@@ -1,20 +1,26 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Studi Kasus & Kisah Sukses UMKM Indonesia: Transformasi Bisnis Nyata | COOCA')
-@section('description', 'Pelajari bagaimana pelaku UMKM F&B, retail, bengkel, laundry, fashion, dan konveksi berhasil mengeliminasi selisih stok, memangkas biaya operasional, dan melipatgandakan profit bersama COOCA.')
-@section('og_title', 'Studi Kasus & Kisah Sukses UMKM Indonesia: Transformasi Bisnis Nyata | COOCA')
-@section('og_description', 'Pelajari kisah nyata pemilik bisnis Indonesia mengeliminasi kebocoran stok, memangkas waktu rekap kasir, dan menumbuhkan cabang bersama COOCA.')
+@php
+    $caseStudyConfig = config('marketing.case_studies', []);
+    $caseStudies = $caseStudyConfig['items'] ?? [];
+    $caseStudyDisclaimer = $caseStudyConfig['disclaimer'] ?? 'Angka merupakan ilustrasi berdasarkan skenario umum dan bukan jaminan hasil.';
+@endphp
+
+@section('title', 'Contoh Skenario & Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
+@section('description', 'Pelajari contoh skenario bagaimana pelaku UMKM F&B, retail, bengkel, laundry, fashion, dan konveksi berhasil mengeliminasi selisih stok, memangkas biaya operasional, dan melipatgandakan profit bersama COOCA.')
+@section('og_title', 'Contoh Skenario & Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
+@section('og_description', 'Pelajari contoh skenario pemilik bisnis Indonesia mengeliminasi kebocoran stok, memangkas waktu rekap kasir, dan menumbuhkan cabang bersama COOCA.')
 @section('canonical', route('public.resources.case-studies'))
 @section('og_type', 'article')
-@section('keywords', 'studi kasus umkm, kisah sukses bisnis, efisiensi bisnis umkm, sistem kasir multi cabang, kontrol hpp makanan, aplikasi bengkel motor, software erp indonesia')
+@section('keywords', 'studi kasus umkm, contoh skenario bisnis, efisiensi bisnis umkm, sistem kasir multi cabang, kontrol hpp makanan, aplikasi bengkel motor, software erp indonesia')
 
-    @push('seo')
-        <script type="application/ld+json">
+@push('seo')
+    <script type="application/ld+json">
 {
   "@@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Studi Kasus & Kisah Sukses UMKM Indonesia - COOCA",
-  "description": "Kumpulan studi kasus implementasi Business Operating System COOCA pada UMKM di berbagai sektor industri di Indonesia.",
+  "name": "Contoh Skenario & Studi Kasus UMKM Indonesia - COOCA",
+  "description": "Kumpulan contoh skenario implementasi Business Operating System COOCA pada UMKM di berbagai sektor industri di Indonesia.",
   "url": "{{ route('public.resources.case-studies') }}",
   "provider": {
     "@type": "Organization",
@@ -24,41 +30,18 @@
   "mainEntity": {
     "@type": "ItemList",
     "itemListElement": [
+      @foreach ($caseStudies as $idx => $cs)
       {
         "@type": "ListItem",
-        "position": 1,
-        "name": "Kopi Sudut Santai: Hemat Food Cost 12% dan Kontrol Resep Otomatis"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Toko Kelontong Berkah: Bon Hutang Nol Macet dan Kasir Kilat Barcode"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Bengkel Motor Perkasa: Tertib SPK Digital & Transparansi Komisi Montir"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": "Fresh Laundry Express: Zero Pakaian Tertukar dengan Tracking Barcode"
-      },
-      {
-        "@type": "ListItem",
-        "position": 5,
-        "name": "Boutique Hijab Syari: Sinkronisasi Stok Multi-Channel Toko Fisik dan Online"
-      },
-      {
-        "@type": "ListItem",
-        "position": 6,
-        "name": "Konveksi Maju Bersama: Presisi HPP Produksi dan Margin Terkunci"
-      }
+        "position": {{ $idx + 1 }},
+        "name": "{{ addslashes($cs['title']) }}"
+      }{{ $loop->last ? '' : ',' }}
+      @endforeach
     ]
   }
 }
 </script>
-    @endpush
+@endpush
 
 @section('content')
     <div x-data="{
@@ -109,12 +92,12 @@
                             <div
                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                                 <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Studi Kasus &amp; Bukti Nyata</span>
+                                <span>Contoh Skenario &amp; Solusi Nyata</span>
                             </div>
 
                             <h1
                                 class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                                Kisah Nyata UMKM Menutup Kebocoran Kasir &amp; <span
+                                Contoh Skenario: Bagaimana UMKM Menutup Kebocoran Kasir &amp; <span
                                     class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Naik
                                     Kelas</span>
                             </h1>
@@ -122,7 +105,7 @@
 
                         <p
                             class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal text-pretty text-left max-w-xl">
-                            Bukan sekadar teori manajemen. Pelajari bagaimana pemilik kedai kopi, minimarket kelontong,
+                            Bukan klaim berlebihan tanpa bukti. Pelajari simulasi bagaimana kedai kopi, minimarket kelontong,
                             bengkel motor, dan konveksi menata ulang operasional harian, mengeliminasi selisih kasir,
                             dan membuka cabang baru dengan tenang.
                         </p>
@@ -142,31 +125,37 @@
                             </a>
                         </div>
 
-                        <!-- Tangible Impact Indicators -->
+                        <!-- Tangible Impact Indicators with Prompt 2 Disclaimer -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10 w-full">
                             <div class="p-3 rounded-2xl bg-[#060B1E]/80 border border-white/10">
-                                <div class="text-xl sm:text-2xl font-black text-emerald-400 tabular-nums">12.4%</div>
+                                <div class="text-xl sm:text-2xl font-black text-emerald-400 tabular-nums">12.4%*</div>
                                 <div class="text-[11px] font-medium text-slate-400 mt-0.5">Hemat Bahan Baku</div>
                             </div>
 
                             <div class="p-3 rounded-2xl bg-[#060B1E]/80 border border-white/10">
-                                <div class="text-xl sm:text-2xl font-black text-[#00C4D8] tabular-nums">5 Menit</div>
+                                <div class="text-xl sm:text-2xl font-black text-[#00C4D8] tabular-nums">5 Menit*</div>
                                 <div class="text-[11px] font-medium text-slate-400 mt-0.5">Tutup Buku Shift</div>
                             </div>
 
                             <div class="p-3 rounded-2xl bg-[#060B1E]/80 border border-white/10">
-                                <div class="text-xl sm:text-2xl font-black text-amber-400 tabular-nums">99.8%</div>
+                                <div class="text-xl sm:text-2xl font-black text-amber-400 tabular-nums">99.8%*</div>
                                 <div class="text-[11px] font-medium text-slate-400 mt-0.5">Kesesuaian Stok</div>
                             </div>
 
                             <div class="p-3 rounded-2xl bg-[#060B1E]/80 border border-white/10">
-                                <div class="text-xl sm:text-2xl font-black text-purple-400 tabular-nums">0%</div>
+                                <div class="text-xl sm:text-2xl font-black text-purple-400 tabular-nums">0%*</div>
                                 <div class="text-[11px] font-medium text-slate-400 mt-0.5">Kasbon Macet</div>
+                            </div>
+
+                            <div class="col-span-2 sm:col-span-4 pt-1">
+                                <p class="text-[11px] text-slate-400 italic text-left">
+                                    * {{ $caseStudyDisclaimer }}
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Real Verification UI Bento -->
+                    <!-- Right Column: Example Scenario UI Bento (Prompt 2 Compliant) -->
                     <div class="lg:col-span-6 relative w-full mt-4 lg:mt-0">
                         <div
                             class="relative rounded-2xl sm:rounded-3xl bg-gradient-to-b from-[#0E1E45]/90 to-[#0A122C]/90 p-4 sm:p-6 shadow-2xl border border-white/15 ring-1 ring-white/10 backdrop-blur-xl text-white overflow-hidden space-y-4">
@@ -175,16 +164,16 @@
                                 class="absolute -top-24 -right-24 w-48 h-48 bg-[#007AFF]/25 rounded-full blur-3xl pointer-events-none">
                             </div>
 
-                            <!-- Header Verification -->
+                            <!-- Header Scenario Badge -->
                             <div class="flex items-center justify-between border-b border-white/10 pb-3">
                                 <div>
-                                    <div class="text-xs font-bold text-white">Audit Operasional Terverifikasi</div>
-                                    <div class="text-[11px] text-slate-400">Kopi Sudut Santai - 3 Gerai (Bandung)</div>
+                                    <div class="text-xs font-bold text-white">Skenario Operasional F&amp;B</div>
+                                    <div class="text-[11px] text-slate-400">Kedai Kopi - 3 Gerai (Bandung)</div>
                                 </div>
                                 <span
-                                    class="text-[11px] font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                    Sukses Terverifikasi
+                                    class="text-[11px] font-semibold text-slate-300 bg-white/10 border border-white/15 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+                                    <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#00C4D8]"></i>
+                                    Contoh Skenario
                                 </span>
                             </div>
 
@@ -206,18 +195,21 @@
                                     </div>
                                     <div class="text-xs text-emerald-100 mt-1 leading-relaxed font-medium">
                                         BOM Resep otomatis memotong stok bahan per porsi kopi. Biaya bahan baku (Food
-                                        Cost) terpangkas 12.4% dan kasir tutup buku tepat 5 menit.
+                                        Cost) terpangkas 12.4%* dan kasir tutup buku tepat 5 menit.
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Timeline & Modules -->
-                            <div class="pt-2 border-t border-white/10 flex items-center justify-between text-xs">
+                            <!-- Timeline & Disclaimer -->
+                            <div class="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
                                 <div class="flex items-center gap-2 text-slate-400">
                                     <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-                                    <span>Waktu Migrasi: 2 Hari Kerja</span>
+                                    <span>Estimasi Implementasi: 2 Hari Kerja</span>
                                 </div>
                                 <span class="font-bold text-[#00C4D8]">Modul: Kasir + BOM Resep</span>
+                            </div>
+                            <div class="text-[10px] text-slate-400 italic">
+                                * {{ $caseStudyDisclaimer }}
                             </div>
                         </div>
                     </div>
@@ -235,15 +227,14 @@
                 class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
                 <div class="max-w-2xl space-y-2">
                     <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                        DAFTAR KASUS PER INDUSTRI
+                        DAFTAR SKENARIO PER INDUSTRI
                     </div>
                     <h2
                         class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
                         Pilih Sektor Bisnis yang Relevan dengan Usaha Anda
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Setiap industri memiliki tantangan operasional yang berbeda. Telusuri solusi yang telah teruji di
-                        lapangan.
+                        Setiap industri memiliki tantangan operasional yang berbeda. Telusuri contoh skenario solusi dan alur kerja di lapangan.
                     </p>
                 </div>
 
@@ -289,273 +280,76 @@
                 </div>
             </div>
 
-            <!-- Bento Grid of Case Studies -->
+            <!-- Bento Grid of Case Studies (Data-Driven from config/marketing.php) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- Case 1: Kopi Sudut Santai -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'fnb'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-[8px]">
-                                F&amp;B / Kedai Kopi (3 Gerai)
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                Hemat 12.4% Bahan
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Kopi Sudut Santai: Resep Otomatis Memotong Bahan Basi &amp; Selisih Susu
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Takaran bahan beda per barista. 45 liter susu hilang tiap bulan tanpa nota jelas.
+                @foreach ($caseStudies as $case)
+                    <div x-show="activeFilter === 'all' || activeFilter === '{{ $case['industry'] }}'"
+                        class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-3 flex-wrap">
+                                <span
+                                    class="text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-[8px]">
+                                    {{ $case['industry_label'] }}
+                                </span>
+                                <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                                    {{ $case['stat_badge'] }}*
+                                </span>
                             </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Resep BOM terpotong otomatis tiap pesanan kasir dan terhubung printer dapur KOT.
+
+                            <!-- Status Badge (Prompt 2 Compliant) -->
+                            <div>
+                                @if (($case['status'] ?? 'illustration') === 'verified')
+                                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+                                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                        Pelanggan Terverifikasi
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/10 border border-black/[0.04] dark:border-white/10 px-2.5 py-0.5 rounded-full">
+                                        <i data-lucide="file-text" class="w-3 h-3 text-[#007AFF]"></i>
+                                        Contoh Skenario
+                                    </span>
+                                @endif
                             </div>
-                        </div>
-                    </div>
 
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('public.solutions.fnb') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Solusi F&amp;B &rarr;
-                        </a>
-                        <button @click="openDetail(1)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
+                                {{ $case['title'] }}
+                            </h3>
 
-                <!-- Case 2: Toko Kelontong Berkah -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'retail'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-[8px]">
-                                Retail / Kelontong &amp; Grosir
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                Piutang Macet Turun 85%
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Toko Kelontong Berkah: Bon Hutang Nol Macet dengan Pengingat Otomatis
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Bon kasbon ditulis di buku tulis kertas yang sering robek dan lupa ditagih berbulan-bulan.
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Batas pagu hutang otomatis per pelanggan &amp; rekap pengingat via WhatsApp terjadwal.
+                            <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
+                                <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
+                                    <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
+                                    {{ $case['challenge'] }}
+                                </div>
+                                <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
+                                    <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
+                                    {{ $case['solution'] }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('public.solutions.retail') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Solusi Retail &rarr;
-                        </a>
-                        <button @click="openDetail(2)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Case 3: Bengkel Motor Perkasa -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'workshop'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-purple-600 dark:text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-[8px]">
-                                Otomotif / Bengkel &amp; Sparepart
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                Servis Naik 35%
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Bengkel Motor Perkasa: Tertib SPK Digital &amp; Transparansi Komisi Montir
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Oli dan sparepart keluar laci tanpa nota. Komisi bagi hasil 6 montir sering memicu ribut.
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Surat Perintah Kerja (SPK) digital terikat nomor polisi motor &amp; komisi jasa terhitung
-                                otomatis.
-                            </div>
+                        <div
+                            class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
+                            @if (!empty($case['solution_route']) && \Illuminate\Support\Facades\Route::has($case['solution_route']))
+                                <a href="{{ route($case['solution_route']) }}"
+                                    class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                                    {{ $case['solution_label'] }} &rarr;
+                                </a>
+                            @else
+                                <span class="text-xs font-semibold text-slate-400">{{ $case['solution_label'] }}</span>
+                            @endif
+                            <button @click="openDetail({{ $case['id'] }})"
+                                class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
+                                <span>Baca Kisah Lengkap</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
                         </div>
                     </div>
+                @endforeach
 
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('public.solutions.workshop') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Solusi Bengkel &rarr;
-                        </a>
-                        <button @click="openDetail(3)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Case 4: Fresh Laundry Express -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'services'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-[8px]">
-                                Jasa / Laundry Kiloan &amp; Satuan
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                0% Baju Tertukar
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Fresh Laundry Express: Zero Baju Tertukar dengan Pelacakan QR Rak
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Nota bon kertas luntur basah kena detergen. Pakaian pelanggan sering tertukar di rak saat
-                                ramai.
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Label barcode per kantong, nomor rak digital, dan WhatsApp otomatis saat cuci selesai.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('public.solutions.services') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Solusi Jasa &rarr;
-                        </a>
-                        <button @click="openDetail(4)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Case 5: Boutique Hijab Syari -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'fashion'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-rose-600 dark:text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-[8px]">
-                                Fashion / Butik &amp; Pakaian
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                Stok Multi-Kanal Sinkron
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Boutique Hijab Syari: Stok Live TikTok &amp; Toko Fisik Terkunci Akurat
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Barang live streaming malam terjual 50 pcs, tapi siangnya masih dibeli orang di toko fisik.
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Sentralisasi SKU variasi warna/ukuran dengan sinkronisasi inventori real-time.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('public.solutions.retail') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Solusi Inventori &rarr;
-                        </a>
-                        <button @click="openDetail(5)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Case 6: Konveksi Maju Bersama -->
-                <div x-show="activeFilter === 'all' || activeFilter === 'fashion'"
-                    class="flex flex-col bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 shadow-sm hover:border-[#007AFF]/40 transition-all justify-between space-y-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between gap-3">
-                            <span
-                                class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-[8px]">
-                                Manufaktur / Konveksi &amp; Sablon
-                            </span>
-                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                                Margin Terkunci 22%
-                            </span>
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug">
-                            Konveksi Maju Bersama: Presisi HPP Produksi Seragam Sebelum Tender
-                        </h3>
-
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                            <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <strong class="text-rose-600 dark:text-rose-400 block mb-0.5">Tantangan:</strong>
-                                Pasang harga tender modal kira-kira. Saat bahan katun naik, proyek berakhir impas nombok.
-                            </div>
-                            <div class="p-3 rounded-[12px] bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12]">
-                                <strong class="text-emerald-700 dark:text-emerald-400 block mb-0.5">Solusi COOCA:</strong>
-                                Estimator HPP multi-bahan (kain, benang, sablon) &amp; tracking uang muka (DP) bertahap.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                        <a href="{{ route('kalkulator.hpp') }}"
-                            class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                            Kalkulator HPP &rarr;
-                        </a>
-                        <button @click="openDetail(6)"
-                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                            <span>Baca Kisah Lengkap</span>
-                            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
+                <!-- Disclaimer Banner under Grid -->
+                <div class="col-span-full p-4 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-xs text-slate-500 dark:text-slate-400 text-center italic">
+                    * {{ $caseStudyDisclaimer }}
                 </div>
 
             </div>
@@ -736,7 +530,7 @@
         </section>
 
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
-        <!-- ═══ 6. MODAL SHEET: Detail Kisah Studi Kasus ═════════════════════════════ -->
+        <!-- ═══ 6. MODAL SHEET: Detail Kisah Studi Kasus (Prompt 2 Compliant) ════════ -->
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
         <div x-show="activeCaseModal !== null" x-cloak class="fixed inset-0 z-50 overflow-y-auto"
             aria-labelledby="modal-case-title" role="dialog" aria-modal="true">
@@ -753,9 +547,9 @@
                         class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
                         <div>
                             <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                                DETAIL STUDI KASUS</div>
+                                DETAIL SKENARIO STUDI KASUS</div>
                             <h3 class="text-xl font-bold text-slate-900 dark:text-white" id="modal-case-title">
-                                Langkah Transformasi Operasional
+                                Simulasi Langkah Transformasi Operasional
                             </h3>
                         </div>
                         <button @click="closeDetail()"
@@ -764,171 +558,58 @@
                         </button>
                     </div>
 
-                    <!-- Case 1 Details -->
-                    <div x-show="activeCaseModal === 1" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Kopi Sudut Santai - 3 Gerai
-                            (Bandung)</div>
-                        <p class="text-sm leading-relaxed">Sebelumnya pemilik kedai sering mengeluhkan selisih stok susu
-                            cair dan bubuk kopi espresso yang mencapai Rp 2,8 juta per bulan tanpa bisa melacak shift mana
-                            yang boros.</p>
+                    <!-- Dynamic Case Details for Modals -->
+                    @foreach ($caseStudies as $case)
+                        <div x-show="activeCaseModal === {{ $case['id'] }}" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex items-center justify-between gap-3 flex-wrap">
+                                <div class="font-bold text-base text-slate-900 dark:text-white">
+                                    {{ $case['details']['title'] }}
+                                </div>
+                                @if (($case['status'] ?? 'illustration') === 'verified')
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full shrink-0">
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                                        Pelanggan Terverifikasi
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/10 border border-black/[0.04] dark:border-white/10 px-2.5 py-0.5 rounded-full shrink-0">
+                                        <i data-lucide="file-text" class="w-3 h-3 text-[#007AFF]"></i>
+                                        Contoh Skenario
+                                    </span>
+                                @endif
+                            </div>
 
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 1: Standardisasi
-                                    Takaran (BOM)</strong>
-                                <span class="text-xs">Setiap menu kopi dikunci resep gramasi resminya ke dalam sistem COOCA
-                                    (contoh: 18 gr espresso, 150 ml susu).</span>
+                            @if (($case['status'] ?? 'illustration') === 'verified' && !empty($case['verified_data']['owner_quote']))
+                                <blockquote class="p-3.5 rounded-[12px] bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-emerald-500 text-xs italic text-emerald-900 dark:text-emerald-200">
+                                    "{{ $case['verified_data']['owner_quote'] }}"
+                                    <div class="mt-1 font-semibold not-italic text-emerald-700 dark:text-emerald-400">
+                                        — {{ $case['verified_data']['owner_name'] }}, {{ $case['city'] }}
+                                    </div>
+                                </blockquote>
+                            @endif
+
+                            <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                                {{ $case['details']['description'] }}
+                            </p>
+
+                            <div class="space-y-2 pt-1">
+                                @foreach ($case['details']['steps'] as $step)
+                                    <div
+                                        class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
+                                        <strong class="text-slate-900 dark:text-white block text-xs mb-1">
+                                            {{ $step['step'] }}
+                                        </strong>
+                                        <span class="text-xs text-slate-600 dark:text-slate-300">
+                                            {{ $step['desc'] }}
+                                        </span>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 2: Integrasi
-                                    Printer Dapur Barista</strong>
-                                <span class="text-xs">Pesanan kasir langsung tercetak otomatis ke meja barista,
-                                    menghentikan kebiasaan memberi porsi gratis tanpa tiket.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Hasil: Penghematan Rp 3,2
-                                    Juta / Bulan</strong>
-                                <span class="text-xs">Food cost turun 12.4% dan pemilik kini dapat memantau stok susu
-                                    ketiga cabang cukup dari handphone.</span>
+
+                            <div class="p-3 rounded-[12px] bg-slate-50 dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06] text-xs text-slate-500 dark:text-slate-400 italic">
+                                * {{ $caseStudyDisclaimer }}
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Case 2 Details -->
-                    <div x-show="activeCaseModal === 2" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Toko Kelontong Berkah (Cirebon)
-                        </div>
-                        <p class="text-sm leading-relaxed">Pemilik toko mengelola lebih dari 2.500 SKU barang kebutuhan
-                            pokok dan melayani kasbon pelanggan warga sekitar. Rekap piutang yang tercecer menyebabkan modal
-                            macet.</p>
-
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 1: Impor Excel
-                                    2.500 Barang</strong>
-                                <span class="text-xs">Katalog barang dan modal harga beli dimasukkan ke COOCA dalam 10
-                                    menit via impor spreadsheet.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 2: Plafon Kasbon
-                                    Digital</strong>
-                                <span class="text-xs">Setiap pelanggan diberi limit kredit maksimal. Transaksi kasir
-                                    menolak otomatis jika hutang lama belum dilunasi.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Hasil: Arus Kas Kembali
-                                    Sehat</strong>
-                                <span class="text-xs">Piutang macet berkurang 85% dalam 60 hari berkat pesan pengingat
-                                    jatuh tempo WhatsApp otomatis.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Case 3 Details -->
-                    <div x-show="activeCaseModal === 3" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Bengkel Motor Perkasa (Semarang)
-                        </div>
-                        <p class="text-sm leading-relaxed">Sering terjadi komplain montir merasa komisi servisnya dipotong,
-                            sementara pemilik bengkel sering mendapati stok kampas rem dan oli berkurang tanpa ada nota.</p>
-
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 1: SPK Digital
-                                    Plat Nomor</strong>
-                                <span class="text-xs">Setiap motor masuk wajib input plat nomor dan keluhan di tablet kasir
-                                    penerima servis.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 2: Ambil
-                                    Sparepart Berbasis SPK</strong>
-                                <span class="text-xs">Bagian gudang hanya mengeluarkan sparepart bila sudah tercatat di SPK
-                                    resmi sistem.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Hasil: Bebas Selisih
-                                    &amp; Montir Puas</strong>
-                                <span class="text-xs">Komisi jasa mekanik terhitung otomatis secara transparan. Antrean
-                                    servis meningkat 35%.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Case 4 Details -->
-                    <div x-show="activeCaseModal === 4" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Fresh Laundry Express (Surabaya)
-                        </div>
-                        <p class="text-sm leading-relaxed">Menangani hingga 400 kg cucian per hari. Masalah utama adalah
-                            nota bon kertas basah terkena detergen dan pakaian pelanggan sering tertukar saat jam sibuk.</p>
-
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 1: Label Barcode
-                                    Anti-Air</strong>
-                                <span class="text-xs">Struk barcode ditempelkan pada keranjang cucian saat penimbangan
-                                    awal.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah 2: Alur Rak
-                                    Selesai Siap Ambil</strong>
-                                <span class="text-xs">Saat disetrika dan masuk rak, kasir memindai barcode dan status
-                                    WhatsApp otomatis terkirim ke pelanggan.</span>
-                            </div>
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Hasil: Nol Komplain
-                                    Pakaian Hilang</strong>
-                                <span class="text-xs">Kecepatan pengambilan cucian meningkat dan kepuasan pelanggan naik
-                                    signifikan.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Case 5 Details -->
-                    <div x-show="activeCaseModal === 5" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Boutique Hijab Syari (Solo)</div>
-                        <p class="text-sm leading-relaxed">Menjual pakaian muslimah via siaran live media sosial sekaligus
-                            memiliki butik offline. Stok sering bentrok karena penjualan malam belum tercatat saat toko buka
-                            pagi.</p>
-
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah: Satu Database
-                                    Sentral</strong>
-                                <span class="text-xs">Seluruh pesanan live diinput ke kasir COOCA sehingga etalase offline
-                                    langsung mengetahui sisa stok riil.</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Case 6 Details -->
-                    <div x-show="activeCaseModal === 6" class="space-y-4 text-sm text-slate-700 dark:text-slate-300">
-                        <div class="font-bold text-base text-slate-900 dark:text-white">Konveksi Maju Bersama (Pekalongan)
-                        </div>
-                        <p class="text-sm leading-relaxed">Menerima pesanan seragam instansi dan komunitas. Kerap kali
-                            merugi karena kenaikan harga bahan kain katun di tengah proses penjahitan.</p>
-
-                        <div class="space-y-2 pt-1">
-                            <div
-                                class="p-3 rounded-[12px] bg-[#F9F9FB] dark:bg-[#242426] border border-black/[0.04] dark:border-white/[0.06]">
-                                <strong class="text-slate-900 dark:text-white block text-xs mb-1">Langkah: Simulasi Biaya
-                                    HPP Bahan &amp; Upah</strong>
-                                <span class="text-xs">Menghitung kebutuhan kain per meter, kancing, benang, sablon, dan
-                                    upah jahit sebelum mengajukan penawaran harga.</span>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
 
                     <!-- Modal Actions -->
                     <div

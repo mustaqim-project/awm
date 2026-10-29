@@ -33,7 +33,7 @@ Route::get('/', function () {
     $previewProducts = \App\Models\Product::where('is_active', true)
         ->where('show_in_website', true)
         ->whereHas('business', function ($q): void {
-            $q->where('is_active', true)
+            $q->publicListed()
               ->whereHas('storeSetting', function ($sq): void {
                   $sq->where('is_storefront_enabled', true)
                     ->where('is_discoverable', true);

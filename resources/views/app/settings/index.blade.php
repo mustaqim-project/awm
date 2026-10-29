@@ -128,8 +128,8 @@
                         <span>{{ __('settings.tab_modules') }}</span>
                         <span
                             class="px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#007AFF]/15 text-[#007AFF] tabular-nums"
-                            x-text="activeModulesCount + '/' + totalModulesCount">
-                            {{ count($allModules) - count($business->disabled_modules ?? []) }}/{{ count($allModules) }}
+                            x-text="activeVisibleModulesCount + '/' + visibleModulesCount">
+                            {{ count($relevantModuleKeys) - count(array_intersect($business->disabled_modules ?? [], $relevantModuleKeys)) }}/{{ count($relevantModuleKeys) }}
                         </span>
                     </button>
                 </div>
@@ -1277,6 +1277,78 @@
                 </div>
 
                 <!-- ============================================================= -->
+                <!-- SUB-PANEL: PENGATURAN TAMPILAN SESUAI INDUSTRI (ZERO LEAKAGE) -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-3 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] {{ $isFreeIndustry ? 'bg-[#FF9500]/10 text-[#FF9500]' : 'bg-[#007AFF]/10 text-[#007AFF]' }} flex items-center justify-center shrink-0">
+                                <i data-lucide="{{ $isFreeIndustry ? 'layers' : 'briefcase' }}" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-[15px] font-bold text-black dark:text-white">
+                                        {{ $isFreeIndustry ? __('settings.industry_free_mode') : $industryName }}
+                                    </h3>
+                                    @if ($isFreeIndustry)
+                                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FFA00A] border border-[#FF9500]/20">
+                                            Mode Bebas
+                                        </span>
+                                    @else
+                                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
+                                            Zero Feature Leakage
+                                        </span>
+                                    @endif
+                                </div>
+                                <p class="text-[12px] text-black/55 dark:text-white/55 mt-0.5 leading-relaxed">
+                                    @if ($isFreeIndustry)
+                                        {{ __('settings.industry_free_mode_desc') }}
+                                    @else
+                                        <span x-show="industryFilterMode === 'tailored'">
+                                            {{ __('settings.industry_filter_tailored_desc', ['industry' => $industryName]) }}
+                                        </span>
+                                        <span x-show="industryFilterMode === 'all'" style="display: none;">
+                                            {{ __('settings.industry_filter_all_desc') }}
+                                        </span>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+
+                        @if (!$isFreeIndustry)
+                            <!-- Apple Segmented Control Filter Switcher -->
+                            <div class="inline-flex items-center p-1 rounded-[11px] bg-black/5 dark:bg-white/10 shrink-0 self-start sm:self-auto border border-black/5 dark:border-white/5">
+                                <button type="button"
+                                        @click="industryFilterMode = 'tailored'"
+                                        :class="industryFilterMode === 'tailored'
+                                            ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm'
+                                            : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        class="min-h-[36px] px-3.5 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                    <span>{{ __('settings.industry_filter_tailored') }}</span>
+                                    <span class="px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#007AFF]/15 text-[#007AFF] tabular-nums"
+                                          x-text="relevantModules.length">
+                                        {{ count($relevantModuleKeys) }}
+                                    </span>
+                                </button>
+                                <button type="button"
+                                        @click="industryFilterMode = 'all'"
+                                        :class="industryFilterMode === 'all'
+                                            ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm'
+                                            : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        class="min-h-[36px] px-3.5 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5">
+                                    <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+                                    <span>{{ __('settings.industry_filter_all') }}</span>
+                                    <span class="px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60 tabular-nums">
+                                        {{ count($allModules) }}
+                                    </span>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- ============================================================= -->
                 <!-- SUB-PANEL 1: 1-CLICK PROFIL SKALA BISNIS (PROGRESSIVE PRESET)  -->
                 <!-- ============================================================= -->
                 <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
@@ -1513,18 +1585,18 @@
                             @php
                                 $catFeatures = array_filter($featureDefinitions, fn($f) => $f['category'] === $catKey);
                             @endphp
-                            <div class="rounded-[14px] bg-black/[0.01] dark:bg-white/[0.015] border border-black/5 dark:border-white/5 p-4 space-y-3">
+                            <div x-show="isCategoryVisible(@json($catFeatures))" class="rounded-[14px] bg-black/[0.01] dark:bg-white/[0.015] border border-black/5 dark:border-white/5 p-4 space-y-3">
                                 <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
                                     <span class="p-1 rounded-[6px] bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">
                                         <i data-lucide="{{ $catMeta['icon'] ?? 'settings' }}" class="w-3.5 h-3.5"></i>
                                     </span>
                                     <h4 class="text-[13px] font-bold text-black dark:text-white">{{ $catMeta['name'] }}</h4>
-                                    <span class="text-[11px] text-black/40 dark:text-white/40 tabular-nums">({{ count($catFeatures) }})</span>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40 tabular-nums" x-text="'(' + Object.keys(@json($catFeatures)).filter(k => isFeatureVisible(k)).length + ')'">({{ count($catFeatures) }})</span>
                                 </div>
 
                                 <div class="space-y-2">
                                     @foreach($catFeatures as $fKey => $fDef)
-                                        <div x-show="!featureSearch || '{{ strtolower($fDef['name'] . ' ' . $fDef['description'] . ' ' . $fKey) }}'.includes(featureSearch.toLowerCase())"
+                                        <div x-show="isFeatureVisible('{{ $fKey }}') && (!featureSearch || '{{ strtolower($fDef['name'] . ' ' . $fDef['description'] . ' ' . $fKey) }}'.includes(featureSearch.toLowerCase()))"
                                              class="rounded-[12px] bg-black/[0.015] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 p-3.5 flex items-start justify-between gap-3 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-all">
                                             <div class="space-y-1 flex-1 min-w-0">
                                                 <div class="flex items-center gap-2">
@@ -1579,8 +1651,8 @@
                         </div>
                     </div>
                     <span class="text-[12px] font-medium text-black/50 dark:text-white/50 tabular-nums self-start sm:self-auto"
-                          x-text="activeModulesCount + ' dari ' + totalModulesCount + ' Modul Aktif'">
-                        {{ count($allModules) - count($business->disabled_modules ?? []) }} dari {{ count($allModules) }} Modul Aktif
+                          x-text="activeVisibleModulesCount + ' dari ' + visibleModulesCount + ' Modul Aktif'">
+                        {{ count($relevantModuleKeys) - count(array_intersect($business->disabled_modules ?? [], $relevantModuleKeys)) }} dari {{ count($relevantModuleKeys) }} Modul Aktif
                     </span>
                 </div>
 
@@ -1651,27 +1723,36 @@
                                 'merchant_shipping' => 'Logistik: Pengaturan Ongkos Kirim & Kurir Toko',
                             ],
                         ],
+                        'layanan_jasa' => [
+                            'title' => __('settings.cluster_services_title'),
+                            'desc' => __('settings.cluster_services_desc'),
+                            'icon' => 'wrench',
+                            'color' => 'text-[#0284C7]',
+                            'bg' => 'bg-[#0284C7]/10',
+                            'keys' => ['service_workshop'],
+                            'impacts' => [
+                                'service_workshop' => 'Layanan & Servis: SPK Order Kerja, Data Kendaraan/Nopol, Estimasi Jasa & Sparepart',
+                            ],
+                        ],
                         'keuangan_akuntansi' => [
                             'title' => __('settings.cluster_accounting_title'),
                             'desc' => __('settings.cluster_accounting_desc'),
                             'icon' => 'book-open',
                             'color' => 'text-[#007AFF]',
                             'bg' => 'bg-[#007AFF]/10',
-                            'keys' => ['coa_journals', 'ar_ap_monitoring', 'tax_compliance', 'budgeting'],
+                            'keys' => ['accounting_corporate'],
                             'impacts' => [
-                                'coa_journals' => 'Akuntansi Standar: Bagan Akun (COA), Jurnal Umum, Buku Besar, Neraca & Laba Rugi',
-                                'ar_ap_monitoring' => 'Kas & Piutang/Hutang: Rekening Bank & Kas Operasional, Pengawasan Jatuh Tempo Piutang & Hutang',
-                                'tax_compliance' => 'Perpajakan & PPh/PPN: Rekap PPN Faktur Masukan/Keluaran, SPT Masa & Bukti Potong',
-                                'budgeting' => 'Anggaran Biaya: Rencana Anggaran (Budget Plan), Realisasi Pengeluaran per Departemen',
+                                'accounting_corporate' => 'Akuntansi Standar: Bagan Akun (COA), Jurnal Umum, Buku Besar, Neraca & Laba Rugi',
                             ],
                         ],
                     ];
                 @endphp
 
-                <!-- 6 Thematic Bento Clusters -->
+                <!-- 7 Thematic Bento Clusters -->
                 @foreach ($clusterMap as $clusterId => $cluster)
                     <!-- Cluster Card -->
-                    <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-sm">
+                    <div x-show="isClusterVisible(@json($cluster['keys']))"
+                         class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-sm">
                         <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
                             <div class="flex items-center gap-2.5">
                                 <span class="p-1.5 rounded-[8px] {{ $cluster['bg'] }} {{ $cluster['color'] }}">
@@ -1693,7 +1774,8 @@
                                         $isEnabled = $business->isModuleEnabled($moduleKey);
                                         $impactText = $cluster['impacts'][$moduleKey] ?? null;
                                     @endphp
-                                    <div class="rounded-[14px] p-4 sm:p-4.5 flex flex-col justify-between gap-3.5 transition-all hover:border-black/15 dark:hover:border-white/15"
+                                    <div x-show="isModuleVisible('{{ $moduleKey }}')"
+                                         class="rounded-[14px] p-4 sm:p-4.5 flex flex-col justify-between gap-3.5 transition-all hover:border-black/15 dark:hover:border-white/15"
                                          :class="modulesState['{{ $moduleKey }}'] ?
                                              'border border-[#34C759]/30 dark:border-[#34C759]/30 bg-[#34C759]/[0.02]' :
                                              'border border-black/5 dark:border-white/5 opacity-75 bg-black/[0.02] dark:bg-white/[0.02]'">
@@ -2808,6 +2890,33 @@
                 isOwner: @json(\App\Support\Context::isOwner()),
                 totalModulesCount: {{ count($allModules) }},
                 activeModulesCount: {{ count($allModules) - count($business->disabled_modules ?? []) }},
+                isFreeIndustry: @json($isFreeIndustry),
+                industryName: @json($industryName),
+                industryFilterMode: @json($isFreeIndustry ? 'all' : 'tailored'),
+                relevantModules: @json($relevantModuleKeys),
+                relevantFeatures: @json($relevantFeatureKeys),
+
+                isModuleVisible(key) {
+                    return this.industryFilterMode === 'all' || this.relevantModules.includes(key);
+                },
+                isFeatureVisible(key) {
+                    return this.industryFilterMode === 'all' || this.relevantFeatures.includes(key);
+                },
+                isClusterVisible(keys) {
+                    if (this.industryFilterMode === 'all') return true;
+                    return keys.some(k => this.relevantModules.includes(k));
+                },
+                isCategoryVisible(features) {
+                    if (this.industryFilterMode === 'all') return true;
+                    const fKeys = Object.keys(features);
+                    return fKeys.some(k => this.relevantFeatures.includes(k));
+                },
+                get visibleModulesCount() {
+                    return Object.keys(this.modulesState).filter(k => this.isModuleVisible(k)).length;
+                },
+                get activeVisibleModulesCount() {
+                    return Object.keys(this.modulesState).filter(k => this.isModuleVisible(k) && this.modulesState[k]).length;
+                },
                 modulesState: {
                     @foreach($allModules as $mKey => $mDef)
                         '{{ $mKey }}': {{ $business->isModuleEnabled($mKey) ? 'true' : 'false' }},

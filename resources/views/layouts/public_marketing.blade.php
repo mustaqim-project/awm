@@ -50,10 +50,6 @@
             'seo_meta_description',
             'Cooca: Software kasir POS, pembukuan otomatis, omnichannel media sosial & AI Assistant gratis selamanya untuk UMKM Indonesia.',
         );
-        $seoKeywords = \App\Models\SystemSetting::get(
-            'seo_meta_keywords',
-            'Cooca, software kasir gratis, erp umkm, pos kasir toko, aplikasi pembukuan gratis, sistem operasional bisnis, cooca.id',
-        );
         $seoAuthor = \App\Models\SystemSetting::get('seo_author', 'Cooca Indonesia');
         $seoRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
         $seoCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url()->current();

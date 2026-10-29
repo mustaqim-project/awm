@@ -64,6 +64,9 @@ class Business extends Model
         'settings',
         'allow_negative_stock',
         'is_active',
+        'is_test',
+        'is_demo',
+        'is_public_listed',
         'suspended_reason',
         'suspended_at',
         'pos_supervisor_pin',
@@ -112,6 +115,9 @@ class Business extends Model
         return [
             'allow_negative_stock' => 'boolean',
             'is_active' => 'boolean',
+            'is_test' => 'boolean',
+            'is_demo' => 'boolean',
+            'is_public_listed' => 'boolean',
             'suspended_at' => 'datetime',
             'currency_precision' => 'integer',
             'disabled_modules' => 'array',
@@ -128,6 +134,26 @@ class Business extends Model
             'pos_service_charge_percent' => 'float',
             'ai_credits_balance' => 'integer',
         ];
+    }
+
+    /**
+     * Scope query to only include businesses eligible for public marketplace listing (Prompt 3 compliant).
+     * Excludes test accounts, internal review stores, and unlisted entities.
+     */
+    public function scopePublicListed(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where('is_active', true)
+            ->where(function ($q): void {
+                $q->whereNull('is_test')->orWhere('is_test', false);
+            })
+            ->where(function ($q): void {
+                $q->whereNull('is_public_listed')->orWhere('is_public_listed', true);
+            });
+    }
+
+    public function isTestStore(): bool
+    {
+        return (bool) ($this->is_test ?? false);
     }
 
     public function getTimezone(): string
@@ -433,6 +459,15 @@ class Business extends Model
      */
     public function isModuleEnabled(string $moduleKey): bool
     {
+        // Reservation module gating:
+        // Requires a designated industry that supports reservations or bookings.
+        // If the business has no industry or its industry does not support reservations, disable it.
+        if ($moduleKey === \App\Domain\Template\ModuleRegistry::MODULE_RESERVATION) {
+            if (! $this->hasIndustry() || ! $this->supportsReservation()) {
+                return false;
+            }
+        }
+
         $disabled = $this->disabled_modules;
 
         if ($disabled === null && ! empty($this->template_code)) {
@@ -751,6 +786,89 @@ class Business extends Model
         $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
         return str_starts_with($code, 'mfg_')
             || in_array($code, ['manufacturing', 'pabrik', 'produksi', 'konveksi'], true);
+    }
+
+    public function isBarbershop(): bool
+    {
+        $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+        return in_array($code, ['service_barbershop', 'barbershop', 'salon', 'cukur'], true)
+            || str_contains(strtolower($this->name ?? ''), 'barber')
+            || str_contains(strtolower($this->name ?? ''), 'salon')
+            || str_contains(strtolower($this->name ?? ''), 'pangkas');
+    }
+
+    public function isEventService(): bool
+    {
+        $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+        return in_array($code, ['service_event', 'event', 'organizer', 'eo', 'wedding'], true)
+            || str_contains(strtolower($this->name ?? ''), 'event')
+            || str_contains(strtolower($this->name ?? ''), 'wedding');
+    }
+
+    public function isTailor(): bool
+    {
+        $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+        return in_array($code, ['mfg_tailor_custom', 'tailor', 'penjahit', 'jahit'], true)
+            || str_contains(strtolower($this->name ?? ''), 'tailor')
+            || str_contains(strtolower($this->name ?? ''), 'jahit');
+    }
+
+    /**
+     * Determine whether this business has an assigned industry template or category.
+     */
+    public function hasIndustry(): bool
+    {
+        if (! empty($this->template_code) || ! empty($this->industry_category)) {
+            return true;
+        }
+
+        // Implicit category fallback for named test entities
+        if ($this->isFoodIndustry() || $this->isWorkshop() || $this->isPharmacy() || $this->isLaundry()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine whether this business supports reservations or appointments based on its industry.
+     * Supported: F&B Dine-in, Workshop, Barbershop, Detailing, Event, Custom Tailor.
+     * If no industry is defined or the industry is not in this list, returns false.
+     */
+    public function supportsReservation(): bool
+    {
+        if (! $this->hasIndustry()) {
+            return false;
+        }
+
+        $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+        if (empty($code)) {
+            return $this->isFoodIndustry() || $this->isWorkshop();
+        }
+
+        $supported = [
+            'fnb_resto',
+            'fnb_cafe',
+            'service_workshop',
+            'service_barbershop',
+            'service_autodetailing',
+            'service_event',
+            'mfg_tailor_custom',
+            // Aliases / category fallbacks
+            'resto',
+            'cafe',
+            'restaurant',
+            'workshop',
+            'bengkel',
+            'barbershop',
+            'salon',
+            'autodetailing',
+            'carwash',
+            'event',
+            'tailor',
+        ];
+
+        return in_array($code, $supported, true);
     }
 
     public function approvalRules(): \Illuminate\Database\Eloquent\Relations\HasMany

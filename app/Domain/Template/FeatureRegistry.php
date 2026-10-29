@@ -440,5 +440,129 @@ final class FeatureRegistry
 
         return $tierDisabled;
     }
+
+    /**
+     * Get list of relevant feature parameter keys for a given template code.
+     * When template code is null, empty or 'general'/'bebas', ALL 24 features are returned.
+     *
+     * @return array<int, string>
+     */
+    public static function getRelevantFeaturesForTemplate(?string $templateCode): array
+    {
+        $allKeys = self::allKeys();
+
+        if (empty($templateCode) || in_array(strtolower($templateCode), ['general', 'bebas', 'universal', 'all'], true)) {
+            return $allKeys;
+        }
+
+        $code = strtolower($templateCode);
+        $isFnb = str_starts_with($code, 'fnb_') || in_array($code, ['fnb', 'cafe', 'resto', 'kuliner'], true);
+        $isFnbDineIn = in_array($code, ['fnb_resto', 'fnb_cafe'], true);
+        $isBakery = $code === 'fnb_bakery';
+        $isWorkshop = in_array($code, ['service_workshop', 'service_autodetailing', 'bengkel', 'otomotif'], true);
+        $isLaundry = in_array($code, ['service_laundry', 'laundry'], true);
+        $isBarbershop = in_array($code, ['service_barbershop', 'salon', 'barbershop'], true);
+        $isPharmacy = in_array($code, ['retail_pharmacy', 'farmasi', 'apotek'], true);
+        $isTailor = in_array($code, ['mfg_tailor_custom', 'mfg_garment', 'konveksi'], true);
+        $isPrinting = in_array($code, ['mfg_printing', 'percetakan'], true);
+        $isMfg = str_starts_with($code, 'mfg_');
+        $isB2B = in_array($code, ['distributor_fmcg', 'service_agency', 'service_contractor', 'service_event'], true) || $isMfg;
+
+        $relevant = [];
+        foreach ($allKeys as $key) {
+            // Check specific vertical features
+            if ($key === self::VERTICAL_WORKSHOP_HISTORY || $key === self::VERTICAL_WORKSHOP_REMINDER) {
+                if ($isWorkshop) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_LAUNDRY_TRACKING) {
+                if ($isLaundry) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_STYLIST_COMMISSION) {
+                if ($isBarbershop) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_PHARMACY_PRESCRIPT) {
+                if ($isPharmacy) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_FEFO_DEDUCT) {
+                if ($isPharmacy || $isFnb || $code === 'distributor_fmcg') {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_TAILOR_MEASURE) {
+                if ($isTailor) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_PRINTING_CALC) {
+                if ($isPrinting) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::VERTICAL_BAKERY_CLEARANCE) {
+                if ($isBakery) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+
+            // POS Kitchen routing is strictly for F&B Dine-In
+            if ($key === self::POS_KITCHEN_ROUTING) {
+                if ($isFnbDineIn) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+
+            // Food waste log is for F&B businesses
+            if ($key === self::POS_FOOD_WASTE_LOG) {
+                if ($isFnb) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+
+            // MFG Work in Progress & Grid
+            if ($key === self::MFG_PRODUCTION_WIP) {
+                if ($isMfg || $code === 'service_contractor' || $isPrinting) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+            if ($key === self::MFG_SIZE_COLOR_GRID) {
+                if ($isTailor || $code === 'retail_reseller') {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+
+            // B2B Progressive invoice
+            if ($key === self::B2B_PROGRESSIVE_INVOICE) {
+                if ($code === 'service_contractor' || $code === 'service_agency' || $code === 'service_event' || $isB2B) {
+                    $relevant[] = $key;
+                }
+                continue;
+            }
+
+            // Everything else is universal/cross-industry
+            $relevant[] = $key;
+        }
+
+        return $relevant;
+    }
 }
 

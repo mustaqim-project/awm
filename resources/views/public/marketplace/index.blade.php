@@ -296,6 +296,23 @@
                     @endforeach
                 </div>
             </section>
+        @else
+            {{-- Empty State (Prompt 3 Compliant) --}}
+            <section class="p-8 sm:p-12 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-center space-y-4 shadow-sm">
+                <div class="w-14 h-14 rounded-2xl bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto">
+                    <i data-lucide="store" class="w-7 h-7"></i>
+                </div>
+                <div class="max-w-md mx-auto space-y-1.5">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jadilah merchant pertama di kota Anda!</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                        Belum ada produk publik yang terdaftar. Buka toko online Anda sekarang dan nikmati integrasi kasir POS instan gratis.
+                    </p>
+                </div>
+                <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold shadow-sm transition">
+                    <span>Daftarkan Usaha Saya</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </section>
         @endif
 
         {{-- Featured Stores Section --}}

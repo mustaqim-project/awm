@@ -252,57 +252,83 @@ final class ModuleRegistry
             'fnb_resto' => [
                 self::MODULE_B2B_SALES,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
             ],
             'fnb_cafe' => [
                 self::MODULE_B2B_SALES,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
             ],
 
             // ─── 2. F&B NON DINE-IN ──────────────────────────────────────────
             'fnb_bakery' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_B2B_SALES,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'fnb_cloud_kitchen' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_B2B_SALES,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'fnb_catering' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'fnb_frozen_food' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'fnb_catering_diet' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_LABOR_MACHINES,
                 self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
 
             // ─── 3. MANUFAKTUR & PRODUKSI ────────────────────────────────────
             'mfg_garment' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_precision' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_furniture' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_craft' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_printing' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_cosmetics' => [
                 self::MODULE_POS_DINEIN,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'mfg_tailor_custom' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_SERVICE_WORKSHOP,
             ],
 
             // ─── 4. RETAIL & TOKO OBAT ───────────────────────────────────────
@@ -311,12 +337,16 @@ final class ModuleRegistry
                 self::MODULE_B2B_SALES,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'retail_pharmacy' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_B2B_SALES,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
 
             // ─── 5. JASA PROFESIONAL & PROYEK B2B ───────────────────────────
@@ -325,21 +355,28 @@ final class ModuleRegistry
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
                 self::MODULE_PROCUREMENT,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'service_contractor' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_RECIPE_BOM,
+                self::MODULE_RESERVATION,
             ],
             'service_event' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
             ],
 
             // ─── 6. JASA OPERASIONAL ON-THE-SPOT ─────────────────────────────
             'service_workshop' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
             ],
             'service_barbershop' => [
                 self::MODULE_POS_DINEIN,
@@ -347,6 +384,7 @@ final class ModuleRegistry
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
                 self::MODULE_PROCUREMENT,
+                self::MODULE_LABOR_MACHINES,
             ],
             'service_laundry' => [
                 self::MODULE_POS_DINEIN,
@@ -354,6 +392,8 @@ final class ModuleRegistry
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
                 self::MODULE_PROCUREMENT,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_RESERVATION,
             ],
             'service_autodetailing' => [
                 self::MODULE_POS_DINEIN,
@@ -361,6 +401,7 @@ final class ModuleRegistry
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_INVENTORY_WAREHOUSE,
                 self::MODULE_PROCUREMENT,
+                self::MODULE_LABOR_MACHINES,
             ],
 
             // ─── 7. DISTRIBUSI & PERTANIAN ───────────────────────────────────
@@ -368,10 +409,14 @@ final class ModuleRegistry
                 self::MODULE_POS_DINEIN,
                 self::MODULE_RECIPE_BOM,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
             'agri_farming' => [
                 self::MODULE_POS_DINEIN,
                 self::MODULE_LABOR_MACHINES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_RESERVATION,
             ],
         ];
     }
@@ -388,6 +433,377 @@ final class ModuleRegistry
         }
 
         return self::templateDisabledModulesMap()[$templateCode] ?? [];
+    }
+
+    /**
+     * Map each of the 25 industry templates to the modules that are relevant/applicable.
+     * When template is null, empty or 'general'/'bebas', ALL modules are applicable.
+     *
+     * @return array<string, array<int, string>>
+     */
+    public static function templateRelevantModulesMap(): array
+    {
+        return [
+            // ─── 1. F&B RESTORAN & DINE-IN ────────────────────────────────────
+            'fnb_resto' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_POS_DINEIN,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_RESERVATION,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'fnb_cafe' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_POS_DINEIN,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_RESERVATION,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 2. F&B NON DINE-IN ──────────────────────────────────────────
+            'fnb_bakery' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_SCHEDULED_ORDER,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'fnb_cloud_kitchen' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_SCHEDULED_ORDER,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'fnb_catering' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_SCHEDULED_ORDER,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'fnb_frozen_food' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'fnb_catering_diet' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_SCHEDULED_ORDER,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 3. MANUFAKTUR & PRODUKSI ────────────────────────────────────
+            'mfg_garment' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_precision' => [
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_furniture' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_craft' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_printing' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_cosmetics' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'mfg_tailor_custom' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_RESERVATION,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 4. RETAIL & TOKO OBAT ───────────────────────────────────────
+            'retail_reseller' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'retail_pharmacy' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 5. JASA PROFESIONAL & PROYEK B2B ───────────────────────────
+            'service_agency' => [
+                self::MODULE_B2B_SALES,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'service_contractor' => [
+                self::MODULE_B2B_SALES,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_LABOR_MACHINES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'service_event' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_ORDER_REQUEST,
+                self::MODULE_SCHEDULED_ORDER,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_RESERVATION,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 6. JASA OPERASIONAL ON-THE-SPOT ─────────────────────────────
+            'service_workshop' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_RESERVATION,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'service_barbershop' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_RESERVATION,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'service_laundry' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'service_autodetailing' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_SERVICE_WORKSHOP,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_RESERVATION,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+
+            // ─── 7. DISTRIBUSI & PERTANIAN ───────────────────────────────────
+            'distributor_fmcg' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+            'agri_farming' => [
+                self::MODULE_POS_RETAIL,
+                self::MODULE_B2B_SALES,
+                self::MODULE_RECIPE_BOM,
+                self::MODULE_INVENTORY_WAREHOUSE,
+                self::MODULE_PROCUREMENT,
+                self::MODULE_CRM_LOYALTY,
+                self::MODULE_CHANNELS_MARKETING,
+                self::MODULE_STOREFRONT_CHECKOUT,
+                self::MODULE_CUSTOMER_PO,
+                self::MODULE_MERCHANT_SHIPPING,
+                self::MODULE_ACCOUNTING_CORPORATE,
+            ],
+        ];
+    }
+
+    /**
+     * Get list of relevant module keys for a given template code.
+     * When template code is null, empty or 'general'/'bebas', ALL modules are returned.
+     *
+     * @return array<int, string>
+     */
+    public static function getRelevantModulesForTemplate(?string $templateCode): array
+    {
+        if (empty($templateCode) || in_array(strtolower($templateCode), ['general', 'bebas', 'universal', 'all'], true)) {
+            return array_keys(self::definitions());
+        }
+
+        $map = self::templateRelevantModulesMap();
+        if (isset($map[$templateCode])) {
+            return $map[$templateCode];
+        }
+
+        // Prefix-based fallback if templateCode is non-standard but starts with known cluster
+        $lower = strtolower($templateCode);
+        if (str_starts_with($lower, 'fnb_') || str_contains($lower, 'cafe') || str_contains($lower, 'resto')) {
+            return $map['fnb_resto'];
+        }
+        if (str_starts_with($lower, 'mfg_') || str_contains($lower, 'konveksi')) {
+            return $map['mfg_garment'];
+        }
+        if (str_starts_with($lower, 'service_') || str_contains($lower, 'bengkel') || str_contains($lower, 'salon')) {
+            return $map['service_workshop'];
+        }
+        if (str_starts_with($lower, 'retail_') || str_contains($lower, 'toko')) {
+            return $map['retail_reseller'];
+        }
+
+        return array_keys(self::definitions());
     }
 
     /**

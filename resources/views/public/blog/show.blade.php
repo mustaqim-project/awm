@@ -540,8 +540,12 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
                     {{-- Article content --}}
                     <div class="px-5 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10">
+                        @php
+                            $sanitizedContent = preg_replace('/^\s*<h1\b[^>]*>.*?<\/h1>\s*/si', '', (string) $post->content);
+                            $sanitizedContent = preg_replace('/<h1\b([^>]*)>(.*?)<\/h1>/si', '<h2$1>$2</h2>', $sanitizedContent);
+                        @endphp
                         <div class="article-prose" :class="fontSize === 'large' && 'text-large'">
-                            {!! $post->content !!}
+                            {!! $sanitizedContent !!}
                         </div>
                     </div>
 

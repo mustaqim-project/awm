@@ -24,11 +24,21 @@ final class MerchantReservationController extends Controller
     /**
      * Display merchant reservations dashboard & calendar list.
      */
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $business = Context::business();
         abort_unless($business, 404);
         abort_unless(Context::hasPermission('storefront.reservations.manage'), 403);
+
+        if (! $business->hasIndustry()) {
+            return redirect()->route('settings.index', ['tab' => 'modules'])
+                ->with('error', 'Fitur reservasi dinonaktifkan karena bisnis belum memiliki klasifikasi industri.');
+        }
+
+        if (! $business->supportsReservation() || ! $business->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RESERVATION)) {
+            return redirect()->route('settings.index', ['tab' => 'modules'])
+                ->with('error', 'Fitur reservasi atau booking tidak tersedia untuk sektor industri bisnis Anda.');
+        }
 
         $statusTab = $request->query('tab', 'all');
         $selectedDate = $request->query('date', Carbon::today()->toDateString());
@@ -78,6 +88,17 @@ final class MerchantReservationController extends Controller
             ->orderBy('table_number')
             ->get();
 
+        $isFnB = $business->hasDineInFeature() || ($business->isFoodIndustry() && in_array($business->template_code, ['fnb_resto', 'fnb_cafe'], true));
+        $isWorkshop = $business->isWorkshop();
+        $isBarbershop = $business->isBarbershop();
+        $isEvent = $business->isEventService();
+        $isTailor = $business->isTailor();
+
+        $activeServicesCount = \App\Models\Product::where('business_id', $business->id)
+            ->where('is_active', true)
+            ->where('type', 'service')
+            ->count();
+
         return view('app.storefront.reservations.index', compact(
             'business',
             'reservations',
@@ -85,7 +106,13 @@ final class MerchantReservationController extends Controller
             'pendingCount',
             'todayCount',
             'tables',
-            'selectedDate'
+            'selectedDate',
+            'isFnB',
+            'isWorkshop',
+            'isBarbershop',
+            'isEvent',
+            'isTailor',
+            'activeServicesCount'
         ));
     }
 

@@ -101,6 +101,16 @@ final class SettingWebController extends Controller implements HasMiddleware
         $featureCategories = \App\Domain\Template\FeatureRegistry::getCategories();
         $currentScalingTier = $business->getScalingTier();
 
+        $templateCode = $business->template_code;
+        $industryCategory = $business->industry_category;
+        $isFreeIndustry = empty($templateCode) || in_array(strtolower($templateCode), ['general', 'bebas', 'universal', 'all'], true);
+
+        $currentTemplate = $templateCode ? BusinessTypeTemplate::where('code', $templateCode)->first() : null;
+        $industryName = $currentTemplate?->name ?? ($isFreeIndustry ? __('settings.industry_free_mode') : ucfirst((string) $industryCategory));
+
+        $relevantModuleKeys = \App\Domain\Template\ModuleRegistry::getRelevantModulesForTemplate($templateCode);
+        $relevantFeatureKeys = \App\Domain\Template\FeatureRegistry::getRelevantFeaturesForTemplate($templateCode);
+
         return view('app.settings.index', compact(
             'business',
             'templates',
@@ -118,7 +128,12 @@ final class SettingWebController extends Controller implements HasMiddleware
             'waSession',
             'socialAccounts',
             'accounts',
-            'approvedTemplates'
+            'approvedTemplates',
+            'currentTemplate',
+            'industryName',
+            'isFreeIndustry',
+            'relevantModuleKeys',
+            'relevantFeatureKeys'
         ));
     }
 

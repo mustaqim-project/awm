@@ -380,6 +380,11 @@ final class ImportUmkmArticlesCommand extends Command
             $body = preg_replace('/```json\s*\{.*?@context.*?```\s*$/usi', '', $body);
             $body = trim($body);
 
+            // Strip leading H1 heading from markdown body so body does not repeat title H1
+            $body = preg_replace('/^\s*#\s+[^\r\n]+\r?\n+/u', '', $body);
+            // Convert any internal # Heading to ## Heading (H2) to guarantee single H1 per page
+            $body = preg_replace('/^#\s+(.+)$/m', '## $1', $body);
+
             // Convert Markdown body to rich, semantic HTML
             $data['content'] = Str::markdown($body);
 
@@ -427,7 +432,10 @@ final class ImportUmkmArticlesCommand extends Command
         }
 
         if (preg_match('/## Konten Lengkap.*?\r?\n+(.*?)(?=\r?\n## Pengaturan SEO|$)/us', $content, $m)) {
-            $data['content'] = trim($m[1]);
+            $legacyBody = trim($m[1]);
+            $legacyBody = preg_replace('/^\s*#\s+[^\r\n]+\r?\n+/u', '', $legacyBody);
+            $legacyBody = preg_replace('/^#\s+(.+)$/m', '## $1', $legacyBody);
+            $data['content'] = $legacyBody;
         }
 
         if (preg_match('/\*\*Meta Title.*?\*\*\s*\r?\n+([^\r\n]+)/u', $content, $m)) {

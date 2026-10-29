@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::table('businesses', function (Blueprint $table): void {
             if (! Schema::hasColumn('businesses', 'industry_category')) {
-                $table->string('industry_category')->nullable()->after('currency');
+                $table->string('industry_category')->nullable();
             }
             if (! Schema::hasColumn('businesses', 'template_code')) {
-                $table->string('template_code')->nullable()->after('industry_category');
+                $table->string('template_code')->nullable();
             }
             if (! Schema::hasColumn('businesses', 'disabled_modules')) {
-                $table->json('disabled_modules')->nullable()->after('template_code');
+                $table->json('disabled_modules')->nullable();
             }
         });
     }

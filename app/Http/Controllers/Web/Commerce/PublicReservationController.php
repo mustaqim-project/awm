@@ -24,6 +24,13 @@ final class PublicReservationController extends Controller
     {
         $business = Business::where('slug', $slug)->where('is_active', true)->firstOrFail();
 
+        if (! $business->hasIndustry() || ! $business->supportsReservation() || ! $business->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RESERVATION)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fitur reservasi atau booking tidak tersedia untuk sektor industri bisnis ini.',
+            ], 403);
+        }
+
         $validated = $request->validate([
             'customer_name' => ['required', 'string', 'min:2', 'max:150'],
             'customer_phone' => ['required', 'string', 'min:8', 'max:30'],
@@ -83,6 +90,13 @@ final class PublicReservationController extends Controller
     public function checkAvailability(Request $request, string $slug): JsonResponse
     {
         $business = Business::where('slug', $slug)->where('is_active', true)->firstOrFail();
+
+        if (! $business->hasIndustry() || ! $business->supportsReservation() || ! $business->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RESERVATION)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fitur reservasi atau booking tidak tersedia untuk sektor industri bisnis ini.',
+            ], 403);
+        }
 
         $date = (string) $request->query('date', now()->toDateString());
         $timeSlot = (string) $request->query('time_slot', '');

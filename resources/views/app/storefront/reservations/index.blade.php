@@ -31,32 +31,106 @@
             </div>
         @endif
 
-        <!-- POS & Table Floor Plan Quick Action Strip -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#007AFF]/[0.06] border border-[#007AFF]/15">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <i data-lucide="monitor" class="w-4.5 h-4.5"></i>
+        <!-- POS & Operations Quick Action Strip (Industry-Adaptive) -->
+        @if ($isFnB)
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#007AFF]/[0.06] border border-[#007AFF]/15">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="monitor" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_title') }}</h3>
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_desc') }}</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_title') }}</h3>
-                    <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_desc') }}</p>
+                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                    <a href="{{ route('pos.tables.index') }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
+                        <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_tables') }}</span>
+                    </a>
+                    <a href="{{ route('pos.terminal') }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
+                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
+                    </a>
                 </div>
             </div>
-            <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
-                <a href="{{ route('pos.tables.index') }}"
-                    class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
-                    <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                    <span>{{ __('storefront.backoffice.reservations.btn_pos_tables') }}</span>
-                </a>
-                <a href="{{ route('pos.terminal') }}"
-                    class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
-                    <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                    <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
-                </a>
+        @elseif ($isWorkshop)
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#FF9500]/[0.08] border border-[#FF9500]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-[10px] bg-[#FF9500] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="wrench" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_workshop_title') }}</h3>
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_workshop_desc') }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                    <a href="{{ route('products.index', ['type' => 'service']) }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
+                        <i data-lucide="wrench" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_services') }}</span>
+                    </a>
+                    <a href="{{ route('pos.terminal') }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
+                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_workshop_terminal') }}</span>
+                    </a>
+                </div>
             </div>
-        </div>
+        @elseif ($isBarbershop)
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#AF52DE]/[0.08] border border-[#AF52DE]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-[10px] bg-[#AF52DE] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="scissors" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_barber_title') }}</h3>
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_barber_desc') }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                    <a href="{{ route('products.index', ['type' => 'service']) }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
+                        <i data-lucide="scissors" class="w-3.5 h-3.5 text-[#AF52DE]"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_treatment') }}</span>
+                    </a>
+                    <a href="{{ route('pos.terminal') }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-[#AF52DE] hover:bg-[#9945C5] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
+                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
+                    </a>
+                </div>
+            </div>
+        @else
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#007AFF]/[0.06] border border-[#007AFF]/15">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <i data-lucide="calendar" class="w-4.5 h-4.5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_general_title') }}</h3>
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_general_desc') }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                    <a href="{{ route('products.index', ['type' => 'service']) }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_services') }}</span>
+                    </a>
+                    <a href="{{ route('pos.terminal') }}"
+                        class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
+                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
+                    </a>
+                </div>
+            </div>
+        @endif
 
-        <!-- Apple Bento Summary Cards -->
+        <!-- Apple Bento Summary Cards (Industry-Adaptive) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div
                 class="bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-2">
@@ -84,14 +158,29 @@
 
             <div
                 class="bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-2">
-                <div class="flex items-center justify-between text-[#5856D6]">
-                    <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables') }}</span>
-                    <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                </div>
-                <div class="text-3xl font-extrabold text-[#5856D6] tabular-nums tracking-tight">
-                    {{ $tables->count() }}
-                </div>
-                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables_desc') }}</p>
+                @if ($isFnB)
+                    <div class="flex items-center justify-between text-[#5856D6]">
+                        <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables') }}</span>
+                        <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                    </div>
+                    <div class="text-3xl font-extrabold text-[#5856D6] tabular-nums tracking-tight">
+                        {{ $tables->count() }}
+                    </div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables_desc') }}</p>
+                @else
+                    <div class="flex items-center justify-between text-[#5856D6]">
+                        <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
+                            {{ $isWorkshop ? __('storefront.backoffice.reservations.kpi_services_workshop') : ($isBarbershop ? __('storefront.backoffice.reservations.kpi_services_barber') : __('storefront.backoffice.reservations.kpi_services_general')) }}
+                        </span>
+                        <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : 'sparkles') }}" class="w-4 h-4"></i>
+                    </div>
+                    <div class="text-3xl font-extrabold text-[#5856D6] tabular-nums tracking-tight">
+                        {{ $activeServicesCount }}
+                    </div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">
+                        {{ $isWorkshop ? __('storefront.backoffice.reservations.kpi_services_workshop_desc') : ($isBarbershop ? __('storefront.backoffice.reservations.kpi_services_barber_desc') : __('storefront.backoffice.reservations.kpi_services_general_desc')) }}
+                    </p>
+                @endif
             </div>
         </div>
 
@@ -157,8 +246,8 @@
                             <tr>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_code_time') }}</th>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_customer') }}</th>
-                                <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_guests') }}</th>
-                                <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_table_service') }}</th>
+                                <th class="py-3.5 px-4">{{ $isWorkshop ? __('storefront.backoffice.reservations.col_units_workshop') : ($isTailor ? __('storefront.backoffice.reservations.col_units_service') : __('storefront.backoffice.reservations.col_guests')) }}</th>
+                                <th class="py-3.5 px-4">{{ $isFnB ? __('storefront.backoffice.reservations.col_table_service') : ($isWorkshop ? __('storefront.backoffice.reservations.col_service_workshop') : ($isBarbershop ? __('storefront.backoffice.reservations.col_service_barber') : __('storefront.backoffice.reservations.col_service_general'))) }}</th>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_status') }}</th>
                                 <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('storefront.backoffice.reservations.col_action') }}</th>
                             </tr>
@@ -201,13 +290,21 @@
 
                                     <td class="py-4 px-4 align-top font-semibold text-black dark:text-white">
                                         <span class="inline-flex items-center gap-1">
-                                            <i data-lucide="users" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
-                                            <span class="tabular-nums">{{ __('storefront.backoffice.reservations.guest_count_format', ['count' => $rsv->guest_count]) }}</span>
+                                            <i data-lucide="{{ $isWorkshop ? 'car' : 'users' }}" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
+                                            <span class="tabular-nums">
+                                                @if ($isWorkshop)
+                                                    {{ __('storefront.backoffice.reservations.guest_count_vehicle', ['count' => $rsv->guest_count]) }}
+                                                @elseif ($isTailor || $isEvent)
+                                                    {{ __('storefront.backoffice.reservations.guest_count_session', ['count' => $rsv->guest_count]) }}
+                                                @else
+                                                    {{ __('storefront.backoffice.reservations.guest_count_format', ['count' => $rsv->guest_count]) }}
+                                                @endif
+                                            </span>
                                         </span>
                                     </td>
 
                                     <td class="py-4 px-4 align-top">
-                                        @if ($rsv->posTable)
+                                        @if ($rsv->posTable && $isFnB)
                                             <span
                                                 class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#5856D6]/10 text-[#5856D6]">
                                                 <i data-lucide="layout-grid" class="w-3 h-3"></i>
@@ -217,15 +314,21 @@
                                         @elseif($rsv->product)
                                             <span
                                                 class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
-                                                <i data-lucide="sparkles" class="w-3 h-3"></i>
+                                                <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : 'sparkles') }}" class="w-3 h-3"></i>
                                                 <span>{{ $rsv->product->name }}</span>
                                             </span>
                                         @else
-                                            <button type="button" @click="openAssign({{ Js::from($rsv) }})"
-                                                class="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#007AFF] hover:underline">
-                                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.backoffice.reservations.btn_select_table') }}</span>
-                                            </button>
+                                            @if ($isFnB)
+                                                <button type="button" @click="openAssign({{ Js::from($rsv) }})"
+                                                    class="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                                                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                                    <span>{{ __('storefront.backoffice.reservations.btn_select_table') }}</span>
+                                                </button>
+                                            @else
+                                                <span class="text-black/50 dark:text-white/50 text-[11.5px] italic">
+                                                    {{ __('storefront.backoffice.reservations.booking_general_label') }}
+                                                </span>
+                                            @endif
                                         @endif
                                     </td>
 
@@ -291,8 +394,15 @@
                                                 </form>
                                             @endif
 
-                                            @if ($rsv->pos_table_id)
+                                            @if ($rsv->pos_table_id && $isFnB)
                                                 <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
+                                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                    title="{{ __('storefront.backoffice.reservations.btn_open_pos') }}"
+                                                    aria-label="{{ __('storefront.backoffice.reservations.btn_open_pos') }}">
+                                                    <i data-lucide="calculator" class="w-4 h-4"></i>
+                                                </a>
+                                            @elseif (!$isFnB)
+                                                <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
                                                     class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] transition flex items-center justify-center shrink-0 cursor-pointer"
                                                     title="{{ __('storefront.backoffice.reservations.btn_open_pos') }}"
                                                     aria-label="{{ __('storefront.backoffice.reservations.btn_open_pos') }}">
@@ -310,19 +420,27 @@
                                                 </button>
                                                 <div x-show="openMenu" @click.away="openMenu = false" x-transition
                                                     class="absolute right-0 mt-1 w-36 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-[11.5px] space-y-0.5">
-                                                    @if ($rsv->pos_table_id)
+                                                    @if ($rsv->pos_table_id && $isFnB)
                                                         <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
                                                             class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
                                                             <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
                                                             <span>{{ __('storefront.backoffice.reservations.btn_open_pos') }}</span>
                                                         </a>
+                                                    @elseif (!$isFnB)
+                                                        <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
+                                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
+                                                            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                                                            <span>{{ __('storefront.backoffice.reservations.btn_open_pos') }}</span>
+                                                        </a>
                                                     @endif
-                                                    <button type="button"
-                                                        @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
-                                                        class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white">
-                                                        <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                                                        <span>{{ __('storefront.backoffice.reservations.btn_change_table') }}</span>
-                                                    </button>
+                                                    @if ($isFnB)
+                                                        <button type="button"
+                                                            @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
+                                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white cursor-pointer">
+                                                            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                                                            <span>{{ __('storefront.backoffice.reservations.btn_change_table') }}</span>
+                                                        </button>
+                                                    @endif
                                                     @if (!in_array($rsv->status, ['cancelled', 'completed', 'no_show'], true))
                                                         <button type="button"
                                                             @click="openMenu = false; reservationToCancel = {{ json_encode(['id' => $rsv->id, 'code' => $rsv->reservation_code, 'customer_name' => $rsv->customer_name]) }}; cancelModalOpen = true;"
@@ -389,8 +507,16 @@
                                     <span class="font-bold text-black dark:text-white">{{ $rsv->customer_name }}</span>
                                     <span
                                         class="font-semibold text-black/70 dark:text-white/70 inline-flex items-center gap-1">
-                                        <i data-lucide="users" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
-                                        <span class="tabular-nums">{{ __('storefront.reservations.guest_count_mobile', ['count' => $rsv->guest_count]) }}</span>
+                                        <i data-lucide="{{ $isWorkshop ? 'car' : 'users' }}" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
+                                        <span class="tabular-nums">
+                                            @if ($isWorkshop)
+                                                {{ __('storefront.backoffice.reservations.guest_count_vehicle', ['count' => $rsv->guest_count]) }}
+                                            @elseif ($isTailor || $isEvent)
+                                                {{ __('storefront.backoffice.reservations.guest_count_session', ['count' => $rsv->guest_count]) }}
+                                            @else
+                                                {{ __('storefront.reservations.guest_count_mobile', ['count' => $rsv->guest_count]) }}
+                                            @endif
+                                        </span>
                                     </span>
                                 </div>
 
@@ -409,7 +535,7 @@
                                     </a>
 
                                     <div>
-                                        @if ($rsv->posTable)
+                                        @if ($rsv->posTable && $isFnB)
                                             <span
                                                 class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#5856D6]/10 text-[#5856D6]">
                                                 <i data-lucide="layout-grid" class="w-3 h-3"></i>
@@ -418,15 +544,21 @@
                                         @elseif($rsv->product)
                                             <span
                                                 class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
-                                                <i data-lucide="sparkles" class="w-3 h-3"></i>
+                                                <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : 'sparkles') }}" class="w-3 h-3"></i>
                                                 <span>{{ $rsv->product->name }}</span>
                                             </span>
                                         @else
-                                            <button type="button" @click="openAssign({{ Js::from($rsv) }})"
-                                                class="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#007AFF] hover:underline">
-                                                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.reservations.btn_select_table') }}</span>
-                                            </button>
+                                            @if ($isFnB)
+                                                <button type="button" @click="openAssign({{ Js::from($rsv) }})"
+                                                    class="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                                                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                                                    <span>{{ __('storefront.reservations.btn_select_table') }}</span>
+                                                </button>
+                                            @else
+                                                <span class="text-black/50 dark:text-white/50 text-[11px] italic">
+                                                    {{ __('storefront.backoffice.reservations.booking_general_label') }}
+                                                </span>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -482,19 +614,27 @@
                                     </button>
                                     <div x-show="openMenu" @click.away="openMenu = false" x-transition
                                         class="absolute right-0 bottom-full mb-1 w-40 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-xs space-y-0.5">
-                                        @if ($rsv->pos_table_id)
+                                        @if ($rsv->pos_table_id && $isFnB)
                                             <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
                                                 class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
                                                 <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
                                                 <span>{{ __('storefront.reservations.btn_open_pos') }}</span>
                                             </a>
+                                        @elseif (!$isFnB)
+                                            <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
+                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
+                                                <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('storefront.reservations.btn_open_pos') }}</span>
+                                            </a>
                                         @endif
-                                        <button type="button"
-                                            @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
-                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white">
-                                            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                                            <span>{{ __('storefront.reservations.btn_change_table') }}</span>
-                                        </button>
+                                        @if ($isFnB)
+                                            <button type="button"
+                                                @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
+                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white cursor-pointer">
+                                                <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('storefront.reservations.btn_change_table') }}</span>
+                                            </button>
+                                        @endif
                                         @if (!in_array($rsv->status, ['cancelled', 'completed', 'no_show'], true))
                                             <button type="button"
                                                 @click="openMenu = false; reservationToCancel = {{ json_encode(['id' => $rsv->id, 'code' => $rsv->reservation_code, 'customer_name' => $rsv->customer_name]) }}; cancelModalOpen = true;"
@@ -516,69 +656,71 @@
             @endif
         </div>
 
-        <!-- Modal Assign Table (Apple HIG Multi-Device Dialog) -->
-        <template x-teleport="body">
-            <div x-show="showAssignModal" x-cloak
-                class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
-                role="dialog"
-                aria-modal="true">
+        <!-- Modal Assign Table (F&B Only - Apple HIG Multi-Device Dialog) -->
+        @if ($isFnB)
+            <template x-teleport="body">
+                <div x-show="showAssignModal" x-cloak
+                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
+                    role="dialog"
+                    aria-modal="true">
 
-                {{-- Backdrop Blur Overlay --}}
-                <div x-show="showAssignModal"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                    @click="showAssignModal = false"
-                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+                    {{-- Backdrop Blur Overlay --}}
+                    <div x-show="showAssignModal"
+                        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                        @click="showAssignModal = false"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div @click.away="showAssignModal = false"
-                    class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto">
-                    {{-- Mobile Grab Bar --}}
-                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
+                    <div @click.away="showAssignModal = false"
+                        class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto">
+                        {{-- Mobile Grab Bar --}}
+                        <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
 
-                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.reservations.modal_assign_title') }}</h3>
-                        <button type="button" @click="showAssignModal = false"
-                            class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
+                        <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                            <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.reservations.modal_assign_title') }}</h3>
+                            <button type="button" @click="showAssignModal = false"
+                                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+
+                        <template x-if="selectedReservation">
+                            <form :action="'/storefront/reservations/' + selectedReservation.id + '/assign-table'" method="POST"
+                                class="space-y-4">
+                                @csrf
+                                <div>
+                                    <span class="text-[12px] text-black/50 dark:text-white/50 block">{{ __('storefront.reservations.modal_assign_rsv_label') }}</span>
+                                    <p class="font-bold text-sm text-black dark:text-white"
+                                        x-text="selectedReservation.customer_name + ' (' + selectedReservation.guest_count + ' ' + ({{ Js::from(trim(str_replace(':count', '', __('storefront.reservations.guest_count_mobile', ['count' => ''])))) }}) + ')'">
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('storefront.reservations.modal_assign_select_table') }}</label>
+                                    <select name="pos_table_id" required
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <option value="">{{ __('storefront.reservations.modal_assign_choose_placeholder') }}</option>
+                                        @foreach ($tables as $tbl)
+                                            <option value="{{ $tbl->id }}">
+                                                {{ __('storefront.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="flex items-center justify-end gap-2 pt-2">
+                                    <button type="button" @click="showAssignModal = false"
+                                        class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_cancel') }}</button>
+                                    <button type="submit"
+                                        class="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_save') }}</button>
+                                </div>
+                            </form>
+                        </template>
                     </div>
-
-                    <template x-if="selectedReservation">
-                        <form :action="'/storefront/reservations/' + selectedReservation.id + '/assign-table'" method="POST"
-                            class="space-y-4">
-                            @csrf
-                            <div>
-                                <span class="text-[12px] text-black/50 dark:text-white/50 block">{{ __('storefront.reservations.modal_assign_rsv_label') }}</span>
-                                <p class="font-bold text-sm text-black dark:text-white"
-                                    x-text="selectedReservation.customer_name + ' (' + selectedReservation.guest_count + ' ' + ({{ Js::from(trim(str_replace(':count', '', __('storefront.reservations.guest_count_mobile', ['count' => ''])))) }}) + ')'">
-                                </p>
-                            </div>
-
-                            <div>
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('storefront.reservations.modal_assign_select_table') }}</label>
-                                <select name="pos_table_id" required
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                    <option value="">{{ __('storefront.reservations.modal_assign_choose_placeholder') }}</option>
-                                    @foreach ($tables as $tbl)
-                                        <option value="{{ $tbl->id }}">
-                                            {{ __('storefront.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="flex items-center justify-end gap-2 pt-2">
-                                <button type="button" @click="showAssignModal = false"
-                                    class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_cancel') }}</button>
-                                <button type="submit"
-                                    class="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_save') }}</button>
-                            </div>
-                        </form>
-                    </template>
                 </div>
-            </div>
-        </template>
+            </template>
+        @endif
 
         {{-- APPLE ALERT CONFIRMATION DIALOG (CANCEL RESERVATION) --}}
         <template x-teleport="body">

@@ -49,6 +49,7 @@ class CommerceReservationTest extends TestCase
         $this->business = Business::create([
             'name' => 'Aroma Bistro & Cafe',
             'slug' => 'aroma-bistro',
+            'template_code' => 'fnb_resto',
             'currency_code' => 'IDR',
             'currency_symbol' => 'Rp',
             'is_active' => true,

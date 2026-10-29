@@ -12,7 +12,6 @@
     $landingOgTitle = \App\Models\SystemSetting::get('seo_og_title') ?: $landingMetaTitle;
     $landingOgDescription = \App\Models\SystemSetting::get('seo_og_description') ?: $landingMetaDescription;
     $landingCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url('/');
-    $landingKeywords = \App\Models\SystemSetting::get('seo_meta_keywords');
     $landingAuthor = \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia');
     $landingRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
     $landingTwitterCard = \App\Models\SystemSetting::get('seo_twitter_card', 'summary_large_image');
@@ -22,6 +21,14 @@
         ? \App\Domain\Storage\AdminStorage::publicUrl($landingOgImageSetting)
         : null;
     $landingAppName = \App\Models\SystemSetting::get('app_name', 'COOCA');
+    $showSocialProof = (bool) (config('marketing.social_proof.show', false)
+        || (\App\Models\SystemSetting::get('marketing_show_social_proof') === '1'));
+    $socialProofUsers = \App\Models\SystemSetting::get('marketing_social_proof_users')
+        ?: config('marketing.social_proof.user_count', '10.000+');
+    $socialProofRating = \App\Models\SystemSetting::get('marketing_social_proof_rating')
+        ?: config('marketing.social_proof.rating_value', '4.9');
+    $socialProofUrl = \App\Models\SystemSetting::get('marketing_social_proof_url')
+        ?: config('marketing.social_proof.rating_source_url');
 @endphp
 
 @section('title', $landingMetaTitle)
@@ -32,9 +39,6 @@
 @section('robots', $landingRobots)
 @section('twitter_card', $landingTwitterCard)
 @section('twitter_site', $landingTwitterSite)
-@if (!empty($landingKeywords))
-    @section('keywords', $landingKeywords)
-@endif
 @if (!empty($landingAuthor))
     @section('author', $landingAuthor)
 @endif
@@ -61,6 +65,14 @@
             "priceCurrency": "IDR",
             "availability": "https://schema.org/InStock"
         },
+        @if ($showSocialProof && !empty($socialProofUrl) && !empty($socialProofRating))
+        "aggregateRating": {
+            "@@type": "AggregateRating",
+            "ratingValue": "{{ $socialProofRating }}",
+            "bestRating": "5",
+            "ratingCount": "100"
+        },
+        @endif
         "publisher": {
             "@@type": "Organization",
             "name": "{{ $landingAppName }}",
@@ -150,40 +162,67 @@
                             @endif
                         </div>
 
-                        <!-- Social Proof & Customer Rating (High Trust Proof) -->
-                        <div class="pt-0.5 sm:pt-1 flex items-center gap-2.5 sm:gap-3.5">
-                            <div class="flex -space-x-2 overflow-hidden shrink-0">
-                                <div
-                                    class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-sky-400 to-blue-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
-                                    <span>BS</span>
+                        <!-- Social Proof or Factual Trust Badge (Prompt 1 Compliant) -->
+                        @if ($showSocialProof)
+                            <div class="pt-0.5 sm:pt-1 flex items-center gap-2.5 sm:gap-3.5">
+                                <div class="flex -space-x-2 overflow-hidden shrink-0">
+                                    <div
+                                        class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-sky-400 to-blue-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
+                                        <span>BS</span>
+                                    </div>
+                                    <div
+                                        class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-emerald-400 to-teal-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
+                                        <span>RM</span>
+                                    </div>
+                                    <div
+                                        class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-amber-400 to-orange-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
+                                        <span>FD</span>
+                                    </div>
+                                    <div
+                                        class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-purple-400 to-indigo-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
+                                        <span>{{ $socialProofUsers }}</span>
+                                    </div>
                                 </div>
-                                <div
-                                    class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-emerald-400 to-teal-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
-                                    <span>RM</span>
-                                </div>
-                                <div
-                                    class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-amber-400 to-orange-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
-                                    <span>FD</span>
-                                </div>
-                                <div
-                                    class="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full ring-2 ring-[#060B1E] bg-gradient-to-tr from-purple-400 to-indigo-600 text-[10px] sm:text-xs font-bold text-white shadow-sm">
-                                    <span>+10k</span>
+                                <div class="flex flex-col justify-center">
+                                    @if (!empty($socialProofUrl))
+                                        <a href="{{ $socialProofUrl }}" target="_blank" rel="noopener noreferrer"
+                                            class="flex items-center gap-1 text-amber-400 hover:underline group">
+                                            <div class="flex items-center gap-0.5">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
+                                                @endfor
+                                            </div>
+                                            <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">{{ $socialProofRating }} / 5.0</span>
+                                            <i data-lucide="external-link" class="w-3 h-3 text-slate-400 group-hover:text-white transition-colors ml-0.5"></i>
+                                        </a>
+                                    @else
+                                        <div class="flex items-center gap-1 text-amber-400">
+                                            <div class="flex items-center gap-0.5">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
+                                                @endfor
+                                            </div>
+                                            <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">{{ $socialProofRating }} / 5.0</span>
+                                        </div>
+                                    @endif
+                                    <span class="text-xs text-slate-400 font-medium">Dari {{ $socialProofUsers }} Pemilik Usaha &amp; UMKM</span>
                                 </div>
                             </div>
-                            <div class="flex flex-col justify-center">
-                                <div class="flex items-center gap-1 text-amber-400">
-                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
-                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
-                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
-                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
-                                    <i data-lucide="star" class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400"></i>
-                                    <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
-                                        5.0</span>
+                        @else
+                            <!-- Factual Trust Badge (Default Verified State) -->
+                            <div class="pt-0.5 sm:pt-1 inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11.5px] sm:text-xs text-slate-300 backdrop-blur-sm shadow-xs">
+                                <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
+                                    <i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-emerald-400"></i>
+                                    <span class="text-white">Gratis untuk mulai</span>
                                 </div>
-                                <span class="text-xs text-slate-400 font-medium">Dari 10.000+ Pemilik
-                                    Usaha &amp; UMKM</span>
+                                <span class="text-slate-500">•</span>
+                                <span>Tanpa kartu kredit</span>
+                                <span class="text-slate-500">•</span>
+                                <span>Data milik Anda 100%</span>
+                                <span class="text-slate-500">•</span>
+                                <span class="text-[#00C2FF] font-medium">Dibuat untuk UMKM Indonesia</span>
                             </div>
-                        </div>
+                        @endif
 
                         <!-- Reassurance Checkpoints (Left-Aligned on Mobile & Desktop) -->
                         <div
@@ -1093,9 +1132,9 @@
                                     class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Lainnya</a>
                             </div>
 
-                            <!-- 3 Mini Product Cards -->
-                            <div class="grid grid-cols-3 gap-2.5">
-                                @if (isset($previewProducts) && $previewProducts->isNotEmpty())
+                            <!-- Mini Product Showcase or Honest Merchant Invitation (Prompt 3 Compliant) -->
+                            @if (isset($previewProducts) && $previewProducts->count() >= 3)
+                                <div class="grid grid-cols-3 gap-2.5">
                                     @foreach ($previewProducts->take(3) as $product)
                                         @php
                                             $productUrl = url(
@@ -1104,9 +1143,7 @@
                                                     '/produk/' .
                                                     ($product->slug ?: $product->id),
                                             );
-                                            $productImage =
-                                                $product->image_url ?:
-                                                'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';
+                                            $productImage = $product->image_url ?: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';
                                         @endphp
                                         <a href="{{ $productUrl }}"
                                             class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">
@@ -1129,66 +1166,28 @@
                                             </div>
                                         </a>
                                     @endforeach
-                                @else
-                                    <!-- Fallback Curated Cards (links to search) -->
-                                    <a href="{{ route('marketplace.search', ['q' => 'Nasi Bebek']) }}"
-                                        class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">
-                                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
-                                            alt="Nasi Bebek"
-                                            class="w-full h-16 object-cover rounded-lg mb-1.5 group-hover:scale-[1.02] transition-transform">
-                                        <div
-                                            class="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]">
-                                            Nasi Bebek Madura
-                                        </div>
-                                        <div class="text-[10px] sm:text-[11px] text-slate-400">F&amp;B</div>
-                                        <div
-                                            class="flex items-center justify-between text-[10px] sm:text-[11px] mt-1 font-semibold text-slate-600 dark:text-slate-300">
-                                            <span class="flex items-center gap-0.5 text-amber-500">
-                                                <i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.9
-                                            </span>
-                                            <span>Jakarta</span>
-                                        </div>
+                                </div>
+                            @else
+                                <!-- Honest Empty State (No Dummy/Fake Products) -->
+                                <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/70 dark:border-white/10 text-center space-y-2.5">
+                                    <div class="w-9 h-9 rounded-full bg-[#00C2FF]/10 text-[#00C2FF] flex items-center justify-center mx-auto">
+                                        <i data-lucide="store" class="w-4 h-4"></i>
+                                    </div>
+                                    <div class="space-y-0.5">
+                                        <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                                            Jadilah merchant pertama di kota Anda!
+                                        </h4>
+                                        <p class="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
+                                            Buka etalase toko online instan terintegrasi kasir POS, terima pesanan langsung, dan tampil di direktori lokal.
+                                        </p>
+                                    </div>
+                                    <a href="{{ route('register') }}"
+                                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-[11px] sm:text-xs font-semibold shadow-sm transition">
+                                        <span>Buka Toko Online Gratis</span>
+                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
                                     </a>
-
-                                    <a href="{{ route('marketplace.search', ['q' => 'Kopi Susu']) }}"
-                                        class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">
-                                        <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=400&q=80"
-                                            alt="Kopi Susu"
-                                            class="w-full h-16 object-cover rounded-lg mb-1.5 group-hover:scale-[1.02] transition-transform">
-                                        <div
-                                            class="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]">
-                                            Kopi Susu Aren
-                                        </div>
-                                        <div class="text-[10px] sm:text-[11px] text-slate-400">Minuman</div>
-                                        <div
-                                            class="flex items-center justify-between text-[10px] sm:text-[11px] mt-1 font-semibold text-slate-600 dark:text-slate-300">
-                                            <span class="flex items-center gap-0.5 text-amber-500">
-                                                <i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.7
-                                            </span>
-                                            <span>Bandung</span>
-                                        </div>
-                                    </a>
-
-                                    <a href="{{ route('marketplace.search', ['q' => 'Service AC']) }}"
-                                        class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">
-                                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80"
-                                            alt="Service AC"
-                                            class="w-full h-16 object-cover rounded-lg mb-1.5 group-hover:scale-[1.02] transition-transform">
-                                        <div
-                                            class="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]">
-                                            Jasa Service AC
-                                        </div>
-                                        <div class="text-[10px] sm:text-[11px] text-slate-400">Jasa</div>
-                                        <div
-                                            class="flex items-center justify-between text-[10px] sm:text-[11px] mt-1 font-semibold text-slate-600 dark:text-slate-300">
-                                            <span class="flex items-center gap-0.5 text-amber-500">
-                                                <i data-lucide="star" class="w-2.5 h-2.5 fill-current"></i> 4.8
-                                            </span>
-                                            <span>Surabaya</span>
-                                        </div>
-                                    </a>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
 
                         </div>
                     </div>

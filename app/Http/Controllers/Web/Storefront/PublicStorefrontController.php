@@ -311,6 +311,11 @@ final class PublicStorefrontController extends Controller
 
         $business = $context['business'];
 
+        if (! $business->hasIndustry() || ! $business->supportsReservation() || ! $business->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RESERVATION)) {
+            return redirect()->to('/' . $business->slug)
+                ->with('info', 'Layanan reservasi dan booking tidak tersedia untuk toko ini.');
+        }
+
         $posTables = PosTable::where('business_id', $business->id)
             ->where('is_active', true)
             ->orderBy('table_number')

@@ -43,11 +43,11 @@
     $resolvedTwitterCard = $twitterCard ?? (View::hasSection('twitter_card') ? View::yieldContent('twitter_card') : 'summary_large_image');
     $resolvedTwitterSite = $twitterSite ?? \App\Models\SystemSetting::get('seo_twitter_site', '@cooca_id');
 
-    // 9. Resolve Robots
-    $resolvedRobots = SeoMetadataService::resolveRobots($robots ?? null, $noindex ?? false);
+    // 9. Resolve Robots (Enforces noindex for test & review stores - Prompt 3 compliant)
+    $isTestStore = (isset($business) && (bool) ($business->is_test ?? false)) || !empty($noindex);
+    $resolvedRobots = $isTestStore ? 'noindex, nofollow' : SeoMetadataService::resolveRobots($robots ?? null, false);
 
-    // 10. Resolve Keywords & Author
-    $resolvedKeywords = $keywords ?? (View::hasSection('keywords') ? View::yieldContent('keywords') : \App\Models\SystemSetting::get('seo_meta_keywords'));
+    // 10. Resolve Author (Keywords removed per SEO best practices)
     $resolvedAuthor = $author ?? (View::hasSection('author') ? View::yieldContent('author') : \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia'));
 
     // 11. Article / Product specifics
@@ -61,9 +61,6 @@
 <!-- Primary HTML Meta Tags -->
 <title>{{ $resolvedTitle }}</title>
 <meta name="description" content="{{ $resolvedDesc }}">
-@if(!empty($resolvedKeywords))
-<meta name="keywords" content="{{ SeoMetadataService::cleanText((string) $resolvedKeywords, 250) }}">
-@endif
 <meta name="author" content="{{ $resolvedAuthor }}">
 <link rel="canonical" href="{{ $resolvedCanonical }}">
 <meta name="robots" content="{{ $resolvedRobots }}">

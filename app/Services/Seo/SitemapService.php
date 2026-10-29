@@ -211,7 +211,7 @@ final class SitemapService
             $seenBusinessSlugs = [];
 
             $businessLandings = BusinessLandingPage::where('is_published', true)
-                ->whereHas('business', fn($q) => $q->where('is_active', true))
+                ->whereHas('business', fn($q) => $q->publicListed())
                 ->with('business')
                 ->get();
 
@@ -233,7 +233,7 @@ final class SitemapService
 
             $discoverableStores = \App\Models\CommerceStoreSetting::where('is_storefront_enabled', true)
                 ->where('is_discoverable', true)
-                ->whereHas('business', fn($q) => $q->where('is_active', true))
+                ->whereHas('business', fn($q) => $q->publicListed())
                 ->with('business')
                 ->get();
 

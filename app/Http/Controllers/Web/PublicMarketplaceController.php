@@ -24,8 +24,8 @@ final class PublicMarketplaceController extends Controller
      */
     public function index(Request $request): View
     {
-        // Featured stores (discoverable, with products)
-        $featuredStores = Business::where('is_active', true)
+        // Featured stores (discoverable, with products, non-test)
+        $featuredStores = Business::publicListed()
             ->whereHas('storeSetting', function ($q): void {
                 $q->where('is_storefront_enabled', true)
                     ->where('is_discoverable', true);
@@ -41,7 +41,7 @@ final class PublicMarketplaceController extends Controller
         $popularProducts = Product::where('is_active', true)
             ->where('show_in_website', true)
             ->whereHas('business', function ($q): void {
-                $q->where('is_active', true)
+                $q->publicListed()
                     ->whereHas('storeSetting', function ($sq): void {
                         $sq->where('is_storefront_enabled', true)
                             ->where('is_discoverable', true);
@@ -55,15 +55,15 @@ final class PublicMarketplaceController extends Controller
         // Category aggregation
         $categories = $this->buildCategoryData();
 
-        // Statistics
-        $totalStores = Business::where('is_active', true)
+        // Statistics (Only counting public, verified, non-test stores and products)
+        $totalStores = Business::publicListed()
             ->whereHas('storeSetting', fn($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
             ->count();
 
         $totalProducts = Product::where('is_active', true)
             ->where('show_in_website', true)
             ->whereHas('business', function ($q): void {
-                $q->where('is_active', true)
+                $q->publicListed()
                     ->whereHas('storeSetting', fn($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
             })
             ->count();
@@ -93,7 +93,7 @@ final class PublicMarketplaceController extends Controller
         $query = Product::where('is_active', true)
             ->where('show_in_website', true)
             ->whereHas('business', function ($q): void {
-                $q->where('is_active', true)
+                $q->publicListed()
                     ->whereHas('storeSetting', function ($sq): void {
                         $sq->where('is_storefront_enabled', true)
                             ->where('is_discoverable', true);
