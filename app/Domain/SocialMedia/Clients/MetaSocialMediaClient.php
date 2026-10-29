@@ -768,6 +768,23 @@ class MetaSocialMediaClient
                 return (array) ($res->json('data') ?? []);
             }
 
+            // Self-healing: jika error 190 karena membutuhkan Page Access Token, otomatis ambil Page Access Token lalu coba ulang
+            $errCode = $res->json('error.code');
+            $errMsg = (string) $res->json('error.message');
+            if ($errCode === 190 && str_contains($errMsg, 'Page Access Token')) {
+                $resolvedToken = $this->getPageAccessToken($pageId, $pageToken);
+                if ($resolvedToken && $resolvedToken !== $pageToken) {
+                    $retry = Http::timeout(10)->get($this->endpoint("{$pageId}/conversations", $resolvedToken), [
+                        'fields'       => 'id,updated_time,senders,snippet,unread_count,messages{id,message,created_time,from,to}',
+                        'limit'        => $limit,
+                        'access_token' => $resolvedToken,
+                    ]);
+                    if ($retry->successful()) {
+                        return (array) ($retry->json('data') ?? []);
+                    }
+                }
+            }
+
             Log::warning("[MetaSocialMediaClient] getPageConversations failed for page {$pageId}: " . $res->body());
 
             return [];

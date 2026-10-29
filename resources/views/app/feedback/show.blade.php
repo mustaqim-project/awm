@@ -154,7 +154,7 @@
                             <p class="text-[11px] text-black/40 dark:text-white/40 font-mono">{{ basename($item->attachment_path) }}</p>
                         </div>
                     </div>
-                    <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($item->attachment_path) }}" target="_blank"
+                    <a href="{{ route('feedback.bugs.attachment', $item) }}" target="_blank"
                         class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                         <span>{{ __('feedback.view_attachment') }}</span>

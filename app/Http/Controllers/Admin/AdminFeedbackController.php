@@ -12,7 +12,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class AdminFeedbackController extends Controller implements HasMiddleware
 {
@@ -22,7 +24,7 @@ final class AdminFeedbackController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.admin.permission:admin.feedback.view', only: ['bugs', 'showBug', 'features', 'showFeature']),
+            new Middleware('require.admin.permission:admin.feedback.view', only: ['bugs', 'showBug', 'features', 'showFeature', 'streamBugAttachment']),
             new Middleware('require.admin.permission:admin.feedback.manage', only: ['updateBug', 'updateFeature']),
         ];
     }
@@ -39,6 +41,16 @@ final class AdminFeedbackController extends Controller implements HasMiddleware
     {
         $bugReport->load(['business', 'reporter', 'assignedAdmin', 'updates.user', 'updates.admin']);
         return view('admin.feedback.show', ['item' => $bugReport, 'type' => 'bugs', 'statuses' => BugReport::STATUSES, 'admins' => Admin::where('is_active', true)->orderBy('name')->get()]);
+    }
+
+    public function streamBugAttachment(BugReport $bugReport): StreamedResponse
+    {
+        abort_unless($bugReport->attachment_path, 404);
+
+        $disk = Storage::disk('local')->exists($bugReport->attachment_path) ? 'local' : 'public';
+        abort_unless(Storage::disk($disk)->exists($bugReport->attachment_path), 404);
+
+        return Storage::disk($disk)->response($bugReport->attachment_path);
     }
 
     public function updateBug(Request $request, BugReport $bugReport): RedirectResponse

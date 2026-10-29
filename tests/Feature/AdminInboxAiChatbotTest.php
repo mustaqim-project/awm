@@ -192,4 +192,38 @@ final class AdminInboxAiChatbotTest extends TestCase
         $this->assertStringContainsString('Budi Santoso', $reply);
         $this->assertStringContainsString('COOCA', $reply);
     }
+
+    public function test_generate_reply_suggestion_directly_without_channel_option(): void
+    {
+        $comment = SocialMediaComment::create([
+            'is_platform' => true,
+            'platform' => 'live_chat',
+            'platform_post_id' => 'lc_thread_001',
+            'platform_comment_id' => 'lc_msg_001',
+            'from_id' => 'visitor_99',
+            'from_name' => null,
+            'message' => 'Halo min, COOCA bisa multi outlet?',
+            'created_time' => now(),
+            'status' => 'unread',
+        ]);
+
+        Http::fake([
+            '*/chat/completions' => Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'role' => 'assistant',
+                            'content' => 'Halo Kak! Tentu bisa, COOCA mendukung multi-outlet.',
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $service = app(AdminInboxAiService::class);
+        $result = $service->generateReplySuggestion($comment);
+
+        $this->assertTrue($result['success']);
+        $this->assertNotEmpty($result['reply']);
+    }
 }

@@ -1000,8 +1000,15 @@ final class PosTerminalWebController extends Controller
     /**
      * Stream high-res thermal receipt image (PNG) for printing or sharing.
      */
-    public function receiptImage(PosOrder $order, \App\Domain\Pos\PosReceiptImageService $receiptService): \Illuminate\Http\Response
+    public function receiptImage(PosOrder $order, \App\Domain\Pos\PosReceiptImageService $receiptService, Request $request): \Illuminate\Http\Response
     {
+        if ($request->routeIs('public.receipt.image')) {
+            abort_unless($order->business !== null && $order->status !== PosOrder::STATUS_DRAFT_HELD, 404, 'Struk transaksi belum tersedia.');
+        } else {
+            $currentBiz = Context::requireBusiness();
+            abort_unless($order->business_id === $currentBiz->id, 403, 'Akses struk transaksi ditolak lintas bisnis.');
+        }
+
         $png = $receiptService->generate($order);
 
         return response($png, 200, [

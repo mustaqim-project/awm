@@ -229,9 +229,13 @@ Route::get('/sitemap.xml', [SitemapController::class, 'xml'])->name('sitemap.xml
 Route::get('/sitemap_blog.xml', [SitemapController::class, 'blogXml'])->name('sitemap_blog.xml');
 Route::get('/sitemap', [SitemapController::class, 'html'])->name('sitemap.html');
 
-// 11. Public Customer Receipt & Receipt Image View
-Route::get('/receipt/{order}', [PosTerminalWebController::class, 'printReceipt'])->name('public.receipt');
-Route::get('/receipt/{order}/image', [PosTerminalWebController::class, 'receiptImage'])->name('public.receipt.image');
+// 11. Public Customer Receipt & Receipt Image View (Throttled for DDoS/Scraping Protection)
+Route::get('/receipt/{order}', [PosTerminalWebController::class, 'printReceipt'])
+    ->middleware('throttle:60,1')
+    ->name('public.receipt');
+Route::get('/receipt/{order}/image', [PosTerminalWebController::class, 'receiptImage'])
+    ->middleware('throttle:60,1')
+    ->name('public.receipt.image');
 
 // 12. Legal Policies (Privacy Policy & Terms of Service for Cooca, TikTok, Meta & Google)
 Route::get('/privacy', function () {
@@ -259,8 +263,10 @@ Route::get('/penghapusan-data', function () {
     return redirect('/privacy#data-subject-rights');
 });
 
-// 13. Public Digital Payslip (Token Access)
-Route::get('/payslip/{token}', [\App\Http\Controllers\Web\Hrm\HrmWebController::class, 'publicPayslip'])->name('public.payslip');
+// 13. Public Digital Payslip (Token Access with Anti-Bruteforce Throttle)
+Route::get('/payslip/{token}', [\App\Http\Controllers\Web\Hrm\HrmWebController::class, 'publicPayslip'])
+    ->middleware('throttle:30,1')
+    ->name('public.payslip');
 
 // 14. Marketplace Integration OAuth Callbacks & Webhooks
 Route::get('/integrations/{provider}/callback', [\App\Http\Controllers\Web\Marketplace\MarketplaceWebController::class, 'callback'])->name('integrations.marketplace.callback');

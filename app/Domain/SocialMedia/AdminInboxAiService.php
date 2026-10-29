@@ -710,6 +710,12 @@ PROMPT;
             ];
         }
 
+        $channel = strtolower((string) ($options['channel'] ?? $comment->platform ?? 'live_chat'));
+        $customerName = trim((string) ($options['customer_name'] ?? $comment->from_name ?? 'Pelanggan'));
+        if ($customerName === '') {
+            $customerName = 'Pelanggan';
+        }
+
         $latestCustomerMessage = trim((string) $comment->message);
 
         // Build conversation history messages
@@ -1146,7 +1152,7 @@ PROMPT;
         $currentSettings = $this->getSettings();
         $mergedSettings = array_merge($currentSettings, $customSettings);
 
-        $testMessage = trim($prompt);
+        $testMessage = trim($sampleMessage);
         $systemPrompt = $this->buildSystemPrompt($mergedSettings, 'whatsapp', 'Calon Mitra UMKM', $testMessage);
 
         $messages = [

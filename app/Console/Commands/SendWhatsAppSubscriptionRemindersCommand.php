@@ -31,14 +31,23 @@ class SendWhatsAppSubscriptionRemindersCommand extends Command
         $this->info('Memeriksa langganan jatuh tempo (H-7, H-3, H-1, Hari H)...');
 
         $status = $adminWaService->getStatus();
-        if (($status['status'] ?? '') !== 'connected') {
-            $this->warn('WhatsApp Admin belum terhubung. Harap scan QR di panel Admin WhatsApp terlebih dahulu.');
-            return self::FAILURE;
+        $isReady = ($status['status'] ?? '') === 'connected'
+            || ($status['is_connected'] ?? false)
+            || \App\Domain\WhatsApp\CloudApi\WhatsAppClient::forPlatform() !== null;
+
+        if (! $isReady) {
+            $this->warn('WhatsApp Admin Platform belum terhubung ke Meta Cloud API. Pengiriman pengingat langganan ditunda.');
+            return self::SUCCESS;
         }
 
-        $result = $adminWaService->sendAllDueReminders();
-
-        $this->info("Pengiriman selesai: {$result['sent']} terkirim, {$result['failed']} gagal, {$result['skipped']} dilewati (sudah dikirim hari ini).");
+        try {
+            $result = $adminWaService->sendAllDueReminders();
+            $this->info("Pengiriman selesai: {$result['sent']} terkirim, {$result['failed']} gagal, {$result['skipped']} dilewati (sudah dikirim hari ini).");
+        } catch (\Throwable $e) {
+            $this->error('Gagal memproses pengingat langganan: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::warning('[SendWhatsAppSubscriptionReminders] Error: ' . $e->getMessage());
+            return self::SUCCESS;
+        }
 
         return self::SUCCESS;
     }

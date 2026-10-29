@@ -46,6 +46,14 @@ class MarketplaceAccount extends Model
     ];
 
     /**
+     * @var list<string>
+     */
+    protected $hidden = [
+        'access_token',
+        'refresh_token',
+    ];
+
+    /**
      * @return array<string, string>
      */
     protected function casts(): array

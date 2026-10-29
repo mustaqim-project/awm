@@ -92,6 +92,24 @@
                         </div>
                     </div>
                 @endif
+                @if($item->attachment_path)
+                    <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] flex items-center justify-between gap-3 mt-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="paperclip" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <span class="text-[13px] font-bold text-black dark:text-white">Lampiran Investigasi</span>
+                                <p class="text-[11px] text-black/40 dark:text-white/40 font-mono">{{ basename($item->attachment_path) }}</p>
+                            </div>
+                        </div>
+                        <a href="{{ route('admin.feedback.bugs.attachment', $item) }}" target="_blank"
+                            class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            <span>Buka Lampiran</span>
+                        </a>
+                    </div>
+                @endif
             </div>
 
             <!-- Riwayat Progress Timeline Bento Card -->

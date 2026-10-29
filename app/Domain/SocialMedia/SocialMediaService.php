@@ -709,7 +709,8 @@ class SocialMediaService
             if ($account->platform === 'facebook') {
                 // 1. Sync Facebook Page Messenger Conversations
                 try {
-                    $conversations = $this->client->getPageConversations($accountId, $token);
+                    $pageToken = $this->client->getPageAccessToken($accountId, $token) ?: $token;
+                    $conversations = $this->client->getPageConversations($accountId, $pageToken);
                     foreach ($conversations as $conv) {
                         $convId = (string) ($conv['id'] ?? '');
                         $messages = (array) data_get($conv, 'messages.data', []);

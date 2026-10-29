@@ -1246,7 +1246,7 @@ class AdminInboxController extends Controller implements HasMiddleware
         // 1. Sinkronkan Percakapan Messenger Halaman Facebook
         if (! empty($pageId)) {
             try {
-                $conversations = $this->metaClient->getPageConversations($pageId, $token, 30);
+                $conversations = $this->metaClient->getPageConversations($pageId, $pageToken, 30);
                 foreach ($conversations as $conv) {
                     $messages = data_get($conv, 'messages.data', []);
                     foreach ($messages as $msg) {

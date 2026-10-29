@@ -497,6 +497,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/attendance/corrections', [HrmWebController::class, 'storeCorrection'])->name('attendance.corrections.store');
             Route::post('/attendance/corrections/{correction}/approve', [HrmWebController::class, 'approveCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.approve');
             Route::post('/attendance/corrections/{correction}/reject', [HrmWebController::class, 'rejectCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.reject');
+            Route::get('/attendance/corrections/{correction}/attachment', [HrmWebController::class, 'streamCorrectionAttachment'])->name('attendance.corrections.attachment');
 
             // Pendaftaran & Reset Biometrik Wajah Karyawan
             Route::post('/employees/{membership}/face-register', [HrmWebController::class, 'registerEmployeeFace'])->middleware('require.permission:users.manage')->name('employees.face-register');
@@ -523,6 +524,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/feedback/bugs', [FeedbackWebController::class, 'bugs'])->name('feedback.bugs.index');
             Route::get('/feedback/bugs/create', [FeedbackWebController::class, 'createBug'])->name('feedback.bugs.create');
             Route::post('/feedback/bugs', [FeedbackWebController::class, 'storeBug'])->name('feedback.bugs.store');
+            Route::get('/feedback/bugs/{bugReport}/attachment', [FeedbackWebController::class, 'streamBugAttachment'])->name('feedback.bugs.attachment');
             Route::get('/feedback/bugs/{bugReport}', [FeedbackWebController::class, 'showBug'])->name('feedback.bugs.show');
             Route::get('/feedback/features', [FeedbackWebController::class, 'features'])->name('feedback.features.index');
             Route::get('/feedback/features/create', [FeedbackWebController::class, 'createFeature'])->name('feedback.features.create');

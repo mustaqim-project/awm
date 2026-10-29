@@ -32,6 +32,23 @@ final class WebSecurityHeaders
         // XSS filter legacy instruction
         $response->headers->set('X-XSS-Protection', '1; mode=block');
 
+        // Permissions Policy
+        $response->headers->set('Permissions-Policy', 'camera=(self), microphone=(), geolocation=(self)');
+
+        // Content Security Policy: Strict origin control while explicitly allowing verified CDNs
+        $cspDirectives = [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tiny.cloud",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net",
+            "font-src 'self' data: https://fonts.gstatic.com",
+            "img-src 'self' data: blob: https://cdn.cooca.id https://images.unsplash.com https://*.tile.openstreetmap.org https://unpkg.com https://*.tripay.co.id",
+            "connect-src 'self' https://api.biteship.com https://*.tripay.co.id wss: ws:",
+            "frame-src 'self' https://*.tripay.co.id",
+            "object-src 'none'",
+            "base-uri 'self'",
+        ];
+        $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
+
         return $response;
     }
 }

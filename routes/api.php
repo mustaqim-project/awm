@@ -102,10 +102,13 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         ], 200);
     });
 
-    // Test Suite Diagnostic and Execution Endpoint
+    // Test Suite Diagnostic and Execution Endpoint (Strictly disabled in production & gated)
     Route::match(['GET', 'POST'], '/social-media/test-suite/status', function (\Illuminate\Http\Request $request) {
+        abort_if(app()->isProduction(), 404);
+
         $token = $request->query('token') ?? $request->input('token');
-        if ($token !== 'cooca_test_suite_2026') {
+        $expectedToken = config('services.test_suite.token', env('TEST_SUITE_TOKEN', 'cooca_test_suite_2026'));
+        if (! auth('admin')->check() && (empty($token) || ! hash_equals((string) $expectedToken, (string) $token))) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

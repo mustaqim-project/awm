@@ -247,6 +247,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
         // Feedback: Bug Reports & Feature Requests
         Route::get('/feedback/bugs', [AdminFeedbackController::class, 'bugs'])->name('feedback.bugs.index');
+        Route::get('/feedback/bugs/{bugReport}/attachment', [AdminFeedbackController::class, 'streamBugAttachment'])->name('feedback.bugs.attachment');
         Route::get('/feedback/bugs/{bugReport}', [AdminFeedbackController::class, 'showBug'])->name('feedback.bugs.show');
         Route::patch('/feedback/bugs/{bugReport}', [AdminFeedbackController::class, 'updateBug'])->name('feedback.bugs.update');
         Route::get('/feedback/features', [AdminFeedbackController::class, 'features'])->name('feedback.features.index');

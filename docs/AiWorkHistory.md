@@ -23302,3 +23302,46 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - `python verify_links.py docs/user-guides/billing --routes routes.json` → **11 internal links checked, 0 problems (100% Verified)**.
 - Production Readiness Gate: **READY FOR PRODUCTION (Siap Rilis)**.
 
+
+
+---
+
+### [WORK-2026-10-29-370] End-to-End Comprehensive Security Audit & Production Hardening (Storage, CDN, Privacy, & OWASP)
+- **Timestamp:** 2026-10-29T08:52:00+07:00
+- **Audited Target:** Seluruh repositori `cooca_core` (Model Eloquent, Filesystem Disks, CDN Assets & CSP, API/Web Routes, Middleware, Upload Handlers, PII Protection)
+- **Work Type:** Comprehensive Security Audit | Storage Architecture Hardening | CDN & CSP Whitelisting | User Privacy Protection | Vulnerability Remediation | Automated Testing
+
+#### 1. Business Context & Objective
+- Melakukan audit keamanan menyeluruh berbasis kode nyata (*code-first*) terhadap seluruh arsitektur sistem COOCA, memastikan tidak ada celah keamanan yang dapat dibobol (OWASP Top 10), privasi pengguna (PII) terjaga sesuai standar UU Pelindungan Data Pribadi (UU PDP), penggunaan aset CDN tetap diizinkan secara aman, serta membedah dan memperbaiki pemisahan berkas pada penyimpanan privat (*private storage*) vs penyimpanan publik (*public storage*).
+
+#### 2. Key Remediations Applied
+1. **F-SEC-001 (Private Storage Enforcement on Customer Payment Proofs):**
+   - Merefaktor `CustomerCheckoutApiController::uploadProof` yang semula menyimpan bukti transfer ke disk `public` (`payment_proofs`), kini dialihkan ke `CommercePaymentProofService::submitProof` pada disk privat `local` (`storage/app/private/commerce_proofs/{biz}/{order}/...`).
+   - Memperketat validasi upload berkas bukti bayar dengan melarang berkas SVG (`mimes:jpeg,png,jpg,webp,pdf`) untuk mengeliminasi potensi Stored XSS.
+2. **F-SEC-002 (Private Storage & Secure Streaming on Medical HR Documents):**
+   - Mengalihkan penyimpanan lampiran koreksi absensi / surat sakit dokter karyawan di `AttendanceService.php` dari disk `public` ke disk privat `local` (`hrm/{biz}/corrections/...`).
+   - Menyediakan rute streaming terproteksi `/hrm/attendance/corrections/{correction}/attachment` di `routes/owner.php` dan `HrmWebController::streamCorrectionAttachment` dengan validasi otorisasi ganda (kepemilikan tenant + verifikasi tiket karyawan atau wewenang staf HR).
+   - Memperbarui tautan di `resources/views/app/hrm/index.blade.php` agar menggunakan endpoint streaming terproteksi, bukan URL publik `/storage/...`.
+3. **F-SEC-003 (OAuth Token Decryption Exposure Fix on Model MarketplaceAccount):**
+   - Menambahkan deklarasi array `$hidden = ['access_token', 'refresh_token']` pada `MarketplaceAccount.php` agar token rahasia Shopee/TikTok Shop yang terdekripsi tidak bocor saat model diserialisasi ke JSON/array.
+4. **F-SEC-004 (Diagnostic Backdoor Route Gating):**
+   - Menutup rute diagnostik `/api/v1/social-media/test-suite/status` di `routes/api.php` agar otomatis mengembalikan 404 pada lingkungan produksi (`abort_if(app()->isProduction(), 404)`).
+   - Menambahkan pemeriksaan Superadmin (`auth('admin')->check()`) dan perbandingan token menggunakan `hash_equals` tahan *timing attack* di lingkungan pengujian.
+5. **F-SEC-005 (CSRF Exemption Removal on Owner Billing Routes):**
+   - Menghapus `'billing/payments/*'` dari daftar pengecualian CSRF di `bootstrap/app.php` untuk memastikan seluruh formulir pembayaran langganan SaaS pemilik bisnis terlindungi dari serangan Cross-Site Request Forgery.
+6. **F-SEC-006 (CDN Whitelisted Content Security Policy):**
+   - Memasang header Content Security Policy (CSP) pada `WebSecurityHeaders.php` yang me-whitelist seluruh 7 domain CDN tepercaya aktif (`cdn.tailwindcss.com`, `unpkg.com`, `cdn.jsdelivr.net`, `fonts.googleapis.com`, `fonts.gstatic.com`, `cdnjs.cloudflare.com`, `cdn.tiny.cloud`, `cdn.cooca.id`) dan menambahkan `Permissions-Policy`.
+7. **F-SEC-007 (Rate Limiting on Sensitive Public Endpoints):**
+   - Menerapkan middleware pembatas frekuensi `throttle:60,1` pada rute struk kasir `/receipt/{order}` dan `/receipt/{order}/image`, serta `throttle:30,1` pada rute slip gaji publik `/payslip/{token}` di `routes/public.php`.
+   - Mengunci verifikasi kepemilikan tenant pada `PosTerminalWebController::receiptImage` saat diakses dari workspace internal.
+8. **F-SEC-008 (Private Storage & Authorized Streaming on Feedback Bug Attachments):**
+   - Mengalihkan penyimpanan lampiran laporan bug di `FeedbackWebController::storeBug` dari disk `public` ke disk privat `local` (`storage/app/private/feedback/bugs`), melindungi data diagnostik sensitif, stack trace, dan tangkapan layar internal bisnis pengguna dari paparan URL publik.
+   - Menyediakan rute streaming terproteksi ganda: `/feedback/bugs/{bugReport}/attachment` di `routes/owner.php` dan `FeedbackWebController::streamBugAttachment` (dengan isolasi tenant `business_id`) serta di `routes/admin.php` dan `AdminFeedbackController::streamBugAttachment` (dengan guard otorisasi `admin.feedback.view`).
+   - Menyelaraskan tampilan `resources/views/app/feedback/show.blade.php` dan `resources/views/admin/feedback/show.blade.php` untuk memanggil route streaming terproteksi dengan kompatibilitas mundur mulus (memeriksa disk `local` lalu fallback `public`).
+
+#### 3. Verification & Test Results
+- `php artisan test tests/Feature/SecurityHardeningAuditTest.php` → **6 passed, 35 assertions (100% Success)**.
+- `php artisan test tests/Feature/FeedbackModuleAuditTest.php tests/Feature/FeedbackWorkflowTest.php` → **11 passed, 64 assertions (100% Success)**.
+- `php -l` pada seluruh berkas yang dimodifikasi → **0 syntax errors**.
+- Laporan Audit Lengkap: `docs/security/AUDIT_KEAMANAN_END_TO_END_STORAGE_CDN_PRIVACY.md`.
+- Production Readiness Gate: **PASSED (Production Hardened)**.

@@ -563,7 +563,7 @@ final class AttendanceService
 
         $attachmentPath = null;
         if (isset($data['attachment']) && $data['attachment'] instanceof UploadedFile) {
-            $attachmentPath = $data['attachment']->store('attendance/corrections', 'public');
+            $attachmentPath = $data['attachment']->store("hrm/{$business->id}/corrections", 'local');
         }
 
         return AttendanceCorrection::create([
@@ -606,7 +606,7 @@ final class AttendanceService
 
         $attachmentPath = $ticket->attachment_path;
         if (isset($data['attachment']) && $data['attachment'] instanceof UploadedFile) {
-            $attachmentPath = $data['attachment']->store('attendance/corrections', 'public');
+            $attachmentPath = $data['attachment']->store("hrm/{$business->id}/corrections", 'local');
         }
 
         $ticket->update([

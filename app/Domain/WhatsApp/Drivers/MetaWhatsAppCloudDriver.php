@@ -223,8 +223,8 @@ class MetaWhatsAppCloudDriver
             if ($response->successful()) {
                 $data = $response->json();
                 $isCodeVerified = strtoupper((string) ($data['code_verification_status'] ?? '')) === 'VERIFIED';
-                $isStatusConnected = strtoupper((string) ($data['status'] ?? '')) === 'CONNECTED';
-                $isFullyConnected = $isCodeVerified && $isStatusConnected;
+                $isStatusConnected = in_array(strtoupper((string) ($data['status'] ?? '')), ['CONNECTED', 'APPROVED', 'AVAILABLE', 'LIVE', 'VERIFIED', 'ACTIVE'], true);
+                $isFullyConnected = $isCodeVerified && ($isStatusConnected || empty($data['status']));
 
                 return [
                     'success'                  => true,

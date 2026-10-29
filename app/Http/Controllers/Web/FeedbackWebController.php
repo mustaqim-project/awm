@@ -13,7 +13,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class FeedbackWebController extends Controller implements HasMiddleware
 {
@@ -60,7 +62,7 @@ final class FeedbackWebController extends Controller implements HasMiddleware
             $trackingService = app(\App\Domain\Storage\StorageTrackingService::class);
             $owner = app(\App\Domain\Storage\OwnerStorageQuotaService::class)->ownerForBusiness($business) ?? $user;
             $trackingService->assertCanUpload($owner, (int) $file->getSize(), 'attachment');
-            $path = $file->store('feedback/bugs', 'public');
+            $path = $file->store('feedback/bugs', 'local');
             $validated['attachment_path'] = $path;
             $trackingService->recordUpload(
                 file: $file,
@@ -69,7 +71,8 @@ final class FeedbackWebController extends Controller implements HasMiddleware
                 module: 'feedback',
                 owner: $owner,
                 business: $business,
-                uploader: $user
+                uploader: $user,
+                disk: 'local'
             );
         }
         $validated['business_id'] = $business->id;
@@ -103,6 +106,18 @@ final class FeedbackWebController extends Controller implements HasMiddleware
         abort_unless($bugReport->business_id === $business->id, 403);
         $bugReport->load(['reporter', 'assignedAdmin', 'updates.user', 'updates.admin']);
         return view('app.feedback.show', ['business' => $business, 'item' => $bugReport, 'type' => 'bugs']);
+    }
+
+    public function streamBugAttachment(BugReport $bugReport): StreamedResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($bugReport->business_id === $business->id, 403);
+        abort_unless($bugReport->attachment_path, 404);
+
+        $disk = Storage::disk('local')->exists($bugReport->attachment_path) ? 'local' : 'public';
+        abort_unless(Storage::disk($disk)->exists($bugReport->attachment_path), 404);
+
+        return Storage::disk($disk)->response($bugReport->attachment_path);
     }
 
     public function features(): View

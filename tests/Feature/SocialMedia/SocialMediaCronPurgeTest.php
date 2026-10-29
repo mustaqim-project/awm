@@ -197,4 +197,33 @@ class SocialMediaCronPurgeTest extends TestCase
             Carbon::setTestNow();
         }
     }
+
+    public function test_purge_inactive_credentials_safely_clears_tokens_without_integrity_violation(): void
+    {
+        $business = Business::create([
+            'name' => 'Purge Cred Biz',
+            'slug' => 'purge-cred-biz',
+            'currency' => 'IDR',
+            'currency_code' => 'IDR',
+            'is_active' => true,
+        ]);
+
+        $account = SocialMediaAccount::create([
+            'business_id' => $business->id,
+            'platform' => 'facebook',
+            'account_id' => 'fb_page_purge_test',
+            'account_name' => 'Facebook Test Page',
+            'access_token' => 'EAAG...valid_token',
+            'refresh_token' => 'EAAG...refresh_token',
+            'status' => 'disconnected',
+        ]);
+
+        $this->artisan('social-media:purge-published', ['--days' => 0])
+            ->assertExitCode(0);
+
+        $refreshed = $account->fresh();
+        $this->assertNull($refreshed->access_token);
+        $this->assertNull($refreshed->refresh_token);
+        $this->assertSame('expired', $refreshed->status);
+    }
 }

@@ -88,7 +88,8 @@ class SocialMediaAccount extends Model
         }
 
         try {
-            return Crypt::decryptString($value);
+            $decrypted = Crypt::decryptString($value);
+            return $decrypted !== '' ? $decrypted : null;
         } catch (\Throwable) {
             return (string) $value;
         }
@@ -99,7 +100,7 @@ class SocialMediaAccount extends Model
         if (! empty($value)) {
             $this->attributes['access_token'] = Crypt::encryptString((string) $value);
         } else {
-            $this->attributes['access_token'] = null;
+            $this->attributes['access_token'] = Crypt::encryptString('');
         }
     }
 

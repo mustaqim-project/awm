@@ -199,12 +199,16 @@ class PurgePublishedSocialMediaCommand extends Command
         $purgedCount = 0;
         foreach ($accounts as $account) {
             if (! empty($account->access_token) || ! empty($account->refresh_token)) {
-                $account->update([
-                    'access_token'  => '',
-                    'refresh_token' => null,
-                    'status'        => 'expired',
-                ]);
-                $purgedCount++;
+                try {
+                    $account->update([
+                        'access_token'  => '',
+                        'refresh_token' => null,
+                        'status'        => 'expired',
+                    ]);
+                    $purgedCount++;
+                } catch (\Throwable $e) {
+                    Log::warning("[PurgeSocialMedia] Gagal membersihkan token akun {$account->id}: {$e->getMessage()}");
+                }
             }
         }
 

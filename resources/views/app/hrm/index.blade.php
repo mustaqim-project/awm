@@ -4527,7 +4527,7 @@
                             <i data-lucide="paperclip" class="w-4.5 h-4.5 text-[#007AFF] shrink-0"></i>
                             <span class="text-[12.5px] font-bold text-black/80 dark:text-white/80 truncate">{{ __('hrm.attachment_evidence_attached') }}</span>
                         </div>
-                        <a :href="'/storage/' + selectedCorrection.attachment_path" target="_blank"
+                        <a :href="'{{ url('hrm/attendance/corrections') }}/' + selectedCorrection.id + '/attachment'" target="_blank"
                             class="h-8 px-3.5 rounded-[9px] text-[11.5px] font-bold bg-[#007AFF] text-white hover:bg-[#0071E3] transition flex items-center gap-1.5 shrink-0">
                             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             <span>{{ __('hrm.btn_open_file') }}</span>

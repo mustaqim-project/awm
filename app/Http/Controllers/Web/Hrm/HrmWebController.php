@@ -1248,6 +1248,38 @@ final class HrmWebController extends Controller implements HasMiddleware
     }
 
     /**
+     * Stream protected attendance correction attachment.
+     */
+    public function streamCorrectionAttachment(AttendanceCorrection $correction): \Symfony\Component\HttpFoundation\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($correction->business_id === $business->id, 403, 'Akses ditolak lintas bisnis.');
+
+        $user = auth()->user();
+        abort_unless(
+            $correction->user_id === $user->id || Context::hasPermission('users.view') || Context::hasPermission('users.manage'),
+            403,
+            'Akses berkas lampiran absensi ditolak.'
+        );
+
+        $path = $correction->attachment_path;
+        abort_unless(! empty($path), 404, 'Lampiran tidak ditemukan.');
+        abort_if(str_contains($path, '..'), 403, 'Format berkas tidak valid.');
+
+        // 1. Cek disk privat ('local')
+        if (\Illuminate\Support\Facades\Storage::disk('local')->exists($path)) {
+            return \Illuminate\Support\Facades\Storage::disk('local')->response($path);
+        }
+
+        // 2. Cek disk public untuk backward compatibility berkas lama
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+            return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
+        }
+
+        abort(404, 'Berkas fisik lampiran tidak ditemukan di server.');
+    }
+
+    /**
      * Handle biometric face enrollment for an employee from HRM.
      */
     public function registerEmployeeFace(Request $request, string $membershipId): RedirectResponse|JsonResponse

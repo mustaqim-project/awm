@@ -61,8 +61,10 @@ class AdminWhatsAppService
             if ($verified['success'] ?? false) {
                 $data = $verified['data'] ?? [];
                 $isCodeVerified = strtoupper((string) ($data['code_verification_status'] ?? '')) === 'VERIFIED';
-                $isStatusConnected = strtoupper((string) ($data['status'] ?? '')) === 'CONNECTED';
-                $isFullyConnected = ($verified['is_connected'] ?? false) || ($isCodeVerified && $isStatusConnected);
+                $isStatusConnected = in_array(strtoupper((string) ($data['status'] ?? '')), ['CONNECTED', 'APPROVED', 'AVAILABLE', 'LIVE', 'VERIFIED', 'ACTIVE'], true);
+                $isFullyConnected = ($verified['is_connected'] ?? false)
+                    || ($isCodeVerified && ($isStatusConnected || empty($data['status'])))
+                    || (! empty($data['display_phone_number']) && $isCodeVerified);
 
                 $wabaId = $creds['waba_id'] ?: '2292844188142290';
                 $managerUrl = "https://business.facebook.com/wa/manage/phone-numbers/?waba_id={$wabaId}";

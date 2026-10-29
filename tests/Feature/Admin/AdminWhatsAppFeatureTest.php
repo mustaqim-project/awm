@@ -236,4 +236,10 @@ class AdminWhatsAppFeatureTest extends TestCase
         $viewResponse->assertSee('custom_webhook_secret_token_99');
         $viewResponse->assertSee('876543210987654');
     }
+
+    public function test_send_wa_subscription_reminders_command_completes_gracefully(): void
+    {
+        $this->artisan('subscriptions:send-wa-reminders')
+            ->assertExitCode(0);
+    }
 }

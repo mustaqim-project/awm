@@ -362,29 +362,31 @@ final class CustomerCheckoutApiController extends Controller
             ->firstOrFail();
 
         $validated = $request->validate([
-            'proof_image' => ['required', 'image', 'max:5120'], // max 5MB
+            'proof_image' => ['required', 'file', 'mimes:jpeg,png,jpg,webp,pdf', 'max:5120'], // max 5MB, strict raster/PDF (no SVG)
+            'sender_bank' => ['nullable', 'string', 'max:100'],
+            'sender_account_name' => ['nullable', 'string', 'max:150'],
             'notes' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $path = $request->file('proof_image')->store('payment_proofs', 'public');
+        try {
+            $proof = $this->proofService->submitProof(
+                order: $order,
+                file: $request->file('proof_image'),
+                senderBank: $validated['sender_bank'] ?? null,
+                senderAccountName: $validated['sender_account_name'] ?? null
+            );
 
-        $proof = CommercePaymentProof::create([
-            'commerce_order_id' => $order->id,
-            'proof_image_path' => $path,
-            'notes' => $validated['notes'] ?? null,
-            'status' => CommercePaymentProof::STATUS_PENDING,
-        ]);
-
-        $order->update([
-            'status' => CommerceOrder::STATUS_PROOF_SUBMITTED,
-            'payment_status' => CommerceOrder::PAYMENT_VERIFYING,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Bukti pembayaran berhasil diunggah. Penjual akan segera memverifikasi.',
-            'data' => $proof,
-        ], Response::HTTP_OK);
+            return response()->json([
+                'success' => true,
+                'message' => 'Bukti pembayaran berhasil diunggah secara aman ke server privat. Penjual akan segera memverifikasi.',
+                'data' => $proof,
+            ], Response::HTTP_OK);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
     }
 
     /**
