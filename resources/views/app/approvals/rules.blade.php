@@ -98,6 +98,7 @@
                 </div>
 
                 <!-- Footer Actions: Edit & Delete -->
+                @if(\App\Support\Context::hasPermission('approvals.manage'))
                 <div class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-2">
                     <button
                         type="button"
@@ -116,6 +117,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             </div>
         @empty
             <div class="col-span-full p-12 text-center rounded-[24px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] space-y-3">

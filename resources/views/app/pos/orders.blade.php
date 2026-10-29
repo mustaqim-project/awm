@@ -556,8 +556,10 @@
                             <div class="text-right">
                                 <div class="font-bold tabular-nums text-black dark:text-white"
                                     x-text="'Rp ' + Number(it.total_price).toLocaleString('id-ID')"></div>
+                                @if (\App\Support\Context::hasPermission('costing.view_margin'))
                                 <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums"
                                     x-text="'HPP: Rp ' + Number(it.total_hpp).toLocaleString('id-ID')"></div>
+                                @endif
                             </div>
                         </div>
                         <!-- Pharmacy attributes if present -->

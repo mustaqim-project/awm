@@ -29,7 +29,7 @@
                 <span>{{ __('finance.btn_supplier_bills') }}</span>
             </a>
         @endif
-        @if(\App\Support\Context::hasPermission('master_data.suppliers') || \App\Support\Context::hasPermission('purchasing.view'))
+        @if(\App\Support\Context::hasPermission('master_data.suppliers.view') || \App\Support\Context::hasPermission('purchasing.view'))
             <a href="{{ route('suppliers.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
                 <i data-lucide="truck" class="w-4 h-4 text-[#FF9500]"></i>
                 <span>{{ __('finance.btn_suppliers_list') }}</span>

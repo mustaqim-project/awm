@@ -339,11 +339,13 @@
                                 {{ $project->updated_at?->diffForHumans() ?? $project->created_at->diffForHumans() }}
                             </span>
                             <div class="flex items-center gap-1.5">
+                                @if(\App\Support\Context::hasPermission('ai_studio.manage'))
                                 <button type="button" @click="confirmDelete('{{ $project->id }}', '{{ addslashes($project->name) }}')"
                                     class="p-1.5 rounded-[8px] text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-red-500/10 transition-colors"
                                     title="Hapus Proyek">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 </button>
+                                @endif
                                 <a href="{{ route('ai-studio.show', $project->id) }}"
                                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-[8px] bg-[#007AFF]/10 dark:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF] hover:text-white text-xs font-semibold transition-all">
                                     <span>Buka Canvas</span>

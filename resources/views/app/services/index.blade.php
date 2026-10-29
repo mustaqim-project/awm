@@ -322,12 +322,15 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-1">
+                                        @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('products.edit'))
                                         <button type="button" @click="openEdit({{ Js::from($item) }})"
                                             class="w-8 h-8 rounded-[8px] text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all flex items-center justify-center shrink-0 cursor-pointer"
                                             title="{{ __('services.actions.edit') }}"
                                             aria-label="{{ __('services.actions.edit') }}">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
+                                        @endif
+                                        @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('products.delete'))
                                         <button type="button"
                                             @click="openDelete('{{ $item->id }}', {{ Js::from($item->name) }})"
                                             class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 active:scale-[0.97] transition-all flex items-center justify-center shrink-0 cursor-pointer"
@@ -341,6 +344,7 @@
                                             @csrf
                                             @method('DELETE')
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -413,15 +417,19 @@
                         </div>
 
                         <div class="flex items-center gap-1.5">
+                            @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('products.edit'))
                             <button type="button" @click="openEdit({{ Js::from($item) }})"
                                 class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.04] dark:bg-white/[0.06] active:scale-95 transition-all cursor-pointer">
                                 {{ __('services.actions.edit') }}
                             </button>
+                            @endif
+                            @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('products.delete'))
                             <button type="button"
                                 @click="openDelete('{{ $item->id }}', {{ Js::from($item->name) }})"
                                 class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 transition-all cursor-pointer">
                                 {{ __('services.actions.delete') }}
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>

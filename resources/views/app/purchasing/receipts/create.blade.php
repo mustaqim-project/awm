@@ -6,7 +6,7 @@
 
 @section('content')
 @php
-    $showBatchExpiry = $business->isModuleEnabled('batch_expiry') || in_array($business->industry, ['pharmacy', 'fnb_resto', 'fnb_bakery'], true);
+    $showBatchExpiry = $business->isPharmacy() || $business->isFoodIndustry() || $business->isModuleEnabled('batch_expiry');
 @endphp
 <div class="max-w-[1080px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{ isSubmitting: false }">
     <!-- ===================================================== -->

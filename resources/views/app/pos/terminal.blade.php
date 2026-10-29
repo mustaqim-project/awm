@@ -3666,7 +3666,7 @@
 
     @if ($isWorkshop || $isLaundry || (!$isFnB && !$isRetail && !$isPharmacy))
     <!-- ===================================================== -->
-    <!-- MODAL: DATA LAYANAN INDUSTRI (BENGKEL, LAUNDRY & UMUM) -->
+    <!-- MODAL: DATA LAYANAN INDUSTRI (BENGKEL & LAUNDRY) -->
     <!-- ===================================================== -->
     <div x-show="showServiceVerticalModal" x-cloak
         class="fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4"
