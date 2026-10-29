@@ -599,7 +599,7 @@
                             <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight">{{ __('navigation.services') }}</span>
+                            <span class="truncate tracking-tight">{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.services_spk') : __('navigation.services') }}</span>
                         </div>
                     </a>
 
@@ -609,12 +609,12 @@
                         style="display: none;">
                         <div class="sidebar-flyout-panel w-60 p-2 rounded-[14px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_16px_36px_rgba(0,0,0,0.18)] space-y-1 max-h-[85vh] overflow-y-auto overscroll-contain">
                             <div class="px-2.5 py-1 font-semibold text-xs text-black dark:text-white border-b border-black/5 dark:border-white/10 pb-1.5 mb-1">
-                                {{ __('navigation.services') }}
+                                {{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.services_spk') : __('navigation.services') }}
                             </div>
                             <a href="{{ route('services.index') }}"
                                 class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('services.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
                                 <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5 {{ request()->routeIs('services.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
-                                <span>{{ __('navigation.services') }}</span>
+                                <span>{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.services_spk') : __('navigation.services') }}</span>
                             </a>
                         </div>
                     </div>

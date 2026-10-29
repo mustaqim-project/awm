@@ -3664,7 +3664,7 @@
         </div>
     </div>
 
-    @if ($isWorkshop || $isLaundry || (!$isFnB && !$isRetail))
+    @if ($isWorkshop || $isLaundry || (!$isFnB && !$isRetail && !$isPharmacy))
     <!-- ===================================================== -->
     <!-- MODAL: DATA LAYANAN INDUSTRI (BENGKEL, LAUNDRY & UMUM) -->
     <!-- ===================================================== -->

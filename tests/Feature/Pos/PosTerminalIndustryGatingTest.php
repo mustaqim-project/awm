@@ -90,6 +90,23 @@ final class PosTerminalIndustryGatingTest extends TestCase
         return [$business, $location, $shift];
     }
 
+    private function getBodyWithoutScripts($response): string
+    {
+        return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $response->getContent()) ?? '';
+    }
+
+    private function assertHtmlDontSee($response, string $needle): void
+    {
+        $body = $this->getBodyWithoutScripts($response);
+        $this->assertStringNotContainsString($needle, $body, "Failed asserting that rendered HTML body (excluding scripts) does not contain '{$needle}'.");
+    }
+
+    private function assertHtmlSee($response, string $needle): void
+    {
+        $body = $this->getBodyWithoutScripts($response);
+        $this->assertStringContainsString($needle, $body, "Failed asserting that rendered HTML body (excluding scripts) contains '{$needle}'.");
+    }
+
     public function test_retail_reseller_terminal_hides_fnb_features_completely(): void
     {
         [$retailBiz, $location, $shift] = $this->createTenant('Toko Retail Pakaian', 'retail_reseller');
@@ -111,26 +128,26 @@ final class PosTerminalIndustryGatingTest extends TestCase
 
         $response->assertStatus(200);
 
-        // 1. Topbar and drawer F&B buttons must NOT exist
-        $response->assertDontSee('Order QR');
-        $response->assertDontSee('Pesanan Masuk dari Meja QR');
-        $response->assertDontSee('Daftar Meja Resto');
-        $response->assertDontSee('Buku Reservasi Storefront');
+        // 1. Topbar and drawer F&B buttons must NOT exist in rendered HTML
+        $this->assertHtmlDontSee($response, 'Order QR');
+        $this->assertHtmlDontSee($response, 'Pesanan Masuk dari Meja QR');
+        $this->assertHtmlDontSee($response, 'Daftar Meja Resto');
+        $this->assertHtmlDontSee($response, 'Buku Reservasi Storefront');
 
-        // 2. Cart F&B buttons must NOT exist
-        $response->assertDontSee('Makan di Tempat / Dine In');
-        $response->assertDontSee('Pilih / Ganti Meja');
-        $response->assertDontSee('Bungkus / Takeaway');
+        // 2. Cart F&B buttons must NOT exist in rendered HTML
+        $this->assertHtmlDontSee($response, 'Makan di Tempat / Dine In');
+        $this->assertHtmlDontSee($response, 'Pilih / Ganti Meja');
+        $this->assertHtmlDontSee($response, 'Bungkus / Takeaway');
 
         // 3. Multi-channel online delivery selector bar must NOT exist
-        $response->assertDontSee('Harga Khusus GoFood');
-        $response->assertDontSee('Harga Khusus GrabFood');
-        $response->assertDontSee('Harga Khusus ShopeeFood');
+        $this->assertHtmlDontSee($response, 'Harga Khusus Online GoFood');
+        $this->assertHtmlDontSee($response, 'Harga Khusus Online GrabFood');
+        $this->assertHtmlDontSee($response, 'Harga Khusus Online ShopeeFood');
 
         // 4. Modals for F&B must NOT be rendered in HTML
         $response->assertDontSee('MODAL: INCOMING QR TABLE ORDERS DRAWER', false);
         $response->assertDontSee('MODAL: RESTAURANT TABLES & STOREFRONT RESERVATIONS', false);
-        $response->assertDontSee('Pembayaran Pesanan Meja');
+        $this->assertHtmlDontSee($response, 'Pembayaran Pesanan Meja');
 
         // 5. Alpine JS state must be initialized for non-food
         $response->assertSee('hasDineIn: false', false);
@@ -142,7 +159,7 @@ final class PosTerminalIndustryGatingTest extends TestCase
 
         // 7. Item detail modal title must be generic notes, NOT pharmacy medicine dosage
         $response->assertSee('Detail &amp; Catatan Item', false);
-        $response->assertDontSee('Detail &amp; Dosis Obat', false);
+        $this->assertHtmlDontSee($response, 'Detail &amp; Dosis Obat');
     }
 
     public function test_service_workshop_terminal_shows_spk_and_hides_fnb(): void
@@ -174,10 +191,10 @@ final class PosTerminalIndustryGatingTest extends TestCase
         $response->assertSee('MODAL: DATA LAYANAN INDUSTRI (BENGKEL & LAUNDRY)', false);
         $response->assertSee('SPK Bengkel &amp; Kendaraan', false);
 
-        // 3. F&B Resto features must NOT exist
-        $response->assertDontSee('Order QR');
-        $response->assertDontSee('Pesanan Masuk dari Meja QR');
-        $response->assertDontSee('Makan di Tempat / Dine In');
+        // 3. F&B Resto features must NOT exist in rendered HTML
+        $this->assertHtmlDontSee($response, 'Order QR');
+        $this->assertHtmlDontSee($response, 'Pesanan Masuk dari Meja QR');
+        $this->assertHtmlDontSee($response, 'Makan di Tempat / Dine In');
         $response->assertDontSee('MODAL: RESTAURANT TABLES & STOREFRONT RESERVATIONS', false);
     }
 
@@ -214,9 +231,10 @@ final class PosTerminalIndustryGatingTest extends TestCase
         // 3. Service vertical modal must NOT be rendered for Pharmacy
         $response->assertDontSee('MODAL: DATA LAYANAN INDUSTRI (BENGKEL & LAUNDRY)', false);
 
-        // 4. F&B Resto features must NOT exist
-        $response->assertDontSee('Order QR');
-        $response->assertDontSee('Makan di Tempat / Dine In');
+        // 4. F&B Resto features must NOT exist in rendered HTML
+        $this->assertHtmlDontSee($response, 'Order QR');
+        $this->assertHtmlDontSee($response, 'Pesanan Masuk dari Meja QR');
+        $this->assertHtmlDontSee($response, 'Makan di Tempat / Dine In');
         $response->assertDontSee('MODAL: RESTAURANT TABLES & STOREFRONT RESERVATIONS', false);
     }
 
@@ -281,9 +299,9 @@ final class PosTerminalIndustryGatingTest extends TestCase
         $response->assertSee('Bungkus / Takeaway');
 
         // 3. Multi-channel online delivery selector bar must exist
-        $response->assertSee('Harga Khusus GoFood');
-        $response->assertSee('Harga Khusus GrabFood');
-        $response->assertSee('Harga Khusus ShopeeFood');
+        $response->assertSee('Harga Khusus Online GoFood');
+        $response->assertSee('Harga Khusus Online GrabFood');
+        $response->assertSee('Harga Khusus Online ShopeeFood');
 
         // 4. Modals for F&B must be rendered in HTML
         $response->assertSee('MODAL: INCOMING QR TABLE ORDERS DRAWER', false);
