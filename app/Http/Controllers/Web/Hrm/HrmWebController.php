@@ -1058,6 +1058,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'latitude' => ['nullable', 'numeric'],
@@ -1118,6 +1119,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'latitude' => ['nullable', 'numeric'],
@@ -1177,6 +1179,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'target_date' => ['required', 'date', 'before_or_equal:today'],

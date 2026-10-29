@@ -277,12 +277,8 @@ Route::match(['get', 'post'], '/webhooks/marketplace/{provider}', [\App\Http\Con
 // 15. Public COOCA My Own Mobile Android APK Download
 Route::get('/download/apk', function () {
     $candidates = [
-        public_path('apk/cooca_my_own.apk'),
-        public_path('downloads/cooca_my_own.apk'),
-        public_path('downloads/cooca.apk'),
         public_path('cooca.apk'),
-        public_path('apk/cooca.apk'),
-        public_path('apk/app-release.apk'),
+        public_path('downloads/cooca.apk'),
     ];
 
     foreach ($candidates as $apkPath) {

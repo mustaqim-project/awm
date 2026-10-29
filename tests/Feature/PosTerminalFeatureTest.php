@@ -58,6 +58,14 @@ final class PosTerminalFeatureTest extends TestCase
         $this->user->update(['active_business_id' => $this->business->id]);
         Context::setBusiness($this->business);
 
+        \App\Models\BusinessSubscription::create([
+            'business_id' => $this->business->id,
+            'plan_code' => \App\Models\BusinessSubscription::PLAN_PREMIUM_MONTHLY,
+            'status' => 'active',
+            'starts_at' => now()->subDay(),
+            'expires_at' => now()->addMonth(),
+        ]);
+
         $this->location = Location::create([
             'business_id' => $this->business->id,
             'name' => 'Outlet Sudirman',

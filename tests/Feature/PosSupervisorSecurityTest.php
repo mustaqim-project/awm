@@ -365,7 +365,7 @@ final class PosSupervisorSecurityTest extends TestCase
             ->postJson(route('pos.verify-pin'), ['pin' => '9999']);
 
         $resEnFail->assertStatus(401);
-        $this->assertStringContainsString('Incorrect Supervisor PIN', (string) $resEnFail->json('message'));
+        $this->assertStringContainsString('Supervisor PIN incorrect', (string) $resEnFail->json('message'));
 
         // Reset back to ID
         app()->setLocale('id');

@@ -18,6 +18,11 @@ cloudflared.exe
 config.yml
 *.exe
 
+# --- Database ---
+*.sqlite
+database/*.sqlite
+database/database.sqlite
+
 # --- Python ---
 __pycache__/
 *.pyc
@@ -110,3 +115,9 @@ Homestead.json
 Homestead.yaml
 .vagrant/
 /scratch/
+
+# --- Audit & Diagnostic Dumps ---
+routes.json
+scan_report*.txt
+scratch_*.py
+temp_mcp_render.html
