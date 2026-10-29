@@ -80,6 +80,7 @@
                         <span>{{ __('finance.badge_verified') }}</span>
                     </div>
 
+                    @if (\App\Support\Context::hasPermission('finance.cash_bank'))
                     <div class="flex items-center gap-2">
                         @if(!$acc->is_primary)
                             <form action="{{ route('finance.payout-accounts.set-primary', $acc->id) }}" method="POST">
@@ -100,6 +101,7 @@
                             </button>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
         @empty

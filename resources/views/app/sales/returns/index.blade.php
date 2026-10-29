@@ -256,10 +256,12 @@
                                         </svg>
                                         <h4 class="text-[15px] font-medium text-black dark:text-white">{{ __('sales.returns.empty_title') }}</h4>
                                         <p class="text-[13px] text-black/50 dark:text-white/50 max-w-sm">{{ __('sales.returns.empty_desc') }}</p>
+                                         @if (\App\Support\Context::hasPermission('sales.returns'))
                                          <a href="{{ route('sales.returns.create') }}"
                                              class="mt-2 h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] transition flex items-center gap-1.5">
                                              <span>{{ __('sales.returns.btn_create_first') }}</span>
                                          </a>
+                                         @endif
                                      </div>
                                  </td>
                             </tr>

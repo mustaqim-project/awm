@@ -230,12 +230,14 @@
             module="crm"
             :title="__('customers.title')"
             :subtitle="__('customers.subtitle')">
+            @if (\App\Support\Context::hasPermission('customers.export'))
             <a href="{{ route('customers.export') }}"
                 class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 w-full sm:w-auto"
                 title="Export seluruh direktori pelanggan ke file Excel (.xlsx)">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                 <span>Export Excel</span>
             </a>
+            @endif
 
             @if (\App\Support\Context::hasPermission('customers.create'))
                 <button type="button" @click="showImportModal = true"

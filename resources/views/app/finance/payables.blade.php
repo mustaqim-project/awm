@@ -9,12 +9,14 @@
     <x-module-header
         title="{{ __('finance.payables_page_title') }}"
         subtitle="{{ __('finance.payables_subtitle') }}">
+        @if (\App\Support\Context::hasPermission('finance.payables'))
         <a href="{{ route('finance.payables.export') }}"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
            title="{{ __('finance.tooltip_export_payables_excel') }}">
             <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
             <span>{{ __('finance.btn_export_excel') }}</span>
         </a>
+        @endif
 
         <button type="button" @click="showImportModal = true"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"

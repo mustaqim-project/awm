@@ -543,6 +543,7 @@
                                 </div>
                             </label>
 
+                            @if ($business && ($business->hasDineInFeature() || $business->isModuleEnabled('pos_dinein')))
                             <label
                                 class="flex items-start gap-3 p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 cursor-pointer hover:bg-black/[0.04] dark:hover:bg-white/[0.05] transition min-h-[48px]">
                                 <input type="checkbox" name="pos_auto_send_kds" value="1"
@@ -556,6 +557,7 @@
                                     <span class="text-[11px] text-black/50 dark:text-white/50 block mt-0.5">{{ __('settings.desc_auto_send_kds') }}</span>
                                 </div>
                             </label>
+                            @endif
                         </div>
                     </div>
                 @endif

@@ -9,12 +9,14 @@
     <x-module-header
         :title="__('finance.receivables_title')"
         :subtitle="__('finance.receivables_subtitle')">
+        @if (\App\Support\Context::hasPermission('finance.receivables'))
         <a href="{{ route('finance.receivables.export') }}"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
            title="{{ __('finance.receivables_export_tooltip') }}">
             <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
             <span>{{ __('finance.btn_export_excel') }}</span>
         </a>
+        @endif
 
         <button type="button" @click="showImportModal = true"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"

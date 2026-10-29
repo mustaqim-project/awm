@@ -125,6 +125,7 @@
                     @endif
                 </div>
 
+                @if (\App\Support\Context::hasPermission('finance.cash_bank'))
                 {{-- Action Bar --}}
                 <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/10 text-xs">
                     <form action="{{ route('finance.edc-terminals.toggle', $term->id) }}" method="POST">
@@ -144,6 +145,7 @@
                         </button>
                     </form>
                 </div>
+                @endif
             </div>
         @empty
             <div class="col-span-full py-16 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-8 text-center space-y-3">

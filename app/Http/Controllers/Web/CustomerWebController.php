@@ -23,7 +23,8 @@ final class CustomerWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:customers.view', only: ['index', 'export', 'downloadTemplate']),
+            new Middleware('require.permission:customers.view', only: ['index', 'downloadTemplate']),
+            new Middleware('require.permission:customers.export', only: ['export']),
             new Middleware('require.permission:customers.create', only: ['store', 'previewImport', 'executeImport']),
             new Middleware('require.permission:customers.edit', only: ['update']),
             new Middleware('require.permission:customers.delete', only: ['destroy']),

@@ -949,6 +949,7 @@
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                         <span class="hidden sm:inline">{{ __('hrm.btn_export_excel') }}</span>
                     </a>
+                    @if (\App\Support\Context::hasPermission('users.manage'))
                     <button type="button" @click="showImportEmployeeModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_import_employees_excel') }}">
@@ -960,6 +961,7 @@
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>{{ __('hrm.btn_add_employee') }}</span>
                     </button>
+                    @endif
                 </div>
             </template>
 
@@ -971,12 +973,14 @@
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                         <span class="hidden sm:inline">{{ __('hrm.btn_export_attendance') }}</span>
                     </a>
+                    @if (\App\Support\Context::hasPermission('users.manage'))
                     <button type="button" @click="showImportAttendanceModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_import_fingerprint') }}">
                         <i data-lucide="fingerprint" class="w-4 h-4 text-[#34C759]"></i>
                         <span class="hidden sm:inline">{{ __('hrm.btn_import_fingerprint') }}</span>
                     </button>
+                    @endif
                     <button type="button" @click="startFaceAttendance('in')"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
                         <i data-lucide="scan-face" class="w-4 h-4"></i>

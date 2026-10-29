@@ -234,7 +234,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Customers Management (Commercial CRM)
         Route::get('/customers', [CustomerWebController::class, 'index'])->middleware('require.permission:customers.view')->name('customers.index');
-        Route::get('/customers/export', [CustomerWebController::class, 'export'])->middleware('require.permission:customers.view')->name('customers.export');
+        Route::get('/customers/export', [CustomerWebController::class, 'export'])->middleware('require.permission:customers.export')->name('customers.export');
         Route::get('/customers/template', [CustomerWebController::class, 'downloadTemplate'])->middleware('require.permission:customers.view')->name('customers.template');
         Route::post('/customers/import/preview', [CustomerWebController::class, 'previewImport'])->middleware('require.permission:customers.create')->name('customers.import.preview');
         Route::post('/customers/import/execute', [CustomerWebController::class, 'executeImport'])->middleware(['require.permission:customers.create', 'entitlement:customer'])->name('customers.import.execute');
