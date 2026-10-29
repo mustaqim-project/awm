@@ -1,12 +1,20 @@
 @php
     use App\Services\Seo\SeoMetadataService;
 
-    // 1. Resolve Title (Single source of truth)
-    $rawTitle = $title ?? (View::hasSection('title') ? View::yieldContent('title') : null);
+    // 0. Preconfigured page SEO from config/seo.php (Prompt 2 compliant single source of truth)
+    $pageSeo = SeoMetadataService::getPageSeo();
+    $isRootPath = (Request::path() === '/' || Request::path() === '');
+    $adminCustomTitle = $isRootPath ? \App\Models\SystemSetting::get('seo_meta_title') : null;
+    $adminCustomDesc = $isRootPath ? \App\Models\SystemSetting::get('seo_meta_description') : null;
+    $adminCustomOgTitle = $isRootPath ? \App\Models\SystemSetting::get('seo_og_title') : null;
+    $adminCustomOgDesc = $isRootPath ? \App\Models\SystemSetting::get('seo_og_description') : null;
+
+    // 1. Resolve Title (Single source of truth with admin CMS override capability)
+    $rawTitle = $adminCustomTitle ?: ($pageSeo['title'] ?? ($title ?? (View::hasSection('title') ? View::yieldContent('title') : null)));
     $resolvedTitle = SeoMetadataService::cleanTitle($rawTitle);
 
     // 2. Resolve Meta Description
-    $rawDesc = $description ?? (View::hasSection('description') ? View::yieldContent('description') : null);
+    $rawDesc = $adminCustomDesc ?: ($pageSeo['description'] ?? ($description ?? (View::hasSection('description') ? View::yieldContent('description') : null)));
     if (empty($rawDesc)) {
         $rawDesc = \App\Models\SystemSetting::get(
             'seo_meta_description',
@@ -33,19 +41,27 @@
     $resolvedOgType = $type ?? (View::hasSection('og_type') ? trim((string) View::yieldContent('og_type')) : 'website');
 
     // 7. Resolve OG Title & OG Description
-    $rawOgTitle = $ogTitle ?? (View::hasSection('og_title') ? View::yieldContent('og_title') : $resolvedTitle);
+    $rawOgTitle = $adminCustomOgTitle ?: ($pageSeo['og_title'] ?? $pageSeo['title'] ?? ($ogTitle ?? (View::hasSection('og_title') ? View::yieldContent('og_title') : $resolvedTitle)));
     $resolvedOgTitle = SeoMetadataService::cleanTitle((string) $rawOgTitle);
 
-    $rawOgDesc = $ogDescription ?? (View::hasSection('og_description') ? View::yieldContent('og_description') : $resolvedDesc);
+    $rawOgDesc = $adminCustomOgDesc ?: ($pageSeo['og_description'] ?? $pageSeo['description'] ?? ($ogDescription ?? (View::hasSection('og_description') ? View::yieldContent('og_description') : $resolvedDesc)));
     $resolvedOgDesc = SeoMetadataService::cleanText((string) $rawOgDesc, 160);
 
     // 8. Resolve Twitter Card
     $resolvedTwitterCard = $twitterCard ?? (View::hasSection('twitter_card') ? View::yieldContent('twitter_card') : 'summary_large_image');
     $resolvedTwitterSite = $twitterSite ?? \App\Models\SystemSetting::get('seo_twitter_site', '@cooca_id');
 
-    // 9. Resolve Robots (Enforces noindex for test & review stores - Prompt 3 compliant)
+    // 9. Resolve Robots (Enforces noindex for test & demo stores - Prompt 3 & 5 compliant)
+    $isDemoStore = isset($business) && (bool) ($business->is_demo ?? false);
     $isTestStore = (isset($business) && (bool) ($business->is_test ?? false)) || !empty($noindex);
-    $resolvedRobots = $isTestStore ? 'noindex, nofollow' : SeoMetadataService::resolveRobots($robots ?? null, false);
+
+    if ($isTestStore) {
+        $resolvedRobots = 'noindex, nofollow';
+    } elseif ($isDemoStore) {
+        $resolvedRobots = 'noindex, follow';
+    } else {
+        $resolvedRobots = SeoMetadataService::resolveRobots($robots ?? null, false);
+    }
 
     // 10. Resolve Author (Keywords removed per SEO best practices)
     $resolvedAuthor = $author ?? (View::hasSection('author') ? View::yieldContent('author') : \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia'));

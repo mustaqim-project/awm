@@ -2,7 +2,6 @@
 
 @section('title', 'Peta Situs (HTML Sitemap) | COOCA')
 @section('description', 'Daftar lengkap seluruh halaman resmi COOCA: modul POS, ERP, kalkulator bisnis gratis, solusi industri, template pembukuan, dan direktori bisnis.')
-@section('keywords', 'sitemap cooca, peta situs, navigasi Cooca, daftar kalkulator bisnis, direktori software kasir')
 
 @section('og_title', 'Peta Situs (HTML Sitemap) | COOCA')
 @section('og_description', 'Daftar lengkap struktur navigasi, solusi industri, alat kalkulator, dan halaman resmi COOCA.')

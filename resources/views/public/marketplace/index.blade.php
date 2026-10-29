@@ -1,10 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Marketplace UMKM Indonesia | Cooca')
+@section('title', 'Marketplace UMKM Indonesia | COOCA')
 @section('description', 'Belanja produk UMKM lokal terpercaya langsung dari pemilik usaha. Kuliner, busana, kerajinan, jasa, dan ribuan produk lainnya.')
-@section('keywords', 'marketplace umkm, belanja produk lokal, toko online umkm, produk umkm indonesia, cooca marketplace')
 @section('canonical', route('marketplace.index'))
-@section('og_title', 'Marketplace UMKM Indonesia | Cooca')
+@section('og_title', 'Marketplace UMKM Indonesia | COOCA')
 @section('og_description', 'Belanja produk UMKM lokal terpercaya langsung dari pemilik usaha tanpa perantara.')
 @section('og_type', 'website')
 
@@ -13,7 +12,7 @@
 {
   "@@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Cooca Marketplace",
+  "name": "COOCA Marketplace",
   "url": "{{ route('marketplace.index') }}",
   "potentialAction": {
     "@type": "SearchAction",
@@ -247,7 +246,7 @@
         </section>
 
         {{-- Popular Products Section --}}
-        @if ($popularProducts->isNotEmpty())
+        @if ($popularProducts->count() >= 3)
             <section class="space-y-6">
                 <div class="flex items-center justify-between gap-4 border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
                     <div>

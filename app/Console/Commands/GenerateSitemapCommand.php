@@ -28,31 +28,26 @@ final class GenerateSitemapCommand extends Command
      */
     public function handle(SitemapService $sitemapService): int
     {
-        $this->info('Memulai pembuatan sitemap XML untuk COOCA...');
+        $this->info('Memulai pembuatan sitemap XML split index untuk COOCA...');
 
-        // 1. Main sitemap.xml (seluruh halaman publik)
-        $customPath = $this->option('path');
-        $targetFile = is_string($customPath) && $customPath !== ''
-            ? $customPath
-            : public_path('sitemap.xml');
+        $files = $sitemapService->saveAllToPublic();
 
-        $savedMain = $sitemapService->saveToPublic($targetFile);
-        $totalUrls = count($sitemapService->getPublicUrls());
+        $totalPages = count($sitemapService->getPagesUrls());
+        $totalBlog = count($sitemapService->getBlogUrls());
+        $totalMarketplace = count($sitemapService->getMarketplaceUrls());
+        $totalTools = count($sitemapService->getToolsUrls());
+        $totalAll = count($sitemapService->getPublicUrls());
 
-        // 2. Sitemap khusus blog: sitemap_blog.xml (hub + semua artikel terbit)
-        $savedBlog = $sitemapService->saveBlogToPublic();
-        $totalBlogUrls = count($sitemapService->getBlogUrls());
-
-        $this->info('✓ Berhasil membuat sitemap XML!');
+        $this->info('✓ Berhasil membuat sitemap XML index dan sub-sitemaps!');
         $this->table(
-            ['Parameter', 'Nilai'],
+            ['Sitemap', 'Path File', 'Total URL'],
             [
-                ['Target File (Umum)', $savedMain],
-                ['Total URL Terindeks (Umum)', (string) $totalUrls],
-                ['Target File (Blog)', $savedBlog],
-                ['Total URL Terindeks (Blog)', (string) $totalBlogUrls],
-                ['Skema Indeks', 'INDEX, FOLLOW (Public Pages Only)'],
-                ['Timestamp', now()->toDateTimeString()],
+                ['Sitemap Index (Utama)', $files['index'], '4 sub-sitemaps'],
+                ['Pages (Marketing & Solusi)', $files['pages'], (string) $totalPages],
+                ['Blog (Hub & Artikel)', $files['blog'], (string) $totalBlog],
+                ['Marketplace & Storefronts', $files['marketplace'], (string) $totalMarketplace],
+                ['Tools (Kalkulator & Template)', $files['tools'], (string) $totalTools],
+                ['TOTAL AGREGAT URL TERINDEKS', '-', (string) $totalAll],
             ]
         );
 

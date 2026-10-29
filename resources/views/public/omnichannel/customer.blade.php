@@ -109,9 +109,8 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.75rem] xl:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.22] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Satu Pandangan Utuh Pelanggan <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Dari Toko Fisik Sampai Marketplace</span>
-                            </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
                         </div>
 
                         <!-- Subtitle Copy -->

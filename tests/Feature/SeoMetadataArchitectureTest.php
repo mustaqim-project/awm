@@ -20,24 +20,24 @@ final class SeoMetadataArchitectureTest extends TestCase
         $response->assertStatus(200);
 
         // Core Meta Tags
-        $response->assertSee('<title>COOCA — Business Operating System &amp; Omnichannel ERP</title>', false);
-        $response->assertSee('<meta name="description" content="Platform terintegrasi kasir POS, akuntansi riil, stok resep bahan baku, WhatsApp otomatis, dan toko online untuk UMKM Indonesia.">', false);
+        $response->assertSee('<title>COOCA: Aplikasi Kasir, Stok &amp; Pembukuan UMKM Gratis</title>', false);
+        $response->assertSee('<meta name="description" content="Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp &amp; toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.">', false);
         $response->assertSee('<link rel="canonical" href="' . url('/') . '">', false);
         $response->assertSee('<meta name="robots" content="index, follow">', false);
 
         // Open Graph Metadata
         $response->assertSee('<meta property="og:type" content="website">', false);
-        $response->assertSee('<meta property="og:site_name" content="Cooca">', false);
+        $response->assertSee('<meta property="og:site_name" content="COOCA">', false);
         $response->assertSee('<meta property="og:locale" content="id_ID">', false);
         $response->assertSee('<meta property="og:url" content="' . url('/') . '">', false);
-        $response->assertSee('<meta property="og:title" content="COOCA — Business Operating System &amp; Omnichannel ERP">', false);
+        $response->assertSee('<meta property="og:title" content="COOCA: Aplikasi Kasir, Stok &amp; Pembukuan UMKM Gratis">', false);
         $response->assertSee('<meta property="og:image:width" content="1200">', false);
         $response->assertSee('<meta property="og:image:height" content="630">', false);
         $response->assertSee('<meta property="og:image" content="' . asset('assets/seo/cooca-og-default.jpg') . '">', false);
 
         // Twitter / X Card
         $response->assertSee('<meta name="twitter:card" content="summary_large_image">', false);
-        $response->assertSee('<meta name="twitter:title" content="COOCA — Business Operating System &amp; Omnichannel ERP">', false);
+        $response->assertSee('<meta name="twitter:title" content="COOCA: Aplikasi Kasir, Stok &amp; Pembukuan UMKM Gratis">', false);
         $response->assertSee('<meta name="twitter:image" content="' . asset('assets/seo/cooca-og-default.jpg') . '">', false);
 
         // Structured Data Schema.org
@@ -54,11 +54,12 @@ final class SeoMetadataArchitectureTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertSee('<title>Daftar Harga &amp; Paket Transparan Tanpa Biaya Tersembunyi | COOCA</title>', false);
+        $response->assertSee('<title>Harga Aplikasi Kasir &amp; ERP UMKM Mulai Rp0 | COOCA</title>', false);
+        $this->assertMatchesRegularExpression('/<meta name="description" content="[^"]+">/', $response->getContent());
         $response->assertSee('<link rel="canonical" href="' . url('/pricing') . '">', false);
         $response->assertSee('<meta property="og:url" content="' . url('/pricing') . '">', false);
-        $response->assertSee('<meta property="og:title" content="Daftar Harga &amp; Paket Transparan | COOCA">', false);
-        $response->assertSee('<meta name="twitter:title" content="Daftar Harga &amp; Paket Transparan | COOCA">', false);
+        $response->assertSee('<meta property="og:title" content="Harga Aplikasi Kasir &amp; ERP UMKM Mulai Rp0 | COOCA">', false);
+        $response->assertSee('<meta name="twitter:title" content="Harga Aplikasi Kasir &amp; ERP UMKM Mulai Rp0 | COOCA">', false);
     }
 
     /**
@@ -226,4 +227,3 @@ final class SeoMetadataArchitectureTest extends TestCase
         $response->assertSee('"image": ["' . $expectedProductImg . '"]', false);
     }
 }
-

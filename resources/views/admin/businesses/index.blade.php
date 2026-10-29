@@ -5,7 +5,25 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="{ showSuspendModal: false, suspendBizName: '', suspendActionUrl: '' }">
+    <div class="space-y-6" x-data="{
+        showSuspendModal: false,
+        suspendBizName: '',
+        suspendActionUrl: '',
+        selectedIds: [],
+        showBulkSuspendModal: false,
+        bulkSuspendReason: '',
+        toggleSelectAll(e) {
+            if (e.target.checked) {
+                this.selectedIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
+            } else {
+                this.selectedIds = [];
+            }
+        },
+        isAllSelected() {
+            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
+            return pageIds.length > 0 && pageIds.every(id => this.selectedIds.includes(id));
+        }
+    }">
 
         <!-- Bento KPI Summary Grid (Adaptive 2-Column Micro-Bento Mobile, 4-Column Desktop) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -131,6 +149,13 @@
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02]">
+                            <th class="w-10 px-4 py-3.5 text-center">
+                                <input type="checkbox"
+                                    @change="toggleSelectAll($event)"
+                                    :checked="isAllSelected()"
+                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
+                                    title="Pilih Semua di Halaman Ini">
+                            </th>
                             <th class="px-5 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Bisnis &amp; Identitas</th>
                             <th class="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Paket Langganan</th>
                             <th class="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Pengguna &amp; Tim</th>
@@ -141,7 +166,14 @@
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($businesses as $biz)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
+                                :class="selectedIds.includes(String({{ $biz->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                <td class="w-10 px-4 py-4 text-center">
+                                    <input type="checkbox"
+                                        :value="String({{ $biz->id }})"
+                                        x-model="selectedIds"
+                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                </td>
                                 <td class="px-5 py-4">
                                     <div class="font-bold text-black dark:text-white text-[14px]">
                                         <a href="{{ route('admin.businesses.show', $biz->id) }}"
@@ -236,7 +268,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-5 py-12 text-center">
+                                <td colspan="7" class="px-5 py-12 text-center">
                                     <div class="w-12 h-12 mx-auto rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/30 dark:text-white/30 mb-2.5">
                                         <i data-lucide="building" class="w-6 h-6" stroke-width="1.5"></i>
                                     </div>
@@ -254,6 +286,102 @@
                     {{ $businesses->links() }}
                 </div>
             @endif
+        </div>
+
+        <!-- Floating Bulk Action Toolbar (Bento Apple HIG Floating Pill) -->
+        <div x-show="selectedIds.length > 0"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            x-cloak
+            class="fixed bottom-6 inset-x-4 max-w-xl mx-auto z-40 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] rounded-[20px] p-3 shadow-[0_12px_32px_rgba(0,0,0,0.18)] flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2 pl-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse"></span>
+                <span class="text-[13px] font-bold text-black dark:text-white" x-text="`${selectedIds.length} bisnis dipilih`"></span>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Form Bulk Activate -->
+                <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="inline"
+                    onsubmit="return AppAlert.confirmSubmit(event, this, 'Aktifkan seluruh bisnis terpilih?', 'Aktifkan Masal?', 'info')">
+                    @csrf
+                    <input type="hidden" name="action" value="activate">
+                    <template x-for="id in selectedIds" :key="'act-' + id">
+                        <input type="hidden" name="ids[]" :value="id">
+                    </template>
+                    <button type="submit"
+                        class="h-9 px-3.5 rounded-[12px] text-[12.5px] font-bold text-white bg-[#34C759] hover:bg-[#30D158] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                        <i data-lucide="check-circle" class="w-3.5 h-3.5" stroke-width="2"></i>
+                        <span>Aktifkan Masal</span>
+                    </button>
+                </form>
+
+                <!-- Bulk Suspend Button (Opens Modal) -->
+                <button type="button"
+                    @click="showBulkSuspendModal = true"
+                    class="h-9 px-3.5 rounded-[12px] text-[12.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#FF453A] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                    <i data-lucide="ban" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Suspend Masal</span>
+                </button>
+
+                <!-- Cancel Selection -->
+                <button type="button" @click="selectedIds = []"
+                    class="h-9 px-3 rounded-[12px] text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                    Batal
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Bulk Suspend Confirmation -->
+        <div x-show="showBulkSuspendModal" x-cloak
+            class="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="relative w-full max-w-md bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] rounded-[24px] shadow-2xl p-6 overflow-hidden"
+                @click.outside="showBulkSuspendModal = false">
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-[12px] bg-[#FF3B30]/10 flex items-center justify-center text-[#FF3B30] shrink-0 mt-0.5">
+                            <i data-lucide="alert-triangle" class="w-5 h-5" stroke-width="2"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">Suspend Masal Tenant Bisnis</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                <span class="font-bold text-[#FF3B30]" x-text="`${selectedIds.length} bisnis`"></span> akan dibekukan sekaligus dan transaksi publiknya dinonaktifkan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="action" value="suspend">
+                        <template x-for="id in selectedIds" :key="'susp-' + id">
+                            <input type="hidden" name="ids[]" :value="id">
+                        </template>
+
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                Alasan Penangguhan Masal <span class="text-[#FF3B30]">* (Wajib Diisi)</span>
+                            </label>
+                            <textarea name="reason" rows="3" required minlength="5" x-model="bulkSuspendReason"
+                                placeholder="Contoh: Pembekuan operasional platform / audit kepatuhan masal..."
+                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/40"></textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+                            <button type="button" @click="showBulkSuspendModal = false"
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm cursor-pointer inline-flex items-center gap-1.5">
+                                <i data-lucide="ban" class="w-4 h-4"></i>
+                                <span>Konfirmasi Suspend Masal</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <!-- Apple HIG Suspend Modal with Mandatory Reason -->

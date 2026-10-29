@@ -21,7 +21,8 @@
         ],
         'publisher' => [
             '@type' => 'Organization',
-            'name' => 'COOCA Indonesia',
+            'name' => 'COOCA',
+            'url' => url('/'),
             'logo' => [
                 '@type' => 'ImageObject',
                 'url' => asset('assets/image/1785229034_logo_dark.png'),
@@ -34,23 +35,68 @@
             '@id' => route('blog.show', $post->slug),
         ],
     ];
+
+    $breadcrumbSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Beranda',
+                'item' => url('/'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Blog',
+                'item' => url('/blog'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $post->title,
+                'item' => route('blog.show', $post->slug),
+            ],
+        ],
+    ];
+
+    $faqSchema = null;
+    if (preg_match('/<div class="faq-schema-json" style="display:none;">(.*?)<\/div>/s', (string) $post->content, $faqMatch)) {
+        $faqItems = json_decode(html_entity_decode($faqMatch[1]), true);
+        if (is_array($faqItems) && !empty($faqItems)) {
+            $faqSchema = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => $faqItems,
+            ];
+        }
+    }
 @endphp
 
-@section('title', ($post->meta_title ?? $post->title) . ' | COOCA Edukasi UMKM')
-@section('description', $post->meta_description ?? $post->excerpt)
-@section('og_title', ($post->meta_title ?? $post->title) . ' | COOCA')
-@section('og_description', $post->meta_description ?? $post->excerpt)
+@section('title', $post->resolved_seo_title)
+@section('description', $post->resolved_meta_description)
+@section('og_title', $post->resolved_seo_title)
+@section('og_description', $post->resolved_meta_description)
 @section('canonical', route('blog.show', $post->slug))
 @section('og_type', 'article')
 @section('og_image', $articleOgImage)
 @section('article_published_time', $post->published_at ? $post->published_at->toIso8601String() : $post->created_at->toIso8601String())
 @section('article_modified_time', $post->updated_at->toIso8601String())
-@section('article_author', $post->author_name ?? 'COOCA Indonesia')
+@section('article_author', $post->author_name ?? 'COOCA')
 
 @push('seo')
     <script type="application/ld+json">
     {!! json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
     </script>
+    <script type="application/ld+json">
+    {!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+    @if ($faqSchema)
+    <script type="application/ld+json">
+    {!! json_encode($faqSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+    @endif
 @endpush
 
 @push('styles')
@@ -450,7 +496,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </div>
                     <div class="min-w-0">
                         <div class="text-sm font-bold text-white truncate">{{ $post->author_name ?? 'Tim Edukasi COOCA' }}</div>
-                        <div class="text-xs text-slate-400 truncate hidden sm:block">Panduan UMKM terverifikasi</div>
+                        <div class="text-xs text-slate-400 truncate hidden sm:block">Panduan & Edukasi Praktis</div>
                     </div>
                 </div>
 
@@ -549,11 +595,49 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                         </div>
                     </div>
 
-                    {{-- Article footer — verification + share --}}
+                    {{-- Dasar Regulasi & Referensi Resmi Pemerintah (Prompt 10) --}}
+                    @if (in_array($post->topic_cluster, ['pajak', 'legalitas']) || str_contains($post->slug, 'nib') || str_contains($post->slug, 'pajak') || str_contains($post->slug, 'pph'))
+                    <div class="px-5 sm:px-8 lg:px-12 py-4 bg-amber-500/[0.04] dark:bg-amber-500/[0.08] border-t border-amber-500/20">
+                        <div class="text-xs font-bold text-amber-900 dark:text-amber-200 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i data-lucide="scale" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
+                            <span>Dasar Regulasi & Referensi Resmi Pemerintah RI</span>
+                        </div>
+                        <ul class="text-xs space-y-2 text-slate-700 dark:text-slate-300">
+                            @if ($post->topic_cluster === 'pajak' || str_contains($post->slug, 'pajak') || str_contains($post->slug, 'pph'))
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
+                                <span><strong>PP No. 55 Tahun 2022:</strong> Penyesuaian Pengaturan di Bidang Pajak Penghasilan (PPh Final UMKM 0,5% & Batas Bebas Pajak Omzet s.d. Rp500 Juta) — <a href="https://peraturan.bpk.go.id/Details/232490/pp-no-55-tahun-2022" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Dokumen Resmi BPK RI</a></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
+                                <span><strong>Direktorat Jenderal Pajak (DJP):</strong> Tata Cara Penyetoran & Pelaporan SPT Tahunan PPh Final UMKM — <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi DJP (pajak.go.id)</a></span>
+                            </li>
+                            @else
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
+                                <span><strong>Online Single Submission (OSS RBA):</strong> Penerbitan Nomor Induk Berusaha (NIB) Resmi Berbasis Risiko — <a href="https://oss.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi OSS BKPM (oss.go.id)</a></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
+                                <span><strong>UU No. 6 Tahun 2023:</strong> Kemudahan, Perlindungan, dan Pemberdayaan Koperasi dan Usaha Mikro, Kecil, dan Menengah — <a href="https://peraturan.bpk.go.id/Details/246419/uu-no-6-tahun-2023" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Database Peraturan BPK RI</a></span>
+                            </li>
+                            @endif
+                        </ul>
+                    </div>
+                    @endif
+
+                    {{-- Article footer — author + updated_at + share (Prompt 10) --}}
                     <div class="px-5 sm:px-8 lg:px-12 py-5 bg-[#F9F9FB] dark:bg-[#0D0D0F] border-t border-black/[0.04] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
-                            <span>Materi terverifikasi sesuai regulasi UMKM Indonesia</span>
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
+                            <span class="inline-flex items-center gap-1.5">
+                                <i data-lucide="user" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
+                                <span>Penulis: <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->author_name ?? 'Tim Edukasi COOCA' }}</strong></span>
+                            </span>
+                            <span class="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
+                            <span class="inline-flex items-center gap-1.5">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
+                                <span>Diperbarui: {{ $post->updated_at ? $post->updated_at->translatedFormat('d F Y') : ($post->created_at ? $post->created_at->translatedFormat('d F Y') : date('d F Y')) }}</span>
+                            </span>
                         </div>
                         <div class="flex items-center gap-2">
                             <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . ' — ' . url()->current()) }}"
@@ -571,15 +655,19 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </div>
                 </article>
 
-                {{-- CTA Banner — below article --}}
+                {{-- Contextual CTA Banner — below article (Prompt 9) --}}
+                @php
+                    $clusterKey = $post->topic_cluster ?? 'keuangan';
+                    $clusterData = \App\Console\Commands\SeoTopicClusterCommand::CLUSTERS[$clusterKey] ?? \App\Console\Commands\SeoTopicClusterCommand::CLUSTERS['keuangan'];
+                @endphp
                 <div class="mt-6 sm:mt-8 p-5 sm:p-7 rounded-[16px] sm:rounded-[20px] bg-gradient-to-br from-[#007AFF] to-[#0055CC] text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-[#007AFF]/15">
                     <div class="space-y-1.5 text-center sm:text-left">
-                        <div class="text-lg sm:text-xl font-extrabold tracking-tight">Kelola Kasir &amp; Laporan Otomatis</div>
-                        <p class="text-sm text-white/80 max-w-md">Sistem kasir gratis selamanya untuk UMKM. Catat penjualan dari smartphone tanpa biaya.</p>
+                        <div class="text-lg sm:text-xl font-extrabold tracking-tight">{!! $clusterData['title'] !!}</div>
+                        <p class="text-sm text-white/90 max-w-lg leading-relaxed">{!! $clusterData['desc'] !!}</p>
                     </div>
-                    <a href="{{ route('register') }}"
+                    <a href="{{ $clusterData['url'] }}"
                         class="art-touch art-focus min-h-[48px] px-6 rounded-[12px] bg-white text-[#007AFF] font-bold text-sm flex items-center gap-2 shrink-0 hover:bg-white/90 transition w-full sm:w-auto justify-center shadow-sm">
-                        <span>Daftar Gratis</span>
+                        <span>{!! $clusterData['btn'] !!}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>

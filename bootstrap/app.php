@@ -88,6 +88,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->web(append: [
+            \App\Http\Middleware\AllowVerifiedCrawlersMiddleware::class,
             \App\Http\Middleware\CheckBlockedIp::class,
             \App\Http\Middleware\WebSecurityHeaders::class,
             \App\Http\Middleware\SetLocaleMiddleware::class,

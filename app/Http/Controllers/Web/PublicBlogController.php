@@ -73,7 +73,7 @@ final class PublicBlogController extends Controller
     /**
      * Single post view.
      */
-    public function show(string $slug): View
+    public function show(string $slug): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         if (Post::count() === 0) {
             try {
@@ -83,7 +83,14 @@ final class PublicBlogController extends Controller
             }
         }
 
-        $post = Post::published()->where('slug', $slug)->firstOrFail();
+        $post = Post::published()->where('slug', $slug)->first();
+        if (! $post) {
+            $redirect = \App\Models\Redirect::findAndRecord('/blog/' . $slug);
+            if ($redirect) {
+                return redirect($redirect->target_url, $redirect->status_code);
+            }
+            abort(404);
+        }
 
         // Increment views only once per visitor per post (guards against bot inflation)
         $viewKey = 'post_viewed_' . $post->id;
@@ -95,7 +102,9 @@ final class PublicBlogController extends Controller
         $relatedPosts = Post::published()
             ->where('id', '!=', $post->id)
             ->where(function ($q) use ($post) {
-                if (!empty($post->category)) {
+                if (!empty($post->topic_cluster)) {
+                    $q->where('topic_cluster', $post->topic_cluster);
+                } elseif (!empty($post->category)) {
                     $q->where('category', $post->category);
                 } elseif (!empty($post->cluster)) {
                     $q->where('cluster', $post->cluster);

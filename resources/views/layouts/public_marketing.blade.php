@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="id" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8">
@@ -40,17 +40,17 @@
         $seoOgImageUrl =
             \App\Domain\Storage\AdminStorage::publicUrl($seoOgImageSetting) ?? asset('assets/seo/cooca-og-default.jpg');
 
-        $siteAppName = \App\Models\SystemSetting::get('app_name', 'Cooca');
-        $siteTagline = \App\Models\SystemSetting::get('site_tagline', 'Business Operating System & Omnichannel ERP');
+        $siteAppName = \App\Models\SystemSetting::get('app_name', 'COOCA');
+        $siteTagline = \App\Models\SystemSetting::get('site_tagline', 'Aplikasi Kasir POS & Software ERP UMKM');
         $seoMetaTitle = \App\Models\SystemSetting::get(
             'seo_meta_title',
-            'Cooca - Business Operating System & Omnichannel ERP',
+            'COOCA: Aplikasi Kasir POS & Software ERP UMKM Indonesia',
         );
         $seoMetaDesc = \App\Models\SystemSetting::get(
             'seo_meta_description',
-            'Cooca: Software kasir POS, pembukuan otomatis, omnichannel media sosial & AI Assistant gratis selamanya untuk UMKM Indonesia.',
+            'COOCA: Aplikasi kasir online gratis, pencatatan stok barang, dan laporan keuangan otomatis untuk UMKM Indonesia.',
         );
-        $seoAuthor = \App\Models\SystemSetting::get('seo_author', 'Cooca Indonesia');
+        $seoAuthor = \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia');
         $seoRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
         $seoCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url()->current();
         $seoOgTitle = \App\Models\SystemSetting::get('seo_og_title') ?: $seoMetaTitle;
@@ -91,7 +91,6 @@
     <link rel="icon" type="{{ $siteFaviconType }}" href="{{ $siteFaviconUrl }}">
     <link rel="shortcut icon" href="{{ $siteFaviconUrl }}">
     <link rel="apple-touch-icon" href="{{ $siteFaviconUrl }}">
-    @stack('seo')
 
     <!-- Google Analytics (GA4) -->
     @if (!empty($seoGaId))
@@ -168,9 +167,9 @@
         }
     </script>
 
-    <!-- Lucide Icons & Alpine.js -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
         :root {
@@ -484,7 +483,7 @@
             @keydown.escape.window="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false; mobileMenu = false"
             @resize.window="if (window.innerWidth >= 1024) mobileMenu = false">
             <div
-                class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 lg:h-[84px] flex items-center justify-between">
+                class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 lg:h-[84px] flex items-center justify-between gap-4">
 
                 <!-- Logo Cooca (Perbesar Skala Desktop & Mobile) -->
                 <a href="{{ route('landing') }}"
@@ -630,10 +629,11 @@
                                 <span>Login</span>
                             </a>
                             <a href="{{ route('register') }}"
-                                class="group relative inline-flex items-center justify-center gap-2 px-6 xl:px-7 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm xl:text-[14.5px] tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] min-h-[42px] xl:min-h-[44px] transition-all">
-                                <span>Coba COOCA Gratis</span>
+                                class="group relative inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0 px-4.5 xl:px-6 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm xl:text-[14.5px] tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] min-h-[44px] transition-all">
+                                <span class="hidden min-[1150px]:inline">Coba COOCA Gratis</span>
+                                <span class="inline min-[1150px]:hidden">Coba Gratis</span>
                                 <i data-lucide="arrow-right"
-                                    class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                                    class="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"></i>
                             </a>
                         @endif
                     </div>
@@ -1024,6 +1024,51 @@
                                         </span>
                                     </div>
                                 </a>
+                            </div>
+
+                            <!-- SUBMENU: USAHA KECIL & SPESIFIK (Prompt 5 Part B) -->
+                            <div class="pt-4 border-t border-slate-200/80 dark:border-white/10 space-y-2.5">
+                                <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                                    Solusi Usaha Kecil &amp; Mikro
+                                </p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <a href="{{ route('solusi.show', 'kasir-warung') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Warung Kelontong</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="coffee" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Kedai Kopi &amp; Kafe</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-kios') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="smartphone" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Konter HP &amp; Kios</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-salon') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="scissors" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Salon Kecantikan</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-barbershop') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="user-check" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Barbershop</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-irt') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="home" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Usaha Rumahan &amp; IRT</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'kasir-apotek') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="pill" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Apotek &amp; Toko Obat</span>
+                                    </a>
+                                    <a href="{{ route('solusi.show', 'aplikasi-catering') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                        <i data-lucide="utensils" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span>Catering &amp; Prasmanan</span>
+                                    </a>
+                                    <a href="/aplikasi-kasir-gratis" class="px-3 py-2 rounded-xl text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors flex items-center gap-2">
+                                        <i data-lucide="gift" class="w-3.5 h-3.5 text-emerald-500"></i>
+                                        <span>Kasir Gratis Rp0</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -1791,6 +1836,22 @@
                                     </div>
                                 </a>
                             </div>
+
+                            <!-- Usaha Kecil Submenu (Prompt 5 Part B) -->
+                            <div class="pt-2 border-t border-white/5 space-y-1.5">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Solusi Usaha Kecil</p>
+                                <div class="grid grid-cols-2 gap-1.5">
+                                    <a href="{{ route('solusi.show', 'kasir-warung') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Warung Kelontong</a>
+                                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Kedai Kopi</a>
+                                    <a href="{{ route('solusi.show', 'kasir-kios') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Konter HP</a>
+                                    <a href="{{ route('solusi.show', 'kasir-salon') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Salon Kecantikan</a>
+                                    <a href="{{ route('solusi.show', 'kasir-barbershop') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Barbershop</a>
+                                    <a href="{{ route('solusi.show', 'kasir-irt') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Usaha Rumahan</a>
+                                    <a href="{{ route('solusi.show', 'kasir-apotek') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Apotek &amp; Obat</a>
+                                    <a href="{{ route('solusi.show', 'aplikasi-catering') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Catering &amp; Porsi</a>
+                                    <a href="/aplikasi-kasir-gratis" @click="mobileMenu = false" class="p-2 rounded-lg bg-emerald-500/10 text-xs font-semibold text-emerald-300 hover:text-emerald-200 col-span-2">Aplikasi Kasir Gratis (Rp0)</a>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Showcase Banner Card: Konsultasi Solusi -->
@@ -2361,6 +2422,16 @@
                                 <a href="{{ route('public.solutions.services') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Jasa
                                     &amp; Service</a>
+                                <a href="/aplikasi-kasir-gratis"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block text-emerald-400 font-medium">Kasir Gratis (Rp0)</a>
+                                <a href="/aplikasi-kasir-android"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Android</a>
+                                <a href="/aplikasi-kasir-offline"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Offline</a>
+                                <a href="{{ route('solusi.show', 'kasir-apotek') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Apotek</a>
+                                <a href="{{ route('solusi.show', 'aplikasi-catering') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Aplikasi Catering</a>
                             </nav>
                         </div>
 
@@ -2423,7 +2494,7 @@
                     class="border-t border-white/10 text-slate-400 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-[13px]">
 
                     <div class="text-center sm:text-left space-y-1">
-                        <p>© {{ date('Y') }} Cooca. All rights reserved.</p>
+                        <p>© {{ date('Y') }} COOCA. All rights reserved.</p>
                         <p>
                             Founded by
                             <a href="https://www.linkedin.com/in/agung-mustaqim" target="_blank"
@@ -2659,6 +2730,10 @@
 
     {{-- Official Live Chat Widget (Laravel Broadcasting with Reverb) --}}
     @include('public.partials.live_chat_widget')
+
+    {{-- Unified Multi-Channel Tracking Engine & UU PDP Cookie Consent Banner --}}
+    @include('public.partials.tracking_pixels')
+    @include('public.partials.cookie_consent_banner')
 
     <!-- AppAlert (Centralized Alert & Confirm System) -->
     <script src="{{ asset('js/app-alert.js') }}"></script>

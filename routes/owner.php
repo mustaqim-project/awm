@@ -185,6 +185,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
         Route::post('/products/{product}/branch-prices', [ProductWebController::class, 'updateBranchPrices'])->middleware(['require.permission:products.edit', 'entitlement:branch_pricing'])->name('products.branch_prices.update');
         Route::post('/products', [ProductWebController::class, 'store'])->middleware(['require.permission:products.create', 'entitlement:product'])->name('products.store');
+        Route::post('/products/bulk-action', [ProductWebController::class, 'bulkAction'])->middleware('require.permission:products.edit')->name('products.bulk-action');
         Route::post('/products/toggle-pos-images', [ProductWebController::class, 'togglePosImageVisibility'])->middleware('require.permission:products.edit')->name('products.toggle-pos-images');
         Route::post('/products/{product}/toggle-setting', [ProductWebController::class, 'toggleSetting'])->middleware('require.permission:products.edit')->name('products.toggle-setting');
         Route::put('/products/{product}', [ProductWebController::class, 'update'])->middleware('require.permission:products.edit')->name('products.update');
@@ -197,6 +198,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::middleware('require.permission:products.view')->group(function (): void {
             Route::get('/services', [ServiceWebController::class, 'index'])->name('services.index');
         });
+        Route::post('/services/bulk-action', [ServiceWebController::class, 'bulkAction'])->middleware('require.permission:products.edit')->name('services.bulk-action');
         Route::post('/services', [ServiceWebController::class, 'store'])->middleware(['require.permission:products.create', 'entitlement:product'])->name('services.store');
         Route::put('/services/{product}', [ServiceWebController::class, 'update'])->middleware('require.permission:products.edit')->name('services.update');
         Route::delete('/services/{product}', [ServiceWebController::class, 'destroy'])->middleware('require.permission:products.delete')->name('services.destroy');

@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', ($search ? "Hasil Pencarian: {$search}" : 'Katalog Produk & Direktori UMKM') . ' | Cooca Marketplace')
+@section('title', ($search ? Str::limit("Hasil: {$search}", 40) : 'Katalog Produk & Direktori UMKM') . ' | COOCA')
 @section('description',
     'Jelajahi dan temukan aneka produk lokal berkualitas dari ribuan bisnis UMKM Indonesia. Belanja langsung, dukung produk lokal terpercaya.')
 
 @section('canonical', route('marketplace.search'))
-@section('og_title', ($search ? "Hasil Pencarian: {$search}" : 'Katalog Produk & Direktori UMKM') . ' | Cooca Marketplace')
+@section('og_title', ($search ? Str::limit("Hasil: {$search}", 40) : 'Katalog Produk & Direktori UMKM') . ' | COOCA')
 @section('og_description', 'Jelajahi dan temukan aneka produk lokal berkualitas dari ribuan bisnis UMKM Indonesia.')
 @section('og_type', 'website')
 @if(request()->filled('q') || request()->filled('category') || request()->filled('city') || request()->filled('sort') || request()->filled('business_type'))
@@ -17,7 +17,7 @@
     {
       "@@context": "https://schema.org",
       "@type": "SearchResultsPage",
-      "name": "Pencarian Produk Cooca Marketplace",
+      "name": "Pencarian Produk COOCA Marketplace",
       "url": "{{ route('marketplace.search') }}"
     }
     </script>

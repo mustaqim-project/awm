@@ -1,19 +1,18 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Hubungi Tim Dukungan Cooca | WhatsApp Resmi ' . $officialWhatsapp)
-@section('description', 'Hubungi tim konsultan dan customer service Cooca. Dapatkan bantuan teknis seputar aplikasi kasir, kalkulator HPP, atau pertanyaan kemitraan.')
-@section('og_title', 'Hubungi Tim Dukungan Cooca | WhatsApp Resmi ' . $officialWhatsapp)
-@section('og_description', 'Hubungi tim konsultan dan customer service Cooca. Dapatkan bantuan teknis seputar aplikasi kasir atau kemitraan.')
+@section('title', 'Hubungi Tim Dukungan COOCA: Konsultasi & Bantuan Resmi')
+@section('description', 'Hubungi tim konsultan dan customer service resmi COOCA. Bantuan teknis aplikasi kasir POS, kalkulator HPP, pembukuan, atau kemitraan bisnis UMKM.')
+@section('og_title', 'Hubungi Tim Dukungan COOCA: Konsultasi & Bantuan Resmi')
+@section('og_description', 'Hubungi tim konsultan dan customer service resmi COOCA. Bantuan teknis aplikasi kasir POS atau kemitraan.')
 @section('canonical', route('contact'))
 @section('og_type', 'website')
-@section('keywords', 'kontak Cooca, whatsapp cooca, customer service software kasir, support cooca id, bantuan teknis aplikasi kasir')
 
     @push('seo')
         <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
       "@@type": "ContactPage",
-      "name": "Kontak Dukungan Cooca",
+      "name": "Kontak Dukungan COOCA",
       "url": "{{ route('contact') }}",
       "telephone": "{{ $officialWhatsapp }}"
     }

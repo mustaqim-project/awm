@@ -206,13 +206,12 @@ final class PublicStorefrontController extends Controller
      */
     public function checkout(Request $request, string $slug): View|RedirectResponse
     {
-        // 1. Enforce Customer Authentication
         if (auth('customer')->guest()) {
             return redirect()->to('/' . $slug . '/login?redirect=' . urlencode($request->fullUrl()))
                 ->with('info', 'Silakan masuk ke akun pelanggan Anda untuk melanjutkan ke checkout.');
         }
 
-        // 2. Enforce Complete Profile & WhatsApp OTP Verification
+        // Enforce Complete Profile & WhatsApp OTP Verification for authenticated customers.
         $customer = auth('customer')->user();
         if ($customer && ! $customer->isProfileComplete()) {
             if (! $request->session()->has('url.intended')) {
@@ -405,10 +404,12 @@ final class PublicStorefrontController extends Controller
     {
         $business = Business::where('slug', $slug)
             ->where('is_active', true)
+            ->whereNull('suspended_at')
             ->first();
 
         if (! $business) {
             $business = Business::where('is_active', true)
+                ->whereNull('suspended_at')
                 ->get()
                 ->first(fn (Business $candidate): bool => Str::slug($candidate->name) === $slug);
         }

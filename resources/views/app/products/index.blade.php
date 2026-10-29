@@ -6,6 +6,41 @@
 
 @section('content')
     <div class="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
+        selectedProductIds: [],
+        toggleSelectAllProducts(e) {
+            if (e.target.checked) {
+                this.selectedProductIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
+            } else {
+                this.selectedProductIds = [];
+            }
+        },
+        isAllProductsSelected() {
+            const pageIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
+            return pageIds.length > 0 && pageIds.every(id => this.selectedProductIds.includes(id));
+        },
+        submitBulkProduct(action, confirmTitle, confirmText, icon = 'question') {
+            const form = this.$refs.bulkProductForm;
+            if (!form) return;
+            this.$refs.bulkProductAction.value = action;
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: confirmTitle,
+                    text: confirmText,
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonColor: action === 'delete' ? '#FF3B30' : '#007AFF',
+                    cancelButtonColor: '#8E8E93',
+                    confirmButtonText: 'Ya, Lanjutkan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            } else if (confirm(confirmTitle + '\n' + confirmText)) {
+                form.submit();
+            }
+        },
         showAddModal: false,
         showEditModal: {{ $editProduct ? 'true' : 'false' }},
         showAddCategoryModal: false,
@@ -915,11 +950,18 @@
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <x-table-sort-th :col="0" type="string" :title="__('products.th_product_name_barcode')" class="whitespace-nowrap min-w-[280px]" />
-                            <x-table-sort-th :col="1" type="string" :title="__('products.th_category')" class="whitespace-nowrap min-w-[170px]" />
-                            <x-table-sort-th :col="2" type="string" :title="__('products.th_output_unit')" class="whitespace-nowrap min-w-[140px]" />
-                            <x-table-sort-th :col="3" type="number" :title="__('products.th_effective_cost')" align="right" class="whitespace-nowrap min-w-[130px]" />
-                            <x-table-sort-th :col="4" type="number" :title="__('products.th_selling_price')" align="right" class="whitespace-nowrap min-w-[140px]" />
+                            <th class="w-10 px-4 py-3 text-center">
+                                <input type="checkbox"
+                                    :checked="isAllProductsSelected()"
+                                    @change="toggleSelectAllProducts($event)"
+                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
+                                    title="Pilih Semua Produk">
+                            </th>
+                            <x-table-sort-th :col="1" type="string" :title="__('products.th_product_name_barcode')" class="whitespace-nowrap min-w-[280px]" />
+                            <x-table-sort-th :col="2" type="string" :title="__('products.th_category')" class="whitespace-nowrap min-w-[170px]" />
+                            <x-table-sort-th :col="3" type="string" :title="__('products.th_output_unit')" class="whitespace-nowrap min-w-[140px]" />
+                            <x-table-sort-th :col="4" type="number" :title="__('products.th_effective_cost')" align="right" class="whitespace-nowrap min-w-[130px]" />
+                            <x-table-sort-th :col="5" type="number" :title="__('products.th_selling_price')" align="right" class="whitespace-nowrap min-w-[140px]" />
                             <th
                                 class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 text-center whitespace-nowrap min-w-[340px]">
                                 {{ __('products.th_channels_status') }}</th>
@@ -937,7 +979,14 @@
                                     ? (float) $latestVer->hpp_per_unit
                                     : (float) $prod->base_cost;
                             @endphp
-                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group">
+                            <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group"
+                                :class="selectedProductIds.includes(String({{ $prod->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                <td class="w-10 px-4 py-3.5 text-center">
+                                    <input type="checkbox"
+                                        :value="String({{ $prod->id }})"
+                                        x-model="selectedProductIds"
+                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                </td>
                                 <td data-sort-value="{{ strtolower($prod->name) }}" class="py-3.5 px-5 font-medium text-black dark:text-white">
                                     <div class="flex items-center gap-3">
                                         <div
@@ -1182,7 +1231,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="py-14 text-center text-black/40 dark:text-white/40">
+                                <td colspan="8" class="py-14 text-center text-black/40 dark:text-white/40">
                                     {{ __('products.empty_catalog') }}
                                 </td>
                             </tr>
@@ -1203,6 +1252,18 @@
         <!-- 5. MOBILE GROUPED INSET LIST (Standar iOS List View)   -->
         <!-- ===================================================== -->
         <div class="sm:hidden space-y-3">
+            @if($products->count() > 0)
+                <div class="flex items-center justify-between px-1 text-[13px] text-black/60 dark:text-white/60">
+                    <label class="inline-flex items-center gap-2 cursor-pointer font-medium select-none">
+                        <input type="checkbox"
+                            :checked="isAllProductsSelected()"
+                            @change="toggleSelectAllProducts($event)"
+                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                        <span>Pilih Semua di Halaman Ini</span>
+                    </label>
+                    <span x-show="selectedProductIds.length > 0" class="text-[12px] font-bold text-[#007AFF]" x-text="`${selectedProductIds.length} dipilih`"></span>
+                </div>
+            @endif
             @forelse($products as $prod)
                 @php
                     $activeModel = $prod->costModels->first();
@@ -1210,9 +1271,14 @@
                     $effectiveHpp = $latestVer ? (float) $latestVer->hpp_per_unit : (float) $prod->base_cost;
                 @endphp
                 <div
-                    class="p-4 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-3 shadow-sm">
+                    class="p-4 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-3 shadow-sm transition-all"
+                    :class="selectedProductIds.includes(String({{ $prod->id }})) ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <input type="checkbox"
+                                :value="String({{ $prod->id }})"
+                                x-model="selectedProductIds"
+                                class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
                             <div
                                 class="w-11 h-11 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
                                 @if ($prod->image_url)
@@ -3226,6 +3292,154 @@
                 </div>
             </template>
         @endif
+
+        <!-- ===================================================== -->
+        <!-- 11. FLOATING BENTO BULK ACTION TOOLBAR                -->
+        <!-- ===================================================== -->
+        <div x-show="selectedProductIds.length > 0"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            x-cloak
+            class="fixed bottom-6 inset-x-4 max-w-4xl mx-auto z-40 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] rounded-[22px] p-2.5 sm:p-3 shadow-[0_16px_36px_rgba(0,0,0,0.22)] flex flex-wrap items-center justify-between gap-2.5">
+            
+            <div class="flex items-center gap-2 pl-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse"></span>
+                <span class="text-[13px] font-bold text-black dark:text-white" x-text="`${selectedProductIds.length} produk dipilih`"></span>
+            </div>
+
+            <!-- Hidden Form for Bulk Action Submission -->
+            <form x-ref="bulkProductForm" method="POST" action="{{ route('products.bulk-action') }}" class="hidden">
+                @csrf
+                <input type="hidden" name="action" x-ref="bulkProductAction" value="">
+                <template x-for="id in selectedProductIds" :key="'bulk-prod-' + id">
+                    <input type="hidden" name="ids[]" :value="id">
+                </template>
+            </form>
+
+            <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <!-- Aktifkan Masal -->
+                <button type="button"
+                    @click="submitBulkProduct('activate', 'Aktifkan Produk Terpilih?', `Aktifkan ${selectedProductIds.length} produk terpilih sekaligus?`, 'question')"
+                    class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#34C759] hover:bg-[#30D158] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Aktifkan</span>
+                </button>
+
+                <!-- Nonaktifkan Masal -->
+                <button type="button"
+                    @click="submitBulkProduct('deactivate', 'Nonaktifkan Produk Terpilih?', `Nonaktifkan ${selectedProductIds.length} produk terpilih? Produk tidak akan aktif di transaksi baru.`, 'warning')"
+                    class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-black/70 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="eye-off" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Nonaktifkan</span>
+                </button>
+
+                <!-- Dropdown: Tampil Dimana Aja -->
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button type="button"
+                        @click="open = !open"
+                        class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/5">
+                        <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#007AFF]" stroke-width="2"></i>
+                        <span>Tampil Dimana Aja</span>
+                        <i data-lucide="chevron-up" class="w-3 h-3 text-black/40 dark:text-white/40 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                    </button>
+
+                    <div x-show="open" x-cloak
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                        class="absolute bottom-full mb-2 right-0 w-72 bg-white dark:bg-[#1E1E20] border border-black/[0.08] dark:border-white/[0.12] rounded-[18px] p-2 shadow-2xl z-50 text-[12.5px] space-y-1">
+                        
+                        <div class="px-2.5 py-1 text-[11px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider">
+                            Saluran Etalase & Visibilitas
+                        </div>
+
+                        <!-- Web Catalog -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Etalase Toko Web</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkProduct('show_website', 'Tampilkan di Web?', 'Tampilkan produk di etalase website publik?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkProduct('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan produk dari etalase website publik?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- POS Kasir -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Kasir POS</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkProduct('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan produk di kasir POS?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkProduct('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan produk dari kasir POS?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Faktur Sales Order -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Faktur & Sales Order (B2B)</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkProduct('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan produk di pemilihan faktur/SO?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkProduct('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan produk dari pemilihan faktur/SO?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tampilkan Harga di Web -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Harga di Web</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkProduct('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka harga produk di etalase web?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkProduct('hide_price_web', 'Sembunyikan Harga di Web?', 'Sembunyikan angka harga (hubungi admin)?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @if (\App\Support\Context::hasPermission('products.delete') || \App\Support\Context::hasPermission('products.manage'))
+                    <!-- Bulk Delete Button -->
+                    <button type="button"
+                        @click="submitBulkProduct('delete', 'Hapus Produk Terpilih?', `Hapus ${selectedProductIds.length} produk terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')"
+                        class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#FF453A] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
+                        <span>Hapus</span>
+                    </button>
+                @endif
+
+                <!-- Cancel Selection -->
+                <button type="button" @click="selectedProductIds = []"
+                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    Batal
+                </button>
+            </div>
+        </div>
 
     </div>
 @endsection

@@ -272,4 +272,58 @@ return [
             ],
         ],
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Verified Customer Proof & Testimonials (Prompt 10)
+    |--------------------------------------------------------------------------
+    |
+    | Only verified customers with explicit publication permission are listed.
+    | If empty, the component is completely hidden to prevent fake social proof.
+    |
+    */
+    'verified_testimonials' => [
+        // Format:
+        // [
+        //     'business_name' => 'Nama Usaha',
+        //     'owner_name' => 'Nama Pemilik',
+        //     'city' => 'Kota',
+        //     'quote' => 'Kutipan asli pelanggan...',
+        //     'logo_url' => '/assets/...',
+        //     'verified_date' => '2026-08-15',
+        // ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Verified Video Testimonials (Prompt 10)
+    |--------------------------------------------------------------------------
+    |
+    | Lazy-loaded video embed containers. Auto-hidden when empty.
+    |
+    */
+    'video_testimonials' => [
+        // Format:
+        // [
+        //     'title' => 'Judul Video',
+        //     'business_name' => 'Nama Usaha',
+        //     'platform' => 'youtube', // 'youtube' or 'tiktok'
+        //     'embed_id' => '...',
+        //     'thumbnail_url' => '...',
+        // ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Marketing Image Slots (Prompt 10)
+    |--------------------------------------------------------------------------
+    |
+    | Easily customizable screenshot/image slots for admin branding.
+    |
+    */
+    'visual_slots' => [
+        'pos_dashboard' => env('MARKETING_IMG_POS_DASHBOARD', '/assets/image/mockups/pos-dashboard-preview.webp'),
+        'profit_report' => env('MARKETING_IMG_PROFIT_REPORT', '/assets/image/mockups/finance-report-preview.webp'),
+        'content_automation' => env('MARKETING_IMG_CONTENT_AUTOMATION', '/assets/image/mockups/content-automation-preview.webp'),
+    ],
 ];

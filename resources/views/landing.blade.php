@@ -1,16 +1,16 @@
-﻿@extends('layouts.public_marketing')
+@extends('layouts.public_marketing')
 
 @php
     $landingMetaTitle = \App\Models\SystemSetting::get(
         'seo_meta_title',
-        'COOCA â€” Business Operating System & Omnichannel ERP',
+        config('seo.pages./.title', 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis')
     );
     $landingMetaDescription = \App\Models\SystemSetting::get(
         'seo_meta_description',
-        'Platform terintegrasi kasir POS, akuntansi riil, stok resep bahan baku, WhatsApp otomatis, dan toko online untuk UMKM Indonesia.',
+        config('seo.pages./.description', 'Platform terintegrasi kasir POS, akuntansi riil, stok resep bahan baku, WhatsApp otomatis, dan toko online untuk UMKM Indonesia.')
     );
-    $landingOgTitle = \App\Models\SystemSetting::get('seo_og_title') ?: $landingMetaTitle;
-    $landingOgDescription = \App\Models\SystemSetting::get('seo_og_description') ?: $landingMetaDescription;
+    $landingOgTitle = \App\Models\SystemSetting::get('seo_og_title') ?: config('seo.pages./.og_title', $landingMetaTitle);
+    $landingOgDescription = \App\Models\SystemSetting::get('seo_og_description') ?: config('seo.pages./.og_description', $landingMetaDescription);
     $landingCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url('/');
     $landingAuthor = \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia');
     $landingRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
@@ -59,12 +59,40 @@
         "operatingSystem": "Web, Cloud-based",
         "description": "{{ addslashes($landingMetaDescription) }}",
         "url": "{{ $landingCanonical }}",
-        "offers": {
-            "@@type": "Offer",
-            "price": "0",
-            "priceCurrency": "IDR",
-            "availability": "https://schema.org/InStock"
-        },
+        "offers": [
+            {
+                "@@type": "Offer",
+                "name": "Gratis",
+                "price": "0",
+                "priceCurrency": "IDR",
+                "availability": "https://schema.org/InStock",
+                "description": "Paket Gratis Selamanya untuk 1 toko, 50 produk, 100 transaksi per bulan"
+            },
+            {
+                "@@type": "Offer",
+                "name": "Standard",
+                "price": "39000",
+                "priceCurrency": "IDR",
+                "availability": "https://schema.org/InStock",
+                "description": "Paket Standard Rp39.000/bulan untuk usaha bertumbuh"
+            },
+            {
+                "@@type": "Offer",
+                "name": "Premium",
+                "price": "89000",
+                "priceCurrency": "IDR",
+                "availability": "https://schema.org/InStock",
+                "description": "Paket Premium Rp89.000/bulan multi-kasir dan inventori cabang"
+            },
+            {
+                "@@type": "Offer",
+                "name": "Prestige",
+                "price": "199000",
+                "priceCurrency": "IDR",
+                "availability": "https://schema.org/InStock",
+                "description": "Paket Prestige Rp199.000/bulan ERP lengkap tanpa batasan"
+            }
+        ],
         @if ($showSocialProof && !empty($socialProofUrl) && !empty($socialProofRating))
         "aggregateRating": {
             "@@type": "AggregateRating",
@@ -77,6 +105,41 @@
             "@@type": "Organization",
             "name": "{{ $landingAppName }}",
             "url": "{{ $landingCanonical }}"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
+        "name": "COOCA",
+        "url": "{{ $landingCanonical }}",
+        "potentialAction": {
+            "@@type": "SearchAction",
+            "target": "{{ $landingCanonical }}/marketplace/cari?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "Organization",
+        "name": "COOCA",
+        "alternateName": "COOCA Aplikasi Kasir & ERP UMKM",
+        "url": "{{ $landingCanonical }}",
+        "logo": "{{ asset('assets/image/1785229034_logo_dark.png') }}",
+        "sameAs": [
+            "https://instagram.com/cooca.indonesia",
+            "https://tiktok.com/@cooca.id",
+            "https://linkedin.com/company/cooca-indonesia",
+            "https://www.facebook.com/profile.php?id=61594556787735"
+        ],
+        "contactPoint": {
+            "@@type": "ContactPoint",
+            "telephone": "+62 852-8786-4176",
+            "contactType": "customer support",
+            "availableLanguage": ["id", "en"]
         }
     }
     </script>
@@ -127,9 +190,8 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4.5rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Satu Sistem Operasi untuk Seluruh <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Denyut Bisnis Anda.</span>
-                            </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
@@ -690,14 +752,14 @@
                 <div class="text-center max-w-4xl mx-auto space-y-3">
                     <p
                         class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                        One Ecosystem for Your Business
+                        Satu Ekosistem untuk Bisnis Anda
                     </p>
                     <h2
                         class="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                        Everything Your Business Needs. Connected.
+                        Semua Kebutuhan Bisnis Anda, Terhubung Jadi Satu
                     </h2>
                     <p class="text-xs sm:text-sm font-semibold text-[#007AFF] uppercase tracking-wider">
-                        Semua yang Anda Butuhkan. Terhubung dalam Satu Sistem.
+                        Satu Platform Praktis Tanpa Aplikasi yang Tercecer
                     </p>
                     <div
                         class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto space-y-2">
@@ -885,21 +947,21 @@
                         class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
                         <div>
                             <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                Create Once. Reach More Channels.
+                                Buat Sekali, Jangkau Banyak Channel
                             </span>
                             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                                 Content Automation &bull; Kelola Konten, Maksimalkan Dampak
                             </h3>
                             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                Buat dan kelola konten bisnis tanpa harus berpindah-pindah platform. Plan, Create, Schedule,
-                                Publish, dan Analyze performa konten dalam satu alur kerja terhubung.
+                                Buat dan kelola konten promosi bisnis tanpa repot pindah aplikasi. Rencanakan, buat, jadwalkan,
+                                tayangkan, dan pantau performa promosi dalam satu alur kerja terhubung.
                             </p>
                         </div>
 
                         <div>
                             <a href="{{ route('public.content.creation') }}"
                                 class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>Explore Content Automation</span>
+                                <span>Pelajari Content Automation</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -1011,21 +1073,21 @@
                         class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
                         <div>
                             <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                Discover Businesses. Discover Products.
+                                Temukan Bisnis &amp; Produk UMKM
                             </span>
                             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                                 COOCA Marketplace &bull; Temukan &amp; Jual Lebih Mudah
                             </h3>
                             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                Temukan bisnis dan produk dari berbagai kategori dan lokasi. Merchant mendapatkan channel
-                                tambahan untuk menjangkau customer.
+                                Temukan bisnis dan produk unggulan dari berbagai kategori usaha. Toko Anda mendapatkan etalase
+                                online tambahan untuk menjangkau pembeli baru.
                             </p>
                         </div>
 
                         <div>
                             <a href="{{ route('marketplace.index') }}"
                                 class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>Explore Marketplace</span>
+                                <span>Kunjungi Marketplace</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -1208,20 +1270,20 @@
                     <div class="space-y-2">
                         <p
                             class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                            Tailored Industry Modules
+                            Modul Khusus Industri
                         </p>
                         <h2
                             class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                            Built for Different Businesses
+                            Cocok untuk Berbagai Jenis Usaha
                         </h2>
                         <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
-                            COOCA menyesuaikan sistem berdasarkan jenis bisnis Anda. Cocok untuk Berbagai Jenis Bisnis.
+                            COOCA menyesuaikan fitur dan alur kerja otomatis berdasarkan karakteristik operasional usaha Anda.
                         </p>
                     </div>
                     <div>
                         <a href="{{ route('public.solutions.fnb') }}"
                             class="inline-flex items-center gap-2 px-6 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-[0_4px_16px_rgba(0,122,255,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                            <span>Explore Solutions</span>
+                            <span>Lihat Solusi Lengkap</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
@@ -1235,6 +1297,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"
                             alt="F&B Restoran"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1255,6 +1318,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80"
                             alt="Retail Toko"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1275,6 +1339,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=600&q=80"
                             alt="Bengkel"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1295,6 +1360,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=600&q=80"
                             alt="Laundry"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1315,6 +1381,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
                             alt="Manufacturing"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1335,6 +1402,7 @@
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
                             alt="Services Jasa"
+                            loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1352,10 +1420,17 @@
 
                 </div>
 
-                <div class="mt-8 text-center">
+                <div class="mt-8 text-center space-y-3">
                     <p class="text-xs text-slate-500 dark:text-slate-400">
                         Dan berbagai jenis bisnis lainnya yang membutuhkan fleksibilitas serta integrasi tanpa batas.
                     </p>
+                    <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                        <a href="/aplikasi-kasir-gratis" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Aplikasi Kasir Gratis</a>
+                        <a href="/aplikasi-kasir-android" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Android</a>
+                        <a href="/aplikasi-kasir-offline" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Offline</a>
+                        <a href="{{ route('solusi.show', 'kasir-apotek') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Apotek</a>
+                        <a href="{{ route('solusi.show', 'aplikasi-catering') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Aplikasi Catering</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1383,7 +1458,7 @@
                         <!-- Main Headline (H2) -->
                         <h2
                             class="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-extrabold text-white tracking-tight leading-[1.12]">
-                            Start Building Your Business Operating System.
+                            Mulai Rapikan Bisnis Anda Hari Ini
                         </h2>
 
                         <!-- Subheadline (H3) -->
@@ -1393,8 +1468,8 @@
 
                         <!-- Supporting Copy -->
                         <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                            Tidak perlu membangun semuanya sekaligus. Mulai dari kebutuhan bisnis Anda dan kembangkan modul
-                            sesuai skala usaha.
+                            Tidak perlu menggunakan banyak aplikasi terpisah. Mulai dari kebutuhan kasir esensial dan kembangkan modul
+                            sesuai skala pertumbuhan usaha Anda.
                         </p>
 
                         <!-- 4 Step Flow Ribbon (Bento Tiles) -->
@@ -1402,26 +1477,22 @@
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">01</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Create your
-                                    business.</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">Daftarkan usaha</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">02</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Choose your
-                                    modules.</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">Pilih modul</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">03</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Connect your
-                                    channels.</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">Hubungkan channel</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">04</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Run your
-                                    business.</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">Jalankan bisnis</span>
                             </div>
                         </div>
 
@@ -1457,7 +1528,7 @@
                             <div class="absolute -top-10 right-4 z-20 hidden sm:block text-right">
                                 <span style="font-family: 'Caveat', cursive;"
                                     class="text-2xl sm:text-3xl text-cyan-300 font-bold block transform -rotate-3 drop-shadow-[0_2px_10px_rgba(0,194,255,0.5)]">
-                                    One System, Endless Possibilities
+                                    Satu Sistem, Berbagai Kemudahan Usaha
                                 </span>
                                 <!-- Hand-drawn curved arrow pointing to laptop -->
                                 <svg class="w-16 h-8 text-cyan-300 ml-auto mt-0.5" viewBox="0 0 100 50" fill="none"
@@ -1473,6 +1544,7 @@
                                 class="rounded-[24px] overflow-hidden border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.5)] bg-slate-900/80 backdrop-blur-md">
                                 <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1000&q=80"
                                     alt="COOCA Workspace"
+                                    loading="lazy" width="1000" height="600"
                                     class="w-full h-72 sm:h-80 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
                             </div>
 
@@ -1482,6 +1554,10 @@
                 </div>
             </div>
         </section>
+
+        {{-- Verified Customer Testimonials & Video Proof (Auto-hidden if empty) --}}
+        @include('public.partials.verified_testimonials')
+        @include('public.partials.video_testimonials')
 
     </div>
 @endsection

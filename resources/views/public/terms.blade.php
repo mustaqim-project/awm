@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', ($page->meta_title ?? 'Syarat & Ketentuan Layanan (Terms of Service)') . ' | Cooca')
+@section('title', ($page->meta_title ?? 'Syarat & Ketentuan Layanan (Terms of Service)') . ' | COOCA')
 @section('description',
     $page->meta_description ??
-    'Syarat dan Ketentuan resmi penggunaan platform Cooca, pemisahan hak
+    'Syarat dan Ketentuan resmi penggunaan platform COOCA, pemisahan hak
     kewajiban Owner UMKM dan Pembeli, aturan settlement TriPay, pengiriman Biteship, dan resolusi sengketa.')
 
 @section('og_title', ($page->meta_title ?? 'Syarat & Ketentuan Layanan') . ' | COOCA')

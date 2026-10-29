@@ -240,6 +240,7 @@
         mobileMenuOpen: false
     }">
 
+    @include('public.storefront.components.demo_banner')
     {{-- 1. Private Draft Preview Banner --}}
     @if (!$landingPage->is_published)
         <div class="sticky top-0 z-[100] w-full bg-[#FF9500] text-black font-semibold text-xs py-2 px-4 text-center flex items-center justify-center gap-2 shadow-sm">

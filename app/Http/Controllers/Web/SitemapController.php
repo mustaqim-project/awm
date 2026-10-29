@@ -16,11 +16,11 @@ final class SitemapController extends Controller
     ) {}
 
     /**
-     * Render the dynamic XML sitemap for search engine crawlers.
+     * Render the root XML sitemap index referencing all sub-sitemaps.
      */
     public function xml(): Response
     {
-        $xml = $this->sitemapService->generateXml();
+        $xml = $this->sitemapService->generateSitemapIndexXml();
 
         return response($xml, 200, [
             'Content-Type' => 'application/xml; charset=UTF-8',
@@ -30,11 +30,53 @@ final class SitemapController extends Controller
     }
 
     /**
-     * Render the dedicated blog XML sitemap (sitemap_blog.xml) for crawlers.
+     * Render the pages XML sitemap (marketing, solution, omnichannel, resources).
+     */
+    public function pagesXml(): Response
+    {
+        $xml = $this->sitemapService->generatePagesXml();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'X-Robots-Tag' => 'noindex, follow',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    /**
+     * Render the dedicated blog XML sitemap (sitemap_blog.xml).
      */
     public function blogXml(): Response
     {
         $xml = $this->sitemapService->generateBlogXml();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'X-Robots-Tag' => 'noindex, follow',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    /**
+     * Render the marketplace XML sitemap (sitemap_marketplace.xml).
+     */
+    public function marketplaceXml(): Response
+    {
+        $xml = $this->sitemapService->generateMarketplaceXml();
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'X-Robots-Tag' => 'noindex, follow',
+            'Cache-Control' => 'public, max-age=3600',
+        ]);
+    }
+
+    /**
+     * Render the tools XML sitemap (sitemap_tools.xml: calculators & templates).
+     */
+    public function toolsXml(): Response
+    {
+        $xml = $this->sitemapService->generateToolsXml();
 
         return response($xml, 200, [
             'Content-Type' => 'application/xml; charset=UTF-8',

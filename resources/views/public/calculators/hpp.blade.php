@@ -63,8 +63,8 @@
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                            Kalkulator HPP &amp; <span class="text-[#007AFF] dark:text-[#0A84FF]">Harga Jual Produk</span>
-                        </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">

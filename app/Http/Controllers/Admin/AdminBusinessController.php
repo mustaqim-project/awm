@@ -31,7 +31,7 @@ final class AdminBusinessController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show', 'impersonate']),
-            new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus']),
+            new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus', 'bulkStatus']),
         ];
     }
     /**
@@ -200,6 +200,53 @@ final class AdminBusinessController extends Controller implements HasMiddleware
 
         return redirect()->back()
             ->with('success', "Workspace bisnis {$business->name} berhasil diaktifkan kembali.");
+    }
+
+    /**
+     * Bulk suspend or activate tenant businesses.
+     */
+    public function bulkStatus(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'string', 'exists:businesses,id'],
+            'action' => ['required', 'string', 'in:activate,suspend'],
+            'reason' => ['nullable', 'string', 'min:5', 'max:1000'],
+        ], [
+            'ids.required' => 'Pilih minimal satu bisnis untuk diproses.',
+            'ids.min' => 'Pilih minimal satu bisnis untuk diproses.',
+            'action.in' => 'Aksi bulk status tidak valid.',
+            'reason.min' => 'Alasan penangguhan minimal 5 karakter.',
+            'reason.max' => 'Alasan penangguhan maksimal 1000 karakter.',
+        ]);
+
+        $ids = $validated['ids'];
+        $action = $validated['action'];
+
+        if ($action === 'suspend') {
+            $reason = trim((string) ($validated['reason'] ?? 'Ditangguhkan secara masal oleh administrator.'));
+            if (strlen($reason) < 5) {
+                $reason = 'Ditangguhkan secara masal oleh administrator platform.';
+            }
+
+            $count = Business::whereIn('id', $ids)->update([
+                'is_active' => false,
+                'suspended_reason' => $reason,
+                'suspended_at' => now(),
+            ]);
+
+            return redirect()->back()
+                ->with('success', "{$count} workspace bisnis berhasil ditangguhkan.");
+        }
+
+        $count = Business::whereIn('id', $ids)->update([
+            'is_active' => true,
+            'suspended_reason' => null,
+            'suspended_at' => null,
+        ]);
+
+        return redirect()->back()
+            ->with('success', "{$count} workspace bisnis berhasil diaktifkan kembali.");
     }
 
     /**

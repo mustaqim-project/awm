@@ -137,23 +137,37 @@ class Business extends Model
     }
 
     /**
-     * Scope query to only include businesses eligible for public marketplace listing (Prompt 3 compliant).
-     * Excludes test accounts, internal review stores, and unlisted entities.
+     * Scope query to only include businesses eligible for public marketplace listing (Prompt 3 & 5 compliant).
+     * Excludes suspended businesses, test accounts, internal review stores, unlisted entities, and showcase demo accounts.
      */
     public function scopePublicListed(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
     {
         return $query->where('is_active', true)
+            ->whereNull('suspended_at')
             ->where(function ($q): void {
                 $q->whereNull('is_test')->orWhere('is_test', false);
+            })
+            ->where(function ($q): void {
+                $q->whereNull('is_demo')->orWhere('is_demo', false);
             })
             ->where(function ($q): void {
                 $q->whereNull('is_public_listed')->orWhere('is_public_listed', true);
             });
     }
 
+    public function isSuspended(): bool
+    {
+        return ! (bool) $this->is_active || $this->suspended_at !== null;
+    }
+
     public function isTestStore(): bool
     {
         return (bool) ($this->is_test ?? false);
+    }
+
+    public function isDemoStore(): bool
+    {
+        return (bool) ($this->is_demo ?? false);
     }
 
     public function getTimezone(): string

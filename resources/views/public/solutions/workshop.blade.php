@@ -55,9 +55,8 @@
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Tinggalkan Nota Kertas Minyak. <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Kendalikan SPK &amp; Komisi</span>
-                        </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">

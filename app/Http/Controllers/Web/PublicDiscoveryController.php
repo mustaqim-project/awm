@@ -21,7 +21,7 @@ final class PublicDiscoveryController extends Controller
         $capability = trim((string) $request->query('fitur', ''));
         $location = trim((string) $request->query('lokasi', ''));
 
-        $query = Business::where('is_active', true)
+        $query = Business::publicListed()
             ->whereHas('storeSetting', function ($q): void {
                 $q->where('is_storefront_enabled', true)
                   ->where('is_discoverable', true);
@@ -91,40 +91,37 @@ final class PublicDiscoveryController extends Controller
         $businesses = $query->orderByDesc('created_at')->paginate(12)->withQueryString();
 
         // Statistical counts for category filter pills
-        $totalStores = Business::where('is_active', true)
-            ->whereHas('storeSetting', fn ($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
-            ->count();
+        $baseListing = fn($q) => $q->publicListed()
+            ->whereHas('storeSetting', fn ($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
+
+        $totalStores = Business::where($baseListing)->count();
 
         $categories = [
             'fnb' => [
                 'label' => 'Kuliner & Kafe',
                 'icon' => 'utensils',
-                'count' => Business::where('is_active', true)
-                    ->whereHas('storeSetting', fn ($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
+                'count' => Business::where($baseListing)
                     ->where(fn ($q) => $q->where('industry_category', 'fnb')->orWhere('template_code', 'like', 'fnb%'))
                     ->count(),
             ],
             'retail' => [
                 'label' => 'Ritel & Butik',
                 'icon' => 'shopping-bag',
-                'count' => Business::where('is_active', true)
-                    ->whereHas('storeSetting', fn ($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
+                'count' => Business::where($baseListing)
                     ->where(fn ($q) => $q->where('industry_category', 'retail')->orWhere('template_code', 'like', 'retail%'))
                     ->count(),
             ],
             'service' => [
                 'label' => 'Jasa & Perawatan',
                 'icon' => 'sparkles',
-                'count' => Business::where('is_active', true)
-                    ->whereHas('storeSetting', fn ($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
+                'count' => Business::where($baseListing)
                     ->where(fn ($q) => $q->where('industry_category', 'service')->orWhere('template_code', 'like', 'service%'))
                     ->count(),
             ],
             'manufacture' => [
                 'label' => 'Katering & Produsen',
                 'icon' => 'factory',
-                'count' => Business::where('is_active', true)
-                    ->whereHas('storeSetting', fn ($q) => $q->where('is_storefront_enabled', true)->where('is_discoverable', true))
+                'count' => Business::where($baseListing)
                     ->where(fn ($q) => $q->where('industry_category', 'manufacture')->orWhere('template_code', 'like', 'mfg%'))
                     ->count(),
             ],

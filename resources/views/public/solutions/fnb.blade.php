@@ -58,9 +58,8 @@
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Dari Meja Tamu, Dapur, hingga Stok Resep <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Terhubung Otomatis</span>
-                        </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
@@ -536,12 +535,12 @@
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
                             Retail & Swalayan</h4>
                     </a>
-                    <a href="{{ route('public.solutions.services') }}"
+                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Solusi Industri</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Bisnis Jasa & Servis</h4>
+                            Aplikasi Kasir Cafe</h4>
                     </a>
                 </div>
             </section>

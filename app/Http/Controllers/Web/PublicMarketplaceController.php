@@ -203,7 +203,7 @@ final class PublicMarketplaceController extends Controller
      */
     private function buildCategoryData(): array
     {
-        $baseScope = fn($q) => $q->where('is_active', true)
+        $baseScope = fn($q) => $q->publicListed()
             ->whereHas('storeSetting', fn($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
 
         return [
@@ -259,7 +259,7 @@ final class PublicMarketplaceController extends Controller
     {
         $search = trim((string) $request->query('q', ''));
 
-        $query = Business::where('is_active', true)
+        $query = Business::publicListed()
             ->whereHas('storeSetting', function ($q): void {
                 $q->where('is_storefront_enabled', true)->where('is_discoverable', true);
             })
@@ -288,7 +288,7 @@ final class PublicMarketplaceController extends Controller
         $query = Product::where('is_active', true)
             ->where('show_in_website', true)
             ->whereHas('business', function ($q): void {
-                $q->where('is_active', true)->whereHas('storeSetting', function ($sq): void {
+                $q->publicListed()->whereHas('storeSetting', function ($sq): void {
                     $sq->where('is_storefront_enabled', true)->where('is_discoverable', true);
                 });
             })

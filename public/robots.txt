@@ -11,14 +11,20 @@ Allow: /kalkulator
 Allow: /kalkulator/
 Allow: /template-pembukuan-gratis
 Allow: /template/
+Allow: /solutions/
 Allow: /solusi/
+Allow: /resources/
+Allow: /marketplace/
 Allow: /blog
 Allow: /blog/
 Allow: /kontak
 Allow: /b/
 Allow: /sitemap
 Allow: /sitemap.xml
+Allow: /sitemap_pages.xml
 Allow: /sitemap_blog.xml
+Allow: /sitemap_marketplace.xml
+Allow: /sitemap_tools.xml
 
 # 2. Private App, Internal POS, & Tenant Operating System (NOINDEX & NOFOLLOW)
 Disallow: /admin
@@ -67,6 +73,9 @@ Disallow: /api/
 Disallow: /webhook/
 Disallow: /broadcasting/
 
-# 5. Dynamic XML Sitemap Reference
+# 5. Dynamic XML Sitemap Index & Sub-Sitemaps
 Sitemap: https://cooca.id/sitemap.xml
+Sitemap: https://cooca.id/sitemap_pages.xml
 Sitemap: https://cooca.id/sitemap_blog.xml
+Sitemap: https://cooca.id/sitemap_marketplace.xml
+Sitemap: https://cooca.id/sitemap_tools.xml

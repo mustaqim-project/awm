@@ -9,7 +9,7 @@
     {{-- FLOATING TRIGGER BUTTON & GREETING POPUP --}}
     <div class="fixed floating-live-chat-fab right-4 sm:right-6 lg:right-6 z-50 flex flex-col items-end gap-2 pointer-events-none">
         
-        {{-- Floating Greeting Pill / Prompt (Disappears once chat is open) --}}
+        {{-- Floating Greeting Pill / Prompt (Desktop/Tablet only, hidden on mobile to protect hero & bottom bar) --}}
         <div x-show="!isOpen && showGreeting && !sessionToken" 
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 translate-y-2 scale-95"
@@ -17,9 +17,9 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
              x-transition:leave-end="opacity-0 translate-y-2 scale-95"
-             class="pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
+             class="hidden sm:block pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
              @click="toggleChat()">
-            <button type="button" @click.stop="showGreeting = false" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs">
+            <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs" aria-label="Tutup sapaan live chat">
                 ✕
             </button>
             <div class="flex items-center gap-2 mb-1">
@@ -97,6 +97,17 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
+                {{-- Direct WhatsApp Support Link --}}
+                <a href="https://wa.me/6285287864176?text=Halo%20COOCA%2C%20saya%20butuh%20bantuan%20seputar%20sistem%20kasir" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   title="Chat via WhatsApp (+62 852-8786-4176)"
+                   class="w-8 h-8 rounded-full hover:bg-white/20 text-emerald-300 hover:text-emerald-200 flex items-center justify-center transition-colors">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.825 2.787.826h.004c3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.766-5.768-5.766zm9.969 5.766c0 5.503-4.477 9.98-9.969 9.98-1.747 0-3.385-.453-4.819-1.246l-5.212 1.366 1.393-5.086c-.888-1.488-1.393-3.235-1.393-5.014 0-5.503 4.477-9.98 9.969-9.98 5.492 0 10.031 4.477 10.031 9.98z"/>
+                    </svg>
+                </a>
+
                 {{-- Reset / New Chat Option if in session --}}
                 <button type="button" x-show="sessionToken" @click="confirmResetSession()" 
                         title="Mulai sesi chat baru"
@@ -354,14 +365,11 @@
     }
 </style>
 
-{{-- LOAD PUSHER CLIENT FOR REVERB BROADCASTING --}}
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
 <script>
 function coocaLiveChatWidget() {
     return {
         isOpen: false,
-        showGreeting: true,
+        showGreeting: false,
         isSubmitting: false,
         isSending: false,
         isWaitingReply: false,
@@ -389,11 +397,60 @@ function coocaLiveChatWidget() {
         pollInterval: null,
         timeoutCheckInterval: null,
 
+        loadPusher(callback) {
+            if (typeof window.Pusher !== 'undefined') {
+                if (callback) callback();
+                return;
+            }
+            if (document.getElementById('cooca-pusher-sdk')) {
+                const s = document.getElementById('cooca-pusher-sdk');
+                s.addEventListener('load', () => { if (callback) callback(); });
+                return;
+            }
+            const s = document.createElement('script');
+            s.id = 'cooca-pusher-sdk';
+            s.src = 'https://js.pusher.com/8.2.0/pusher.min.js';
+            s.async = true;
+            s.onload = () => { if (callback) callback(); };
+            document.head.appendChild(s);
+        },
+
+        dismissGreeting() {
+            this.showGreeting = false;
+            // 7 days dismissal: 7 * 24 * 60 * 60 * 1000 = 604800000 ms
+            localStorage.setItem('cooca_greeting_dismissed_until', String(Date.now() + 604800000));
+        },
+
         init() {
             // Restore visitor info into formData if present
             if (this.visitorData.name) this.formData.name = this.visitorData.name;
             if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
             if (this.visitorData.email) this.formData.email = this.visitorData.email;
+
+            // Delayed greeting: 20s or 50% scroll, suppressed if dismissed in last 7 days or on mobile
+            const dismissedUntil = parseInt(localStorage.getItem('cooca_greeting_dismissed_until') || '0', 10);
+            const isSuppressed = Date.now() < dismissedUntil;
+
+            if (!isSuppressed && !this.sessionToken) {
+                let triggered = false;
+                const activateGreeting = () => {
+                    if (triggered || this.isOpen || this.sessionToken) return;
+                    triggered = true;
+                    this.showGreeting = true;
+                    window.removeEventListener('scroll', handleScroll);
+                };
+
+                const timer = setTimeout(activateGreeting, 20000);
+
+                const handleScroll = () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    if (scrollable > 0 && (window.scrollY / scrollable) >= 0.5) {
+                        clearTimeout(timer);
+                        activateGreeting();
+                    }
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+            }
 
             // If session already exists, restore chat history immediately
             if (this.sessionToken) {
@@ -720,31 +777,38 @@ function coocaLiveChatWidget() {
         },
 
         connectReverb() {
-            if (!this.sessionToken || typeof Pusher === 'undefined') return;
+            if (!this.sessionToken) return;
 
-            try {
-                const reverbKey = '{{ config('broadcasting.connections.reverb.key') }}' || 'cooca_reverb_key_2026';
-                const reverbHost = '{{ config('broadcasting.connections.reverb.options.host') }}' || window.location.hostname;
-                const reverbPort = {{ (int) (config('broadcasting.connections.reverb.options.port') ?: 8080) }};
-                const reverbScheme = '{{ config('broadcasting.connections.reverb.options.scheme') ?: 'http' }}';
+            this.loadPusher(() => {
+                if (typeof Pusher === 'undefined') return;
 
-                this.pusherInstance = new Pusher(reverbKey, {
-                    wsHost: reverbHost,
-                    wsPort: reverbPort,
-                    wssPort: reverbPort,
-                    forceTLS: reverbScheme === 'https',
-                    enabledTransports: ['ws', 'wss'],
-                    cluster: 'mt1',
-                });
+                try {
+                    const reverbKey = '{{ config('broadcasting.connections.reverb.key') }}' || 'cooca_reverb_key_2026';
+                    const reverbHost = '{{ config('broadcasting.connections.reverb.options.host') }}' || window.location.hostname;
+                    const reverbPort = {{ (int) (config('broadcasting.connections.reverb.options.port') ?: 8080) }};
+                    const reverbScheme = '{{ config('broadcasting.connections.reverb.options.scheme') ?: 'http' }}';
 
-                this.pusherInstance.connection.bind('connected', () => {
-                    this.isReverbConnected = true;
-                    console.log('[LiveChat] Connected to Laravel Reverb WebSocket.');
-                });
+                    if (this.pusherInstance) {
+                        try { this.pusherInstance.disconnect(); } catch (_) {}
+                    }
 
-                this.pusherInstance.connection.bind('disconnected', () => {
-                    this.isReverbConnected = false;
-                });
+                    this.pusherInstance = new Pusher(reverbKey, {
+                        wsHost: reverbHost,
+                        wsPort: reverbPort,
+                        wssPort: reverbPort,
+                        forceTLS: reverbScheme === 'https',
+                        enabledTransports: ['ws', 'wss'],
+                        cluster: 'mt1',
+                    });
+
+                    this.pusherInstance.connection.bind('connected', () => {
+                        this.isReverbConnected = true;
+                        console.log('[LiveChat] Connected to Laravel Reverb WebSocket.');
+                    });
+
+                    this.pusherInstance.connection.bind('disconnected', () => {
+                        this.isReverbConnected = false;
+                    });
 
                 const channelName = 'livechat.' + this.sessionToken;
                 this.reverbChannel = this.pusherInstance.subscribe(channelName);
@@ -797,6 +861,7 @@ function coocaLiveChatWidget() {
             } catch (err) {
                 console.warn('[LiveChat] Reverb initialization warning:', err);
             }
+            });
         },
 
         confirmResetSession() {

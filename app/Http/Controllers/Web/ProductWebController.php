@@ -38,7 +38,7 @@ final class ProductWebController extends Controller implements HasMiddleware
         return [
             new Middleware('require.permission:products.view', only: ['index', 'bom', 'branchPrices', 'export']),
             new Middleware(['require.permission:products.create', 'entitlement:product'], only: ['store']),
-            new Middleware('require.permission:products.edit', only: ['update', 'toggleSetting', 'togglePosImageVisibility', 'deleteGalleryImage']),
+            new Middleware('require.permission:products.edit', only: ['update', 'toggleSetting', 'togglePosImageVisibility', 'deleteGalleryImage', 'bulkAction']),
             new Middleware(['require.permission:products.edit', 'entitlement:recipe'], only: ['addBomItem', 'removeBomItem']),
             new Middleware(['require.permission:products.edit', 'entitlement:branch_pricing'], only: ['updateBranchPrices']),
             new Middleware('entitlement:branch_pricing', only: ['branchPrices']),
@@ -203,6 +203,111 @@ final class ProductWebController extends Controller implements HasMiddleware
             'value' => (bool) $newValue,
             'product_id' => $product->id,
         ]);
+    }
+
+    /**
+     * Perform bulk operations on products (activate, deactivate, channel visibility, delete).
+     */
+    public function bulkAction(Request $request): \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+    {
+        $business = Context::requireBusiness();
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'string'],
+            'action' => ['required', 'string', 'in:activate,deactivate,show_website,hide_website,show_pos,hide_pos,show_sales_order,hide_sales_order,show_price_web,hide_price_web,delete'],
+        ], [
+            'ids.required' => 'Pilih minimal satu produk untuk diproses.',
+            'ids.min' => 'Pilih minimal satu produk untuk diproses.',
+            'action.in' => 'Aksi bulk tidak valid.',
+        ]);
+
+        $ids = $validated['ids'];
+        $action = $validated['action'];
+
+        // Strict tenant isolation: only affect products owned by current business
+        $query = Product::goods()->where('business_id', $business->id)->whereIn('id', $ids);
+        $count = $query->count();
+
+        if ($count === 0) {
+            $msg = 'Tidak ada produk valid yang dapat diproses.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 404);
+            }
+            return redirect()->back()->with('error', $msg);
+        }
+
+        switch ($action) {
+            case 'activate':
+                $query->update(['is_active' => true]);
+                $message = "{$count} produk berhasil diaktifkan.";
+                break;
+
+            case 'deactivate':
+                $query->get()->each(function (Product $prod): void {
+                    $prod->update(['is_active' => false]);
+                });
+                $message = "{$count} produk berhasil dinonaktifkan.";
+                break;
+
+            case 'show_website':
+                $query->update(['show_in_website' => true]);
+                $message = "{$count} produk berhasil diatur tampil di etalase web.";
+                break;
+
+            case 'hide_website':
+                $query->update(['show_in_website' => false]);
+                $message = "{$count} produk berhasil disembunyikan dari etalase web.";
+                break;
+
+            case 'show_pos':
+                $query->update(['show_in_pos' => true]);
+                $message = "{$count} produk berhasil diatur tampil di kasir POS.";
+                break;
+
+            case 'hide_pos':
+                $query->update(['show_in_pos' => false]);
+                $message = "{$count} produk berhasil disembunyikan dari kasir POS.";
+                break;
+
+            case 'show_sales_order':
+                $query->update(['show_in_sales_order' => true]);
+                $message = "{$count} produk berhasil diatur tampil di Faktur SO.";
+                break;
+
+            case 'hide_sales_order':
+                $query->update(['show_in_sales_order' => false]);
+                $message = "{$count} produk berhasil disembunyikan dari Faktur SO.";
+                break;
+
+            case 'show_price_web':
+                $query->update(['show_price_on_web' => true]);
+                $message = "{$count} produk menampilkan harga di web.";
+                break;
+
+            case 'hide_price_web':
+                $query->update(['show_price_on_web' => false]);
+                $message = "{$count} produk menyembunyikan harga di web.";
+                break;
+
+            case 'delete':
+                abort_unless(auth()->user()?->hasPermission('products.delete'), 403);
+                $query->get()->each(function (Product $prod): void {
+                    $prod->delete();
+                });
+                $message = "{$count} produk berhasil dihapus.";
+                break;
+
+            default:
+                $message = 'Aksi selesai.';
+                break;
+        }
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'message' => $message]);
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
     /**

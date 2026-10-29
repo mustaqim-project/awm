@@ -20,6 +20,48 @@ final class SeoMetadataService
     public const DEFAULT_OG_HEIGHT = 630;
 
     /**
+     * Look up preconfigured SEO metadata for a specific route or path from config/seo.php.
+     *
+     * @return array{
+     *     title?: string,
+     *     h1?: string,
+     *     description?: string,
+     *     og_title?: string,
+     *     og_description?: string
+     * }|null
+     */
+    public static function getPageSeo(?string $path = null): ?array
+    {
+        if ($path === null) {
+            $path = Request::path();
+        }
+
+        $parts = parse_url($path);
+        $cleanPath = $parts['path'] ?? $path;
+        $normalized = '/' . trim($cleanPath, '/');
+        if ($normalized === '//') {
+            $normalized = '/';
+        }
+
+        $pages = config('seo.pages', []);
+
+        return $pages[$normalized] ?? null;
+    }
+
+    /**
+     * Resolve the H1 heading for the current page from config/seo.php.
+     */
+    public static function getH1(?string $fallback = null, ?string $path = null): string
+    {
+        $meta = self::getPageSeo($path);
+        if (!empty($meta['h1'])) {
+            return (string) $meta['h1'];
+        }
+
+        return (string) ($fallback ?? '');
+    }
+
+    /**
      * Resolve the canonical, absolute HTTPS URL for the current request or specified path.
      */
     public static function resolveCanonicalUrl(?string $url = null): string
@@ -168,8 +210,20 @@ final class SeoMetadataService
         $text = (string) preg_replace('/\s+/u', ' ', $text);
         $text = trim($text);
 
-        // Word-boundary aware truncation
-        return Str::limit($text, $limit);
+        // Word-boundary aware truncation without '...' ellipsis
+        if (mb_strlen($text) <= $limit) {
+            $clean = rtrim($text, ".…");
+            return $clean !== '' ? $clean . '.' : '';
+        }
+
+        $sub = mb_substr($text, 0, $limit - 1);
+        $lastSpace = mb_strrpos($sub, ' ');
+        if ($lastSpace !== false && $lastSpace > (int) ($limit * 0.6)) {
+            $sub = mb_substr($sub, 0, $lastSpace);
+        }
+        $clean = rtrim(trim($sub), ",;:-.…");
+
+        return $clean !== '' ? $clean . '.' : '';
     }
 
     /**

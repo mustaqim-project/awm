@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Seo;
 
 use App\Models\BusinessLandingPage;
+use App\Models\CommerceStoreSetting;
 use App\Models\Post;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -15,18 +16,54 @@ final class SitemapService
      * Vertical solution definitions (synchronized with PublicSolutionController).
      */
     private const SOLUTIONS = [
-        'kasir-warung' => 'Solusi Kasir Toko Kelontong & Warung Sembako',
-        'kasir-cafe-kecil' => 'Solusi Kasir Kedai Kopi & Kafe Modern',
-        'kasir-kios' => 'Solusi Kasir Konter HP & Kios Aksesoris',
-        'kasir-laundry' => 'Solusi Kasir Laundry Kiloan & Satuan',
-        'kasir-salon' => 'Solusi Kasir Salon Kecantikan & Spa',
-        'kasir-barbershop' => 'Solusi Kasir Barbershop & Pangkas Rambut',
-        'kasir-bengkel-kecil' => 'Solusi Kasir Bengkel Motor & Sparepart',
-        'kasir-irt' => 'Solusi Industri Rumah Tangga & Produsen Snack',
+        'kasir-warung' => ['name' => 'Aplikasi Kasir Warung & Toko Kelontong', 'view' => 'public.solutions.show'],
+        'kasir-cafe-kecil' => ['name' => 'Aplikasi Kasir Cafe & Kedai Kopi', 'view' => 'public.solutions.show'],
+        'kasir-kios' => ['name' => 'Aplikasi Kasir Konter HP & Pulsa', 'view' => 'public.solutions.show'],
+        'kasir-salon' => ['name' => 'Aplikasi Kasir Salon & Spa Kecantikan', 'view' => 'public.solutions.show'],
+        'kasir-barbershop' => ['name' => 'Aplikasi Kasir Barbershop & Pangkas Rambut', 'view' => 'public.solutions.show'],
+        'kasir-irt' => ['name' => 'Aplikasi Usaha Rumahan & Produsen Snack', 'view' => 'public.solutions.show'],
+        'kasir-apotek' => ['name' => 'Aplikasi Kasir Apotek & Toko Obat', 'view' => 'public.solutions.show'],
+        'aplikasi-catering' => ['name' => 'Aplikasi Catering & Usaha Prasmanan', 'view' => 'public.solutions.show'],
     ];
 
     /**
-     * Free lead capture template definitions (synchronized with PublicTemplateController).
+     * Core public marketing, solutions, and resource pages.
+     */
+    private const CORE_PAGES = [
+        '/' => ['name' => 'Beranda Cooca', 'category' => 'Halaman Utama', 'priority' => '1.0', 'changefreq' => 'daily', 'view' => 'landing'],
+        '/pricing' => ['name' => 'Harga Aplikasi Kasir & ERP UMKM', 'category' => 'Harga & Paket', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.pricing'],
+        '/about' => ['name' => 'Tentang Kami & Misi UMKM Cooca', 'category' => 'Tentang Kami', 'priority' => '0.8', 'changefreq' => 'monthly', 'view' => 'public.about'],
+        '/demo' => ['name' => 'Jadwal Demo & Uji Coba Gratis', 'category' => 'Demo Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.demo'],
+        '/support' => ['name' => 'Pusat Bantuan & Layanan Konsumen', 'category' => 'Bantuan & Support', 'priority' => '0.8', 'changefreq' => 'monthly', 'view' => 'public.support'],
+        '/kontak' => ['name' => 'Hubungi Tim Cooca', 'category' => 'Informasi', 'priority' => '0.7', 'changefreq' => 'monthly', 'view' => 'public.contact.index'],
+        '/terms' => ['name' => 'Syarat & Ketentuan Layanan', 'category' => 'Legalitas', 'priority' => '0.5', 'changefreq' => 'monthly', 'view' => 'public.terms'],
+        '/privacy' => ['name' => 'Kebijakan Privasi & Perlindungan Data', 'category' => 'Legalitas', 'priority' => '0.5', 'changefreq' => 'monthly', 'view' => 'public.privacy'],
+        '/sitemap' => ['name' => 'Peta Situs (HTML Sitemap)', 'category' => 'Informasi', 'priority' => '0.6', 'changefreq' => 'weekly', 'view' => 'public.sitemap'],
+        '/aplikasi-kasir-gratis' => ['name' => 'Aplikasi Kasir Gratis Selamanya', 'category' => 'Solusi Kasir', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.landing_commercial.aplikasi_kasir_gratis'],
+        '/aplikasi-kasir-android' => ['name' => 'Aplikasi Kasir Android HP & Tablet', 'category' => 'Solusi Kasir', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.landing_commercial.aplikasi_kasir_android'],
+        '/aplikasi-kasir-offline' => ['name' => 'Aplikasi Kasir Offline Tanpa Internet', 'category' => 'Solusi Kasir', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.landing_commercial.aplikasi_kasir_offline'],
+        '/solutions/fnb' => ['name' => 'Aplikasi Kasir Restoran & Cafe', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.fnb'],
+        '/solutions/retail' => ['name' => 'Aplikasi Kasir Toko & Minimarket', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.retail'],
+        '/solutions/workshop' => ['name' => 'Aplikasi Bengkel Motor & Mobil', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.workshop'],
+        '/solutions/laundry' => ['name' => 'Aplikasi Kasir Laundry Kiloan', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.laundry'],
+        '/solutions/manufacturing' => ['name' => 'Software Produksi & BOM UMKM', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.manufacturing'],
+        '/solutions/services' => ['name' => 'Aplikasi Booking & Invoice Jasa', 'category' => 'Solusi Industri', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.solutions.services'],
+        '/omnichannel-erp/pos' => ['name' => 'Aplikasi POS Kasir Online', 'category' => 'Fitur Produk', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.omnichannel-erp.pos'],
+        '/omnichannel-erp/inventory' => ['name' => 'Aplikasi Stok Barang & Gudang', 'category' => 'Fitur Produk', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.omnichannel-erp.inventory'],
+        '/omnichannel-erp/finance' => ['name' => 'Aplikasi Pembukuan & Keuangan', 'category' => 'Fitur Produk', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.omnichannel-erp.finance'],
+        '/omnichannel-erp/erp' => ['name' => 'ERP UMKM Terintegrasi', 'category' => 'Fitur Produk', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.omnichannel-erp.erp'],
+        '/omnichannel-erp/analytics' => ['name' => 'Asisten AI & Analisa Penjualan', 'category' => 'Fitur Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.omnichannel-erp.analytics'],
+        '/omnichannel/whatsapp' => ['name' => 'WhatsApp Multi-Agent & Chatbot', 'category' => 'Fitur Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.omnichannel.whatsapp'],
+        '/omnichannel/customer' => ['name' => 'CRM & Loyalitas Pelanggan', 'category' => 'Fitur Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.omnichannel.customer'],
+        '/omnichannel/marketplace' => ['name' => 'Integrasi Marketplace Shopee & Tokopedia', 'category' => 'Fitur Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.omnichannel.marketplace'],
+        '/content-automation/content-creation' => ['name' => 'Auto-Post & Konten AI UMKM', 'category' => 'Fitur Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.content-automation.content-creation'],
+        '/resources/case-studies' => ['name' => 'Contoh Skenario UMKM & Studi Kasus', 'category' => 'Pusat Edukasi', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.resources.case-studies'],
+        '/resources/guides' => ['name' => 'Panduan Operasional & Panduan UMKM', 'category' => 'Pusat Edukasi', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.resources.guides'],
+        '/resources/faq' => ['name' => 'Pertanyaan Umum (FAQ) Cooca', 'category' => 'Pusat Edukasi', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.resources.faq'],
+    ];
+
+    /**
+     * Free lead capture template definitions.
      */
     private const TEMPLATES = [
         'pembukuan-warung-excel' => 'Template Pembukuan Warung & Toko Kelontong (Excel)',
@@ -39,156 +76,106 @@ final class SitemapService
      * Business calculators.
      */
     private const CALCULATORS = [
-        'hpp' => ['name' => 'Kalkulator HPP & Food Costing', 'path' => '/kalkulator/hpp', 'priority' => '0.9'],
-        'bep' => ['name' => 'Kalkulator Break Even Point (BEP)', 'path' => '/kalkulator/bep', 'priority' => '0.9'],
-        'harga-jual' => ['name' => 'Kalkulator Harga Jual & Margin Laba', 'path' => '/kalkulator/harga-jual', 'priority' => '0.9'],
-        'laba-bersih' => ['name' => 'Kalkulator Laba Bersih & Arus Kas', 'path' => '/kalkulator/laba-bersih', 'priority' => '0.8'],
-        'gaji-karyawan' => ['name' => 'Kalkulator Gaji & Upah Lembur Karyawan', 'path' => '/kalkulator/gaji-karyawan', 'priority' => '0.8'],
-        'pph-final' => ['name' => 'Kalkulator Pajak PPh Final UMKM 0.5%', 'path' => '/kalkulator/pph-final', 'priority' => '0.8'],
-        'omzet-harian' => ['name' => 'Kalkulator Target Omzet Harian', 'path' => '/kalkulator/omzet-harian', 'priority' => '0.8'],
-        'simulasi-what-if' => ['name' => 'Simulator Skenario Bisnis What-If', 'path' => '/kalkulator/simulasi-what-if', 'priority' => '0.8'],
+        'hpp' => ['name' => 'Kalkulator HPP & Food Costing', 'path' => '/kalkulator/hpp', 'priority' => '0.9', 'view' => 'public.calculators.hpp'],
+        'bep' => ['name' => 'Kalkulator Break Even Point (BEP)', 'path' => '/kalkulator/bep', 'priority' => '0.9', 'view' => 'public.calculators.bep'],
+        'harga-jual' => ['name' => 'Kalkulator Harga Jual & Margin Laba', 'path' => '/kalkulator/harga-jual', 'priority' => '0.9', 'view' => 'public.calculators.harga-jual'],
+        'laba-bersih' => ['name' => 'Kalkulator Laba Bersih & Arus Kas', 'path' => '/kalkulator/laba-bersih', 'priority' => '0.8', 'view' => 'public.calculators.laba-bersih'],
+        'gaji-karyawan' => ['name' => 'Kalkulator Gaji & Upah Lembur Karyawan', 'path' => '/kalkulator/gaji-karyawan', 'priority' => '0.8', 'view' => 'public.calculators.gaji-karyawan'],
+        'pph-final' => ['name' => 'Kalkulator Pajak PPh Final UMKM 0.5%', 'path' => '/kalkulator/pph-final', 'priority' => '0.8', 'view' => 'public.calculators.pph-final'],
+        'omzet-harian' => ['name' => 'Kalkulator Target Omzet Harian', 'path' => '/kalkulator/omzet-harian', 'priority' => '0.8', 'view' => 'public.calculators.omzet-harian'],
+        'simulasi-what-if' => ['name' => 'Simulator Skenario Bisnis What-If', 'path' => '/kalkulator/simulasi-what-if', 'priority' => '0.8', 'view' => 'public.calculators.simulasi-what-if'],
     ];
 
     /**
-     * Resolve the canonical production base URL for SEO indexing.
+     * Resolve the canonical production base URL (strictly HTTPS).
      */
     public function getBaseUrl(): string
     {
-        // 1. Explicit canonical URL if configured (ignore localhost/127.0.0.1)
         $canonical = config('app.canonical_url');
         if (!empty($canonical) && !str_contains($canonical, '127.0.0.1') && !str_contains($canonical, 'localhost')) {
-            return rtrim((string) $canonical, '/');
+            return preg_replace('/^http:/i', 'https:', rtrim((string) $canonical, '/'));
         }
 
-        // 2. If app.url is explicitly production domain
         $appUrl = (string) config('app.url', '');
         if (!empty($appUrl) && !str_contains($appUrl, '127.0.0.1') && !str_contains($appUrl, 'localhost')) {
-            return rtrim($appUrl, '/');
+            return preg_replace('/^http:/i', 'https:', rtrim($appUrl, '/'));
         }
 
-        // 3. Fallback to production URL
         return 'https://cooca.id';
     }
 
     /**
-     * Compile all public indexable URLs with metadata.
-     *
-     * @return array<int, array{
-     *     loc: string,
-     *     lastmod: string,
-     *     changefreq: string,
-     *     priority: string,
-     *     category: string,
-     *     title: string
-     * }>
+     * Get real content modification timestamp for a blade view file.
      */
-    public function getPublicUrls(): array
+    private function getViewLastmod(string $viewName): string
+    {
+        try {
+            $viewPath = resource_path('views/' . str_replace('.', '/', $viewName) . '.blade.php');
+            if (file_exists($viewPath)) {
+                return Carbon::createFromTimestamp((int) filemtime($viewPath))->toIso8601String();
+            }
+        } catch (\Throwable) {
+        }
+
+        return Carbon::now()->subDays(1)->toIso8601String();
+    }
+
+    /**
+     * Compile public marketing, solution, omnichannel, and resource URLs (sitemap_pages.xml).
+     *
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, category: string, title: string}>
+     */
+    public function getPagesUrls(): array
     {
         $baseUrl = $this->getBaseUrl();
-        $nowDate = Carbon::now()->toIso8601String();
         $urls = [];
 
-        // 1. Homepage & Core Hubs
-        $urls[] = [
-            'loc' => $baseUrl . '/',
-            'lastmod' => $nowDate,
-            'changefreq' => 'daily',
-            'priority' => '1.0',
-            'category' => 'Halaman Utama',
-            'title' => 'Beranda Cooca',
-        ];
+        foreach (self::CORE_PAGES as $path => $page) {
+            $urls[] = [
+                'loc' => $baseUrl . ($path === '/' ? '' : $path),
+                'lastmod' => $this->getViewLastmod($page['view']),
+                'changefreq' => $page['changefreq'],
+                'priority' => $page['priority'],
+                'category' => $page['category'],
+                'title' => $page['name'],
+            ];
+        }
 
-        $urls[] = [
-            'loc' => $baseUrl . '/kalkulator',
-            'lastmod' => $nowDate,
-            'changefreq' => 'weekly',
-            'priority' => '0.9',
-            'category' => 'Kalkulator Bisnis',
-            'title' => 'Pusat Kalkulator & Simulasi Keuangan UMKM',
-        ];
+        foreach (self::SOLUTIONS as $slug => $data) {
+            $urls[] = [
+                'loc' => $baseUrl . '/solusi/' . $slug,
+                'lastmod' => $this->getViewLastmod($data['view']),
+                'changefreq' => 'weekly',
+                'priority' => '0.9',
+                'category' => 'Solusi Industri',
+                'title' => $data['name'],
+            ];
+        }
 
-        $urls[] = [
-            'loc' => $baseUrl . '/template-pembukuan-gratis',
-            'lastmod' => $nowDate,
-            'changefreq' => 'weekly',
-            'priority' => '0.9',
-            'category' => 'Template Gratis',
-            'title' => 'Download Template Pembukuan & Excel Gratis',
-        ];
+        return $urls;
+    }
+
+    /**
+     * Compile all public blog URLs (sitemap_blog.xml).
+     *
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, category: string, title: string}>
+     */
+    public function getBlogUrls(): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $urls = [];
+
+        $blogHubLastmod = $this->getViewLastmod('public.blog.index');
 
         $urls[] = [
             'loc' => $baseUrl . '/blog',
-            'lastmod' => $nowDate,
+            'lastmod' => $blogHubLastmod,
             'changefreq' => 'daily',
             'priority' => '0.9',
             'category' => 'Edukasi & Blog',
             'title' => 'Pusat Panduan & Edukasi Bisnis UMKM',
         ];
 
-        $urls[] = [
-            'loc' => $baseUrl . '/kontak',
-            'lastmod' => $nowDate,
-            'changefreq' => 'monthly',
-            'priority' => '0.7',
-            'category' => 'Informasi',
-            'title' => 'Hubungi Tim Cooca',
-        ];
-
-        $urls[] = [
-            'loc' => $baseUrl . '/jelajah',
-            'lastmod' => $nowDate,
-            'changefreq' => 'daily',
-            'priority' => '0.9',
-            'category' => 'Direktori UMKM',
-            'title' => 'Direktori & Jelajah Toko Online UMKM',
-        ];
-
-        $urls[] = [
-            'loc' => $baseUrl . '/sitemap',
-            'lastmod' => $nowDate,
-            'changefreq' => 'weekly',
-            'priority' => '0.6',
-            'category' => 'Informasi',
-            'title' => 'Peta Situs (HTML Sitemap)',
-        ];
-
-        // 2. Kalkulator Spesifik
-        foreach (self::CALCULATORS as $calc) {
-            $urls[] = [
-                'loc' => $baseUrl . $calc['path'],
-                'lastmod' => $nowDate,
-                'changefreq' => 'weekly',
-                'priority' => $calc['priority'],
-                'category' => 'Kalkulator Bisnis',
-                'title' => $calc['name'],
-            ];
-        }
-
-        // 3. Solusi Industri Vertikal
-        foreach (self::SOLUTIONS as $slug => $title) {
-            $urls[] = [
-                'loc' => $baseUrl . '/solusi/' . $slug,
-                'lastmod' => $nowDate,
-                'changefreq' => 'weekly',
-                'priority' => '0.9',
-                'category' => 'Solusi Industri',
-                'title' => $title,
-            ];
-        }
-
-        // 4. Template Excel & Resource Downloads
-        foreach (self::TEMPLATES as $slug => $title) {
-            $urls[] = [
-                'loc' => $baseUrl . '/template/' . $slug,
-                'lastmod' => $nowDate,
-                'changefreq' => 'monthly',
-                'priority' => '0.8',
-                'category' => 'Template Gratis',
-                'title' => $title,
-            ];
-        }
-
-        // 5. Dynamic Blog Articles (Post Model)
         try {
             $posts = Post::published()->orderByDesc('published_at')->get();
             foreach ($posts as $post) {
@@ -203,10 +190,75 @@ final class SitemapService
                 ];
             }
         } catch (\Throwable) {
-            // Graceful fallback if database unavailable during static boot
         }
 
-        // 6. Public Business Single-Page Landings & Discoverable Commerce Storefronts (cooca.id/{slug-bisnis})
+        return $urls;
+    }
+
+    /**
+     * Compile all public marketplace & discoverable merchant storefront URLs (sitemap_marketplace.xml).
+     *
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, category: string, title: string}>
+     */
+    public function getMarketplaceUrls(): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $urls = [];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/marketplace',
+            'lastmod' => $this->getViewLastmod('public.marketplace.index'),
+            'changefreq' => 'daily',
+            'priority' => '0.9',
+            'category' => 'Marketplace',
+            'title' => 'Direktori Merchant & Produk Unggulan UMKM',
+        ];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/marketplace/businesses',
+            'lastmod' => $this->getViewLastmod('public.marketplace.businesses'),
+            'changefreq' => 'daily',
+            'priority' => '0.8',
+            'category' => 'Marketplace',
+            'title' => 'Daftar Toko & Merchant UMKM Terpercaya',
+        ];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/marketplace/products',
+            'lastmod' => $this->getViewLastmod('public.marketplace.products'),
+            'changefreq' => 'daily',
+            'priority' => '0.8',
+            'category' => 'Marketplace',
+            'title' => 'Katalog Produk & Penawaran UMKM Terkini',
+        ];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/marketplace/categories',
+            'lastmod' => $this->getViewLastmod('public.marketplace.categories'),
+            'changefreq' => 'weekly',
+            'priority' => '0.7',
+            'category' => 'Marketplace',
+            'title' => 'Kategori Industri & Bisnis UMKM Indonesia',
+        ];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/marketplace/locations',
+            'lastmod' => $this->getViewLastmod('public.marketplace.locations'),
+            'changefreq' => 'weekly',
+            'priority' => '0.7',
+            'category' => 'Marketplace',
+            'title' => 'Lokasi Usaha & Merchant UMKM per Kota',
+        ];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/jelajah',
+            'lastmod' => $this->getViewLastmod('public.discovery.index'),
+            'changefreq' => 'daily',
+            'priority' => '0.8',
+            'category' => 'Direktori UMKM',
+            'title' => 'Direktori & Jelajah Toko Online UMKM',
+        ];
+
         try {
             $seenBusinessSlugs = [];
 
@@ -231,7 +283,7 @@ final class SitemapService
                 }
             }
 
-            $discoverableStores = \App\Models\CommerceStoreSetting::where('is_storefront_enabled', true)
+            $discoverableStores = CommerceStoreSetting::where('is_storefront_enabled', true)
                 ->where('is_discoverable', true)
                 ->whereHas('business', fn($q) => $q->publicListed())
                 ->with('business')
@@ -255,79 +307,112 @@ final class SitemapService
                 }
             }
         } catch (\Throwable) {
-            // Graceful fallback
         }
 
         return $urls;
     }
 
     /**
-     * Compile all public blog URLs (blog hub index + every published post).
+     * Compile all public calculators and spreadsheet templates (sitemap_tools.xml).
      *
-     * @return array<int, array{
-     *     loc: string,
-     *     lastmod: string,
-     *     changefreq: string,
-     *     priority: string,
-     *     title: string
-     * }>
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, category: string, title: string}>
      */
-    public function getBlogUrls(): array
+    public function getToolsUrls(): array
+    {
+        $baseUrl = $this->getBaseUrl();
+        $urls = [];
+
+        $urls[] = [
+            'loc' => $baseUrl . '/kalkulator',
+            'lastmod' => $this->getViewLastmod('public.calculators.index'),
+            'changefreq' => 'weekly',
+            'priority' => '0.9',
+            'category' => 'Kalkulator Bisnis',
+            'title' => 'Pusat Kalkulator & Simulasi Keuangan UMKM',
+        ];
+
+        foreach (self::CALCULATORS as $calc) {
+            $urls[] = [
+                'loc' => $baseUrl . $calc['path'],
+                'lastmod' => $this->getViewLastmod($calc['view']),
+                'changefreq' => 'weekly',
+                'priority' => $calc['priority'],
+                'category' => 'Kalkulator Bisnis',
+                'title' => $calc['name'],
+            ];
+        }
+
+        $urls[] = [
+            'loc' => $baseUrl . '/template-pembukuan-gratis',
+            'lastmod' => $this->getViewLastmod('public.templates.index'),
+            'changefreq' => 'weekly',
+            'priority' => '0.9',
+            'category' => 'Template Gratis',
+            'title' => 'Download Template Pembukuan & Excel Gratis',
+        ];
+
+        foreach (self::TEMPLATES as $slug => $title) {
+            $urls[] = [
+                'loc' => $baseUrl . '/template/' . $slug,
+                'lastmod' => $this->getViewLastmod('public.templates.show'),
+                'changefreq' => 'monthly',
+                'priority' => '0.8',
+                'category' => 'Template Gratis',
+                'title' => $title,
+            ];
+        }
+
+        return $urls;
+    }
+
+    /**
+     * Compile all public indexable URLs with metadata (aggregated for HTML sitemap).
+     *
+     * @return array<int, array{loc: string, lastmod: string, changefreq: string, priority: string, category: string, title: string}>
+     */
+    public function getPublicUrls(): array
+    {
+        return array_merge(
+            $this->getPagesUrls(),
+            $this->getBlogUrls(),
+            $this->getMarketplaceUrls(),
+            $this->getToolsUrls()
+        );
+    }
+
+    /**
+     * Render the root Sitemap Index XML (<sitemapindex>).
+     */
+    public function generateSitemapIndexXml(): string
     {
         $baseUrl = $this->getBaseUrl();
         $nowDate = Carbon::now()->toIso8601String();
-        $urls = [];
 
-        // 1. Blog hub index
-        $urls[] = [
-            'loc' => $baseUrl . '/blog',
-            'lastmod' => $nowDate,
-            'changefreq' => 'daily',
-            'priority' => '0.9',
-            'title' => 'Blog & Edukasi Bisnis UMKM Cooca',
+        $subSitemaps = [
+            '/sitemap_pages.xml',
+            '/sitemap_blog.xml',
+            '/sitemap_marketplace.xml',
+            '/sitemap_tools.xml',
         ];
 
-        // 2. Published blog posts
-        try {
-            $posts = Post::published()->orderByDesc('published_at')->get();
-            foreach ($posts as $post) {
-                $postDate = ($post->updated_at ?? $post->published_at ?? Carbon::now())->toIso8601String();
-                $urls[] = [
-                    'loc' => $baseUrl . '/blog/' . $post->slug,
-                    'lastmod' => $postDate,
-                    'changefreq' => 'weekly',
-                    'priority' => '0.8',
-                    'title' => (string) $post->title,
-                ];
-            }
-        } catch (\Throwable) {
-            // Graceful fallback if database unavailable during static boot
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        $xml .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+
+        foreach ($subSitemaps as $path) {
+            $loc = htmlspecialchars($baseUrl . $path, ENT_XML1, 'UTF-8');
+            $xml .= "    <sitemap>\n";
+            $xml .= "        <loc>{$loc}</loc>\n";
+            $xml .= "        <lastmod>{$nowDate}</lastmod>\n";
+            $xml .= "    </sitemap>\n";
         }
 
-        return $urls;
+        $xml .= '</sitemapindex>';
+
+        return $xml;
     }
 
     /**
-     * Generate the dedicated blog XML sitemap (sitemap_blog.xml).
-     */
-    public function generateBlogXml(): string
-    {
-        return $this->renderUrlset($this->getBlogUrls());
-    }
-
-    /**
-     * Save the blog sitemap XML to the public folder.
-     */
-    public function saveBlogToPublic(?string $path = null): string
-    {
-        $targetPath = $path ?? public_path('sitemap_blog.xml');
-        file_put_contents($targetPath, $this->generateBlogXml());
-
-        return $targetPath;
-    }
-
-    /**
-     * Render a standard XML <urlset> wrapper for the given URL items.
+     * Render a standard XML <urlset> wrapper for given items.
      *
      * @param array<int, array{loc: string, lastmod: string, changefreq: string, priority: string}> $items
      */
@@ -357,22 +442,74 @@ final class SitemapService
         return $xml;
     }
 
-    /**
-     * Generate standard XML sitemap content.
-     */
-    public function generateXml(): string
+    public function generatePagesXml(): string
     {
-        return $this->renderUrlset($this->getPublicUrls());
+        return $this->renderUrlset($this->getPagesUrls());
+    }
+
+    public function generateBlogXml(): string
+    {
+        return $this->renderUrlset($this->getBlogUrls());
+    }
+
+    public function generateMarketplaceXml(): string
+    {
+        return $this->renderUrlset($this->getMarketplaceUrls());
+    }
+
+    public function generateToolsXml(): string
+    {
+        return $this->renderUrlset($this->getToolsUrls());
     }
 
     /**
-     * Save generated XML to public folder.
+     * Generate standard XML sitemap index for sitemap.xml.
      */
+    public function generateXml(): string
+    {
+        return $this->generateSitemapIndexXml();
+    }
+
+    /**
+     * Save all split sitemaps to public folder.
+     *
+     * @return array<string, string>
+     */
+    public function saveAllToPublic(): array
+    {
+        $indexFile = public_path('sitemap.xml');
+        $pagesFile = public_path('sitemap_pages.xml');
+        $blogFile = public_path('sitemap_blog.xml');
+        $marketplaceFile = public_path('sitemap_marketplace.xml');
+        $toolsFile = public_path('sitemap_tools.xml');
+
+        file_put_contents($indexFile, $this->generateSitemapIndexXml());
+        file_put_contents($pagesFile, $this->generatePagesXml());
+        file_put_contents($blogFile, $this->generateBlogXml());
+        file_put_contents($marketplaceFile, $this->generateMarketplaceXml());
+        file_put_contents($toolsFile, $this->generateToolsXml());
+
+        return [
+            'index' => $indexFile,
+            'pages' => $pagesFile,
+            'blog' => $blogFile,
+            'marketplace' => $marketplaceFile,
+            'tools' => $toolsFile,
+        ];
+    }
+
     public function saveToPublic(?string $path = null): string
     {
         $targetPath = $path ?? public_path('sitemap.xml');
-        $xml = $this->generateXml();
-        file_put_contents($targetPath, $xml);
+        file_put_contents($targetPath, $this->generateSitemapIndexXml());
+
+        return $targetPath;
+    }
+
+    public function saveBlogToPublic(?string $path = null): string
+    {
+        $targetPath = $path ?? public_path('sitemap_blog.xml');
+        file_put_contents($targetPath, $this->generateBlogXml());
 
         return $targetPath;
     }

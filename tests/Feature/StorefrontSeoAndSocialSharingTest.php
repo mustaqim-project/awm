@@ -213,15 +213,10 @@ final class StorefrontSeoAndSocialSharingTest extends TestCase
         $this->assertSame(1, substr_count($content, '<title>'));
     }
 
-    public function test_checkout_page_has_specific_metadata(): void
+    public function test_checkout_page_requires_customer_login(): void
     {
         $response = $this->get('/' . $this->business->slug . '/checkout');
-        $response->assertOk();
-
-        $content = $response->getContent();
-        $this->assertStringContainsString('Checkout Pesanan | Kedai Kopi Artisan Sejahtera', $content);
-        $this->assertStringContainsString('<link rel="canonical" href="' . url('/' . $this->business->slug . '/checkout') . '">', $content);
-        $this->assertSame(1, substr_count($content, '<title>'));
+        $response->assertRedirect('/' . $this->business->slug . '/login?redirect=' . urlencode(url('/' . $this->business->slug . '/checkout')));
     }
 
     public function test_about_page_has_about_page_schema_and_metadata(): void

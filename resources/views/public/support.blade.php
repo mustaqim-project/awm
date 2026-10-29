@@ -6,13 +6,12 @@
 @section('og_description', 'Temukan solusi cepat untuk operasional kasir, inventaris, koneksi printer thermal, dan pembukuan toko Anda.')
 @section('canonical', route('public.support'))
 @section('og_type', 'website')
-@section('keywords', 'cooca support, bantuan cooca, panduan cooca, call center cooca, technical support kasir, cara pakai cooca pos')
 
     @push('seo')
         <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
-      "@type": "ContactPage",
+      "@@type": "ContactPage",
       "name": "Pusat Bantuan COOCA",
       "description": "Layanan bantuan teknis dan panduan operasional sistem operasi bisnis COOCA.",
       "url": "{{ route('public.support') }}"

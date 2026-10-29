@@ -24,8 +24,13 @@ final class CheckBlockedIp
     {
         $ip = (string) $request->ip();
 
-        // Never block webhooks or health checks
-        if ($request->is('up') || $request->is('payments/*') || $request->is('tripay/*') || $request->is('api/v1/wa/*') || $request->is('webhooks/*')) {
+        // Never block webhooks, health checks, or verified search/social crawlers
+        if ($request->attributes->get('is_verified_crawler') === true
+            || $request->is('up')
+            || $request->is('payments/*')
+            || $request->is('tripay/*')
+            || $request->is('api/v1/wa/*')
+            || $request->is('webhooks/*')) {
             return $next($request);
         }
 

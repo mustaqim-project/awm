@@ -4,9 +4,6 @@
 @section('description',
     'Pilihan paket jujur dan transparan untuk UMKM Indonesia. Mulai dari gratis selamanya hingga
     paket lengkap multi-cabang. Tanpa biaya instalasi dan bebas upgrade kapan saja.')
-@section('keywords',
-    'harga cooca, paket aplikasi kasir, biaya software pos umkm, software akuntansi toko murah, erp
-    toko murah indonesia')
 
 @section('og_title', 'Daftar Harga & Paket Transparan | COOCA')
 @section('og_description', 'Pilihan paket jujur dan terjangkau untuk UMKM Indonesia. Mulai gratis selamanya tanpa kartu kredit hingga paket multi-cabang lengkap.')
@@ -134,9 +131,8 @@
 
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Investasi Jujur &amp; Terjangkau untuk <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Kemajuan Usaha Anda</span>
-                        </h1>
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                </h1>
 
                         <p
                             class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
@@ -215,6 +211,7 @@
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight">Rp 0</div>
                                     <div class="text-[10px] text-emerald-400 font-medium">1 Toko &bull; 100 Trx/bln</div>
                                     <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, 50 produk</div>
+                                    <a href="/aplikasi-kasir-gratis" class="text-[10px] text-emerald-400 font-semibold hover:underline block pt-1">Detail Paket Gratis &rarr;</a>
                                 </div>
 
                                 <!-- Plan 2: Standard (Populer) -->
@@ -752,6 +749,10 @@
                                     Sangat cocok untuk memulai. Anda sudah bisa mencatat kasir, mengelola hingga 50 produk,
                                     dan mencetak nota tanpa keluar biaya sepeser pun.
                                 </p>
+                                <a href="/aplikasi-kasir-gratis" class="text-xs text-[#007AFF] dark:text-[#00C4D8] font-bold hover:underline inline-flex items-center gap-1">
+                                    <span>Pelajari Rincian Fitur Paket Kasir Gratis</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                                </a>
                             </div>
 
                             <!-- Case Standard -->

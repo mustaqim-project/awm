@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Pos\PublicQrOrderWebController;
 use App\Http\Controllers\Web\PublicBlogController;
 use App\Http\Controllers\Web\PublicBusinessLandingController;
 use App\Http\Controllers\Web\PublicCalculatorController;
+use App\Http\Controllers\Web\PublicCommercialLandingController;
 use App\Http\Controllers\Web\PublicContactController;
 use App\Http\Controllers\Web\PublicDiscoveryController;
 use App\Http\Controllers\Web\PublicSolutionController;
@@ -30,22 +31,29 @@ use Illuminate\Support\Facades\Route;
 
 // Main Marketing Homepage
 Route::get('/', function () {
-    $previewProducts = \App\Models\Product::where('is_active', true)
-        ->where('show_in_website', true)
-        ->whereHas('business', function ($q): void {
-            $q->publicListed()
-              ->whereHas('storeSetting', function ($sq): void {
-                  $sq->where('is_storefront_enabled', true)
-                    ->where('is_discoverable', true);
-              });
-        })
-        ->with(['business.storeSetting', 'category'])
-        ->latest()
-        ->take(3)
-        ->get();
+    $previewProducts = rescue(function () {
+        return \App\Models\Product::where('is_active', true)
+            ->where('show_in_website', true)
+            ->whereHas('business', function ($q): void {
+                $q->publicListed()
+                  ->whereHas('storeSetting', function ($sq): void {
+                      $sq->where('is_storefront_enabled', true)
+                        ->where('is_discoverable', true);
+                  });
+            })
+            ->with(['business.storeSetting', 'category'])
+            ->latest()
+            ->take(3)
+            ->get();
+    }, collect(), false);
 
     return view('landing', compact('previewProducts'));
 })->name('landing');
+
+// Commercial Landing Pages (Prompt 8)
+Route::get('/aplikasi-kasir-gratis', [PublicCommercialLandingController::class, 'kasirGratis'])->name('commercial.kasir-gratis');
+Route::get('/aplikasi-kasir-android', [PublicCommercialLandingController::class, 'kasirAndroid'])->name('commercial.kasir-android');
+Route::get('/aplikasi-kasir-offline', [PublicCommercialLandingController::class, 'kasirOffline'])->name('commercial.kasir-offline');
 
 // Marketplace (SaaS + Toko Online Directory)
 Route::get('/marketplace', [PublicMarketplaceController::class, 'index'])->name('marketplace.index');
@@ -91,6 +99,8 @@ Route::post('/template/{slug}/download', [PublicTemplateController::class, 'capt
 Route::get('/template/{slug}/file', [PublicTemplateController::class, 'downloadFile'])->name('template.file');
 
 // 3. Solusi per Vertikal Niche UMKM
+Route::permanentRedirect('/solusi/kasir-laundry', '/solutions/laundry');
+Route::permanentRedirect('/solusi/kasir-bengkel-kecil', '/solutions/workshop');
 Route::get('/solusi/{slug}', [PublicSolutionController::class, 'show'])->name('solusi.show');
 
 // 4. Blog & Edukasi Bisnis
@@ -224,9 +234,12 @@ Route::post('/t/{qrToken}/order', [PublicQrOrderWebController::class, 'submitOrd
 Route::get('/t/{qrToken}/order/{order}/track', [PublicQrOrderWebController::class, 'trackOrder'])->name('public.qr.track');
 Route::get('/t/{qrToken}/order/{order}/status', [PublicQrOrderWebController::class, 'checkStatus'])->name('public.qr.order.status');
 
-// 10. Sitemap XML & HTML (SEO & Web Crawlers)
+// 10. Sitemap XML Index & Split Sub-Sitemaps (SEO & Web Crawlers)
 Route::get('/sitemap.xml', [SitemapController::class, 'xml'])->name('sitemap.xml');
+Route::get('/sitemap_pages.xml', [SitemapController::class, 'pagesXml'])->name('sitemap_pages.xml');
 Route::get('/sitemap_blog.xml', [SitemapController::class, 'blogXml'])->name('sitemap_blog.xml');
+Route::get('/sitemap_marketplace.xml', [SitemapController::class, 'marketplaceXml'])->name('sitemap_marketplace.xml');
+Route::get('/sitemap_tools.xml', [SitemapController::class, 'toolsXml'])->name('sitemap_tools.xml');
 Route::get('/sitemap', [SitemapController::class, 'html'])->name('sitemap.html');
 
 // 11. Public Customer Receipt & Receipt Image View (Throttled for DDoS/Scraping Protection)
@@ -239,20 +252,20 @@ Route::get('/receipt/{order}/image', [PosTerminalWebController::class, 'receiptI
 
 // 12. Legal Policies (Privacy Policy & Terms of Service for Cooca, TikTok, Meta & Google)
 Route::get('/privacy', function () {
-    $page = \App\Models\LegalPage::findBySlug('privacy-policy');
+    $page = rescue(fn() => \App\Models\LegalPage::findBySlug('privacy-policy'), null, false);
     return view('public.privacy', compact('page'));
 })->name('public.privacy');
 Route::get('/kebijakan-privasi', function () {
-    $page = \App\Models\LegalPage::findBySlug('privacy-policy');
+    $page = rescue(fn() => \App\Models\LegalPage::findBySlug('privacy-policy'), null, false);
     return view('public.privacy', compact('page'));
 });
 
 Route::get('/terms', function () {
-    $page = \App\Models\LegalPage::findBySlug('terms-conditions');
+    $page = rescue(fn() => \App\Models\LegalPage::findBySlug('terms-conditions'), null, false);
     return view('public.terms', compact('page'));
 })->name('public.terms');
 Route::get('/syarat-ketentuan', function () {
-    $page = \App\Models\LegalPage::findBySlug('terms-conditions');
+    $page = rescue(fn() => \App\Models\LegalPage::findBySlug('terms-conditions'), null, false);
     return view('public.terms', compact('page'));
 });
 

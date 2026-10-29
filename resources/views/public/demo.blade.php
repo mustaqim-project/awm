@@ -6,13 +6,12 @@
 @section('og_description', 'Eksplorasi modul kasir, pemotongan stok otomatis, dan dasbor pemilik bisnis COOCA secara langsung.')
 @section('canonical', route('public.demo'))
 @section('og_type', 'website')
-@section('keywords', 'demo cooca, coba aplikasi kasir gratis, simulasi software pos, demo erp umkm, uji coba kasir toko')
 
     @push('seo')
         <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
-      "@type": "WebPage",
+      "@@type": "WebPage",
       "name": "Live Demo COOCA",
       "description": "Simulasi interaktif kasir dan sistem operasi bisnis COOCA.",
       "url": "{{ route('public.demo') }}"

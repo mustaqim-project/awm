@@ -8,14 +8,12 @@
     satu sistem terpadu tanpa fragmentasi data.')
 @section('canonical', route('public.about'))
 @section('og_type', 'website')
-@section('keywords', 'tentang cooca, visi cooca, business operating system indonesia, software erp umkm lokal, filosofi
-    produk cooca')
 
     @push('seo')
         <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
-      "@type": "AboutPage",
+      "@@type": "AboutPage",
       "name": "Tentang COOCA",
       "description": "Filosofi, misi, dan latar belakang pengembangan COOCA sebagai Business Operating System terintegrasi untuk UMKM Indonesia.",
       "url": "{{ route('public.about') }}"

@@ -6,6 +6,41 @@
 
 @section('content')
     <div class="w-full max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
+        selectedServiceIds: [],
+        toggleSelectAllServices(e) {
+            if (e.target.checked) {
+                this.selectedServiceIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
+            } else {
+                this.selectedServiceIds = [];
+            }
+        },
+        isAllServicesSelected() {
+            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
+            return pageIds.length > 0 && pageIds.every(id => this.selectedServiceIds.includes(id));
+        },
+        submitBulkService(action, confirmTitle, confirmText, icon = 'question') {
+            const form = this.$refs.bulkServiceForm;
+            if (!form) return;
+            this.$refs.bulkServiceAction.value = action;
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: confirmTitle,
+                    text: confirmText,
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonColor: action === 'delete' ? '#FF3B30' : '#007AFF',
+                    cancelButtonColor: '#8E8E93',
+                    confirmButtonText: 'Ya, Lanjutkan',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            } else if (confirm(confirmTitle + '\n' + confirmText)) {
+                form.submit();
+            }
+        },
         showAddModal: false,
         showEditModal: {{ $editService ? 'true' : 'false' }},
         showAddCategoryModal: false,
@@ -263,10 +298,17 @@
                     <thead>
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
-                            <x-table-sort-th :col="0" type="string" title="Layanan & Kode" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="1" type="string" title="Kategori" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="2" type="string" title="Satuan Output" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="3" type="number" :title="__('services.table.col_price')" align="right" class="whitespace-nowrap" />
+                            <th class="w-10 px-4 py-3 text-center">
+                                <input type="checkbox"
+                                    :checked="isAllServicesSelected()"
+                                    @change="toggleSelectAllServices($event)"
+                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
+                                    title="Pilih Semua Layanan">
+                            </th>
+                            <x-table-sort-th :col="1" type="string" title="Layanan & Kode" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="2" type="string" title="Kategori" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="3" type="string" title="Satuan Output" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="4" type="number" :title="__('services.table.col_price')" align="right" class="whitespace-nowrap" />
                             <th
                                 class="py-3 px-4 text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] text-center whitespace-nowrap">
                                 {{ __('services.table.col_channels') }}</th>
@@ -277,7 +319,14 @@
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($services as $item)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
+                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
+                                :class="selectedServiceIds.includes(String({{ $item->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                <td class="w-10 px-4 py-3.5 text-center">
+                                    <input type="checkbox"
+                                        :value="String({{ $item->id }})"
+                                        x-model="selectedServiceIds"
+                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                </td>
                                 <td data-sort-value="{{ strtolower($item->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $item->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
@@ -350,7 +399,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="py-12 text-center text-[#8E8E93] dark:text-[#98989D]">
+                                <td colspan="7" class="py-12 text-center text-[#8E8E93] dark:text-[#98989D]">
                                     <i data-lucide="briefcase" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
                                     <div class="font-bold text-sm text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('services.empty.search_empty_title') }}</div>
                                     <div class="text-xs text-[#8E8E93] dark:text-[#98989D] mt-1">{{ __('services.empty.search_empty_subtitle') }}</div>
@@ -373,15 +422,34 @@
         <!-- 5. MOBILE GROUPED INSET LIST (Standar Apple HIG)      -->
         <!-- ===================================================== -->
         <div class="sm:hidden space-y-3">
+            @if($services->count() > 0)
+                <div class="flex items-center justify-between px-1 text-[13px] text-black/60 dark:text-white/60">
+                    <label class="inline-flex items-center gap-2 cursor-pointer font-medium select-none">
+                        <input type="checkbox"
+                            :checked="isAllServicesSelected()"
+                            @change="toggleSelectAllServices($event)"
+                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                        <span>Pilih Semua di Halaman Ini</span>
+                    </label>
+                    <span x-show="selectedServiceIds.length > 0" class="text-[12px] font-bold text-[#007AFF]" x-text="`${selectedServiceIds.length} dipilih`"></span>
+                </div>
+            @endif
             @forelse($services as $item)
                 <div
-                    class="rounded-[20px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 shadow-xs space-y-3">
+                    class="rounded-[20px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 shadow-xs space-y-3 transition-all"
+                    :class="selectedServiceIds.includes(String({{ $item->id }})) ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
                     <div class="flex items-start justify-between gap-2">
-                        <div class="min-w-0">
-                            <h3 class="text-[15px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] leading-tight truncate">
-                                {{ $item->name }}</h3>
-                            <div class="text-[12px] text-[#8E8E93] dark:text-[#98989D] mt-0.5">
-                                {{ $item->code ?? __('services.table.no_code') }} · {{ $item->category?->name ?? __('services.table.uncategorized') }}
+                        <div class="flex items-start gap-3 min-w-0 flex-1">
+                            <input type="checkbox"
+                                :value="String({{ $item->id }})"
+                                x-model="selectedServiceIds"
+                                class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
+                            <div class="min-w-0">
+                                <h3 class="text-[15px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] leading-tight truncate">
+                                    {{ $item->name }}</h3>
+                                <div class="text-[12px] text-[#8E8E93] dark:text-[#98989D] mt-0.5">
+                                    {{ $item->code ?? __('services.table.no_code') }} · {{ $item->category?->name ?? __('services.table.uncategorized') }}
+                                </div>
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -1031,6 +1099,154 @@
             </div>
         </div>
     </template>
+
+        <!-- ===================================================== -->
+        <!-- 9. FLOATING BENTO BULK ACTION TOOLBAR                 -->
+        <!-- ===================================================== -->
+        <div x-show="selectedServiceIds.length > 0"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            x-cloak
+            class="fixed bottom-6 inset-x-4 max-w-4xl mx-auto z-40 bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] rounded-[22px] p-2.5 sm:p-3 shadow-[0_16px_36px_rgba(0,0,0,0.22)] flex flex-wrap items-center justify-between gap-2.5">
+            
+            <div class="flex items-center gap-2 pl-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse"></span>
+                <span class="text-[13px] font-bold text-black dark:text-white" x-text="`${selectedServiceIds.length} layanan dipilih`"></span>
+            </div>
+
+            <!-- Hidden Form for Bulk Action Submission -->
+            <form x-ref="bulkServiceForm" method="POST" action="{{ route('services.bulk-action') }}" class="hidden">
+                @csrf
+                <input type="hidden" name="action" x-ref="bulkServiceAction" value="">
+                <template x-for="id in selectedServiceIds" :key="'bulk-srv-' + id">
+                    <input type="hidden" name="ids[]" :value="id">
+                </template>
+            </form>
+
+            <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <!-- Aktifkan Masal -->
+                <button type="button"
+                    @click="submitBulkService('activate', 'Aktifkan Layanan Terpilih?', `Aktifkan ${selectedServiceIds.length} layanan terpilih sekaligus?`, 'question')"
+                    class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#34C759] hover:bg-[#30D158] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Aktifkan</span>
+                </button>
+
+                <!-- Nonaktifkan Masal -->
+                <button type="button"
+                    @click="submitBulkService('deactivate', 'Nonaktifkan Layanan Terpilih?', `Nonaktifkan ${selectedServiceIds.length} layanan terpilih? Layanan tidak akan aktif di transaksi baru.`, 'warning')"
+                    class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-black/70 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="eye-off" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Nonaktifkan</span>
+                </button>
+
+                <!-- Dropdown: Tampil Dimana Aja -->
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                    <button type="button"
+                        @click="open = !open"
+                        class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/5">
+                        <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#007AFF]" stroke-width="2"></i>
+                        <span>Tampil Dimana Aja</span>
+                        <i data-lucide="chevron-up" class="w-3 h-3 text-black/40 dark:text-white/40 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                    </button>
+
+                    <div x-show="open" x-cloak
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                        class="absolute bottom-full mb-2 right-0 w-72 bg-white dark:bg-[#1E1E20] border border-black/[0.08] dark:border-white/[0.12] rounded-[18px] p-2 shadow-2xl z-50 text-[12.5px] space-y-1">
+                        
+                        <div class="px-2.5 py-1 text-[11px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider">
+                            Saluran Etalase & Visibilitas
+                        </div>
+
+                        <!-- Web Catalog -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Etalase Toko Web</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkService('show_website', 'Tampilkan di Web?', 'Tampilkan layanan di etalase website publik?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkService('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan layanan dari etalase website publik?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- POS Kasir -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Kasir POS</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkService('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan layanan di kasir POS?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkService('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan layanan dari kasir POS?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Faktur Sales Order -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Faktur & Sales Order (B2B)</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkService('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan layanan di pemilihan faktur/SO?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkService('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan layanan dari pemilihan faktur/SO?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tampilkan Harga di Web -->
+                        <div class="p-1.5 rounded-[10px] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]">
+                            <div class="font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]">Harga di Web</div>
+                            <div class="grid grid-cols-2 gap-1 mt-1">
+                                <button type="button" @click="open = false; submitBulkService('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka tarif layanan di etalase web?')"
+                                    class="h-7 px-2 rounded-[8px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye" class="w-3 h-3"></i> Tampilkan
+                                </button>
+                                <button type="button" @click="open = false; submitBulkService('hide_price_web', 'Sembunyikan Harga di Web?', 'Sembunyikan angka tarif (hubungi admin)?')"
+                                    class="h-7 px-2 rounded-[8px] bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 hover:bg-rose-100 text-[11px] font-medium flex items-center justify-center gap-1 cursor-pointer">
+                                    <i data-lucide="eye-off" class="w-3 h-3"></i> Sembunyikan
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                @if (\App\Support\Context::hasPermission('products.delete') || \App\Support\Context::hasPermission('products.manage'))
+                    <!-- Bulk Delete Button -->
+                    <button type="button"
+                        @click="submitBulkService('delete', 'Hapus Layanan Terpilih?', `Hapus ${selectedServiceIds.length} layanan terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')"
+                        class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#FF453A] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
+                        <span>Hapus</span>
+                    </button>
+                @endif
+
+                <!-- Cancel Selection -->
+                <button type="button" @click="selectedServiceIds = []"
+                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    Batal
+                </button>
+            </div>
+        </div>
 
     </div>
 @endsection

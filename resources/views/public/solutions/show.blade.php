@@ -1,15 +1,18 @@
 @extends('layouts.public_marketing')
 
-@section('title', $solution['title'] . ' | COOCA Business Operating System')
-@section('description', $solution['subheadline'])
-@section('og_title', $solution['title'] . ' | COOCA')
-@section('og_description', $solution['subheadline'])
+@php
+    $pageSeo = \App\Services\Seo\SeoMetadataService::getPageSeo();
+@endphp
+
+@section('title', $pageSeo['title'] ?? ($solution['title'] . ' | COOCA'))
+@section('description', $pageSeo['description'] ?? $solution['subheadline'])
+@section('og_title', $pageSeo['og_title'] ?? ($solution['title'] . ' | COOCA'))
+@section('og_description', $pageSeo['og_description'] ?? $solution['subheadline'])
 @section('canonical', route('solusi.show', $solution['slug']))
 @section('og_type', 'product')
-@section('keywords', strtolower($solution['title']) . ', aplikasi kasir indonesia, software pos ' . strtolower($solution['badge']) . ', aplikasi pembukuan ' . strtolower($solution['slug']))
 
-    @push('seo')
-        <script type="application/ld+json">
+@push('seo')
+    <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
       "@type": "SoftwareApplication",
@@ -24,9 +27,32 @@
       }
     }
     </script>
-    @endpush
+    @if (!empty($solution['faqs']))
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        @foreach ($solution['faqs'] as $index => $faq)
+        {
+          "@type": "Question",
+          "name": "{{ addslashes($faq['q']) }}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{ addslashes($faq['a']) }}"
+          }
+        }{{ $loop->last ? '' : ',' }}
+        @endforeach
+      ]
+    }
+    </script>
+    @endif
+@endpush
 
 @section('content')
+    @if (!empty($solution['confirmation_note']))
+        <!-- KONFIRMASI: {{ $solution['confirmation_note'] }} -->
+    @endif
     <div class="bg-white dark:bg-[#070A14] text-slate-900 dark:text-white transition-colors duration-300">
 
         {{-- 1. HERO SECTION (Unified Bento Cockpit - No Breadcrumb) --}}
@@ -55,7 +81,7 @@
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            {{ $solution['headline'] }}
+                            {{ \App\Services\Seo\SeoMetadataService::getH1($solution['headline']) }}
                         </h1>
 
                         {{-- Subtitle Paragraph --}}
@@ -289,6 +315,88 @@
                                 {{ $solution['testimonial']['business'] }}
                             </div>
                         </div>
+                    </div>
+                </section>
+            @endif
+
+            {{-- Section: Cara Kerja (Step by Step) --}}
+            @if (!empty($solution['how_it_works']))
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto space-y-2">
+                        <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] dark:text-[#00C4D8] block">
+                            Cara Kerja Praktis
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                            Hanya 3 Langkah Mudah untuk Memulai
+                        </h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            Tanpa instalasi server yang rumit. Sistem siap dipakai dalam waktu kurang dari 2 menit.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        @foreach ($solution['how_it_works'] as $hw)
+                            <div class="p-6 sm:p-7 rounded-[22px] bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 space-y-3 relative overflow-hidden shadow-sm">
+                                <span class="text-4xl font-extrabold text-[#007AFF]/20 dark:text-[#00C4D8]/20 font-mono block">
+                                    0{{ $hw['step'] }}
+                                </span>
+                                <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                                    {{ $hw['title'] }}
+                                </h3>
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
+                                    {{ $hw['desc'] }}
+                                </p>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+            @endif
+
+            {{-- Section: Hubungan ke Solusi Utama Sektor (Cross-Link) --}}
+            @if (!empty($solution['parent_solution']))
+                <section class="p-6 sm:p-8 rounded-[24px] bg-gradient-to-r from-blue-500/[0.06] via-cyan-500/[0.04] to-transparent dark:from-blue-500/[0.12] dark:via-cyan-500/[0.08] border border-blue-500/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div class="space-y-1.5 max-w-2xl">
+                        <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block">
+                            Solusi Sektor Skala Menengah &amp; Lanjut
+                        </span>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                            {{ $solution['parent_solution']['title'] }}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            {{ $solution['parent_solution']['desc'] }}
+                        </p>
+                    </div>
+                    <a href="{{ $solution['parent_solution']['url'] }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-white/10 hover:bg-slate-50 dark:hover:bg-white/15 border border-slate-200 dark:border-white/15 text-[#007AFF] dark:text-white font-semibold text-xs sm:text-sm shrink-0 transition-all shadow-sm">
+                        <span>Lihat Solusi Terpadu</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
+                    </a>
+                </section>
+            @endif
+
+            {{-- Section: FAQ (Pertanyaan yang Sering Diajukan) --}}
+            @if (!empty($solution['faqs']))
+                <section class="space-y-8">
+                    <div class="text-center max-w-2xl mx-auto space-y-2">
+                        <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] dark:text-[#00C4D8] block">
+                            Tanya Jawab Seputar Fitur
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                            Pertanyaan yang Sering Diajukan
+                        </h2>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto space-y-4" x-data="{ activeFaq: null }">
+                        @foreach ($solution['faqs'] as $index => $faq)
+                            <div class="rounded-[18px] bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 overflow-hidden shadow-sm transition-all">
+                                <button type="button" @click="activeFaq = (activeFaq === {{ $index }} ? null : {{ $index }})" class="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                                    <span>{{ $faq['q'] }}</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200" :class="activeFaq === {{ $index }} ? 'rotate-180 text-[#007AFF]' : ''"></i>
+                                </button>
+                                <div x-show="activeFaq === {{ $index }}" x-cloak x-collapse class="px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
+                                    {!! $faq['a'] !!}
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </section>
             @endif
