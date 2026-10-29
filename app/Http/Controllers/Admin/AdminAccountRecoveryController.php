@@ -103,6 +103,8 @@ final class AdminAccountRecoveryController extends Controller implements HasMidd
             abort(404, 'Dokumen tidak ditemukan.');
         }
 
+        abort_if(str_contains($path, '..'), 403, 'Akses berkas tidak diizinkan.');
+
         // Cek disk privat (local) terlebih dahulu, dengan fallback disk public untuk berkas legacy
         if (\Illuminate\Support\Facades\Storage::disk('local')->exists($path)) {
             return \Illuminate\Support\Facades\Storage::disk('local')->response($path);

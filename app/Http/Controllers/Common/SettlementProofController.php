@@ -36,6 +36,7 @@ final class SettlementProofController extends Controller
 
         $path = $settlement->proof_image_path;
         abort_unless(! empty($path), 404, 'Bukti transfer belum diunggah.');
+        abort_if(str_contains($path, '..'), 403, 'Akses berkas tidak diizinkan.');
 
         // 1. Check private disk ('local')
         if (Storage::disk(AdminStorage::DISK_PRIVATE)->exists($path)) {

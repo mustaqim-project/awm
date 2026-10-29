@@ -8,27 +8,43 @@ on:
 jobs:
   strix-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0   # Required for diff-scope resolution against base branch
 
+      - name: Check Required Secrets
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.LLM_API_KEY }}" ]; then
+            echo "has_secrets=false" >> $GITHUB_OUTPUT
+            echo "::notice title=Strix Security Scan::LLM_API_KEY repository secret is not set. Skipping AI security review until secret is configured in repo settings."
+          else
+            echo "has_secrets=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Install Strix CLI
+        if: steps.check-secrets.outputs.has_secrets == 'true'
         run: curl -sSL https://strix.ai/install | bash
 
       - name: Run Strix Security Review
+        if: steps.check-secrets.outputs.has_secrets == 'true'
         env:
-          STRIX_LLM: ${{ secrets.STRIX_LLM }}
+          STRIX_LLM: ${{ secrets.STRIX_LLM || 'openai/gpt-4o' }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: |
           # Headless diff-scoped AI pentest on pull request changes
           strix -n -t ./ --scan-mode quick --max-budget 10
 
       - name: Verify Scan Completion
+        if: steps.check-secrets.outputs.has_secrets == 'true'
         run: |
           run_json=$(ls -t strix_runs/*/run.json 2>/dev/null | head -1)
-          if [ -f "$run_json" ]; then
+          if [ -n "$run_json" ] && [ -f "$run_json" ]; then
             status=$(jq -r .status "$run_json")
             if [ "$status" != "completed" ]; then
               echo "Strix run status is '$status' — scan did not finish cleanly. Raise --max-budget if budget exhausted." >&2
@@ -37,7 +53,8 @@ jobs:
           fi
 
       - name: Upload SARIF to GitHub Code Scanning
-        if: always()
+        if: always() && steps.check-secrets.outputs.has_secrets == 'true'
         uses: github/codeql-action/upload-sarif@v3
+        continue-on-error: true
         with:
           sarif_file: strix_runs

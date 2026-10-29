@@ -50,7 +50,6 @@ final class AdminAiEnginePlatformTest extends TestCase
 
         // Security check: Plaintext API key must never be printed to HTML
         $response->assertDontSee('sk-cooca-platform-placeholder-key-00000000');
-        $response->assertDontSee('sk-59807b51bc76063d-ge0agt-97ac1590');
     }
 
     public function test_update_engine_configuration_persists_settings_cleanly(): void

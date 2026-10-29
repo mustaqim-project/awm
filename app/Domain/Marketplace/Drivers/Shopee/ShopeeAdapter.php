@@ -2125,7 +2125,6 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
         // Supports both App Partner Key and Shopee Console Test Push Partner Key
         $candidateKeys = array_filter(array_unique([
             $this->partnerKey,
-            'aaaaaaaaaaaaaaeckam6qwfvarbrc9mlsqkuto8h42uvjlz4qj1k4ihsfgr22g9i',
             (string) (SystemSetting::get('shopee_test_push_partner_key') ?? config('services.shopee.test_push_partner_key', '')),
         ]));
 
