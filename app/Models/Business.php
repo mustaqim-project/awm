@@ -36,6 +36,12 @@ class Business extends Model
 
     public const SCALE_CORPORATE = 'corporate';
 
+    public const SCALE_STARTER = 'starter';
+
+    public const SCALE_GROWTH = 'growth';
+
+    public const SCALE_CORPORATE_TIER = 'corporate';
+
     protected $fillable = [
         'name',
         'slug',
@@ -55,6 +61,7 @@ class Business extends Model
         'template_code',
         'business_scale',
         'disabled_modules',
+        'settings',
         'allow_negative_stock',
         'is_active',
         'suspended_reason',
@@ -108,6 +115,7 @@ class Business extends Model
             'suspended_at' => 'datetime',
             'currency_precision' => 'integer',
             'disabled_modules' => 'array',
+            'settings' => 'array',
             'operating_hours' => 'array',
             'pos_max_cashier_discount_percent' => 'float',
             'pos_require_pin_for_void' => 'boolean',
@@ -509,12 +517,160 @@ class Business extends Model
 
     public function isUmkm(): bool
     {
-        return ($this->business_scale ?? self::SCALE_UMKM) === self::SCALE_UMKM;
+        $scale = $this->business_scale ?? self::SCALE_UMKM;
+        return $scale === self::SCALE_UMKM || $scale === self::SCALE_STARTER;
+    }
+
+    public function isGrowth(): bool
+    {
+        return ($this->business_scale ?? '') === self::SCALE_GROWTH;
     }
 
     public function isCorporate(): bool
     {
-        return ($this->business_scale ?? '') === self::SCALE_CORPORATE;
+        $scale = $this->business_scale ?? '';
+        return $scale === self::SCALE_CORPORATE || $scale === self::SCALE_CORPORATE_TIER;
+    }
+
+    public function getScalingTier(): string
+    {
+        $raw = $this->getSettingsArray()['scale_tier'] ?? $this->business_scale ?? self::SCALE_UMKM;
+        return \App\Domain\Template\FeatureRegistry::normalizeTier((string) $raw);
+    }
+
+    /**
+     * Get settings payload as normalized array.
+     *
+     * @return array<string, mixed>
+     */
+    public function getSettingsArray(): array
+    {
+        $settings = $this->getAttribute('settings');
+        if (is_string($settings)) {
+            $decoded = json_decode($settings, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return is_array($settings) ? $settings : [];
+    }
+
+    /**
+     * Determine if a granular feature parameter is enabled for this business.
+     * Supports graceful fallback across 4 layers:
+     * 1. Explicit business settings JSON (`settings.features.{featureKey}`)
+     * 2. Direct legacy model attribute (e.g. allow_negative_stock, pos_require_pin_for_void)
+     * 3. Business Scaling Tier Preset (Starter, Growth, Corporate)
+     * 4. Global Feature Registry Default or caller-supplied $default
+     */
+    public function isFeatureEnabled(string $featureKey, ?bool $default = null): bool
+    {
+        $settings = $this->getSettingsArray();
+
+        // 1. Explicit setting in JSON
+        if (isset($settings['features'][$featureKey])) {
+            return (bool) $settings['features'][$featureKey];
+        }
+
+        // 2. Direct legacy attribute fallback
+        $legacyVal = match ($featureKey) {
+            \App\Domain\Template\FeatureRegistry::POS_ALLOW_NEGATIVE_STOCK => $this->getAttribute('allow_negative_stock'),
+            \App\Domain\Template\FeatureRegistry::POS_REQUIRE_SUPERVISOR_PIN => $this->getAttribute('pos_require_pin_for_void'),
+            \App\Domain\Template\FeatureRegistry::POS_SHOW_IMAGES => $this->getAttribute('pos_show_product_images'),
+            default => null,
+        };
+
+        if ($legacyVal !== null) {
+            return (bool) $legacyVal;
+        }
+
+        // 3. Scaling Tier Preset
+        $tier = $this->getScalingTier();
+        $preset = \App\Domain\Template\FeatureRegistry::getPresetForTier($tier);
+        if (array_key_exists($featureKey, $preset)) {
+            return (bool) $preset[$featureKey];
+        }
+
+        // 4. Registry Definition Default or param $default
+        $definitions = \App\Domain\Template\FeatureRegistry::definitions();
+        if (isset($definitions[$featureKey]['default'])) {
+            return (bool) $definitions[$featureKey]['default'];
+        }
+
+        return $default ?? false;
+    }
+
+    /**
+     * Enable or disable a granular feature parameter.
+     */
+    public function setFeatureEnabled(string $featureKey, bool $enabled): void
+    {
+        $settings = $this->getSettingsArray();
+        $settings['features'] = $settings['features'] ?? [];
+        $settings['features'][$featureKey] = $enabled;
+
+        // Sync legacy columns if present
+        $attributesToUpdate = [];
+        if (\Illuminate\Support\Facades\Schema::hasColumn('businesses', 'settings')) {
+            $attributesToUpdate['settings'] = $settings;
+        }
+
+        if ($featureKey === \App\Domain\Template\FeatureRegistry::POS_ALLOW_NEGATIVE_STOCK
+            && \Illuminate\Support\Facades\Schema::hasColumn('businesses', 'allow_negative_stock')) {
+            $attributesToUpdate['allow_negative_stock'] = $enabled;
+        } elseif ($featureKey === \App\Domain\Template\FeatureRegistry::POS_REQUIRE_SUPERVISOR_PIN
+            && \Illuminate\Support\Facades\Schema::hasColumn('businesses', 'pos_require_pin_for_void')) {
+            $attributesToUpdate['pos_require_pin_for_void'] = $enabled;
+        } elseif ($featureKey === \App\Domain\Template\FeatureRegistry::POS_SHOW_IMAGES
+            && \Illuminate\Support\Facades\Schema::hasColumn('businesses', 'pos_show_product_images')) {
+            $attributesToUpdate['pos_show_product_images'] = $enabled;
+        }
+
+        if (! empty($attributesToUpdate)) {
+            $this->update($attributesToUpdate);
+        } else {
+            $this->settings = $settings;
+        }
+    }
+
+    /**
+     * Apply a complete 1-Click Scaling Tier Preset (Starter, Growth, Corporate).
+     * Synchronizes features and disables/enables modules seamlessly with zero data loss.
+     */
+    public function applyScalingPreset(string $presetTier): void
+    {
+        $tier = \App\Domain\Template\FeatureRegistry::normalizeTier($presetTier);
+        $features = \App\Domain\Template\FeatureRegistry::getPresetForTier($tier);
+        $disabledModules = \App\Domain\Template\FeatureRegistry::getDisabledModulesForTier($tier, $this->template_code);
+
+        $settings = $this->getSettingsArray();
+        $settings['scale_tier'] = $tier;
+        $settings['features'] = $features;
+
+        $scaleValue = match ($tier) {
+            \App\Domain\Template\FeatureRegistry::TIER_CORPORATE => self::SCALE_CORPORATE,
+            \App\Domain\Template\FeatureRegistry::TIER_GROWTH => self::SCALE_GROWTH,
+            default => self::SCALE_UMKM,
+        };
+
+        $updatePayload = [
+            'business_scale' => $scaleValue,
+            'disabled_modules' => $disabledModules,
+        ];
+
+        if (\Illuminate\Support\Facades\Schema::hasColumn('businesses', 'settings')) {
+            $updatePayload['settings'] = $settings;
+        }
+        if (\Illuminate\Support\Facades\Schema::hasColumn('businesses', 'allow_negative_stock')) {
+            $updatePayload['allow_negative_stock'] = $features[\App\Domain\Template\FeatureRegistry::POS_ALLOW_NEGATIVE_STOCK] ?? false;
+        }
+        if (\Illuminate\Support\Facades\Schema::hasColumn('businesses', 'pos_require_pin_for_void')) {
+            $updatePayload['pos_require_pin_for_void'] = $features[\App\Domain\Template\FeatureRegistry::POS_REQUIRE_SUPERVISOR_PIN] ?? false;
+        }
+        if (\Illuminate\Support\Facades\Schema::hasColumn('businesses', 'pos_show_product_images')) {
+            $updatePayload['pos_show_product_images'] = $features[\App\Domain\Template\FeatureRegistry::POS_SHOW_IMAGES] ?? true;
+        }
+
+        $this->update($updatePayload);
     }
 
     public function isFoodIndustry(): bool

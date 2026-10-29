@@ -40,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo \\App\\Support\\TimezoneHelper::formatTime({$expression}); ?>";
         });
 
+        // Progressive Disclosure & Feature Parameterization Blade Directive
+        \Illuminate\Support\Facades\Blade::if('feature', function (string $featureKey, ?bool $default = null): bool {
+            $business = \App\Support\Context::business();
+
+            return $business ? $business->isFeatureEnabled($featureKey, $default) : (bool) $default;
+        });
+
         // Platform Admin RBAC Gate Integration
         \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
             if ($user instanceof \App\Models\Admin) {
