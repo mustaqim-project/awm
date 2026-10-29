@@ -1273,6 +1273,627 @@
                     </div>
                 </div>
 
+                <!-- ============================================================= -->
+                <!-- SUB-PANEL: 1-CLICK PROFIL SKALA BISNIS (PROGRESSIVE DISCLOSURE) -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF]">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Profil Skala Operasional (1-Click Preset)</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                                    One System for Life
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Pilih profil yang mencerminkan fase bisnis Anda saat ini. Seluruh alur kerja dan parameter akan otomatis beradaptasi tanpa perlu berganti sistem dan tanpa menghapus riwayat transaksi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3 Bento Preset Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- TIER 1: STARTER -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'starter' 
+                                ? 'bg-[#007AFF]/[0.03] dark:bg-[#007AFF]/[0.08] border-[#007AFF] ring-2 ring-[#007AFF]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                        <i data-lucide="zap" class="w-3 h-3"></i> UMKM MIKRO
+                                    </span>
+                                    <template x-if="currentScaleTier === 'starter'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#007AFF]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Starter (Rintisan)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Dirancang untuk pemilik usaha tunggal atau gerobak rintisan. Layar kasir bersih, transaksi instan, tanpa beban administrasi.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kasir POS 1-Klik Super Cepat</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Bebas Jualan Saat Stok Habis/Minus</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kirim Struk Otomatis via WhatsApp</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5 text-black/40 dark:text-white/40">
+                                        <i data-lucide="minus" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>Tanpa Menu Gudang & Jurnal Rumit</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'starter'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'starter'">
+                                    <button type="button" @click="requestApplyTier('starter', 'UMKM Mikro (Starter)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] hover:text-[#007AFF] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Starter
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 2: GROWTH -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'growth' 
+                                ? 'bg-[#FF9500]/[0.03] dark:bg-[#FF9500]/[0.08] border-[#FF9500] ring-2 ring-[#FF9500]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FFA00A]">
+                                        <i data-lucide="trending-up" class="w-3 h-3"></i> BERTUMBUH
+                                    </span>
+                                    <template x-if="currentScaleTier === 'growth'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#FF9500]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Growth (1-3 Cabang)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Fokus pada pengawasan operasional, pencegahan kebocoran kas kasir (anti-fraud), dan resep HPP otomatis.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Buka / Tutup Shift Laci Kas Blind Close</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>PIN Otorisasi Supervisor untuk Void/Diskon</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Formula Resep (BOM) & HPP Otomatis</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Database Poin Loyalitas & WhatsApp CRM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'growth'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'growth'">
+                                    <button type="button" @click="requestApplyTier('growth', 'UMKM Bertumbuh (Growth)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#FF9500] hover:text-[#FF9500] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Growth
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 3: CORPORATE -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'corporate' 
+                                ? 'bg-[#AF52DE]/[0.03] dark:bg-[#AF52DE]/[0.08] border-[#AF52DE] ring-2 ring-[#AF52DE]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#AF52DE]/15 text-[#8944AB] dark:text-[#BF5AF2]">
+                                        <i data-lucide="building-2" class="w-3 h-3"></i> SCALE-UP
+                                    </span>
+                                    <template x-if="currentScaleTier === 'corporate'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#AF52DE]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Corporate (Scale-Up)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Arsitektur lengkap untuk distributor regional, rantai pasok multi-gudang, dan kepatuhan akuntansi standar SAK EMKM.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Surat Jalan Resmi Supir (Delivery Order)</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Transfer Antar Multi-Gudang & Cabang</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Validasi Batas Plafon Piutang B2B</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Akuntansi Lengkap: COA, Jurnal & Neraca</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'corporate'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#AF52DE]/15 text-[#AF52DE] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'corporate'">
+                                    <button type="button" @click="requestApplyTier('corporate', 'Perusahaan Berkembang (Corporate)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#AF52DE] hover:text-[#AF52DE] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Corporate
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================= -->
+                <!-- SUB-PANEL: 24 PARAMETER GRANULAR KUSTOM MANDIRI               -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#34C759]/10 text-[#34C759]">
+                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">24 Parameter Granular Mandiri</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                    Kustomisasi Bebas
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Atur setiap parameter operasional secara independen. Perubahan tersimpan otomatis secara real-time.
+                            </p>
+                        </div>
+
+                        <!-- Search Parameter Input -->
+                        <div class="relative w-full sm:w-64">
+                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                            <input type="text" x-model="featureSearch" placeholder="Cari nama parameter..."
+                                   class="w-full pl-8 pr-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-[#007AFF] transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Cluster Grid of 24 Parameters -->
+                    <div class="space-y-6">
+                        @foreach($featureCategories as $catKey => $catMeta)
+                            @php
+                                $catFeatures = array_filter($featureDefinitions, fn($def) => $def['category'] === $catKey);
+                            @endphp
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="p-1 rounded-[6px] bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                        <i data-lucide="{{ $catMeta['icon'] }}" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">{{ $catMeta['name'] }}</h4>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">({{ count($catFeatures) }} parameter)</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    @foreach($catFeatures as $fKey => $fDef)
+                                        <div x-show="!featureSearch || '{{ strtolower($fDef['name'] . ' ' . $fDef['description'] . ' ' . $fKey) }}'.includes(featureSearch.toLowerCase())"
+                                             class="rounded-[12px] bg-black/[0.015] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 p-3.5 flex items-start justify-between gap-3 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-all">
+                                            <div class="space-y-1 flex-1 min-w-0">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-[13px] font-semibold text-black dark:text-white leading-tight">
+                                                        {{ $fDef['name'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+                                                    {{ $fDef['description'] }}
+                                                </p>
+                                                <div class="flex items-center gap-2 pt-1 text-[10px] text-black/40 dark:text-white/40 font-mono">
+                                                    <span>{{ $fKey }}</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- iOS / Apple Toggle Switch -->
+                                            <div class="shrink-0 pt-0.5">
+                                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                                    <input type="checkbox"
+                                                           :checked="featuresState['{{ $fKey }}']"
+                                                           :disabled="featureSaving['{{ $fKey }}'] || !isOwner"
+                                                           @change="toggleFeatureParam('{{ $fKey }}', $event.target.checked)"
+                                                           class="sr-only peer">
+                                                    <div class="w-10 h-6 bg-black/15 peer-focus:outline-none rounded-full peer dark:bg-white/15 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#34C759]"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- MODAL KONFIRMASI TERAPKAN TIER -->
+                <div x-show="confirmTierModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" x-cloak>
+                    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="confirmTierModalOpen = false"></div>
+                    <div class="relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2.5 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF]">
+                                <i data-lucide="help-circle" class="w-6 h-6"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">Terapkan Profil Skala?</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50" x-text="targetTierName"></p>
+                            </div>
+                        </div>
+
+                        <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
+                            Sistem akan menyesuaikan alur kerja kasir, otorisasi, dan modul fitur sesuai profil <strong x-text="targetTierName"></strong>. Seluruh riwayat transaksi, laporan, dan master data Anda tetap 100% aman dan utuh.
+                        </p>
+
+                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/5">
+                            <button type="button" @click="confirmTierModalOpen = false"
+                                    class="px-4 py-2 rounded-[10px] bg-black/5 dark:bg-white/10 text-[12px] font-semibold text-black dark:text-white hover:bg-black/10 transition-all">
+                                Batal
+                            </button>
+                            <button type="button" @click="executeApplyTier()" :disabled="applyingTier"
+                                    class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-[12px] font-bold text-white hover:bg-[#007AFF]/90 transition-all inline-flex items-center gap-1.5 shadow-sm">
+                                <template x-if="applyingTier">
+                                    <svg class="animate-spin w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </template>
+                                <span x-text="applyingTier ? 'Menerapkan...' : 'Ya, Terapkan Sekarang'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ============================================================= -->
+                <!-- SUB-PANEL: 1-CLICK PROFIL SKALA BISNIS (PROGRESSIVE DISCLOSURE) -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF]">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Profil Skala Operasional (1-Click Preset)</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                                    One System for Life
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Pilih profil yang mencerminkan fase bisnis Anda saat ini. Seluruh alur kerja dan parameter akan otomatis beradaptasi tanpa perlu berganti sistem dan tanpa menghapus riwayat transaksi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3 Bento Preset Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- TIER 1: STARTER -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'starter' 
+                                ? 'bg-[#007AFF]/[0.03] dark:bg-[#007AFF]/[0.08] border-[#007AFF] ring-2 ring-[#007AFF]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                        <i data-lucide="zap" class="w-3 h-3"></i> UMKM MIKRO
+                                    </span>
+                                    <template x-if="currentScaleTier === 'starter'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#007AFF]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Starter (Rintisan)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Dirancang untuk pemilik usaha tunggal atau gerobak rintisan. Layar kasir bersih, transaksi instan, tanpa beban administrasi.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kasir POS 1-Klik Super Cepat</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Bebas Jualan Saat Stok Habis/Minus</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kirim Struk Otomatis via WhatsApp</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5 text-black/40 dark:text-white/40">
+                                        <i data-lucide="minus" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>Tanpa Menu Gudang & Jurnal Rumit</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'starter'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'starter'">
+                                    <button type="button" @click="requestApplyTier('starter', 'UMKM Mikro (Starter)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] hover:text-[#007AFF] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Starter
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 2: GROWTH -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'growth' 
+                                ? 'bg-[#FF9500]/[0.03] dark:bg-[#FF9500]/[0.08] border-[#FF9500] ring-2 ring-[#FF9500]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FFA00A]">
+                                        <i data-lucide="trending-up" class="w-3 h-3"></i> BERTUMBUH
+                                    </span>
+                                    <template x-if="currentScaleTier === 'growth'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#FF9500]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Growth (1-3 Cabang)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Fokus pada pengawasan operasional, pencegahan kebocoran kas kasir (anti-fraud), dan resep HPP otomatis.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Buka / Tutup Shift Laci Kas Blind Close</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>PIN Otorisasi Supervisor untuk Void/Diskon</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Formula Resep (BOM) & HPP Otomatis</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Database Poin Loyalitas & WhatsApp CRM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'growth'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'growth'">
+                                    <button type="button" @click="requestApplyTier('growth', 'UMKM Bertumbuh (Growth)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#FF9500] hover:text-[#FF9500] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Growth
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 3: CORPORATE -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'corporate' 
+                                ? 'bg-[#AF52DE]/[0.03] dark:bg-[#AF52DE]/[0.08] border-[#AF52DE] ring-2 ring-[#AF52DE]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#AF52DE]/15 text-[#8944AB] dark:text-[#BF5AF2]">
+                                        <i data-lucide="building-2" class="w-3 h-3"></i> SCALE-UP
+                                    </span>
+                                    <template x-if="currentScaleTier === 'corporate'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#AF52DE]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Corporate (Scale-Up)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Arsitektur lengkap untuk distributor regional, rantai pasok multi-gudang, dan kepatuhan akuntansi standar SAK EMKM.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Surat Jalan Resmi Supir (Delivery Order)</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Transfer Antar Multi-Gudang & Cabang</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Validasi Batas Plafon Piutang B2B</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Akuntansi Lengkap: COA, Jurnal & Neraca</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'corporate'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#AF52DE]/15 text-[#AF52DE] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'corporate'">
+                                    <button type="button" @click="requestApplyTier('corporate', 'Perusahaan Berkembang (Corporate)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#AF52DE] hover:text-[#AF52DE] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Corporate
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================= -->
+                <!-- SUB-PANEL: 24 PARAMETER GRANULAR KUSTOM MANDIRI               -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#34C759]/10 text-[#34C759]">
+                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">24 Parameter Granular Mandiri</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                    Kustomisasi Bebas
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Atur setiap parameter operasional secara independen. Perubahan tersimpan otomatis secara real-time.
+                            </p>
+                        </div>
+
+                        <!-- Search Parameter Input -->
+                        <div class="relative w-full sm:w-64">
+                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                            <input type="text" x-model="featureSearch" placeholder="Cari nama parameter..."
+                                   class="w-full pl-8 pr-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-[#007AFF] transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Cluster Grid of 24 Parameters -->
+                    <div class="space-y-6">
+                        @foreach($featureCategories as $catKey => $catMeta)
+                            @php
+                                $catFeatures = array_filter($featureDefinitions, fn($def) => $def['category'] === $catKey);
+                            @endphp
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="p-1 rounded-[6px] bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                        <i data-lucide="{{ $catMeta['icon'] }}" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">{{ $catMeta['name'] }}</h4>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">({{ count($catFeatures) }} parameter)</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    @foreach($catFeatures as $fKey => $fDef)
+                                        <div x-show="!featureSearch || '{{ strtolower($fDef['name'] . ' ' . $fDef['description'] . ' ' . $fKey) }}'.includes(featureSearch.toLowerCase())"
+                                             class="rounded-[12px] bg-black/[0.015] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 p-3.5 flex items-start justify-between gap-3 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-all">
+                                            <div class="space-y-1 flex-1 min-w-0">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-[13px] font-semibold text-black dark:text-white leading-tight">
+                                                        {{ $fDef['name'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+                                                    {{ $fDef['description'] }}
+                                                </p>
+                                                <div class="flex items-center gap-2 pt-1 text-[10px] text-black/40 dark:text-white/40 font-mono">
+                                                    <span>{{ $fKey }}</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- iOS / Apple Toggle Switch -->
+                                            <div class="shrink-0 pt-0.5">
+                                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                                    <input type="checkbox"
+                                                           :checked="featuresState['{{ $fKey }}']"
+                                                           :disabled="featureSaving['{{ $fKey }}'] || !isOwner"
+                                                           @change="toggleFeatureParam('{{ $fKey }}', $event.target.checked)"
+                                                           class="sr-only peer">
+                                                    <div class="w-10 h-6 bg-black/15 peer-focus:outline-none rounded-full peer dark:bg-white/15 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#34C759]"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- MODAL KONFIRMASI TERAPKAN TIER -->
+                <div x-show="confirmTierModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" x-cloak>
+                    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="confirmTierModalOpen = false"></div>
+                    <div class="relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2.5 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF]">
+                                <i data-lucide="help-circle" class="w-6 h-6"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">Terapkan Profil Skala?</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50" x-text="targetTierName"></p>
+                            </div>
+                        </div>
+
+                        <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
+                            Sistem akan menyesuaikan alur kerja kasir, otorisasi, dan modul fitur sesuai profil <strong x-text="targetTierName"></strong>. Seluruh riwayat transaksi, laporan, dan master data Anda tetap 100% aman dan utuh.
+                        </p>
+
+                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/5">
+                            <button type="button" @click="confirmTierModalOpen = false"
+                                    class="px-4 py-2 rounded-[10px] bg-black/5 dark:bg-white/10 text-[12px] font-semibold text-black dark:text-white hover:bg-black/10 transition-all">
+                                Batal
+                            </button>
+                            <button type="button" @click="executeApplyTier()" :disabled="applyingTier"
+                                    class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-[12px] font-bold text-white hover:bg-[#007AFF]/90 transition-all inline-flex items-center gap-1.5 shadow-sm">
+                                <template x-if="applyingTier">
+                                    <svg class="animate-spin w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </template>
+                                <span x-text="applyingTier ? 'Menerapkan...' : 'Ya, Terapkan Sekarang'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 @php
                     $clusterMap = [
                         'kasir' => [
@@ -1374,7 +1995,317 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             @foreach ($cluster['keys'] as $moduleKey)
                                 @if (isset($allModules[$moduleKey]))
-                                    @php
+                                    <!-- ============================================================= -->
+                <!-- SUB-PANEL: 1-CLICK PROFIL SKALA BISNIS (PROGRESSIVE DISCLOSURE) -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF]">
+                                    <i data-lucide="layers" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">Profil Skala Operasional (1-Click Preset)</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                                    One System for Life
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Pilih profil yang mencerminkan fase bisnis Anda saat ini. Seluruh alur kerja dan parameter akan otomatis beradaptasi tanpa perlu berganti sistem dan tanpa menghapus riwayat transaksi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3 Bento Preset Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- TIER 1: STARTER -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'starter' 
+                                ? 'bg-[#007AFF]/[0.03] dark:bg-[#007AFF]/[0.08] border-[#007AFF] ring-2 ring-[#007AFF]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                        <i data-lucide="zap" class="w-3 h-3"></i> UMKM MIKRO
+                                    </span>
+                                    <template x-if="currentScaleTier === 'starter'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#007AFF]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Starter (Rintisan)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Dirancang untuk pemilik usaha tunggal atau gerobak rintisan. Layar kasir bersih, transaksi instan, tanpa beban administrasi.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kasir POS 1-Klik Super Cepat</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Bebas Jualan Saat Stok Habis/Minus</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Kirim Struk Otomatis via WhatsApp</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5 text-black/40 dark:text-white/40">
+                                        <i data-lucide="minus" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>Tanpa Menu Gudang & Jurnal Rumit</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'starter'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'starter'">
+                                    <button type="button" @click="requestApplyTier('starter', 'UMKM Mikro (Starter)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#007AFF] hover:text-[#007AFF] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Starter
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 2: GROWTH -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'growth' 
+                                ? 'bg-[#FF9500]/[0.03] dark:bg-[#FF9500]/[0.08] border-[#FF9500] ring-2 ring-[#FF9500]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FFA00A]">
+                                        <i data-lucide="trending-up" class="w-3 h-3"></i> BERTUMBUH
+                                    </span>
+                                    <template x-if="currentScaleTier === 'growth'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#FF9500]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Growth (1-3 Cabang)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Fokus pada pengawasan operasional, pencegahan kebocoran kas kasir (anti-fraud), dan resep HPP otomatis.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Buka / Tutup Shift Laci Kas Blind Close</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>PIN Otorisasi Supervisor untuk Void/Diskon</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Formula Resep (BOM) & HPP Otomatis</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Database Poin Loyalitas & WhatsApp CRM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'growth'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'growth'">
+                                    <button type="button" @click="requestApplyTier('growth', 'UMKM Bertumbuh (Growth)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#FF9500] hover:text-[#FF9500] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Growth
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- TIER 3: CORPORATE -->
+                        <div class="relative rounded-[14px] p-5 border transition-all flex flex-col justify-between"
+                             :class="currentScaleTier === 'corporate' 
+                                ? 'bg-[#AF52DE]/[0.03] dark:bg-[#AF52DE]/[0.08] border-[#AF52DE] ring-2 ring-[#AF52DE]/20 shadow-sm' 
+                                : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20'">
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#AF52DE]/15 text-[#8944AB] dark:text-[#BF5AF2]">
+                                        <i data-lucide="building-2" class="w-3 h-3"></i> SCALE-UP
+                                    </span>
+                                    <template x-if="currentScaleTier === 'corporate'">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#AF52DE]">
+                                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Aktif Saat Ini
+                                        </span>
+                                    </template>
+                                </div>
+                                <div>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Corporate (Scale-Up)</h4>
+                                    <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
+                                        Arsitektur lengkap untuk distributor regional, rantai pasok multi-gudang, dan kepatuhan akuntansi standar SAK EMKM.
+                                    </p>
+                                </div>
+                                <ul class="text-[11px] space-y-1.5 text-black/70 dark:text-white/70 pt-2 border-t border-black/5 dark:border-white/5">
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Surat Jalan Resmi Supir (Delivery Order)</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Transfer Antar Multi-Gudang & Cabang</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Validasi Batas Plafon Piutang B2B</span>
+                                    </li>
+                                    <li class="flex items-center gap-1.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0"></i>
+                                        <span>Akuntansi Lengkap: COA, Jurnal & Neraca</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pt-4 mt-3">
+                                <template x-if="currentScaleTier === 'corporate'">
+                                    <button type="button" disabled class="w-full py-2 px-3 rounded-[10px] bg-[#AF52DE]/15 text-[#AF52DE] text-[12px] font-bold text-center cursor-default">
+                                        Profil Aktif
+                                    </button>
+                                </template>
+                                <template x-if="currentScaleTier !== 'corporate'">
+                                    <button type="button" @click="requestApplyTier('corporate', 'Perusahaan Berkembang (Corporate)')"
+                                            class="w-full py-2 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-[#AF52DE] hover:text-[#AF52DE] text-[12px] font-semibold text-black dark:text-white transition-all shadow-sm">
+                                        Terapkan Corporate
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================= -->
+                <!-- SUB-PANEL: 24 PARAMETER GRANULAR KUSTOM MANDIRI               -->
+                <!-- ============================================================= -->
+                <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-5 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="p-1.5 rounded-[8px] bg-[#34C759]/10 text-[#34C759]">
+                                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                                </span>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">24 Parameter Granular Mandiri</h3>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                    Kustomisasi Bebas
+                                </span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-1">
+                                Atur setiap parameter operasional secara independen. Perubahan tersimpan otomatis secara real-time.
+                            </p>
+                        </div>
+
+                        <!-- Search Parameter Input -->
+                        <div class="relative w-full sm:w-64">
+                            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                            <input type="text" x-model="featureSearch" placeholder="Cari nama parameter..."
+                                   class="w-full pl-8 pr-3 py-1.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-[#007AFF] transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Cluster Grid of 24 Parameters -->
+                    <div class="space-y-6">
+                        @foreach($featureCategories as $catKey => $catMeta)
+                            @php
+                                $catFeatures = array_filter($featureDefinitions, fn($def) => $def['category'] === $catKey);
+                            @endphp
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="p-1 rounded-[6px] bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60">
+                                        <i data-lucide="{{ $catMeta['icon'] }}" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">{{ $catMeta['name'] }}</h4>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">({{ count($catFeatures) }} parameter)</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    @foreach($catFeatures as $fKey => $fDef)
+                                        <div x-show="!featureSearch || '{{ strtolower($fDef['name'] . ' ' . $fDef['description'] . ' ' . $fKey) }}'.includes(featureSearch.toLowerCase())"
+                                             class="rounded-[12px] bg-black/[0.015] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 p-3.5 flex items-start justify-between gap-3 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-all">
+                                            <div class="space-y-1 flex-1 min-w-0">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-[13px] font-semibold text-black dark:text-white leading-tight">
+                                                        {{ $fDef['name'] }}
+                                                    </span>
+                                                </div>
+                                                <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed line-clamp-2">
+                                                    {{ $fDef['description'] }}
+                                                </p>
+                                                <div class="flex items-center gap-2 pt-1 text-[10px] text-black/40 dark:text-white/40 font-mono">
+                                                    <span>{{ $fKey }}</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- iOS / Apple Toggle Switch -->
+                                            <div class="shrink-0 pt-0.5">
+                                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                                    <input type="checkbox"
+                                                           :checked="featuresState['{{ $fKey }}']"
+                                                           :disabled="featureSaving['{{ $fKey }}'] || !isOwner"
+                                                           @change="toggleFeatureParam('{{ $fKey }}', $event.target.checked)"
+                                                           class="sr-only peer">
+                                                    <div class="w-10 h-6 bg-black/15 peer-focus:outline-none rounded-full peer dark:bg-white/15 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#34C759]"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- MODAL KONFIRMASI TERAPKAN TIER -->
+                <div x-show="confirmTierModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;" x-cloak>
+                    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" @click="confirmTierModalOpen = false"></div>
+                    <div class="relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
+                        <div class="flex items-center gap-3">
+                            <span class="p-2.5 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF]">
+                                <i data-lucide="help-circle" class="w-6 h-6"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">Terapkan Profil Skala?</h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50" x-text="targetTierName"></p>
+                            </div>
+                        </div>
+
+                        <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
+                            Sistem akan menyesuaikan alur kerja kasir, otorisasi, dan modul fitur sesuai profil <strong x-text="targetTierName"></strong>. Seluruh riwayat transaksi, laporan, dan master data Anda tetap 100% aman dan utuh.
+                        </p>
+
+                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/5">
+                            <button type="button" @click="confirmTierModalOpen = false"
+                                    class="px-4 py-2 rounded-[10px] bg-black/5 dark:bg-white/10 text-[12px] font-semibold text-black dark:text-white hover:bg-black/10 transition-all">
+                                Batal
+                            </button>
+                            <button type="button" @click="executeApplyTier()" :disabled="applyingTier"
+                                    class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-[12px] font-bold text-white hover:bg-[#007AFF]/90 transition-all inline-flex items-center gap-1.5 shadow-sm">
+                                <template x-if="applyingTier">
+                                    <svg class="animate-spin w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </template>
+                                <span x-text="applyingTier ? 'Menerapkan...' : 'Ya, Terapkan Sekarang'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                @php
                                         $mod = $allModules[$moduleKey];
                                         $isEnabled = $business->isModuleEnabled($moduleKey);
                                         $impactText = $cluster['impacts'][$moduleKey] ?? null;
@@ -2442,6 +3373,21 @@
                 moduleSaving: {},
                 moduleSaveStatus: 'idle', // 'idle' | 'saving' | 'saved' | 'error'
                 saveStatusTimer: null,
+                // Progressive Disclosure & Scaling Presets
+                currentScaleTier: @json($currentScalingTier ?? $business->getScalingTier()),
+                applyingTier: false,
+                confirmTierModalOpen: false,
+                targetTierToApply: '',
+                targetTierName: '',
+
+                // 24 Granular Parameters State
+                featureSearch: '',
+                featureSaving: {},
+                featuresState: {
+                    @foreach(\App\Domain\Template\FeatureRegistry::allKeys() as $fKey)
+                        '{{ $fKey }}': {{ $business->isFeatureEnabled($fKey) ? 'true' : 'false' }},
+                    @endforeach
+                },
 
                 async toggleModule(moduleKey, isChecked) {
                     if (!this.isOwner) return;
@@ -2509,6 +3455,109 @@
                         this.moduleSaving[moduleKey] = false;
                     }
                 },
+
+                requestApplyTier(tierKey, tierName) {
+                    this.targetTierToApply = tierKey;
+                    this.targetTierName = tierName;
+                    this.confirmTierModalOpen = true;
+                },
+
+                async executeApplyTier() {
+                    if (!this.isOwner || this.applyingTier) return;
+                    this.applyingTier = true;
+
+                    try {
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                            || document.querySelector('input[name="_token"]')?.value;
+
+                        const response = await fetch('{{ route('settings.features.apply-tier') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                            body: JSON.stringify({
+                                tier: this.targetTierToApply,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            this.currentScaleTier = data.tier;
+                            if (data.features) {
+                                this.featuresState = { ...this.featuresState, ...data.features };
+                            }
+                            if (window.AppAlert && data.message) {
+                                window.AppAlert.toast('success', data.message, { duration: 4000 });
+                            }
+                            this.confirmTierModalOpen = false;
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 800);
+                        } else {
+                            throw new Error(data.message || 'Gagal menerapkan profil skala.');
+                        }
+                    } catch (err) {
+                        console.error('Apply tier error:', err);
+                        if (window.AppAlert) {
+                            window.AppAlert.toast('error', err.message || 'Terjadi kesalahan sistem.');
+                        } else {
+                            alert(err.message || 'Terjadi kesalahan sistem.');
+                        }
+                    } finally {
+                        this.applyingTier = false;
+                    }
+                },
+
+                async toggleFeatureParam(featureKey, isChecked) {
+                    if (!this.isOwner) return;
+
+                    this.featureSaving[featureKey] = true;
+                    this.featuresState[featureKey] = isChecked;
+
+                    try {
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                            || document.querySelector('input[name="_token"]')?.value;
+
+                        const response = await fetch('{{ route('settings.features.toggle') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                            body: JSON.stringify({
+                                feature_key: featureKey,
+                                enabled: isChecked,
+                            }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            if (window.AppAlert && data.message) {
+                                window.AppAlert.toast('success', data.message, { duration: 3000 });
+                            }
+                        } else {
+                            throw new Error(data.message || 'Gagal menyimpan parameter fitur.');
+                        }
+                    } catch (err) {
+                        console.error('Feature toggle error:', err);
+                        this.featuresState[featureKey] = !isChecked;
+                        if (window.AppAlert) {
+                            window.AppAlert.toast('error', err.message || 'Gagal mengubah parameter.');
+                        } else {
+                            alert(err.message || 'Gagal mengubah parameter.');
+                        }
+                    } finally {
+                        this.featureSaving[featureKey] = false;
+                    }
+                },
+
 
                 init() {
                     // Deep-linking URL synchronization on tab change without page reload

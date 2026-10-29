@@ -42,6 +42,8 @@ final class SettingWebController extends Controller implements HasMiddleware
             new Middleware('require.role:owner', only: [
                 'applyTemplate',
                 'updateModules',
+                'applyScalingTier',
+                'toggleFeature',
             ]),
             new Middleware('require.permission:users.manage', only: [
                 'storeMember',
@@ -95,6 +97,10 @@ final class SettingWebController extends Controller implements HasMiddleware
             ->orderBy('name')
             ->get();
 
+        $featureDefinitions = \App\Domain\Template\FeatureRegistry::definitions();
+        $featureCategories = \App\Domain\Template\FeatureRegistry::getCategories();
+        $currentScalingTier = $business->getScalingTier();
+
         return view('app.settings.index', compact(
             'business',
             'templates',
@@ -102,6 +108,9 @@ final class SettingWebController extends Controller implements HasMiddleware
             'locations',
             'branches',
             'allModules',
+            'featureDefinitions',
+            'featureCategories',
+            'currentScalingTier',
             'timezones',
             'operatingHours',
             'currentTimezone',
@@ -515,6 +524,117 @@ final class SettingWebController extends Controller implements HasMiddleware
         }
 
         return back()->with('success', 'Konfigurasi modul fitur bisnis Anda berhasil diperbarui.')->with('active_tab', 'modules');
+    }
+
+    /**
+     * Apply 1-Click Scaling Tier Preset (Starter, Growth, Corporate).
+     */
+    public function applyScalingTier(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::isOwner(), 403, 'Hanya Business Owner yang berwenang mengubah profil skala bisnis.');
+
+        $validated = $request->validate([
+            'tier' => ['required', 'string', 'in:starter,growth,corporate,umkm'],
+        ]);
+
+        $tier = \App\Domain\Template\FeatureRegistry::normalizeTier($validated['tier']);
+        $oldTier = $business->getScalingTier();
+
+        $business->applyScalingPreset($tier);
+
+        $tierNames = [
+            \App\Domain\Template\FeatureRegistry::TIER_STARTER => 'UMKM Mikro (Starter)',
+            \App\Domain\Template\FeatureRegistry::TIER_GROWTH => 'UMKM Bertumbuh (Growth)',
+            \App\Domain\Template\FeatureRegistry::TIER_CORPORATE => 'Perusahaan Berkembang (Corporate)',
+        ];
+        $tierName = $tierNames[$tier] ?? $tier;
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $request->user()?->id,
+            'auditable_type' => \App\Models\Business::class,
+            'auditable_id' => $business->id,
+            'action' => 'scaling_tier_applied',
+            'risk_level' => AuditLog::RISK_MEDIUM,
+            'risk_reason' => 'Perubahan profil skala operasional bisnis ke ' . $tierName,
+            'notes' => 'Menerapkan profil skala bisnis: ' . $tierName,
+            'ip_address' => (string) $request->ip(),
+            'user_agent' => (string) $request->userAgent(),
+            'old_values' => ['scale_tier' => $oldTier],
+            'new_values' => ['scale_tier' => $tier],
+            'created_at' => now(),
+        ]);
+
+        $message = "Profil operasional {$tierName} berhasil diterapkan. Seluruh parameter otomatis disesuaikan.";
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'tier' => $tier,
+                'tier_name' => $tierName,
+                'message' => $message,
+                'features' => \App\Domain\Template\FeatureRegistry::getPresetForTier($tier),
+                'disabled_modules' => $business->disabled_modules ?? [],
+            ]);
+        }
+
+        return back()->with('success', $message)->with('active_tab', 'modules');
+    }
+
+    /**
+     * Toggle a single granular feature parameter.
+     */
+    public function toggleFeature(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::isOwner(), 403, 'Hanya Business Owner yang berwenang mengubah parameter fitur.');
+
+        $allKeys = \App\Domain\Template\FeatureRegistry::allKeys();
+
+        $validated = $request->validate([
+            'feature_key' => ['required', 'string', 'in:' . implode(',', $allKeys)],
+            'enabled' => ['required', 'boolean'],
+        ]);
+
+        $featureKey = $validated['feature_key'];
+        $enabled = (bool) $validated['enabled'];
+        $oldState = $business->isFeatureEnabled($featureKey);
+
+        $business->setFeatureEnabled($featureKey, $enabled);
+
+        $featureDef = \App\Domain\Template\FeatureRegistry::definitions()[$featureKey] ?? null;
+        $featureName = $featureDef['name'] ?? $featureKey;
+        $statusText = $enabled ? 'diaktifkan' : 'dinonaktifkan';
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $request->user()?->id,
+            'auditable_type' => \App\Models\Business::class,
+            'auditable_id' => $business->id,
+            'action' => 'feature_parameter_toggled',
+            'risk_level' => AuditLog::RISK_LOW,
+            'risk_reason' => 'Perubahan parameter fitur ' . $featureName,
+            'notes' => ($enabled ? 'Mengaktifkan' : 'Menonaktifkan') . " parameter {$featureName} ({$featureKey})",
+            'ip_address' => (string) $request->ip(),
+            'user_agent' => (string) $request->userAgent(),
+            'old_values' => [$featureKey => $oldState],
+            'new_values' => [$featureKey => $enabled],
+            'created_at' => now(),
+        ]);
+
+        $message = "Parameter \"{$featureName}\" berhasil {$statusText}.";
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'feature_key' => $featureKey,
+                'enabled' => $enabled,
+                'message' => $message,
+            ]);
+        }
+
+        return back()->with('success', $message)->with('active_tab', 'modules');
     }
 
     /**

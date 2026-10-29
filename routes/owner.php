@@ -411,6 +411,8 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::put('/settings', [SettingWebController::class, 'update'])->middleware('require.permission:settings.edit')->name('settings.update');
         Route::put('/settings/modules', [SettingWebController::class, 'updateModules'])->middleware('require.role:owner')->name('settings.modules.update');
         Route::post('/settings/apply-template', [SettingWebController::class, 'applyTemplate'])->middleware(['require.permission:settings.edit', 'require.role:owner'])->name('settings.apply-template');
+        Route::post('/settings/features/apply-tier', [SettingWebController::class, 'applyScalingTier'])->middleware(['require.permission:settings.edit', 'require.role:owner'])->name('settings.features.apply-tier');
+        Route::post('/settings/features/toggle', [SettingWebController::class, 'toggleFeature'])->middleware(['require.permission:settings.edit', 'require.role:owner'])->name('settings.features.toggle');
 
         // Integrasi AI / Model Context Protocol (MCP) Hub
         Route::prefix('settings/integrations/mcp')->name('settings.integrations.mcp.')->middleware(['require.permission:settings.view', 'entitlement:mcp'])->group(function (): void {
