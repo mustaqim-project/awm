@@ -1226,13 +1226,381 @@ final class StorefrontThemeService
     ];
 
     /**
-     * Get all available theme presets (42 distinct themes).
+     * Curated Google Fonts catalog for storefront identity customization.
+     *
+     * @var array<string, string>
+     */
+    public const CURATED_FONTS = [
+        'Plus Jakarta Sans'     => 'family=Plus+Jakarta+Sans:wght@400;500;600;700;800',
+        'Inter'                 => 'family=Inter:wght@400;500;600;700',
+        'Urbanist'              => 'family=Urbanist:wght@500;600;700;800;900',
+        'Syne'                  => 'family=Syne:wght@600;700;800',
+        'Cormorant Garamond'    => 'family=Cormorant+Garamond:wght@400;500;600;700',
+        'Playfair Display'      => 'family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600',
+        'DM Serif Display'      => 'family=DM+Serif+Display:ital@0;1',
+        'Outfit'                => 'family=Outfit:wght@400;500;600;700;800',
+        'Bebas Neue'            => 'family=Bebas+Neue',
+        'Chakra Petch'          => 'family=Chakra+Petch:wght@500;600;700',
+        'Orbitron'              => 'family=Orbitron:wght@600;700;800;900',
+        'Merriweather'          => 'family=Merriweather:wght@400;700',
+        'Bodoni Moda'           => 'family=Bodoni+Moda:ital,opsz,wght@0,6..96,600;0,6..96,700',
+        'Quicksand'             => 'family=Quicksand:wght@500;600;700',
+        'Space Grotesk'         => 'family=Space+Grotesk:wght@500;600;700',
+        'Rajdhani'              => 'family=Rajdhani:wght@500;600;700',
+        'Barlow Semi Condensed' => 'family=Barlow+Semi+Condensed:wght@600;700;800',
+        'Archivo Black'         => 'family=Archivo+Black',
+    ];
+
+    /**
+     * Curated sector recommendations for 1-click authentic industry copywriting & trust pillars.
+     *
+     * @var array<string, array<string, mixed>>
+     */
+    public const RECOMMENDATIONS = [
+        'business_corporate' => [
+            'headline' => 'Solusi Terpercaya & Mitra Strategis Bisnis Anda',
+            'subheadline' => 'Kami menyediakan produk dan layanan berkualitas dengan standar profesional, legalitas resmi, dan dukungan penuh untuk perusahaan Anda.',
+            'announcement_badge' => 'Mitra B2B Terpercaya di Indonesia',
+            'cta_primary_text' => 'Minta Penawaran Resmi',
+            'trust_pillars' => ['Legalitas PT/CV Resmi', 'Faktur Pajak Standar', 'SLA Pengiriman Terjamin', 'Dukungan Dedicated Account'],
+        ],
+        'modern_umkm' => [
+            'headline' => 'Produk Lokal Berkualitas, Dibuat Sepenuh Hati',
+            'subheadline' => 'Usaha lokal yang mengutamakan mutu bahan, pelayanan ramah, dan kepuasan pelanggan setia dengan harga yang bersahabat.',
+            'announcement_badge' => 'Bangga Buatan Usaha Lokal',
+            'cta_primary_text' => 'Lihat Produk & Pesan Cepat',
+            'trust_pillars' => ['Olahan Bahan Pilihan Lokal', 'Pembayaran QRIS & Transfer', 'Pelayanan Ramah & Cepat', 'Pemesanan Praktis via WhatsApp'],
+        ],
+        'online_store' => [
+            'headline' => 'Koleksi Tren Terbaru, Belanja Mudah & Pengiriman Cepat',
+            'subheadline' => 'Temukan produk favorit Anda dengan promo menarik, jaminan keaslian barang, serta sistem checkout yang cepat dan aman.',
+            'announcement_badge' => 'Gratis Ongkir & Promo Spesial Pekan Ini',
+            'cta_primary_text' => 'Mulai Belanja Sekarang',
+            'trust_pillars' => ['100% Produk Original Bergaransi', 'Checkout Cepat & Aman', 'Bebas Tukar Jika Rusak', 'Pengiriman Cepat Seluruh Wilayah'],
+        ],
+        'product_showcase' => [
+            'headline' => 'Inovasi Formulasi Terbaik untuk Hasil Nyata Maksimal',
+            'subheadline' => 'Diciptakan melalui riset mendalam dengan bahan aktif bermutu tinggi untuk memberikan manfaat terbaik dan pengalaman tak tertandingi.',
+            'announcement_badge' => 'Produk Unggulan Teruji Klinis BPOM',
+            'cta_primary_text' => 'Miliki Sekarang Juga',
+            'trust_pillars' => ['Teruji Laboratorium & BPOM', 'Hasil Nyata Terbukti Pelanggan', 'Garansi Keaslian Produk 100%', 'Pengemasan Eksklusif Aman'],
+        ],
+        'food_restaurant' => [
+            'headline' => 'Cita Rasa Nusantara Autentik, Hangat & Menggugah Selera',
+            'subheadline' => 'Nikmati aneka hidangan khas resep turun-temurun dengan bahan segar pilihan, suasana bersantap nyaman untuk keluarga dan kolega.',
+            'announcement_badge' => '100% Halal & Resep Tradisi Nusantara',
+            'cta_primary_text' => 'Reservasi Meja & Lihat Menu',
+            'trust_pillars' => ['100% Halal Terverifikasi', 'Dapur Bersih Standar Higienis', 'Bahan Segar Setiap Hari', 'Tersedia Ruang VIP & Keluarga'],
+        ],
+        'coffee_beverage' => [
+            'headline' => 'Seduhan Kopi Artisan dari Biji Pilihan Terbaik',
+            'subheadline' => 'Eksplorasi single origin nusantara dan racikan espresso berkelas, diseduh segar setiap hari oleh barista berdedikasi.',
+            'announcement_badge' => 'Freshly Roasted Beans Every Week',
+            'cta_primary_text' => 'Pesan Kopi Favorit',
+            'trust_pillars' => ['100% Biji Kopi Pilihan', 'Roasting Profil Konsisten', 'Barista Bersertifikasi', 'Kemasan One-Way Valve Kedap Udara'],
+        ],
+        'bakery_cake' => [
+            'headline' => 'Kelezatan Roti & Kue Panggang Segar Setiap Pagi',
+            'subheadline' => 'Dibuat dari mentega murni pilihan dan tanpa pengawet buatan. Menghadirkan tekstur lembut, aroma semerbak, dan cita rasa istimewa.',
+            'announcement_badge' => 'Fresh From The Oven Setiap Pukul 07.00',
+            'cta_primary_text' => 'Pesan Kue & Roti Hari Ini',
+            'trust_pillars' => ['Bake Fresh Daily Tanpa Pengawet', '100% Real Butter & Bahan Premium', 'Pemesanan Custom Cake H-1', 'Pengiriman Cepat Aman'],
+        ],
+        'service_business' => [
+            'headline' => 'Layanan Profesional, Tepat Waktu & Bergaransi Kepuasan',
+            'subheadline' => 'Solusi jasa andal dengan teknisi ahli, pengerjaan rapi, dan transparansi biaya tanpa kejutan tambahan di akhir.',
+            'announcement_badge' => 'Layanan Bersertifikat & Bergaransi',
+            'cta_primary_text' => 'Jadwalkan Layanan',
+            'trust_pillars' => ['Teknisi Berpengalaman & Terlatih', 'Peralatan Kerja Standar Modern', 'Garansi Pengerjaan Ulang', 'Biaya Transparan di Awal'],
+        ],
+        'portfolio_creative' => [
+            'headline' => 'Karya Visual Berkarakter, Strategis & Berdampak Nyata',
+            'subheadline' => 'Membantu brand Anda tampil memikat melalui desain visual, branding identitas, dan pengalaman digital yang berkesan.',
+            'announcement_badge' => 'Studio Kreatif & Desain Brand',
+            'cta_primary_text' => 'Lihat Portofolio & Mulai Proyek',
+            'trust_pillars' => ['Konsep Unik & Tidak Pasaran', 'Strategi Desain Berbasis Riset', 'Revisi Terstruktur & Fleksibel', 'Penyerahan File Master Lengkap'],
+        ],
+        'professional_services' => [
+            'headline' => 'Konsultasi Hukum, Pajak & Keuangan Berintegritas',
+            'subheadline' => 'Memberikan nasihat strategis, pendampingan kepatuhan hukum, audit perpajakan, dan tata kelola perusahaan dengan kerahasiaan penuh.',
+            'announcement_badge' => 'Praktisi Berlisensi & Kode Etik Profesional',
+            'cta_primary_text' => 'Jadwalkan Konsultasi Privat',
+            'trust_pillars' => ['Kerahasiaan Klien 100% Terjaga', 'Praktisi Berlisensi Resmi', 'Solusi Hukum & Finansial Akurat', 'Komunikasi Terbuka & Transparan'],
+        ],
+        'manufacturing_factory' => [
+            'headline' => 'Kapasitas Produksi Skala Besar, Maklon & Manufaktur Presisi',
+            'subheadline' => 'Mitra manufaktur pabrikasi, konveksi garmen, packaging industri, dan permesinan presisi dengan quality control ketat dan kapasitas tinggi.',
+            'announcement_badge' => 'Kapasitas Pabrikasi Skala Ribuan Unit',
+            'cta_primary_text' => 'Konsultasi Maklon & Produksi',
+            'trust_pillars' => ['Quality Control Bertingkat', 'Kapasitas Produksi Ribuan Unit', 'Ketepatan Waktu Pengiriman (SLA)', 'Perjanjian Kerahasiaan (NDA) Terjamin'],
+        ],
+        'wholesale_distributor' => [
+            'headline' => 'Pusat Pasokan Grosir Tangan Pertama & Stok Siap Kirim',
+            'subheadline' => 'Harga partai kompetitif untuk reseller, agen, toko kelontong, dan institusi dengan jaminan ketersediaan barang dan armada logistik sendiri.',
+            'announcement_badge' => 'Distributor Resmi & Harga Partai Tangan Pertama',
+            'cta_primary_text' => 'Download Katalog Harga Grosir',
+            'trust_pillars' => ['Harga Terbaik Langsung Pabrik', 'Kapasitas Pasokan Kontinu', 'Fasilitas Tempo Pembayaran Mitra', 'Armada Pengiriman Ekspedisi Sendiri'],
+        ],
+        'construction_property' => [
+            'headline' => 'Membangun Hunian Nyaman & Bangunan Impian Masa Depan',
+            'subheadline' => 'Jasa kontraktor bangun baru, renovasi rumah, desain arsitektur presisi, dan properti pilihan dengan legalitas sertifikat terjamin.',
+            'announcement_badge' => 'Kontraktor Berpengalaman & Bergaransi Struktur',
+            'cta_primary_text' => 'Konsultasi RAB & Desain Gratis',
+            'trust_pillars' => ['Rencana Anggaran Biaya (RAB) Jelas', 'Garansi Pemeliharaan Struktur', 'Arsitek & Mandor Berpengalaman', 'Progress Terlaporkan Berkala'],
+        ],
+        'booking_appointment' => [
+            'headline' => 'Booking Jadwal Praktis Tanpa Antre & Bebas Menunggu',
+            'subheadline' => 'Pilih sesi perawatan favorit Anda, pilih praktisi andalan, dan nikmati waktu layanan yang terjadwal rapi sesuai waktu luang Anda.',
+            'announcement_badge' => 'Sistem Reservasi Otomatis Real-Time',
+            'cta_primary_text' => 'Pilih Jadwal & Reservasi',
+            'trust_pillars' => ['Konfirmasi Otomatis via WhatsApp', 'Praktisi Handal Berpengalaman', 'Ruang Tunggu Bersih & Ber-AC', 'Bisa Reschedule Fleksibel'],
+        ],
+        'event_wedding' => [
+            'headline' => 'Mewujudkan Momen Bahagia dengan Perencanaan Sempurna',
+            'subheadline' => 'Layanan wedding organizer, dekorasi pesta, dokumentasi foto/video, dan manajemen acara profesional yang tenang dan berkesan.',
+            'announcement_badge' => 'Organizer Acara & Pernikahan Berpengalaman',
+            'cta_primary_text' => 'Konsultasi Konsep Acara',
+            'trust_pillars' => ['Tim Acara Dedicated Hari-H', 'Vendor Rekanan Terkurasi', 'Manajemen Rundown Presisi', 'Paket Fleksibel Sesuai Impian'],
+        ],
+        'hospitality_accommodation' => [
+            'headline' => 'Ketenteraman Menginap dengan Sentuhan Hangat Keramahan',
+            'subheadline' => 'Kamar bersih berstandar tinggi, fasilitas lengkap, udara sejuk, dan suasana relaksasi sempurna untuk liburan keluarga maupun perjalanan bisnis.',
+            'announcement_badge' => 'Jaminan Kamar Bersih & Nyaman',
+            'cta_primary_text' => 'Cek Ketersediaan Kamar',
+            'trust_pillars' => ['Sanitasi Kamar Standar Hotel', 'High-Speed Wi-Fi Gratis', 'Sarapan Enak Pagi Hari', 'Check-In Cepat & Ramah'],
+        ],
+        'education_courses' => [
+            'headline' => 'Kembangkan Potensi Diri Bersama Mentor Ahli Berpengalaman',
+            'subheadline' => 'Bimbingan belajar, kursus keterampilan terapan, dan sertifikasi profesional dengan kurikulum mutakhir siap kerja.',
+            'announcement_badge' => 'Kurikulum Terapan & Berorientasi Praktek',
+            'cta_primary_text' => 'Daftar Kelas Sekarang',
+            'trust_pillars' => ['Mentor Praktisi Berpengalaman', 'Materi Praktik Langsung Kerja', 'Sertifikat Kelulusan Resmi', 'Akses Komunitas Belajar Seumur Hidup'],
+        ],
+        'health_beauty' => [
+            'headline' => 'Pancarkan Kecantikan Alami & Kesehatan Kulit Terawat',
+            'subheadline' => 'Koleksi perawatan kulit dan suplemen alami berbahan ramah lingkungan yang telah teruji aman untuk merawat tubuh Anda setiap hari.',
+            'announcement_badge' => '100% Produk Bersertifikat BPOM & Halal',
+            'cta_primary_text' => 'Beli Perawatan Kulit',
+            'trust_pillars' => ['Bahan Alami & Bebas Merkuri', 'Terdaftar Resmi di BPOM', 'Cocok untuk Kulit Sensitif', 'Konsultasi Perawatan Kulit Gratis'],
+        ],
+        'agriculture_farm' => [
+            'headline' => 'Panen Segar Langsung dari Petani Lokal Berkelanjutan',
+            'subheadline' => 'Hasil tani organik, sayuran hidroponik, buah musiman manis, dan bibit tanaman unggul bebas pestisida kimia berbahaya.',
+            'announcement_badge' => '100% Hasil Kebun Alami & Segar',
+            'cta_primary_text' => 'Pesan Hasil Panen Segar',
+            'trust_pillars' => ['Dipetik Pagi Saat Segar', 'Bebas Pestisida Berbahaya', 'Mendukung Petani Lokal Indonesia', 'Pengemasan Bersih Menjaga Kesegaran'],
+        ],
+        'logistics_transportation' => [
+            'headline' => 'Kirim Cepat, Aman & Terlacak ke Seluruh Wilayah',
+            'subheadline' => 'Jasa ekspedisi kargo, sewa armada truk, pengiriman paket sameday, dan logistik pergudangan dengan tarif transparan dan pelacakan real-time.',
+            'announcement_badge' => 'Jaringan Logistik Aman & Terpercaya',
+            'cta_primary_text' => 'Cek Ongkir & Pesan Truk',
+            'trust_pillars' => ['Pelacakan Resi Real-Time', 'Armada Truk Terawat & Pengemudi Ahli', 'Opsi Asuransi Perlindungan Barang', 'Layanan Door-to-Door Service'],
+        ],
+        'personal_brand' => [
+            'headline' => 'Tumbuh Bersama Praktisi, Trainer & Konsultan Teruji',
+            'subheadline' => 'Berbagi pandangan tajam, kelas mentoring privat, buku panduan, dan jasa pembicara ahli untuk mengakselerasi karir dan bisnis Anda.',
+            'announcement_badge' => 'Trainer, Author & Business Advisor',
+            'cta_primary_text' => 'Jadwalkan Sesi Konsultasi',
+            'trust_pillars' => ['Pengalaman Nyata Lebih dari 10 Tahun', 'Ratusan Alumni & Klien Terbantu', 'Sesi Privat One-on-One Eksklusif', 'Action Plan Praktis & Terukur'],
+        ],
+        'fnb_bakery' => [
+            'headline' => 'Pastry Renyah & Artisan Cake Lembut Setiap Hari',
+            'subheadline' => 'Croissant berlapis renyah dengan butter Perancis, tart buah segar, dan kue ulang tahun estetik yang siap memeriahkan momen Anda.',
+            'announcement_badge' => 'Artisan Pastry & Premium Cake Shop',
+            'cta_primary_text' => 'Pesan Pastry Favorit',
+            'trust_pillars' => ['100% Pure French Butter', 'Freshly Baked Every Morning', 'Custom Cake Estetik & Rapi', 'Kemasan Box Eksklusif & Higienis'],
+        ],
+        'fnb_cafe' => [
+            'headline' => 'Ruang Nyaman, Kopi Nikmat & Sajian Istimewa',
+            'subheadline' => 'Tempat bertukar ide, bersantai, atau bekerja dengan koneksi internet kencang dan racikan kopi berkualitas tinggi.',
+            'announcement_badge' => 'Suasana Nyaman & Wi-Fi Kencang',
+            'cta_primary_text' => 'Pesan Menu Favorit',
+            'trust_pillars' => ['QR Code Dine-In di Meja', 'Barista Berpengalaman', 'Free High-Speed Wi-Fi', 'Banyak Colokan Listrik'],
+        ],
+        'fnb_catering' => [
+            'headline' => 'Catering Prasmanan & Bento Box Berkelas untuk Setiap Acara',
+            'subheadline' => 'Solusi konsumsi acara kantor, pernikahan, syukuran, hingga meal prep harian dengan menu variatif dan cita rasa lezat.',
+            'announcement_badge' => 'Penyedia Katering Berstandar Higienis',
+            'cta_primary_text' => 'Konsultasi Menu & Pesan Acara',
+            'trust_pillars' => ['Sertifikasi Higienis Sanitasi', 'Tepat Waktu Sebelum Acara', 'Menu Dapat Disesuaikan Budget', 'Tester Gratis untuk Acara Besar'],
+        ],
+        'fnb_fastfood' => [
+            'headline' => 'Renyah, Juicy & Puas di Setiap Gigitan!',
+            'subheadline' => 'Burger daging sapi asli, ayam goreng ekstra krispi, kentang goreng renyah bumbu gurih, dan paket combo hemat siap antar panas-panas.',
+            'announcement_badge' => 'Saji Cepat & Panas Garansi 15 Menit',
+            'cta_primary_text' => 'Pesan Combo Sekarang',
+            'trust_pillars' => ['Minyak Goreng Higienis & Berkala', 'Daging Sapi & Ayam Pilihan Segar', 'Kemasan Eco Food Grade', 'Pengiriman Instan Cepat'],
+        ],
+        'fnb_resto' => [
+            'headline' => 'Warisan Kuliner Rempah Nusantara yang Menggugah Selera',
+            'subheadline' => 'Disajikan hangat dengan bumbu otentik warisan keluarga, hidangan laut segar, daging empuk meresap, dan sambal khas penambah nafsu makan.',
+            'announcement_badge' => 'Kelezatan Rempah Tradisi Indonesia',
+            'cta_primary_text' => 'Reservasi Meja Keluarga',
+            'trust_pillars' => ['Bumbu Rempah Segar Asli', 'Daging & Ikan Segar Berkualitas', 'Kapasitas Meja Rombongan Luas', 'Layanan Ramah Tamah Nusantara'],
+        ],
+        'retail_bookstore' => [
+            'headline' => 'Jendela Pengetahuan, Buku Terpilih & Perlengkapan Kreatif',
+            'subheadline' => 'Koleksi buku bacaan, sastra, pengembangan diri, buku pelajaran sekolah, hingga stationery estetis untuk mendukung produktivitas Anda.',
+            'announcement_badge' => '100% Buku Asli Penerbit Resmi',
+            'cta_primary_text' => 'Cari Judul Buku',
+            'trust_pillars' => ['100% Buku Asli Bebas Bajakan', 'Packing Bubble Tebal & Aman', 'Bisa Request Judul Langka', 'Pembatas Buku Gratis Tiap Pesanan'],
+        ],
+        'retail_building' => [
+            'headline' => 'Material Bangunan Kokoh & Perkakas Konstruksi Berkualitas',
+            'subheadline' => 'Distributor semen, besi beton SNI, keramik, cat tembok, pipa, dan perkakas tukang lengkap untuk proyek rumah maupun konstruksi besar.',
+            'announcement_badge' => 'Bahan Bangunan Standar SNI Teruji',
+            'cta_primary_text' => 'Minta Penawaran Material',
+            'trust_pillars' => ['Besi & Semen Standar SNI', 'Armada Pengiriman Truk Siaga', 'Harga Grosir Kontraktor', 'Bisa Konsultasi Kebutuhan Volume'],
+        ],
+        'retail_electronics' => [
+            'headline' => 'Teknologi Terdepan, Gadget Original & Bergaransi Resmi',
+            'subheadline' => 'Pusat belanja smartphone, laptop, audio, dan aksesori pintar dengan jaminan produk 100% original serta layanan purna jual terpercaya.',
+            'announcement_badge' => 'Garansi Resmi Distributor & Brand',
+            'cta_primary_text' => 'Beli Gadget Terbaru',
+            'trust_pillars' => ['100% Produk Original Segel Pabrik', 'Garansi Resmi Distributor', 'Klaim Servis Dibantu Penuh', 'Packing Kayu & Asuransi Pengiriman'],
+        ],
+        'retail_fashion' => [
+            'headline' => 'Elegansi Abadi Siluet Mode Kontemporer',
+            'subheadline' => 'Koleksi busana pilihan dengan potongan presisi, kain serat alami berstandar kurasi tinggi, dan jahitan rapi yang dirancang untuk kenyamanan sepanjang hari.',
+            'announcement_badge' => 'Koleksi Edisi Terbatas Musim Ini',
+            'cta_primary_text' => 'Jelajahi Lookbook',
+            'trust_pillars' => ['Bahan Premium Adem & Nyaman', 'Jahitan Rapi Standar Butik', 'Garansi Tukar Ukuran 7 Hari', 'Packaging Eksklusif & Wangi'],
+        ],
+        'retail_florist' => [
+            'headline' => 'Rangkaian Bunga Segar Penuh Makna untuk Setiap Momen',
+            'subheadline' => 'Buket wisuda, standing flower pernikahan, papan ucapan duka/selamat, dan karangan bunga segar dengan perangkai profesional.',
+            'announcement_badge' => 'Bunga Segar Berkualitas & Pengiriman Cepat',
+            'cta_primary_text' => 'Pesan Buket Sekarang',
+            'trust_pillars' => ['Bunga Segar Pilihan Setiap Pagi', 'Rangkaian Estetis Sesuai Request', 'Kartu Ucapan Gratis Dicetak Rapi', 'Pengiriman Tepat Waktu'],
+        ],
+        'retail_grocery' => [
+            'headline' => 'Kebutuhan Harian Lengkap, Segar & Hemat Belanja Dekat',
+            'subheadline' => 'Sembako berkualitas, buah & sayur segar, perlengkapan dapur, dan kebutuhan rumah tangga sehari-hari dengan harga terbaik.',
+            'announcement_badge' => 'Promo Belanja Hemat Setiap Hari',
+            'cta_primary_text' => 'Mulai Belanja Kebutuhan',
+            'trust_pillars' => ['Harga Jujur & Bersaing', 'Sayur & Telur Segar Pilihan', 'Stok Lengkap Siap Antar', 'Melayani Grosir & Eceran'],
+        ],
+        'retail_pharmacy' => [
+            'headline' => 'Apotek Terpercaya, Obat Lengkap & Konsultasi Apoteker',
+            'subheadline' => 'Melayani resep dokter, obat bebas, suplemen kesehatan, vitamin, dan alat kesehatan bersertifikat Kemenkes dengan harga transparan.',
+            'announcement_badge' => 'Apotek Resmi Berizin SIA & SIPA',
+            'cta_primary_text' => 'Konsultasi & Tebus Obat',
+            'trust_pillars' => ['100% Asli dari Distributor Resmi', 'Apoteker Siap Melayani', 'Penyimpanan Sesuai Suhu Standar', 'Pengiriman Obat Cepat & Privasi'],
+        ],
+        'service_agency' => [
+            'headline' => 'Mendorong Pertumbuhan Bisnis dengan Strategi Tepat Sasaran',
+            'subheadline' => 'Agensi pemasaran digital, pengembangan web korporat, dan strategi performa bisnis untuk menghasilkan konversi dan ROI maksimal.',
+            'announcement_badge' => 'Mitra Pertumbuhan Digital Bisnis Anda',
+            'cta_primary_text' => 'Mulai Diskusi Proyek',
+            'trust_pillars' => ['Metodologi Kerja Berbasis Data', 'Tim Spesialis Berpengalaman', 'Transparansi Biaya & Laporan Berkala', 'Kemitraan Jangka Panjang Berkelanjutan'],
+        ],
+        'service_beauty' => [
+            'headline' => 'Pancarkan Pesona Alami dengan Perawatan Kulit Terbaik',
+            'subheadline' => 'Klinik estetika dan salon kecantikan dengan terapis bersertifikat, alat modern higienis, dan rangkaian skincare teruji klinis BPOM.',
+            'announcement_badge' => 'Dokter & Beautician Bersertifikat',
+            'cta_primary_text' => 'Jadwalkan Konsultasi Estetika',
+            'trust_pillars' => ['Alat Steril Standar Medis', 'Skincare Resmi Terdaftar BPOM', 'Konsultasi Kulit Personal', 'Suasana Terapi Relaks & Nyaman'],
+        ],
+        'service_carwash' => [
+            'headline' => 'Auto Detailing & Cuci Mobil Bersih Kinclong Luar Dalam',
+            'subheadline' => 'Perawatan cuci salju nano, poles bodi 3-step, coating keramik, dan pembersihan interior menyeluruh untuk perlindungan maksimal kendaraan Anda.',
+            'announcement_badge' => 'Shampoo pH Netral & Air Filtrasi Khusus',
+            'cta_primary_text' => 'Booking Paket Cuci',
+            'trust_pillars' => ['Shampoo pH Netral Aman untuk Cat', 'Kain Microfiber Khusus Anti-Baret', 'Tenaga Cuci Teliti & Terlatih', 'Garansi Kinclong Berkilau'],
+        ],
+        'service_fitness' => [
+            'headline' => 'Bentuk Tubuh Impian, Tingkatkan Stamina & Hidup Sehat',
+            'subheadline' => 'Pusat kebugaran dengan peralatan lengkap standar internasional, kelas olahraga dinamis, dan bimbingan pelatih (personal trainer) profesional.',
+            'announcement_badge' => 'Gym Lengkap & Komunitas Positif',
+            'cta_primary_text' => 'Daftar Member Hari Ini',
+            'trust_pillars' => ['Peralatan Gym Standar Internasional', 'Personal Trainer Bersertifikasi', 'Loker & Shower Air Hangat Bersih', 'Kelas Olahraga Variatif Tiap Hari'],
+        ],
+        'service_laundry' => [
+            'headline' => 'Laundry Bersih Higienis, Rapi Licin & Wangi Tahan Lama',
+            'subheadline' => 'Layanan laundry kiloan, cuci setrika satuan, dry cleaning jas/gaun, cuci selimut & sepatu dengan deterjen ramah serat kain.',
+            'announcement_badge' => '1 Mesin 1 Pelanggan (Tidak Dicampur)',
+            'cta_primary_text' => 'Pesan Antar Jemput Laundry',
+            'trust_pillars' => ['1 Mesin 1 Pelanggan Higienis', 'Air Filter Bersih Bebas Noda', 'Setrika Uap Presisi Anti-Gosong', 'Layanan Antar Jemput Tersedia'],
+        ],
+        'service_petshop' => [
+            'headline' => 'Perawatan Kasih Sayang, Makanan Sehat & Grooming Anabul',
+            'subheadline' => 'Layanan grooming kucing & anjing profesional, pet hotel nyaman ber-AC, vaksinasi dokter hewan, serta pakan berkualitas tinggi.',
+            'announcement_badge' => 'Groomer Berpengalaman & Sayang Hewan',
+            'cta_primary_text' => 'Booking Grooming Anabul',
+            'trust_pillars' => ['Sampo Hipoalergenik Khusus Anabul', 'Groomer Sabar & Berpengalaman', 'Ruang Penitipan Steril & Bersih', 'Pakan Berkualitas & Terjamin'],
+        ],
+        'service_printing' => [
+            'headline' => 'Cetak Cepat Kualitas Tajam, Spanduk, Brosur & Merchandise',
+            'subheadline' => 'Percetakan digital printing banner, kartu nama, stiker label kemasan, buku, dan merchandise promosi dengan warna akurat serta pengerjaan kilat.',
+            'announcement_badge' => 'Mesin Cetak Presisi Resolusi Tinggi',
+            'cta_primary_text' => 'Kirim File & Cetak Sekarang',
+            'trust_pillars' => ['Warna Akurat Mesin Industri', 'Bisa Cetak Satuan Maupun Ribuan', 'Pengerjaan Kilat Sameday', 'Bantuan Cek File Desain Gratis'],
+        ],
+        'service_workshop' => [
+            'headline' => 'Performa Mesin Prima, Servis Ahli & Sparepart Bergaransi',
+            'subheadline' => 'Bengkel perawatan berkala, tune-up komputer, ganti oli original, servis rem & suspensi dengan mekanik berpengalaman dan peralatan modern.',
+            'announcement_badge' => 'Bengkel Terverifikasi & Mekanik Handal',
+            'cta_primary_text' => 'Booking Servis Sekarang',
+            'trust_pillars' => ['100% Sparepart Original Bergaransi', 'Scanner Komputer Canggih', 'Transparansi Biaya & Estimasi di Depan', 'Ruang Tunggu Ber-AC & Nyaman'],
+        ],
+        'universal_storefront' => [
+            'headline' => 'Toko Resmi & Layanan Lengkap Kebutuhan Anda',
+            'subheadline' => 'Jelajahi pilihan produk terbaik dan layanan unggulan kami dengan pengalaman transaksi yang mudah, aman, dan terpercaya.',
+            'announcement_badge' => 'Toko Resmi & Terverifikasi',
+            'cta_primary_text' => 'Buka Katalog Toko',
+            'trust_pillars' => ['Kualitas Produk Terjamin', 'Kemudahan Transaksi Online', 'Dukungan Pelanggan Responsif', 'Pengiriman Aman & Terpercaya'],
+        ],
+    ];
+
+    /**
+     * Get all available theme presets (42 distinct themes with recommendations).
      *
      * @return array<string, array<string, mixed>>
      */
     public function getAllThemes(): array
     {
-        return self::THEMES;
+        $themes = self::THEMES;
+        foreach ($themes as $key => &$theme) {
+            $theme['recommendation'] = self::RECOMMENDATIONS[$key] ?? self::RECOMMENDATIONS['modern_umkm'];
+        }
+        unset($theme);
+
+        return $themes;
+    }
+
+    /**
+     * Check if a theme preset or alias exists in catalogue.
+     */
+    public function hasTheme(string $presetKey): bool
+    {
+        return isset(self::THEMES[$presetKey])
+            || isset(self::ALIASES[$presetKey])
+            || isset(self::TEMPLATE_CODE_MAP[$presetKey]);
+    }
+
+    /**
+     * Get curated Google fonts map.
+     *
+     * @return array<string, string>
+     */
+    public function getCuratedFonts(): array
+    {
+        return self::CURATED_FONTS;
+    }
+
+    /**
+     * Get industry recommendation for a theme.
+     *
+     * @param string $presetKey
+     * @return array<string, mixed>
+     */
+    public function getRecommendation(string $presetKey): array
+    {
+        $theme = $this->getTheme($presetKey);
+        $key = $theme['id'] ?? $presetKey;
+
+        return self::RECOMMENDATIONS[$key] ?? self::RECOMMENDATIONS['modern_umkm'];
     }
 
     /**
@@ -1243,30 +1611,35 @@ final class StorefrontThemeService
      */
     public function getTheme(string $presetKey): array
     {
+        $resolved = null;
+
         // 1. Direct match on key
         if (isset(self::THEMES[$presetKey])) {
-            return self::THEMES[$presetKey];
-        }
-
-        // 2. Direct match on alias / bundle_dir
-        if (isset(self::ALIASES[$presetKey]) && isset(self::THEMES[self::ALIASES[$presetKey]])) {
-            return self::THEMES[self::ALIASES[$presetKey]];
-        }
-
-        // 3. Match on TEMPLATE_CODE_MAP
-        if (isset(self::TEMPLATE_CODE_MAP[$presetKey]) && isset(self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]])) {
-            return self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]];
-        }
-
-        // 4. Scan bundle_dir inside THEMES
-        foreach (self::THEMES as $theme) {
-            if (($theme['bundle_dir'] ?? null) === $presetKey) {
-                return $theme;
+            $resolved = self::THEMES[$presetKey];
+        } elseif (isset(self::ALIASES[$presetKey]) && isset(self::THEMES[self::ALIASES[$presetKey]])) {
+            // 2. Direct match on alias / bundle_dir
+            $resolved = self::THEMES[self::ALIASES[$presetKey]];
+        } elseif (isset(self::TEMPLATE_CODE_MAP[$presetKey]) && isset(self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]])) {
+            // 3. Match on TEMPLATE_CODE_MAP
+            $resolved = self::THEMES[self::TEMPLATE_CODE_MAP[$presetKey]];
+        } else {
+            // 4. Scan bundle_dir inside THEMES
+            foreach (self::THEMES as $t) {
+                if (($t['bundle_dir'] ?? null) === $presetKey) {
+                    $resolved = $t;
+                    break;
+                }
             }
         }
 
-        // 5. Default fallback: Modern UMKM
-        return self::THEMES['modern_umkm'];
+        if (! $resolved) {
+            $resolved = self::THEMES['modern_umkm'];
+        }
+
+        $id = $resolved['id'] ?? $presetKey;
+        $resolved['recommendation'] = self::RECOMMENDATIONS[$id] ?? self::RECOMMENDATIONS['modern_umkm'];
+
+        return $resolved;
     }
 
     /**
@@ -1323,9 +1696,13 @@ final class StorefrontThemeService
         $theme['badge_bg'] = $accentColor . '18';
 
         // Font override if explicitly specified
-        if (! empty($landingPage->font_family) && $landingPage->font_family !== 'Plus Jakarta Sans') {
-            $theme['font_heading'] = $landingPage->font_family;
-            $theme['font_body'] = $landingPage->font_family;
+        if (! empty($landingPage->font_family)) {
+            $fontName = $landingPage->font_family;
+            $theme['font_heading'] = $fontName;
+            $theme['font_body'] = $fontName;
+            if (isset(self::CURATED_FONTS[$fontName])) {
+                $theme['google_fonts'] = self::CURATED_FONTS[$fontName] . '&family=Inter:wght@400;500;600';
+            }
         }
 
         // Elegant Dark Mode override

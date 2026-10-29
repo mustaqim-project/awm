@@ -446,7 +446,7 @@ final class PublicStorefrontController extends Controller
             ]);
         }
 
-        $isAuthorizedPreview = request()->boolean('preview')
+        $isAuthorizedPreview = (request()->boolean('preview') || request()->filled('preview'))
             && request()->user()?->active_business_id === $business->id;
 
         abort_unless($landingPage->is_published || $isAuthorizedPreview, 404);
@@ -460,6 +460,20 @@ final class PublicStorefrontController extends Controller
 
         // Resolve authentic theme configuration
         $theme = $this->themeService->resolveTheme($landingPage);
+
+        // Preview Theme override for live testing any theme without saving
+        if ($isAuthorizedPreview && request()->filled('preview_theme')) {
+            $previewKey = (string) request()->query('preview_theme');
+            if ($this->themeService->hasTheme($previewKey)) {
+                $theme = $this->themeService->getTheme($previewKey);
+                if (request()->filled('preview_color')) {
+                    $color = '#' . ltrim((string) request()->query('preview_color'), '#');
+                    $theme['primary_color'] = $color;
+                    $theme['badge_text'] = $color;
+                    $theme['badge_bg'] = $color . '18';
+                }
+            }
+        }
 
         // Storefront settings
         $storeSetting = CommerceStoreSetting::where('business_id', $business->id)->first();

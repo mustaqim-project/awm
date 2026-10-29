@@ -165,6 +165,7 @@
             <input type="hidden" name="industry_preset" :value="form.industry_preset">
             <input type="hidden" name="theme_color" :value="form.theme_color">
             <input type="hidden" name="theme_preset" :value="form.theme_preset">
+            <input type="hidden" name="font_family" :value="form.font_family">
             <input type="hidden" name="active_pages_json" :value="JSON.stringify(activePages)">
             <input type="hidden" name="custom_labels_json" :value="JSON.stringify(customLabels)">
 
@@ -259,7 +260,7 @@
                                     Palet Warna Aksen Utama
                                 </label>
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <template x-for="color in themePresets" :key="color.hex">
+                                    <template x-for="color in colorSwatches" :key="color.hex">
                                         <button type="button" @click="form.theme_color = color.hex"
                                             :style="`background-color: ${color.hex}`"
                                             :class="form.theme_color === color.hex ?
@@ -287,6 +288,39 @@
                                 <p class="text-[11px] text-black/50 dark:text-white/50 mt-2">
                                     Warna aksen ini akan diterapkan pada tombol utama, badge produk, serta elemen sorotan
                                     pada website publik.
+                                </p>
+                            </div>
+
+                            <!-- Font Family & Google Fonts Selector -->
+                            <div class="pt-2">
+                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2 uppercase tracking-wider">
+                                    Tipografi &amp; Google Fonts Storefront
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <select x-model="form.font_family"
+                                            class="w-full h-11 px-3.5 text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF] transition cursor-pointer">
+                                            <option value="">Bawaan Tema Aktif (Otentik)</option>
+                                            <template x-for="font in curatedFonts" :key="font">
+                                                <option :value="font" x-text="font" :selected="form.font_family === font"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                    <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                                        <div class="truncate">
+                                            <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Pratinjau Huruf:</span>
+                                            <span class="text-[13px] font-bold text-black dark:text-white truncate block"
+                                                  :style="form.font_family ? `font-family: '${form.font_family}', sans-serif;` : ''"
+                                                  x-text="form.font_family || (allThemesMap[form.theme_preset]?.font_heading || 'Plus Jakarta Sans') + ' (Bawaan)'"></span>
+                                        </div>
+                                        <button type="button" x-show="form.font_family" @click="form.font_family = ''"
+                                            class="text-[11px] text-[#007AFF] hover:underline font-semibold shrink-0 cursor-pointer">
+                                            Reset Default
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-[11px] text-black/50 dark:text-white/50 mt-1.5">
+                                    Gunakan font kustom Google Fonts atau biarkan kosong untuk menerapkan perpaduan tipografi otentik bawaan dari tema yang dipilih.
                                 </p>
                             </div>
 
@@ -411,6 +445,43 @@
                                     </div>
                                 </div>
 
+                                <!-- Active Theme Cockpit Card -->
+                                <div class="p-4 rounded-[16px] bg-gradient-to-r from-[#007AFF]/10 via-[#007AFF]/5 to-black/[0.02] dark:to-white/[0.02] border border-[#007AFF]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div class="flex items-center gap-3.5">
+                                        <div class="w-12 h-12 rounded-[14px] flex items-center justify-center text-white font-bold text-lg shadow-sm shrink-0"
+                                             :style="`background-color: ${form.theme_color || '#007AFF'}`">
+                                            <i data-lucide="layout-template" class="w-6 h-6"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-[11px] font-bold uppercase tracking-wider text-[#007AFF]"
+                                                      x-text="allThemesMap[form.theme_preset]?.industry || 'UMKM & Bisnis'"></span>
+                                                <span class="w-1 h-1 rounded-full bg-black/20 dark:bg-white/20"></span>
+                                                <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">Tema Terpasang</span>
+                                            </div>
+                                            <h4 class="text-[16px] font-bold text-black dark:text-white mt-0.5"
+                                                x-text="allThemesMap[form.theme_preset]?.name || form.theme_preset"></h4>
+                                            <div class="flex items-center gap-3 text-[11px] text-black/55 dark:text-white/55 mt-0.5">
+                                                <span>Font: <strong class="text-black dark:text-white font-mono" x-text="form.font_family || allThemesMap[form.theme_preset]?.font_heading || 'Plus Jakarta Sans'"></strong></span>
+                                                <span>•</span>
+                                                <span>Warna Aksen: <strong class="font-mono uppercase font-bold" :style="`color: ${form.theme_color}`" x-text="form.theme_color"></strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <button type="button" @click="openThemeModal(form.theme_preset)"
+                                            class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-black/20 text-[12px] font-semibold text-black dark:text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                            <span>Detail &amp; Rekomendasi</span>
+                                        </button>
+                                        <a :href="`{{ $publicUrl }}?preview=1&preview_theme=${form.theme_preset}`" target="_blank"
+                                            class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white hover:bg-[#0071E3] text-[12px] font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                            <span>Test Drive Toko</span>
+                                        </a>
+                                    </div>
+                                </div>
+
                                 <!-- Filter Controls: Search & Category Tabs -->
                                 <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-1">
                                     <!-- Category Segmented Control -->
@@ -476,7 +547,7 @@
                                              x-transition:enter="transition ease-out duration-150"
                                              x-transition:enter-start="opacity-0 scale-95"
                                              x-transition:enter-end="opacity-100 scale-100"
-                                             @click="form.theme_preset = '{{ $tKey }}'; form.theme_color = '{{ $tPreset['primary_color'] }}'"
+                                             @click="applyTheme('{{ $tKey }}', false)"
                                              :class="form.theme_preset === '{{ $tKey }}' ? 'ring-2 ring-[#007AFF] border-[#007AFF] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 shadow-sm' : 'border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20 dark:hover:border-white/20'"
                                              class="p-3.5 rounded-[14px] border cursor-pointer transition flex flex-col justify-between gap-3 relative group active:scale-[0.99]">
                                             
@@ -506,7 +577,13 @@
                                                     <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" style="background-color: {{ $tPreset['primary_color'] }};"></span>
                                                     <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs" style="background-color: {{ $tPreset['accent_color'] }};"></span>
                                                 </div>
-                                                <span class="font-medium truncate max-w-[125px] font-mono text-[10px]" title="Font Tipografi">{{ $tPreset['font_heading'] }}</span>
+                                                <div class="flex items-center gap-1.5">
+                                                    <span class="font-medium truncate max-w-[90px] font-mono text-[10px]" title="Font Tipografi">{{ $tPreset['font_heading'] }}</span>
+                                                    <button type="button" @click.stop="openThemeModal('{{ $tKey }}')"
+                                                        class="px-2 py-0.5 rounded-[6px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-[10px] font-semibold text-[#007AFF] transition">
+                                                        Detail
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
@@ -2392,7 +2469,8 @@
                     },
                 ],
 
-                themePresets: [{
+                colorSwatches: [
+                    {
                         hex: '#8B5A2B',
                         label: 'Artisan Warm Wood (Default)'
                     },
@@ -2442,10 +2520,44 @@
 
                 activePages: @json($landingPage->getActivePages()),
                 customLabels: @json($landingPage->custom_labels ?? []),
+                allThemesMap: @json($themePresets),
+                curatedFonts: @json($curatedFonts ?? []),
+                selectedThemeForModal: null,
+                showThemeModal: false,
+
+                openThemeModal(key) {
+                    if (!this.allThemesMap || !this.allThemesMap[key]) return;
+                    this.selectedThemeForModal = this.allThemesMap[key];
+                    this.showThemeModal = true;
+                    this.$nextTick(() => {
+                        if (window.lucide) lucide.createIcons();
+                    });
+                },
+
+                applyTheme(key, withCopy = false) {
+                    const t = this.allThemesMap ? this.allThemesMap[key] : null;
+                    if (!t) return;
+                    this.form.theme_preset = key;
+                    this.form.theme_color = t.primary_color;
+                    this.form.font_family = t.font_heading;
+                    if (withCopy && t.recommendation) {
+                        if (t.recommendation.headline) this.form.headline = t.recommendation.headline;
+                        if (t.recommendation.subheadline) this.form.subheadline = t.recommendation.subheadline;
+                        if (t.recommendation.announcement_badge) this.form.announcement_badge = t.recommendation.announcement_badge;
+                        if (t.recommendation.cta_primary_text) this.form.cta_primary_text = t.recommendation.cta_primary_text;
+                    }
+                    this.showThemeModal = false;
+                    this.saveMessage = `Tema ${t.name} berhasil diterapkan!`;
+                    setTimeout(() => { this.saveMessage = ''; }, 4000);
+                    this.$nextTick(() => {
+                        if (window.lucide) lucide.createIcons();
+                    });
+                },
 
                 form: {
                     industry_preset: @json($landingPage->industry_preset ?? 'retail'),
                     theme_preset: @json($landingPage->getThemePreset()),
+                    font_family: @json($landingPage->font_family ?? ''),
                     theme_color: @json($landingPage->theme_color ?? '#8B5A2B'),
                     dark_mode: @json((bool) ($landingPage->dark_mode ?? false)),
                     announcement_badge: @json($landingPage->announcement_badge ?? ''),

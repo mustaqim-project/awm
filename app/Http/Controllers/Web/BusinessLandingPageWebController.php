@@ -89,7 +89,9 @@ class BusinessLandingPageWebController extends Controller
             ->get();
 
         $publicUrl = route('public.business.landing', Str::slug($business->name));
-        $themePresets = app(\App\Domain\Storefront\StorefrontThemeService::class)->getAllThemes();
+        $themeService = app(\App\Domain\Storefront\StorefrontThemeService::class);
+        $themePresets = $themeService->getAllThemes();
+        $curatedFonts = array_keys($themeService->getCuratedFonts());
 
         return view('app.landing_page.edit', compact(
             'business',
@@ -98,7 +100,8 @@ class BusinessLandingPageWebController extends Controller
             'posProducts',
             'serviceProducts',
             'publicUrl',
-            'themePresets'
+            'themePresets',
+            'curatedFonts'
         ));
     }
 
@@ -113,6 +116,7 @@ class BusinessLandingPageWebController extends Controller
         $validated = $request->validate([
             'industry_preset'               => 'nullable|string',
             'theme_preset'                  => 'nullable|string|max:50',
+            'font_family'                   => 'nullable|string|max:100',
             'active_pages'                  => 'nullable|array',
             'active_pages_json'             => 'nullable|string',
             'custom_labels'                 => 'nullable|array',
@@ -194,6 +198,7 @@ class BusinessLandingPageWebController extends Controller
         $scalarFields = [
             'industry_preset',
             'theme_preset',
+            'font_family',
             'theme_color',
             'headline',
             'subheadline',

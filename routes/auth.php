@@ -39,7 +39,7 @@ Route::middleware('guest:web')->group(function (): void {
 
     // Google-Assisted Registration
     Route::get('/register/google', [GoogleAuthController::class, 'showGoogleRegistration'])->name('register.google');
-    Route::post('/register/google', [GoogleAuthController::class, 'beginGoogleRegistration'])->middleware('throttle:5,1')->name('register.google.submit');
+    Route::post('/register/google', [GoogleAuthController::class, 'beginGoogleRegistration'])->middleware('throttle:30,1')->name('register.google.submit');
 
     // Realtime Registration Availability Check (Business Name & Phone)
     Route::match(['get', 'post'], '/register/check-availability', [AuthWebController::class, 'checkAvailability'])
