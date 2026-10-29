@@ -55,6 +55,8 @@ class Product extends Model
         'preorder_mode',
         'preorder_lead_days',
         'is_bundle',
+        'wholesale_min_qty',
+        'wholesale_price',
     ];
 
     /**
@@ -136,7 +138,27 @@ class Product extends Model
             'preorder_mode' => 'string',
             'preorder_lead_days' => 'integer',
             'is_bundle' => 'boolean',
+            'wholesale_min_qty' => 'float',
+            'wholesale_price' => 'float',
         ];
+    }
+
+    /**
+     * Get effective unit price based on order quantity and business feature enablement.
+     */
+    public function getEffectivePriceForQuantity(float $quantity): float
+    {
+        if ($this->wholesale_min_qty > 0 && $this->wholesale_price > 0 && $quantity >= (float) $this->wholesale_min_qty) {
+            $biz = (\App\Support\Context::hasBusiness() && \App\Support\Context::business()->id === $this->business_id)
+                ? \App\Support\Context::business()
+                : $this->business;
+
+            if ($biz && $biz->isFeatureEnabled(\App\Domain\Template\FeatureRegistry::POS_WHOLESALE_TIERED_PRICING)) {
+                return (float) $this->wholesale_price;
+            }
+        }
+
+        return (float) $this->selling_price;
     }
 
     public function isService(): bool

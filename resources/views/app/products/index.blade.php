@@ -428,6 +428,8 @@
                     'output_unit_id' => (string) $editProduct->output_unit_id,
                     'base_cost' => (float) $editProduct->base_cost,
                     'selling_price' => (float) $editProduct->selling_price,
+                    'wholesale_min_qty' => $editProduct->wholesale_min_qty ? (float) $editProduct->wholesale_min_qty : '',
+                    'wholesale_price' => $editProduct->wholesale_price ? (float) $editProduct->wholesale_price : '',
                     'min_stock' => (float) $editProduct->min_stock,
                     'weight' => (float) ($editProduct->weight ?? 200),
                     'length' => $editProduct->length,
@@ -452,7 +454,7 @@
                 ],
                 JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE,
             )
-            : "{ id: '', slug: '', name: '', sku: '', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: true, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
+            : "{ id: '', slug: '', name: '', sku: '', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, wholesale_min_qty: '', wholesale_price: '', min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: true, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
     
         productToggles: {
             @foreach($products as $p)
@@ -534,6 +536,8 @@
             const currentToggle = this.productToggles[p.id];
             this.editProduct = {
                 ...p,
+                wholesale_min_qty: p.wholesale_min_qty ? Number(p.wholesale_min_qty) : '',
+                wholesale_price: p.wholesale_price ? Number(p.wholesale_price) : '',
                 category_id: String(p.category_id || ''),
                 output_unit_id: String(p.output_unit_id || ''),
                 weight: Number(p.weight || 200),
@@ -1130,6 +1134,8 @@
                                     output_unit_id: '{{ $prod->output_unit_id }}',
                                     base_cost: {{ (float) $prod->base_cost }},
                                     selling_price: {{ (float) $prod->selling_price }},
+                                    wholesale_min_qty: {{ $prod->wholesale_min_qty !== null ? (float) $prod->wholesale_min_qty : "''" }},
+                                    wholesale_price: {{ $prod->wholesale_price !== null ? (float) $prod->wholesale_price : "''" }},
                                     min_stock: {{ (float) $prod->min_stock }},
                                     weight: {{ (float) ($prod->weight ?? 200) }},
                                     length: {{ $prod->length !== null ? (float) $prod->length : "''" }},
@@ -1262,6 +1268,8 @@
                         output_unit_id: '{{ $prod->output_unit_id }}',
                         base_cost: {{ (float) $prod->base_cost }},
                         selling_price: {{ (float) $prod->selling_price }},
+                        wholesale_min_qty: {{ $prod->wholesale_min_qty !== null ? (float) $prod->wholesale_min_qty : "''" }},
+                        wholesale_price: {{ $prod->wholesale_price !== null ? (float) $prod->wholesale_price : "''" }},
                         min_stock: {{ (float) $prod->min_stock }},
                         weight: {{ (float) ($prod->weight ?? 200) }},
                         length: {{ $prod->length !== null ? (float) $prod->length : "''" }},
@@ -1639,6 +1647,37 @@
                                                 class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                                         </div>
                                     </div>
+
+                                    @feature('pos.wholesale_tiered_pricing')
+                                    <!-- Bento Box: Harga Grosir Bertingkat (Progressive Tiering) -->
+                                    <div class="p-5 rounded-[18px] bg-[#34C759]/5 border border-[#34C759]/20 space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
+                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">Harga Grosir Bertingkat</h3>
+                                            </div>
+                                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full">Otomatis POS</span>
+                                        </div>
+                                        <p class="text-[12px] text-black/60 dark:text-white/60">
+                                            Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu.
+                                        </p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                            <div>
+                                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]">Min. Qty Pembelian (Grosir)</label>
+                                                <input type="number" step="any" min="1" name="wholesale_min_qty" placeholder="Cth: 12"
+                                                    class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] px-3.5 text-[14px] text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]">Harga Satuan Grosir</label>
+                                                <div class="relative">
+                                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-medium text-[13px]">{{ $business->currency_symbol }}</span>
+                                                    <input type="number" step="any" min="0" name="wholesale_price" placeholder="0"
+                                                        class="w-full h-10 pl-9 pr-3 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[14px] text-black dark:text-white tabular-nums font-bold focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endfeature
 
                                     @if ($business && ($business->isFoodIndustry() || $business->hasDineInFeature()))
                                     <!-- Bento Box: Multi-Harga Saluran (F&B / Online) -->
@@ -2256,6 +2295,37 @@
                                                 class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                                         </div>
                                     </div>
+
+                                    @feature('pos.wholesale_tiered_pricing')
+                                    <!-- Bento Box: Harga Grosir Bertingkat (Progressive Tiering) -->
+                                    <div class="p-5 rounded-[18px] bg-[#34C759]/5 border border-[#34C759]/20 space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
+                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">Harga Grosir Bertingkat</h3>
+                                            </div>
+                                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full">Otomatis POS</span>
+                                        </div>
+                                        <p class="text-[12px] text-black/60 dark:text-white/60">
+                                            Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu.
+                                        </p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                            <div>
+                                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]">Min. Qty Pembelian (Grosir)</label>
+                                                <input type="number" step="any" min="1" name="wholesale_min_qty" x-model="editProduct.wholesale_min_qty" placeholder="Cth: 12"
+                                                    class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] px-3.5 text-[14px] text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]">Harga Satuan Grosir</label>
+                                                <div class="relative">
+                                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-medium text-[13px]">{{ $business->currency_symbol }}</span>
+                                                    <input type="number" step="any" min="0" name="wholesale_price" x-model="editProduct.wholesale_price" placeholder="0"
+                                                        class="w-full h-10 pl-9 pr-3 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[14px] text-black dark:text-white tabular-nums font-bold focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endfeature
 
                                     @if ($business && ($business->isFoodIndustry() || $business->hasDineInFeature()))
                                     <!-- Bento Box: Multi-Harga Saluran (F&B / Online) -->

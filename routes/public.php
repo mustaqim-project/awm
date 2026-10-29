@@ -316,6 +316,15 @@ Route::prefix('live-chat')->name('public.live-chat.')->group(function (): void {
     Route::post('/typing', \App\Http\Controllers\Web\PublicLiveChatController::class . '@broadcastTyping')->middleware('throttle:60,1')->name('typing');
 });
 
+// Direct order quick tracking route
+Route::get('/track/{token}', function (string $token) {
+    $order = \App\Models\CommerceOrder::where('tracking_token', $token)->with('business')->first();
+    if (! $order || ! $order->business) {
+        abort(404, 'Pesanan tidak ditemukan.');
+    }
+    return redirect()->route('public.storefront.order.track', [$order->business->slug, $token]);
+})->name('public.order.quick_track');
+
 // 15. Public business landing pages using business name as direct URL slug (Must be last)
 Route::get('/{slug}', [PublicStorefrontController::class, 'home'])
     ->where('slug', '^(?!(pos|admin|api|mcp|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community|live-chat)$)[a-z0-9]+(?:-[a-z0-9]+)*$')

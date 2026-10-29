@@ -233,6 +233,24 @@ final class SalesOrderWebController extends Controller
         return $pdf->stream($filename);
     }
 
+    public function deliveryOrder(SalesOrder $salesOrder): \Illuminate\Http\Response
+    {
+        $business = Context::requireBusiness();
+        abort_unless($salesOrder->business_id === $business->id, 403);
+        abort_unless($business->isFeatureEnabled(\App\Domain\Template\FeatureRegistry::LOGISTICS_DELIVERY_ORDER), 403);
+
+        $salesOrder->load(['customer', 'items.product', 'quotation']);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.delivery_order_pdf', [
+            'business' => $business,
+            'salesOrder' => $salesOrder,
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'Surat-Jalan-' . \Illuminate\Support\Str::slug($salesOrder->so_number) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
+
     /**
      * Delete a draft sales order.
      */

@@ -317,6 +317,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::put('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.orders.update');
         Route::get('/sales/orders/{salesOrder}/pdf', [SalesOrderWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.orders.pdf');
         Route::get('/sales/orders/{salesOrder}/print', [SalesOrderWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.orders.print');
+        Route::get('/sales/orders/{salesOrder}/delivery-order', [SalesOrderWebController::class, 'deliveryOrder'])->middleware('require.permission:sales.view')->name('sales.orders.delivery-order');
         Route::post('/sales/orders/{salesOrder}/generate-invoice', [SalesOrderWebController::class, 'generateInvoice'])->middleware('require.permission:sales.pipeline')->name('sales.orders.generate-invoice');
         Route::delete('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'destroy'])->middleware('require.permission:sales.pipeline')->name('sales.orders.destroy');
 

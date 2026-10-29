@@ -165,6 +165,81 @@
             @endif
         </div>
 
+        @if ($business && $business->isLaundry())
+        @feature('vertical.laundry_public_tracking')
+        {{-- LAUNDRY PROGRESS TIMELINE (Progressive Disclosure) --}}
+        @php
+            $laundryStatus = $order->status;
+            $step = 1;
+            if (in_array($laundryStatus, ['paid', 'confirmed'])) $step = 2;
+            elseif ($laundryStatus === 'processing') $step = 3;
+            elseif ($laundryStatus === 'ready') $step = 4;
+            elseif (in_array($laundryStatus, ['fulfilled', 'completed'])) $step = 5;
+        @endphp
+        <div class="p-6 sm:p-7 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse"></span>
+                    <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">Status Pengerjaan Laundry</h2>
+                </div>
+                <span class="text-[11px] font-bold text-[#007AFF] bg-[#007AFF]/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                    Tahap {{ $step }} dari 5
+                </span>
+            </div>
+
+            <!-- Apple Bento Stepper -->
+            <div class="grid grid-cols-5 gap-2 sm:gap-3 text-center">
+                <!-- Step 1: Diterima -->
+                <div class="space-y-1.5">
+                    <div class="h-2 rounded-full {{ $step >= 1 ? 'bg-[#007AFF]' : 'bg-black/10 dark:bg-white/10' }} transition-all"></div>
+                    <div class="text-[10px] sm:text-[12px] font-bold {{ $step >= 1 ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}">1. Diterima</div>
+                    <div class="text-[9px] text-black/50 dark:text-white/50 hidden sm:block">Penimbangan & Tagging</div>
+                </div>
+
+                <!-- Step 2: Cuci -->
+                <div class="space-y-1.5">
+                    <div class="h-2 rounded-full {{ $step >= 2 ? 'bg-[#007AFF]' : 'bg-black/10 dark:bg-white/10' }} transition-all"></div>
+                    <div class="text-[10px] sm:text-[12px] font-bold {{ $step >= 2 ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}">2. Cuci</div>
+                    <div class="text-[9px] text-black/50 dark:text-white/50 hidden sm:block">Pencucian Higienis</div>
+                </div>
+
+                <!-- Step 3: Pengeringan -->
+                <div class="space-y-1.5">
+                    <div class="h-2 rounded-full {{ $step >= 3 ? 'bg-[#007AFF]' : 'bg-black/10 dark:bg-white/10' }} transition-all"></div>
+                    <div class="text-[10px] sm:text-[12px] font-bold {{ $step >= 3 ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}">3. Kering</div>
+                    <div class="text-[9px] text-black/50 dark:text-white/50 hidden sm:block">Dryer & Sanitasi</div>
+                </div>
+
+                <!-- Step 4: Setrika & Packing -->
+                <div class="space-y-1.5">
+                    <div class="h-2 rounded-full {{ $step >= 4 ? 'bg-[#007AFF]' : 'bg-black/10 dark:bg-white/10' }} transition-all"></div>
+                    <div class="text-[10px] sm:text-[12px] font-bold {{ $step >= 4 ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}">4. Setrika</div>
+                    <div class="text-[9px] text-black/50 dark:text-white/50 hidden sm:block">Rapih & Parfum</div>
+                </div>
+
+                <!-- Step 5: Siap Diambil -->
+                <div class="space-y-1.5">
+                    <div class="h-2 rounded-full {{ $step >= 5 ? 'bg-[#34C759]' : 'bg-black/10 dark:bg-white/10' }} transition-all"></div>
+                    <div class="text-[10px] sm:text-[12px] font-bold {{ $step >= 5 ? 'text-[#34C759]' : 'text-black/40 dark:text-white/40' }}">5. Siap</div>
+                    <div class="text-[9px] text-black/50 dark:text-white/50 hidden sm:block">Di Rak / Siap Kirim</div>
+                </div>
+            </div>
+
+            @if ($step >= 4)
+            <div class="p-3.5 rounded-[16px] bg-[#34C759]/10 border border-[#34C759]/20 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-[#34C759] text-white flex items-center justify-center shrink-0">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <div class="text-[12.5px] font-bold text-[#248A3D] dark:text-[#30D158]">Cucian Anda Sudah Selesai!</div>
+                    <div class="text-[11px] text-black/60 dark:text-white/60">Silakan diambil di outlet kami atau menunggu kurir pengantaran sesuai konfirmasi.</div>
+                </div>
+            </div>
+            @endif
+        </div>
+        @endfeature
+        @endif
+
         {{-- GROUP ORDER / SPLIT BILL BANNER (IF APPLICABLE) --}}
         @if ($order->groupOrder)
             @php

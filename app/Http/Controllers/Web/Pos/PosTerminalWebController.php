@@ -189,6 +189,8 @@ final class PosTerminalWebController extends Controller
                     }
                     $p->channel_prices = $channelPricesMap;
                     $p->is_bundle = (bool) ($p->is_bundle ?? false);
+                    $p->wholesale_min_qty = $p->wholesale_min_qty !== null ? (float) $p->wholesale_min_qty : null;
+                    $p->wholesale_price = $p->wholesale_price !== null ? (float) $p->wholesale_price : null;
 
                     return $p;
                 })

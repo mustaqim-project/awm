@@ -16,6 +16,7 @@ final class FeatureRegistry
     public const POS_BLIND_CLOSE_SHIFT         = 'pos.blind_close_shift';
     public const POS_KITCHEN_ROUTING           = 'pos.kitchen_printer_routing';
     public const POS_WHOLESALE_PRICING         = 'pos.wholesale_tiered_pricing';
+    public const POS_WHOLESALE_TIERED_PRICING  = self::POS_WHOLESALE_PRICING;
     public const POS_TIME_PRICING              = 'pos.time_based_pricing';
     public const POS_SHOW_IMAGES               = 'pos.show_product_images';
     public const POS_FOOD_WASTE_LOG            = 'pos.food_waste_log';

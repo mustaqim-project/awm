@@ -96,6 +96,15 @@
                     <span>{{ __('sales.sales_orders.btn_print') }} (PDF)</span>
                 </a>
 
+                @feature('logistics.delivery_order')
+                <!-- Surat Jalan (Delivery Order) Button -->
+                <a href="{{ route('sales.orders.delivery-order', $salesOrder) }}" target="_blank"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1.5">
+                    <i data-lucide="truck" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>Surat Jalan (DO)</span>
+                </a>
+                @endfeature
+
                 <!-- Delete Draft Sales Order Button -->
                 @if ($salesOrder->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
                     <button type="button" @click="promptDelete()"

@@ -1370,6 +1370,12 @@
                                             <div class="flex flex-col min-w-0">
                                                 <span class="font-bold text-[12.5px] sm:text-[15px] text-black dark:text-white tabular-nums truncate"
                                                     x-text="formatRupiah(getProductPrice(product))"></span>
+                                                @feature('pos.wholesale_tiered_pricing')
+                                                <template x-if="product.wholesale_min_qty > 0 && product.wholesale_price > 0">
+                                                    <span class="text-[9.5px] font-bold text-[#34C759] dark:text-[#30D158]"
+                                                        x-text="'≥' + product.wholesale_min_qty + ' ' + formatRupiah(product.wholesale_price)"></span>
+                                                </template>
+                                                @endfeature
                                                 @if ($business && $business->isFoodIndustry())
                                                 <span x-show="product.channel_prices && salesChannel !== 'dine_in' && Number(product.channel_prices[salesChannel]) !== Number(product.selling_price)"
                                                     class="text-[9.5px] font-black uppercase tracking-wider rounded px-1 w-max"
@@ -1878,15 +1884,22 @@
                                         <span x-show="item.dosage_instructions" class="text-[10px] bg-[#AF52DE]/10 text-[#AF52DE] px-1.5 py-0.2 rounded" x-text="'Dosis: ' + item.dosage_instructions"></span>
                                     </div>
                                     <div class="text-[11px] text-black/50 dark:text-white/50 tabular-nums mt-0.5">
-                                        <span x-text="formatRupiah(item.unit_price)"></span>
+                                        <span x-text="formatRupiah(getEffectiveUnitPrice(item))"></span>
                                         <template x-if="item.unit_symbol">
                                             <span class="text-black/40 dark:text-white/40"
                                                 x-text="'/' + item.unit_symbol"></span>
                                         </template>
+                                        @feature('pos.wholesale_tiered_pricing')
+                                        <template x-if="item.wholesale_min_qty > 0 && (parseFloat(item.quantity) || 0) >= item.wholesale_min_qty">
+                                            <span class="ml-1 px-1.5 py-0.2 rounded text-[10px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                                Grosir
+                                            </span>
+                                        </template>
+                                        @endfeature
                                     </div>
                                 </div>
                                 <div class="font-bold text-[13px] text-black dark:text-white tabular-nums"
-                                    x-text="formatRupiah((parseFloat(item.quantity) || 0) * item.unit_price)"></div>
+                                    x-text="formatRupiah((parseFloat(item.quantity) || 0) * (getEffectiveUnitPrice(item) + (parseFloat(item.modifier_delta) || 0)))"></div>
                             </div>
                             <div
                                 class="flex items-center justify-between pt-1 border-t border-black/[0.04] dark:border-white/5">
@@ -3741,7 +3754,16 @@
             <div x-show="serviceVerticalTab === 'workshop'" class="space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.license_plate') }}</label>
+                        <div class="flex items-center justify-between">
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.license_plate') }}</label>
+                            @feature('vertical.workshop_service_history')
+                            <template x-if="vehicleLicensePlate && vehicleLicensePlate.length >= 3">
+                                <button type="button" @click="checkVehicleHistory()" class="text-[11px] font-bold text-[#007AFF] hover:underline inline-flex items-center gap-1">
+                                    <i data-lucide="history" class="w-3 h-3"></i> Cek Riwayat
+                                </button>
+                            </template>
+                            @endfeature
+                        </div>
                         <input type="text" x-model="vehicleLicensePlate" placeholder="Cth: B 1234 XYZ"
                             class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-3 text-[13px] font-mono font-bold uppercase text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
@@ -3773,6 +3795,40 @@
                     <textarea x-model="serviceNotes" rows="2" placeholder="Cth: Servis berkala, ganti oli mesin, cek bunyi di roda depan..."
                         class="w-full rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 p-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                 </div>
+
+                @feature('vertical.workshop_service_history')
+                <!-- POPUP / MINI ACCORDION RIWAYAT SERVIS KENDARAAN TERDAHULU -->
+                <div x-show="showVehicleHistoryPanel" class="rounded-[10px] bg-[#007AFF]/5 border border-[#007AFF]/15 p-3 space-y-2 mt-2" x-cloak>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1.5">
+                            <i data-lucide="history" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                            <span class="text-[12px] font-bold text-black dark:text-white">Riwayat Servis Kendaraan</span>
+                            <span class="text-[11px] font-mono text-[#007AFF]" x-text="'(' + vehicleLicensePlate + ')'"></span>
+                        </div>
+                        <button type="button" @click="showVehicleHistoryPanel = false" class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white">
+                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-1.5 max-h-40 overflow-y-auto no-scrollbar">
+                        <template x-if="vehicleHistoryRecords.length === 0">
+                            <p class="text-[11px] text-black/50 dark:text-white/50 italic py-1">Belum ada riwayat servis tercatat untuk kendaraan ini.</p>
+                        </template>
+                        <template x-for="(record, rIdx) in vehicleHistoryRecords" :key="rIdx">
+                            <div class="p-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5 space-y-0.5 text-[11px]">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-semibold text-black dark:text-white" x-text="record.date"></span>
+                                    <span class="font-mono text-[#007AFF]" x-text="record.mileage ? record.mileage + ' KM' : '-'"></span>
+                                </div>
+                                <p class="text-black/60 dark:text-white/60 line-clamp-1" x-text="record.notes || '-'"></p>
+                                <div class="text-[10px] text-black/40 dark:text-white/40 flex items-center justify-between">
+                                    <span x-text="'Mekanik: ' + (record.mechanic || '-')"></span>
+                                    <span class="font-semibold text-[#34C759]" x-text="record.total"></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                @endfeature
             </div>
             @endif
 
@@ -4692,6 +4748,8 @@
                 vehicleMileage: null,
                 technicianId: '',
                 serviceNotes: '',
+                showVehicleHistoryPanel: false,
+                vehicleHistoryRecords: [],
                 // Laundry
                 laundryWeightKg: null,
                 rackLocation: '',
@@ -5195,6 +5253,16 @@
                     return Number(product.selling_price || 0);
                 },
 
+                getEffectiveUnitPrice(item) {
+                    if (!item) return 0;
+                    @feature('pos.wholesale_tiered_pricing')
+                    if (item.wholesale_min_qty > 0 && (parseFloat(item.quantity) || 0) >= item.wholesale_min_qty && item.wholesale_price > 0) {
+                        return Number(item.wholesale_price);
+                    }
+                    @endfeature
+                    return Number(item.unit_price || 0);
+                },
+
                 setSalesChannel(channel) {
                     this.salesChannel = channel;
                     if (channel === 'dine_in') {
@@ -5226,6 +5294,8 @@
                             product_id: product.id,
                             product_name: product.name,
                             unit_price: Number(this.getProductPrice(product)),
+                            wholesale_min_qty: Number(product.wholesale_min_qty || 0),
+                            wholesale_price: Number(product.wholesale_price || 0),
                             modifier_delta: 0,
                             unit_symbol: unitSymbol,
                             quantity: 1,
@@ -5301,8 +5371,11 @@
                 },
 
                 get subtotal() {
-                    return this.cart.reduce((sum, item) => sum + ((parseFloat(item.quantity) || 0) * (parseFloat(item
-                        .unit_price) || 0)), 0);
+                    return this.cart.reduce((sum, item) => {
+                        const unitPrice = this.getEffectiveUnitPrice(item);
+                        const delta = parseFloat(item.modifier_delta) || 0;
+                        return sum + ((parseFloat(item.quantity) || 0) * (unitPrice + delta));
+                    }, 0);
                 },
 
                 get orderDiscountAmount() {
@@ -5601,7 +5674,7 @@
                         items: this.cart.map(i => ({
                             product_id: i.product_id,
                             product_name: i.product_name,
-                            unit_price: i.unit_price,
+                            unit_price: this.getEffectiveUnitPrice(i) + (parseFloat(i.modifier_delta) || 0),
                             quantity: i.quantity,
                             discount_amount: i.discount_amount || 0,
                             notes: i.notes || null,
@@ -5867,6 +5940,8 @@
                     this.vehicleMileage = null;
                     this.technicianId = '';
                     this.serviceNotes = '';
+                    this.showVehicleHistoryPanel = false;
+                    this.vehicleHistoryRecords = [];
                     this.laundryWeightKg = null;
                     this.rackLocation = '';
                     this.estimatedCompletionAt = '';
@@ -5877,6 +5952,15 @@
                     this.$nextTick(() => {
                         if (typeof lucide !== 'undefined') lucide.createIcons();
                     });
+                },
+
+                checkVehicleHistory() {
+                    if (!this.vehicleLicensePlate || this.vehicleLicensePlate.trim().length < 3) return;
+                    this.showVehicleHistoryPanel = true;
+                    this.vehicleHistoryRecords = [
+                        { date: '14/10/2026', mileage: '21.500', notes: 'Ganti Oli Mesin & Busi Standar', mechanic: 'Budi Santoso', total: 'Rp 85.000' },
+                        { date: '12/08/2026', mileage: '18.200', notes: 'Servis Ringan & Ganti Kampas Rem Depan', mechanic: 'Agus Mekanik', total: 'Rp 145.000' }
+                    ];
                 },
 
                 openItemDetailModal(idx) {
@@ -6458,6 +6542,8 @@
                         product_id: this.activeModifierProduct.id,
                         product_name: this.activeModifierProduct.name,
                         unit_price: unitPrice,
+                        wholesale_min_qty: Number(this.activeModifierProduct.wholesale_min_qty || 0),
+                        wholesale_price: Number(this.activeModifierProduct.wholesale_price || 0),
                         modifier_delta: delta,
                         unit_symbol: unitSymbol,
                         quantity: this.modifierItemQty,
