@@ -1,5 +1,5 @@
 @php
-    $verifiedTestimonials = config('marketing.verified_testimonials', []);
+    $verifiedTestimonials = rescue(fn() => json_decode(\App\Models\SystemSetting::get('marketing_verified_testimonials', '[]'), true), [], false) ?: config('marketing.verified_testimonials', []);
 @endphp
 
 @if(!empty($verifiedTestimonials) && count($verifiedTestimonials) > 0)

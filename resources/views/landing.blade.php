@@ -1205,7 +1205,7 @@
                                                     '/produk/' .
                                                     ($product->slug ?: $product->id),
                                             );
-                                            $productImage = $product->image_url ?: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';
+                                            $productImage = $product->image_url ?: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" fill="%23f1f5f9"><rect width="400" height="300" fill="%23f1f5f9"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="%2394a3b8">Etalase Toko</text></svg>';
                                         @endphp
                                         <a href="{{ $productUrl }}"
                                             class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">

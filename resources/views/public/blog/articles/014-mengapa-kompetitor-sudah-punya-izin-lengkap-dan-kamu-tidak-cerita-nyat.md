@@ -1,7 +1,7 @@
 # Artikel #014
 
 **Judul Artikel \***
-Mengapa Kompetitor Sudah Punya Izin Lengkap dan Kamu Tidak? Cerita Nyata Pedagang
+Pentingnya Izin Lengkap bagi UMKM: Pembelajaran dari Studi Kasus Peluang Pasar (Ilustrasi)
 
 **Cluster Konten \***
 Cluster F - Studi Kasus & Cerita
@@ -16,9 +16,13 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Kisah seorang pedagang yang menyadari pentingnya legalitas usaha setelah melihat kompetitornya lebih dulu memiliki izin lengkap dan mendapat lebih banyak peluang kerja sama.
+[Studi Kasus Edukasi] Pembelajaran praktis mengenai pentingnya legalitas dan izin edar usaha bagi pedagang UMKM agar siap menangkap peluang kerja sama formal.
 
 ## Konten Lengkap (HTML Didukung) \*
+
+<div class="p-4 mb-6 rounded-xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200">
+<strong>Catatan Redaksi (Ilustrasi Edukasi):</strong> Pembelajaran ini disajikan sebagai ilustrasi situasi riil yang dihadapi UMKM saat hendak memperluas distribusi ke kanal ritel formal dan pentingnya kepemilikan dokumen legalitas.
+</div>
 
 <p>Banyak pelaku usaha baru menyadari pentingnya legalitas setelah melihat kompetitor sejenis yang lebih dulu bergerak mengurus izin usahanya. Berikut gambaran situasi yang sering dialami banyak pedagang UMKM.</p>
 

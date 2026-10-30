@@ -1,7 +1,7 @@
 # Artikel #099
 
 **Judul Artikel \***
-Cerita Warung yang Sudah Naik ke Scale: Dari Omzet 80 Juta ke 2 Milyar per Bulan
+Simulasi Model Bisnis: Perjalanan Menuju Skala Omzet Bertumbuh (Ilustrasi)
 
 **Cluster Konten \***
 Cluster F - Studi Kasus & Cerita
@@ -16,9 +16,13 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Kisah perjalanan sebuah usaha warung yang berhasil bertransformasi dari skala kecil menjadi bisnis besar berkat penerapan sistem dan strategi yang tepat.
+[Simulasi Model Bisnis] Materi edukasi mengenai tahapan transformasi usaha warung dari pencatatan manual menuju standarisasi SOP dan ekspansi bertahap.
 
 ## Konten Lengkap (HTML Didukung) \*
+
+<div class="p-4 mb-6 rounded-xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200">
+<strong>Catatan Redaksi (Ilustrasi &amp; Simulasi Model Bisnis):</strong> Artikel ini disajikan khusus sebagai materi edukasi simulasi pertumbuhan usaha bertahap (bukan profil entitas tunggal tertentu) untuk menggambarkan implementasi standarisasi SOP, pencatatan keuangan, dan delegasi tim secara bertahap.
+</div>
 
 <p>Pertumbuhan usaha dari skala warung kecil menjadi bisnis dengan omzet besar bukan hal yang mustahil, asal didukung strategi dan sistem yang tepat diterapkan secara konsisten seiring waktu.</p>
 

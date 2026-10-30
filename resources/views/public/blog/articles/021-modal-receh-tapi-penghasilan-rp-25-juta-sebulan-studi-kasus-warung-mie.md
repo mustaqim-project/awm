@@ -1,7 +1,7 @@
 # Artikel #021
 
 **Judul Artikel \***
-Modal Receh Tapi Penghasilan Rp 25 Juta Sebulan: Studi Kasus Warung Mie Aceh
+Simulasi Bisnis Kuliner: Mengembangkan Usaha Mie Khas Daerah Menuju Omzet Stabil (Ilustrasi)
 
 **Cluster Konten \***
 Cluster F - Studi Kasus & Cerita
@@ -16,9 +16,13 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Kisah usaha warung mie Aceh yang bermula dari modal kecil namun berhasil mencapai omzet puluhan juta rupiah per bulan berkat strategi yang konsisten.
+[Simulasi Model Bisnis] Materi simulasi usaha kuliner mengenai pentingnya menjaga mutu menu andalan, perputaran kas harian, dan reinvestasi keuntungan.
 
 ## Konten Lengkap (HTML Didukung) \*
+
+<div class="p-4 mb-6 rounded-xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs text-blue-900 dark:text-blue-200">
+<strong>Catatan Redaksi (Ilustrasi &amp; Simulasi Model Bisnis):</strong> Studi kasus ini disajikan sebagai materi edukasi simulasi usaha kuliner mengenai prinsip perputaran modal receh, standarisasi menu, dan disiplin pencatatan kas harian.
+</div>
 
 <p>Tidak sedikit usaha kuliner rumahan yang bermula dari modal terbatas namun berkembang pesat berkat strategi operasional yang konsisten. Salah satu gambaran umum yang sering muncul adalah usaha warung makan khas daerah seperti mie Aceh.</p>
 
