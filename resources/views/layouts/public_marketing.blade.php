@@ -442,9 +442,11 @@
                     }
                 },
                 init() {
-                    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                        lucide.createIcons();
-                    }
+                    this.$nextTick(() => {
+                        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                            lucide.createIcons();
+                        }
+                    });
                     this.$watch('mobileMenu', value => {
                         if (value) {
                             document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
@@ -455,11 +457,16 @@
                 }
             };
         }
-        document.addEventListener('alpine:init', () => {
-            if (typeof Alpine !== 'undefined' && Alpine.data) {
-                Alpine.data('marketingLayout', marketingLayout);
-            }
-        });
+        window.marketingLayout = marketingLayout;
+        if (typeof Alpine !== 'undefined' && Alpine.data) {
+            Alpine.data('marketingLayout', marketingLayout);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                if (typeof Alpine !== 'undefined' && Alpine.data) {
+                    Alpine.data('marketingLayout', marketingLayout);
+                }
+            });
+        }
     </script>
 
     {{-- Universal Typography Hierarchy (H1 - H6 & Typographic Roles) --}}
@@ -511,9 +518,9 @@
                             {{ request()->routeIs('public.bos.*') || request()->routeIs('public.erp.*') || request()->routeIs('public.content.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
                         <span>Platform</span>
-                        <i data-lucide="chevron-down"
-                            class="w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200"
-                            :class="platformDropdown ? 'rotate-180' : ''"></i>
+                        <span class="inline-flex transition-transform duration-200" :class="platformDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        </span>
                     </button>
 
                     <!-- 2. Solutions Trigger -->
@@ -525,9 +532,9 @@
                             {{ request()->routeIs('public.solutions.*') || request()->routeIs('solusi.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
                         <span>Solutions</span>
-                        <i data-lucide="chevron-down"
-                            class="w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200"
-                            :class="solutionDropdown ? 'rotate-180' : ''"></i>
+                        <span class="inline-flex transition-transform duration-200" :class="solutionDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        </span>
                     </button>
 
                     <!-- 3. Omnichannel Trigger -->
@@ -539,9 +546,9 @@
                             {{ request()->routeIs('public.omnichannel.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
                         <span>Omnichannel</span>
-                        <i data-lucide="chevron-down"
-                            class="w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200"
-                            :class="omniDropdown ? 'rotate-180' : ''"></i>
+                        <span class="inline-flex transition-transform duration-200" :class="omniDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        </span>
                     </button>
 
                     <!-- 4. Resources Trigger -->
@@ -553,9 +560,9 @@
                             {{ request()->routeIs('public.resources.*') || request()->routeIs('blog.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
                         <span>Resources</span>
-                        <i data-lucide="chevron-down"
-                            class="w-3.5 h-3.5 xl:w-4 xl:h-4 transition-transform duration-200"
-                            :class="resourceDropdown ? 'rotate-180' : ''"></i>
+                        <span class="inline-flex transition-transform duration-200" :class="resourceDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        </span>
                     </button>
 
                     <!-- 5. Pricing (Direct Link) -->
@@ -1547,9 +1554,10 @@
                             <span
                                 class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">8
                                 Modul</span>
-                            <i data-lucide="chevron-down"
-                                class="w-4 h-4 text-slate-400 transition-transform duration-200"
-                                :class="mobileSection === 'platform' ? 'rotate-180 text-[#00C2FF]' : ''"></i>
+                            <span class="inline-flex text-slate-400 transition-transform duration-200"
+                                :class="mobileSection === 'platform' ? 'rotate-180 text-[#00C2FF]' : ''">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </span>
                         </div>
                     </button>
 
@@ -1731,9 +1739,10 @@
                             <span
                                 class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">6
                                 Industri</span>
-                            <i data-lucide="chevron-down"
-                                class="w-4 h-4 text-slate-400 transition-transform duration-200"
-                                :class="mobileSection === 'solutions' ? 'rotate-180 text-[#34C759]' : ''"></i>
+                            <span class="inline-flex text-slate-400 transition-transform duration-200"
+                                :class="mobileSection === 'solutions' ? 'rotate-180 text-[#34C759]' : ''">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </span>
                         </div>
                     </button>
 
@@ -1899,9 +1908,10 @@
                             <span
                                 class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">5
                                 Kanal</span>
-                            <i data-lucide="chevron-down"
-                                class="w-4 h-4 text-slate-400 transition-transform duration-200"
-                                :class="mobileSection === 'omnichannel' ? 'rotate-180 text-[#FF2D55]' : ''"></i>
+                            <span class="inline-flex text-slate-400 transition-transform duration-200"
+                                :class="mobileSection === 'omnichannel' ? 'rotate-180 text-[#FF2D55]' : ''">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </span>
                         </div>
                     </button>
 
@@ -2036,9 +2046,10 @@
                             <span
                                 class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">4
                                 Edukasi</span>
-                            <i data-lucide="chevron-down"
-                                class="w-4 h-4 text-slate-400 transition-transform duration-200"
-                                :class="mobileSection === 'resources' ? 'rotate-180 text-[#AF52DE]' : ''"></i>
+                            <span class="inline-flex text-slate-400 transition-transform duration-200"
+                                :class="mobileSection === 'resources' ? 'rotate-180 text-[#AF52DE]' : ''">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </span>
                         </div>
                     </button>
 

@@ -2103,6 +2103,190 @@
         @endif
 
         <!-- ============================================================ -->
+        <!-- MODAL: THEME INSPECTOR & 1-CLICK RECOMMENDATION (Apple HIG)  -->
+        <!-- ============================================================ -->
+        <template x-teleport="body">
+            <div x-show="showThemeModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto">
+                <!-- Backdrop -->
+                <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+                    x-show="showThemeModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click="showThemeModal = false"
+                    aria-hidden="true"></div>
+
+                <!-- Dialog Box -->
+                <div @click.away="showThemeModal = false"
+                    @keydown.escape.window="showThemeModal = false"
+                    role="dialog" aria-modal="true"
+                    x-show="showThemeModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="relative w-full max-w-3xl rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden my-auto flex flex-col max-h-[90vh]">
+
+                    <!-- Modal Header -->
+                    <div class="px-5 sm:px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-3 shrink-0">
+                        <div class="flex items-center gap-3">
+                            <span class="w-4 h-4 rounded-full shadow-xs shrink-0"
+                                  :style="`background-color: ${selectedThemeForModal?.primary_color || '#007AFF'}`"></span>
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="text-[17px] font-bold text-black dark:text-white"
+                                        x-text="selectedThemeForModal?.name || 'Detail Tema'"></h3>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                                          :style="`background-color: ${selectedThemeForModal?.primary_color}18; color: ${selectedThemeForModal?.primary_color};`"
+                                          x-text="selectedThemeForModal?.industry"></span>
+                                </div>
+                                <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-0.5"
+                                   x-text="selectedThemeForModal?.description"></p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showThemeModal = false"
+                            class="w-9 h-9 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body (Scrollable) -->
+                    <div class="p-5 sm:p-6 space-y-5 overflow-y-auto">
+                        <!-- Two Columns Layout -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+                            <!-- Left: Identity & Typography Preview -->
+                            <div class="md:col-span-5 space-y-4">
+                                <div class="p-4 rounded-[16px] border border-black/5 dark:border-white/10 flex flex-col justify-between gap-3 shadow-sm"
+                                     :style="`background-color: ${selectedThemeForModal?.card_bg || '#FAFAFA'};`">
+                                    <div>
+                                        <span class="text-[9.5px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full mb-2 inline-block"
+                                              :style="`background-color: ${selectedThemeForModal?.primary_color}20; color: ${selectedThemeForModal?.primary_color};`"
+                                              x-text="selectedThemeForModal?.recommendation?.announcement_badge || 'Toko Resmi Terverifikasi'"></span>
+                                        <h4 class="text-[18px] font-black text-neutral-900 leading-snug"
+                                            :style="`font-family: '${selectedThemeForModal?.font_heading}', sans-serif;`"
+                                            x-text="selectedThemeForModal?.recommendation?.headline || 'Headline Utama Industri'"></h4>
+                                        <p class="text-[11.5px] text-neutral-600 mt-2 line-clamp-3 leading-relaxed"
+                                           :style="`font-family: '${selectedThemeForModal?.font_body}', sans-serif;`"
+                                           x-text="selectedThemeForModal?.recommendation?.subheadline"></p>
+                                    </div>
+
+                                    <div class="pt-3 border-t border-black/5 flex items-center justify-between">
+                                        <span class="h-8 px-3 rounded-[8px] text-[11px] font-bold text-white flex items-center shadow-xs"
+                                              :style="`background-color: ${selectedThemeForModal?.primary_color};`"
+                                              x-text="selectedThemeForModal?.recommendation?.cta_primary_text || 'Lihat Produk'"></span>
+                                        <span class="text-[10px] text-neutral-500 font-mono" x-text="selectedThemeForModal?.font_heading"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Specs List -->
+                                <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-2 text-[11.5px]">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-black/50 dark:text-white/50">Font Heading:</span>
+                                        <strong class="text-black dark:text-white font-mono" x-text="selectedThemeForModal?.font_heading"></strong>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-black/50 dark:text-white/50">Font Body:</span>
+                                        <strong class="text-black dark:text-white font-mono" x-text="selectedThemeForModal?.font_body"></strong>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-black/50 dark:text-white/50">Warna Utama:</span>
+                                        <div class="flex items-center gap-1.5 font-mono uppercase font-bold" :style="`color: ${selectedThemeForModal?.primary_color};`">
+                                            <span class="w-3 h-3 rounded-full border border-black/10" :style="`background-color: ${selectedThemeForModal?.primary_color};`"></span>
+                                            <span x-text="selectedThemeForModal?.primary_color"></span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-black/50 dark:text-white/50">Warna Aksen:</span>
+                                        <div class="flex items-center gap-1.5 font-mono uppercase font-bold" :style="`color: ${selectedThemeForModal?.accent_color};`">
+                                            <span class="w-3 h-3 rounded-full border border-black/10" :style="`background-color: ${selectedThemeForModal?.accent_color};`"></span>
+                                            <span x-text="selectedThemeForModal?.accent_color"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Recommendation & Trust Pillars -->
+                            <div class="md:col-span-7 space-y-4">
+                                <div>
+                                    <span class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block mb-2">
+                                        Rekomendasi Copywriting Industri Otentik
+                                    </span>
+                                    <div class="space-y-2 text-[12px]">
+                                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                            <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Headline Rekomendasi:</span>
+                                            <span class="font-medium text-black dark:text-white" x-text="selectedThemeForModal?.recommendation?.headline"></span>
+                                        </div>
+                                        <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                            <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Subheadline Rekomendasi:</span>
+                                            <span class="text-black/70 dark:text-white/70" x-text="selectedThemeForModal?.recommendation?.subheadline"></span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                                <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Badge Promosi:</span>
+                                                <span class="font-medium text-black dark:text-white text-[11px]" x-text="selectedThemeForModal?.recommendation?.announcement_badge"></span>
+                                            </div>
+                                            <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5">
+                                                <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Tombol Utama (CTA):</span>
+                                                <span class="font-medium text-black dark:text-white text-[11px]" x-text="selectedThemeForModal?.recommendation?.cta_primary_text"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 4 Sector Trust Pillars -->
+                                <div>
+                                    <span class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block mb-2">
+                                        Pilar Kepercayaan Sektor (Trust Pillars)
+                                    </span>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        <template x-for="(pillar, pIdx) in (selectedThemeForModal?.recommendation?.trust_pillars || [])" :key="pIdx">
+                                            <div class="p-2.5 rounded-[10px] bg-emerald-500/5 border border-emerald-500/20 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium flex items-center gap-2">
+                                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
+                                                <span x-text="pillar"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="px-5 sm:px-6 py-3.5 border-t border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+                        <div class="flex items-center gap-2">
+                            <a :href="`{{ $publicUrl }}?preview=1&preview_theme=${selectedThemeForModal?.id}`" target="_blank"
+                               class="h-9 px-3.5 rounded-[10px] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-[12px] font-semibold text-black/80 dark:text-white/80 transition flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                                <span>Test Drive di Tab Baru</span>
+                            </a>
+                        </div>
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <button type="button" @click="showThemeModal = false"
+                                class="h-9 px-3.5 rounded-[10px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
+                                Batal
+                            </button>
+                            <button type="button" @click="applyTheme(selectedThemeForModal?.id, false)"
+                                class="h-9 px-3.5 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[12px] font-semibold transition cursor-pointer">
+                                Terapkan Desain &amp; Palet Saja
+                            </button>
+                            <button type="button" @click="applyTheme(selectedThemeForModal?.id, true)"
+                                class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                <span>Terapkan Desain + Copywriting</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- ============================================================ -->
         <!-- MODAL: LIVE PREVIEW DRAWER (Apple Sheet Style)               -->
         <!-- ============================================================ -->
         <template x-teleport="body">

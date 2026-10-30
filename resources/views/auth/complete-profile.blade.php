@@ -259,8 +259,11 @@
                                     @click="useCurrentGps()"
                                     :disabled="isGpsLoading"
                                     class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1.5">
-                                    <i data-lucide="crosshair" class="w-3.5 h-3.5" :class="{'animate-spin': isGpsLoading}"></i>
-                                    <span x-text="isGpsLoading ? {{ json_encode(__('auth.complete_profile.searching_gps')) }} : {{ json_encode(__('auth.complete_profile.use_my_gps')) }}"></span>
+                                    <span :class="{'animate-spin': isGpsLoading}" class="inline-flex">
+                                        <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <span x-show="isGpsLoading">{{ __('auth.complete_profile.searching_gps') }}</span>
+                                    <span x-show="!isGpsLoading">{{ __('auth.complete_profile.use_my_gps') }}</span>
                                 </button>
                             </div>
 
@@ -327,6 +330,9 @@
                 init() {
                     this.$nextTick(() => {
                         this.initLeafletMap();
+                        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                            lucide.createIcons();
+                        }
                     });
                 },
 
@@ -398,6 +404,11 @@
                         if (data.success && Array.isArray(data.areas)) {
                             this.searchResults = data.areas;
                             this.showDropdown = this.searchResults.length > 0;
+                            this.$nextTick(() => {
+                                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                                    lucide.createIcons();
+                                }
+                            });
                         }
                     } catch (err) {
                         console.error('Error searching areas:', err);
@@ -476,7 +487,7 @@
 
                 useCurrentGps() {
                     if (!navigator.geolocation) {
-                        alert({{ json_encode(__('auth.complete_profile.js_gps_not_supported')) }});
+                        alert({!! json_encode(__('auth.complete_profile.js_gps_not_supported')) !!});
                         return;
                     }
 
@@ -496,12 +507,23 @@
                         },
                         (err) => {
                             this.isGpsLoading = false;
-                            alert({{ json_encode(__('auth.complete_profile.js_gps_failed')) }} + (err.message || {{ json_encode(__('auth.complete_profile.js_gps_permission_denied')) }}));
+                            alert({!! json_encode(__('auth.complete_profile.js_gps_failed')) !!} + (err.message || {!! json_encode(__('auth.complete_profile.js_gps_permission_denied')) !!}));
                         },
                         { enableHighAccuracy: true, timeout: 10000 }
                     );
                 }
             };
+        }
+
+        window.businessSetupLocation = businessSetupLocation;
+        if (typeof Alpine !== 'undefined' && Alpine.data) {
+            Alpine.data('businessSetupLocation', businessSetupLocation);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                if (typeof Alpine !== 'undefined' && Alpine.data) {
+                    Alpine.data('businessSetupLocation', businessSetupLocation);
+                }
+            });
         }
     </script>
 @endsection
