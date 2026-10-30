@@ -715,11 +715,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Dynamic Budgeting
+                                                Arus Kas &amp; Pembukuan
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Atur dan pantau dana secara real-time
+                                                Catat pemasukan, pengeluaran &amp; kas toko
                                             </span>
                                         </div>
                                     </a>
@@ -734,17 +734,17 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Vendor Spend
+                                                Belanja Bahan &amp; Pemasok
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Kelola pembayaran SaaS &amp; vendor
+                                                Kelola pesanan beli (PO) &amp; supplier
                                             </span>
                                         </div>
                                     </a>
 
-                                    <!-- Revenue Sync -->
-                                    <a href="{{ route('public.erp.inventory') }}"
+                                    <!-- Rekap Omzet & Laba -->
+                                    <a href="{{ route('public.erp.pos') }}"
                                         class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
                                         <div
                                             class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#007AFF] dark:group-hover:border-[#00C2FF] group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] group-hover:bg-blue-50/50 dark:group-hover:bg-cyan-500/10 transition-all shrink-0 mt-0.5">
@@ -753,17 +753,17 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Revenue Sync
+                                                Rekap Omzet &amp; Laba
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Tarik data retainer &amp; POS otomatis
+                                                Pantau omzet harian &amp; laba bersih toko
                                             </span>
                                         </div>
                                     </a>
 
-                                    <!-- Receipt Capture -->
-                                    <a href="{{ route('public.omnichannel.orders') }}"
+                                    <!-- Cetak Struk & Nota Kasir -->
+                                    <a href="{{ route('public.erp.pos') }}"
                                         class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
                                         <div
                                             class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#007AFF] dark:group-hover:border-[#00C2FF] group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] group-hover:bg-blue-50/50 dark:group-hover:bg-cyan-500/10 transition-all shrink-0 mt-0.5">
@@ -772,11 +772,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Receipt Capture
+                                                Cetak Struk &amp; Nota Kasir
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Otomatiskan urusan struk
+                                                Printer thermal bluetooth &amp; nota WA
                                             </span>
                                         </div>
                                     </a>
@@ -801,11 +801,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                COOCA AI Agents
+                                                Asisten Teks Promosi AI
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Lipat-gandakan efisiensi keuangan
+                                                Buat caption medsos &amp; deskripsi barang
                                             </span>
                                         </div>
                                     </a>
@@ -820,11 +820,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Siap Global
+                                                Faktur Penjualan &amp; Tagihan
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Invoice dalam IDR, USD, dan SGD
+                                                Kelola invoice tempo &amp; piutang usaha
                                             </span>
                                         </div>
                                     </a>
@@ -1589,7 +1589,7 @@
                                     </div>
                                 </a>
 
-                                <!-- Dynamic Budgeting -->
+                                <!-- Arus Kas & Pembukuan -->
                                 <a href="{{ route('public.erp.accounting') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
@@ -1597,13 +1597,13 @@
                                         <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Dynamic Budgeting</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Atur dan pantau
-                                            dana secara real-time</span>
+                                        <span class="font-bold block text-white text-xs">Arus Kas &amp; Pembukuan</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Catat pemasukan,
+                                            pengeluaran &amp; kas toko</span>
                                     </div>
                                 </a>
 
-                                <!-- Vendor Spend -->
+                                <!-- Belanja Bahan & Pemasok -->
                                 <a href="{{ route('public.erp.erp') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
@@ -1611,37 +1611,37 @@
                                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Vendor Spend</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Kelola pembayaran
-                                            SaaS &amp; vendor</span>
+                                        <span class="font-bold block text-white text-xs">Belanja Bahan &amp; Pemasok</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Kelola pesanan beli
+                                            (PO) &amp; supplier</span>
                                     </div>
                                 </a>
 
-                                <!-- Revenue Sync -->
-                                <a href="{{ route('public.erp.inventory') }}" @click="mobileMenu = false"
+                                <!-- Rekap Omzet & Laba -->
+                                <a href="{{ route('public.erp.pos') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
                                         class="w-7 h-7 rounded-lg bg-[#30B0C7]/20 text-[#30B0C7] flex items-center justify-center shrink-0 mt-0.5">
                                         <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Revenue Sync</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Tarik data
-                                            retainer &amp; POS otomatis</span>
+                                        <span class="font-bold block text-white text-xs">Rekap Omzet &amp; Laba</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Pantau omzet harian
+                                            &amp; laba bersih toko</span>
                                     </div>
                                 </a>
 
-                                <!-- Receipt Capture -->
-                                <a href="{{ route('public.omnichannel.orders') }}" @click="mobileMenu = false"
+                                <!-- Cetak Struk & Nota Kasir -->
+                                <a href="{{ route('public.erp.pos') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
                                         class="w-7 h-7 rounded-lg bg-[#34C759]/20 text-[#34C759] flex items-center justify-center shrink-0 mt-0.5">
                                         <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Receipt Capture</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Otomatiskan urusan
-                                            struk</span>
+                                        <span class="font-bold block text-white text-xs">Cetak Struk &amp; Nota Kasir</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Printer thermal
+                                            bluetooth &amp; nota WA</span>
                                     </div>
                                 </a>
                             </div>
@@ -1652,7 +1652,7 @@
                             <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Platform Core
                             </p>
                             <div class="space-y-1.5">
-                                <!-- COOCA AI Agents -->
+                                <!-- Asisten Teks Promosi AI -->
                                 <a href="{{ route('public.content.creation') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-[#00C2FF]/10 hover:bg-[#00C2FF]/15 border border-[#00C2FF]/30 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
@@ -1660,13 +1660,13 @@
                                         <i data-lucide="zap" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-[#00C2FF] text-xs">COOCA AI Agents</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Lipat-gandakan
-                                            efisiensi keuangan</span>
+                                        <span class="font-bold block text-[#00C2FF] text-xs">Asisten Teks Promosi AI</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Buat caption medsos
+                                            &amp; deskripsi barang</span>
                                     </div>
                                 </a>
 
-                                <!-- Siap Global -->
+                                <!-- Faktur Penjualan & Tagihan -->
                                 <a href="{{ route('public.bos.overview') }}" @click="mobileMenu = false"
                                     class="p-2 rounded-[12px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 flex items-start gap-2.5 text-slate-200 transition-all">
                                     <div
@@ -1674,9 +1674,9 @@
                                         <i data-lucide="globe" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Siap Global</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Invoice dalam IDR,
-                                            USD, dan SGD</span>
+                                        <span class="font-bold block text-white text-xs">Faktur Penjualan &amp; Tagihan</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">Kelola invoice tempo
+                                            &amp; piutang usaha</span>
                                     </div>
                                 </a>
 

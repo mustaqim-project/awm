@@ -86,7 +86,7 @@
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Respon Cepat &lt; 15 Menit</span>
+                                <span>Respon Cepat {{ $supportSla['response_time'] ?? '< 15 Menit' }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div
@@ -185,8 +185,7 @@
                                         Operasional</div>
                                     <div class="text-xs sm:text-sm font-semibold text-white mt-0.5 leading-snug break-words">
                                         {{ $officeLocation }}</div>
-                                    <div class="text-[11px] text-slate-400 mt-1 leading-normal">Senin - Sabtu: 08.00 - 20.00
-                                        WIB</div>
+                                    <div class="text-[11px] text-slate-400 mt-1 leading-normal">{{ $supportSla['hours'] ?? 'Senin - Sabtu: 08.00 - 20.00 WIB' }}</div>
                                 </div>
                             </div>
                         </div>
