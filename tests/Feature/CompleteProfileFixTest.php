@@ -64,5 +64,9 @@ final class CompleteProfileFixTest extends TestCase
         // Img-src includes GTM and Google Analytics
         $this->assertStringContainsString('https://www.googletagmanager.com', $csp);
         $this->assertStringContainsString('https://www.google-analytics.com', $csp);
+
+        // Img-src and Connect-src include Tripay apex and wildcard subdomains
+        $this->assertStringContainsString('https://tripay.co.id', $csp);
+        $this->assertStringContainsString('https://*.tripay.co.id', $csp);
     }
 }

@@ -10,44 +10,42 @@
 
 @section('content')
 @php
-    $pricingData = $pricingData ?? [
-        'standard' => [
-            'tier' => 'standard',
-            'monthly_price' => 39000,
-            'annual_price' => 390000,
-            'monthly_price_formatted' => '39.000',
-            'annual_price_formatted' => '390.000',
-            'annual_monthly_equivalent_formatted' => '32.500',
-            'annual_savings_formatted' => '78.000',
-            'is_early_adopter' => false,
-            'batch_name' => null,
-            'remaining_quota' => null,
-        ],
-        'premium' => [
-            'tier' => 'premium',
-            'monthly_price' => 89000,
-            'annual_price' => 890000,
-            'monthly_price_formatted' => '89.000',
-            'annual_price_formatted' => '890.000',
-            'annual_monthly_equivalent_formatted' => '74.167',
-            'annual_savings_formatted' => '178.000',
-            'is_early_adopter' => false,
-            'batch_name' => null,
-            'remaining_quota' => null,
-        ],
-        'prestige' => [
-            'tier' => 'prestige',
-            'monthly_price' => 199000,
-            'annual_price' => 1990000,
-            'monthly_price_formatted' => '199.000',
-            'annual_price_formatted' => '1.990.000',
-            'annual_monthly_equivalent_formatted' => '165.833',
-            'annual_savings_formatted' => '398.000',
-            'is_early_adopter' => false,
-            'batch_name' => null,
-            'remaining_quota' => null,
-        ],
-    ];
+    if (empty($pricingData)) {
+        $pricingService = app(\App\Domain\Billing\EarlyAdopterPricingService::class);
+        $tiers = [
+            'standard' => \App\Models\BusinessSubscription::TIER_STANDARD,
+            'premium' => \App\Models\BusinessSubscription::TIER_PREMIUM,
+            'prestige' => \App\Models\BusinessSubscription::TIER_PRESTIGE,
+        ];
+        $pricingData = [];
+        foreach ($tiers as $key => $tier) {
+            $monthly = $pricingService->calculatePrice($tier, 'monthly');
+            $annual = $pricingService->calculatePrice($tier, 'annual');
+            $monthlyPrice = (float) $monthly['price'];
+            $annualPrice = (float) $annual['price'];
+            $annualMonthlyEquivalent = (int) round($annualPrice / 12);
+            $annualSavings = max(0.0, ($monthlyPrice * 12) - $annualPrice);
+
+            $pricingData[$key] = [
+                'tier' => $key,
+                'monthly_price' => $monthlyPrice,
+                'annual_price' => $annualPrice,
+                'monthly_price_formatted' => number_format($monthlyPrice, 0, ',', '.'),
+                'annual_price_formatted' => number_format($annualPrice, 0, ',', '.'),
+                'annual_monthly_equivalent_formatted' => number_format($annualMonthlyEquivalent, 0, ',', '.'),
+                'annual_savings_formatted' => number_format($annualSavings, 0, ',', '.'),
+                'is_early_adopter' => $monthly['is_early_adopter'] || $annual['is_early_adopter'],
+                'batch_name' => $monthly['batch_name'] ?? $annual['batch_name'] ?? null,
+                'remaining_quota' => $monthly['remaining_quota'] ?? $annual['remaining_quota'] ?? null,
+            ];
+        }
+    }
+    if (empty($tierLimits)) {
+        $tierLimits = app(\App\Domain\Billing\EntitlementService::class)->getAllTierLimits();
+    }
+    if (empty($tierFeatures)) {
+        $tierFeatures = app(\App\Domain\Billing\EntitlementService::class)->getAllTierFeatures();
+    }
     $annualDiscountBadge = $annualDiscountBadge ?? \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
 @endphp
     <div x-data="{
@@ -249,8 +247,8 @@
                                         <i data-lucide="trending-up" class="w-4 h-4"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <div class="font-bold text-white truncate">Hemat Hingga Rp 2.400.000 / Tahun*</div>
-                                        <div class="text-slate-400 text-[11px] truncate">*Estimasi efisiensi dibanding sewa software kasir terpisah + akuntansi manual</div>
+                                        <div class="font-bold text-white truncate">Hemat s.d. Rp {{ $pricingData['prestige']['annual_savings_formatted'] ?? '398.000' }} / Tahun dengan Paket Tahunan</div>
+                                        <div class="text-slate-400 text-[11px] truncate">Diskon 2 bulan penuh jika memilih siklus tahunan dibanding pembayaran bulanan</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0">
@@ -1396,7 +1394,7 @@
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">
-                                            Sinkronisasi Stok Shopee &amp; TikTok Shop</td>
+                                            Integrasi Pesanan Marketplace (Shopee &amp; TikTok Shop)</td>
                                         <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
                                         <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
                                         <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
@@ -1549,15 +1547,15 @@
                     <template x-if="activeDetailModal === 'premium'">
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
-                                Paket Premium menjembatani jualan offline di toko dengan penjualan online di marketplace.
-                                Stok gudang otomatis berkurang saat ada pesanan di Shopee atau TikTok Shop.
+                                Paket Premium menjembatani jualan offline di toko dengan pesanan online di marketplace.
+                                Kelola order Shopee &amp; TikTok Shop dalam satu dashboard tanpa repot cek banyak perangkat.
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-purple-50/50 dark:bg-purple-950/20 border border-purple-500/20 space-y-2">
                                 <div class="font-bold text-slate-900 dark:text-white">Yang Anda Dapatkan:</div>
                                 <ul class="space-y-1.5 list-disc list-inside">
                                     <li>Seluruh fitur Paket Standard</li>
-                                    <li>Sinkronisasi inventori marketplace otomatis (Shopee &amp; TikTok)</li>
+                                    <li>Hub Pesanan Marketplace Terpusat (Shopee &amp; TikTok Shop)</li>
                                     <li>Resep Menu Kuliner Tanpa Batas</li>
                                     <li>Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang Toko &amp; {{ $tierLimits['premium']['user'] ?? 10 }} Staf Kasir</li>
                                     <li>Otomasi jadwal tayang konten katalog di media sosial</li>

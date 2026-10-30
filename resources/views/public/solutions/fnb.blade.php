@@ -312,8 +312,7 @@
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">Resep & Potong Stok Bahan (BOM)</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Definisikan resep standar menu Anda. Setiap 1 porsi nasi goreng atau 1 cup latte terjual, stok
-                            beras, telur, daging, dan biji kopi terpotong otomatis di inventaris.
+                            Definisikan takaran bahan baku menu Anda (hingga 20 resep di Paket Standard atau tanpa batas di Paket Premium). Setiap 1 porsi menu terjual di kasir, stok biji kopi, susu, atau daging otomatis terpotong presisi.
                         </p>
                     </div>
 

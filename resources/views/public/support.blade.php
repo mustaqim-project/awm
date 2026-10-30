@@ -143,7 +143,7 @@
                                             </span>
                                             <span class="font-mono text-emerald-400 shrink-0 text-xs">Aktif</span>
                                         </div>
-                                        <p class="text-[11px] text-slate-300">Respon cepat setiap hari: 08:00 - 22:00 WIB</p>
+                                        <p class="text-[11px] text-slate-300">Jam operasional: {{ $supportSla['hours'] ?? 'Senin – Sabtu 08.00 – 20.00 WIB' }}</p>
                                     </div>
 
                                     <div class="p-3.5 rounded-[14px] bg-[#060B1E]/70 border border-white/10 space-y-1">
@@ -189,7 +189,7 @@
                                 <i data-lucide="clock" class="w-4 h-4 text-[#00C4D8]"></i>
                                 <div>
                                     <p class="text-[10px] text-slate-400">Kecepatan Respon</p>
-                                    <p class="text-xs font-bold text-white">&lt; 5 Menit di Jam Kerja</p>
+                                    <p class="text-xs font-bold text-white">{{ $supportSla['response_time'] ?? '< 15 Menit' }} di Jam Kerja</p>
                                 </div>
                             </div>
                         </div>
@@ -348,8 +348,7 @@
                         </summary>
                         <p
                             class="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty border-t border-slate-100 dark:border-white/10 pt-3">
-                            Tim support kami memprioritaskan kendala operasional kasir dengan respon rata-rata di bawah 5
-                            menit pada jam kerja aktif (08:00 - 22:00 WIB) setiap hari termasuk akhir pekan.
+                            Tim support kami memprioritaskan kendala operasional kasir dengan respon cepat {{ $supportSla['response_time'] ?? '< 15 Menit' }} pada jam kerja operasional ({{ $supportSla['hours'] ?? 'Senin – Sabtu 08.00 – 20.00 WIB' }}).
                         </p>
                     </details>
                 </div>

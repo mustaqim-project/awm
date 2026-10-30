@@ -23494,44 +23494,6 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - Total Pengujian Terverifikasi: **27 passed, 165 assertions (0 Failures, 0 Errors)**.
 - Production Readiness Gate: **PASSED (Production Hardened, Zero Hardcoded, 100% Real Admin Configurable)**.
 
-### [WORK-2026-10-30-373] Remediasi Batas Waktu Pembayaran Langganan (24 Jam) & Standardisasi Timezone WIB (UTC+7)
-- **Timestamp:** 2026-10-30T11:46:00+07:00
-- **Audited Target:** Halaman Pembayaran Tagihan (`/billing/payments/{id}`), `SubscriptionPayment` Model, `TripayService`, dan `SubscriptionCheckoutWebController`.
-- **Work Type:** Payment Expiration Remediation | Gateway Expiration Passthrough | WIB / UTC+7 Timezone Hardening | Automated Test Suite
 
-#### 1. Masalah & Akar Penyebab (Root Cause Analysis)
-- **Keluhan Pengguna:** Pada URL tagihan produksi `https://cooca.id/billing/payments/5fb769d8-90d5-4157-a6c6-6bcb785e7b5a`, tagihan mendadak berstatus *expired* / dibatalkan ketika pengguna hendak membayar.
-- **Akar Masalah 1 (Batas Kedaluwarsa Terlalu Singkat & Pemaksaan 15 Menit):**
-  - Pada `TripayService::createSubscriptionTransaction`, parameter `expired_time` dikirim statis `time() + 900` (hanya 15 menit).
-  - Pada `SubscriptionPayment::getExpiresAt()`, terdapat logika `min($gateway_expired_at, $createdAt + 15 menit)` yang memaksa tagihan hangus dalam 15 menit, mengabaikan masa berlaku resmi gateway (24 jam untuk Virtual Account dan QRIS).
-  - Di `SubscriptionCheckoutWebController::payment` dan `checkStatus`, jika `now() > 15 menit`, sistem secara otomatis mengubah status pesanan menjadi `cancelled` dengan catatan "Tagihan otomatis dibatalkan karena melewati batas pembayaran 15 menit".
-- **Akar Masalah 2 (Ketidaksesuaian Zona Waktu UTC vs WIB):**
-  - Tanggal penyimpanan dan pembacaan `created_at` / `gateway_expired_at` tidak dinormalisasi ke `Asia/Jakarta` (WIB / UTC+7) sebelum perbandingan `greaterThan`, sehingga selisih 7 jam antara UTC server dan WIB pengguna dapat menyebabkan tagihan hangus seketika saat pertama kali dibuat.
-  - Formatter hitung mundur di Alpine.js (`payment.blade.php`) hanya mendukung menit:detik (`mm:ss`), sehingga durasi jam menampilkan angka menit mentah ribuan.
-
-#### 2. Implementasi Perbaikan Teknis
-1. **Perpanjangan Batas Waktu ke 24 Jam & Penghormatan Gateway Expiry:**
-   - Menghapus pemotongan 15 menit pada `SubscriptionPayment::getExpiresAt()`. Jika TriPay mengembalikan `gateway_expired_at`, nilai tersebut dihormati 100% tanpa di-clamp.
-   - Jika `gateway_expired_at` belum tersedia, batas waktu default ditetapkan menjadi 24 jam (`created_at + 24 jam`), dan dapat dikonfigurasi melalui `SystemSetting::get('subscription_payment_expiry_hours', '24')`.
-   - Mengubah parameter `expired_time` di `TripayService::createSubscriptionTransaction` menjadi 24 jam (`time() + 86400`).
-2. **Standardisasi Penuh Zona Waktu WIB (Asia/Jakarta / UTC+7):**
-   - Di `SubscriptionPayment::getExpiresAt()` dan `SubscriptionPayment::isExpired()`, seluruh objek Carbon dinormalisasi secara eksplisit ke `Asia/Jakarta`.
-   - `SubscriptionPayment::isExpired()` membandingkan `Carbon::now('Asia/Jakarta')` terhadap `$expiry->copy()->timezone('Asia/Jakarta')`, mencegah kesalahan akibat perbedaan timezone server.
-   - Di `SubscriptionCheckoutWebController`, penyimpanan `gateway_expired_at` dikonstruksi eksplisit dengan `Carbon::createFromTimestamp($tripayRes['expired_time'], 'Asia/Jakarta')`.
-3. **Penyempurnaan Antarmuka & Hitung Mundur (`payment.blade.php`):**
-   - Mengubah hitung mundur Alpine.js `formatCountdown(seconds)` agar mendukung format `hh:mm:ss` jika sisa waktu $> 1$ jam.
-   - Mengganti teks fallback batas waktu dari "15 Menit" menjadi "24 Jam" (`__('billing.countdown_twenty_four_hours')`) pada seluruh label batas pembayaran di bahasa Indonesia dan Inggris.
-   - Memperbarui deskripsi pembatalan di `lang/id/billing.php` dan `lang/en/billing.php` agar tidak lagi menyebut batas 15 menit.
-
-#### 3. Verifikasi & Automated Test Results
-- `tests/Feature/Billing/SubscriptionPaymentExpirationTimezoneTest.php`:
-  1. `test_payment_has_twenty_four_hour_expiration_and_does_not_expire_after_fifteen_minutes` $\rightarrow$ **PASSED** (Membuktikan tagihan aktif pada menit ke-16 dan bertahan hingga 24 jam).
-  2. `test_tripay_gateway_expiration_is_honored_without_artificial_fifteen_minute_clamping` $\rightarrow$ **PASSED** (Membuktikan `gateway_expired_at` TriPay dihormati tanpa pemotongan 15 menit).
-  3. `test_payment_show_page_does_not_cancel_pending_order_at_twenty_minutes` $\rightarrow$ **PASSED** (Membuktikan akses halaman pada menit ke-20 tidak memicu auto-cancel dan Alpine state tetap `isExpired: false`).
-  4. `test_timezone_consistency_between_utc_server_and_wib_comparison` $\rightarrow$ **PASSED** (Membuktikan konsistensi zona waktu WIB / Asia/Jakarta).
-- Hasil Eksekusi: **4 passed, 20 assertions (100% Success)**.
-- Full Billing Regression (`BillingLimitsAndAdminFeatureGatesTest`, `BillingSubscriptionCheckoutActiveChannelsTest`, `BillingModuleAuditTest`): **14 passed, 67 assertions (100% Success)**.
-- `php artisan view:clear; php artisan view:cache` $\rightarrow$ **Blade templates cached successfully**.
-- Production Readiness Gate: **PASSED**.
 
 

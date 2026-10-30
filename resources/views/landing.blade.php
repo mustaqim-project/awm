@@ -290,7 +290,7 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-4 sm:gap-x-5 gap-y-1.5 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>100% Gratis Selamanya</span>
+                                <span>Gratis Selamanya (s.d. {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln)</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>

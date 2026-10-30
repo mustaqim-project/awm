@@ -75,6 +75,8 @@ final class SecurityHardeningAuditTest extends TestCase
         $this->assertStringContainsString('https://cdn.jsdelivr.net', $csp);
         $this->assertStringContainsString('https://fonts.googleapis.com', $csp);
         $this->assertStringContainsString('https://fonts.gstatic.com', $csp);
+        $this->assertStringContainsString('https://tripay.co.id', $csp);
+        $this->assertStringContainsString('https://*.tripay.co.id', $csp);
     }
 
     public function test_social_media_test_suite_status_is_gated(): void

@@ -725,7 +725,7 @@
                                     </a>
 
                                     <!-- Vendor Spend -->
-                                    <a href="{{ route('public.erp.erp') }}"
+                                    <a href="{{ route('public.erp.inventory') }}"
                                         class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
                                         <div
                                             class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#007AFF] dark:group-hover:border-[#00C2FF] group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] group-hover:bg-blue-50/50 dark:group-hover:bg-cyan-500/10 transition-all shrink-0 mt-0.5">
@@ -884,13 +884,12 @@
                                 <div class="mt-4">
                                     <a href="{{ route('public.omnichannel.whatsapp') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>WhatsApp AI Agents</span>
+                                        <span>Nota &amp; Notifikasi WhatsApp</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Chat langsung dengan ledger Anda untuk menyelesaikan struk hilang, sync vendor,
-                                        dan cek budget di mana saja.
+                                        Kirim nota struk belanja digital PDF &amp; pengingat tagihan otomatis langsung ke nomor WhatsApp pelanggan.
                                     </p>
                                 </div>
                             </div>
