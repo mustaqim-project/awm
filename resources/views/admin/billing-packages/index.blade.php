@@ -249,165 +249,202 @@
                             </div>
                         </div>
 
-                        <!-- Resource Quotas Per Tier Settings (Dynamic Entitlements) -->
-                        <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] space-y-3" x-data="{ openQuotas: true }">
-                            <div class="flex items-center justify-between">
+                                                <!-- Comprehensive Resource Quotas Matrix Across All 4 Tiers (Free, Standard, Premium, Prestige) -->
+                        @php
+                            $resourceCategories = [
+                                'Master Data & Katalog Usaha' => [
+                                    'icon' => 'boxes',
+                                    'tint' => 'text-[#007AFF] dark:text-[#0A84FF]',
+                                    'items' => [
+                                        'product' => ['label' => 'Batas Produk Aktif', 'icon' => 'package', 'unit' => 'item', 'desc' => 'Maksimal jumlah master produk di katalog'],
+                                        'recipe' => ['label' => 'Resep / Formula BOM', 'icon' => 'chef-hat', 'unit' => 'resep', 'desc' => 'Formula bahan baku & resep menu F&B/Manufaktur'],
+                                        'material' => ['label' => 'Bahan Baku & Mentah', 'icon' => 'box', 'unit' => 'item', 'desc' => 'Item bahan baku inventori produksi'],
+                                        'customer' => ['label' => 'Buku Pelanggan / CRM', 'icon' => 'users', 'unit' => 'kontak', 'desc' => 'Daftar data kontak pelanggan bisnis'],
+                                        'supplier' => ['label' => 'Pemasok / Vendor', 'icon' => 'truck', 'unit' => 'kontak', 'desc' => 'Daftar supplier pengadaan barang'],
+                                    ],
+                                ],
+                                'Transaksi & Operasional Bulanan' => [
+                                    'icon' => 'activity',
+                                    'tint' => 'text-emerald-600 dark:text-emerald-400',
+                                    'items' => [
+                                        'pos' => ['label' => 'Transaksi Kasir POS', 'icon' => 'shopping-cart', 'unit' => 'trx/bln', 'desc' => 'Transaksi kasir bulanan (+5 buffer darurat jika limit habis)'],
+                                        'invoice' => ['label' => 'Faktur Penjualan (Invoice)', 'icon' => 'receipt', 'unit' => 'faktur/bln', 'desc' => 'Penerbitan faktur tagihan pelanggan B2B'],
+                                        'po' => ['label' => 'Purchase Order (PO)', 'icon' => 'clipboard-list', 'unit' => 'po/bln', 'desc' => 'Penerbitan pesanan pembelian ke vendor'],
+                                        'whatsapp' => ['label' => 'Notifikasi WhatsApp', 'icon' => 'message-circle', 'unit' => 'pesan/bln', 'desc' => 'Kirim struk POS & broadcast promosi WA'],
+                                        'social' => ['label' => 'Post Sosial Media', 'icon' => 'share-2', 'unit' => 'post/bln', 'desc' => 'Jadwal posting medsos (FB, IG, TikTok)'],
+                                    ],
+                                ],
+                                'Struktur Usaha, Lokasi & Tim' => [
+                                    'icon' => 'building-2',
+                                    'tint' => 'text-indigo-600 dark:text-indigo-400',
+                                    'items' => [
+                                        'business' => ['label' => 'Maksimal Bisnis / Usaha', 'icon' => 'building-2', 'unit' => 'bisnis', 'desc' => 'Entitas perusahaan di bawah 1 akun owner'],
+                                        'outlet' => ['label' => 'Toko / Outlet POS', 'icon' => 'store', 'unit' => 'outlet', 'desc' => 'Titik cabang penjualan fisik / gerai kasir'],
+                                        'warehouse' => ['label' => 'Gudang Penyimpanan', 'icon' => 'warehouse', 'unit' => 'gudang', 'desc' => 'Lokasi inventori stok gudang terpisah'],
+                                        'total_location' => ['label' => 'Total Lokasi Gabungan', 'icon' => 'map-pin', 'unit' => 'lokasi', 'desc' => 'Batas akumulatif toko + gudang aktif'],
+                                        'user' => ['label' => 'Staf / Anggota Tim', 'icon' => 'user-check', 'unit' => 'pengguna', 'desc' => 'Akun karyawan/kasir per owner'],
+                                    ],
+                                ],
+                                'Fasilitas Khusus & Penyimpanan' => [
+                                    'icon' => 'database',
+                                    'tint' => 'text-purple-600 dark:text-purple-400',
+                                    'items' => [
+                                        'table' => ['label' => 'Meja Restoran (Dine-In)', 'icon' => 'utensils', 'unit' => 'meja', 'desc' => 'Nomor meja pesanan F&B makan di tempat'],
+                                        'storage_gb' => ['label' => 'Kapasitas Storage File', 'icon' => 'hard-drive', 'unit' => 'GB', 'desc' => 'Kapasitas penyimpanan media, gambar & bukti'],
+                                    ],
+                                ],
+                            ];
+
+                            $tierCols = [
+                                'free' => [
+                                    'name' => 'Free (Gratis)',
+                                    'desc' => 'Baseline Akun',
+                                    'badge' => 'bg-slate-500/10 text-slate-700 dark:text-slate-300 border-slate-500/20',
+                                    'focus' => 'focus:ring-slate-400',
+                                ],
+                                'standard' => [
+                                    'name' => 'Standard',
+                                    'desc' => 'UMKM Operasional',
+                                    'badge' => 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20',
+                                    'focus' => 'focus:ring-emerald-500',
+                                ],
+                                'premium' => [
+                                    'name' => 'Premium',
+                                    'desc' => 'Skala Tumbuh (Best)',
+                                    'badge' => 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/20',
+                                    'focus' => 'focus:ring-indigo-500',
+                                ],
+                                'prestige' => [
+                                    'name' => 'Prestige',
+                                    'desc' => 'Enterprise / Skala Besar',
+                                    'badge' => 'bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20',
+                                    'focus' => 'focus:ring-purple-500',
+                                ],
+                            ];
+                        @endphp
+
+                        <div class="pt-6 border-t border-black/[0.06] dark:border-white/[0.08] space-y-4">
+                            <!-- Section Title & Legend Banner -->
+                            <div class="rounded-[18px] p-4 bg-gradient-to-r from-blue-500/[0.05] via-emerald-500/[0.05] to-purple-500/[0.05] border border-black/[0.06] dark:border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4">
                                 <div>
-                                    <h4 class="text-[13px] font-bold text-black dark:text-white flex items-center gap-1.5">
-                                        <i data-lucide="sliders" class="w-4 h-4 text-emerald-600"></i>
-                                        <span>Batas Kuota Sumber Daya Tiap Level (Resource Quota Entitlements)</span>
+                                    <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 flex items-center justify-center text-[#007AFF] dark:text-[#0A84FF] shrink-0">
+                                            <i data-lucide="sliders" class="w-4 h-4" stroke-width="2"></i>
+                                        </div>
+                                        <span>Konfigurasi Lengkap Batas Kuota Sumber Daya (17 Limit x 4 Level)</span>
                                     </h4>
-                                    <p class="text-[11px] text-black/50 dark:text-white/50">
-                                        Sesuaikan batasan operasional untuk tiap paket langganan. Masukkan <strong>-1</strong> untuk kuota Unlimited (Tanpa Batas).
+                                    <p class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
+                                        Semua 17 batas sumber daya dapat diatur bebas untuk tiap level (Free, Standard, Premium, Prestige).
+                                        Ketik <strong>-1</strong> untuk <strong>Unlimited (Tanpa Batas)</strong>, atau <strong>0</strong> untuk menonaktifkan fitur.
                                     </p>
                                 </div>
-                                <button type="button" @click="openQuotas = !openQuotas"
-                                    class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer flex items-center gap-1">
-                                    <span x-text="openQuotas ? 'Tutup Rincian' : 'Buka Rincian'"></span>
-                                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform" :class="openQuotas ? 'rotate-180' : ''"></i>
-                                </button>
+                                <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                                        <i data-lucide="infinity" class="w-3.5 h-3.5"></i> -1 = Unlimited
+                                    </span>
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
+                                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> POS: +5 Buffer Darurat
+                                    </span>
+                                </div>
                             </div>
 
-                            <div x-show="openQuotas" x-collapse class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                                <!-- Free Tier Quotas -->
-                                <div class="p-3.5 rounded-[14px] bg-slate-500/[0.03] border border-slate-500/20 space-y-2.5">
-                                    <div class="flex items-center justify-between pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
-                                        <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Free Tier (Gratis)</span>
-                                        <span class="text-[10px] text-slate-400">Baseline</span>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-2 text-[11px]">
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Produk</label>
-                                            <input type="number" name="tier_limit_free_product" value="{{ $tierLimits['free']['product'] ?? 10 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Resep</label>
-                                            <input type="number" name="tier_limit_free_recipe" value="{{ $tierLimits['free']['recipe'] ?? 3 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Kasir POS /bln</label>
-                                            <input type="number" name="tier_limit_free_pos" value="{{ $tierLimits['free']['pos'] ?? 30 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Faktur /bln</label>
-                                            <input type="number" name="tier_limit_free_invoice" value="{{ $tierLimits['free']['invoice'] ?? 3 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">PO /bln</label>
-                                            <input type="number" name="tier_limit_free_po" value="{{ $tierLimits['free']['po'] ?? 3 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">WhatsApp /bln</label>
-                                            <input type="number" name="tier_limit_free_whatsapp" value="{{ $tierLimits['free']['whatsapp'] ?? 10 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Pelanggan</label>
-                                            <input type="number" name="tier_limit_free_customer" value="{{ $tierLimits['free']['customer'] ?? 15 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Bahan Baku</label>
-                                            <input type="number" name="tier_limit_free_material" value="{{ $tierLimits['free']['material'] ?? 10 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Responsive 4-Tier Matrix Table -->
+                            <div class="overflow-x-auto rounded-[18px] border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-black/20 shadow-xs">
+                                <table class="w-full text-left border-collapse min-w-[760px]">
+                                    <thead>
+                                        <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/[0.06] dark:border-white/[0.08]">
+                                            <th class="py-3.5 px-4 text-[12px] font-bold text-black/70 dark:text-white/70 w-[32%]">
+                                                Sumber Daya / Fitur Operasional
+                                            </th>
+                                            @foreach($tierCols as $tierKey => $tierMeta)
+                                                <th class="py-3.5 px-3 text-center w-[17%]">
+                                                    <div class="inline-flex flex-col items-center">
+                                                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border {{ $tierMeta['badge'] }}">
+                                                            {{ $tierMeta['name'] }}
+                                                        </span>
+                                                        <span class="text-[10px] text-black/40 dark:text-white/40 mt-0.5">{{ $tierMeta['desc'] }}</span>
+                                                    </div>
+                                                </th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.05]">
+                                        @foreach($resourceCategories as $catName => $catData)
+                                            <!-- Category Divider Row -->
+                                            <tr class="bg-black/[0.02] dark:bg-white/[0.03]">
+                                                <td colspan="5" class="py-2 px-4">
+                                                    <div class="flex items-center gap-2">
+                                                        <i data-lucide="{{ $catData['icon'] }}" class="w-3.5 h-3.5 {{ $catData['tint'] }}" stroke-width="2"></i>
+                                                        <span class="text-[11px] font-extrabold text-black/70 dark:text-white/70 uppercase tracking-wider">{{ $catName }}</span>
+                                                        <span class="text-[10px] text-black/40 dark:text-white/40">({{ count($catData['items']) }} limit)</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
 
-                                <!-- Standard Tier Quotas -->
-                                <div class="p-3.5 rounded-[14px] bg-emerald-500/[0.03] border border-emerald-500/20 space-y-2.5">
-                                    <div class="flex items-center justify-between pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
-                                        <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400">Standard Tier</span>
-                                        <span class="text-[10px] text-emerald-600">UMKM Pemula</span>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-2 text-[11px]">
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Produk</label>
-                                            <input type="number" name="tier_limit_standard_product" value="{{ $tierLimits['standard']['product'] ?? 100 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Resep</label>
-                                            <input type="number" name="tier_limit_standard_recipe" value="{{ $tierLimits['standard']['recipe'] ?? 20 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Kasir POS /bln</label>
-                                            <input type="number" name="tier_limit_standard_pos" value="{{ $tierLimits['standard']['pos'] ?? 1000 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Faktur /bln</label>
-                                            <input type="number" name="tier_limit_standard_invoice" value="{{ $tierLimits['standard']['invoice'] ?? 15 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">PO /bln</label>
-                                            <input type="number" name="tier_limit_standard_po" value="{{ $tierLimits['standard']['po'] ?? 15 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">WhatsApp /bln</label>
-                                            <input type="number" name="tier_limit_standard_whatsapp" value="{{ $tierLimits['standard']['whatsapp'] ?? 50 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Staf</label>
-                                            <input type="number" name="tier_limit_standard_user" value="{{ $tierLimits['standard']['user'] ?? 3 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Meja Resto</label>
-                                            <input type="number" name="tier_limit_standard_table" value="{{ $tierLimits['standard']['table'] ?? 5 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-emerald-500">
-                                        </div>
-                                    </div>
-                                </div>
+                                            @foreach($catData['items'] as $resKey => $meta)
+                                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                                                    <td class="py-2.5 px-4">
+                                                        <div class="flex items-start gap-2.5">
+                                                            <div class="w-6 h-6 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0 mt-0.5">
+                                                                <i data-lucide="{{ $meta['icon'] }}" class="w-3 h-3" stroke-width="1.75"></i>
+                                                            </div>
+                                                            <div>
+                                                                <div class="text-[12px] font-bold text-black dark:text-white">{{ $meta['label'] }}</div>
+                                                                <div class="text-[10px] text-black/50 dark:text-white/50 leading-tight">{{ $meta['desc'] }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    @foreach($tierCols as $tierKey => $tierMeta)
+                                                        @php
+                                                            $val = $tierLimits[$tierKey][$resKey] ?? null;
+                                                            $inputVal = $val === null ? -1 : $val;
+                                                        @endphp
+                                                        <td class="py-2 px-2 align-middle">
+                                                            <div class="space-y-0.5 max-w-[130px] mx-auto">
+                                                                <input type="number"
+                                                                    name="tier_limit_{{ $tierKey }}_{{ $resKey }}"
+                                                                    value="{{ $inputVal }}"
+                                                                    min="-1"
+                                                                    step="1"
+                                                                    placeholder="-1"
+                                                                    class="w-full h-8 px-2 bg-white dark:bg-black/40 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white tabular-nums text-right focus:outline-none focus:ring-2 {{ $tierMeta['focus'] }} transition"
+                                                                >
+                                                                <div class="text-[9.5px] text-right font-medium pr-0.5">
+                                                                    @if((int)$inputVal === -1)
+                                                                        <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                                                                            Unlimited
+                                                                        </span>
+                                                                    @elseif((int)$inputVal === 0)
+                                                                        <span class="text-slate-400 dark:text-slate-500">
+                                                                            Dinonaktifkan
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="text-black/60 dark:text-white/60 tabular-nums font-mono">
+                                                                            {{ number_format((int)$inputVal) }} <span class="text-[8.5px] text-black/40 dark:text-white/40">{{ $meta['unit'] }}</span>
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    @endforeach
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <!-- Premium Tier Quotas -->
-                                <div class="p-3.5 rounded-[14px] bg-indigo-500/[0.03] border border-indigo-500/20 space-y-2.5">
-                                    <div class="flex items-center justify-between pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
-                                        <span class="text-[11px] font-bold text-indigo-700 dark:text-indigo-400">Premium Tier</span>
-                                        <span class="text-[10px] text-indigo-600">Skala Tumbuh</span>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-2 text-[11px]">
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Pelanggan</label>
-                                            <input type="number" name="tier_limit_premium_customer" value="{{ $tierLimits['premium']['customer'] ?? 1000 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Maks Staf</label>
-                                            <input type="number" name="tier_limit_premium_user" value="{{ $tierLimits['premium']['user'] ?? 10 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">WhatsApp /bln</label>
-                                            <input type="number" name="tier_limit_premium_whatsapp" value="{{ $tierLimits['premium']['whatsapp'] ?? 200 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Total Lokasi/Cabang</label>
-                                            <input type="number" name="tier_limit_premium_total_location" value="{{ $tierLimits['premium']['total_location'] ?? 5 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Produk (-1=Unlim)</label>
-                                            <input type="number" name="tier_limit_premium_product" value="{{ $tierLimits['premium']['product'] ?? -1 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-[10px] text-black/60 dark:text-white/60 mb-0.5">Kasir POS (-1=Unlim)</label>
-                                            <input type="number" name="tier_limit_premium_pos" value="{{ $tierLimits['premium']['pos'] ?? -1 }}" min="-1"
-                                                class="w-full h-8 px-2 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[12px] font-bold text-black dark:text-white focus:ring-1 focus:ring-indigo-500">
-                                        </div>
-                                    </div>
+                            <!-- Bottom Action / Confirmation Banner -->
+                            <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
+                                <div class="text-[11.5px] text-black/60 dark:text-white/60 flex items-center gap-2">
+                                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                                    <span>Semua 17 batas kuota di atas langsung tersimpan ke <strong>SystemSetting</strong> dan aktif secara instan di sistem.</span>
                                 </div>
+                                <button type="submit"
+                                    class="h-9 px-5 rounded-[12px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-2 shadow-sm shrink-0">
+                                    <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
+                                    <span>Simpan Semua Batas Kuota &amp; Harga</span>
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -45,6 +45,12 @@ final class OwnerStorageQuotaService
 
         if ($owner !== null) {
             $tier = $this->getHighestTierForOwner($owner);
+            $tierDynamicGb = SystemSetting::get("tier_limit_{$tier}_storage_gb");
+            if ($tierDynamicGb !== null && $tierDynamicGb !== '' && is_numeric($tierDynamicGb)) {
+                $gb = (int) $tierDynamicGb;
+                return max(0, $gb) * 1024 * 1024 * 1024;
+            }
+
             $gb = match ($tier) {
                 \App\Models\BusinessSubscription::TIER_PRESTIGE => 30,
                 \App\Models\BusinessSubscription::TIER_PREMIUM => 10,

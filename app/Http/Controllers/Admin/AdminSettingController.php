@@ -913,7 +913,7 @@ final class AdminSettingController extends Controller implements HasMiddleware
         $resources = [
             'product', 'recipe', 'material', 'customer', 'supplier',
             'outlet', 'warehouse', 'total_location', 'user', 'business',
-            'pos', 'invoice', 'po', 'whatsapp', 'table',
+            'pos', 'invoice', 'po', 'whatsapp', 'social', 'table', 'storage_gb',
         ];
 
         foreach ($tiers as $t) {

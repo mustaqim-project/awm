@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Domain\Billing\EntitlementService;
+use App\Models\Admin;
 use App\Models\Business;
 use App\Models\BusinessSubscription;
 use App\Models\QuotaMonthlyUsage;
@@ -12,6 +13,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class DynamicTierQuotaAndEmergencyBufferTest extends TestCase
@@ -113,5 +115,55 @@ class DynamicTierQuotaAndEmergencyBufferTest extends TestCase
         $this->assertArrayHasKey('product', $matrix['free']);
         $this->assertArrayHasKey('pos', $matrix['standard']);
     }
-}
 
+    public function test_admin_billing_packages_page_renders_complete_quota_matrix_for_all_tiers(): void
+    {
+        $admin = Admin::create([
+            'name' => 'Super Admin',
+            'email' => 'admin-matrix@test.local',
+            'password' => Hash::make('password'),
+            'role' => 'super_admin',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($admin, 'admin')
+            ->get(route('admin.billing-packages.index'));
+
+        $response->assertOk();
+        $response->assertSee('Konfigurasi Lengkap Batas Kuota Sumber Daya');
+        $response->assertSee('name="tier_limit_free_product"', false);
+        $response->assertSee('name="tier_limit_standard_pos"', false);
+        $response->assertSee('name="tier_limit_premium_customer"', false);
+        $response->assertSee('name="tier_limit_prestige_storage_gb"', false);
+    }
+
+    public function test_admin_can_update_all_resource_quotas_via_settings_endpoint(): void
+    {
+        $admin = Admin::create([
+            'name' => 'Super Admin',
+            'email' => 'admin-updater@test.local',
+            'password' => Hash::make('password'),
+            'role' => 'super_admin',
+            'is_active' => true,
+        ]);
+
+        $postData = [
+            'tier_limit_free_product' => 45,
+            'tier_limit_standard_pos' => 2000,
+            'tier_limit_premium_pos' => -1,
+            'tier_limit_prestige_storage_gb' => 100,
+        ];
+
+        $response = $this->actingAs($admin, 'admin')
+            ->post(route('admin.settings.billing'), $postData);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
+
+        $entitlement = app(EntitlementService::class);
+        $this->assertEquals(45, $entitlement->getTierLimit(BusinessSubscription::TIER_FREE, 'product'));
+        $this->assertEquals(2000, $entitlement->getTierLimit(BusinessSubscription::TIER_STANDARD, 'pos'));
+        $this->assertNull($entitlement->getTierLimit(BusinessSubscription::TIER_PREMIUM, 'pos'));
+        $this->assertEquals(100, $entitlement->getTierLimit(BusinessSubscription::TIER_PRESTIGE, 'storage_gb'));
+    }
+}

@@ -377,6 +377,12 @@ final class EntitlementService
             'whatsapp' => array_key_exists($tier, self::TIER_WHATSAPP_LIMITS) ? self::TIER_WHATSAPP_LIMITS[$tier] : self::FREE_WHATSAPP_MONTHLY_LIMIT,
             'social' => array_key_exists($tier, self::TIER_SOCIAL_LIMITS) ? self::TIER_SOCIAL_LIMITS[$tier] : self::FREE_SOCIAL_POST_MONTHLY_LIMIT,
             'table' => array_key_exists($tier, self::TIER_TABLE_LIMITS) ? self::TIER_TABLE_LIMITS[$tier] : 0,
+            'storage_gb' => match ($tier) {
+                BusinessSubscription::TIER_PRESTIGE => 30,
+                BusinessSubscription::TIER_PREMIUM => 10,
+                BusinessSubscription::TIER_STANDARD => 3,
+                default => 1,
+            },
             default => null,
         };
     }
@@ -398,7 +404,7 @@ final class EntitlementService
         $resources = [
             'product', 'recipe', 'material', 'customer', 'supplier',
             'outlet', 'warehouse', 'total_location', 'user', 'business',
-            'pos', 'invoice', 'po', 'whatsapp', 'table',
+            'pos', 'invoice', 'po', 'whatsapp', 'social', 'table', 'storage_gb',
         ];
 
         $matrix = [];
