@@ -22,7 +22,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-rose-100">Izin Uji Resmi</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-rose-100">{{ __('storefront.izin_uji_resmi') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-rose-300/60">Sertifikasi &amp; uji lab berkala</p>
             </div>
         </div>

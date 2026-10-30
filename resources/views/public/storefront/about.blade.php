@@ -37,7 +37,7 @@
         {{-- Breadcrumb & Header --}}
         <div class="max-w-3xl space-y-3">
             <div class="flex items-center gap-2 text-xs text-neutral-500">
-                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
                 <span>/</span>
                 <span class="text-neutral-900 dark:text-white font-medium">Tentang Kami</span>
             </div>
@@ -141,9 +141,7 @@
 
         {{-- CTA Bottom --}}
         <div class="p-8 sm:p-12 rounded-theme bg-neutral-900 text-white text-center space-y-4">
-            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl tracking-tight">
-                Siap Merasakan Pengalaman Terbaik Bersama Kami?
-            </h2>
+            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl tracking-tight">{{ __('storefront.about_cta_heading') }}</h2>
             <p class="text-sm text-neutral-400 max-w-xl mx-auto">
                 Kunjungi katalog online kami untuk pemesanan langsung atau hubungi tim customer service kami via WhatsApp.
             </p>
@@ -151,7 +149,7 @@
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-6 py-3 rounded-xl font-semibold text-sm theme-btn-primary">
-                        Buka Katalog Toko
+                        {{ __('storefront.open_store_catalog') }}
                     </a>
                 @endif
                 @if ($hasWhatsapp)

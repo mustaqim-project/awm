@@ -29,7 +29,7 @@
                 </span>
                 <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold truncate flex items-center gap-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    Toko UMKM Resmi
+                    {{ __('storefront.toko_umkm_resmi') }}
                 </span>
             </div>
         </a>
@@ -38,7 +38,7 @@
         <nav class="hidden lg:flex items-center gap-1.5 bg-emerald-50/80 dark:bg-emerald-950/40 p-1.5 rounded-xl border border-emerald-500/10">
             <a href="{{ url('/' . $business->slug) }}"
                 class="px-3 py-1.5 rounded-lg text-xs font-bold transition {{ request()->is($business->slug) ? 'bg-emerald-600 text-white shadow-2xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-600' }}">
-                {{ $landingPage->getNavLabel('home', 'Beranda') }}
+                {{ $landingPage->getNavLabel('home', '{{ __('storefront.nav_home') }}') }}
             </a>
 
             @if ($landingPage->isPageActive('catalog'))
@@ -51,7 +51,7 @@
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="px-3 py-1.5 rounded-lg text-xs font-bold transition {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-emerald-600 text-white shadow-2xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-600' }}">
-                    {{ $landingPage->getNavLabel('about', 'Tentang Toko') }}
+                    {{ $landingPage->getNavLabel('about', '{{ __('storefront.tentang_toko') }}') }}
                 </a>
             @endif
 
@@ -82,7 +82,7 @@
             {{-- Tracking --}}
             <button type="button" @click="$dispatch('open-order-track-modal')"
                 class="p-2 rounded-xl text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 transition"
-                title="Lacak Pesanan">
+                title="{{ __('storefront.order_tracking') }}">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </button>
 
@@ -106,15 +106,15 @@
 
     {{-- Mobile Drawer --}}
     <div x-show="mobileMenuOpen" x-cloak class="lg:hidden border-t border-emerald-900/10 bg-white dark:bg-[#071912] px-4 py-4 space-y-1">
-        <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-emerald-700 dark:text-emerald-300">Beranda</a>
+        <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-emerald-700 dark:text-emerald-300">{{ __('storefront.nav_home') }}</a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300">Katalog</a>
         @endif
         @if ($landingPage->isPageActive('about'))
-            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300">Tentang Toko</a>
+            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300">{{ __('storefront.tentang_toko') }}</a>
         @endif
         @if ($landingPage->isPageActive('contact'))
-            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300">Alamat &amp; Kontak</a>
+            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-lg text-xs font-bold text-neutral-700 dark:text-neutral-300">{{ __('storefront.alamat_kontak') }}</a>
         @endif
     </div>
 </header>

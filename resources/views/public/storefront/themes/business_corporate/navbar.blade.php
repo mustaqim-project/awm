@@ -37,7 +37,7 @@
         <nav class="hidden lg:flex items-center gap-1 font-medium text-xs">
             <a href="{{ url('/' . $business->slug) }}"
                 class="px-3.5 py-2 rounded-md transition-colors {{ request()->is($business->slug) ? 'bg-slate-800 text-white font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }}">
-                {{ $landingPage->getNavLabel('home', 'Beranda') }}
+                {{ $landingPage->getNavLabel('home', '{{ __('storefront.nav_home') }}') }}
             </a>
 
             @if ($landingPage->isPageActive('catalog'))
@@ -57,7 +57,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="px-3.5 py-2 rounded-md transition-colors {{ request()->is($business->slug . '/kontak*') ? 'bg-slate-800 text-white font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }}">
-                    {{ $landingPage->getNavLabel('contact', 'Kontak & Kantor') }}
+                    {{ $landingPage->getNavLabel('contact', '{{ __('storefront.nav_contact') }} & Kantor') }}
                 </a>
             @endif
 
@@ -133,15 +133,15 @@
 
     {{-- Mobile Drawer --}}
     <div x-show="mobileMenuOpen" x-cloak class="lg:hidden border-t border-slate-800 bg-slate-900 px-4 py-4 space-y-1">
-        <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-white">Beranda</a>
+        <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-white">{{ __('storefront.nav_home') }}</a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-slate-300">Katalog</a>
         @endif
         @if ($landingPage->isPageActive('about'))
-            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-slate-300">Tentang Kami</a>
+            <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-slate-300">{{ __('storefront.tentang_kami') }}</a>
         @endif
         @if ($landingPage->isPageActive('contact'))
-            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-slate-300">Kontak</a>
+            <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-md text-xs font-semibold text-slate-300">{{ __('storefront.nav_contact') }}</a>
         @endif
     </div>
 </header>

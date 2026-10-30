@@ -45,9 +45,9 @@
                     Navigasi Tamu
                 </h4>
                 <ul class="space-y-2 text-xs text-sky-200/70">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-sky-300 transition-colors">Beranda Utama</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-sky-300 transition-colors">{{ __('storefront.home_main') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-sky-300 transition-colors">Daftar Kamar &amp; Villa</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-sky-300 transition-colors">{{ __('storefront.daftar_kamar_villa') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-sky-300 transition-colors">Fasilitas &amp; Galeri</a></li>
@@ -58,7 +58,7 @@
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-sky-300 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="calendar" class="w-3.5 h-3.5 text-sky-400"></i>
-                            <span>Cek Status Reservasi</span>
+                            <span>{{ __('storefront.cek_status_reservasi') }}</span>
                         </button>
                     </li>
                 </ul>
@@ -66,9 +66,7 @@
 
             {{-- Col 3: Front Desk Hotline --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">
-                    Front Desk &amp; Bantuan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">{{ __('storefront.front_desk_bantuan') }}</h4>
                 <div class="space-y-2.5 text-xs text-sky-200/70">
                     @if ($hasWhatsapp)
                         <div>

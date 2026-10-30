@@ -6,9 +6,7 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-normal text-xl sm:text-2xl text-slate-900 dark:text-amber-50">
-                    Daftar Hidangan
-                </h2>
+                <h2 class="font-heading font-normal text-xl sm:text-2xl text-slate-900 dark:text-amber-50">{{ __('storefront.daftar_hidangan') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-amber-200/70">Pilih jenis sajian untuk melihat menu lengkap</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

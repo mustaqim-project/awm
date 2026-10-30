@@ -37,14 +37,12 @@
         {{-- Breadcrumb & Title --}}
         <div class="max-w-2xl space-y-3">
             <div class="flex items-center gap-2 text-xs text-neutral-500">
-                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
                 <span>/</span>
                 <span class="text-neutral-900 dark:text-white font-medium">Artikel & Tips</span>
             </div>
             <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold theme-badge">Edukasi & Berita</div>
-            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">
-                Artikel, Panduan & Kabar Terbaru
-            </h1>
+            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">{{ __('storefront.articles_heading') }}</h1>
             <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300">
                 Wawasan seputar tren produk, tips perawatan, serta kabar promo dan update terbaru dari
                 {{ $business->name }}.
@@ -106,7 +104,7 @@
                     class="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-400 mx-auto flex items-center justify-center">
                     <i data-lucide="file-text" class="w-8 h-8"></i>
                 </div>
-                <h2 class="font-heading font-bold text-lg text-neutral-800 dark:text-neutral-200">Belum Ada Artikel
+                <h2 class="font-heading font-bold text-lg text-neutral-800 dark:text-neutral-200">{{ __('storefront.no_articles_yet') }}
                     Dipublikasikan</h2>
                 <p class="text-xs text-neutral-500 max-w-sm mx-auto">Nantikan panduan dan tips menarik yang akan kami
                     hadirkan segera.</p>

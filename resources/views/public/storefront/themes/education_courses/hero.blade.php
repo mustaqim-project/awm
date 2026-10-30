@@ -98,7 +98,7 @@
 
                                 <div>
                                     <span class="text-xs font-bold uppercase tracking-widest text-indigo-300">Jalur Belajar Terbimbing</span>
-                                    <h3 class="font-heading font-bold text-2xl mt-1 text-white">Metode Belajar Praktik Langsung</h3>
+                                    <h3 class="font-heading font-bold text-2xl mt-1 text-white">{{ __('storefront.metode_belajar_praktik_langsung') }}</h3>
                                     <p class="text-xs text-indigo-200/80 leading-relaxed mt-2">
                                         Setiap modul dirancang selaras dengan studi kasus dunia nyata sehingga siswa siap terjun ke dunia industri maupun wirausaha mandiri.
                                     </p>

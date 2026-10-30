@@ -6,9 +6,7 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-black text-lg sm:text-xl text-slate-900 dark:text-white">
-                    Kategori Pasokan Grosir
-                </h2>
+                <h2 class="font-heading font-black text-lg sm:text-xl text-slate-900 dark:text-white">{{ __('storefront.kategori_pasokan_grosir') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400">Pilih komoditas atau lini produk untuk melihat daftar harga karton</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

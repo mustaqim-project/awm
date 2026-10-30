@@ -45,20 +45,20 @@
                     Menu &amp; Roastery
                 </h4>
                 <ul class="space-y-2 text-xs text-[#A8988B]">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-[#C88A58] transition-colors">Beranda Kedai</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-[#C88A58] transition-colors">{{ __('storefront.home_cafe') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-[#C88A58] transition-colors">Daftar Minuman &amp; Beans</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-[#C88A58] transition-colors">{{ __('storefront.daftar_minuman_beans') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-[#C88A58] transition-colors">Tentang Biji Kopi Kami</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-[#C88A58] transition-colors">{{ __('storefront.tentang_biji_kopi_kami') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-[#C88A58] transition-colors">Lokasi &amp; Jam Buka</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-[#C88A58] transition-colors">{{ __('storefront.lokasi_jam_buka') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-[#C88A58] transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-[#C88A58]"></i>
-                            <span>Status Pesanan Takeaway/Antar</span>
+                            <span>{{ __('storefront.status_pesanan_takeaway_antar') }}</span>
                         </button>
                     </li>
                 </ul>
@@ -66,9 +66,7 @@
 
             {{-- Col 3: Pesanan & Jam Barista --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Pemesanan &amp; Jam Kedai
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.pemesanan_jam_kedai') }}</h4>
                 <div class="space-y-2.5 text-xs text-[#A8988B]">
                     @if ($hasWhatsapp)
                         <div>

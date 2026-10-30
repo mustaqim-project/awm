@@ -11,7 +11,7 @@
                 <i data-lucide="tag" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Harga Bertingkat</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.harga_bertingkat') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Makin banyak makin hemat</p>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <i data-lucide="boxes" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Stok Berkelanjutan</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.stok_berkelanjutan') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Gudang kapasitas buffer aman</p>
             </div>
         </div>

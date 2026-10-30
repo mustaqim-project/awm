@@ -13,7 +13,7 @@
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-[#8B5A2B] dark:text-[#C88A58] hover:underline flex items-center gap-1">
-                <span>Semua Menu</span>
+                <span>{{ __('storefront.semua_menu') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

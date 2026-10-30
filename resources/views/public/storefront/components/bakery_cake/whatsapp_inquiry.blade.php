@@ -65,7 +65,7 @@
                     <button type="button" 
                             @click="waChatOpen = false"
                             class="w-7 h-7 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-700 dark:hover:text-amber-200 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
-                            aria-label="Tutup jendela chat">
+                            aria-label="{{ __('storefront.close_chat_window') }}">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -96,7 +96,7 @@
             <button type="button" 
                     @click="waChatOpen = !waChatOpen"
                     class="group flex items-center gap-2.5 h-12 px-4 rounded-full bg-[#18110B] dark:bg-[#22160E] text-amber-100 hover:text-white border border-amber-500/30 shadow-[0_12px_30px_rgba(24,17,11,0.35)] hover:shadow-[0_16px_36px_rgba(217,119,6,0.3)] transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:scale-95"
-                    aria-label="Konsultasi Pesanan Cake">
+                    aria-label="{{ __('storefront.consult_cake_order_label') }}">
                 <span class="w-7 h-7 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-xs">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
                 </span>

@@ -24,9 +24,7 @@
                 <i data-lucide="tag" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">
-                    Harga Ramah Kantong
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">{{ __('storefront.harga_ramah_kantong') }}</h4>
                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-2">
                     Harga hemat terjangkau tanpa perantara berlebihan.
                 </p>
@@ -38,9 +36,7 @@
                 <i data-lucide="truck" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">
-                    Kirim Cepat &amp; Aman
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">{{ __('storefront.kirim_cepat_aman') }}</h4>
                 <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-2">
                     Packing rapi dengan opsi kurir instan dan reguler.
                 </p>

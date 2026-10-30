@@ -47,14 +47,14 @@
                     <li>
                         <a href="{{ url('/' . $business->slug) }}" class="hover:text-purple-300 transition-colors flex items-center gap-1.5">
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-purple-500"></i>
-                            <span>Beranda Reservasi</span>
+                            <span>{{ __('storefront.home_reservation') }}</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li>
                             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-purple-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-purple-500"></i>
-                                <span>Daftar Sesi Layanan</span>
+                                <span>{{ __('storefront.daftar_sesi_layanan') }}</span>
                             </a>
                         </li>
                     @endif
@@ -62,7 +62,7 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-purple-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-purple-500"></i>
-                                <span>Profil Staf &amp; Ahli</span>
+                                <span>{{ __('storefront.profil_staf_ahli') }}</span>
                             </a>
                         </li>
                     @endif
@@ -115,9 +115,7 @@
 
             {{-- Col 4: Kebijakan Booking & Jaminan Layanan --}}
             <div class="space-y-3.5">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-purple-100">
-                    Jaminan Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-purple-100">{{ __('storefront.service_guarantee') }}</h4>
                 <div class="space-y-2 text-xs text-purple-200/70">
                     <div class="p-2.5 rounded-2xl bg-black/40 border border-purple-900/50 flex items-center gap-2.5">
                         <i data-lucide="clock" class="w-4 h-4 text-purple-400 shrink-0"></i>

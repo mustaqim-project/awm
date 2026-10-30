@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-7 py-3.5 rounded-full bg-sky-600 hover:bg-sky-700 text-white font-semibold text-sm shadow-md shadow-sky-600/25 transition-all flex items-center gap-2 active:scale-95">
                             <i data-lucide="bed-double" class="w-4 h-4"></i>
-                            <span>Pilih Tipe Kamar / Villa</span>
+                            <span>{{ __('storefront.pilih_tipe_kamar_villa') }}</span>
                         </a>
                     @endif
 

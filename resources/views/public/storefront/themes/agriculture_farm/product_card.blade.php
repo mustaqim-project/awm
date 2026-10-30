@@ -120,15 +120,13 @@
                 <button type="button"
                     @click="$store.cart.add(@js($productPayload), 1); $dispatch('product-added-notification', { name: @js($prod->name) })"
                     class="px-3.5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white text-xs font-bold shadow-xs transition flex items-center gap-1.5 shrink-0 min-h-[40px]"
-                    title="Tambah ke Keranjang Hasil Panen">
+                    title="{{ __('storefront.add_harvest_to_cart') }}">
                     <i data-lucide="shopping-basket" class="w-3.5 h-3.5"></i>
                     <span>Pesan</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-200 transition min-h-[40px] flex items-center justify-center">
-                    Detail
-                </a>
+                    class="px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-200 transition min-h-[40px] flex items-center justify-center">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>

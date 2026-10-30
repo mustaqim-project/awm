@@ -154,7 +154,7 @@
                                     <a href="{{ url('/' . $business->slug . '/reservasi') }}"
                                         class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-[12px] text-xs font-semibold theme-btn-primary shadow-sm min-h-[36px]">
                                         <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                                        <span>Booking Layanan</span>
+                                        <span>{{ __('storefront.book_service') }}</span>
                                     </a>
                                 @else
                                     <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank"
@@ -192,16 +192,14 @@
                         <div>
                             <div class="inline-block px-3 py-1 rounded-[8px] text-xs font-semibold theme-badge mb-2">
                                 Reservasi Tempat</div>
-                            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-neutral-900 dark:text-white">
-                                Reservasi Meja &amp; Ruangan
-                            </h2>
+                            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-neutral-900 dark:text-white">{{ __('storefront.table_and_room_reservation') }}</h2>
                             <p class="text-sm text-neutral-500 mt-1">Pilih meja favorit Anda dan jadwalkan kunjungan Anda
                                 lebih awal.</p>
                         </div>
                         @if ($landingPage->isPageActive('reservation'))
                             <a href="{{ url('/' . $business->slug . '/reservasi') }}"
                                 class="inline-flex items-center gap-1.5 text-xs font-semibold text-theme-primary hover:underline">
-                                <span>Formulir Lengkap</span>
+                                <span>{{ __('storefront.full_form') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -252,7 +250,7 @@
                             <div>
                                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                                     class="inline-flex items-center gap-2 font-semibold text-sm text-theme-primary hover:underline">
-                                    <span>Baca Selengkapnya Tentang Kami</span>
+                                    <span>{{ __('storefront.read_more_about_us') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             </div>
@@ -284,7 +282,7 @@
                                                 {{ $h['hours'] ?: 'Buka' }}
                                             </span>
                                         @else
-                                            <span class="font-semibold text-neutral-400">Tutup</span>
+                                            <span class="font-semibold text-neutral-400">{{ __('storefront.close') }}</span>
                                         @endif
                                     </div>
                                 @endforeach
@@ -295,7 +293,7 @@
                             <div
                                 class="rounded-[20px] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg aspect-video bg-neutral-100 dark:bg-neutral-800">
                                 <img src="{{ $landingPage->about_image_url ?: ($landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&auto=format&fit=crop&q=80') }}"
-                                    alt="Tentang {{ $business->name }}" class="w-full h-full object-cover">
+                                    alt="{{ __('storefront.tentang_business_name') }}" class="w-full h-full object-cover">
                             </div>
                         </div>
                     @endif
@@ -317,7 +315,7 @@
                     </div>
                     <a href="{{ url('/' . $business->slug . '/artikel') }}"
                         class="text-xs sm:text-sm font-semibold text-theme-primary hover:underline flex items-center gap-1">
-                        <span>Semua Artikel</span>
+                        <span>{{ __('storefront.all_articles') }}</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -400,7 +398,7 @@
                         {{-- Close Button (Top Right X) --}}
                         <button type="button" @click="close()"
                             class="absolute top-3.5 right-3.5 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90"
-                            aria-label="Tutup Pop-up">
+                            aria-label="{{ __('storefront.close_popup') }}">
                             <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </button>
 

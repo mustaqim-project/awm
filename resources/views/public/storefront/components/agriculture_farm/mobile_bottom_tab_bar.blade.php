@@ -23,7 +23,7 @@
         <a href="{{ url('/' . $bSlug) }}"
             class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isHome ? 'text-emerald-700 dark:text-emerald-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-emerald-600' }}">
             <i data-lucide="home" class="w-5 h-5 {{ $isHome ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span>Beranda</span>
+            <span>{{ __('storefront.nav_home') }}</span>
         </a>
 
         {{-- Catalog / Panen Tab --}}
@@ -43,7 +43,7 @@
                           x-text="$store.cart.count()"></span>
                 </template>
             </div>
-            <span>Pesanan</span>
+            <span>{{ __('storefront.nav_orders') }}</span>
         </a>
 
         {{-- WA / Profile Tab --}}

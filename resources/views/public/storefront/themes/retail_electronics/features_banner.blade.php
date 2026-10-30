@@ -8,7 +8,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Garansi Resmi Distributor</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.garansi_resmi_distributor') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Klaim servis mudah di seluruh service center resmi di Indonesia.</p>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <i data-lucide="cpu" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Konsultasi Spek Gratis</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.konsultasi_spek_gratis') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Rekomendasi device sesuai budget kerja, kuliah atau gaming.</p>
             </div>
         </div>

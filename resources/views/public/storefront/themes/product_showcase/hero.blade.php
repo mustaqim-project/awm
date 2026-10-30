@@ -30,7 +30,7 @@
                     @if ($landingPage->isPageActive('catalog'))
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-7 py-3.5 rounded-2xl bg-rose-700 hover:bg-rose-800 text-white font-semibold text-sm shadow-lg shadow-rose-700/25 transition-all flex items-center gap-2 active:scale-95">
-                            <span>Jelajahi Seri Produk</span>
+                            <span>{{ __('storefront.jelajahi_seri_produk') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     @endif
@@ -39,7 +39,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-6 py-3.5 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-rose-50 dark:hover:bg-zinc-800 text-slate-800 dark:text-white border border-rose-200 dark:border-rose-900/60 font-semibold text-sm transition-all flex items-center gap-2 shadow-2xs">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
-                            <span>Konsultasi Produk VIP</span>
+                            <span>{{ __('storefront.konsultasi_produk_vip') }}</span>
                         </a>
                     @endif
                 </div>

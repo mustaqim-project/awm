@@ -49,9 +49,7 @@
                 <i data-lucide="coffee" class="w-5 h-5" style="color: #8B5A2B;"></i>
             </div>
             <div>
-                <h3 class="font-heading font-bold text-base" style="color: #3D2B1F;">
-                    Profil Rasa & Asal Biji
-                </h3>
+                <h3 class="font-heading font-bold text-base" style="color: #3D2B1F;">{{ __('storefront.profil_rasa_asal_biji') }}</h3>
                 <p class="text-[11px]" style="color: #8B5A2B99;">
                     Catatan sensorik kopi spesialti
                 </p>

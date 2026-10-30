@@ -30,14 +30,14 @@
             <nav class="hidden md:flex items-center gap-1 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/60 transition uppercase tracking-wide">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
 
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/60 transition uppercase tracking-wide flex items-center gap-1.5">
                         <i data-lucide="truck" class="w-3.5 h-3.5 text-amber-600"></i>
-                        <span>Armada &amp; Layanan</span>
+                        <span>{{ __('storefront.armada_layanan') }}</span>
                     </a>
                 @endif
 
@@ -51,14 +51,14 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/60 transition uppercase tracking-wide">
-                        Pool &amp; Kontak
+                        {{ __('storefront.pool_kontak') }}
                     </a>
                 @endif
 
                 {{-- Status Resi / Muatan Modal Trigger --}}
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="px-3.5 py-2 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-950/60 transition uppercase tracking-wide flex items-center gap-1.5"
-                    title="Lacak Nomor Resi / Surat Jalan">
+                    title="{{ __('storefront.track_tracking_waybill') }}">
                     <i data-lucide="scan-line" class="w-3.5 h-3.5 text-amber-600"></i>
                     <span class="hidden lg:inline">Lacak Resi / Muatan</span>
                 </button>
@@ -78,7 +78,7 @@
                 {{-- Cart Badge --}}
                 <a href="{{ url('/' . $business->slug . '/keranjang') }}"
                     class="relative p-2 sm:p-2.5 rounded-xl border border-amber-300 dark:border-amber-900 bg-amber-500/10 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 transition"
-                    title="Daftar Sewa Armada Dipilih">
+                    title="{{ __('storefront.fleet_rental_selected') }}">
                     <i data-lucide="package-search" class="w-4 h-4"></i>
                     <span x-show="$store.cart.count() > 0" x-text="$store.cart.count()"
                         class="absolute -top-1.5 -right-1.5 bg-red-600 text-white font-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-xs">
@@ -98,7 +98,7 @@
                 {{-- Mobile Menu Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
                     class="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
-                    aria-label="Buka Menu">
+                    aria-label="{{ __('storefront.open_menu') }}">
                     <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenuOpen"></i>
                     <i data-lucide="x" class="w-5 h-5" x-show="mobileMenuOpen" style="display:none"></i>
                 </button>
@@ -110,11 +110,11 @@
     {{-- Mobile Navigation Dropdown --}}
     <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden border-t border-amber-200 dark:border-amber-950 bg-white dark:bg-[#0F141C] px-4 py-4 space-y-2 shadow-lg" style="display:none">
         <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-sm font-bold uppercase text-slate-800 dark:text-slate-100 hover:bg-amber-50 dark:hover:bg-amber-950/60">
-            Beranda
+            {{ __('storefront.nav_home') }}
         </a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-lg text-sm font-bold uppercase text-slate-800 dark:text-slate-100 hover:bg-amber-50 dark:hover:bg-amber-950/60">
-                Armada &amp; Layanan
+                {{ __('storefront.armada_layanan') }}
             </a>
         @endif
         @if ($landingPage->isPageActive('about'))
@@ -124,7 +124,7 @@
         @endif
         @if ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-lg text-sm font-bold uppercase text-slate-800 dark:text-slate-100 hover:bg-amber-50 dark:hover:bg-amber-950/60">
-                Pool &amp; Kontak
+                {{ __('storefront.pool_kontak') }}
             </a>
         @endif
         <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"

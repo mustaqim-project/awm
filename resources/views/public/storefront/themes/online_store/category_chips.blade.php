@@ -6,14 +6,12 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-bold text-lg sm:text-xl text-zinc-950 dark:text-white">
-                    Kategori Pilihan
-                </h2>
+                <h2 class="font-heading font-bold text-lg sm:text-xl text-zinc-950 dark:text-white">{{ __('storefront.kategori_pilihan') }}</h2>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">Pilih departemen produk yang Anda cari</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 flex items-center gap-1">
-                <span>Semua Departemen</span>
+                <span>{{ __('storefront.semua_departemen') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

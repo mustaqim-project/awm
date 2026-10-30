@@ -65,7 +65,7 @@
             </div>
             <button type="button" @click="isOpen = false"
                 class="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 dark:hover:text-emerald-200 bg-neutral-100 dark:bg-emerald-950/60 transition min-w-[36px] min-h-[36px] flex items-center justify-center"
-                aria-label="Tutup">
+                aria-label="{{ __('storefront.close') }}">
                 <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>
@@ -79,7 +79,7 @@
                 <div class="relative">
                     <i data-lucide="receipt" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-600 dark:text-emerald-400"></i>
                     <input type="text" id="track-token-input" x-model="orderToken" required
-                        placeholder="Contoh: INV/2026/... atau No. WhatsApp Anda"
+                        placeholder="{{ __('storefront.track_input_placeholder_wa') }}"
                         class="w-full pl-10 pr-4 py-3 sm:py-2.5 rounded-xl border border-emerald-900/15 dark:border-emerald-500/20 bg-neutral-50 dark:bg-[#07130A] text-neutral-900 dark:text-emerald-50 text-base sm:text-sm placeholder:text-neutral-400 dark:placeholder:text-emerald-400/40 focus:outline-none focus:ring-2 focus:ring-emerald-600 transition">
                 </div>
                 <p class="text-[11px] text-neutral-500 dark:text-emerald-300/60 mt-1.5">
@@ -89,9 +89,7 @@
 
             <div class="flex items-center justify-end gap-3 pt-2">
                 <button type="button" @click="isOpen = false"
-                    class="px-4 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/5 transition min-h-[44px]">
-                    Batal
-                </button>
+                    class="px-4 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/5 transition min-h-[44px]">{{ __('storefront.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-5 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs flex items-center gap-2 active:scale-95 transition disabled:opacity-50 min-h-[44px]">
                     <span x-show="!loading" class="flex items-center gap-2">

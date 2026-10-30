@@ -87,7 +87,7 @@
                      this.errorMessage = data.message || 'Gagal mengirimkan reservasi. Silakan periksa kembali data Anda.';
                  }
              } catch (e) {
-                 this.errorMessage = 'Terjadi kesalahan koneksi saat mengirim reservasi.';
+                 this.errorMessage = '{{ __('storefront.reservation_connection_error') }}
              } finally {
                  this.isSubmitting = false;
              }
@@ -97,9 +97,7 @@
     {{-- Breadcrumb & Title --}}
     <div class="text-center max-w-2xl mx-auto space-y-3">
         <div class="inline-block px-3 py-1 rounded-[8px] text-xs font-semibold theme-badge">Booking & Reservasi</div>
-        <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">
-            Reservasi Meja & Janji Temu
-        </h1>
+        <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">{{ __('storefront.reservation_title') }}</h1>
         <p class="text-sm text-neutral-500">
             Pesan tempat atau jadwalkan janji layanan Anda di {{ $business->name }} lebih awal untuk memastikan ketersediaan dan kenyamanan optimal.
         </p>
@@ -116,7 +114,7 @@
             <i data-lucide="check" class="w-8 h-8"></i>
         </div>
         <div>
-            <h2 class="font-heading font-bold text-2xl text-neutral-900 dark:text-white">Reservasi Berhasil Diajukan!</h2>
+            <h2 class="font-heading font-bold text-2xl text-neutral-900 dark:text-white">{{ __('storefront.reservation_success_title') }}</h2>
             <p class="text-sm text-neutral-500 mt-1">Kode Reservasi Anda:</p>
             <div class="text-2xl font-extrabold text-theme-primary mt-1" style="font-variant-numeric: tabular-nums;" x-text="successData?.code"></div>
         </div>
@@ -125,12 +123,12 @@
         </p>
         <div class="pt-4 flex justify-center gap-3">
             <a href="{{ url('/' . $business->slug) }}" class="px-5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 text-sm font-medium min-h-[44px] inline-flex items-center">
-                Kembali ke Beranda
+                {{ __('storefront.btn_back_to_home') }}
             </a>
             @if ($hasWhatsapp)
                 <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" class="px-5 py-2.5 rounded-[12px] bg-emerald-500 text-white text-sm font-semibold flex items-center gap-1.5 min-h-[44px]">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>Konfirmasi via WhatsApp</span>
+                    <span>{{ __('storefront.confirm_via_wa') }}</span>
                 </a>
             @endif
         </div>
@@ -214,7 +212,7 @@
                 </label>
                 <input type="text" 
                        x-model="customerName" 
-                       placeholder="Nama lengkap pemesan"
+                       placeholder="{{ __('storefront.orderer_full_name_placeholder') }}"
                        required
                        class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm">
             </div>
@@ -238,7 +236,7 @@
                 </label>
                 <input type="email" 
                        x-model="customerEmail" 
-                       placeholder="email@domain.com"
+                       placeholder="{{ __('storefront.email_domain_com') }}"
                        class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm">
             </div>
 
@@ -249,7 +247,7 @@
                 </label>
                 <textarea x-model="notes" 
                           rows="3" 
-                          placeholder="Contoh: Meja dekat jendela, perayaan ulang tahun, kursi bayi..."
+                          placeholder="{{ __('storefront.table_notes_placeholder') }}"
                           class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm"></textarea>
             </div>
         </div>

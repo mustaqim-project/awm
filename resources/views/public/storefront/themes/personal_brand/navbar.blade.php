@@ -30,7 +30,7 @@
             <nav class="hidden md:flex items-center gap-1 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
 
                 @if ($landingPage->isPageActive('catalog'))
@@ -51,16 +51,16 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-full text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                        Kolaborasi &amp; Kontak
+                        {{ __('storefront.kolaborasi_kontak') }}
                     </a>
                 @endif
 
                 {{-- Status Sesi / Invoice Modal Trigger --}}
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition flex items-center gap-1.5"
-                    title="Cek Status Booking Sesi / Invoice">
+                    title="{{ __('storefront.check_booking_session_invoice') }}">
                     <i data-lucide="receipt" class="w-3.5 h-3.5 text-cyan-500"></i>
-                    <span class="hidden lg:inline">Status Sesi / Invoice</span>
+                    <span class="hidden lg:inline">{{ __('storefront.status_sesi_invoice_2') }}</span>
                 </button>
             </nav>
 
@@ -78,7 +78,7 @@
                 {{-- Cart Badge --}}
                 <a href="{{ url('/' . $business->slug . '/keranjang') }}"
                     class="relative p-2 sm:p-2.5 rounded-full border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 transition"
-                    title="Pilihan Program / Produk Digital">
+                    title="{{ __('storefront.digital_programs_products') }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                     <span x-show="$store.cart.count() > 0" x-text="$store.cart.count()"
                         class="absolute -top-1.5 -right-1.5 bg-cyan-600 text-white font-extrabold text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-xs">
@@ -98,7 +98,7 @@
                 {{-- Mobile Menu Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
                     class="md:hidden p-2 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-200"
-                    aria-label="Buka Menu">
+                    aria-label="{{ __('storefront.open_menu') }}">
                     <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenuOpen"></i>
                     <i data-lucide="x" class="w-5 h-5" x-show="mobileMenuOpen" style="display:none"></i>
                 </button>
@@ -110,7 +110,7 @@
     {{-- Mobile Navigation Dropdown --}}
     <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-[#09090B] px-4 py-4 space-y-2 shadow-lg" style="display:none">
         <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-            Beranda
+            {{ __('storefront.nav_home') }}
         </a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900">
@@ -124,13 +124,13 @@
         @endif
         @if ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                Kolaborasi &amp; Kontak
+                {{ __('storefront.kolaborasi_kontak') }}
             </a>
         @endif
         <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
             class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 flex items-center gap-2">
             <i data-lucide="receipt" class="w-4 h-4"></i>
-            <span>Cek Status Sesi / Invoice</span>
+            <span>{{ __('storefront.cek_status_sesi_invoice') }}</span>
         </button>
         @if (!empty($hasWhatsapp))
             <div class="pt-2">

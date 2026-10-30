@@ -6,7 +6,7 @@
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
 
-            {{-- Col 1: Profil Pabrik --}}
+            {{-- Col 1: {{ __('storefront.profil_pabrik') }} --}}
             <div class="space-y-4">
                 <div class="flex items-center gap-3">
                     @if ($business->logo_url || $landingPage->logo_url)
@@ -45,20 +45,20 @@
                     Navigasi Pabrik
                 </h4>
                 <ul class="space-y-2 text-xs text-slate-400 uppercase font-semibold">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-orange-400 transition-colors">Profil Pabrik</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-orange-400 transition-colors">{{ __('storefront.profil_pabrik') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-orange-400 transition-colors">Katalog Produk &amp; Maklon</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-orange-400 transition-colors">{{ __('storefront.katalog_produk_maklon') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-orange-400 transition-colors">Fasilitas Mesin &amp; Mutu</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-orange-400 transition-colors">Kontak Divisi B2B</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-orange-400 transition-colors">{{ __('storefront.kontak_divisi_b2b') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-orange-400 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="truck" class="w-3.5 h-3.5 text-orange-400"></i>
-                            <span>Lacak Surat Jalan / Status PO</span>
+                            <span>{{ __('storefront.lacak_surat_jalan_status_po') }}</span>
                         </button>
                     </li>
                 </ul>

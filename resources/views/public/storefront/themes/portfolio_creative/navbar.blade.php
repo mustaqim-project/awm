@@ -35,13 +35,13 @@
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-bold text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition flex items-center gap-1.5">
                         <i data-lucide="layers" class="w-3.5 h-3.5 text-violet-500"></i>
-                        <span>Koleksi &amp; Paket</span>
+                        <span>{{ __('storefront.koleksi_paket') }}</span>
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('about'))
                     <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-bold text-zinc-700 dark:text-zinc-200 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                        Profil &amp; Tim
+                        {{ __('storefront.profil_tim') }}
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('contact'))
@@ -64,13 +64,13 @@
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 text-xs font-bold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
                     <i data-lucide="folder-search" class="w-3.5 h-3.5 text-violet-500"></i>
-                    <span>Cek Status Order</span>
+                    <span>{{ __('storefront.cek_status_order') }}</span>
                 </button>
 
                 {{-- Cart Trigger --}}
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 hover:bg-violet-700 dark:hover:bg-violet-600 dark:hover:text-white transition font-bold text-xs shadow-xs active:scale-95"
-                    title="Order Layanan">
+                    title="{{ __('storefront.order_service') }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Paket</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
@@ -92,24 +92,24 @@
             class="md:hidden py-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded-lg text-sm font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                Beranda Studio
+                {{ __('storefront.home_studio') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2 rounded-lg text-sm font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Karya &amp; Paket Layanan
+                    {{ __('storefront.karya_paket_layanan') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="block px-3 py-2 rounded-lg text-sm font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Tentang Studio &amp; Tim
+                    {{ __('storefront.tentang_studio_tim') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded-lg text-sm font-bold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Kontak &amp; Alamat Studio
+                    {{ __('storefront.kontak_alamat_studio') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"

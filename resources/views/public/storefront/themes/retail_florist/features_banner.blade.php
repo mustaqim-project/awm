@@ -18,7 +18,7 @@
                 <i data-lucide="mail" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Kartu Ucapan Custom</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.kartu_ucapan_custom') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Tulis pesan manis Anda dan kami cetak eksklusif.</p>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <i data-lucide="camera" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Foto Buket Sebelum Kirim</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.foto_buket_sebelum_kirim') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Kami kirim foto hasil rangkaian untuk persetujuan Anda.</p>
             </div>
         </div>

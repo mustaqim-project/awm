@@ -29,13 +29,13 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-rose-200/90 hover:text-rose-700 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-rose-200/90 hover:text-rose-700 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition flex items-center gap-1.5">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
-                        <span>Paket Perayaan &amp; Dekor</span>
+                        <span>{{ __('storefront.paket_perayaan_dekor') }}</span>
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('about'))
@@ -70,7 +70,7 @@
                 {{-- Cart Trigger --}}
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-rose-700 hover:bg-rose-800 text-white font-semibold text-xs shadow-md shadow-rose-700/20 transition active:scale-95"
-                    title="Paket Dipilih">
+                    title="{{ __('storefront.selected_package') }}">
                     <i data-lucide="heart" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Paket</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
@@ -92,18 +92,18 @@
             class="md:hidden py-4 border-t border-rose-200/60 dark:border-rose-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-rose-100 hover:bg-rose-50 dark:hover:bg-rose-950/40">
-                Beranda Perayaan
+                {{ __('storefront.nav_home') }} Perayaan
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-rose-100 hover:bg-rose-50 dark:hover:bg-rose-950/40">
-                    Pilihan Paket &amp; Dekorasi
+                    {{ __('storefront.pilihan_paket_dekorasi') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-rose-100 hover:bg-rose-50 dark:hover:bg-rose-950/40">
-                    Profil Wedding Planner
+                    {{ __('storefront.profil_wedding_planner') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('contact'))
@@ -115,7 +115,7 @@
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-rose-700 dark:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center gap-2">
                 <i data-lucide="calendar" class="w-4 h-4 text-rose-600"></i>
-                <span>Lacak Status Kontrak &amp; Booking Event</span>
+                <span>{{ __('storefront.lacak_status_kontrak_booking_event') }}</span>
             </button>
         </div>
     </div>

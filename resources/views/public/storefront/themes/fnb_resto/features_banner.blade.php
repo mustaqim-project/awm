@@ -8,7 +8,7 @@
                 <i data-lucide="chef-hat" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Dimasak Langsung Segar</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.dimasak_langsung_segar') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Sajian panas mengepul, dibuat saat pesanan masuk.</p>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <i data-lucide="calendar" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Reservasi Meja &amp; Acara</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.reservasi_meja_acara') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Booking meja online bebas antre untuk arisan &amp; reuni.</p>
             </div>
         </div>

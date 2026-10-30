@@ -58,15 +58,13 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-black dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-bold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Pilih Program">
+                    title="{{ __('storefront.select_program') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5 text-cyan-400 dark:text-cyan-600"></i>
-                    <span>Pilih</span>
+                    <span>{{ __('storefront.btn_select') }}</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold hover:bg-zinc-200 transition">
-                    Lihat
-                </a>
+                    class="px-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-semibold hover:bg-zinc-200 transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

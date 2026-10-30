@@ -63,9 +63,7 @@
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold">
-                    Detail
-                </a>
+                    class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>

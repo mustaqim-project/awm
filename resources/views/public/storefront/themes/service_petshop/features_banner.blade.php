@@ -38,7 +38,7 @@
                 <i data-lucide="stethoscope" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Cek Kesehatan Gratis</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.cek_kesehatan_gratis') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Pemeriksaan telinga, kuku &amp; bulu saat sesi grooming.</p>
             </div>
         </div>

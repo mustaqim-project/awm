@@ -29,7 +29,7 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 transition">
-                    Gudang Pusat
+                    {{ __('storefront.gudang_pusat') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -47,7 +47,7 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 transition">
-                        Kontak Agen &amp; Toko
+                        {{ __('storefront.kontak_agen_toko') }}
                     </a>
                 @endif
             </nav>
@@ -64,7 +64,7 @@
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-emerald-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-slate-800 transition">
                     <i data-lucide="truck" class="w-3.5 h-3.5 text-blue-600"></i>
-                    <span>Lacak Pengiriman</span>
+                    <span>{{ __('storefront.lacak_pengiriman') }}</span>
                 </button>
 
                 {{-- Cart Trigger --}}
@@ -92,12 +92,12 @@
             class="md:hidden py-4 border-t border-emerald-200/60 dark:border-emerald-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded-xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800">
-                Gudang Pusat
+                {{ __('storefront.gudang_pusat') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2 rounded-xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800">
-                    Katalog Harga Grosir
+                    {{ __('storefront.katalog_harga_grosir') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))
@@ -109,13 +109,13 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded-xl text-sm font-bold text-slate-800 dark:text-slate-200 hover:bg-emerald-50 dark:hover:bg-slate-800">
-                    Pusat Kontak Grosir
+                    {{ __('storefront.pusat_kontak_grosir') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2 rounded-xl text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 flex items-center gap-2">
                 <i data-lucide="truck" class="w-4 h-4 text-blue-600"></i>
-                <span>Lacak Status Surat Jalan / DO</span>
+                <span>{{ __('storefront.lacak_status_surat_jalan_do') }}</span>
             </button>
         </div>
     </div>

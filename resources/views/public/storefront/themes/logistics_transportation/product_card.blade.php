@@ -16,7 +16,7 @@
         @else
             <div class="w-full h-full flex flex-col items-center justify-center text-amber-500 dark:text-slate-600">
                 <i data-lucide="truck" class="w-12 h-12 stroke-1 mb-1 text-amber-500"></i>
-                <span class="text-[10px] uppercase font-black tracking-wider">Unit Armada Truk</span>
+                <span class="text-[10px] uppercase font-black tracking-wider">{{ __('storefront.unit_armada_truk') }}</span>
             </div>
         @endif
 

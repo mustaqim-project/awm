@@ -18,7 +18,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Produk BPOM &amp; Non-Komedogenik</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.produk_bpom_non_komedogenik') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Aman untuk kulit sensitif, bebas zat berbahaya.</p>
             </div>
         </div>

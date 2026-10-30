@@ -54,7 +54,7 @@
                     </div>
                     <button type="button" @click="waChatOpen = false"
                         class="text-neutral-400 hover:text-neutral-600 dark:hover:text-emerald-200 transition p-1"
-                        aria-label="Tutup Dialog">
+                        aria-label="{{ __('storefront.close_dialog') }}">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>

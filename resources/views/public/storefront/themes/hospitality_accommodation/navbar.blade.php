@@ -29,7 +29,7 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-sky-200/90 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -47,7 +47,7 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-sky-200/90 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 transition">
-                        Lokasi &amp; Kontak
+                        {{ __('storefront.lokasi_kontak') }}
                     </a>
                 @endif
             </nav>
@@ -92,7 +92,7 @@
             class="md:hidden py-4 border-t border-sky-200/60 dark:border-sky-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-sky-100 hover:bg-sky-100/50 dark:hover:bg-sky-950/40">
-                Beranda Penginapan
+                {{ __('storefront.nav_home') }} Penginapan
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -115,7 +115,7 @@
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-sky-600 dark:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 flex items-center gap-2">
                 <i data-lucide="calendar" class="w-4 h-4 text-amber-500"></i>
-                <span>Cek Status Tiket / Booking Kamar</span>
+                <span>{{ __('storefront.cek_status_tiket_booking_kamar') }}</span>
             </button>
         </div>
     </div>

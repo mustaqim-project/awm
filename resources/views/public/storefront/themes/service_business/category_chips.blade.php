@@ -6,14 +6,12 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">
-                    Pilihan Paket Layanan
-                </h2>
+                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">{{ __('storefront.pilihan_paket_layanan') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-sky-300/70">Pilih kategori layanan kiloan, satuan, atau perawatan khusus</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
-                <span>Seluruh Layanan</span>
+                <span>{{ __('storefront.seluruh_layanan') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

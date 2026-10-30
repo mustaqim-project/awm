@@ -43,14 +43,12 @@
         {{-- Breadcrumb & Title --}}
         <div class="max-w-2xl space-y-3">
             <div class="flex items-center gap-2 text-xs text-neutral-500">
-                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
                 <span>/</span>
                 <span class="text-neutral-900 dark:text-white font-medium">Kontak & Cabang</span>
             </div>
             <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold theme-badge">Hubungi Kami</div>
-            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">
-                Lokasi, Jam Buka & Layanan Pelanggan
-            </h1>
+            <h1 class="font-heading font-extrabold text-3xl sm:text-4xl text-neutral-900 dark:text-white">{{ __('storefront.contact_main_heading') }}</h1>
             <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-300">
                 Kunjungi gerai fisik kami atau hubungi tim customer support untuk pertanyaan, konsultasi, dan informasi
                 kemitraan.
@@ -66,8 +64,7 @@
                 {{-- Contact Channels --}}
                 <div
                     class="p-6 rounded-theme bg-white dark:bg-neutral-800/80 border border-black/5 dark:border-white/10 shadow-sm space-y-4">
-                    <h2 class="font-heading font-bold text-lg text-neutral-900 dark:text-white">Saluran Komunikasi Resmi
-                    </h2>
+                    <h2 class="font-heading font-bold text-lg text-neutral-900 dark:text-white">{{ __('storefront.official_communication_channels') }}</h2>
 
                     <div class="space-y-3">
                         {{-- WhatsApp --}}
@@ -147,7 +144,7 @@
                         class="p-6 rounded-theme bg-white dark:bg-neutral-800/80 border border-black/5 dark:border-white/10 shadow-sm space-y-4">
                         <h2 class="font-heading font-bold text-lg text-neutral-900 dark:text-white flex items-center gap-2">
                             <i data-lucide="clock" class="w-5 h-5 text-theme-primary"></i>
-                            <span>Jadwal Jam Operasional</span>
+                            <span>{{ __('storefront.operating_hours_schedule') }}</span>
                         </h2>
 
                         <div class="divide-y divide-black/5 dark:divide-white/10 text-xs sm:text-sm">
@@ -192,7 +189,7 @@
                     <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($landingPage->custom_address ?: ($business->address ?: $business->name)) }}"
                         target="_blank" rel="noopener"
                         class="font-semibold text-theme-primary hover:underline flex items-center gap-1">
-                        <span>Buka di Google Maps</span>
+                        <span>{{ __('storefront.open_in_google_maps') }}</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>

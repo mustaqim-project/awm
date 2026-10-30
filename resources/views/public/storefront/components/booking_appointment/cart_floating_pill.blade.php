@@ -30,7 +30,7 @@
         {{-- Direct Checkout CTA --}}
         <a href="{{ url('/' . $business->slug . '/checkout') }}"
             class="min-h-[44px] px-4.5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm text-white bg-purple-600 hover:bg-purple-700 shadow-sm flex items-center gap-2 hover:scale-[1.02] active:scale-95 transition-all duration-150 shrink-0">
-            <span>Konfirmasi Jadwal</span>
+            <span>{{ __('storefront.konfirmasi_jadwal') }}</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>

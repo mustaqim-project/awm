@@ -5,16 +5,14 @@
     <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
-                <h2 class="font-heading font-black text-2xl text-neutral-900 dark:text-white uppercase tracking-tight">
-                    Kategori Menu Kilat
-                </h2>
+                <h2 class="font-heading font-black text-2xl text-neutral-900 dark:text-white uppercase tracking-tight">{{ __('storefront.kategori_menu_kilat') }}</h2>
                 <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                     Pilih burger, ayam krispi, snack, atau paket hemat
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs sm:text-sm font-bold flex items-center gap-1 hover:underline text-red-600 dark:text-red-400">
-                <span>Lihat Semua</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

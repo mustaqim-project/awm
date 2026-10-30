@@ -8,7 +8,7 @@
                 <i data-lucide="zap" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">Saji Kilat 15 Menit</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">{{ __('storefront.saji_kilat_15_menit') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Proses cepat tanpa antre lama saat lapar melanda.</p>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <i data-lucide="percent" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">Paket Combo Lebih Hemat</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">{{ __('storefront.paket_combo_lebih_hemat') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Sudah lengkap burger/ayam + kentang + minuman dingin.</p>
             </div>
         </div>

@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-6 py-3.5 rounded-2xl bg-red-700 hover:bg-red-800 text-white font-semibold text-sm shadow-md shadow-red-700/20 transition-all flex items-center gap-2 active:scale-95">
                             <i data-lucide="book-open" class="w-4 h-4"></i>
-                            <span>Buka Buku Menu</span>
+                            <span>{{ __('storefront.open_menu_book') }}</span>
                         </a>
                     @endif
 
@@ -55,7 +55,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-5 py-3.5 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-amber-50 dark:hover:bg-zinc-800 text-slate-800 dark:text-white border border-amber-200 dark:border-amber-900/60 font-semibold text-sm transition-all flex items-center gap-2 shadow-2xs">
                             <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
-                            <span>Reservasi Meja / Order</span>
+                            <span>{{ __('storefront.reservasi_meja_order') }}</span>
                         </a>
                     @endif
                 </div>

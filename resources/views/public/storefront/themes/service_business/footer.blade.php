@@ -41,13 +41,11 @@
 
             {{-- Col 2: Navigasi Layanan --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">
-                    Navigasi Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">{{ __('storefront.navigation_services') }}</h4>
                 <ul class="space-y-2 text-xs text-sky-200/70">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-sky-300 transition-colors">Beranda</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-sky-300 transition-colors">{{ __('storefront.nav_home') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-sky-300 transition-colors">Daftar Paket &amp; Tarif</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-sky-300 transition-colors">{{ __('storefront.daftar_paket_tarif') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-sky-300 transition-colors">Standar Higienis Kerja</a></li>
@@ -96,9 +94,7 @@
 
             {{-- Col 4: Keamanan & Garansi --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">
-                    Jaminan Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-sky-100">{{ __('storefront.service_guarantee') }}</h4>
                 <div class="space-y-2 text-xs text-sky-200/70">
                     <div class="p-2.5 rounded-2xl bg-black/40 border border-sky-900/40 flex items-center gap-2">
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>

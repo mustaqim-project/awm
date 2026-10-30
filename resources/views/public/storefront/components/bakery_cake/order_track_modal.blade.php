@@ -55,9 +55,7 @@
                     <i data-lucide="clock" class="w-5 h-5 text-amber-600 dark:text-amber-400"></i>
                 </div>
                 <div>
-                    <h3 class="font-heading font-medium text-lg sm:text-xl text-neutral-900 dark:text-amber-50 leading-tight">
-                        Lacak Pesanan Roti &amp; Kue
-                    </h3>
+                    <h3 class="font-heading font-medium text-lg sm:text-xl text-neutral-900 dark:text-amber-50 leading-tight">{{ __('storefront.lacak_pesanan_roti_kue') }}</h3>
                     <p class="text-xs text-neutral-500 dark:text-amber-200/70 mt-0.5">
                         Cek status memanggang, dekorasi kue, atau jadwal kurir
                     </p>
@@ -65,7 +63,7 @@
             </div>
             <button type="button" @click="isOpen = false"
                 class="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 dark:hover:text-amber-200 bg-neutral-100 dark:bg-amber-950/60 transition min-w-[36px] min-h-[36px] flex items-center justify-center"
-                aria-label="Tutup">
+                aria-label="{{ __('storefront.close') }}">
                 <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>
@@ -79,7 +77,7 @@
                 <div class="relative">
                     <i data-lucide="receipt" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-amber-600 dark:text-amber-400"></i>
                     <input type="text" id="track-token-input-bakery" x-model="orderToken" required
-                        placeholder="Contoh: INV/2026/... atau No. WhatsApp Anda"
+                        placeholder="{{ __('storefront.track_input_placeholder_wa') }}"
                         class="w-full pl-10 pr-4 py-3 sm:py-2.5 rounded-xl border border-amber-900/15 dark:border-amber-500/20 bg-neutral-50 dark:bg-[#18110B] text-neutral-900 dark:text-amber-50 text-base sm:text-sm placeholder:text-neutral-400 dark:placeholder:text-amber-400/40 focus:outline-none focus:ring-2 focus:ring-amber-600 transition">
                 </div>
                 <p class="text-[11px] text-neutral-500 dark:text-amber-300/60 mt-1.5">
@@ -89,9 +87,7 @@
 
             <div class="flex items-center justify-end gap-3 pt-2">
                 <button type="button" @click="isOpen = false"
-                    class="px-4 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/5 transition min-h-[44px]">
-                    Batal
-                </button>
+                    class="px-4 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/5 transition min-h-[44px]">{{ __('storefront.cancel') }}</button>
                 <button type="submit" :disabled="loading"
                     class="px-5 py-3 sm:py-2.5 rounded-xl text-xs font-semibold text-white bg-amber-600 hover:bg-amber-700 shadow-xs flex items-center gap-2 active:scale-95 transition disabled:opacity-50 min-h-[44px]">
                     <span x-show="!loading" class="flex items-center gap-2">

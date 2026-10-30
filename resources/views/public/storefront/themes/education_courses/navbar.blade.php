@@ -30,7 +30,7 @@
             <nav class="hidden md:flex items-center gap-1 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-700 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
 
                 @if ($landingPage->isPageActive('catalog'))
@@ -51,16 +51,16 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-700 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition">
-                        Admisi &amp; Kontak
+                        {{ __('storefront.admisi_kontak') }}
                     </a>
                 @endif
 
                 {{-- Status Pendaftaran Modal Trigger --}}
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-700 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 transition flex items-center gap-1.5"
-                    title="Cek Status Pendaftaran">
+                    title="{{ __('storefront.check_registration_status') }}">
                     <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-indigo-600"></i>
-                    <span class="hidden lg:inline">Status Pendaftaran</span>
+                    <span class="hidden lg:inline">{{ __('storefront.status_pendaftaran') }}</span>
                 </button>
             </nav>
 
@@ -78,7 +78,7 @@
                 {{-- Course Enrollment Cart Badge --}}
                 <a href="{{ url('/' . $business->slug . '/keranjang') }}"
                     class="relative p-2 sm:p-2.5 rounded-xl border border-indigo-200 dark:border-indigo-900 bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition"
-                    title="Daftar Kelas Dipilih">
+                    title="{{ __('storefront.selected_class_list') }}">
                     <i data-lucide="book-open" class="w-4 h-4"></i>
                     <span x-show="$store.cart.count() > 0" x-text="$store.cart.count()"
                         class="absolute -top-1.5 -right-1.5 bg-orange-600 text-white font-extrabold text-[10px] w-5 h-5 rounded-full flex items-center justify-center shadow-xs">
@@ -98,7 +98,7 @@
                 {{-- Mobile Menu Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
                     class="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
-                    aria-label="Buka Menu">
+                    aria-label="{{ __('storefront.open_menu') }}">
                     <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenuOpen"></i>
                     <i data-lucide="x" class="w-5 h-5" x-show="mobileMenuOpen" style="display:none"></i>
                 </button>
@@ -110,7 +110,7 @@
     {{-- Mobile Navigation Dropdown --}}
     <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden border-t border-indigo-100 dark:border-indigo-950 bg-white dark:bg-[#0F172A] px-4 py-4 space-y-2 shadow-lg" style="display:none">
         <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-indigo-50 dark:hover:bg-indigo-950/60">
-            Beranda
+            {{ __('storefront.nav_home') }}
         </a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-indigo-50 dark:hover:bg-indigo-950/60">
@@ -124,13 +124,13 @@
         @endif
         @if ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-indigo-50 dark:hover:bg-indigo-950/60">
-                Admisi &amp; Kontak
+                {{ __('storefront.admisi_kontak') }}
             </a>
         @endif
         <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
             class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 flex items-center gap-2">
             <i data-lucide="clipboard-check" class="w-4 h-4"></i>
-            <span>Cek Status Pendaftaran</span>
+            <span>{{ __('storefront.cek_status_pendaftaran') }}</span>
         </button>
         @if (!empty($hasWhatsapp))
             <div class="pt-2">

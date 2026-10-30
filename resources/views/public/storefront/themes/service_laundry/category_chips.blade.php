@@ -6,16 +6,14 @@
     <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
-                <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">
-                    Pilihan Paket Cuci &amp; Satuan
-                </h2>
+                <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">{{ __('storefront.pilihan_paket_cuci_satuan') }}</h2>
                 <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                     Pilih kategori layanan laundry yang Anda butuhkan
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs sm:text-sm font-semibold flex items-center gap-1 hover:underline text-sky-600 dark:text-sky-400">
-                <span>Lihat Semua Layanan</span>
+                <span>{{ __('storefront.view_all_services') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

@@ -57,15 +57,13 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2.5 rounded-2xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-semibold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Beli Produk Ini">
+                    title="{{ __('storefront.buy_this_product') }}">
                     <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                     <span>Pesan</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3.5 py-2 rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 text-xs font-semibold hover:bg-rose-100 transition">
-                    Lihat
-                </a>
+                    class="px-3.5 py-2 rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 text-xs font-semibold hover:bg-rose-100 transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

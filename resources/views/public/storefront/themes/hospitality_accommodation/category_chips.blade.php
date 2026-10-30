@@ -13,7 +13,7 @@
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-sky-700 dark:text-sky-300 hover:underline flex items-center gap-1">
-                <span>Semua Tipe Kamar</span>
+                <span>{{ __('storefront.semua_tipe_kamar') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

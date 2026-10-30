@@ -41,16 +41,14 @@
 
             {{-- Col 2: Portofolio Proyek --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-black text-xs uppercase tracking-wider text-white">
-                    Portofolio &amp; Layanan
-                </h4>
+                <h4 class="font-heading font-black text-xs uppercase tracking-wider text-white">{{ __('storefront.portofolio_layanan') }}</h4>
                 <ul class="space-y-2 text-xs text-slate-400 uppercase font-semibold">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">Beranda Perusahaan</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.home_corporate') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-400 transition-colors">Proyek Terbangun &amp; Unit</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-400 transition-colors">Metode Konstruksi &amp; SIPIL</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.metode_konstruksi_sipil') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
                         <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-400 transition-colors">Konsultasi Site Plan</a></li>

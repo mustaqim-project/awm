@@ -29,7 +29,7 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -41,13 +41,13 @@
                 @if ($landingPage->isPageActive('about'))
                     <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                         class="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                        Tentang Kami
+                        {{ __('storefront.tentang_kami') }}
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3 py-2 rounded-lg text-xs font-semibold text-zinc-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition">
-                        Kontak
+                        {{ __('storefront.nav_contact') }}
                     </a>
                 @endif
             </nav>
@@ -95,30 +95,30 @@
             class="md:hidden py-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                Beranda
+                {{ __('storefront.nav_home') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Katalog Produk
+                    {{ __('storefront.katalog_produk') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Tentang Kami
+                    {{ __('storefront.tentang_kami') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    Kontak &amp; Alamat
+                    {{ __('storefront.nav_contact') }} &amp; Alamat
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 flex items-center gap-2">
                 <i data-lucide="package-search" class="w-4 h-4"></i>
-                <span>Lacak Pesanan / Resi</span>
+                <span>{{ __('storefront.lacak_pesanan_resi') }}</span>
             </button>
         </div>
     </div>

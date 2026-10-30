@@ -45,15 +45,15 @@
                     Eksplorasi Studio
                 </h4>
                 <ul class="space-y-2 text-xs text-zinc-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-violet-400 transition-colors">Beranda Studio</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-violet-400 transition-colors">{{ __('storefront.home_studio') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-violet-400 transition-colors">Portofolio &amp; Layanan</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-violet-400 transition-colors">{{ __('storefront.portofolio_layanan') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-violet-400 transition-colors">Tentang Kami &amp; Tim</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-violet-400 transition-colors">{{ __('storefront.tentang_kami_tim') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-violet-400 transition-colors">Brief &amp; Kontak Studio</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-violet-400 transition-colors">{{ __('storefront.brief_kontak_studio') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-violet-400 transition-colors text-left flex items-center gap-1.5">

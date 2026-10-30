@@ -45,7 +45,7 @@
         {{-- Close Button --}}
         <button type="button" @click="isOpen = false"
             class="absolute top-4 sm:top-5 right-5 p-2 rounded-xl text-neutral-400 hover:text-neutral-600 dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] transition"
-            aria-label="Tutup">
+            aria-label="{{ __('storefront.close') }}">
             <i data-lucide="x" class="w-4 h-4"></i>
         </button>
 

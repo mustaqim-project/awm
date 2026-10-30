@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-7 py-3.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 active:scale-95 uppercase tracking-wider">
                             <i data-lucide="package" class="w-4 h-4"></i>
-                            <span>Katalog Produk Manufaktur</span>
+                            <span>{{ __('storefront.katalog_produk_manufaktur') }}</span>
                         </a>
                     @endif
 

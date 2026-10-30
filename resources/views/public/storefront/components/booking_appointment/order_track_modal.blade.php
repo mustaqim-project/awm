@@ -82,9 +82,7 @@ aria-modal="true">
                         <i data-lucide="calendar-search" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 id="modal-booking-track-title" class="font-heading font-extrabold text-base text-slate-900 dark:text-purple-100 leading-tight">
-                            Cek Status Reservasi
-                        </h3>
+                        <h3 id="modal-booking-track-title" class="font-heading font-extrabold text-base text-slate-900 dark:text-purple-100 leading-tight">{{ __('storefront.cek_status_reservasi') }}</h3>
                         <p class="text-[11px] text-slate-500 dark:text-purple-300/70">
                             Masukkan No. Tiket, Invoice, atau No. WhatsApp
                         </p>
@@ -93,7 +91,7 @@ aria-modal="true">
                 <button type="button" 
                         @click="close()"
                         class="w-8 h-8 rounded-full bg-slate-100 dark:bg-purple-950/60 text-slate-400 hover:text-slate-700 dark:hover:text-purple-200 flex items-center justify-center transition cursor-pointer"
-                        aria-label="Tutup modal">
+                        aria-label="{{ __('storefront.close_modal') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -110,7 +108,7 @@ aria-modal="true">
                                x-ref="orderInput"
                                x-model="orderCode" 
                                required
-                               placeholder="Contoh: INV/2026/... atau 08123456789"
+                               placeholder="{{ __('storefront.track_input_placeholder') }}"
                                class="w-full h-12 pl-11 pr-4 rounded-2xl border border-purple-200 dark:border-purple-900/60 bg-purple-50/50 dark:bg-[#0E0B17] text-slate-900 dark:text-purple-100 text-sm focus:outline-hidden focus:ring-2 focus:ring-purple-600 transition">
                         <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-500">
                             <i data-lucide="ticket" class="w-4 h-4"></i>

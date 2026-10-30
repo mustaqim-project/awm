@@ -11,7 +11,7 @@
                 <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Paket All-In One</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.paket_all_in_one') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Solusi lengkap hari bahagia</p>
             </div>
         </div>

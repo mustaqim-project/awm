@@ -58,9 +58,9 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Daftar Kelas Ini">
+                    title="{{ __('storefront.register_this_class') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>Daftar</span>
+                    <span>{{ __('storefront.register') }}</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"

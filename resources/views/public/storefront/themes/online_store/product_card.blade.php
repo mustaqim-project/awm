@@ -57,14 +57,12 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="p-2.5 rounded-xl bg-zinc-900 hover:bg-indigo-600 dark:bg-zinc-100 dark:hover:bg-indigo-500 text-white dark:text-zinc-950 dark:hover:text-white transition active:scale-95 shadow-xs flex items-center justify-center min-w-[40px] min-h-[40px]"
-                    title="Tambah ke Keranjang">
+                    title="{{ __('storefront.add_to_cart') }}">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition">
-                    Lihat
-                </a>
+                    class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

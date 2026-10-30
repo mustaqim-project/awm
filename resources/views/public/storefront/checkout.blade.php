@@ -498,7 +498,7 @@
                             if (data.errors && typeof data.errors === 'object') {
                                 this.errorMessage = Object.values(data.errors).flat().join('. ') || data.message || 'Data formulir tidak valid.';
                             } else {
-                                this.errorMessage = data.message || 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.';
+                                this.errorMessage = data.message || '{{ __('storefront.order_process_error') }}
                             }
                             this.isSubmitting = false;
                             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -523,16 +523,14 @@
         {{-- Header --}}
         <div class="mb-8">
             <div class="flex items-center gap-2 text-xs text-neutral-500 mb-2">
-                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
                 <span>/</span>
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="hover:text-theme-primary transition">Katalog</a>
                 <span>/</span>
                 <span class="text-neutral-900 dark:text-white font-medium">Checkout Pembayaran</span>
             </div>
-            <h1 class="font-heading font-extrabold text-2xl sm:text-3xl text-neutral-900 dark:text-white">
-                Checkout Pesanan
-            </h1>
+            <h1 class="font-heading font-extrabold text-2xl sm:text-3xl text-neutral-900 dark:text-white">{{ __('storefront.checkout_title') }}</h1>
             <p class="text-sm text-neutral-500">Lengkapi detail pengiriman dan selesaikan pembayaran pesanan Anda secara aman.</p>
         </div>
 
@@ -549,9 +547,7 @@
                 class="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-400 mx-auto flex items-center justify-center">
                 <i data-lucide="shopping-bag" class="w-8 h-8"></i>
             </div>
-            <h2 class="font-heading font-bold text-xl text-neutral-800 dark:text-neutral-200">
-                Keranjang belanja Anda masih kosong
-            </h2>
+            <h2 class="font-heading font-bold text-xl text-neutral-800 dark:text-neutral-200">{{ __('storefront.cart_is_empty') }}</h2>
             <p class="text-sm text-neutral-500 max-w-sm mx-auto">
                 Silakan pilih produk favorit Anda dari katalog untuk melanjutkan ke proses pembayaran.
             </p>
@@ -583,7 +579,7 @@
                 <div class="flex items-center gap-2">
                     <a href="{{ route('customer.dashboard') }}"
                         class="px-3 py-1.5 rounded-lg border border-black/10 dark:border-white/10 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center gap-1">
-                        <span>Portal Pelanggan</span>
+                        <span>{{ __('storefront.customer_portal') }}</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -616,7 +612,7 @@
                                         'border-black/10 dark:border-white/10 text-neutral-600 dark:text-neutral-300 hover:border-black/20'"
                                     class="p-4 rounded-[14px] border text-center text-xs flex flex-col items-center gap-2 transition min-h-[72px]">
                                     <i data-lucide="truck" class="w-5 h-5"></i>
-                                    <span>Kirim ke Alamat</span>
+                                    <span>{{ __('storefront.ship_to_address') }}</span>
                                 </button>
                             @endif
 
@@ -627,7 +623,7 @@
                                         'border-black/10 dark:border-white/10 text-neutral-600 dark:text-neutral-300 hover:border-black/20'"
                                     class="p-4 rounded-[14px] border text-center text-xs flex flex-col items-center gap-2 transition min-h-[72px]">
                                     <i data-lucide="store" class="w-5 h-5"></i>
-                                    <span>Ambil di Toko</span>
+                                    <span>{{ __('storefront.pickup_in_store') }}</span>
                                 </button>
                             @endif
                         </div>
@@ -710,7 +706,7 @@
                                 <label class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                                     Email (Opsional untuk bukti digital)
                                 </label>
-                                <input type="email" x-model="customerEmail" placeholder="nama@email.com"
+                                <input type="email" x-model="customerEmail" placeholder="{{ __('storefront.nama_email_com') }}"
                                     class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm focus:ring-2 focus:ring-theme-primary">
                             </div>
 
@@ -818,7 +814,7 @@
                                             <input type="text" x-model="areaSearchQuery"
                                                 @input.debounce.300ms="searchBiteshipAreas()"
                                                 @focus="if(areaSearchResults.length > 0) areaSearchOpen = true"
-                                                placeholder="Cari Kelurahan / Kecamatan / Kota / Kode Pos via Biteship..."
+                                                placeholder="{{ __('storefront.search_location_placeholder') }}"
                                                 class="w-full pl-9 pr-9 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-xs focus:ring-2 focus:ring-theme-primary">
                                             <i data-lucide="search" class="w-4 h-4 text-neutral-400 absolute left-3 top-3"></i>
                                             <div x-show="areaSearching" class="absolute right-3 top-3">
@@ -839,7 +835,7 @@
                                                         <div class="text-[10px] text-neutral-500"
                                                             x-text="(item.administrative_division_level_2_name || item.city || '') + ' • Kode Pos: ' + (item.postal_code || '-')"></div>
                                                     </div>
-                                                    <span class="text-[10px] font-bold text-theme-primary shrink-0">Pilih</span>
+                                                    <span class="text-[10px] font-bold text-theme-primary shrink-0">{{ __('storefront.btn_select') }}</span>
                                                 </button>
                                             </template>
                                         </div>
@@ -875,7 +871,7 @@
                                             Detail Alamat (Jalan, RT/RW, Patokan):
                                         </label>
                                         <textarea x-model="shippingAddress" rows="3" required
-                                            placeholder="Detail jalan, nomor bangunan, RT/RW, patokan lokasi..."
+                                            placeholder="{{ __('storefront.address_detail_placeholder') }}"
                                             class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm focus:ring-2 focus:ring-theme-primary leading-relaxed"></textarea>
                                     </div>
 
@@ -1015,7 +1011,7 @@
                                     class="block text-xs font-medium text-neutral-700 dark:text-neutral-300 mb-1">Catatan
                                     Tambahan untuk Toko</label>
                                 <input type="text" x-model="notes"
-                                    placeholder="Contoh: Jangan terlalu pedas, titipkan di pos satpam..."
+                                    placeholder="{{ __('storefront.order_notes_example') }}"
                                     class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm focus:ring-2 focus:ring-theme-primary">
                             </div>
                         </div>
@@ -1044,7 +1040,7 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center gap-2">
-                                        <h4 class="font-bold text-sm text-neutral-900 dark:text-white">QRIS</h4>
+                                        <h4 class="font-bold text-sm text-neutral-900 dark:text-white">{{ __('storefront.qris') }}</h4>
                                         <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 uppercase">Cooca</span> X
                                         <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 uppercase">Tripay</span>
                                     </div>
@@ -1168,7 +1164,7 @@
                         {{-- Confirm Order Button --}}
                         <button type="button" @click="submitOrder()" :disabled="isSubmitting"
                             class="w-full py-4 rounded-[12px] theme-btn-primary font-bold text-sm shadow-xl flex items-center justify-center gap-2 active:scale-[0.97] disabled:opacity-50 min-h-[52px]">
-                            <span x-show="!isSubmitting">Konfirmasi &amp; Pesan Sekarang</span>
+                            <span x-show="!isSubmitting">{{ __('storefront.confirm_and_order_now') }}</span>
                             <span x-show="isSubmitting" x-cloak class="flex items-center gap-2">
                                 <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
                                 <span>Memproses Pesanan...</span>

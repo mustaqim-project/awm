@@ -22,7 +22,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-zinc-900 dark:text-white">Transaksi Aman</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-zinc-900 dark:text-white">{{ __('storefront.transaksi_aman') }}</h4>
                 <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Verifikasi pesanan otomatis</p>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <i data-lucide="truck" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-zinc-900 dark:text-white">Pengiriman Cepat</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-zinc-900 dark:text-white">{{ __('storefront.pengiriman_cepat') }}</h4>
                 <p class="text-[11px] text-zinc-500 dark:text-zinc-400">Resi terbit hari kerja sama</p>
             </div>
         </div>

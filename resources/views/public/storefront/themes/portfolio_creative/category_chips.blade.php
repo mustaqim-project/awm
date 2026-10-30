@@ -6,9 +6,7 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-black text-xl sm:text-2xl text-zinc-950 dark:text-white">
-                    Disiplin Layanan &amp; Karya
-                </h2>
+                <h2 class="font-heading font-black text-xl sm:text-2xl text-zinc-950 dark:text-white">{{ __('storefront.disiplin_layanan_karya') }}</h2>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">Pilih rumpun proyek kreatif yang ingin Anda telusuri</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

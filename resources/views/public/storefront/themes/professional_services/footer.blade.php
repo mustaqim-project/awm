@@ -45,7 +45,7 @@
                     Bidang Penugasan
                 </h4>
                 <ul class="space-y-2 text-xs text-slate-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">Beranda Kantor</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.home_office') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-400 transition-colors">Praktik &amp; Retainer</a></li>
                     @endif
@@ -53,12 +53,12 @@
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-400 transition-colors">Partner &amp; Legalitas</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-400 transition-colors">Kontak Sekretariat</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.kontak_sekretariat') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-amber-400 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="file-search" class="w-3.5 h-3.5 text-amber-400"></i>
-                            <span>Lacak Status Dokumen &amp; Perkara</span>
+                            <span>{{ __('storefront.lacak_status_dokumen_perkara') }}</span>
                         </button>
                     </li>
                 </ul>

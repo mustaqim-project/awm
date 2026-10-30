@@ -47,7 +47,7 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        Kontak Kantor
+                        {{ __('storefront.kontak_kantor') }}
                     </a>
                 @endif
             </nav>
@@ -92,7 +92,7 @@
             class="md:hidden py-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
-                Beranda Kantor
+                {{ __('storefront.home_office') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -109,13 +109,13 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">
-                    Kontak &amp; Alamat Kantor
+                    {{ __('storefront.kontak_alamat_kantor') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-amber-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
                 <i data-lucide="file-search" class="w-4 h-4"></i>
-                <span>Lacak Status Dokumen &amp; Perkara</span>
+                <span>{{ __('storefront.lacak_status_dokumen_perkara') }}</span>
             </button>
         </div>
     </div>

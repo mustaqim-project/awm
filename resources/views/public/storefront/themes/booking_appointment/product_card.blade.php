@@ -107,7 +107,7 @@
             @else
                 <a href="{{ $pdpUrl }}"
                     class="min-h-[40px] px-3.5 py-2 rounded-2xl bg-purple-100 dark:bg-purple-950/80 text-purple-800 dark:text-purple-300 text-xs font-bold hover:bg-purple-200 dark:hover:bg-purple-900 transition flex items-center gap-1">
-                    <span>Lihat Slot</span>
+                    <span>{{ __('storefront.lihat_slot') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             @endif

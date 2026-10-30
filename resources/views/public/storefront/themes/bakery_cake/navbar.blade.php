@@ -51,11 +51,11 @@
                 </a>
             @endif
 
-            {{-- Dapur Pembuat / About --}}
+            {{-- {{ __('storefront.dapur_pembuat') }} / About --}}
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
-                    Dapur Pembuat
+                    {{ __('storefront.dapur_pembuat') }}
                 </a>
             @endif
 
@@ -82,15 +82,15 @@
             {{-- Status Pre-Order (Desktop) --}}
             <button type="button" @click="$dispatch('open-order-track-modal')"
                 class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-xs font-semibold text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition min-h-[40px]"
-                title="Lacak Status Pre-Order &amp; Pengiriman">
+                title="{{ __('storefront.track_preorder_delivery') }}">
                 <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
-                <span class="hidden md:inline">Cek Pesanan</span>
+                <span class="hidden md:inline">{{ __('storefront.check_order') }}</span>
             </button>
 
             {{-- Dark Mode Toggle --}}
             <button type="button" @click="toggleDarkMode()"
                 class="p-2 sm:p-2.5 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition flex items-center justify-center min-h-[40px] min-w-[40px]"
-                aria-label="Ubah Mode Tampilan"
+                aria-label="{{ __('storefront.toggle_display_mode') }}"
                 title="Mode Terang / Gelap">
                 <i data-lucide="sun" class="w-4 h-4 hidden dark:inline text-amber-400"></i>
                 <i data-lucide="moon" class="w-4 h-4 inline dark:hidden text-amber-800"></i>
@@ -99,9 +99,9 @@
             {{-- Keranjang Bakery Trigger --}}
             <a href="{{ url('/' . $business->slug . '/checkout') }}"
                 class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs shadow-md shadow-amber-700/20 transition active:scale-95 min-h-[40px]"
-                title="Kotak Pesanan Roti &amp; Kue">
+                title="{{ __('storefront.bakery_order_box') }}">
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                <span class="hidden md:inline">Pesanan</span>
+                <span class="hidden md:inline">{{ __('storefront.nav_orders') }}</span>
                 <span x-show="$store.cart.count() > 0" x-cloak x-text="$store.cart.count()"
                     class="px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white text-amber-950 min-w-[18px] text-center shadow-2xs">
                 </span>
@@ -152,7 +152,7 @@
         @if ($landingPage->isPageActive('about'))
             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" @click="mobileMenuOpen = false"
                 class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Dapur Pembuat
+                {{ __('storefront.dapur_pembuat') }}
             </a>
         @endif
 
@@ -174,7 +174,7 @@
             <button type="button" @click="mobileMenuOpen = false; $dispatch('open-order-track-modal')"
                 class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-xs bg-amber-900/[0.04] dark:bg-amber-400/[0.05] text-amber-900 dark:text-amber-200 min-h-[44px]">
                 <i data-lucide="clock" class="w-4 h-4 text-amber-600"></i>
-                <span>Cek Status Pre-Order Kue</span>
+                <span>{{ __('storefront.cek_status_pre_order_kue') }}</span>
             </button>
 
             @if (!empty($hasWhatsapp))

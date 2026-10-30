@@ -36,7 +36,7 @@
             {{-- Home --}}
             <a href="{{ url('/' . $business->slug) }}"
                 class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug) ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
-                {{ $landingPage->getNavLabel('home', 'Beranda') }}
+                {{ $landingPage->getNavLabel('home', '{{ __('storefront.nav_home') }}') }}
             </a>
 
             {{-- Catalog / Produk --}}
@@ -44,7 +44,7 @@
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 {{ request()->is($business->slug . '/katalog*') || request()->is($business->slug . '/produk*') ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
                     <i data-lucide="store" class="w-3.5 h-3.5" style="color: #10B981;"></i>
-                    <span>{{ $landingPage->getNavLabel('catalog', 'Paket Membership & Kelas') }}</span>
+                    <span>{{ $landingPage->getNavLabel('catalog', '{{ __('storefront.paket_membership_kelas') }}') }}</span>
                 </a>
             @endif
 
@@ -76,18 +76,18 @@
         {{-- 3. Action Tools: Tracking, Dark Mode, Cart, Petani WA --}}
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
 
-            {{-- Lacak Pesanan Trigger --}}
+            {{-- {{ __('storefront.order_tracking') }} Trigger --}}
             <button type="button" @click="$store.orderTracking.open()"
                 class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-xs font-semibold text-neutral-800 dark:text-neutral-200 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition min-h-[40px] cursor-pointer"
-                title="Lacak Status Pesanan">
+                title="{{ __('storefront.track_order_status') }}">
                 <i data-lucide="package-search" class="w-3.5 h-3.5" style="color: #10B981;"></i>
-                <span class="hidden md:inline">Lacak Pesanan</span>
+                <span class="hidden md:inline">{{ __('storefront.order_tracking') }}</span>
             </button>
 
             {{-- Dark Mode Toggle --}}
             <button type="button" @click="toggleDarkMode()"
                 class="p-2 sm:p-2.5 rounded-xl border border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-neutral-800 dark:text-neutral-200 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition flex items-center justify-center min-h-[40px] min-w-[40px] cursor-pointer"
-                aria-label="Ubah Mode Tampilan"
+                aria-label="{{ __('storefront.toggle_display_mode') }}"
                 title="Mode Terang / Gelap">
                 <i data-lucide="sun" class="w-4 h-4 hidden dark:inline text-amber-400"></i>
                 <i data-lucide="moon" class="w-4 h-4 inline dark:hidden text-neutral-700"></i>
@@ -120,11 +120,11 @@
     <div x-show="mobileMenuOpen" x-cloak
         class="md:hidden border-t border-black/5 dark:border-white/10 bg-white/95 dark:bg-[#121620]/95 backdrop-blur-xl px-4 py-4 space-y-2">
         <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-            Beranda
+            {{ __('storefront.nav_home') }}
         </a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-xl text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                Paket Membership & Kelas
+                {{ __('storefront.paket_membership_kelas') }}
             </a>
         @endif
         @if ($landingPage->isPageActive('about'))
@@ -140,7 +140,7 @@
         <div class="pt-2 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
             <button type="button" @click="$store.orderTracking.open(); mobileMenuOpen = false" class="text-xs font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-2">
                 <i data-lucide="package-search" class="w-4 h-4"></i>
-                <span>Lacak Pesanan</span>
+                <span>{{ __('storefront.order_tracking') }}</span>
             </button>
         </div>
     </div>

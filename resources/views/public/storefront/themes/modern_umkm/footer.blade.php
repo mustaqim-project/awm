@@ -45,29 +45,25 @@
                     Navigasi Toko
                 </h4>
                 <ul class="space-y-2 text-xs text-slate-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-400 transition-colors">Beranda</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-400 transition-colors">{{ __('storefront.nav_home') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-400 transition-colors">Daftar Produk</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-400 transition-colors">{{ __('storefront.daftar_produk') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-400 transition-colors">Tentang Kami</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-400 transition-colors">{{ __('storefront.tentang_kami') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
                         <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-emerald-400 transition-colors">Hubungi Kami</a></li>
                     @endif
                     <li>
-                        <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-emerald-400 transition-colors text-left">
-                            Lacak Pesanan Anda
-                        </button>
+                        <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-emerald-400 transition-colors text-left">{{ __('storefront.lacak_pesanan_anda') }}</button>
                     </li>
                 </ul>
             </div>
 
             {{-- Col 3: Kontak & Chat Cepat --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Pemesanan &amp; Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.pemesanan_layanan') }}</h4>
                 <div class="space-y-2 text-xs text-slate-400">
                     @if ($hasWhatsapp)
                         <div>
@@ -95,9 +91,7 @@
 
             {{-- Col 4: Keunggulan Lokal --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Jaminan Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.service_guarantee') }}</h4>
                 <div class="space-y-2 text-xs text-slate-400">
                     <div class="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
                         <i data-lucide="heart" class="w-4 h-4 text-rose-400 shrink-0"></i>

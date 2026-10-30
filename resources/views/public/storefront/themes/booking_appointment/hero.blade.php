@@ -50,7 +50,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="min-h-[48px] px-7 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-purple-700 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-md shadow-purple-600/30 transition-all flex items-center justify-center gap-2.5 active:scale-95">
                             <i data-lucide="calendar-plus" class="w-4.5 h-4.5"></i>
-                            <span>Pilih Sesi &amp; Layanan</span>
+                            <span>{{ __('storefront.pilih_sesi_layanan') }}</span>
                         </a>
                     @endif
 
@@ -163,7 +163,7 @@
                             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                                 class="w-full py-3 px-4 rounded-2xl bg-slate-900 hover:bg-slate-800 dark:bg-purple-600 dark:hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-98">
                                 <i data-lucide="calendar" class="w-4 h-4"></i>
-                                <span>Lihat Seluruh Layanan &amp; Tarif</span>
+                                <span>{{ __('storefront.lihat_seluruh_layanan_tarif') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-auto"></i>
                             </a>
                         @endif

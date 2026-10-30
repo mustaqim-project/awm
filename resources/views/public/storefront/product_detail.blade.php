@@ -83,7 +83,7 @@
 
         {{-- Breadcrumbs --}}
         <nav class="flex items-center gap-2 text-xs text-neutral-500">
-            <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+            <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
             <span>/</span>
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-theme-primary transition">Katalog</a>
             @if ($product->category)
@@ -294,7 +294,7 @@
                             <button type="button" @click="addToCart(false)"
                                 class="py-3.5 px-4 rounded-[12px] bg-white dark:bg-neutral-800 border-2 border-theme-primary text-theme-primary font-bold text-sm hover:bg-neutral-50 dark:hover:bg-neutral-700 transition flex items-center justify-center gap-2 shadow-sm active:scale-[0.97] min-h-[48px]">
                                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                                <span>Tambah ke Keranjang</span>
+                                <span>{{ __('storefront.add_to_cart') }}</span>
                             </button>
 
                             <button type="button" @click="addToCart(true)"
@@ -312,7 +312,7 @@
                                 <span>Produk berhasil ditambahkan ke keranjang!</span>
                             </div>
                             <a href="{{ url('/' . $business->slug . '/checkout') }}" class="underline font-bold">
-                                Lihat Keranjang &rarr;
+                                {{ __('storefront.view_cart') }}
                             </a>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                     <div class="flex items-center gap-2">
                         <button type="button" @click="copyLink()"
                             class="p-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition flex items-center gap-1.5"
-                            title="Salin Tautan Produk">
+                            title="{{ __('storefront.copy_product_link') }}">
                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                             <span x-text="shareCopied ? 'Tersalin!' : 'Salin Tautan'"></span>
                         </button>
@@ -356,7 +356,7 @@
                             <a href="https://api.whatsapp.com/send?text={{ urlencode($product->name . ' - ' . url()->current()) }}"
                                 target="_blank"
                                 class="p-2 rounded-lg bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition"
-                                title="Bagikan ke WhatsApp">
+                                title="{{ __('storefront.share_to_whatsapp') }}">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -365,7 +365,7 @@
 
                 {{-- Detailed Description --}}
                 <div class="pt-6 border-t border-black/5 dark:border-white/10 space-y-3">
-                    <h2 class="font-heading font-bold text-lg text-neutral-900 dark:text-white">Deskripsi Lengkap</h2>
+                    <h2 class="font-heading font-bold text-lg text-neutral-900 dark:text-white">{{ __('storefront.full_description') }}</h2>
                     <div class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed whitespace-pre-line">
                         {{ $product->description ?: 'Tidak ada deskripsi tambahan untuk produk ini.' }}
                     </div>
@@ -411,7 +411,7 @@
                     <div class="w-10 h-10 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto text-neutral-400">
                         <i data-lucide="message-square" class="w-5 h-5"></i>
                     </div>
-                    <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-300">Belum Ada Ulasan</p>
+                    <p class="text-sm font-semibold text-neutral-700 dark:text-neutral-300">{{ __('storefront.no_reviews_yet') }}</p>
                     <p class="text-xs text-neutral-500 max-w-sm mx-auto">
                         Jadilah yang pertama mencoba produk ini dan membagikan pengalaman berbelanja Anda!
                     </p>
@@ -475,11 +475,10 @@
         @if ($relatedProducts->isNotEmpty())
             <div class="pt-16 border-t border-black/5 dark:border-white/10 space-y-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">Produk Serupa
-                    </h2>
+                    <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">{{ __('storefront.similar_products') }}</h2>
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="text-xs sm:text-sm font-semibold text-theme-primary hover:underline">
-                        Lihat Semua
+                        {{ __('storefront.view_all') }}
                     </a>
                 </div>
 

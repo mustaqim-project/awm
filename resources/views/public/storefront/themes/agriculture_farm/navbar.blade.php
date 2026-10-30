@@ -90,7 +90,7 @@
             {{-- Dark Mode Toggle --}}
             <button type="button" @click="toggleDarkMode()"
                 class="p-2 sm:p-2.5 rounded-xl border border-emerald-900/10 dark:border-emerald-400/20 bg-emerald-900/[0.03] dark:bg-emerald-400/[0.05] text-emerald-900 dark:text-emerald-200 hover:bg-emerald-900/[0.08] dark:hover:bg-emerald-400/[0.1] transition flex items-center justify-center min-h-[40px] min-w-[40px]"
-                aria-label="Ubah Mode Tampilan"
+                aria-label="{{ __('storefront.toggle_display_mode') }}"
                 title="Mode Terang / Gelap">
                 <i data-lucide="sun" class="w-4 h-4 hidden dark:inline text-amber-400"></i>
                 <i data-lucide="moon" class="w-4 h-4 inline dark:hidden text-emerald-800"></i>

@@ -91,7 +91,7 @@
             <div class="flex items-center bg-black/[0.04] dark:bg-white/[0.06] p-0.5 rounded-xl border border-black/[0.04] dark:border-white/[0.06]">
                 <a href="{{ $idUrl }}"
                     class="px-2 py-1 rounded-[10px] text-[11px] font-bold tracking-wider transition-all {{ $currentLocale === 'id' ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs' : 'text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200' }}"
-                    title="Bahasa Indonesia">
+                    title="{{ __('storefront.indonesian_language') }}">
                     ID
                 </a>
                 <a href="{{ $enUrl }}"

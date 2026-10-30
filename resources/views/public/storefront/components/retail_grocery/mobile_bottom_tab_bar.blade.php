@@ -24,7 +24,7 @@
             class="flex flex-col items-center justify-center gap-1 transition-colors"
             style="color: {{ $isHome ? '#16A34A' : 'rgba(156, 163, 175, 1)' }};">
             <i data-lucide="home" class="w-5 h-5 {{ $isHome ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span class="font-medium {{ $isHome ? 'font-bold' : '' }}">Beranda</span>
+            <span class="font-medium {{ $isHome ? 'font-bold' : '' }}">{{ __('storefront.nav_home') }}</span>
         </a>
 
         {{-- Catalog Tab --}}
@@ -47,7 +47,7 @@
                           x-text="$store.cart.count()"></span>
                 </template>
             </div>
-            <span class="font-medium {{ $isCart ? 'font-bold' : '' }}">Pesanan</span>
+            <span class="font-medium {{ $isCart ? 'font-bold' : '' }}">{{ __('storefront.nav_orders') }}</span>
         </a>
 
         {{-- WA / Profile Tab --}}
@@ -61,7 +61,7 @@
         <a href="{{ $waLink }}" target="{{ $waNum ? '_blank' : '_self' }}"
             class="flex flex-col items-center justify-center gap-1 transition-colors text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200">
             <i data-lucide="message-circle" class="w-5 h-5 stroke-[1.6]"></i>
-            <span class="font-medium">Kontak</span>
+            <span class="font-medium">{{ __('storefront.nav_contact') }}</span>
         </a>
     </div>
 </nav>

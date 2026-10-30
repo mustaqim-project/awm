@@ -29,7 +29,7 @@
             <nav class="hidden md:flex items-center gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-rose-200/90 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-100/50 dark:hover:bg-rose-950/40 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -63,7 +63,7 @@
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-rose-200 dark:border-rose-900/60 text-xs font-semibold text-slate-700 dark:text-rose-200 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
-                    <span>Lacak Pesanan</span>
+                    <span>{{ __('storefront.order_tracking') }}</span>
                 </button>
 
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
@@ -90,7 +90,7 @@
             class="md:hidden py-4 border-t border-rose-200/60 dark:border-rose-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-rose-100 hover:bg-rose-50 dark:hover:bg-rose-950/40">
-                Beranda
+                {{ __('storefront.nav_home') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -107,13 +107,13 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-rose-100 hover:bg-rose-50 dark:hover:bg-rose-950/40">
-                    Concierge &amp; Kontak
+                    {{ __('storefront.concierge_kontak') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-rose-700 dark:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
-                <span>Lacak Pesanan Saya</span>
+                <span>{{ __('storefront.lacak_pesanan_saya') }}</span>
             </button>
         </div>
     </div>

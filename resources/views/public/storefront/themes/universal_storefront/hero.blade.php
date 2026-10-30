@@ -41,7 +41,7 @@
                     <button type="button" @click="$dispatch('open-order-track-modal')"
                         class="px-4 py-3.5 text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-400 hover:text-theme-primary transition flex items-center gap-1.5 min-h-[48px]">
                         <i data-lucide="search" class="w-4 h-4"></i>
-                        <span>Lacak Pesanan</span>
+                        <span>{{ __('storefront.order_tracking') }}</span>
                     </button>
                 </div>
             </div>

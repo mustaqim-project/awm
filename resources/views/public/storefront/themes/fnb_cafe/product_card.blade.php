@@ -124,15 +124,13 @@
                     style="background: rgba(139, 90, 43, 0.08); color: #8B5A2B;"
                     onmouseover="this.style.background='#8B5A2B'; this.style.color='#FFF';"
                     onmouseout="this.style.background='rgba(139, 90, 43, 0.08)'; this.style.color='#8B5A2B';"
-                    title="Tambah ke Keranjang">
+                    title="{{ __('storefront.add_to_cart') }}">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
                     class="px-3 py-1.5 rounded-full text-[11px] font-semibold transition"
-                    style="background: rgba(139, 90, 43, 0.08); color: #8B5A2B;">
-                    Detail
-                </a>
+                    style="background: rgba(139, 90, 43, 0.08); color: #8B5A2B;">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>

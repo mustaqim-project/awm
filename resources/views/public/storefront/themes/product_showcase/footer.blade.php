@@ -45,12 +45,12 @@
                     Eksplorasi Seri
                 </h4>
                 <ul class="space-y-2 text-xs text-rose-200/70">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-rose-300 transition-colors">Beranda Utama</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-rose-300 transition-colors">{{ __('storefront.home_main') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-rose-300 transition-colors">Daftar Seri Produk</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-rose-300 transition-colors">{{ __('storefront.daftar_seri_produk') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-rose-300 transition-colors">Kisah Di Balik Brand</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-rose-300 transition-colors">{{ __('storefront.kisah_di_balik_brand') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
                         <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-rose-300 transition-colors">Konsultasi Concierge</a></li>
@@ -58,7 +58,7 @@
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-rose-300 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
-                            <span>Lacak Paket Kiriman</span>
+                            <span>{{ __('storefront.lacak_paket_kiriman') }}</span>
                         </button>
                     </li>
                 </ul>

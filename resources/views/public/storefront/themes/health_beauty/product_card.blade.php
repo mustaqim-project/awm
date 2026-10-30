@@ -16,7 +16,7 @@
         @else
             <div class="w-full h-full flex flex-col items-center justify-center text-teal-300 dark:text-slate-600">
                 <i data-lucide="sparkles" class="w-12 h-12 stroke-1 mb-1 text-teal-400"></i>
-                <span class="text-[10px] uppercase font-bold tracking-wider">Perawatan Kulit</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider">{{ __('storefront.perawatan_kulit') }}</span>
             </div>
         @endif
 
@@ -58,15 +58,13 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2 rounded-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Beli atau Booking">
+                    title="{{ __('storefront.buy_or_booking') }}">
                     <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                     <span>Beli</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3.5 py-2 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 text-xs font-semibold hover:bg-teal-100 transition">
-                    Detail
-                </a>
+                    class="px-3.5 py-2 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 text-xs font-semibold hover:bg-teal-100 transition">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>

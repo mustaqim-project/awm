@@ -50,7 +50,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-6 py-4 text-base font-bold rounded-2xl border-2 shadow-sm transition-all duration-300 flex items-center gap-2 min-h-[50px] bg-white dark:bg-[#181E2A] text-neutral-800 dark:text-white border-red-300 dark:border-red-800/50 hover:bg-red-50/50">
                             <i data-lucide="message-circle" class="w-5 h-5 text-emerald-500"></i>
-                            <span>Order Cepat WA</span>
+                            <span>{{ __('storefront.order_cepat_wa') }}</span>
                         </a>
                     @endif
                 </div>

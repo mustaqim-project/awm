@@ -67,7 +67,7 @@
                     <button type="button" @click="$dispatch('open-order-track-modal')"
                         class="px-4 py-3.5 text-xs sm:text-sm font-semibold rounded-2xl text-sky-700 dark:text-sky-300 hover:bg-sky-50 dark:hover:bg-sky-950/30 transition flex items-center gap-1.5 min-h-[48px]">
                         <i data-lucide="search" class="w-4 h-4"></i>
-                        <span>Cek Status Nota</span>
+                        <span>{{ __('storefront.cek_status_nota') }}</span>
                     </button>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                                     <i data-lucide="washing-machine" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-sm text-neutral-900 dark:text-white">Estimasi Cepat Laundry</h4>
+                                    <h4 class="font-bold text-sm text-neutral-900 dark:text-white">{{ __('storefront.estimasi_cepat_laundry') }}</h4>
                                     <p class="text-[11px] text-neutral-500 dark:text-neutral-400">Pilih jenis cucian untuk order mudah</p>
                                 </div>
                             </div>

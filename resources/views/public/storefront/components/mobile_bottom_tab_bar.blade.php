@@ -46,16 +46,14 @@
         {{-- 1. Beranda / Home --}}
         <a href="{{ url('/' . $business->slug) }}"
             class="group flex flex-col items-center justify-center min-h-[48px] py-1 text-center transition-all duration-150 active:scale-95 focus:outline-none"
-            aria-label="Beranda">
+            aria-label="{{ __('storefront.nav_home') }}">
             <div class="relative p-1 rounded-xl transition-colors {{ $isHomeActive ? 'text-theme-primary dark:text-theme-primary' : 'text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-800 dark:group-hover:text-white' }}">
                 <i data-lucide="home" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 @if ($isHomeActive)
                     <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-theme-primary"></span>
                 @endif
             </div>
-            <span class="text-[10px] tracking-tight font-semibold mt-0.5 leading-none {{ $isHomeActive ? 'text-theme-primary font-bold' : 'text-neutral-500 dark:text-neutral-400' }}">
-                Beranda
-            </span>
+            <span class="text-[10px] tracking-tight font-semibold mt-0.5 leading-none {{ $isHomeActive ? 'text-theme-primary font-bold' : 'text-neutral-500 dark:text-neutral-400' }}">{{ __('storefront.nav_home') }}</span>
         </a>
 
         {{-- 2. Katalog / Menu / Layanan (If Active) --}}
@@ -97,7 +95,7 @@
         {{-- 4. Status / Lacak Pesanan --}}
         <button type="button" @click="$dispatch('open-order-track-modal')"
             class="group flex flex-col items-center justify-center min-h-[48px] py-1 text-center transition-all duration-150 active:scale-95 focus:outline-none"
-            aria-label="Lacak Pesanan">
+            aria-label="{{ __('storefront.order_tracking') }}">
             <div class="relative p-1 rounded-xl text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-800 dark:group-hover:text-white transition-colors">
                 <i data-lucide="clipboard-check" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
             </div>
@@ -122,13 +120,11 @@
         @elseif ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}"
                 class="group flex flex-col items-center justify-center min-h-[48px] py-1 text-center transition-all duration-150 active:scale-95 focus:outline-none"
-                aria-label="Kontak">
+                aria-label="{{ __('storefront.nav_contact') }}">
                 <div class="relative p-1 rounded-xl text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-800 dark:group-hover:text-white transition-colors">
                     <i data-lucide="phone-call" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
                 </div>
-                <span class="text-[10px] tracking-tight font-semibold mt-0.5 leading-none text-neutral-500 dark:text-neutral-400">
-                    Kontak
-                </span>
+                <span class="text-[10px] tracking-tight font-semibold mt-0.5 leading-none text-neutral-500 dark:text-neutral-400">{{ __('storefront.nav_contact') }}</span>
             </a>
         @else
             <button type="button" @click="toggleDarkMode()"

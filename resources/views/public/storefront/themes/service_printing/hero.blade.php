@@ -50,7 +50,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-6 py-3.5 text-sm sm:text-base font-semibold rounded-2xl border-2 shadow-sm transition-all duration-300 flex items-center gap-2 min-h-[48px] bg-white dark:bg-[#181E2A] text-neutral-800 dark:text-white border-purple-300 dark:border-purple-800/50 hover:bg-purple-50/50">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
-                            <span>Kirim File &amp; Cek Format</span>
+                            <span>{{ __('storefront.kirim_file_cek_format') }}</span>
                         </a>
                     @endif
                 </div>

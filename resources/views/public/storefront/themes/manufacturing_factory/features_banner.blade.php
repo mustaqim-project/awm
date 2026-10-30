@@ -44,7 +44,7 @@
                 <i data-lucide="file-check" class="w-5 h-5 text-orange-600"></i>
             </div>
             <div>
-                <h4 class="font-heading font-black text-xs sm:text-sm text-slate-950 dark:text-white uppercase">Maklon Resmi</h4>
+                <h4 class="font-heading font-black text-xs sm:text-sm text-slate-950 dark:text-white uppercase">{{ __('storefront.maklon_resmi') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Kerahasiaan formula &amp; desain</p>
             </div>
         </div>

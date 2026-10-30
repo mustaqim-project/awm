@@ -43,20 +43,20 @@
                     Buku Menu &amp; Reservasi
                 </h4>
                 <ul class="space-y-2 text-xs text-amber-200/70">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-300 transition-colors">Beranda Resto</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-300 transition-colors">{{ __('storefront.home_resto') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-300 transition-colors">Daftar Menu Lengkap</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-300 transition-colors">{{ __('storefront.daftar_menu_lengkap') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-300 transition-colors">Tentang Dapur Kami</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-300 transition-colors">{{ __('storefront.tentang_dapur_kami') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-300 transition-colors">Alamat &amp; Reservasi</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-300 transition-colors">{{ __('storefront.alamat_reservasi') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-amber-300 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i>
-                            <span>Status Antaran Pesanan</span>
+                            <span>{{ __('storefront.status_antaran_pesanan') }}</span>
                         </button>
                     </li>
                 </ul>
@@ -64,9 +64,7 @@
 
             {{-- Col 3: Reservasi & Jam Buka --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-amber-100">
-                    Reservasi Meja &amp; Acara
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-amber-100">{{ __('storefront.reservasi_meja_acara') }}</h4>
                 <div class="space-y-2.5 text-xs text-amber-200/70">
                     @if ($hasWhatsapp)
                         <div>

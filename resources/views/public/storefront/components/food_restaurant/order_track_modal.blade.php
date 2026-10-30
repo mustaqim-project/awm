@@ -19,9 +19,7 @@
                         <i data-lucide="package-search" class="w-4 h-4"></i>
                     </div>
                     <div>
-                        <h3 class="font-heading font-bold text-base text-neutral-900 dark:text-white leading-tight">
-                            Lacak Status Pesanan
-                        </h3>
+                        <h3 class="font-heading font-bold text-base text-neutral-900 dark:text-white leading-tight">{{ __('storefront.track_order_status') }}</h3>
                         <p class="text-[11px] text-neutral-500">Masukkan No. Invoice atau No. HP Anda</p>
                     </div>
                 </div>
@@ -37,14 +35,14 @@
                         Nomor Pesanan / Invoice
                     </label>
                     <input type="text" x-model="$store.orderTracking.identifier" required
-                        placeholder="Contoh: INV/2026/... atau 0812..."
+                        placeholder="{{ __('storefront.track_input_placeholder') }}"
                         class="w-full px-3.5 py-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-white text-sm focus:outline-hidden focus:ring-2 focus:ring-[#991B1B] transition">
                 </div>
 
                 <button type="submit" :disabled="$store.orderTracking.loading"
                     class="w-full py-2.5 px-4 rounded-xl text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition active:scale-95 disabled:opacity-50"
                     style="background-color: #991B1B;">
-                    <span x-show="!$store.orderTracking.loading">Cek Status Sekarang</span>
+                    <span x-show="!$store.orderTracking.loading">{{ __('storefront.check_status_now') }}</span>
                     <span x-show="$store.orderTracking.loading" class="inline-flex items-center gap-2">
                         <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

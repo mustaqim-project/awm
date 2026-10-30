@@ -43,7 +43,7 @@
         {{-- Breadcrumb & Header Title --}}
         <div class="flex flex-col gap-2">
             <div class="flex items-center gap-2 text-xs text-neutral-500">
-                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+                <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
                 <span>/</span>
                 <span class="text-neutral-800 dark:text-neutral-200 font-medium">
                     {{ $isArtisanBrew ? 'Menu Kopi' : 'Katalog Toko' }}
@@ -73,7 +73,7 @@
                 <div class="sm:col-span-5 relative">
                     <i data-lucide="search" class="w-4 h-4 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                     <input type="text" name="q" value="{{ $search }}"
-                        placeholder="Cari nama produk atau deskripsi..."
+                        placeholder="{{ __('storefront.search_products_placeholder') }}"
                         class="w-full pl-10 pr-4 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-theme-primary">
                 </div>
 
@@ -111,7 +111,7 @@
                     @if ($search !== '' || !empty($categoryId) || $sort !== 'popular')
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="p-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 transition min-h-[44px] flex items-center justify-center"
-                            title="Reset Filter">
+                            title="{{ __('storefront.reset_filter') }}">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </a>
                     @endif
@@ -149,16 +149,14 @@
                     class="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-400 mx-auto flex items-center justify-center">
                     <i data-lucide="package-x" class="w-8 h-8"></i>
                 </div>
-                <h3 class="font-heading font-bold text-lg text-neutral-800 dark:text-neutral-200">
-                    Tidak ada produk ditemukan
-                </h3>
+                <h3 class="font-heading font-bold text-lg text-neutral-800 dark:text-neutral-200">{{ __('storefront.no_products_found') }}</h3>
                 <p class="text-sm text-neutral-500 max-w-sm mx-auto">
                     Coba ubah kata kunci pencarian Anda atau reset filter untuk menampilkan semua produk.
                 </p>
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[12px] font-medium text-sm theme-btn-primary min-h-[44px]">
                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                    <span>Reset Semua Filter</span>
+                    <span>{{ __('storefront.reset_all_filters') }}</span>
                 </a>
             </div>
         @endif

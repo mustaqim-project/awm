@@ -29,7 +29,7 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-[#6B5744] dark:text-[#CBBDB1] hover:text-[#8B5A2B] dark:hover:text-[#FAF7F2] hover:bg-[#F2ECE3] dark:hover:bg-[#201914] transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -64,13 +64,13 @@
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-[#E8DEC8] dark:border-[#382B21] text-xs font-semibold text-[#6B5744] dark:text-[#CBBDB1] hover:bg-[#F2ECE3] dark:hover:bg-[#201914] transition">
                     <i data-lucide="clock" class="w-3.5 h-3.5 text-[#8B5A2B]"></i>
-                    <span>Cek Pesanan</span>
+                    <span>{{ __('storefront.check_order') }}</span>
                 </button>
 
                 {{-- Cart Trigger --}}
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#8B5A2B] hover:bg-[#724822] text-white font-semibold text-xs shadow-md shadow-[#8B5A2B]/20 transition active:scale-95"
-                    title="Pesanan Kopi">
+                    title="{{ __('storefront.coffee_orders') }}">
                     <i data-lucide="cup-soda" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Pesanan</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
@@ -92,7 +92,7 @@
             class="md:hidden py-4 border-t border-[#E8DEC8] dark:border-[#2C211A] space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded-xl text-sm font-semibold text-[#3D2B1F] dark:text-[#FAF7F2] hover:bg-[#F2ECE3] dark:hover:bg-[#201914]">
-                Beranda
+                {{ __('storefront.nav_home') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -109,13 +109,13 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded-xl text-sm font-semibold text-[#3D2B1F] dark:text-[#FAF7F2] hover:bg-[#F2ECE3] dark:hover:bg-[#201914]">
-                    Lokasi Kedai &amp; Jam Buka
+                    {{ __('storefront.lokasi_kedai_jam_buka') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
                 class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold text-[#8B5A2B] dark:text-[#C88A58] hover:bg-[#F2ECE3] dark:hover:bg-[#201914] flex items-center gap-2">
                 <i data-lucide="clock" class="w-4 h-4"></i>
-                <span>Lacak Pesanan Antar / Takeaway</span>
+                <span>{{ __('storefront.lacak_pesanan_antar_takeaway') }}</span>
             </button>
         </div>
     </div>

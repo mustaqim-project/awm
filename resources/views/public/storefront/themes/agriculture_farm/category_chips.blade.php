@@ -31,7 +31,7 @@
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition border min-h-[44px] {{ !request()->filled('category') ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs' : 'bg-white dark:bg-[#07130A] text-neutral-700 dark:text-emerald-100 border-emerald-900/10 dark:border-emerald-500/15 hover:border-emerald-500' }}">
                 <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                <span>Semua Komoditas</span>
+                <span>{{ __('storefront.semua_komoditas') }}</span>
             </a>
 
             @php

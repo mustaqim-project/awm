@@ -62,7 +62,7 @@
 
     {{-- Breadcrumb --}}
     <nav class="flex items-center gap-2 text-xs text-neutral-500">
-        <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">Beranda</a>
+        <a href="{{ url('/' . $business->slug) }}" class="hover:text-theme-primary transition">{{ __('storefront.nav_home') }}</a>
         <span>/</span>
         <a href="{{ url('/' . $business->slug . '/artikel') }}" class="hover:text-theme-primary transition">Artikel</a>
         <span>/</span>

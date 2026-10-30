@@ -21,7 +21,7 @@
                     <span class="font-heading font-extrabold text-base sm:text-lg text-slate-900 dark:text-white leading-tight group-hover:text-sky-600 transition-colors">
                         {{ $business->name }}
                     </span>
-                    <span class="text-[9px] uppercase tracking-widest text-sky-600 dark:text-sky-400 font-bold">Layanan Jasa &amp; Perawatan</span>
+                    <span class="text-[9px] uppercase tracking-widest text-sky-600 dark:text-sky-400 font-bold">{{ __('storefront.layanan_jasa_perawatan') }}</span>
                 </div>
             </a>
 
@@ -29,13 +29,13 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-sky-200/90 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-sky-200/90 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 transition flex items-center gap-1.5">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sky-500"></i>
-                        <span>Daftar Layanan &amp; Tarif</span>
+                        <span>{{ __('storefront.daftar_layanan_tarif') }}</span>
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('about'))
@@ -47,7 +47,7 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-sky-200/90 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-100/50 dark:hover:bg-sky-950/40 transition">
-                        Outlet &amp; Kontak
+                        {{ __('storefront.outlet_kontak') }}
                     </a>
                 @endif
             </nav>
@@ -70,7 +70,7 @@
                 {{-- Cart Trigger --}}
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs shadow-md shadow-sky-600/20 transition active:scale-95"
-                    title="Order Layanan">
+                    title="{{ __('storefront.order_service') }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Order</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
@@ -92,12 +92,12 @@
             class="md:hidden py-4 border-t border-sky-200/60 dark:border-sky-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-sky-100 hover:bg-sky-100/50 dark:hover:bg-sky-950/40">
-                Beranda
+                {{ __('storefront.nav_home') }}
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-sky-100 hover:bg-sky-100/50 dark:hover:bg-sky-950/40">
-                    Daftar Layanan &amp; Tarif
+                    {{ __('storefront.daftar_layanan_tarif') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))

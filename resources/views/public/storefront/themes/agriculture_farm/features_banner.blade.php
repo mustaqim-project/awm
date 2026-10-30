@@ -56,9 +56,7 @@
                 <i data-lucide="truck" class="w-6 h-6"></i>
             </div>
             <div>
-                <h4 class="font-heading font-normal text-base text-neutral-900 dark:text-emerald-100 leading-snug">
-                    Pengiriman Terproteksi
-                </h4>
+                <h4 class="font-heading font-normal text-base text-neutral-900 dark:text-emerald-100 leading-snug">{{ __('storefront.pengiriman_terproteksi') }}</h4>
                 <p class="text-xs text-neutral-600 dark:text-emerald-200/70 mt-1 leading-relaxed">
                     Kemasan sirkulasi udara khusus menjaga sayur &amp; buah tetap renyah hingga sampai di rumah.
                 </p>

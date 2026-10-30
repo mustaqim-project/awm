@@ -32,7 +32,7 @@
             class="flex flex-col items-center justify-center gap-1 transition-colors min-h-[44px]"
             style="color: {{ $isHome ? '#7C3AED' : 'rgba(156, 163, 175, 1)' }};">
             <i data-lucide="home" class="w-5 h-5 {{ $isHome ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span class="font-medium {{ $isHome ? 'font-extrabold text-purple-700 dark:text-purple-400' : '' }}">Beranda</span>
+            <span class="font-medium {{ $isHome ? 'font-extrabold text-purple-700 dark:text-purple-400' : '' }}">{{ __('storefront.nav_home') }}</span>
         </a>
 
         {{-- 2. Sesi Layanan Tab --}}
@@ -40,7 +40,7 @@
             class="flex flex-col items-center justify-center gap-1 transition-colors min-h-[44px]"
             style="color: {{ $isCatalog ? '#7C3AED' : 'rgba(156, 163, 175, 1)' }};">
             <i data-lucide="calendar" class="w-5 h-5 {{ $isCatalog ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span class="font-medium {{ $isCatalog ? 'font-extrabold text-purple-700 dark:text-purple-400' : '' }}">Layanan</span>
+            <span class="font-medium {{ $isCatalog ? 'font-extrabold text-purple-700 dark:text-purple-400' : '' }}">{{ __('storefront.nav_services') }}</span>
         </a>
 
         {{-- 3. Tiket Reservasi Tab (Cart) --}}

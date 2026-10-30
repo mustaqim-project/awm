@@ -44,7 +44,7 @@
                 <i data-lucide="bell" class="w-5 h-5 text-sky-600"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Layanan 24 Jam</h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.layanan_24_jam') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Resepsionis &amp; staf sigap melayani</p>
             </div>
         </div>

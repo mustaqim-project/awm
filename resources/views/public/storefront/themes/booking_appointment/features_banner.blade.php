@@ -40,9 +40,7 @@
                 <i data-lucide="bell-ring" class="w-5 h-5"></i>
             </div>
             <div>
-                <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 dark:text-purple-100 mb-0.5">
-                    Pengingat WA Otomatis
-                </h3>
+                <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 dark:text-purple-100 mb-0.5">{{ __('storefront.pengingat_wa_otomatis') }}</h3>
                 <p class="text-[11px] text-slate-500 dark:text-purple-300/70 leading-relaxed">
                     Notifikasi jadwal dan petunjuk persiapan pra-kunjungan dikirimkan otomatis.
                 </p>

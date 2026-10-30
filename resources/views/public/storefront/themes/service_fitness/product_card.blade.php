@@ -60,7 +60,7 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="p-2.5 rounded-2xl bg-lime-500 hover:bg-lime-400 text-black font-black transition active:scale-95 shadow-sm min-w-[42px] min-h-[42px] flex items-center justify-center"
-                    title="Daftar / Beli">
+                    title="{{ __('storefront.register_or_buy') }}">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                 </button>
             @else

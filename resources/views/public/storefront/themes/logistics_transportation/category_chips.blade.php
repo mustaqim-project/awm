@@ -6,14 +6,12 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-black text-2xl sm:text-3xl text-slate-900 dark:text-white uppercase">
-                    Kategori Armada &amp; Layanan Kargo
-                </h2>
+                <h2 class="font-heading font-black text-2xl sm:text-3xl text-slate-900 dark:text-white uppercase">{{ __('storefront.kategori_armada_layanan_kargo') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-amber-100/70">Pilih jenis armada pengangkutan atau rute pengiriman yang sesuai dengan muatan bisnis Anda</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-bold text-amber-700 dark:text-amber-300 hover:underline flex items-center gap-1 uppercase">
-                <span>Semua Armada</span>
+                <span>{{ __('storefront.semua_armada') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

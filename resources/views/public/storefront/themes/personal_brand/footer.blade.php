@@ -45,9 +45,9 @@
                     Program &amp; Navigasi
                 </h4>
                 <ul class="space-y-2 text-xs text-zinc-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-cyan-400 transition-colors">Beranda Utama</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-cyan-400 transition-colors">{{ __('storefront.home_main') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-cyan-400 transition-colors">Daftar Sesi &amp; Toolkit Digital</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-cyan-400 transition-colors">{{ __('storefront.daftar_sesi_toolkit_digital') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-cyan-400 transition-colors">Biografi, Prestasi &amp; Media Kit</a></li>
@@ -58,7 +58,7 @@
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-cyan-400 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="receipt" class="w-3.5 h-3.5 text-cyan-500"></i>
-                            <span>Status Sesi &amp; Invoice</span>
+                            <span>{{ __('storefront.status_sesi_invoice') }}</span>
                         </button>
                     </li>
                 </ul>

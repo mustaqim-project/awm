@@ -7,13 +7,11 @@
         <div class="flex items-center justify-between gap-4 mb-4">
             <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">
-                    Pilihan Produk &amp; Layanan
-                </h2>
+                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">{{ __('storefront.pilihan_produk_layanan') }}</h2>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 flex items-center gap-1 group">
-                <span>Lihat Semua</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
         </div>

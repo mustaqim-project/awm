@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-sm uppercase tracking-wider shadow-md shadow-amber-500/25 transition-all flex items-center gap-2 active:scale-95">
                             <i data-lucide="truck" class="w-4 h-4"></i>
-                            <span>Pilih Armada &amp; Layanan</span>
+                            <span>{{ __('storefront.pilih_armada_layanan') }}</span>
                         </a>
                     @endif
 
@@ -98,7 +98,7 @@
 
                                 <div>
                                     <span class="text-xs font-black uppercase tracking-widest text-amber-400">Fleet Precision &bull; Nationwide</span>
-                                    <h3 class="font-heading font-black text-2xl mt-1 text-white uppercase">Sistem Logistik Andal</h3>
+                                    <h3 class="font-heading font-black text-2xl mt-1 text-white uppercase">{{ __('storefront.sistem_logistik_andal') }}</h3>
                                     <p class="text-xs text-slate-300 leading-relaxed mt-2">
                                         Didukung sistem pemantauan posisi berkala, jaringan sopir tersertifikasi, dan asuransi muatan menyeluruh untuk ketenangan bisnis Anda.
                                     </p>

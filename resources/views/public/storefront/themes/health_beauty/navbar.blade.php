@@ -30,21 +30,21 @@
             <nav class="hidden md:flex items-center gap-1 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/60 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
 
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/60 transition flex items-center gap-1.5">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-teal-600"></i>
-                        <span>Produk &amp; Treatment</span>
+                        <span>{{ __('storefront.produk_treatment') }}</span>
                     </a>
                 @endif
 
                 @if ($landingPage->isPageActive('about'))
                     <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                         class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/60 transition">
-                        Profil Dokter &amp; Klinik
+                        {{ __('storefront.profil_dokter_klinik') }}
                     </a>
                 @endif
 
@@ -58,9 +58,9 @@
                 {{-- Status Janji / Pesanan Modal Trigger --}}
                 <button type="button" @click="$dispatch('open-order-track-modal')"
                     class="px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-950/60 transition flex items-center gap-1.5"
-                    title="Cek Status Pesanan / Treatment">
+                    title="{{ __('storefront.check_order_treatment_status') }}">
                     <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-teal-600"></i>
-                    <span class="hidden lg:inline">Cek Status Treatment</span>
+                    <span class="hidden lg:inline">{{ __('storefront.cek_status_treatment') }}</span>
                 </button>
             </nav>
 
@@ -98,7 +98,7 @@
                 {{-- Mobile Menu Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
                     class="md:hidden p-2 rounded-full border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200"
-                    aria-label="Buka Menu">
+                    aria-label="{{ __('storefront.open_menu') }}">
                     <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenuOpen"></i>
                     <i data-lucide="x" class="w-5 h-5" x-show="mobileMenuOpen" style="display:none"></i>
                 </button>
@@ -110,16 +110,16 @@
     {{-- Mobile Navigation Dropdown --}}
     <div x-show="mobileMenuOpen" x-transition.origin.top class="md:hidden border-t border-teal-100 dark:border-teal-950 bg-white dark:bg-[#0F171A] px-4 py-4 space-y-2 shadow-lg" style="display:none">
         <a href="{{ url('/' . $business->slug) }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-teal-50 dark:hover:bg-teal-950/60">
-            Beranda
+            {{ __('storefront.nav_home') }}
         </a>
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-teal-50 dark:hover:bg-teal-950/60">
-                Produk &amp; Treatment
+                {{ __('storefront.produk_treatment') }}
             </a>
         @endif
         @if ($landingPage->isPageActive('about'))
             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-teal-50 dark:hover:bg-teal-950/60">
-                Profil Dokter &amp; Klinik
+                {{ __('storefront.profil_dokter_klinik') }}
             </a>
         @endif
         @if ($landingPage->isPageActive('contact'))
@@ -130,7 +130,7 @@
         <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"
             class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/60 flex items-center gap-2">
             <i data-lucide="clipboard-check" class="w-4 h-4"></i>
-            <span>Cek Status Pesanan / Treatment</span>
+            <span>{{ __('storefront.cek_status_pesanan_treatment') }}</span>
         </button>
         @if (!empty($hasWhatsapp))
             <div class="pt-2">

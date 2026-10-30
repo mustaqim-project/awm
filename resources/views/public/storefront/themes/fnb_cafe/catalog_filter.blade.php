@@ -16,7 +16,7 @@
         <div class="sm:col-span-5 relative">
             <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2" style="color: #C88A58;"></i>
             <input type="text" name="q" value="{{ $search }}"
-                placeholder="Cari kopi, blend, atau origin..."
+                placeholder="{{ __('storefront.search_coffee_placeholder') }}"
                 class="w-full pl-10 pr-4 py-2.5 rounded-full text-[16px] sm:text-sm focus:outline-none focus:ring-2 transition"
                 style="border: 1.5px solid rgba(139, 90, 43, 0.12); background: #FAF7F2; color: #3D2B1F; --tw-ring-color: #8B5A2B;">
         </div>

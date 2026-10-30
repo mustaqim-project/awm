@@ -11,9 +11,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
-                    SLA &amp; Garansi Resmi
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.sla_garansi_resmi') }}</h4>
                 <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
                     Jaminan mutu kerja dan dukungan teknis berstandar SLA.
                 </p>
@@ -26,9 +24,7 @@
                 <i data-lucide="file-check-2" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
-                    Faktur Pajak PPN
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.faktur_pajak_ppn') }}</h4>
                 <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
                     Kelengkapan dokumen perpajakan resmi untuk pembukuan entitas.
                 </p>
@@ -41,9 +37,7 @@
                 <i data-lucide="calculator" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
-                    Quotation &amp; PO Resmi
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-slate-900 dark:text-white">{{ __('storefront.quotation_po_resmi') }}</h4>
                 <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">
                     Skema pembayaran bertahap dan termin sesuai kesepakatan PO.
                 </p>

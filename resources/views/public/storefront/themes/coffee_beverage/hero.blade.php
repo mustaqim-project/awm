@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-6 py-3.5 rounded-full bg-[#8B5A2B] hover:bg-[#724822] text-white font-semibold text-sm shadow-md shadow-[#8B5A2B]/25 transition-all flex items-center gap-2 active:scale-95">
                             <i data-lucide="coffee" class="w-4 h-4"></i>
-                            <span>Pilih Menu Kopi</span>
+                            <span>{{ __('storefront.pilih_menu_kopi') }}</span>
                         </a>
                     @endif
 
@@ -55,7 +55,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-5 py-3.5 rounded-full bg-white dark:bg-[#201914] hover:bg-[#F2ECE3] dark:hover:bg-[#2C231C] text-[#3D2B1F] dark:text-[#FAF7F2] border border-[#E8DEC8] dark:border-[#382B21] font-semibold text-sm transition-all flex items-center gap-2 shadow-2xs">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
-                            <span>Pesan Meja / Beans</span>
+                            <span>{{ __('storefront.pesan_meja_beans') }}</span>
                         </a>
                     @endif
                 </div>

@@ -8,7 +8,7 @@
                 <i data-lucide="dumbbell" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">Alat Beban &amp; Kardio Lengkap</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-black text-neutral-900 dark:text-white uppercase">{{ __('storefront.alat_beban_kardio_lengkap') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Treadmill, squat rack, dumbell hingga 50kg terawat prima.</p>
             </div>
         </div>

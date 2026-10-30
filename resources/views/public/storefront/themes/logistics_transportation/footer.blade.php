@@ -41,24 +41,22 @@
 
             {{-- Col 2: Layanan & Rute --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-black text-xs uppercase tracking-wider text-amber-100">
-                    Layanan &amp; Rute
-                </h4>
+                <h4 class="font-heading font-black text-xs uppercase tracking-wider text-amber-100">{{ __('storefront.layanan_rute') }}</h4>
                 <ul class="space-y-2 text-xs text-slate-300">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">Beranda Utama</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.home_main') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-400 transition-colors">Daftar Armada &amp; Tarif</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.daftar_armada_tarif') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-400 transition-colors">Jaringan Hub &amp; Rute</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-400 transition-colors">Pool Armada &amp; Kontak</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-400 transition-colors">{{ __('storefront.pool_armada_kontak') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-amber-400 transition-colors text-left flex items-center gap-1.5 uppercase font-bold">
                             <i data-lucide="scan-line" class="w-3.5 h-3.5 text-amber-400"></i>
-                            <span>Lacak Nomor Resi / Muatan</span>
+                            <span>{{ __('storefront.lacak_nomor_resi_muatan') }}</span>
                         </button>
                     </li>
                 </ul>

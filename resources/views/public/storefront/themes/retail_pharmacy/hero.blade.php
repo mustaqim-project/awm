@@ -50,7 +50,7 @@
                         <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                             class="px-6 py-3.5 text-sm sm:text-base font-semibold rounded-2xl border-2 shadow-sm transition-all duration-300 flex items-center gap-2 min-h-[48px] bg-white dark:bg-[#181E2A] text-neutral-800 dark:text-white border-teal-300 dark:border-teal-800/50 hover:bg-teal-50/50">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
-                            <span>Kirim Foto Resep Dokter</span>
+                            <span>{{ __('storefront.kirim_foto_resep_dokter') }}</span>
                         </a>
                     @endif
                 </div>

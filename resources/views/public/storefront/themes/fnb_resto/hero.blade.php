@@ -53,7 +53,7 @@
                         <a href="{{ url('/' . $business->slug . '/reservasi') }}"
                             class="px-6 py-3.5 text-sm sm:text-base font-semibold rounded-2xl border-2 shadow-sm transition-all duration-300 flex items-center gap-2 min-h-[48px] bg-white dark:bg-[#181E2A] text-neutral-800 dark:text-white border-amber-300 dark:border-amber-800/50 hover:bg-amber-50/50">
                             <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
-                            <span>Reservasi Meja</span>
+                            <span>{{ __('storefront.reservasi_meja') }}</span>
                         </a>
                     @endif
                 </div>

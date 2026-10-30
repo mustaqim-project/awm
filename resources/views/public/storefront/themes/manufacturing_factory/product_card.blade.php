@@ -57,7 +57,7 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-3.5 py-2 rounded bg-slate-900 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5 active:scale-95"
-                    title="Tambah ke RFQ">
+                    title="{{ __('storefront.add_to_rfq') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     <span>RFQ</span>
                 </button>

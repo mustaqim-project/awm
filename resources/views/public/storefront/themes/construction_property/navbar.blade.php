@@ -29,13 +29,13 @@
             <nav class="hidden md:flex items-center gap-1.5 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-slate-800 transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
                         <i data-lucide="building" class="w-3.5 h-3.5 text-amber-600"></i>
-                        <span>Portofolio &amp; Layanan</span>
+                        <span>{{ __('storefront.portofolio_layanan') }}</span>
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('about'))
@@ -47,7 +47,7 @@
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-100/50 dark:hover:bg-slate-800 transition">
-                        Kontak &amp; Kantor
+                        {{ __('storefront.kontak_kantor_2') }}
                     </a>
                 @endif
             </nav>
@@ -92,12 +92,12 @@
             class="md:hidden py-4 border-t border-amber-200/60 dark:border-amber-950/60 space-y-2">
             <a href="{{ url('/' . $business->slug) }}"
                 class="block px-3 py-2 rounded text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:bg-amber-100/50 dark:hover:bg-slate-800">
-                Beranda Perusahaan
+                {{ __('storefront.nav_home') }} Perusahaan
             </a>
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="block px-3 py-2 rounded text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:bg-amber-100/50 dark:hover:bg-slate-800">
-                    Portofolio &amp; Layanan
+                    {{ __('storefront.portofolio_layanan') }}
                 </a>
             @endif
             @if ($landingPage->isPageActive('about'))
@@ -109,7 +109,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2 rounded text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200 hover:bg-amber-100/50 dark:hover:bg-slate-800">
-                    Konsultasi &amp; Kontak
+                    {{ __('storefront.konsultasi_kontak') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"

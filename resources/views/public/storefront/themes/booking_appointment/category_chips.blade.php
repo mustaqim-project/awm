@@ -8,16 +8,14 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 dark:text-purple-100 leading-tight">
-                    Pilihan Kategori Sesi &amp; Layanan
-                </h2>
+                <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 dark:text-purple-100 leading-tight">{{ __('storefront.pilihan_kategori_sesi_layanan') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-purple-300/70 mt-0.5">
                     Pilih jenis perawatan atau sesi konsultasi yang ingin Anda reservasi
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-bold text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 flex items-center gap-1 shrink-0 transition">
-                <span>Seluruh Layanan</span>
+                <span>{{ __('storefront.seluruh_layanan') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -28,7 +26,7 @@
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="flex-shrink-0 inline-flex items-center gap-2 min-h-[44px] px-4.5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 border {{ empty($selectedCatId) ? 'bg-purple-600 text-white border-purple-600 shadow-md shadow-purple-600/25' : 'bg-white/80 dark:bg-[#161224] text-slate-800 dark:text-purple-200 border-purple-200/80 dark:border-purple-900/60 hover:border-purple-400 hover:text-purple-700 dark:hover:text-purple-300' }}">
                 <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                <span>Semua Sesi</span>
+                <span>{{ __('storefront.semua_sesi') }}</span>
             </a>
 
             @foreach ($productCategories->take(12) as $cat)

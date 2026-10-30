@@ -9,7 +9,7 @@
                 <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Outlet Resmi Terverifikasi</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.outlet_resmi_terverifikasi') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Produk dan layanan 100% original dari merchant terpercaya.</p>
             </div>
         </div>
@@ -19,7 +19,7 @@
                 <i data-lucide="credit-card" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Pembayaran Mudah</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.pembayaran_mudah') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Mendukung transfer bank, QRIS, e-wallet, dan COD.</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <i data-lucide="truck" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Pengiriman Aman</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.pengiriman_aman') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Ekspedisi terpercaya dengan pelacakan nomor resi otomatis.</p>
             </div>
         </div>

@@ -56,9 +56,7 @@
                 <i data-lucide="trending-up" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
             <div>
-                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">
-                    Solusi Terarah
-                </h4>
+                <h4 class="font-heading font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">{{ __('storefront.solusi_terarah') }}</h4>
                 <p class="text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 line-clamp-2">
                     Skema kerja kustom sesuai skala &amp; target korporat.
                 </p>

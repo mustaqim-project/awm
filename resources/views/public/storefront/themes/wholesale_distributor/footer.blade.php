@@ -45,9 +45,9 @@
                     Pusat Grosir
                 </h4>
                 <ul class="space-y-2 text-xs text-slate-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-400 transition-colors">Beranda Gudang</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-400 transition-colors">{{ __('storefront.home_warehouse') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-400 transition-colors">Katalog Harga Grosir</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-400 transition-colors">{{ __('storefront.katalog_harga_grosir') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-400 transition-colors">Armada &amp; Jangkauan Rute</a></li>

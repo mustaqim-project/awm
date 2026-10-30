@@ -31,7 +31,7 @@
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold transition border min-h-[44px] {{ !request()->filled('category') ? 'bg-amber-600 text-white border-amber-600 shadow-xs' : 'bg-white dark:bg-[#221810] text-neutral-700 dark:text-amber-100 border-amber-900/10 dark:border-amber-500/15 hover:border-amber-500' }}">
                 <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                <span>Semua Etalase</span>
+                <span>{{ __('storefront.semua_etalase') }}</span>
             </a>
 
             @foreach ($productCategories->take(12) as $cat)

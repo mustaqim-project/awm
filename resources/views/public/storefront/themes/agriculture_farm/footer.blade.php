@@ -48,7 +48,7 @@
                     <li>
                         <a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                            <span>Beranda Utama</span>
+                            <span>{{ __('storefront.home_main') }}</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
@@ -63,7 +63,7 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                <span>Profil Kebun &amp; Mitra Tani</span>
+                                <span>{{ __('storefront.profil_kebun_mitra_tani') }}</span>
                             </a>
                         </li>
                     @endif

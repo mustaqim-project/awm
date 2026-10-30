@@ -43,24 +43,22 @@
 
             {{-- Col 2: Navigasi Cepat & Katalog --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Navigasi &amp; Layanan
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.nav_and_services') }}</h4>
                 <ul class="space-y-2 text-xs text-neutral-400">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-white transition-colors">Beranda</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-white transition-colors">{{ __('storefront.nav_home') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-white transition-colors">Katalog Produk Cetak</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-white transition-colors">{{ __('storefront.katalog_produk_cetak') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
                         <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-white transition-colors">Mesin & Spesifikasi</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
-                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-white transition-colors">Kirim File & Order</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-white transition-colors">{{ __('storefront.kirim_file_order') }}</a></li>
                     @endif
                     <li>
                         <button type="button" @click="$store.orderTracking.open()" class="hover:text-white transition-colors text-left flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="package-search" class="w-3.5 h-3.5" style="color: #7C3AED;"></i>
-                            <span>Lacak Status Pesanan</span>
+                            <span>{{ __('storefront.track_order_status') }}</span>
                         </button>
                     </li>
                 </ul>
@@ -68,9 +66,7 @@
 
             {{-- Col 3: Jam Operasional Bisnis --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Jam Operasional
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.operating_hours') }}</h4>
                 @php
                     $hours = (array) ($landingPage->operational_hours ?? []);
                 @endphp
@@ -93,9 +89,7 @@
 
             {{-- Col 4: Kepercayaan & Hubungi Kami --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">
-                    Pusat Kontak Resmi
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-white">{{ __('storefront.official_contact_center') }}</h4>
                 <div class="space-y-2 text-xs text-neutral-400">
                     @if ($landingPage->whatsapp_number || $business->phone)
                         <div class="flex items-center gap-2">

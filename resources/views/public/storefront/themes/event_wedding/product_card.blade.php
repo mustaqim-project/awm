@@ -16,7 +16,7 @@
         @else
             <div class="w-full h-full flex flex-col items-center justify-center text-rose-300 dark:text-zinc-600">
                 <i data-lucide="sparkles" class="w-12 h-12 stroke-1 mb-1 text-amber-400"></i>
-                <span class="text-[10px] uppercase font-bold tracking-wider">Paket Perayaan</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider">{{ __('storefront.paket_perayaan') }}</span>
             </div>
         @endif
 
@@ -58,15 +58,13 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2 rounded-full bg-rose-700 hover:bg-rose-800 text-white text-xs font-semibold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Pilih Paket">
+                    title="{{ __('storefront.select_package') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>Pilih</span>
+                    <span>{{ __('storefront.btn_select') }}</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3.5 py-2 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 text-xs font-semibold hover:bg-rose-100 transition">
-                    Lihat
-                </a>
+                    class="px-3.5 py-2 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 text-xs font-semibold hover:bg-rose-100 transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

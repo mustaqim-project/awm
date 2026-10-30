@@ -48,7 +48,7 @@
                     <li>
                         <a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                            <span>Beranda Utama</span>
+                            <span>{{ __('storefront.home_main') }}</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
@@ -63,7 +63,7 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                                <span>Dapur Pembuat &amp; Resep</span>
+                                <span>{{ __('storefront.dapur_pembuat_resep') }}</span>
                             </a>
                         </li>
                     @endif
@@ -78,7 +78,7 @@
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-amber-300 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i>
-                            <span>Status Pre-Order Kue</span>
+                            <span>{{ __('storefront.status_pre_order_kue') }}</span>
                         </button>
                     </li>
                 </ul>

@@ -56,7 +56,7 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-700 dark:text-slate-200 transition active:scale-95 shadow-2xs flex items-center justify-center min-w-[40px] min-h-[40px]"
-                    title="Tambah ke Order Pengadaan">
+                    title="{{ __('storefront.add_to_procurement') }}">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                 </button>
             @else

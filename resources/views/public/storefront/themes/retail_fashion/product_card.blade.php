@@ -52,14 +52,12 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="p-2 rounded-full border border-black/15 dark:border-white/15 hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-neutral-900 transition active:scale-95 min-w-[36px] min-h-[36px] flex items-center justify-center text-neutral-700 dark:text-neutral-200"
-                    title="Tambah ke Tas Belanja">
+                    title="{{ __('storefront.add_to_shopping_bag') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="text-xs font-medium text-neutral-500 hover:underline">
-                    Lihat
-                </a>
+                    class="text-xs font-medium text-neutral-500 hover:underline">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

@@ -41,16 +41,14 @@
 
             {{-- Col 2: Menu Treatment & Skincare --}}
             <div class="space-y-3">
-                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-teal-100">
-                    Layanan &amp; Skincare
-                </h4>
+                <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-teal-100">{{ __('storefront.layanan_skincare') }}</h4>
                 <ul class="space-y-2 text-xs text-teal-200/70">
-                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-teal-300 transition-colors">Beranda Utama</a></li>
+                    <li><a href="{{ url('/' . $business->slug) }}" class="hover:text-teal-300 transition-colors">{{ __('storefront.home_main') }}</a></li>
                     @if ($landingPage->isPageActive('catalog'))
-                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-teal-300 transition-colors">Katalog Produk &amp; Treatment</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-teal-300 transition-colors">{{ __('storefront.katalog_produk_treatment') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('about'))
-                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-teal-300 transition-colors">Profil Dokter &amp; Fasilitas Klinik</a></li>
+                        <li><a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-teal-300 transition-colors">{{ __('storefront.profil_dokter_fasilitas_klinik') }}</a></li>
                     @endif
                     @if ($landingPage->isPageActive('contact'))
                         <li><a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-teal-300 transition-colors">Jadwal Praktek &amp; Lokasi</a></li>
@@ -58,7 +56,7 @@
                     <li>
                         <button type="button" @click="$dispatch('open-order-track-modal')" class="hover:text-teal-300 transition-colors text-left flex items-center gap-1.5">
                             <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-teal-400"></i>
-                            <span>Cek Status Pesanan &amp; Reservasi</span>
+                            <span>{{ __('storefront.cek_status_pesanan_reservasi') }}</span>
                         </button>
                     </li>
                 </ul>

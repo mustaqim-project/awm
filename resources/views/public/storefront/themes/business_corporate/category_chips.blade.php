@@ -6,9 +6,7 @@
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4 pb-2 border-b border-slate-200 dark:border-slate-800">
             <div>
-                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">
-                    Divisi Produk &amp; Solusi
-                </h2>
+                <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">{{ __('storefront.divisi_produk_solusi') }}</h2>
                 <p class="text-xs text-slate-500 dark:text-slate-400">Pilih kategori untuk memfilter spesifikasi pengadaan</p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

@@ -61,7 +61,7 @@
                     <a href="{{ route('customer.orders') }}"
                         class="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 text-[12px] font-semibold transition flex items-center gap-1.5">
                         <i data-lucide="package" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                        <span>Pesanan Saya</span>
+                        <span>{{ __('storefront.my_orders') }}</span>
                     </a>
                 @endif
                 <span class="text-[12px] font-mono text-black/50 dark:text-white/50">#{{ $order->order_number }}</span>
@@ -180,7 +180,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse"></span>
-                    <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">Status Pengerjaan Laundry</h2>
+                    <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.laundry_progress_status') }}</h2>
                 </div>
                 <span class="text-[11px] font-bold text-[#007AFF] bg-[#007AFF]/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
                     Tahap {{ $step }} dari 5
@@ -260,7 +260,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <h3 class="text-[15px] font-bold text-black dark:text-white tracking-tight">
-                                    Pesanan Bersama: {{ $group->title }}
+                                    {{ __('storefront.group_order_colon') }} {{ $group->title }}
                                 </h3>
                                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#AF52DE]/20 text-[#AF52DE]">
                                     Pesan Bareng
@@ -335,7 +335,7 @@
                             <a href="https://api.whatsapp.com/send?text={{ rawurlencode($waBillText) }}" target="_blank"
                                 class="flex-1 h-10 rounded-full bg-[#25D366] hover:bg-[#25D366]/90 text-white text-[12.5px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm">
                                 <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                <span>Kirim ke WA Rekan</span>
+                                <span>{{ __('storefront.send_to_peer_wa') }}</span>
                             </a>
                         </div>
                     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
                     <div class="text-left">
-                        <h2 class="font-bold text-[18px] text-black dark:text-white">QRIS Pembayaran Pesanan</h2>
+                        <h2 class="font-bold text-[18px] text-black dark:text-white">{{ __('storefront.qris_payment_title') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Scan dengan GoPay, OVO, Dana, BCA, Mandiri, atau Semua m-Banking</p>
                     </div>
                     <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20">
@@ -395,7 +395,7 @@
 
                 <!-- QR Code Render Card -->
                 <div class="p-5 rounded-[22px] bg-white border border-black/10 shadow-inner flex flex-col items-center justify-center relative mx-auto max-w-sm">
-                    <img src="{{ $qrImageUrl }}" alt="QRIS Code Pesanan #{{ $order->order_number }}" class="w-56 h-56 sm:w-64 sm:h-64 object-contain rounded-xl">
+                    <img src="{{ $qrImageUrl }}" alt="{{ __('storefront.qris_code_pesanan_order_order_number') }}" class="w-56 h-56 sm:w-64 sm:h-64 object-contain rounded-xl">
                     <div class="mt-3 text-[11px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
                         <span>Menunggu Pembayaran...</span>
@@ -437,13 +437,13 @@
                     <a href="{{ $qrImageUrl }}" target="_blank" download="qris-pesanan-{{ $order->order_number }}.png"
                         class="w-full sm:flex-1 h-11 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
                         <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>Unduh Gambar QR</span>
+                        <span>{{ __('storefront.download_qr_image') }}</span>
                     </a>
                     @if ($order->gateway_pay_url)
                         <a href="{{ $order->gateway_pay_url }}" target="_blank"
                             class="w-full sm:flex-1 h-11 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
                             <i data-lucide="external-link" class="w-4 h-4"></i>
-                            <span>Buka Gateway</span>
+                            <span>{{ __('storefront.open_gateway') }}</span>
                         </a>
                     @endif
                 </div>
@@ -463,7 +463,7 @@
                             <i data-lucide="layers" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white tracking-tight">Jadwal Pengiriman Bertahap (PO Batches)</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.po_batches_schedule') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50">Progres pemenuhan setiap termin
                                 pengiriman.</p>
                         </div>
@@ -540,7 +540,7 @@
         {{-- ORDER DETAILS & ITEMS BENTO --}}
         <div
             class="p-6 sm:p-7 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-5">
-            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">Rincian Pesanan</h3>
+            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.order_details_heading') }}</h3>
 
             <div class="divide-y divide-black/5 dark:divide-white/5">
                 @foreach ($order->items as $item)
@@ -594,8 +594,7 @@
         {{-- CUSTOMER & DELIVERY INFO --}}
         <div
             class="p-6 sm:p-7 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">Informasi Pengambilan /
-                Pengiriman</h3>
+            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.pickup_delivery_info') }}</h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[13px]">
                 @if ($order->scheduled_date)
@@ -667,7 +666,7 @@
                         target="_blank"
                         class="inline-flex items-center gap-2 text-[13px] font-semibold text-[#007AFF] hover:underline">
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        <span>Butuh Bantuan? Chat Toko via WhatsApp</span>
+                        <span>{{ __('storefront.need_help_wa') }}</span>
                     </a>
                 </div>
             @endif

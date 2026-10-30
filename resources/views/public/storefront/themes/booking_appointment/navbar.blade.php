@@ -33,25 +33,25 @@
             <nav class="hidden md:flex items-center gap-1 lg:gap-2">
                 <a href="{{ url('/' . $business->slug) }}"
                     class="px-3.5 py-2 rounded-xl text-xs font-bold {{ request()->path() === $business->slug ? 'text-purple-700 dark:text-purple-300 bg-purple-100/70 dark:bg-purple-950/60' : 'text-slate-700 dark:text-purple-200/80 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100/50 dark:hover:bg-purple-950/40' }} transition">
-                    Beranda
+                    {{ __('storefront.nav_home') }}
                 </a>
                 @if ($landingPage->isPageActive('catalog'))
                     <a href="{{ url('/' . $business->slug . '/katalog') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-purple-200/80 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100/50 dark:hover:bg-purple-950/40 transition flex items-center gap-1.5">
                         <i data-lucide="calendar" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400"></i>
-                        <span>Menu Layanan &amp; Durasi</span>
+                        <span>{{ __('storefront.menu_layanan_durasi') }}</span>
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('about'))
                     <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-purple-200/80 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100/50 dark:hover:bg-purple-950/40 transition">
-                        Staf &amp; Fasilitas
+                        {{ __('storefront.staf_fasilitas') }}
                     </a>
                 @endif
                 @if ($landingPage->isPageActive('contact'))
                     <a href="{{ url('/' . $business->slug . '/kontak') }}"
                         class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-purple-200/80 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100/50 dark:hover:bg-purple-950/40 transition">
-                        Lokasi &amp; Kontak
+                        {{ __('storefront.lokasi_kontak') }}
                     </a>
                 @endif
             </nav>
@@ -78,7 +78,7 @@
                 {{-- Booking Cart Trigger --}}
                 <a href="{{ url('/' . $business->slug . '/checkout') }}"
                     class="relative inline-flex items-center gap-2 h-10 px-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-purple-600/25 transition active:scale-95"
-                    title="Daftar Sesi Booking">
+                    title="{{ __('storefront.booking_sessions_list') }}">
                     <i data-lucide="calendar-check" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">Sesi Booking</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
@@ -90,7 +90,7 @@
                 {{-- Mobile Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
                     class="md:hidden w-10 h-10 rounded-2xl border border-purple-200 dark:border-purple-900/60 bg-white/70 dark:bg-purple-950/40 text-slate-700 dark:text-purple-200 flex items-center justify-center cursor-pointer"
-                    aria-label="Buka Menu Navigasi">
+                    aria-label="{{ __('storefront.open_nav_menu') }}">
                     <i :data-lucide="mobileMenuOpen ? 'x' : 'menu'" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -111,14 +111,14 @@
             <a href="{{ url('/' . $business->slug) }}"
                 class="flex items-center gap-2.5 px-3.5 py-3 rounded-2xl text-sm font-bold text-slate-800 dark:text-purple-100 hover:bg-purple-100/60 dark:hover:bg-purple-950/60 transition">
                 <i data-lucide="home" class="w-4 h-4 text-purple-600"></i>
-                <span>Beranda Reservasi</span>
+                <span>{{ __('storefront.nav_home') }} Reservasi</span>
             </a>
 
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="flex items-center gap-2.5 px-3.5 py-3 rounded-2xl text-sm font-bold text-slate-800 dark:text-purple-100 hover:bg-purple-100/60 dark:hover:bg-purple-950/60 transition">
                     <i data-lucide="calendar" class="w-4 h-4 text-purple-600"></i>
-                    <span>Menu Layanan &amp; Slot Jam</span>
+                    <span>{{ __('storefront.menu_layanan_slot_jam') }}</span>
                 </a>
             @endif
 
@@ -126,7 +126,7 @@
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="flex items-center gap-2.5 px-3.5 py-3 rounded-2xl text-sm font-bold text-slate-800 dark:text-purple-100 hover:bg-purple-100/60 dark:hover:bg-purple-950/60 transition">
                     <i data-lucide="user-check" class="w-4 h-4 text-purple-600"></i>
-                    <span>Staf Profesional &amp; Tempat</span>
+                    <span>{{ __('storefront.staf_profesional_tempat') }}</span>
                 </a>
             @endif
 
@@ -134,7 +134,7 @@
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="flex items-center gap-2.5 px-3.5 py-3 rounded-2xl text-sm font-bold text-slate-800 dark:text-purple-100 hover:bg-purple-100/60 dark:hover:bg-purple-950/60 transition">
                     <i data-lucide="map-pin" class="w-4 h-4 text-purple-600"></i>
-                    <span>Lokasi &amp; Kontak Studio</span>
+                    <span>{{ __('storefront.lokasi_kontak') }} Studio</span>
                 </a>
             @endif
 

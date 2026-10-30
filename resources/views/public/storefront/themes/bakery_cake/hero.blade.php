@@ -51,7 +51,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-6 sm:px-7 py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm shadow-md shadow-amber-700/25 transition-all flex items-center justify-center gap-2 active:scale-95 min-h-[48px]">
                             <i data-lucide="cake-slice" class="w-4 h-4"></i>
-                            <span>Pilih Roti &amp; Pastry</span>
+                            <span>{{ __('storefront.pilih_roti_pastry') }}</span>
                         </a>
                     @endif
 

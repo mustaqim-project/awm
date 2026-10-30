@@ -16,7 +16,7 @@
         @else
             <div class="w-full h-full flex flex-col items-center justify-center text-emerald-300 dark:text-slate-600">
                 <i data-lucide="package" class="w-10 h-10 stroke-1 mb-1"></i>
-                <span class="text-[10px] font-medium">Produk UMKM</span>
+                <span class="text-[10px] font-medium">{{ __('storefront.produk_umkm') }}</span>
             </div>
         @endif
 
@@ -59,9 +59,7 @@
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 text-slate-700 dark:text-slate-200 text-xs font-semibold transition">
-                    Lihat
-                </a>
+                    class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 text-slate-700 dark:text-slate-200 text-xs font-semibold transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>

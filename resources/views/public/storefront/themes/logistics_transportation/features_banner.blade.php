@@ -11,7 +11,7 @@
                 <i data-lucide="truck" class="w-5 h-5 text-amber-600"></i>
             </div>
             <div>
-                <h4 class="font-heading font-black text-xs sm:text-sm text-slate-900 dark:text-white uppercase">Armada Lengkap</h4>
+                <h4 class="font-heading font-black text-xs sm:text-sm text-slate-900 dark:text-white uppercase">{{ __('storefront.armada_lengkap') }}</h4>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400">Blindvan, CDD, hingga Tronton</p>
             </div>
         </div>

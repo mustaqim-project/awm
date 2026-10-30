@@ -8,7 +8,7 @@
                 <i data-lucide="zap" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Cetak Kilat 1 Hari</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.cetak_kilat_1_hari') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Solusi cetak mendesak untuk event &amp; promosi darurat.</p>
             </div>
         </div>
@@ -28,7 +28,7 @@
                 <i data-lucide="scissors" class="w-5 h-5"></i>
             </div>
             <div>
-                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">Finishing Lengkap</h4>
+                <h4 class="text-[13px] sm:text-[14px] font-bold text-neutral-900 dark:text-white">{{ __('storefront.finishing_lengkap') }}</h4>
                 <p class="text-[11px] sm:text-[12px] text-neutral-500 dark:text-neutral-400 mt-0.5">Laminasi doff/glossy, potong die-cut &amp; mata ayam presisi.</p>
             </div>
         </div>

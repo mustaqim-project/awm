@@ -14,7 +14,7 @@
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs sm:text-sm font-semibold flex items-center gap-1 hover:underline text-green-700 dark:text-green-400">
-                <span>Lihat Semua</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

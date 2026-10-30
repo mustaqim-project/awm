@@ -47,7 +47,7 @@
                         <a href="{{ url('/' . $business->slug . '/katalog') }}"
                             class="px-7 py-3.5 rounded-xl bg-slate-900 dark:bg-amber-600 hover:bg-slate-800 dark:hover:bg-amber-700 text-white font-semibold text-sm shadow-md transition-all flex items-center gap-2 active:scale-95">
                             <i data-lucide="briefcase" class="w-4 h-4"></i>
-                            <span>Daftar Layanan Advisory</span>
+                            <span>{{ __('storefront.daftar_layanan_advisory') }}</span>
                         </a>
                     @endif
 

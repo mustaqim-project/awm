@@ -16,7 +16,7 @@
         @else
             <div class="w-full h-full flex flex-col items-center justify-center text-sky-300 dark:text-sky-800">
                 <i data-lucide="sparkles" class="w-12 h-12 stroke-1 mb-1"></i>
-                <span class="text-[10px] uppercase font-bold tracking-wider">Layanan Bersih</span>
+                <span class="text-[10px] uppercase font-bold tracking-wider">{{ __('storefront.layanan_bersih') }}</span>
             </div>
         @endif
 
@@ -58,15 +58,13 @@
                 <button type="button"
                     @click="$store.cart.add({ id: '{{ $item->id }}', name: '{{ addslashes($item->name) }}', price: {{ (float) $item->selling_price }}, image_url: '{{ $item->image_url }}' }, 1)"
                     class="px-4 py-2 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs hover:shadow transition flex items-center gap-1.5 active:scale-95"
-                    title="Pesan Layanan">
+                    title="{{ __('storefront.order_service') }}">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                     <span>Order</span>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3.5 py-2 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 text-xs font-semibold hover:bg-sky-100 transition">
-                    Lihat
-                </a>
+                    class="px-3.5 py-2 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 text-xs font-semibold hover:bg-sky-100 transition">{{ __('storefront.btn_view') }}</a>
             @endif
         </div>
     </div>
