@@ -33,6 +33,7 @@ final class PosTableWebController extends Controller
     public function index(Request $request): View|JsonResponse
     {
         $business = Context::requireBusiness();
+        abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404);
         $locations = Location::where('business_id', $business->id)->where('is_active', true)->get();
 
         $selectedLocationId = $request->query('location_id');
@@ -133,6 +134,16 @@ final class PosTableWebController extends Controller
     public function store(Request $request): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
+        abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404);
+
+        $entitlement = app(\App\Domain\Billing\EntitlementService::class);
+        if (! $entitlement->canCreateTable($business)) {
+            $msg = 'Batas kuota meja untuk paket Anda telah tercapai. Silakan upgrade paket untuk menambah meja baru.';
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 403);
+            }
+            return back()->with('error', $msg);
+        }
 
         $validated = $request->validate([
             'table_number' => ['required', 'string', 'max:50'],

@@ -37,7 +37,7 @@ final class InvoiceWebController extends Controller implements HasMiddleware
                 'pdf',
                 'sendTermReminder',
             ]),
-            new Middleware('require.permission:invoices.create', only: [
+            new Middleware(['require.permission:invoices.create', 'entitlement:invoice'], only: [
                 'create',
                 'store',
                 'confirm',
@@ -111,13 +111,14 @@ final class InvoiceWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
 
-        $customers = Customer::where('is_active', true)->orderBy('name')->get();
-        $products = Product::where('is_active', true)->with('outputUnit')->orderBy('name')->get();
-        $units = Unit::all();
-        $locations = \App\Models\Location::where('is_active', true)->orderBy('name')->get();
+        $customers = Customer::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
+        $products = Product::where('business_id', $business->id)->where('is_active', true)->with('outputUnit')->orderBy('name')->get();
+        $units = Unit::where('business_id', $business->id)->orWhereNull('business_id')->get();
+        $locations = \App\Models\Location::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
 
         // Available confirmed POs that can be converted
-        $availablePurchaseOrders = PurchaseOrder::where('po_type', PurchaseOrder::TYPE_CUSTOMER)
+        $availablePurchaseOrders = PurchaseOrder::where('business_id', $business->id)
+            ->where('po_type', PurchaseOrder::TYPE_CUSTOMER)
             ->whereIn('status', [PurchaseOrder::STATUS_CONFIRMED, PurchaseOrder::STATUS_PARTIALLY_INVOICED])
             ->with(['customer', 'items.unit'])
             ->latest()
@@ -125,7 +126,9 @@ final class InvoiceWebController extends Controller implements HasMiddleware
 
         // Check if pre-filled from PO
         $prefillPoId = $request->get('po_id');
-        $selectedPo = $prefillPoId ? PurchaseOrder::with(['customer', 'items.unit'])->find($prefillPoId) : null;
+        $selectedPo = $prefillPoId 
+            ? PurchaseOrder::where('business_id', $business->id)->with(['customer', 'items.unit'])->find($prefillPoId) 
+            : null;
 
         // Check if pre-filled from Calculator HPP
         $prefillProductId = $request->get('product_id');
@@ -133,7 +136,9 @@ final class InvoiceWebController extends Controller implements HasMiddleware
         $prefillPrice = (float) ($request->get('price', 0));
         $prefillCost = (float) ($request->get('cost', 0));
 
-        $prefillProduct = $prefillProductId ? Product::find($prefillProductId) : null;
+        $prefillProduct = $prefillProductId 
+            ? Product::where('business_id', $business->id)->find($prefillProductId) 
+            : null;
 
         return view('app.invoices.create', compact(
             'business',
@@ -199,7 +204,7 @@ final class InvoiceWebController extends Controller implements HasMiddleware
         ]);
 
         /** @var Customer $customer */
-        $customer = Customer::findOrFail($validated['customer_id']);
+        $customer = Customer::where('business_id', $business->id)->findOrFail($validated['customer_id']);
 
         $invoice = $this->invoiceService->createFromProducts($business, $customer, $validated['items'], $validated);
 
@@ -240,10 +245,10 @@ final class InvoiceWebController extends Controller implements HasMiddleware
 
         $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit']);
 
-        $customers = Customer::where('is_active', true)->orderBy('name')->get();
-        $products = Product::where('is_active', true)->with('outputUnit')->orderBy('name')->get();
-        $units = Unit::all();
-        $locations = \App\Models\Location::where('is_active', true)->orderBy('name')->get();
+        $customers = Customer::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
+        $products = Product::where('business_id', $business->id)->where('is_active', true)->with('outputUnit')->orderBy('name')->get();
+        $units = Unit::where('business_id', $business->id)->orWhereNull('business_id')->get();
+        $locations = \App\Models\Location::where('business_id', $business->id)->where('is_active', true)->orderBy('name')->get();
 
         return view('app.invoices.edit', compact(
             'business',
@@ -304,7 +309,7 @@ final class InvoiceWebController extends Controller implements HasMiddleware
         ]);
 
         /** @var Customer $customer */
-        $customer = Customer::findOrFail($validated['customer_id']);
+        $customer = Customer::where('business_id', $business->id)->findOrFail($validated['customer_id']);
 
         $this->invoiceService->updateDraft($invoice, $customer, $validated['items'], $validated);
 

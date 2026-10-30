@@ -33,6 +33,36 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-30-374] Hardening Sistem Menyeluruh Pasca Audit: Eliminasi IDOR, Penegakan Entitlement Bahan Baku/Outlet/PO/Invoice, Jurnal Penyeimbang Pembulatan Kasir, PSR-4 Linux Fix & Isolasi Industri
+
+- **Date:** 2026-10-30
+- **Status:** COMPLETED
+- **Module:** Security & IDOR, Billing Entitlements, Accounting & Double-Entry Ledger, PSR-4 Autoloading, Multi-Industry Isolation, Database Optimization
+- **Feature:** Implementasi perbaikan komprehensif hulu-ke-hilir atas 10 temuan audit arsitektur sistem:
+  1. **Isolasi Multi-Tenant IDOR (`InvoiceWebController`):** Membatasi prefill PO (`po_id`) dan produk (`product_id`) secara ketat pada `business_id` tenant aktif. Memperketat validasi `customer_id` di `store()` dan `update()` agar memverifikasi kepemilikan tenant (`Rule::exists('customers', 'id')->where('business_id', $business->id)`), mencegah kebocoran master data dan kontaminasi relasi pelanggan antar bisnis.
+  2. **Penegakan Kuota Entitlement Bahan Baku (`MaterialWebController`):** Mengimplementasikan interface `HasMiddleware` dengan `new Middleware(['require.permission:materials.create', 'entitlement:material'], only: ['store'])`. Menutup celah pembuatan ribuan bahan baku tak terbatas pada Free Plan (maks. 10 bahan baku).
+  3. **Penegakan Kuota Cabang/Outlet (`SettingWebController::storeBranch`):** Menambahkan pemeriksaan batas kuota lokasi (`canCreateLocation($business, 'outlet')`), menghentikan penambahan cabang tak terkontrol pada Free Plan (maks. 1 outlet) dan Standard (maks. 2 outlet).
+  4. **Penegakan Kuota Bulanan PO & Faktur (`PurchaseOrderWebController` & `InvoiceWebController`):** Mendaftarkan middleware `entitlement:po` dan `entitlement:invoice` pada method `store` masing-masing controller, menegakkan batas kuota 10 PO/bulan dan 10 faktur/bulan untuk akun Free Plan.
+  5. **Integritas Finansial Jurnal Pembulatan Kasir POS (`AutoJournalService`):** Mendaftarkan akun standar baru `6-6005` (Beban Selisih Pembulatan Kasir) dan `7-7005` (Pendapatan Selisih Pembulatan Kasir). Mengimplementasikan balancing otomatis selisih pembulatan pada `recordPosSaleJournal()`, menjamin `total_debit === total_credit` (100% seimbang) dan memulihkan akurasi Buku Besar & Neraca Saldo.
+  6. **Koreksi Casing Namespace PSR-4 Linux (`PosSyncApiController`):** Mengubah import namespace dari `use App\Domain\POS\` menjadi `use App\Domain\Pos\`, mencegah fatal error `Class not found` di lingkungan runtime Linux (Ubuntu/Debian) yang case-sensitive.
+  7. **Penguatan Kredensial Staf Baru (`SettingWebController::storeMember`):** Menghapus fallback hardcoded `'password123'`, beralih ke pembuatan password acak kuat (`Str::password(12)`) dengan notifikasi flash satu kali bagi pemilik usaha untuk diserahkan ke staf.
+  8. **Optimasi Index Database Buku Besar (`journal_entry_lines`):** Membuat migration `2026_11_03_000006_add_account_id_index_to_journal_entry_lines_table.php` yang menambahkan composite index `['account_id', 'created_at']`, mempercepat query pelaporan buku besar per akun.
+  9. **Isolasi Vertikal Modul F&B (`PosKitchenWebController` & `PosTableWebController`):** Mencegah akses URL langsung modul Meja dan Kitchen KDS bagi bisnis non-F&B (retail, bengkel, jasa) via `abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404)`.
+  10. **Automated Testing Bebas Eror:** Membangun test suite baru `tests/Feature/Audit/SystemHardeningAndEntitlementTest.php` yang memverifikasi seluruh skenario pengujian di atas dengan hasil 6 passed, 18 assertions, 0 errors.
+- **Work Type:** Security | Billing & Entitlements | Accounting | Architecture | Database | Multi-Industry
+
+#### 1. Business Context & Objective
+- **Konteks:** Menindaklanjuti temuan audit sistem mendalam (Fase 1) mengenai celah isolasi tenant, kebocoran kuota paket gratis, inkonsistensi jurnal pembulatan kasir, dan risiko crash di server produksi Linux.
+- **Masalah/Target:** Mengeliminasi seluruh kerentanan IDOR, menutup kebocoran kuota paket, menjamin keseimbangan akuntansi double-entry 100%, serta memastikan kode siap pakai di lingkungan produksi Linux tanpa hambatan.
+
+#### 2. What Was Done
+- Merefaktor controller `InvoiceWebController`, `MaterialWebController`, `SettingWebController`, `PurchaseOrderWebController`, `PosKitchenWebController`, dan `PosTableWebController`.
+- Memperbarui `AutoJournalService` untuk mencatat selisih pembulatan kasir secara otomatis.
+- Menjalankan migrasi index pada `journal_entry_lines`.
+- Memperbaiki casing namespace PSR-4 pada `PosSyncApiController`.
+
+---
+
 ### [WORK-2026-10-30-373] Rekonsiliasi Menyeluruh Gap Informasi Publik & Sistem: Anti-Overclaim, Zero-Hardcoding, Dynamic Mega-Menu Navigasi & Single Source of Truth
 
 - **Date:** 2026-10-30

@@ -32,7 +32,8 @@ final class PurchaseOrderWebController extends Controller implements HasMiddlewa
     {
         return [
             new Middleware('require.permission:purchasing.view', only: ['index', 'create', 'show', 'print']),
-            new Middleware('require.permission:purchasing.manage', only: ['store', 'confirm', 'cancel', 'generateInvoice', 'destroy']),
+            new Middleware(['require.permission:purchasing.manage', 'entitlement:po'], only: ['store']),
+            new Middleware('require.permission:purchasing.manage', only: ['confirm', 'cancel', 'generateInvoice', 'destroy']),
         ];
     }
 

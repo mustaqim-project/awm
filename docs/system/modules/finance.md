@@ -64,6 +64,8 @@ Pemilik bisnis tidak perlu lagi menyewa akuntan khusus hanya untuk menjurnal tra
 | :--- | :--- | :--- |
 | **Penjualan Kasir (Tunai)** | Kas Kasir (Aset) | Pendapatan Penjualan (Pendapatan) |
 | **Penjualan Kasir (Kasbon)** | Piutang Usaha (Aset) | Pendapatan Penjualan (Pendapatan) |
+| **Selisih Pembulatan (Surplus)** | Kas Kasir (Aset) | Pendapatan Selisih Pembulatan 7-7005 (Pendapatan) |
+| **Selisih Pembulatan (Defisit)** | Beban Selisih Pembulatan 6-6005 (Beban) | Kas Kasir / Piutang (Aset) |
 | **Penerimaan Barang (GR)** | Persediaan Bahan (Aset) | Hutang Usaha / AP (Kewajiban) |
 | **Pelunasan Hutang Vendor** | Hutang Usaha / AP (Kewajiban) | Rekening Bank / Kas (Aset) |
 | **Pengeluaran Operasional** | Beban Operasional (Beban) | Kas Kecil / Bank (Aset) |

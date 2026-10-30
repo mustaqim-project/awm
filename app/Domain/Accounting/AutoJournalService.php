@@ -54,9 +54,11 @@ final class AutoJournalService
             ['code' => '2-2004', 'name' => 'Hutang PPh 21 Karyawan', 'type' => ChartOfAccount::TYPE_LIABILITY, 'normal_balance' => 'credit'],
             ['code' => '2-2005', 'name' => 'Hutang Iuran BPJS', 'type' => ChartOfAccount::TYPE_LIABILITY, 'normal_balance' => 'credit'],
             ['code' => '6-6004', 'name' => 'Beban Kerugian Selisih Persediaan', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
+            ['code' => '6-6005', 'name' => 'Beban Selisih Pembulatan Kasir', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '6-6010', 'name' => 'Beban Gaji & Upah Karyawan', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '6-6011', 'name' => 'Beban BPJS Ketenagakerjaan & Kesehatan (Perusahaan)', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '7-7004', 'name' => 'Pendapatan Selisih Stok', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
+            ['code' => '7-7005', 'name' => 'Pendapatan Selisih Pembulatan Kasir', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
         ];
 
 
@@ -108,6 +110,8 @@ final class AutoJournalService
         $revenueAccount = $this->getAccount($business, '4-4001');
         $hppAccount = $this->getAccount($business, '5-5001');
         $diskonAccount = $this->getAccount($business, '6-6001');
+        $roundingExpenseAccount = $this->getAccount($business, '6-6005') ?? $this->getAccount($business, '6-6002');
+        $roundingRevenueAccount = $this->getAccount($business, '7-7005') ?? $this->getAccount($business, '4-4001');
 
         if (! $kasAccount || ! $revenueAccount || ! $persediaanAccount || ! $hppAccount) {
             return null;
@@ -134,7 +138,9 @@ final class AutoJournalService
             $serviceAccount,
             $revenueAccount,
             $hppAccount,
-            $diskonAccount
+            $diskonAccount,
+            $roundingExpenseAccount,
+            $roundingRevenueAccount
         ) {
             $entry = JournalEntry::create([
                 'business_id' => $business->id,
@@ -268,6 +274,32 @@ final class AutoJournalService
                     'notes' => "Pengurangan Persediaan Barang",
                 ]);
                 $totalCredit += $hpp;
+            }
+
+            // 7. Balancing Difference / Selisih Pembulatan Kasir POS (Double-Entry Balance Guarantee)
+            $diff = round($totalDebit - $totalCredit, 2);
+            if (abs($diff) > 0.001) {
+                if ($diff > 0 && $roundingRevenueAccount) {
+                    // Debit > Credit: surplus pembulatan kasir (Kredit Pendapatan Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingRevenueAccount->id,
+                        'type' => JournalEntryLine::TYPE_CREDIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Pendapatan Selisih Pembulatan Kasir',
+                    ]);
+                    $totalCredit += abs($diff);
+                } elseif ($diff < 0 && $roundingExpenseAccount) {
+                    // Credit > Debit: defisit pembulatan kasir (Debit Beban Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingExpenseAccount->id,
+                        'type' => JournalEntryLine::TYPE_DEBIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Beban Selisih Pembulatan Kasir',
+                    ]);
+                    $totalDebit += abs($diff);
+                }
             }
 
             $entry->update([
@@ -630,6 +662,32 @@ final class AutoJournalService
                 $totalCredit += $hpp;
             }
 
+            // 7. Balancing Difference / Selisih Pembulatan Kasir POS (Double-Entry Balance Guarantee)
+            $diff = round($totalDebit - $totalCredit, 2);
+            if (abs($diff) > 0.001) {
+                if ($diff > 0 && $roundingRevenueAccount) {
+                    // Debit > Credit: surplus pembulatan kasir (Kredit Pendapatan Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingRevenueAccount->id,
+                        'type' => JournalEntryLine::TYPE_CREDIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Pendapatan Selisih Pembulatan Kasir',
+                    ]);
+                    $totalCredit += abs($diff);
+                } elseif ($diff < 0 && $roundingExpenseAccount) {
+                    // Credit > Debit: defisit pembulatan kasir (Debit Beban Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingExpenseAccount->id,
+                        'type' => JournalEntryLine::TYPE_DEBIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Beban Selisih Pembulatan Kasir',
+                    ]);
+                    $totalDebit += abs($diff);
+                }
+            }
+
             $entry->update([
                 'total_debit' => $totalDebit,
                 'total_credit' => $totalCredit,
@@ -952,6 +1010,8 @@ final class AutoJournalService
         $revenueAccount = $this->getAccount($business, '4-4001');
         $hppAccount = $this->getAccount($business, '5-5001');
         $diskonAccount = $this->getAccount($business, '6-6001');
+        $roundingExpenseAccount = $this->getAccount($business, '6-6005') ?? $this->getAccount($business, '6-6002');
+        $roundingRevenueAccount = $this->getAccount($business, '7-7005') ?? $this->getAccount($business, '4-4001');
 
         if (! $kasAccount || ! $revenueAccount || ! $persediaanAccount || ! $hppAccount) {
             return null;
@@ -1114,6 +1174,32 @@ final class AutoJournalService
                     'notes' => "Pembalikan Beban Pokok Penjualan (HPP) ({$actionLabel})",
                 ]);
                 $totalCredit += $hpp;
+            }
+
+            // 7. Balancing Difference / Selisih Pembulatan Kasir POS (Double-Entry Balance Guarantee)
+            $diff = round($totalDebit - $totalCredit, 2);
+            if (abs($diff) > 0.001) {
+                if ($diff > 0 && $roundingRevenueAccount) {
+                    // Debit > Credit: surplus pembulatan kasir (Kredit Pendapatan Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingRevenueAccount->id,
+                        'type' => JournalEntryLine::TYPE_CREDIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Pendapatan Selisih Pembulatan Kasir',
+                    ]);
+                    $totalCredit += abs($diff);
+                } elseif ($diff < 0 && $roundingExpenseAccount) {
+                    // Credit > Debit: defisit pembulatan kasir (Debit Beban Selisih Pembulatan)
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id' => $roundingExpenseAccount->id,
+                        'type' => JournalEntryLine::TYPE_DEBIT,
+                        'amount' => abs($diff),
+                        'notes' => 'Beban Selisih Pembulatan Kasir',
+                    ]);
+                    $totalDebit += abs($diff);
+                }
             }
 
             $entry->update([

@@ -19,7 +19,6 @@ return [
     'pages' => [
         '/' => [
             'title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
-            'h1' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem',
             'h1' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem Cepat',
             'description' => 'Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp & toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.',
             'og_title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
@@ -29,11 +28,9 @@ return [
         '/pricing' => [
             'title' => 'Harga Aplikasi Kasir & ERP UMKM Mulai Rp0 | COOCA',
             'h1' => 'Harga Aplikasi Kasir COOCA: Mulai Gratis, Tanpa Kontrak',
-            'description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 ribu, Premium Rp89 ribu, Prestige Rp199 ribu/bulan. Tanpa biaya pasang, tanpa kontrak, data milik Anda.',
-            'description' => 'Paket COOCA mulai Rp0 selamanya, Standard, Premium, hingga Prestige. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja, data milik Anda.',
+            'description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 rb, Premium Rp89 rb, Prestige Rp199 rb/bln. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja.',
             'og_title' => 'Harga Aplikasi Kasir & ERP UMKM Mulai Rp0 | COOCA',
-            'og_description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 ribu, Premium Rp89 ribu, Prestige Rp199 ribu/bulan. Tanpa biaya pasang, tanpa kontrak, data milik Anda.',
-            'og_description' => 'Paket COOCA mulai Rp0 selamanya, Standard, Premium, hingga Prestige. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja, data milik Anda.',
+            'og_description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 rb, Premium Rp89 rb, Prestige Rp199 rb/bln. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja.',
         ],
 
         '/omnichannel-erp/pos' => [
@@ -125,11 +122,11 @@ return [
         ],
 
         '/omnichannel/whatsapp' => [
-            'title' => 'WhatsApp Multi-Agent & Chatbot untuk Bisnis | COOCA',
-            'h1' => 'WhatsApp Bisnis Multi-Agent yang Terhubung ke Kasir',
-            'description' => 'Satu nomor WhatsApp untuk banyak admin, chatbot otomatis, dan order yang langsung masuk ke kasir dan stok. Tidak ada lagi pesanan terlewat.',
-            'og_title' => 'WhatsApp Multi-Agent & Chatbot untuk Bisnis | COOCA',
-            'og_description' => 'Satu nomor WhatsApp untuk banyak admin, chatbot otomatis, dan order yang langsung masuk ke kasir dan stok. Tidak ada lagi pesanan terlewat.',
+            'title' => 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA',
+            'h1' => 'Kirim Struk Kasir Digital & Notifikasi Pesanan via WhatsApp',
+            'description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Coba gratis.',
+            'og_title' => 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA',
+            'og_description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Coba gratis.',
         ],
 
         '/omnichannel/customer' => [
@@ -140,12 +137,76 @@ return [
             'og_description' => 'Simpan data dan riwayat belanja pelanggan, buat program poin, dan kirim promo terarah via WhatsApp. Pelanggan sekali beli jadi langganan.',
         ],
 
+        '/omnichannel/orders' => [
+            'title' => 'Manajemen Pesanan Kasir, Meja & Online | COOCA',
+            'h1' => 'Kelola Pesanan dari Kasir, Meja Kafe, dan WhatsApp Terpadu',
+            'description' => 'Satukan antrean pesanan dari kasir toko, QR meja kafe, dan pesanan WhatsApp ke dalam satu layar pemrosesan teratur tanpa order terlewat.',
+            'og_title' => 'Manajemen Pesanan Kasir, Meja & Online | COOCA',
+            'og_description' => 'Satukan antrean pesanan dari kasir toko, QR meja kafe, dan pesanan WhatsApp ke dalam satu layar pemrosesan teratur tanpa order terlewat.',
+        ],
+
+        '/omnichannel/social-media' => [
+            'title' => 'Kelola Akun Sosmed Bisnis Toko Terpadu | COOCA',
+            'h1' => 'Kelola Seluruh Kanal Media Sosial Bisnis dari Satu Ruang Kerja',
+            'description' => 'Kelola materi promosi di Instagram, Facebook, TikTok, dan Threads dari satu ruang kerja terpadu yang terhubung langsung ke katalog produk toko.',
+            'og_title' => 'Kelola Akun Sosmed Bisnis Toko Terpadu | COOCA',
+            'og_description' => 'Kelola materi promosi di Instagram, Facebook, TikTok, dan Threads dari satu ruang kerja terpadu yang terhubung langsung ke katalog produk toko.',
+        ],
+
         '/content-automation/content-creation' => [
-            'title' => 'Auto-Post & Konten AI untuk Promosi UMKM | COOCA',
-            'h1' => 'Jadwal Posting Otomatis & Konten AI untuk Semua Sosmed',
-            'description' => 'Buat caption dengan AI, jadwalkan, dan publikasikan ke Instagram, TikTok, Facebook, dan Threads sekaligus. Sekali buat, tayang di semua channel.',
-            'og_title' => 'Auto-Post & Konten AI untuk Promosi UMKM | COOCA',
-            'og_description' => 'Buat caption dengan AI, jadwalkan, dan publikasikan ke Instagram, TikTok, Facebook, dan Threads sekaligus. Sekali buat, tayang di semua channel.',
+            'title' => 'Buat Konten Promosi Produk dari Kasir Toko | COOCA',
+            'h1' => 'Buat Konten Promosi Produk Langsung dari Kasir & Stok',
+            'description' => 'Tarik foto produk, harga promo, dan stok langsung dari kasir POS untuk membuat materi postingan media sosial dalam hitungan menit.',
+            'og_title' => 'Buat Konten Promosi Produk dari Kasir Toko | COOCA',
+            'og_description' => 'Tarik foto produk, harga promo, dan stok langsung dari kasir POS untuk membuat materi postingan media sosial dalam hitungan menit.',
+        ],
+
+        '/content-automation/content-calendar' => [
+            'title' => 'Jadwal & Kalender Promosi Bisnis Toko | COOCA',
+            'h1' => 'Rencanakan Pemasaran Sebulan Penuh dalam Satu Tampilan Visual',
+            'description' => 'Rencanakan jadwal posting promosi toko sebulan penuh dalam satu tampilan kalender visual. Siapkan draf materi dan review sebelum tayang.',
+            'og_title' => 'Jadwal & Kalender Promosi Bisnis Toko | COOCA',
+            'og_description' => 'Rencanakan jadwal posting promosi toko sebulan penuh dalam satu tampilan kalender visual. Siapkan draf materi dan review sebelum tayang.',
+        ],
+
+        '/content-automation/publishing' => [
+            'title' => 'Publikasi Otomatis Sosmed Toko Tanpa Upload | COOCA',
+            'h1' => 'Tayangkan Konten Promosi Tepat Waktu Tanpa Perlu Unggah Manual',
+            'description' => 'Tayangkan konten promosi produk tepat waktu ke Instagram, TikTok, dan Facebook secara otomatis tanpa repot unggah manual setiap hari.',
+            'og_title' => 'Publikasi Otomatis Sosmed Toko Tanpa Upload | COOCA',
+            'og_description' => 'Tayangkan konten promosi produk tepat waktu ke Instagram, TikTok, dan Facebook secara otomatis tanpa repot unggah manual setiap hari.',
+        ],
+
+        '/content-automation/analytics' => [
+            'title' => 'Analisa Konten yang Menghasilkan Penjualan | COOCA',
+            'h1' => 'Ketahui Konten Mana yang Benar-Benar Menghasilkan Pembeli',
+            'description' => 'Ketahui postingan media sosial mana yang benar-benar menghasilkan transaksi penjualan di kasir toko dengan pelacakan konversi otomatis.',
+            'og_title' => 'Analisa Konten yang Menghasilkan Penjualan | COOCA',
+            'og_description' => 'Ketahui postingan media sosial mana yang benar-benar menghasilkan transaksi penjualan di kasir toko dengan pelacakan konversi otomatis.',
+        ],
+
+        '/business-operating-system/overview' => [
+            'title' => 'Business Operating System UMKM: Kasir & Stok | COOCA',
+            'h1' => 'Kendalikan Kasir, Stok, dan Keuangan dalam Satu Sistem Terpadu',
+            'description' => 'BOS terpadu UMKM. Hubungkan kasir POS, persediaan gudang, arus kas, dan laporan laba pemilik toko dalam satu sistem otomatis seketika.',
+            'og_title' => 'Business Operating System UMKM: Kasir & Stok | COOCA',
+            'og_description' => 'BOS terpadu UMKM. Hubungkan kasir POS, persediaan gudang, arus kas, dan laporan laba pemilik toko dalam satu sistem otomatis seketika.',
+        ],
+
+        '/business-operating-system/how-it-works' => [
+            'title' => 'Cara Kerja Sistem Terpadu Toko & Pembukuan | COOCA',
+            'h1' => 'Bagaimana COOCA Mengotomasi Operasional Toko Anda',
+            'description' => 'Pelajari alur data otomatis COOCA: dari transaksi kasir, pemotongan stok bahan baku, pembukuan jurnal otomatis, hingga analitik pemilik toko.',
+            'og_title' => 'Cara Kerja Sistem Terpadu Toko & Pembukuan | COOCA',
+            'og_description' => 'Pelajari alur data otomatis COOCA: dari transaksi kasir, pemotongan stok bahan baku, pembukuan jurnal otomatis, hingga analitik pemilik toko.',
+        ],
+
+        '/business-operating-system/why-cooca' => [
+            'title' => 'Kenapa Pilih COOCA: Sistem Terpadu vs Aplikasi Terpisah',
+            'h1' => 'Berhenti Membayar Banyak Software Terpisah yang Tidak Terhubung',
+            'description' => 'Berhenti bayar banyak software terpisah. COOCA satukan kasir POS, stok resep, pembukuan riil, dan nota WhatsApp dalam satu ekosistem hemat.',
+            'og_title' => 'Kenapa Pilih COOCA: Sistem Terpadu vs Aplikasi Terpisah',
+            'og_description' => 'Berhenti bayar banyak software terpisah. COOCA satukan kasir POS, stok resep, pembukuan riil, dan nota WhatsApp dalam satu ekosistem hemat.',
         ],
 
         '/kalkulator/hpp' => [

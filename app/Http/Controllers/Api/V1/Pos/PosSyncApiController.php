@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\V1\Pos;
 
-use App\Domain\POS\PosOrderService;
-use App\Domain\POS\PosShiftService;
+use App\Domain\Pos\PosOrderService;
+use App\Domain\Pos\PosShiftService;
 use App\Http\Controllers\Controller;
 use App\Models\PosOrder;
 use App\Models\User;

@@ -15,11 +15,22 @@ use App\Models\Unit;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-final class MaterialWebController extends Controller
+final class MaterialWebController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:materials.view', only: ['index', 'export']),
+            new Middleware(['require.permission:materials.create', 'entitlement:material'], only: ['store']),
+            new Middleware('require.permission:materials.edit', only: ['update', 'storePrice']),
+            new Middleware('require.permission:materials.delete', only: ['destroy']),
+        ];
+    }
     public function __construct(private readonly MaterialCostService $costService = new MaterialCostService) {}
 
     /**

@@ -60,6 +60,10 @@
    - [4.28 Arsitektur Master Layout Shell v2.0 & Standar Modalisasi Apple HIG](#428-arsitektur-master-layout-shell-v20--standar-modalisasi-apple-hig)
    - [4.29 Arsitektur Community & Event Management (Universal Subscription Access, Geofencing GPS Check-in & Digital Barcode Scanner)](#429-arsitektur-community--event-management-universal-subscription-access-geofencing-gps-check-in--digital-barcode-scanner)
    - [4.30 Arsitektur COOCA AI Studio Generation, Multi-Provider Rendering & Two-Phase Credit Ledger](#430-arsitektur-cooca-ai-studio-generation-multi-provider-rendering--two-phase-credit-ledger)
+   - [4.31 Arsitektur Situs Publik, Sinkronisasi Paket/Limit Dinamis dari DB, Navigasi Kanonikal UMKM, & Kepatuhan Zero-Overclaim](#431-arsitektur-situs-publik-sinkronisasi-paketlimit-dinamis-dari-db-navigasi-kanonikal-umkm--kepatuhan-zero-overclaim)
+   - [4.32 Matriks Hak Akses & Kunci Fitur Dinamis Admin (Admin-Configurable Feature Gates) & Penegakan Zero-Hardcoding Limitasi](#432-matriks-hak-akses--kunci-fitur-dinamis-admin-admin-configurable-feature-gates--penegakan-zero-hardcoding-limitasi)
+   - [4.33 Batas Waktu Pembayaran Tagihan Langganan (24 Jam) & Standardisasi Zona Waktu WIB (UTC+7)](#433-batas-waktu-pembayaran-tagihan-langganan-24-jam--standardisasi-zona-waktu-wib-utc7)
+   - [4.34 Arsitektur Hardening Multi-Tenant IDOR, Penegakan Entitlement Universal & Integritas Jurnal Double-Entry Pembulatan Kasir (PRD-35)](#434-arsitektur-hardening-multi-tenant-idor-penegakan-entitlement-universal--integritas-jurnal-double-entry-pembulatan-kasir-prd-35)
 
 ---
 
@@ -1104,17 +1108,30 @@ Berdasarkan direktif audit situs publik COOCA:
    - Middleware `CheckResourceEntitlement` menegakkan hak akses secara otomatis dan menghentikan request secara elegan jika fitur sedang dikunci oleh admin.
    - Halaman `/billing/limits` merender status gembok abu-abu (terkunci) atau centang hijau/ungu (terbuka) secara 100% dinamis sesuai pengaturan admin yang sedang aktif.
 
-### 4.33 Batas Waktu Pembayaran Tagihan Langganan (24 Jam) & Standardisasi Zona Waktu WIB (UTC+7)
+### 4.34 Arsitektur Hardening Multi-Tenant IDOR, Penegakan Entitlement Universal & Integritas Jurnal Double-Entry Pembulatan Kasir (PRD-35)
 
-1. **Jendela Waktu Pembayaran 24 Jam (Eliminasi Batas 15 Menit):**
-   - Transaksi pembayaran langganan SaaS (`SubscriptionPayment`) dan integrasi checkout TriPay menerapkan standar batas waktu **24 jam** (`86.400 detik`), menggantikan batas 15 menit yang terlalu sempit bagi proses administrasi UMKM.
-   - Waktu kedaluwarsa resmi dari gateway (`gateway_expired_at`) dihormati secara mutlak dan dilarang dipotong (*clamped*) oleh kode internal.
-   - Durasi batas waktu dapat disesuaikan Superadmin melalui konfigurasi `SystemSetting::get('subscription_payment_expiry_hours', '24')`.
+Berdasarkan hasil audit sistem mendalam repositori COOCA:
 
-2. **Standardisasi Zona Waktu Tunggal WIB (`Asia/Jakarta` / UTC+7):**
-   - Seluruh perbandingan status kedaluwarsa (`isExpired()`) dan format batas waktu (`getExpiresAt()`, `created_at_wib`, `expires_at_wib`, `approved_at_wib`) dinormalisasi secara eksplisit ke zona waktu `Asia/Jakarta`.
-   - Mengeliminasi anomali *instant expired* akibat perbedaan offset jam antara database server (UTC +00:00) dan waktu lokal merchant di Indonesia Barat (WIB +07:00).
-   - Antarmuka hitung mundur Alpine.js pada `resources/views/app/billing/payment.blade.php` mendukung format adaptif jam-menit-detik (`hh:mm:ss`) untuk durasi $> 1$ jam.
+1. **Eliminasi Celah IDOR & Scoping Multi-Tenant Ketat:**
+   - Seluruh query parameter URL prefill pada `InvoiceWebController` (`po_id` dan `product_id`) dibatasi secara ketat menggunakan klausa `where('business_id', $business->id)`, mencegah kebocoran data pelanggan, harga beli/jual, dan spesifikasi PO antar penyewa (*cross-tenant leakage*).
+   - Validasi formulir penyimpanan faktur (`store` dan `update`) menegakkan aturan `Rule::exists('customers', 'id')->where('business_id', $business->id)` dan pemanggilan model `Customer::where('business_id', $business->id)->findOrFail()`, mencegah injeksi ID pelanggan lintas bisnis.
+
+2. **Penegakan Entitlement Universal & Penutupan Celah Bypass Kuota:**
+   - **Bahan Baku (`MaterialWebController`):** Mengimplementasikan interface `HasMiddleware` dengan middleware terpadu `['require.permission:materials.create', 'entitlement:material']` pada method `store()`, menutup celah pembuatan bahan baku melebihi limit Free Plan (maks. 10 bahan).
+   - **Cabang/Outlet (`SettingWebController::storeBranch`):** Mencegat pembuatan cabang baru jika `canCreateLocation($business, 'outlet')` menghasilkan false, menegakkan kuota paket (1 outlet untuk Free, 2 outlet untuk Standard).
+   - **Faktur & Purchase Order Bulanan:** Mendaftarkan middleware `entitlement:po` pada `PurchaseOrderWebController` dan `entitlement:invoice` pada `InvoiceWebController` untuk mengunci batas kuota 10 PO dan 10 faktur per bulan pada akun Free Plan.
+
+3. **Integritas Akuntansi Double-Entry Pembulatan Kasir POS:**
+   - Menyediakan akun standar otomatis baru pada Chart of Accounts: `6-6005` (*Beban Selisih Pembulatan Kasir*) dan `7-7005` (*Pendapatan Selisih Pembulatan Kasir*).
+   - Method `AutoJournalService::recordPosSaleJournal()` secara otomatis menghitung selisih pembulatan kasir (`$diff = round($totalDebit - $totalCredit, 2)`). Jika terjadi surplus pembulatan, selisih dikreditkan ke pendapatan pembulatan; jika terjadi defisit, selisih didebitkan ke beban pembulatan.
+   - Menjamin persamaan akuntansi dasar $\sum \text{Debit} - \sum \text{Kredit} = 0$ selalu terpenuhi 100% tanpa distorsi pada Neraca Saldo dan Buku Besar.
+
+4. **Kepatuhan Autoloading PSR-4 Linux & Hardening Akun Staf:**
+   - Menormalkan import namespace pada `PosSyncApiController` menjadi `use App\Domain\Pos\` (PascalCase), menjamin kompatibilitas runtime penuh pada kernel Linux tanpa fatal error *Class Not Found*.
+   - Mengganti fallback password default `'password123'` pada penambahan staf baru (`SettingWebController::storeMember`) dengan generator sandi acak kuat 12 karakter (`Str::password(12)`), dilengkapi pemberitahuan flash kredensial satu kali bagi pemilik usaha.
+   - Menambahkan composite index `['account_id', 'created_at']` pada tabel `journal_entry_lines` guna mengeliminasi full table scan pada penarikan laporan Buku Besar per akun.
+   - Mengunci endpoint vertikal F&B (Meja dan KDS) menggunakan `abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404)` untuk menjamin *Zero Feature Leakage* pada sektor ritel dan jasa.
+
 
 
 

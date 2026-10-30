@@ -30,6 +30,7 @@ final class PosKitchenWebController extends Controller
     public function index(Request $request): View
     {
         $business = Context::requireBusiness();
+        abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404);
 
         $activeOrders = PosOrder::where('business_id', $business->id)
             ->whereIn('status', [
