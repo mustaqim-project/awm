@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\BelongsToBusiness;
 use App\Models\Traits\HasUuid;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -364,19 +365,22 @@ class SubscriptionPayment extends Model
 
     public function getExpiresAt(): ?\Illuminate\Support\Carbon
     {
-        if (! $this->created_at) {
-            return $this->gateway_expired_at;
-        }
-
-        $fifteenMinutesFromCreation = $this->created_at->copy()->addMinutes(15);
-
+        // 1. If official gateway expiration exists from TriPay, honor it directly without artificial clamping
         if ($this->gateway_expired_at) {
-            return $this->gateway_expired_at->lessThan($fifteenMinutesFromCreation)
-                ? $this->gateway_expired_at
-                : $fifteenMinutesFromCreation;
+            return $this->gateway_expired_at->copy()->timezone('Asia/Jakarta');
         }
 
-        return $fifteenMinutesFromCreation;
+        // 2. Default configurable expiration window (default: 24 hours) for SaaS subscription invoices
+        $expiryHours = (int) SystemSetting::get('subscription_payment_expiry_hours', '24');
+        if ($expiryHours <= 0) {
+            $expiryHours = 24;
+        }
+
+        if (! $this->created_at) {
+            return Carbon::now('Asia/Jakarta')->addHours($expiryHours);
+        }
+
+        return $this->created_at->copy()->timezone('Asia/Jakarta')->addHours($expiryHours);
     }
 
     public function isExpired(): bool
@@ -390,8 +394,14 @@ class SubscriptionPayment extends Model
         }
 
         $expiry = $this->getExpiresAt();
+        if (! $expiry) {
+            return false;
+        }
 
-        return $expiry ? now()->greaterThan($expiry) : false;
+        $nowWib = Carbon::now('Asia/Jakarta');
+        $expiryWib = $expiry->copy()->timezone('Asia/Jakarta');
+
+        return $nowWib->greaterThan($expiryWib);
     }
 
     public function getGatewayAttribute(): ?string

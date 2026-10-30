@@ -363,7 +363,7 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
                         'gateway_qr_url'    => $tripayRes['qr_url'] ?? null,
                         'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
                         'gateway_fee'       => (float) ($tripayRes['fee'] ?? 0.0),
-                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time']) : null,
+                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time'], 'Asia/Jakarta') : Carbon::now('Asia/Jakarta')->addHours(24),
                         'admin_notes'       => null,
                     ]);
 
@@ -407,11 +407,11 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
         $business = Context::requireBusiness();
         abort_unless($payment->business_id === $business->id, 403);
 
-        // Auto-cancel if 15-minute payment window has expired
+        // Auto-cancel if payment window has expired
         if ($payment->status === SubscriptionPayment::STATUS_PENDING && $payment->isExpired()) {
             $payment->update([
                 'status' => SubscriptionPayment::STATUS_CANCELLED,
-                'admin_notes' => 'Tagihan otomatis dibatalkan karena melewati batas pembayaran 15 menit.',
+                'admin_notes' => 'Tagihan otomatis dibatalkan karena melewati batas pembayaran.',
             ]);
             $payment->refresh();
         }
@@ -435,7 +435,7 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
                         'gateway_qr_url'    => $tripayRes['qr_url'] ?? null,
                         'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
                         'gateway_fee'       => (float) ($tripayRes['fee'] ?? 0.0),
-                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time']) : now()->addMinutes(15),
+                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time'], 'Asia/Jakarta') : Carbon::now('Asia/Jakarta')->addHours(24),
                         'admin_notes'       => null,
                     ]);
                     $payment->refresh();
@@ -463,11 +463,11 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
         $business = Context::requireBusiness();
         abort_unless($payment->business_id === $business->id, 403);
 
-        // Auto-cancel if 15-minute payment window has expired
+        // Auto-cancel if payment window has expired
         if ($payment->status === SubscriptionPayment::STATUS_PENDING && $payment->isExpired()) {
             $payment->update([
                 'status' => SubscriptionPayment::STATUS_CANCELLED,
-                'admin_notes' => 'Tagihan otomatis dibatalkan karena melewati batas pembayaran 15 menit.',
+                'admin_notes' => 'Tagihan otomatis dibatalkan karena melewati batas pembayaran.',
             ]);
             $payment->refresh();
         }
@@ -494,7 +494,7 @@ final class SubscriptionCheckoutWebController extends Controller implements HasM
                         'gateway_qr_url'    => $tripayRes['qr_url'] ?? null,
                         'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
                         'gateway_fee'       => (float) ($tripayRes['fee'] ?? 0.0),
-                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time']) : now()->addMinutes(15),
+                        'gateway_expired_at'=> isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time'], 'Asia/Jakarta') : Carbon::now('Asia/Jakarta')->addHours(24),
                         'admin_notes'       => null,
                     ]);
                     $payment->refresh();

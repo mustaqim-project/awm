@@ -1104,6 +1104,19 @@ Berdasarkan direktif audit situs publik COOCA:
    - Middleware `CheckResourceEntitlement` menegakkan hak akses secara otomatis dan menghentikan request secara elegan jika fitur sedang dikunci oleh admin.
    - Halaman `/billing/limits` merender status gembok abu-abu (terkunci) atau centang hijau/ungu (terbuka) secara 100% dinamis sesuai pengaturan admin yang sedang aktif.
 
+### 4.33 Batas Waktu Pembayaran Tagihan Langganan (24 Jam) & Standardisasi Zona Waktu WIB (UTC+7)
+
+1. **Jendela Waktu Pembayaran 24 Jam (Eliminasi Batas 15 Menit):**
+   - Transaksi pembayaran langganan SaaS (`SubscriptionPayment`) dan integrasi checkout TriPay menerapkan standar batas waktu **24 jam** (`86.400 detik`), menggantikan batas 15 menit yang terlalu sempit bagi proses administrasi UMKM.
+   - Waktu kedaluwarsa resmi dari gateway (`gateway_expired_at`) dihormati secara mutlak dan dilarang dipotong (*clamped*) oleh kode internal.
+   - Durasi batas waktu dapat disesuaikan Superadmin melalui konfigurasi `SystemSetting::get('subscription_payment_expiry_hours', '24')`.
+
+2. **Standardisasi Zona Waktu Tunggal WIB (`Asia/Jakarta` / UTC+7):**
+   - Seluruh perbandingan status kedaluwarsa (`isExpired()`) dan format batas waktu (`getExpiresAt()`, `created_at_wib`, `expires_at_wib`, `approved_at_wib`) dinormalisasi secara eksplisit ke zona waktu `Asia/Jakarta`.
+   - Mengeliminasi anomali *instant expired* akibat perbedaan offset jam antara database server (UTC +00:00) dan waktu lokal merchant di Indonesia Barat (WIB +07:00).
+   - Antarmuka hitung mundur Alpine.js pada `resources/views/app/billing/payment.blade.php` mendukung format adaptif jam-menit-detik (`hh:mm:ss`) untuk durasi $> 1$ jam.
+
+
 
 
 

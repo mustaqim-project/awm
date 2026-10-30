@@ -574,6 +574,12 @@ final class TripayService
 
         $packageName = $payment->package_name ?: ($payment->payment_type === 'ai_token' ? 'Top-up AI Token' : 'Langganan SaaS Cooca');
 
+        $expiryHours = (int) SystemSetting::get('subscription_payment_expiry_hours', '24');
+        if ($expiryHours <= 0) {
+            $expiryHours = 24;
+        }
+        $expiredTime = time() + ($expiryHours * 3600);
+
         $payload = [
             'method' => strtoupper(trim($channelCode)),
             'merchant_ref' => $merchantRef,
@@ -589,7 +595,7 @@ final class TripayService
                 ],
             ],
             'return_url' => route('billing.payment.show', $payment->id),
-            'expired_time' => time() + 900, // 15 minutes (900 seconds) as per Cooca payment checkout rule
+            'expired_time' => $expiredTime,
             'signature' => $signature,
         ];
 
@@ -614,7 +620,7 @@ final class TripayService
                     'qr_string' => $data['qr_string'] ?? null,
                     'checkout_url' => $data['checkout_url'] ?? null,
                     'fee' => (float) ($data['total_fee'] ?? 0),
-                    'expired_time' => (int) ($data['expired_time'] ?? (time() + 900)),
+                    'expired_time' => (int) ($data['expired_time'] ?? $expiredTime),
                     'instructions' => (array) ($data['instructions'] ?? []),
                     'raw_response' => $data,
                 ];

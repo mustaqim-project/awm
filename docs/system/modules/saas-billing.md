@@ -49,6 +49,10 @@ Setiap bisnis tenant terikat pada paket langganan (`business_subscriptions`) den
 * Transaksi checkout otomatis menerbitkan invoice pembayaran melalui payment gateway TriPay.
 * Mendukung saluran QRIS Dinamis (semua e-Wallet & Mobile Banking) dan Virtual Account bank nasional (BCA, Mandiri, BRI, BNI, Permata, CIMB).
 * Transaksi diverifikasi secara otomatis dan instan 24/7 melalui callback webhook TriPay (`/api/tripay/callback`).
+* **Batas Waktu Pembayaran Tagihan (24 Jam Standard Window & Full Gateway Expiry):**
+  - Masa berlaku pembayaran tagihan SaaS ditetapkan secara default **24 jam** (`time() + 86400`) dan dapat dikonfigurasi admin melalui `SystemSetting::get('subscription_payment_expiry_hours', '24')`.
+  - Sistem menghormati penuh waktu kedaluwarsa resmi dari payment gateway TriPay (`gateway_expired_at`) tanpa pemotongan artifisial 15 menit, sehingga pengguna Virtual Account dan QRIS memiliki waktu leluasa untuk mentransfer tanpa risiko order mendadak dibatalkan.
+  - Seluruh evaluasi kedaluwarsa (`getExpiresAt()`, `isExpired()`, tampilan tanggal dan hitung mundur) diikat secara ketat ke zona waktu Indonesia Barat (**WIB / `Asia/Jakarta` / UTC+7**) untuk menjamin konsistensi antara jam server database dan waktu lokal merchant.
 
 ### 3.4 Siklus Hidup Langganan 3 Tahap (Subscription 3-Phase Lifecycle)
 Command konsol `app:process-subscription-lifecycle` dijalankan terjadwal untuk mengelola siklus hidup:

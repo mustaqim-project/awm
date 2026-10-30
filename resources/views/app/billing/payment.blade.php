@@ -25,11 +25,12 @@
         $uniqueStr = str_pad((string) $payment->unique_code, 3, '0', STR_PAD_LEFT);
         $bankCode = strtolower($payment->payment_method ?? '');
         $isCancelledOrExpired = $payment->isCancelled() || $payment->isExpired();
+        $nowWib = \Carbon\Carbon::now('Asia/Jakarta');
         $expiresAt = $payment->getExpiresAt();
         $expiresAtWib = $expiresAt?->copy()->timezone('Asia/Jakarta');
         $approvedAtWib = $payment->approved_at?->copy()->timezone('Asia/Jakarta');
         $rejectedAtWib = $payment->rejected_at?->copy()->timezone('Asia/Jakarta');
-        $remainingSeconds = max(0, $expiresAt ? (int) now()->diffInSeconds($expiresAt, false) : 0);
+        $remainingSeconds = max(0, ($expiresAtWib && $nowWib) ? (int) $nowWib->diffInSeconds($expiresAtWib, false) : 0);
         if ($isCancelledOrExpired) {
             $remainingSeconds = 0;
         }
@@ -49,7 +50,7 @@
         pollTimer: null,
         countdownTimer: null,
         qrisCountdown: {{ $remainingSeconds }},
-        qrisCountdownFormatted: '{{ $isCancelledOrExpired ? '00:00' : '15:00' }}',
+        qrisCountdownFormatted: '{{ $isCancelledOrExpired ? '00:00:00' : '24:00:00' }}',
         qrUrl: {{ ($isCancelledOrExpired || empty($payment->gateway_qr_url)) ? 'null' : "'" . $payment->gateway_qr_url . "'" }},
         reorderUrl: '{{ $reorderUrl }}',
 
@@ -64,8 +65,12 @@
         },
 
         formatCountdown(seconds) {
-            const mins = Math.floor(seconds / 60);
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
+            if (hrs > 0) {
+                return (hrs < 10 ? '0' : '') + hrs + ':' + (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+            }
             return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
         },
 
@@ -434,11 +439,11 @@
                             </div>
                             <div class="text-xs text-red-500 dark:text-red-400 mt-1 flex items-center gap-1.5" x-show="isCancelled || isExpired">
                                 <i data-lucide="x-circle" class="w-3.5 h-3.5 text-[#FF3B30]" aria-hidden="true"></i>
-                                <span>{{ __('billing.order_expired_badge') }} ({{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes') }})</span>
+                                <span>{{ __('billing.order_expired_badge') }} ({{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_twenty_four_hours') }})</span>
                             </div>
                             <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1.5" x-show="!isCancelled && !isExpired">
                                 <i data-lucide="clock" class="w-3.5 h-3.5 text-[#007AFF]" aria-hidden="true"></i>
-                                <span>{{ __('billing.payment_deadline_until', ['time' => $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes')]) }}</span>
+                                <span>{{ __('billing.payment_deadline_until', ['time' => $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_twenty_four_hours')]) }}</span>
                             </div>
                         </div>
 
@@ -683,7 +688,7 @@
                             <div class="space-y-1.5 text-xs text-center max-w-sm mx-auto pt-1" x-show="!isPaid">
                                 <div class="flex items-center justify-center gap-1.5 text-black/70 dark:text-white/70 font-semibold">
                                     <span>{{ __('billing.remaining_payment_time') }}:</span>
-                                    <span class="font-mono text-[#FF9500] font-extrabold text-sm tabular-nums" x-text="qrisCountdownFormatted">15:00</span>
+                                    <span class="font-mono text-[#FF9500] font-extrabold text-sm tabular-nums" x-text="qrisCountdownFormatted">24:00:00</span>
                                 </div>
                                 <p class="text-[11px] text-black/45 dark:text-white/45 leading-relaxed">
                                     {{ __('billing.qris_auto_verify_notice') }}
@@ -799,7 +804,7 @@
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-500 dark:text-gray-400 font-sans">{{ __('billing.payment_deadline') }}</span>
                                 <span class="font-mono text-amber-600 dark:text-amber-400 font-semibold" :class="(isCancelled || isExpired) ? 'text-[#FF3B30] line-through' : ''">
-                                    {{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_fifteen_minutes') }}
+                                    {{ $expiresAtWib ? $expiresAtWib->format('d M Y, H:i') . ' WIB' : __('billing.countdown_twenty_four_hours') }}
                                 </span>
                             </div>
                         </div>
