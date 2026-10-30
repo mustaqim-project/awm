@@ -60,7 +60,8 @@ final class PublicPricingController extends Controller
         }
 
         $annualDiscountBadge = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
+        $tierLimits = $this->entitlementService->getAllTierLimits();
 
-        return view('public.pricing', compact('pricingData', 'annualDiscountBadge', 'activeBatch'));
+        return view('public.pricing', compact('pricingData', 'annualDiscountBadge', 'activeBatch', 'tierLimits'));
     }
 }

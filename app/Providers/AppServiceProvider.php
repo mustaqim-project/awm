@@ -47,6 +47,54 @@ class AppServiceProvider extends ServiceProvider
             return $business ? $business->isFeatureEnabled($featureKey, $default) : (bool) $default;
         });
 
+        // Global View Composer for Public & Marketing Views (Single Source of Truth)
+        \Illuminate\Support\Facades\View::composer(['public.*', 'layouts.public_marketing', 'landing'], function ($view) {
+            $entitlement = app(\App\Domain\Billing\EntitlementService::class);
+            $pricingService = app(\App\Domain\Billing\EarlyAdopterPricingService::class);
+
+            $tiers = [
+                'standard' => \App\Models\BusinessSubscription::TIER_STANDARD,
+                'premium'  => \App\Models\BusinessSubscription::TIER_PREMIUM,
+                'prestige' => \App\Models\BusinessSubscription::TIER_PRESTIGE,
+            ];
+
+            $pricingData = [];
+            foreach ($tiers as $key => $tier) {
+                $monthly = $pricingService->calculatePrice($tier, 'monthly');
+                $annual = $pricingService->calculatePrice($tier, 'annual');
+                $monthlyPrice = (float) $monthly['price'];
+                $annualPrice = (float) $annual['price'];
+                $annualMonthlyEquivalent = (int) round($annualPrice / 12);
+                $annualSavings = max(0.0, ($monthlyPrice * 12) - $annualPrice);
+
+                $pricingData[$key] = [
+                    'tier' => $key,
+                    'monthly_price' => $monthlyPrice,
+                    'annual_price' => $annualPrice,
+                    'monthly_price_formatted' => number_format($monthlyPrice, 0, ',', '.'),
+                    'annual_price_formatted' => number_format($annualPrice, 0, ',', '.'),
+                    'annual_monthly_equivalent_formatted' => number_format($annualMonthlyEquivalent, 0, ',', '.'),
+                    'annual_savings_formatted' => number_format($annualSavings, 0, ',', '.'),
+                    'is_early_adopter' => $monthly['is_early_adopter'] || $annual['is_early_adopter'],
+                    'batch_name' => $monthly['batch_name'] ?? $annual['batch_name'] ?? null,
+                    'remaining_quota' => $monthly['remaining_quota'] ?? $annual['remaining_quota'] ?? null,
+                ];
+            }
+
+            $supportSla = [
+                'hours' => \App\Models\SystemSetting::get('support_working_hours', 'Senin – Sabtu 08.00 – 20.00 WIB'),
+                'response_time' => \App\Models\SystemSetting::get('support_response_time', '< 15 Menit'),
+                'channel' => \App\Models\SystemSetting::get('support_channel_text', 'Chat WhatsApp Resmi & Pusat Bantuan'),
+            ];
+
+            $view->with([
+                'tierLimits' => $entitlement->getAllTierLimits(),
+                'pricingData' => $pricingData,
+                'annualDiscountBadge' => \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan'),
+                'supportSla' => $supportSla,
+            ]);
+        });
+
         // Platform Admin RBAC Gate Integration
         \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
             if ($user instanceof \App\Models\Admin) {

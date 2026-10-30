@@ -66,31 +66,31 @@
                 "price": "0",
                 "priceCurrency": "IDR",
                 "availability": "https://schema.org/InStock",
-                "description": "Paket Gratis Selamanya untuk 1 toko, 50 produk, 100 transaksi per bulan"
+                "description": "Paket Gratis Selamanya untuk {{ $tierLimits['free']['outlet'] ?? 1 }} toko, {{ $tierLimits['free']['product'] ?? 10 }} produk, {{ $tierLimits['free']['pos'] ?? 30 }} transaksi per bulan"
             },
             {
                 "@@type": "Offer",
                 "name": "Standard",
-                "price": "39000",
+                "price": "{{ $pricingData['standard']['monthly_price'] ?? 39000 }}",
                 "priceCurrency": "IDR",
                 "availability": "https://schema.org/InStock",
-                "description": "Paket Standard Rp39.000/bulan untuk usaha bertumbuh"
+                "description": "Paket Standard Rp{{ $pricingData['standard']['monthly_price_formatted'] ?? '39.000' }}/bulan untuk usaha bertumbuh"
             },
             {
                 "@@type": "Offer",
                 "name": "Premium",
-                "price": "89000",
+                "price": "{{ $pricingData['premium']['monthly_price'] ?? 89000 }}",
                 "priceCurrency": "IDR",
                 "availability": "https://schema.org/InStock",
-                "description": "Paket Premium Rp89.000/bulan multi-kasir dan inventori cabang"
+                "description": "Paket Premium Rp{{ $pricingData['premium']['monthly_price_formatted'] ?? '89.000' }}/bulan multi-kasir dan inventori cabang"
             },
             {
                 "@@type": "Offer",
                 "name": "Prestige",
-                "price": "199000",
+                "price": "{{ $pricingData['prestige']['monthly_price'] ?? 199000 }}",
                 "priceCurrency": "IDR",
                 "availability": "https://schema.org/InStock",
-                "description": "Paket Prestige Rp199.000/bulan ERP lengkap tanpa batasan"
+                "description": "Paket Prestige Rp{{ $pricingData['prestige']['monthly_price_formatted'] ?? '199.000' }}/bulan ERP lengkap tanpa batasan"
             }
         ],
         @if ($showSocialProof && !empty($socialProofUrl) && !empty($socialProofRating))

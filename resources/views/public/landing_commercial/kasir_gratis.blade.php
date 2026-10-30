@@ -5,9 +5,9 @@
 @endphp
 
 @section('title', $pageSeo['title'] ?? 'Aplikasi Kasir Gratis Selamanya untuk UMKM | COOCA')
-@section('description', $pageSeo['description'] ?? 'Aplikasi kasir gratis selamanya untuk UMKM. Kelola 1 toko, 50 produk, dan 100 transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.')
+@section('description', $pageSeo['description'] ?? ('Aplikasi kasir gratis selamanya untuk UMKM. Kelola ' . ($tierLimits['free']['outlet'] ?? 1) . ' toko, ' . ($tierLimits['free']['product'] ?? 10) . ' produk, dan ' . ($tierLimits['free']['pos'] ?? 30) . ' transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.'))
 @section('og_title', $pageSeo['og_title'] ?? 'Aplikasi Kasir Gratis Selamanya untuk UMKM | COOCA')
-@section('og_description', $pageSeo['og_description'] ?? 'Aplikasi kasir gratis selamanya untuk UMKM. Kelola 1 toko, 50 produk, dan 100 transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.')
+@section('og_description', $pageSeo['og_description'] ?? ('Aplikasi kasir gratis selamanya untuk UMKM. Kelola ' . ($tierLimits['free']['outlet'] ?? 1) . ' toko, ' . ($tierLimits['free']['product'] ?? 10) . ' produk, dan ' . ($tierLimits['free']['pos'] ?? 30) . ' transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.'))
 @section('canonical', url('/aplikasi-kasir-gratis'))
 @section('og_type', 'product')
 
@@ -45,7 +45,7 @@
           "name": "Apa saja batasan kuota pada paket aplikasi kasir gratis COOCA?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Paket Gratis mencakup 1 outlet toko, kapasitas hingga 50 master produk, dan kuota 100 transaksi penjualan per bulan. Sangat ideal untuk warung, kios, usaha rumahan, dan rintisan awal UMKM."
+            "text": "Paket Gratis mencakup {{ $tierLimits['free']['outlet'] ?? 1 }} outlet toko, kapasitas hingga {{ $tierLimits['free']['product'] ?? 10 }} master produk, dan kuota {{ $tierLimits['free']['pos'] ?? 30 }} transaksi penjualan per bulan. Sangat ideal untuk warung, kios, usaha rumahan, dan rintisan awal UMKM."
           }
         },
         {
@@ -58,7 +58,7 @@
         },
         {
           "@type": "Question",
-          "name": "Apakah data penjualan saya akan hilang jika kuota transaksi 100 per bulan habis?",
+          "name": "Apakah data penjualan saya akan hilang jika kuota transaksi {{ $tierLimits['free']['pos'] ?? 30 }} per bulan habis?",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Data transaksi Anda 100% aman dan tersimpan permanen di cloud. Anda tetap dapat melihat seluruh riwayat laporan penjualan. Kuota transaksi akan di-reset otomatis setiap tanggal 1 awal bulan baru, atau Anda dapat upgrade ke paket Standard kapan saja."
@@ -128,7 +128,7 @@
                                 <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
                                     <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200">1 Toko & 50 Produk Gratis Selamanya</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ $tierLimits['free']['outlet'] ?? 1 }} Toko & {{ $tierLimits['free']['product'] ?? 10 }} Produk Gratis Selamanya</span>
                             </div>
                             <div class="p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5">
                                 <div class="w-6 h-6 rounded-lg bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
@@ -178,15 +178,15 @@
                             <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>1 Lokasi Toko</strong> (Outlet Tunggal)</span>
+                                    <span><strong>{{ $tierLimits['free']['outlet'] ?? 1 }} Lokasi Toko</strong> (Outlet Tunggal)</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>Hingga 50 Produk</strong> Aktif</span>
+                                    <span><strong>Hingga {{ $tierLimits['free']['product'] ?? 10 }} Produk</strong> Aktif</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>100 Transaksi Kasir</strong> per Bulan</span>
+                                    <span><strong>{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi Kasir</strong> per Bulan</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
@@ -276,30 +276,30 @@
                             <tr class="border-b border-slate-200 dark:border-white/10 bg-slate-100/70 dark:bg-white/5">
                                 <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Fitur & Kapasitas</th>
                                 <th class="p-4 sm:p-5 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">Gratis (Rp 0)</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Standard (Rp 39.000)</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Premium (Rp 89.000)</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Prestige (Rp 199.000)</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Standard (Rp {{ $pricingData['standard']['monthly_price_formatted'] }})</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Premium (Rp {{ $pricingData['premium']['monthly_price_formatted'] }})</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Prestige (Rp {{ $pricingData['prestige']['monthly_price_formatted'] }})</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 dark:divide-white/10 text-slate-700 dark:text-slate-300">
                             <tr>
                                 <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Jumlah Outlet Toko</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">1 Outlet</td>
-                                <td class="p-4 sm:p-5">1 Outlet</td>
-                                <td class="p-4 sm:p-5">Hingga 3 Cabang</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['outlet'] ?? 1 }} Outlet</td>
+                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Cabang</td>
+                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang</td>
                                 <td class="p-4 sm:p-5">Multi-Cabang Tak Terbatas</td>
                             </tr>
                             <tr>
                                 <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Kapasitas Master Produk</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">50 Produk</td>
-                                <td class="p-4 sm:p-5">500 Produk</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['product'] ?? 10 }} Produk</td>
+                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['product'] ?? null) ? $tierLimits['standard']['product'] . ' Produk' : 'Tanpa Batas' }}</td>
                                 <td class="p-4 sm:p-5">Tanpa Batas</td>
                                 <td class="p-4 sm:p-5">Tanpa Batas</td>
                             </tr>
                             <tr>
                                 <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Batas Transaksi Kasir</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">100 Transaksi / Bulan</td>
-                                <td class="p-4 sm:p-5">1.000 Transaksi / Bulan</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi / Bulan</td>
+                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi / Bulan' : 'Tanpa Batas' }}</td>
                                 <td class="p-4 sm:p-5">Tanpa Batas</td>
                                 <td class="p-4 sm:p-5">Tanpa Batas</td>
                             </tr>
@@ -319,9 +319,9 @@
                             </tr>
                             <tr>
                                 <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Manajemen Akun Kasir & Hak Akses</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-400">1 Akun Owner</td>
-                                <td class="p-4 sm:p-5">2 Akun Kasir</td>
-                                <td class="p-4 sm:p-5">Hingga 5 Staf Kasir</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-400">{{ $tierLimits['free']['user'] ?? 1 }} Akun Owner</td>
+                                <td class="p-4 sm:p-5">{{ $tierLimits['standard']['user'] ?? 3 }} Akun Kasir</td>
+                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['premium']['user'] ?? 10 }} Staf Kasir</td>
                                 <td class="p-4 sm:p-5">Hak Akses Role Kustom Penuh</td>
                             </tr>
                             <tr>

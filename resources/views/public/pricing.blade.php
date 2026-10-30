@@ -209,8 +209,8 @@
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-slate-400 uppercase tracking-wider">Gratis</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight">Rp 0</div>
-                                    <div class="text-[10px] text-emerald-400 font-medium">1 Toko &bull; 100 Trx/bln</div>
-                                    <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, 50 produk</div>
+                                    <div class="text-[10px] text-emerald-400 font-medium">1 Toko &bull; {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln</div>
+                                    <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, {{ $tierLimits['free']['product'] ?? 10 }} produk</div>
                                     <a href="/aplikasi-kasir-gratis" class="text-[10px] text-emerald-400 font-semibold hover:underline block pt-1">Detail Paket Gratis &rarr;</a>
                                 </div>
 
@@ -221,8 +221,8 @@
                                         <span class="text-[9px] font-bold bg-[#007AFF] text-white px-1.5 py-0.2 rounded-full">Populer</span>
                                     </div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.standard.annual_monthly_equivalent_formatted : 'Rp ' + prices.standard.monthly_price_formatted">Rp {{ $pricingData['standard']['monthly_price_formatted'] }}</div>
-                                    <div class="text-[10px] text-[#00C4D8] font-medium">Trx Kasir Tanpa Batas</div>
-                                    <div class="text-[10.5px] text-slate-300 leading-snug">Banyak kasir, 3 cabang, nota WA</div>
+                                    <div class="text-[10px] text-[#00C4D8] font-medium">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Trx/bln' : 'Trx Kasir Tanpa Batas' }}</div>
+                                    <div class="text-[10.5px] text-slate-300 leading-snug">{{ $tierLimits['standard']['user'] ?? 3 }} kasir, {{ $tierLimits['standard']['outlet'] ?? 2 }} cabang, {{ $tierLimits['standard']['recipe'] ?? 20 }} resep</div>
                                 </div>
 
                                 <!-- Plan 3: Premium -->
@@ -230,15 +230,15 @@
                                     <div class="text-[10.5px] font-bold text-purple-400 uppercase tracking-wider">Premium</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.premium.annual_monthly_equivalent_formatted : 'Rp ' + prices.premium.monthly_price_formatted">Rp {{ $pricingData['premium']['monthly_price_formatted'] }}</div>
                                     <div class="text-[10px] text-purple-300 font-medium">Marketplace Hub</div>
-                                    <div class="text-[10.5px] text-slate-400 leading-snug">Sync Shopee, TikTok, CRM poin</div>
+                                    <div class="text-[10.5px] text-slate-400 leading-snug">Sync Shopee, TikTok, resep unlimited</div>
                                 </div>
 
                                 <!-- Plan 4: Prestige -->
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-amber-400 uppercase tracking-wider">Prestige</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.prestige.annual_monthly_equivalent_formatted : 'Rp ' + prices.prestige.monthly_price_formatted">Rp {{ $pricingData['prestige']['monthly_price_formatted'] }}</div>
-                                    <div class="text-[10px] text-amber-300 font-medium">AI &amp; Resep BOM</div>
-                                    <div class="text-[10.5px] text-slate-400 leading-snug">Asisten AI bisnis, potong bahan</div>
+                                    <div class="text-[10px] text-amber-300 font-medium">AI &amp; Resep Manufaktur</div>
+                                    <div class="text-[10.5px] text-slate-400 leading-snug">Asisten AI bisnis, BOM bertingkat</div>
                                 </div>
                             </div>
 
@@ -249,8 +249,8 @@
                                         <i data-lucide="trending-up" class="w-4 h-4"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <div class="font-bold text-white truncate">Hemat Hingga Rp 2.400.000 / Tahun</div>
-                                        <div class="text-slate-400 text-[11px] truncate">1 sistem COOCA menggantikan kasir terpisah, app stok, dan spreadsheet</div>
+                                        <div class="font-bold text-white truncate">Hemat Hingga Rp 2.400.000 / Tahun*</div>
+                                        <div class="text-slate-400 text-[11px] truncate">*Estimasi efisiensi dibanding sewa software kasir terpisah + akuntansi manual</div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 shrink-0">
@@ -316,17 +316,17 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>1 Toko &amp; 1 Pengguna</strong> (Owner/Kasir)</span>
+                                    <span class="leading-snug"><strong>{{ $tierLimits['free']['outlet'] ?? 1 }} Toko &amp; {{ $tierLimits['free']['user'] ?? 1 }} Pengguna</strong> (Owner/Kasir)</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Maksimal 50 Produk &amp; 20 Bahan Baku</span>
+                                    <span class="leading-snug">Maksimal {{ $tierLimits['free']['product'] ?? 10 }} Produk &amp; {{ $tierLimits['free']['material'] ?? 10 }} Bahan Baku</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">100 Transaksi Kasir POS per bulan</span>
+                                    <span class="leading-snug">{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi Kasir POS per bulan</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -336,7 +336,7 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Penyimpanan Cloud Aman 3 GB</span>
+                                    <span class="leading-snug">Penyimpanan Cloud Aman {{ $tierLimits['free']['storage_gb'] ?? 3 }} GB</span>
                                 </div>
                             </div>
                         </div>
@@ -400,29 +400,27 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Banyak Kasir &amp; Staf</strong> dengan pembatasan
-                                        hak akses aman</span>
+                                    <span class="leading-snug"><strong>Multi-Kasir ({{ $tierLimits['standard']['user'] ?? 3 }} Akun)</strong> &amp; Hak Akses Aman</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Hingga 3 Cabang Toko &amp; Gudang Terpisah</span>
+                                    <span class="leading-snug">Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Lokasi Toko &amp; Gudang</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Transaksi Kasir Tanpa Batas</strong> (bebas
-                                        kuota)</span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir POS/bln' : 'Transaksi Kasir Tanpa Batas' }}</strong></span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Kirim Nota Otomatis ke WhatsApp Pelanggan</span>
+                                    <span class="leading-snug"><strong>{{ $tierLimits['standard']['recipe'] ?? 20 }} Resep Menu Kuliner</strong> &amp; Potong Stok Otomatis</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Laporan Penjualan &amp; Laba Bersih Otomatis</span>
+                                    <span class="leading-snug">Kirim Nota WhatsApp &amp; Laporan Laba Bersih</span>
                                 </div>
                             </div>
                         </div>
@@ -479,23 +477,22 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Sinkronisasi Stok Otomatis</strong> ke Shopee &amp;
-                                        TikTok Shop</span>
+                                    <span class="leading-snug"><strong>Sinkronisasi Stok Otomatis</strong> ke Shopee &amp; TikTok Shop</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Otomasi Jadwal Posting Konten ke Media Sosial</span>
+                                    <span class="leading-snug"><strong>Resep Menu Kuliner Tanpa Batas</strong> &amp; Bahan Baku</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Manajemen Pelanggan Setia &amp; Program Poin Belanja</span>
+                                    <span class="leading-snug">Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang Toko &amp; {{ $tierLimits['premium']['user'] ?? 10 }} Kasir</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Integrasi Webhook &amp; Notifikasi Pesanan</span>
+                                    <span class="leading-snug">Pelanggan Setia &amp; Program Poin Belanja</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -560,8 +557,7 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Asisten Bisnis AI Cerdas</strong> (Tanya laba, tren
-                                        &amp; stok lewat chat)</span>
+                                    <span class="leading-snug"><strong>Asisten Bisnis AI Cerdas</strong> (Tanya laba &amp; tren via chat)</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -571,8 +567,7 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Resep Bahan Baku Produksi (BOM)</strong> &amp;
-                                        Potong Stok Otomatis</span>
+                                    <span class="leading-snug"><strong>Resep Produksi Manufaktur (BOM) Bertingkat</strong></span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -582,7 +577,7 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Pendamping Khusus Pribadi &amp; Bantuan VIP 24 Jam</span>
+                                    <span class="leading-snug">Dukungan Prioritas Cepat (Respons {{ $supportSla['response_time'] ?? '< 15 Menit' }})</span>
                                 </div>
                             </div>
                         </div>
@@ -746,7 +741,7 @@
                                     </div>
                                 </div>
                                 <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                    Sangat cocok untuk memulai. Anda sudah bisa mencatat kasir, mengelola hingga 50 produk,
+                                    Sangat cocok untuk memulai. Anda sudah bisa mencatat kasir, mengelola hingga {{ $tierLimits['free']['product'] ?? 10 }} produk,
                                     dan mencetak nota tanpa keluar biaya sepeser pun.
                                 </p>
                                 <a href="/aplikasi-kasir-gratis" class="text-xs text-[#007AFF] dark:text-[#00C4D8] font-bold hover:underline inline-flex items-center gap-1">
@@ -765,7 +760,7 @@
                                     <div>
                                         <div class="text-xl font-bold text-slate-900 dark:text-white">Paket Standard</div>
                                         <div class="text-xs text-[#007AFF] dark:text-[#0A84FF] font-semibold">Mulai Rp
-                                            39.000 / bulan</div>
+                                            <span x-text="prices.standard.monthly_price_formatted">{{ $pricingData['standard']['monthly_price_formatted'] }}</span> / bulan</div>
                                     </div>
                                 </div>
                                 <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
@@ -784,7 +779,7 @@
                                     <div>
                                         <div class="text-xl font-bold text-slate-900 dark:text-white">Paket Premium</div>
                                         <div class="text-xs text-purple-600 dark:text-purple-400 font-semibold">Mulai Rp
-                                            79.000 / bulan</div>
+                                            <span x-text="prices.premium.monthly_price_formatted">{{ $pricingData['premium']['monthly_price_formatted'] }}</span> / bulan</div>
                                     </div>
                                 </div>
                                 <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
@@ -803,7 +798,7 @@
                                     <div>
                                         <div class="text-xl font-bold text-slate-900 dark:text-white">Paket Prestige</div>
                                         <div class="text-xs text-amber-600 dark:text-amber-400 font-semibold">Mulai Rp
-                                            159.000 / bulan</div>
+                                            <span x-text="prices.prestige.monthly_price_formatted">{{ $pricingData['prestige']['monthly_price_formatted'] }}</span> / bulan</div>
                                     </div>
                                 </div>
                                 <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
@@ -1248,45 +1243,39 @@
                             <table class="w-full min-w-[550px] text-left text-xs sm:text-sm">
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Jumlah Toko
-                                            / Cabang</td>
-                                        <td class="p-3 sm:p-4 text-center">1 Toko</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Hingga 3 Cabang</td>
-                                        <td class="p-3 sm:p-4 text-center">Hingga 10 Cabang</td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Jumlah Toko / Cabang</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['outlet'] ?? 1 }} Toko</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Cabang</td>
+                                        <td class="p-3 sm:p-4 text-center">Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang</td>
                                         <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Pengguna /
-                                            Kasir Terdaftar</td>
-                                        <td class="p-3 sm:p-4 text-center">1 Pengguna</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Multi-User (3 Kasir)
-                                        </td>
-                                        <td class="p-3 sm:p-4 text-center">Multi-User (10 Kasir)</td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Pengguna / Kasir Terdaftar</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['user'] ?? 1 }} Pengguna</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Multi-User ({{ $tierLimits['standard']['user'] ?? 3 }} Kasir)</td>
+                                        <td class="p-3 sm:p-4 text-center">Multi-User ({{ $tierLimits['premium']['user'] ?? 10 }} Kasir)</td>
                                         <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Kapasitas
-                                            Produk / Barang</td>
-                                        <td class="p-3 sm:p-4 text-center">50 Produk</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Kapasitas Produk / Barang</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['product'] ?? 10 }} Produk</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['product'] ?? null) ? $tierLimits['standard']['product'] . ' Produk' : 'Tanpa Batas' }}</td>
                                         <td class="p-3 sm:p-4 text-center">Tanpa Batas</td>
                                         <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Batas
-                                            Transaksi Kasir / bln</td>
-                                        <td class="p-3 sm:p-4 text-center">100 Transaksi</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Batas Transaksi Kasir / bln</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
                                         <td class="p-3 sm:p-4 text-center">Tanpa Batas</td>
                                         <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Penyimpanan
-                                            Cloud Storage</td>
-                                        <td class="p-3 sm:p-4 text-center">3 GB</td>
-                                        <td class="p-3 sm:p-4 text-center">10 GB</td>
-                                        <td class="p-3 sm:p-4 text-center">25 GB</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">100 GB</td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Penyimpanan Cloud Storage</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['storage_gb'] ?? 3 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['standard']['storage_gb'] ?? 10 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['premium']['storage_gb'] ?? 25 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ $tierLimits['prestige']['storage_gb'] ?? 100 }} GB</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1385,13 +1374,11 @@
                                                 data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
-                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Resep Bahan
-                                            Baku Kuliner / Pabrik (BOM)</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
+                                        <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Resep Bahan Baku &amp; Potong Stok (BOM)</td>
+                                        <td class="p-3 sm:p-4 text-center text-slate-600 dark:text-slate-400">{{ $tierLimits['free']['recipe'] ?? 3 }} Resep</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ $tierLimits['standard']['recipe'] ?? 20 }} Resep Menu</td>
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">Resep Menu Unlimited</td>
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">BOM Manufaktur Bertingkat</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1434,8 +1421,7 @@
                                         <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Chat &amp; WhatsApp
                                             Resmi</td>
                                         <td class="p-3 sm:p-4 text-center font-bold">WhatsApp Prioritas Cepat</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-amber-600">VIP Pendamping Pribadi
-                                            24 Jam</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-amber-600">Dukungan Prioritas Cepat (Respons {{ $supportSla['response_time'] ?? '< 15 Menit' }})</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1524,12 +1510,12 @@
                             <div class="p-4 rounded-[16px] bg-slate-50 dark:bg-white/[0.03] space-y-2">
                                 <div class="font-bold text-slate-900 dark:text-white">Yang Anda Dapatkan:</div>
                                 <ul class="space-y-1.5 list-disc list-inside">
-                                    <li>1 User Akun Pemilik / Kasir</li>
-                                    <li>Maksimal 50 Produk barang atau jasa</li>
-                                    <li>100 transaksi kasir POS per bulan</li>
+                                    <li>{{ $tierLimits['free']['user'] ?? 1 }} User Akun Pemilik / Kasir</li>
+                                    <li>Maksimal {{ $tierLimits['free']['product'] ?? 10 }} Produk &amp; {{ $tierLimits['free']['material'] ?? 10 }} Bahan Baku</li>
+                                    <li>{{ $tierLimits['free']['pos'] ?? 30 }} transaksi kasir POS per bulan</li>
                                     <li>Cetak struk thermal bluetooth langsung dari HP</li>
                                     <li>Buku kas dan laporan omset harian otomatis</li>
-                                    <li>Penyimpanan data cloud aman 3 GB</li>
+                                    <li>Penyimpanan data cloud aman {{ $tierLimits['free']['storage_gb'] ?? 3 }} GB</li>
                                 </ul>
                             </div>
                         </div>
@@ -1540,20 +1526,20 @@
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
                                 Paket Standard adalah pilihan paling ideal untuk toko kelontong modern, bengkel, kafe, atau
-                                barbershop yang memiliki karyawan kasir. Kuota transaksi dibuka tanpa batas sehingga tidak
-                                ada kekhawatiran antrean tertolak.
+                                barbershop yang memiliki karyawan kasir. Kuota transaksi dan kapasitas resep mencukupi operasional harian.
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-blue-50/50 dark:bg-blue-950/20 border border-blue-500/20 space-y-2">
                                 <div class="font-bold text-slate-900 dark:text-white">Yang Anda Dapatkan:</div>
                                 <ul class="space-y-1.5 list-disc list-inside">
-                                    <li>Hingga 3 Cabang Toko &amp; Gudang terpisah</li>
-                                    <li>Multi-User kasir dengan PIN supervisor (mencegah kecurangan)</li>
-                                    <li>Produk &amp; Transaksi Kasir Tanpa Batas Kuota</li>
+                                    <li>Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Cabang Toko &amp; Gudang terpisah</li>
+                                    <li>Multi-User kasir ({{ $tierLimits['standard']['user'] ?? 3 }} Akun) dengan PIN supervisor</li>
+                                    <li>{{ ($tierLimits['standard']['product'] ?? null) ? $tierLimits['standard']['product'] . ' Produk & ' : '' }}{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir/bln' : 'Transaksi Kasir Tanpa Batas' }}</li>
+                                    <li>{{ $tierLimits['standard']['recipe'] ?? 20 }} Resep Menu Kuliner &amp; Potong Stok Otomatis</li>
                                     <li>Kirim nota PDF otomatis ke WhatsApp pelanggan</li>
                                     <li>Tingkat harga grosir dan eceran otomatis</li>
                                     <li>Laporan laba kotor &amp; bersih real-time</li>
-                                    <li>Bantuan teknis via WhatsApp resmi</li>
+                                    <li>Bantuan teknis via WhatsApp resmi ({{ $supportSla['hours'] ?? 'Senin–Sabtu 08.00–20.00 WIB' }})</li>
                                 </ul>
                             </div>
                         </div>
@@ -1572,10 +1558,12 @@
                                 <ul class="space-y-1.5 list-disc list-inside">
                                     <li>Seluruh fitur Paket Standard</li>
                                     <li>Sinkronisasi inventori marketplace otomatis (Shopee &amp; TikTok)</li>
+                                    <li>Resep Menu Kuliner Tanpa Batas</li>
+                                    <li>Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang Toko &amp; {{ $tierLimits['premium']['user'] ?? 10 }} Staf Kasir</li>
                                     <li>Otomasi jadwal tayang konten katalog di media sosial</li>
                                     <li>Integrasi Webhook pesanan &amp; notifikasi instan</li>
-                                    <li>Cloud storage 25 GB untuk arsip file bisnis</li>
-                                    <li>Prioritas antrean bantuan teknis 7 hari seminggu</li>
+                                    <li>Cloud storage {{ $tierLimits['premium']['storage_gb'] ?? 25 }} GB untuk arsip file bisnis</li>
+                                    <li>Prioritas antrean bantuan teknis resmi</li>
                                 </ul>
                             </div>
                         </div>
@@ -1586,8 +1574,7 @@
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
                                 Paket Prestige menghadirkan kecerdasan buatan (AI) yang bertindak seperti konsultan pribadi
-                                Anda. Sangat kuat untuk bisnis F&amp;B yang memerlukan resep bahan baku (BOM) atau
-                                distributor multi-perusahaan.
+                                Anda. Sangat kuat untuk bisnis dengan resep produksi bertingkat (BOM) atau distributor multi-perusahaan.
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-amber-50/50 dark:bg-amber-950/20 border border-amber-500/20 space-y-2">
@@ -1596,9 +1583,9 @@
                                     <li>Seluruh fitur Paket Premium</li>
                                     <li>Asisten Bisnis Cerdas AI (Tanya jawab omset, tren &amp; analisa laba)</li>
                                     <li>AI Pembuat Konten Promosi &amp; Deskripsi Produk</li>
-                                    <li>Modul Resep Bahan Baku (BOM) &amp; Potong Stok Otomatis</li>
+                                    <li>Modul Resep Produksi Manufaktur (BOM) Bertingkat &amp; Potong Stok Otomatis</li>
                                     <li>Multi-Perusahaan &amp; Konsolidasi Laporan Keuangan</li>
-                                    <li>Pendamping Khusus Pribadi (Account Manager) &amp; Bantuan VIP 24 Jam</li>
+                                    <li>Dukungan Teknis Prioritas Cepat (Respons {{ $supportSla['response_time'] ?? '< 15 Menit' }})</li>
                                 </ul>
                             </div>
                         </div>
