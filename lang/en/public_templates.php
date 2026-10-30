@@ -24,3 +24,4 @@ return [
     'section_download_sheet' => 'Download Free Spreadsheet',
     'section_other_templates' => 'More Business Templates for You',
 ];
+

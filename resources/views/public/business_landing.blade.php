@@ -3632,7 +3632,7 @@
                         class="h-9 px-3 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-95 border border-black/5 dark:border-white/10"
                         title="{{ __('storefront.title_login_register') }}">
                         <i data-lucide="user" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">Masuk</span>
+                        <span class="hidden sm:inline">{{ __('public_marketing.nav_login') }}</span>
                     </a>
                 @endif
 
@@ -3752,7 +3752,7 @@
                     <a href="{{ route('customer.login', ['store' => $business->slug]) }}"
                         class="w-full h-11 rounded-[14px] bg-brand-100 text-brand-primary font-bold text-[13.5px] flex items-center justify-center gap-2 hover:bg-brand-200 transition">
                         <i data-lucide="user" class="w-4 h-4"></i>
-                        <span>Masuk / Daftar Akun Pelanggan</span>
+                        <span>{{ __('public_marketing.btn_login_register_account') }}</span>
                     </a>
                 </div>
             @endif
@@ -6629,7 +6629,7 @@
                             <span>1</span>
                         </template>
                     </span>
-                    <span class="truncate">1. Pengiriman</span>
+                    <span class="truncate">{{ __('public_marketing.checkout_step_1_delivery') }}</span>
                 </button>
 
                 @if ($hasBatchFeature)
@@ -7104,7 +7104,7 @@
                                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
                                             <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
-                                            <span>Transfer Toko</span>
+                                            <span>{{ __('public_marketing.payment_store_transfer') }}</span>
                                         </button>
                                     </div>
                                 @endif
@@ -7882,7 +7882,7 @@
                                         x-show="customerPoForm.batches.length > 1"
                                         class="text-red-500 hover:text-red-600 text-[11px] font-semibold flex items-center gap-1 cursor-pointer">
                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                        <span>Hapus Batch</span>
+                                        <span>{{ __('public_marketing.btn_remove_batch') }}</span>
                                     </button>
                                 </div>
 

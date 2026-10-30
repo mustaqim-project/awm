@@ -276,4 +276,5 @@ return [
     'srch_preset_high' => '> 200k',
     'remove_filter' => 'Remove filter',
     'max_price_fallback' => 'Max',
+    'srch_merchant_default' => 'Cooca Merchant',
 ];

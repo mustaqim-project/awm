@@ -257,8 +257,8 @@
                     @click="submitReservation()" 
                     :disabled="isSubmitting"
                     class="w-full sm:w-auto px-8 py-3.5 rounded-[12px] theme-btn-primary font-bold text-sm shadow-md flex items-center justify-center gap-2 active:scale-[0.97] disabled:opacity-50 min-h-[48px]">
-                <span x-show="!isSubmitting">Kirim Permintaan Reservasi</span>
-                <span x-show="isSubmitting" x-cloak>Mengirim Permintaan...</span>
+                <span x-show="!isSubmitting">{{ __('storefront.submit_reservation') }}</span>
+                <span x-show="isSubmitting" x-cloak>{{ __('storefront.submitting_reservation') }}</span>
                 <i data-lucide="arrow-right" class="w-4 h-4" x-show="!isSubmitting"></i>
             </button>
         </div>

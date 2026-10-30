@@ -72,7 +72,7 @@
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-rose-700 hover:bg-rose-800 text-white font-semibold text-xs shadow-md shadow-rose-700/20 transition active:scale-95"
                     title="{{ __('storefront.selected_package') }}">
                     <i data-lucide="heart" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">Paket</span>
+                    <span class="hidden sm:inline">{{ __('storefront.nav_packages') }}</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-slate-900 min-w-[18px] text-center">
                         0

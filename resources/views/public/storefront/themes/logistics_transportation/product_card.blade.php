@@ -28,7 +28,7 @@
 
         <span class="absolute bottom-3 right-3 px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase bg-amber-500 text-slate-950 shadow-xs flex items-center gap-1">
             <i data-lucide="scan-line" class="w-3 h-3"></i>
-            <span>GPS Aktif</span>
+            <span>{{ __('storefront.gps_active') }}</span>
         </span>
     </a>
 

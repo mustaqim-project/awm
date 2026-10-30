@@ -10,7 +10,7 @@
 @section('title', $contactTitle)
 @section('description', $contactDesc)
 @section('canonical', $contactCanonical)
-@section('og_title', 'Kontak, Lokasi & Layanan Pelanggan - ' . $business->name)
+@section('og_title', __('storefront.contact_main_heading') . ' - ' . $business->name)
 @section('og_description', $contactDesc)
 @section('og_image', $contactOgImage)
 @section('og_type', 'website')

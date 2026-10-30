@@ -26,9 +26,7 @@
             </span>
         @endif
 
-        <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-mono bg-amber-600 text-white shadow-xs">
-            Resmi
-        </span>
+        <span class="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-mono bg-amber-600 text-white shadow-xs">{{ __('storefront.official_certified') }}</span>
     </a>
 
     {{-- Content --}}

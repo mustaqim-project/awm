@@ -1167,7 +1167,7 @@
                             <span x-show="!isSubmitting">{{ __('storefront.confirm_and_order_now') }}</span>
                             <span x-show="isSubmitting" x-cloak class="flex items-center gap-2">
                                 <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                                <span>Memproses Pesanan...</span>
+                                <span>{{ __('storefront.processing_order') }}</span>
                             </span>
                             <i data-lucide="arrow-right" class="w-4 h-4" x-show="!isSubmitting"></i>
                         </button>

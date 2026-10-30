@@ -20,7 +20,7 @@
 
         <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider shadow-sm backdrop-blur-md bg-purple-700/90 text-white flex items-center gap-1">
             <i data-lucide="zap" class="w-3 h-3"></i>
-            Kilat 1 Hari
+            {{ __('storefront.one_day_express') }}
         </span>
 
         <span class="absolute bottom-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono bg-white/90 dark:bg-black/90 text-neutral-800 dark:text-neutral-200">

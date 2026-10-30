@@ -394,5 +394,9 @@ return [
     'pricing_sec_3_inv' => '3. Inventori, Stok & Bahan Baku',
     'pricing_modal_plan_prefix' => 'Paket',
     'faq_can_switch_plans' => 'Apakah saya bisa berpindah paket kapan saja?',
+    'checkout_step_1_delivery' => '1. Pengiriman',
+    'payment_store_transfer' => 'Transfer Toko',
+    'btn_remove_batch' => 'Hapus Batch',
+    'btn_login_register_account' => 'Masuk / Daftar Akun Pelanggan',
 ];
 

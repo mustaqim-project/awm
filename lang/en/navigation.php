@@ -228,4 +228,8 @@ return [
     'main_navigation' => 'Main Navigation',
     'close_menu' => 'Close Menu',
     'toggle_sidebar' => 'Toggle Sidebar',
+    'pos_ai_intelligence' => 'AI POS Intelligence',
+    'ai_credit_ledger' => 'Credit Ledger & Balance',
+    'ai_credits' => 'Credits & Balance',
+    'nav_docs' => 'Guides & Documentation',
 ];

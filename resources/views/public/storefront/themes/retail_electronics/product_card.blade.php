@@ -19,12 +19,12 @@
 
         <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider shadow-sm backdrop-blur-md bg-cyan-600/90 text-white flex items-center gap-1">
             <i data-lucide="shield-check" class="w-3 h-3"></i>
-            Garansi Resmi
+            {{ __('storefront.official_warranty') }}
         </span>
 
         @if ($item->is_preorder)
             <span class="absolute top-3 right-3 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-500 text-white shadow-sm">
-                Pre-Order
+                {{ __('storefront.preorder') }}
             </span>
         @endif
     </a>

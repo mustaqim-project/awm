@@ -112,7 +112,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                    {{ __('storefront.nav_contact') }} &amp; Alamat
+                    {{ __('storefront.contact_and_address') }}
                 </a>
             @endif
             <button type="button" @click="$dispatch('open-order-track-modal'); mobileMenuOpen = false"

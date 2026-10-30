@@ -450,9 +450,7 @@
                                 @endif
 
                                 <button type="button" @click="close()"
-                                    class="w-full sm:w-auto py-2.5 px-4 text-xs sm:text-sm font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white transition">
-                                    Tutup
-                                </button>
+                                    class="w-full sm:w-auto py-2.5 px-4 text-xs sm:text-sm font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-white transition">{{ __('storefront.close') }}</button>
                             </div>
                         </div>
 

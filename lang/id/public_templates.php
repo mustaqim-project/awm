@@ -24,3 +24,4 @@ return [
     'section_download_sheet' => 'Unduh Spreadsheet Gratis',
     'section_other_templates' => 'Template Bisnis Lainnya untuk Anda',
 ];
+

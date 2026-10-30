@@ -276,4 +276,5 @@ return [
     'srch_preset_high' => '> 200rb',
     'remove_filter' => 'Hapus filter',
     'max_price_fallback' => 'Maks',
+    'srch_merchant_default' => 'Cooca UMKM',
 ];

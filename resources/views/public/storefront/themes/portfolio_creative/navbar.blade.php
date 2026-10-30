@@ -72,7 +72,7 @@
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 hover:bg-violet-700 dark:hover:bg-violet-600 dark:hover:text-white transition font-bold text-xs shadow-xs active:scale-95"
                     title="{{ __('storefront.order_service') }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">Paket</span>
+                    <span class="hidden sm:inline">{{ __('storefront.nav_packages') }}</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-violet-600 text-white min-w-[18px] text-center">
                         0

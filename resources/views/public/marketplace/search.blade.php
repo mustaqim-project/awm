@@ -573,7 +573,7 @@
                                         @else
                                             <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
                                                 <i data-lucide="package" class="w-10 h-10 stroke-[1.5]"></i>
-                                                <span class="text-[10px] mt-1 font-medium tracking-tight">Cooca UMKM</span>
+                                                <span class="text-[10px] mt-1 font-medium tracking-tight">{{ __('public_marketplace.srch_merchant_default') }}</span>
                                             </div>
                                         @endif
 

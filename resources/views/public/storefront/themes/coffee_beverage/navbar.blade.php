@@ -72,7 +72,7 @@
                     class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#8B5A2B] hover:bg-[#724822] text-white font-semibold text-xs shadow-md shadow-[#8B5A2B]/20 transition active:scale-95"
                     title="{{ __('storefront.coffee_orders') }}">
                     <i data-lucide="cup-soda" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">Pesanan</span>
+                    <span class="hidden sm:inline">{{ __('storefront.nav_orders') }}</span>
                     <span x-text="$store.cart ? $store.cart.count() : 0"
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#C88A58] text-[#15110E] min-w-[18px] text-center">
                         0

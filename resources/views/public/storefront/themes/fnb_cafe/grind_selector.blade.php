@@ -10,11 +10,11 @@
 
     <div class="flex items-center gap-2">
         <h4 class="text-sm font-bold" style="color: #3D2B1F; font-family: var(--font-heading);">
-            Pilihan Gilingan
+            {{ __('storefront.grind_size_choice') }}
         </h4>
         <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold"
             style="background: #C88A5820; color: #8B5A2B;">
-            Wajib Dipilih
+            {{ __('storefront.required') }}
         </span>
     </div>
 
@@ -29,8 +29,8 @@
             class="relative flex flex-col items-center gap-1.5 p-3 rounded-[14px] border-2 transition-all duration-200 cursor-pointer text-center"
             style="border-color: rgba(139, 90, 43, 0.12);">
             <i data-lucide="bean" class="w-5 h-5" style="color: #8B5A2B;"></i>
-            <span class="text-xs font-bold leading-tight" style="color: #3D2B1F;">Biji Utuh</span>
-            <span class="text-[10px] leading-tight" style="color: #8B5A2B99;">Simpan kesegaran lebih lama</span>
+            <span class="text-xs font-bold leading-tight" style="color: #3D2B1F;">{{ __('storefront.whole_bean') }}</span>
+            <span class="text-[10px] leading-tight" style="color: #8B5A2B99;">{{ __('storefront.whole_bean_desc') }}</span>
             <div x-show="selectedGrind === 'whole'" x-transition
                 class="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center shadow-sm"
                 style="background: #8B5A2B; color: #FFFFFF;">
@@ -65,8 +65,8 @@
             class="relative flex flex-col items-center gap-1.5 p-3 rounded-[14px] border-2 transition-all duration-200 cursor-pointer text-center"
             style="border-color: rgba(139, 90, 43, 0.12);">
             <i data-lucide="grid-2x2" class="w-5 h-5" style="color: #8B5A2B;"></i>
-            <span class="text-xs font-bold leading-tight" style="color: #3D2B1F;">Sedang</span>
-            <span class="text-[10px] leading-tight" style="color: #8B5A2B99;">V60, Chemex, Aeropress</span>
+            <span class="text-xs font-bold leading-tight" style="color: #3D2B1F;">{{ __('storefront.medium_grind') }}</span>
+            <span class="text-[10px] leading-tight" style="color: #8B5A2B99;">{{ __('storefront.medium_grind_desc') }}</span>
             <div x-show="selectedGrind === 'medium'" x-transition
                 class="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center shadow-sm"
                 style="background: #8B5A2B; color: #FFFFFF;">

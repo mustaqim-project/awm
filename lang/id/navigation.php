@@ -228,4 +228,8 @@ return [
     'main_navigation' => 'Navigasi Utama',
     'close_menu' => 'Tutup Menu',
     'toggle_sidebar' => 'Toggle Sidebar',
+    'pos_ai_intelligence' => 'AI POS Intelligence',
+    'ai_credit_ledger' => 'Ledger & Saldo Kredit',
+    'ai_credits' => 'Saldo & Kredit',
+    'nav_docs' => 'Panduan & Dokumentasi',
 ];

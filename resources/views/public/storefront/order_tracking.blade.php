@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('public.partials.seo', [
         'siteName' => $business->name,
-        'title' => 'Status Pesanan #' . $order->order_number . ' - ' . $business->name,
+        'title' => '{{ __('storefront.order_status') }} #' . $order->order_number . ' - ' . $business->name,
         'description' => 'Pantau rincian status pesanan #' . $order->order_number . ' di ' . $business->name . ' secara real-time. Informasi pembayaran, proses kemas, hingga resi pengiriman.',
         'url' => url("/{$business->slug}/order/{$order->tracking_token}"),
         'image' => $business->logo_url ?: asset('assets/seo/cooca-og-default.jpg'),
-        'imageAlt' => 'Status Pesanan #' . $order->order_number . ' - ' . $business->name,
+        'imageAlt' => '{{ __('storefront.order_status') }} #' . $order->order_number . ' - ' . $business->name,
         'robots' => 'noindex, follow',
     ])
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,27 +93,26 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                     <span
-                        class="text-[11.5px] font-semibold tracking-wider uppercase text-black/45 dark:text-white/45 block">Status
-                        Pesanan</span>
+                        class="text-[11.5px] font-semibold tracking-wider uppercase text-black/45 dark:text-white/45 block">{{ __('storefront.order_status') }}</span>
                     <h1 class="text-2xl sm:text-[26px] font-bold tracking-tight text-black dark:text-white mt-0.5">
                         @if ($order->status === 'pending_payment')
-                            Menunggu Pembayaran
+                            {{ __('storefront.status_pending_payment') }}
                         @elseif($order->status === 'proof_submitted')
-                            Verifikasi Pembayaran
+                            {{ __('storefront.status_proof_submitted') }}
                         @elseif($order->status === 'payment_rejected')
-                            Bukti Transfer Ditolak
+                            {{ __('storefront.status_payment_rejected') }}
                         @elseif($order->status === 'paid' || $order->status === 'processing')
-                            Sedang Diproses Toko
+                            {{ __('storefront.status_processing') }}
                         @elseif($order->status === 'ready')
-                            Pesanan Siap
+                            {{ __('storefront.status_ready') }}
                         @elseif($order->status === 'fulfilled')
-                            Dalam Pengantaran
+                            {{ __('storefront.status_delivering') }}
                         @elseif($order->status === 'completed')
-                            Pesanan Selesai
+                            {{ __('storefront.status_completed') }}
                         @elseif($order->status === 'cancelled')
-                            Pesanan Dibatalkan
+                            {{ __('storefront.status_cancelled') }}
                         @elseif($order->status === 'expired')
-                            Waktu Pembayaran Habis
+                            {{ __('storefront.status_payment_expired') }}
                         @endif
                     </h1>
                 </div>
@@ -398,7 +397,7 @@
                     <img src="{{ $qrImageUrl }}" alt="{{ __('storefront.qris_code_pesanan_order_order_number') }}" class="w-56 h-56 sm:w-64 sm:h-64 object-contain rounded-xl">
                     <div class="mt-3 text-[11px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
-                        <span>Menunggu Pembayaran...</span>
+                        <span>{{ __('storefront.status_pending_payment') }}...</span>
                     </div>
                 </div>
 

@@ -31,9 +31,9 @@
                 <div class="text-left">
                     <h3 class="font-heading font-bold text-sm" style="color: #3D2B1F;">
                         @if ($hasQrTable)
-                            <i data-lucide="coffee" class="w-3.5 h-3.5 inline-block mr-0.5" style="color: #8B5A2B;"></i> Pesan di Meja {{ e($qrTableNumber) }}
+                            <i data-lucide="coffee" class="w-3.5 h-3.5 inline-block mr-0.5" style="color: #8B5A2B;"></i> {{ __('storefront.order_at_table', ['table' => e($qrTableNumber)]) }}
                         @else
-                            Pesan Dine-In di Meja
+                            {{ __('storefront.order_dine_in') }}
                         @endif
                     </h3>
                     <p class="text-[11px]" style="color: #8B5A2B99;">

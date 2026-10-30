@@ -28,7 +28,7 @@
 
         <span class="absolute bottom-3 right-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-600 text-white shadow-xs flex items-center gap-1">
             <i data-lucide="shield-check" class="w-3 h-3 text-teal-200"></i>
-            <span>BPOM Resmi</span>
+            <span>{{ __('storefront.bpom_official') }}</span>
         </span>
     </a>
 

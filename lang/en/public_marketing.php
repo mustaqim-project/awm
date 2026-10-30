@@ -394,5 +394,9 @@ return [
     'pricing_sec_3_inv' => '3. Inventory, Stock & Raw Materials',
     'pricing_modal_plan_prefix' => 'Package',
     'faq_can_switch_plans' => 'Can I change subscription plans at any time?',
+    'checkout_step_1_delivery' => '1. Shipping',
+    'payment_store_transfer' => 'Store Bank Transfer',
+    'btn_remove_batch' => 'Delete Batch',
+    'btn_login_register_account' => 'Login / Register Customer Account',
 ];
 

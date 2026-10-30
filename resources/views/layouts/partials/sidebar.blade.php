@@ -648,7 +648,7 @@
                             <a href="{{ route('pos.ai.index') }}"
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('pos.ai.*') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] shrink-0"></span>
-                                <span class="truncate">AI POS Intelligence</span>
+                                <span class="truncate">{{ __('navigation.pos_ai_intelligence') }}</span>
                             </a>
                             @endif
                             <a href="{{ route('cooca-ai.actions') }}"
@@ -686,7 +686,7 @@
                             <a href="{{ route('pos.ai.index') }}"
                                 class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('pos.ai.*') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
                                 <i data-lucide="calculator" class="w-3.5 h-3.5 {{ request()->routeIs('pos.ai.*') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
-                                <span>AI POS Intelligence</span>
+                                <span>{{ __('navigation.pos_ai_intelligence') }}</span>
                             </a>
                             @endif
                             <a href="{{ route('cooca-ai.actions') }}"
@@ -747,7 +747,7 @@
                             <a href="{{ route('ai-studio.credit-history') }}"
                                 class="sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] font-medium transition-colors {{ request()->routeIs('ai-studio.credit-history') ? 'bg-black/5 dark:bg-white/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.04]' }}">
                                 <span class="w-1.5 h-1.5 rounded-full {{ request()->routeIs('ai-studio.credit-history') ? 'bg-[#007AFF]' : 'bg-black/40 dark:text-white/40' }} shrink-0"></span>
-                                <span class="truncate">Ledger & Saldo Kredit</span>
+                                <span class="truncate">{{ __('navigation.ai_credit_ledger') }}</span>
                             </a>
                         </div>
                     @endif
@@ -778,7 +778,7 @@
                             <a href="{{ route('ai-studio.credit-history') }}"
                                 class="group/flyout sidebar-item flex items-center gap-2 px-2.5 py-1.5 rounded-[7px] text-xs {{ request()->routeIs('ai-studio.credit-history') ? 'bg-black/[0.06] dark:bg-white/[0.08] text-[#007AFF] dark:text-[#0A84FF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]' }}">
                                 <i data-lucide="coins" class="w-3.5 h-3.5 {{ request()->routeIs('ai-studio.credit-history') ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-black/50 dark:text-white/50 group-hover/flyout:text-black dark:group-hover/flyout:text-white' }}"></i>
-                                <span>Saldo & Kredit</span>
+                                <span>{{ __('navigation.ai_credits') }}</span>
                             </a>
                         </div>
                     </div>
@@ -2021,12 +2021,12 @@
                 @mouseleave="activeFlyout = null">
                 <a href="{{ route('docs.index') }}" id="tour-nav-docs"
                     {{ request()->routeIs('docs.*') ? 'aria-current="page"' : '' }}
-                    :title="sidebarCollapsed ? 'Panduan & Dokumentasi' : ''"
+                    :title="sidebarCollapsed ? __('navigation.nav_docs') : ''"
                     class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('docs.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
                     <span class="sidebar-icon-box w-6 h-6 rounded-[7px] {{ request()->routeIs('docs.*') ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white' }} flex items-center justify-center shrink-0">
                         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>Panduan &amp; Dokumentasi</span>
+                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.nav_docs') }}</span>
                 </a>
             </div>
 
