@@ -16,10 +16,11 @@ return [
 
     // Navigation Menus
     'nav_platform' => 'Platform',
-    'nav_solutions' => 'Solusi Industri',
+    'nav_solutions' => 'Solusi',
+    'nav_omnichannel' => 'Omnichannel',
     'nav_calculators' => 'Kalkulator Finansial',
-    'nav_pricing' => 'Paket & Harga',
-    'nav_resources' => 'Panduan & Edukasi',
+    'nav_pricing' => 'Harga',
+    'nav_resources' => 'Panduan',
     'nav_contact' => 'Kontak',
     'nav_blog' => 'Blog & Edukasi',
     'nav_marketplace' => 'Marketplace Lokal',
@@ -27,7 +28,12 @@ return [
     'nav_login' => 'Masuk',
     'nav_register' => 'Mulai Coba Gratis',
     'nav_dashboard' => 'Dashboard',
+    'nav_home' => 'Beranda',
     'nav_toggle_menu' => 'Buka Menu',
+
+    // Action CTAs
+    'cta_free_trial' => 'Coba Gratis',
+    'cta_free_short' => 'Coba Gratis',
 
     // Platform Dropdown
     'nav_bos_title' => 'Business Operating System',
@@ -117,6 +123,7 @@ return [
     'btn_back' => 'Kembali',
 
     // Language & Theme Switcher
+    'lang_selector_label' => 'Pilih Bahasa',
     'lang_label' => 'Bahasa',
     'lang_id' => 'Bahasa Indonesia',
     'lang_id_short' => 'ID',

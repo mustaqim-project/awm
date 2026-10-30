@@ -495,15 +495,15 @@
             @keydown.escape.window="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false; mobileMenu = false"
             @resize.window="if (window.innerWidth >= 1024) mobileMenu = false">
             <div
-                class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 lg:h-[84px] flex items-center justify-between gap-4">
+                class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 lg:h-[76px] flex items-center justify-between gap-3 xl:gap-6">
 
                 <!-- Logo Cooca (Perbesar Skala Desktop & Mobile) -->
                 <a href="{{ route('landing') }}"
                     @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
-                    class="flex items-center gap-3 sm:gap-3.5 group shrink-0">
+                    class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
                     @if (!empty($siteLogoDarkUrl))
                         <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}"
-                            class="h-8 sm:h-9 lg:h-10 xl:h-11 w-auto object-contain transition-transform group-hover:scale-105">
+                            class="h-8 sm:h-9 lg:h-9 xl:h-10 w-auto object-contain transition-transform group-hover:scale-105">
                     @else
                         <span
                             class="font-black text-2xl sm:text-3xl xl:text-4xl tracking-tighter text-white font-sans">COOCA</span>
@@ -512,19 +512,19 @@
 
                 <!-- Desktop Nav Menu (Perbesar Font & Target Sentuh) -->
                 <nav
-                    class="hidden lg:flex items-center gap-2 xl:gap-3 text-[15px] xl:text-[16px] font-semibold text-slate-200">
+                    class="hidden lg:flex items-center gap-1 xl:gap-2 text-[14px] xl:text-[15px] font-medium text-slate-200">
 
                     <!-- 1. Platform Trigger -->
                     <button type="button"
                         @mouseenter="solutionDropdown = false; omniDropdown = false; resourceDropdown = false; marketplaceDropdown = false; platformDropdown = true"
                         @click="platformDropdown = !platformDropdown; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
-                        class="flex items-center gap-1.5 px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+                        class="flex items-center gap-1.5 px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all focus:outline-none whitespace-nowrap shrink-0"
                         :class="platformDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.bos.*') || request()->routeIs('public.erp.*') || request()->routeIs('public.content.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>{{ __('public_marketing.nav_platform') }}</span>
-                        <span class="inline-flex transition-transform duration-200" :class="platformDropdown ? 'rotate-180' : ''">
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_platform') }}</span>
+                        <span class="inline-flex transition-transform duration-200 shrink-0" :class="platformDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
                         </span>
                     </button>
 
@@ -532,13 +532,13 @@
                     <button type="button"
                         @mouseenter="platformDropdown = false; omniDropdown = false; resourceDropdown = false; marketplaceDropdown = false; solutionDropdown = true"
                         @click="solutionDropdown = !solutionDropdown; platformDropdown = false; omniDropdown = false; resourceDropdown = false"
-                        class="flex items-center gap-1.5 px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+                        class="flex items-center gap-1.5 px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all focus:outline-none whitespace-nowrap shrink-0"
                         :class="solutionDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.solutions.*') || request()->routeIs('solusi.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>{{ __('public_marketing.nav_solutions') }}</span>
-                        <span class="inline-flex transition-transform duration-200" :class="solutionDropdown ? 'rotate-180' : ''">
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_solutions') }}</span>
+                        <span class="inline-flex transition-transform duration-200 shrink-0" :class="solutionDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
                         </span>
                     </button>
 
@@ -546,13 +546,13 @@
                     <button type="button"
                         @mouseenter="platformDropdown = false; solutionDropdown = false; resourceDropdown = false; marketplaceDropdown = false; omniDropdown = true"
                         @click="omniDropdown = !omniDropdown; platformDropdown = false; solutionDropdown = false; resourceDropdown = false"
-                        class="flex items-center gap-1.5 px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+                        class="flex items-center gap-1.5 px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all focus:outline-none whitespace-nowrap shrink-0"
                         :class="omniDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.omnichannel.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>{{ __('public_marketing.nav_omnichannel') }}</span>
-                        <span class="inline-flex transition-transform duration-200" :class="omniDropdown ? 'rotate-180' : ''">
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_omnichannel') }}</span>
+                        <span class="inline-flex transition-transform duration-200 shrink-0" :class="omniDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
                         </span>
                     </button>
 
@@ -560,27 +560,29 @@
                     <button type="button"
                         @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; marketplaceDropdown = false; resourceDropdown = true"
                         @click="resourceDropdown = !resourceDropdown; platformDropdown = false; solutionDropdown = false; omniDropdown = false"
-                        class="flex items-center gap-1.5 px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+                        class="flex items-center gap-1.5 px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all focus:outline-none whitespace-nowrap shrink-0"
                         :class="resourceDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.resources.*') || request()->routeIs('blog.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>{{ __('public_marketing.nav_resources') }}</span>
-                        <span class="inline-flex transition-transform duration-200" :class="resourceDropdown ? 'rotate-180' : ''">
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
+                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_resources') }}</span>
+                        <span class="inline-flex transition-transform duration-200 shrink-0" :class="resourceDropdown ? 'rotate-180' : ''">
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
                         </span>
                     </button>
 
                     <!-- 5. Pricing (Direct Link) -->
                     <a href="{{ route('public.pricing') }}"
                         @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
-                        class="px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all {{ request()->routeIs('public.pricing') ? 'text-[#00C2FF] font-semibold' : '' }}">{{ __('public_marketing.nav_pricing') }}</a>
+                        class="px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all whitespace-nowrap shrink-0 {{ request()->routeIs('public.pricing') ? 'text-[#00C2FF] font-semibold' : '' }}">
+                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_pricing') }}</span>
+                    </a>
                 </nav>
 
                 <!-- Action Controls & Theme Toggle -->
-                <div class="flex items-center gap-2 sm:gap-2.5"
+                <div class="flex items-center gap-2 sm:gap-2.5 shrink-0"
                     @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false">
                     <!-- Bilingual Language Switcher (Desktop & Tablet) -->
-                    <div class="hidden sm:inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
+                    <div class="hidden sm:inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md shrink-0" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
                         <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}"
                            class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'id' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}"
                            title="{{ __('public_marketing.lang_id') }}" aria-label="{{ __('public_marketing.lang_id') }}">
@@ -595,16 +597,16 @@
 
                     <!-- Apple Theme Switcher Button (Desktop & Tablet only) -->
                     <button type="button" @click="toggleTheme()"
-                        class="hidden sm:flex w-10 h-10 sm:w-11 sm:h-11 lg:w-10 lg:h-10 rounded-full items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 active:scale-[0.95] transition-all"
+                        class="hidden sm:flex w-9 h-9 sm:w-10 sm:h-10 rounded-full items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 active:scale-[0.95] transition-all shrink-0"
                         title="Ganti Mode Terang/Gelap" aria-label="Toggle Theme">
                         <!-- Sun Icon for Dark Mode (Switch to Light) -->
-                        <svg x-show="isDark" x-cloak class="w-5 h-5 sm:w-5.5 sm:h-5.5 lg:w-5 lg:h-5 text-[#FFD60A]"
+                        <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFD60A]"
                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                         </svg>
                         <!-- Moon Icon for Light Mode (Switch to Dark) -->
-                        <svg x-show="!isDark" class="w-5 h-5 sm:w-5.5 sm:h-5.5 lg:w-5 lg:h-5 text-slate-300"
+                        <svg x-show="!isDark" class="w-4.5 h-4.5 text-slate-300"
                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
@@ -612,54 +614,53 @@
                     </button>
 
                     <!-- Mobile Quick Action CTA (sm:hidden) -->
-                    <div class="sm:hidden flex items-center">
+                    <div class="sm:hidden flex items-center shrink-0">
                         @if (auth('admin')->check())
                             <a href="{{ route('admin.dashboard') }}"
-                                class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all">
+                                class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all whitespace-nowrap">
                                 <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
                                 <span>Admin</span>
                             </a>
                         @elseif (auth('web')->check())
                             <a href="{{ route('dashboard') }}"
-                                class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all">
+                                class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all whitespace-nowrap">
                                 <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
                                 <span>Dashboard</span>
                             </a>
                         @else
                             <a href="{{ route('register') }}"
-                                class="inline-flex items-center justify-center px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all">
+                                class="inline-flex items-center justify-center px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all whitespace-nowrap">
                                 <span>{{ __('public_marketing.cta_free_short') }}</span>
                             </a>
                         @endif
                     </div>
 
                     <!-- Desktop & Tablet Action Buttons (hidden sm:flex) -->
-                    <div class="hidden sm:flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
                         @if (auth('admin')->check())
                             <a href="{{ route('admin.dashboard') }}"
-                                class="group inline-flex items-center gap-2 px-5.5 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm shadow-[0_4px_16px_rgba(0,194,255,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_24px_rgba(0,194,255,0.55),inset_0_1px_0_rgba(255,255,255,0.5)] hover:scale-[1.02] active:scale-[0.98] min-h-[42px] xl:min-h-[44px] transition-all">
+                                class="group inline-flex items-center gap-2 px-4 py-2 xl:px-5 xl:py-2.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm shadow-[0_4px_16px_rgba(0,194,255,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                                 <span>Dashboard</span>
                             </a>
                         @elseif (auth('web')->check())
                             <a href="{{ route('dashboard') }}"
-                                class="group inline-flex items-center gap-2 px-5.5 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm shadow-[0_4px_16px_rgba(0,194,255,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] hover:shadow-[0_6px_24px_rgba(0,194,255,0.55),inset_0_1px_0_rgba(255,255,255,0.5)] hover:scale-[1.02] active:scale-[0.98] min-h-[42px] xl:min-h-[44px] transition-all">
+                                class="group inline-flex items-center gap-2 px-4 py-2 xl:px-5 xl:py-2.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm shadow-[0_4px_16px_rgba(0,194,255,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                                 <span>Dashboard</span>
                             </a>
                         @else
                             <a href="{{ route('login') }}"
-                                class="group px-3.5 py-2.5 text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 rounded-[12px] transition-all min-h-[42px] flex items-center gap-1.5">
+                                class="group px-3 py-2 text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0">
                                 <i data-lucide="user"
-                                    class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors"></i>
-                                <span>{{ __('public_marketing.nav_login') }}</span>
+                                    class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors shrink-0"></i>
+                                <span class="whitespace-nowrap">{{ __('public_marketing.nav_login') }}</span>
                             </a>
                             <a href="{{ route('register') }}"
-                                class="group relative inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0 px-4.5 xl:px-6 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm xl:text-[14.5px] tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] min-h-[44px] transition-all">
-                                <span class="hidden min-[1150px]:inline">{{ __('public_marketing.cta_free_trial') }}</span>
-                                <span class="inline min-[1150px]:hidden">{{ __('public_marketing.cta_free_short') }}</span>
+                                class="group relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 px-4 xl:px-5 py-2 xl:py-2.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                                <span class="whitespace-nowrap">{{ __('public_marketing.cta_free_trial') }}</span>
                                 <i data-lucide="arrow-right"
-                                    class="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"></i>
+                                    class="w-4 h-4 transition-transform group-hover:translate-x-0.5 shrink-0"></i>
                             </a>
                         @endif
                     </div>

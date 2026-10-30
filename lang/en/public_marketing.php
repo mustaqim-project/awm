@@ -16,10 +16,11 @@ return [
 
     // Navigation Menus
     'nav_platform' => 'Platform',
-    'nav_solutions' => 'Industry Solutions',
+    'nav_solutions' => 'Solutions',
+    'nav_omnichannel' => 'Omnichannel',
     'nav_calculators' => 'Financial Calculators',
-    'nav_pricing' => 'Plans & Pricing',
-    'nav_resources' => 'Resources & Guides',
+    'nav_pricing' => 'Pricing',
+    'nav_resources' => 'Resources',
     'nav_contact' => 'Contact Us',
     'nav_blog' => 'Blog & Education',
     'nav_marketplace' => 'Local Marketplace',
@@ -27,7 +28,12 @@ return [
     'nav_login' => 'Sign In',
     'nav_register' => 'Start Free Trial',
     'nav_dashboard' => 'Dashboard',
+    'nav_home' => 'Home',
     'nav_toggle_menu' => 'Toggle Menu',
+
+    // Action CTAs
+    'cta_free_trial' => 'Start Free Trial',
+    'cta_free_short' => 'Free Trial',
 
     // Platform Dropdown
     'nav_bos_title' => 'Business Operating System',
@@ -117,6 +123,7 @@ return [
     'btn_back' => 'Back',
 
     // Language & Theme Switcher
+    'lang_selector_label' => 'Select Language',
     'lang_label' => 'Language',
     'lang_id' => 'Bahasa Indonesia',
     'lang_id_short' => 'ID',

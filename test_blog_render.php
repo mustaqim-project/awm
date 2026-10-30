@@ -7,14 +7,7 @@ $kernel->bootstrap();
 
 view()->share('errors', new \Illuminate\Support\ViewErrorBag());
 
-$content = file_get_contents('resources/views/public/blog/index.blade.php');
-preg_match_all('/@(if|endif|forelse|empty|endforelse|foreach|endforeach)\b/', $content, $m);
-print_r(array_count_values($m[1]));
-
-$code = file_get_contents('storage/framework/views/7265cb79bec511d0308e08791b81447c.php');
-preg_match_all('/\b(if\s*\(|endif;)/', $code, $m);
-print_r(array_count_values($m[1]));
-exit;
+// 1. Test Blog Index
 echo "--- Testing Blog Index ---\n";
 $posts = \App\Models\Post::paginate(10);
 $featuredPost = $posts->first();
