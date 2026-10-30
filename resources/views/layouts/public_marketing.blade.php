@@ -2107,10 +2107,10 @@
         <footer
             class="border-t border-white/10 bg-[#060913] text-slate-400 mt-0 pt-16 sm:pt-20 pb-28 text-sm sm:text-[15px] transition-colors">
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 pb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12">
 
-                    <!-- Col 1: Brand & Contact (Full width on mobile/tablet, 2 cols on desktop) -->
-                    <div class="space-y-4 lg:col-span-2">
+                    <!-- Col 1: Brand & Contact (Full width on mobile/tablet, 3 cols on desktop) -->
+                    <div class="space-y-4 lg:col-span-3">
                         @php
                             $footerWaUrl = \App\Models\SystemSetting::get(
                                 'social_whatsapp_url',
@@ -2221,7 +2221,7 @@
                             <a href="{{ route('landing') }}" class="inline-block group">
                                 @if (!empty($siteLogoDarkUrl))
                                     <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}"
-                                        class="h-9 sm:h-10 lg:h-12 w-auto object-contain transition-transform group-hover:scale-105">
+                                        class="h-9 sm:h-10 lg:h-11 w-auto object-contain transition-transform group-hover:scale-105">
                                 @else
                                     <span
                                         class="font-black text-3xl sm:text-4xl tracking-tighter text-white font-sans">COOCA</span>
@@ -2230,9 +2230,8 @@
                             <p class="text-sm sm:text-base font-bold text-slate-200">
                                 {{ $siteTagline }}
                             </p>
-                            <p class="text-sm sm:text-[14.5px] text-slate-400 leading-relaxed max-w-sm sm:max-w-md">
-                                Satu ekosistem untuk mengelola, menghubungkan, menghasilkan, dan mengembangkan bisnis
-                                Anda.
+                            <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+                                {{ __('public_marketing.brand_description') }}
                             </p>
                             <div class="flex flex-wrap items-center gap-2.5 pt-1.5">
                                 @foreach ($footerSocialChannels as $key => $soc)
@@ -2250,27 +2249,24 @@
                         </div>
                     </div>
 
-                    <!-- Navigation Columns: 4 Columns (Platform, Solutions, Resources, Company) -->
-                    <div class="lg:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 pt-4 lg:pt-0 border-t-0">
+                    <!-- Navigation Columns: 5 Balanced Columns (Platform, Solusi Industri, Aplikasi Kasir, Panduan & Edukasi, Perusahaan) -->
+                    <div class="lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0">
 
                         <!-- Col 1: Platform -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
                                 {{ __('public_marketing.footer_col_platform') }}</p>
-                            <nav
-                                class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
+                            <nav class="flex flex-col space-y-2.5 sm:space-y-3 text-sm text-slate-400">
                                 <a href="{{ route('public.erp.erp') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">ERP</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_plat_erp') }}</a>
                                 <a href="{{ route('public.omnichannel.whatsapp') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Omnichannel</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_plat_omni') }}</a>
                                 <a href="{{ route('public.content.creation') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Content
-                                    Automation</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_plat_content') }}</a>
                                 <a href="{{ route('marketplace.index') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Marketplace</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_plat_market') }}</a>
                                 <a href="{{ route('public.erp.analytics') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">AI
-                                    Assistant</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_plat_ai') }}</a>
                             </nav>
                         </div>
 
@@ -2278,83 +2274,78 @@
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
                                 {{ __('public_marketing.footer_col_solutions') }}</p>
-                            <nav
-                                class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
+                            <nav class="flex flex-col space-y-2.5 sm:space-y-3 text-sm text-slate-400">
                                 <a href="{{ route('public.solutions.fnb') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">POS
-                                    Kasir</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_fnb') }}</a>
                                 <a href="{{ route('public.solutions.retail') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Retail
-                                    &amp; Toko</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_retail') }}</a>
                                 <a href="{{ route('public.solutions.workshop') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Bengkel</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_workshop') }}</a>
                                 <a href="{{ route('public.solutions.laundry') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Laundry</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_laundry') }}</a>
                                 <a href="{{ route('public.solutions.manufacturing') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Manufacturing</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_manufacturing') }}</a>
                                 <a href="{{ route('public.solutions.services') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Jasa
-                                    &amp; Service</a>
-                                <a href="/aplikasi-kasir-gratis"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block text-emerald-400 font-medium">Kasir Gratis (Rp0)</a>
-                                <a href="/aplikasi-kasir-android"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Android</a>
-                                <a href="/aplikasi-kasir-offline"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Offline</a>
-                                <a href="{{ route('solusi.show', 'kasir-apotek') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Kasir Apotek</a>
-                                <a href="{{ route('solusi.show', 'aplikasi-catering') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Aplikasi Catering</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_sol_services') }}</a>
                             </nav>
                         </div>
 
-                        <!-- Col 3: Resources -->
+                        <!-- Col 3: Aplikasi Kasir & Niche -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
-                                {{ __('public_marketing.footer_col_resources') }}</p>
-                            <nav
-                                class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
-                                <a href="{{ route('blog.index') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Blog
-                                    &amp; Edukasi</a>
-                                <a href="{{ route('public.resources.guides') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Guides</a>
-                                <a href="{{ route('public.resources.case-studies') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Case
-                                    Studies</a>
-                                <a href="{{ route('public.demo') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Webinar
-                                    &amp; Demo</a>
-                                <a href="{{ route('public.resources.faq') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">FAQ</a>
+                                {{ __('public_marketing.footer_col_pos_apps') }}</p>
+                            <nav class="flex flex-col space-y-2.5 sm:space-y-3 text-sm text-slate-400">
+                                <a href="{{ route('commercial.kasir-gratis') }}"
+                                    class="hover:text-emerald-300 hover:translate-x-0.5 transition-all inline-block text-emerald-400 font-semibold">{{ __('public_marketing.footer_kasir_gratis') }}</a>
+                                <a href="{{ route('commercial.kasir-android') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_kasir_android') }}</a>
+                                <a href="{{ route('commercial.kasir-offline') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_kasir_offline') }}</a>
+                                <a href="{{ route('solusi.show', 'kasir-apotek') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_kasir_apotek') }}</a>
+                                <a href="{{ route('solusi.show', 'aplikasi-catering') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_kasir_catering') }}</a>
                                 <a href="{{ route('public.download.apk') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-flex items-center gap-1.5 text-emerald-400 font-medium">
-                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                    <span>Download COOCA My Own (APK)</span>
+                                    class="hover:text-cyan-300 hover:translate-x-0.5 transition-all inline-flex items-center gap-1.5 text-[#00C2FF] font-medium whitespace-nowrap">
+                                    <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
+                                    <span>{{ __('public_marketing.footer_download_apk') }}</span>
                                 </a>
                             </nav>
                         </div>
 
-                        <!-- Col 4: Company -->
+                        <!-- Col 4: Resources -->
+                        <div class="space-y-3.5">
+                            <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
+                                {{ __('public_marketing.footer_col_resources') }}</p>
+                            <nav class="flex flex-col space-y-2.5 sm:space-y-3 text-sm text-slate-400">
+                                <a href="{{ route('blog.index') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_blog') }}</a>
+                                <a href="{{ route('public.resources.guides') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_guides') }}</a>
+                                <a href="{{ route('public.resources.case-studies') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_case_studies') }}</a>
+                                <a href="{{ route('public.demo') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_demo') }}</a>
+                                <a href="{{ route('public.resources.faq') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_faq') }}</a>
+                            </nav>
+                        </div>
+
+                        <!-- Col 5: Company -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
                                 {{ __('public_marketing.footer_col_company') }}</p>
-                            <nav
-                                class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
+                            <nav class="flex flex-col space-y-2.5 sm:space-y-3 text-sm text-slate-400">
                                 <a href="{{ route('public.about') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">About
-                                    Us</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_about') }}</a>
                                 <a href="{{ route('public.security') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Security</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_security') }}</a>
                                 <a href="{{ route('public.privacy') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Privacy
-                                    Policy</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_privacy') }}</a>
                                 <a href="{{ route('public.terms') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Terms
-                                    &amp; Conditions</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_terms') }}</a>
                                 <a href="{{ route('public.support') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Bantuan
-                                    &amp; Kontak</a>
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_support') }}</a>
                             </nav>
                         </div>
 
@@ -2367,9 +2358,9 @@
                     class="border-t border-white/10 text-slate-400 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-[13px]">
 
                     <div class="text-center sm:text-left space-y-1">
-                        <p>© {{ date('Y') }} COOCA. All rights reserved.</p>
-                        <p>
-                            Founded by
+                        <p>© {{ date('Y') }} COOCA. {{ __('public_marketing.footer_all_rights') }}</p>
+                        <p class="text-slate-500">
+                            {{ __('public_marketing.footer_founded_by') }}
                             <a href="https://www.linkedin.com/in/agung-mustaqim" target="_blank"
                                 rel="noopener noreferrer"
                                 class="text-slate-300 hover:text-white transition-colors font-medium">
@@ -2378,12 +2369,11 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2">
+                    <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2.5">
                         <!-- Bilingual Switcher in Footer -->
-                        <div class="inline-flex items-center p-0.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium">
-                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" class="px-2.5 py-0.5 rounded-full transition-all {{ app()->getLocale() === 'id' ? 'bg-white/20 text-white font-bold' : 'text-slate-400 hover:text-white' }}" title="{{ __('public_marketing.lang_id') }}">ID</a>
-                            <span class="text-white/20">|</span>
-                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" class="px-2.5 py-0.5 rounded-full transition-all {{ app()->getLocale() === 'en' ? 'bg-white/20 text-white font-bold' : 'text-slate-400 hover:text-white' }}" title="{{ __('public_marketing.lang_en') }}">EN</a>
+                        <div class="inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md shrink-0" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
+                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'id' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}" title="{{ __('public_marketing.lang_id') }}" aria-label="{{ __('public_marketing.lang_id') }}">ID</a>
+                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'en' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}" title="{{ __('public_marketing.lang_en') }}" aria-label="{{ __('public_marketing.lang_en') }}">EN</a>
                         </div>
 
                         <a href="{{ route('public.privacy') }}"
