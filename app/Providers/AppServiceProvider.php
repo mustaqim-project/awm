@@ -87,12 +87,34 @@ class AppServiceProvider extends ServiceProvider
                 'channel' => \App\Models\SystemSetting::get('support_channel_text', 'Chat WhatsApp Resmi & Pusat Bantuan'),
             ];
 
+            $majorIndustrySolutions = [
+                ['name' => 'F&B & Resto', 'desc' => 'Meja, menu QR, dapur, & split bill', 'route' => 'public.solutions.fnb', 'icon' => 'utensils', 'color' => '#FF9500', 'bg' => 'amber'],
+                ['name' => 'Retail & Toko', 'desc' => 'Barcode scanner, varian, & multi-cabang', 'route' => 'public.solutions.retail', 'icon' => 'store', 'color' => '#00C2FF', 'bg' => 'cyan'],
+                ['name' => 'Bengkel & Otomotif', 'desc' => 'SPK, antrean servis, part & mekanik', 'route' => 'public.solutions.workshop', 'icon' => 'wrench', 'color' => '#FF3B30', 'bg' => 'red'],
+                ['name' => 'Laundry Kiloan & Satuan', 'desc' => 'Kiloan, satuan, barcode rak & status cuci', 'route' => 'public.solutions.laundry', 'icon' => 'sparkles', 'color' => '#34C759', 'bg' => 'emerald'],
+                ['name' => 'Manufaktur & Produksi', 'desc' => 'BOM, work order, & alokasi bahan baku', 'route' => 'public.solutions.manufacturing', 'icon' => 'factory', 'color' => '#AF52DE', 'bg' => 'purple'],
+                ['name' => 'Services & Jasa', 'desc' => 'Booking appointment, termin, & invoicing', 'route' => 'public.solutions.services', 'icon' => 'briefcase', 'color' => '#007AFF', 'bg' => 'blue'],
+            ];
+
+            $nicheSolutions = [
+                ['name' => 'Warung Kelontong', 'slug' => 'kasir-warung', 'icon' => 'shopping-bag'],
+                ['name' => 'Kedai Kopi & Kafe', 'slug' => 'kasir-cafe-kecil', 'icon' => 'coffee'],
+                ['name' => 'Konter HP & Kios', 'slug' => 'kasir-kios', 'icon' => 'smartphone'],
+                ['name' => 'Salon Kecantikan', 'slug' => 'kasir-salon', 'icon' => 'scissors'],
+                ['name' => 'Barbershop', 'slug' => 'kasir-barbershop', 'icon' => 'user-check'],
+                ['name' => 'Usaha Rumahan & IRT', 'slug' => 'kasir-irt', 'icon' => 'home'],
+                ['name' => 'Apotek & Toko Obat', 'slug' => 'kasir-apotek', 'icon' => 'pill'],
+                ['name' => 'Catering & Prasmanan', 'slug' => 'aplikasi-catering', 'icon' => 'utensils'],
+            ];
+
             $view->with([
                 'tierLimits' => $entitlement->getAllTierLimits(),
                 'tierFeatures' => $entitlement->getAllTierFeatures(),
                 'pricingData' => $pricingData,
                 'annualDiscountBadge' => \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan'),
                 'supportSla' => $supportSla,
+                'majorIndustrySolutions' => $majorIndustrySolutions,
+                'nicheSolutions' => $nicheSolutions,
             ]);
         });
 

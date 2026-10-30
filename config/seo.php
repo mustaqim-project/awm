@@ -19,7 +19,7 @@ return [
     'pages' => [
         '/' => [
             'title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
-            'h1' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem',
+            'h1' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem Cepat',
             'description' => 'Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp & toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.',
             'og_title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
             'og_description' => 'Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp & toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.',

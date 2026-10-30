@@ -917,159 +917,39 @@
                             </p>
 
                             <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-                                <!-- F&B & Resto -->
-                                <a href="{{ route('public.solutions.fnb') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#FF9500] group-hover:text-[#FF9500] group-hover:bg-amber-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="utensils" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF9500] transition-colors block">
-                                            F&amp;B &amp; Resto
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Meja, menu QR, dapur, &amp; split bill
-                                        </span>
-                                    </div>
-                                </a>
-
-                                <!-- Retail & Toko -->
-                                <a href="{{ route('public.solutions.retail') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#00C2FF] group-hover:text-[#00C2FF] group-hover:bg-cyan-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="store" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#00C2FF] transition-colors block">
-                                            Retail &amp; Toko
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Barcode scanner, varian, &amp; multi-cabang
-                                        </span>
-                                    </div>
-                                </a>
-
-                                <!-- Bengkel & Otomotif -->
-                                <a href="{{ route('public.solutions.workshop') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#FF3B30] group-hover:text-[#FF3B30] group-hover:bg-red-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="wrench" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF3B30] transition-colors block">
-                                            Bengkel &amp; Otomotif
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            SPK, antrean servis, part &amp; mekanik
-                                        </span>
-                                    </div>
-                                </a>
-
-                                <!-- Laundry -->
-                                <a href="{{ route('public.solutions.laundry') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#34C759] group-hover:text-[#34C759] group-hover:bg-emerald-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#34C759] transition-colors block">
-                                            Laundry Kiloan &amp; Satuan
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Kiloan, satuan, barcode rak &amp; status cuci
-                                        </span>
-                                    </div>
-                                </a>
-
-                                <!-- Manufacturing -->
-                                <a href="{{ route('public.solutions.manufacturing') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#AF52DE] group-hover:text-[#AF52DE] group-hover:bg-purple-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="factory" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#AF52DE] transition-colors block">
-                                            Manufaktur &amp; Produksi
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            BOM, work order, &amp; alokasi bahan baku
-                                        </span>
-                                    </div>
-                                </a>
-
-                                <!-- Services & Jasa -->
-                                <a href="{{ route('public.solutions.services') }}"
-                                    class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
-                                    <div
-                                        class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:border-[#007AFF] group-hover:text-[#007AFF] group-hover:bg-blue-50/50 transition-all shrink-0 mt-0.5">
-                                        <i data-lucide="briefcase" class="w-4 h-4"></i>
-                                    </div>
-                                    <div>
-                                        <span
-                                            class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors block">
-                                            Services &amp; Jasa
-                                        </span>
-                                        <span
-                                            class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Booking appointment, termin, &amp; invoicing
-                                        </span>
-                                    </div>
-                                </a>
+                                @foreach($majorIndustrySolutions ?? [] as $ind)
+                                    <a href="{{ route($ind['route']) }}"
+                                        class="group flex items-start gap-3.5 p-1 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.05] transition-all">
+                                        <div
+                                            class="w-8 h-8 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 transition-all shrink-0 mt-0.5">
+                                            <i data-lucide="{{ $ind['icon'] }}" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <span
+                                                class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
+                                                {{ $ind['name'] }}
+                                            </span>
+                                            <span
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
+                                                {{ $ind['desc'] }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                @endforeach
                             </div>
 
-                            <!-- SUBMENU: USAHA KECIL & SPESIFIK (Prompt 5 Part B) -->
+                            <!-- SUBMENU: USAHA KECIL & SPESIFIK -->
                             <div class="pt-4 border-t border-slate-200/80 dark:border-white/10 space-y-2.5">
                                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
                                     Solusi Usaha Kecil &amp; Mikro
                                 </p>
                                 <div class="grid grid-cols-3 gap-2">
-                                    <a href="{{ route('solusi.show', 'kasir-warung') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Warung Kelontong</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="coffee" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Kedai Kopi &amp; Kafe</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-kios') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="smartphone" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Konter HP &amp; Kios</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-salon') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="scissors" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Salon Kecantikan</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-barbershop') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="user-check" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Barbershop</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-irt') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="home" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Usaha Rumahan &amp; IRT</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'kasir-apotek') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="pill" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Apotek &amp; Toko Obat</span>
-                                    </a>
-                                    <a href="{{ route('solusi.show', 'aplikasi-catering') }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
-                                        <i data-lucide="utensils" class="w-3.5 h-3.5 text-slate-400"></i>
-                                        <span>Catering &amp; Prasmanan</span>
-                                    </a>
+                                    @foreach($nicheSolutions ?? [] as $niche)
+                                        <a href="{{ route('solusi.show', $niche['slug']) }}" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] hover:bg-slate-50 dark:hover:bg-white/5 transition-colors flex items-center gap-2">
+                                            <i data-lucide="{{ $niche['icon'] }}" class="w-3.5 h-3.5 text-slate-400"></i>
+                                            <span>{{ $niche['name'] }}</span>
+                                        </a>
+                                    @endforeach
                                     <a href="/aplikasi-kasir-gratis" class="px-3 py-2 rounded-xl text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors flex items-center gap-2">
                                         <i data-lucide="gift" class="w-3.5 h-3.5 text-emerald-500"></i>
                                         <span>Kasir Gratis Rp0</span>

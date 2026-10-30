@@ -33,6 +33,54 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-30-373] Rekonsiliasi Menyeluruh Gap Informasi Publik & Sistem: Anti-Overclaim, Zero-Hardcoding, Dynamic Mega-Menu Navigasi & Single Source of Truth
+
+- **Date:** 2026-10-30
+- **Status:** COMPLETED
+- **Module:** Public Marketing, SEO Config, Navigation Mega-Menu, Billing Entitlements, Blog Transparency, Automated Regression Testing
+- **Feature:** Rekonsiliasi sistemik hulu-ke-hilir atas temuan gap informasi publik vs kenyataan implementasi sistem:
+  1. **Single Source of Truth Harga & Limit:** Menghilangkan hardcoded harga dan batas kuota di level Blade. Seluruh view publik (`pricing.blade.php`, `landing.blade.php`, `kasir_gratis.blade.php`) membaca secara terpadu dari `AppServiceProvider` yang menghubungkan `EarlyAdopterPricingService`, `SystemSetting`, dan `EntitlementService::getAllTierLimits()`.
+  2. **Harmonisasi Gating Fitur F&B & Resep:** Mengoreksi copy pemasaran F&B di `fnb.blade.php` agar mencerminkan batasan riil tier: 20 resep di Paket Standard, Resep Tanpa Batas di Paket Premium, dan BOM Manufaktur Bertingkat di Paket Prestige.
+  3. **Penataan Mega-Menu Navigasi Bahasa UMKM:** Mengganti terminologi fintech korporat ("Dynamic Budgeting", "Vendor Spend", "Siap Global Invoice IDR/USD/SGD", "WhatsApp AI Agents ... sync vendor") menjadi terminologi membumi ("Arus Kas & Buku Kas", "Belanja Bahan & Pemasok", "Faktur Penjualan & Tagihan", "Nota & Notifikasi WhatsApp") serta mengarahkan rute belanja bahan ke rute kanonik `public.erp.inventory`.
+  4. **Sinkronisasi SLA Bantuan & Kontak:** Mengikat jam kerja dan SLA kecepatan respon di `support.blade.php` ke variabel dinamis `$supportSla` (`support_working_hours` dan `support_response_time`), menghilangkan klaim statis yang berkonflik.
+  5. **Kejujuran Konten & Bukti Sosial:** Mengubah artikel blog `199` dari kesan studi kasus riil toko menjadi simulasi strategi warung berlabel callout `[Catatan Edukasi & Simulasi]`, mempertahankan proteksi zero fake testimonials di landing page, serta memfilter akun demo/testing developer dari etalase marketplace.
+  6. **Koreksi Halaman Keamanan `/security`:** Menegaskan 5 pilar keamanan riil yang terverifikasi di kode (isolasi tenant `business_id`, enkripsi Bcrypt & AES-256, AuditLog kecurangan kasir, proteksi siber OWASP, kepatuhan UU PDP No. 27/2022) dan memindahkan MFA TOTP ke roadmap pengujian.
+  7. **Dinamisasi Solusi Industri Navigasi:** Membagikan matriks industri 6 sektor utama dan 8 vertikal mikro secara terstruktur dari `AppServiceProvider`, merender mega-menu secara dinamis tanpa duplikasi manual.
+  8. **Housekeeping File Yatim:** Menghapus file view usang `resources/views/public/home.blade.php` (712 baris) dan `resources/views/public/resources/blog.blade.php` (705 baris).
+  9. **Automated Regression Testing:** Membuat test suite baru `tests/Feature/Public/PublicPricingAndEntitlementConsistencyTest.php` (4 test, 68 assertions, 100% passed).
+- **Work Type:** Architecture | Public Marketing & SEO | Security & Compliance | Automated Testing | Refactoring
+
+#### 1. Business Context & Objective
+- **Konteks:** Situs publik https://cooca.id adalah etalase utama yang dilihat calon merchant UMKM Indonesia. Ketidaksinkronan antara janji pemasaran dengan batas sistem (misal batas kuota gratis, klaim multi-currency valas, atau SLA CS) berisiko menimbulkan komplain dan merusak kepercayaan bisnis.
+- **Masalah/Target:** Memastikan 100% informasi publik bersumber dari konfigurasi database riil yang dapat diatur via Admin Cooca (`/admin/billing-packages`), bebas dari klaim berlebihan yang belum dibangun, dan menggunakan bahasa operasional yang ramah UMKM.
+
+#### 2. What Was Done
+- Mengkoreksi metadata SEO `config/seo.php` pada H1 beranda dan deskripsi paket harga.
+- Memperbarui `AppServiceProvider` untuk menginjeksi `$majorIndustrySolutions`, `$nicheSolutions`, dan mengikat `$supportSla` ke semua template publik.
+- Mengupdate `pricing.blade.php` untuk menghitung penghematan tahunan dari formula dinamis `annual_savings_formatted`.
+- Memperbarui `fnb.blade.php` dengan rincian kuota resep per tier.
+- Memperbarui mega-menu header di `public_marketing.blade.php` dengan copy UMKM dan perulangan dinamis.
+- Mengubah judul dan konten artikel `199` di `database/data/articles/` dan mengimpor ulang ke database via `php artisan blog:import-articles --force`.
+- Menghapus template lama `home.blade.php` dan `resources/blog.blade.php`.
+- Menulis dan memverifikasi unit test `PublicPricingAndEntitlementConsistencyTest.php`.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Providers/AppServiceProvider.php`
+  - `config/seo.php`
+  - `resources/views/public/pricing.blade.php`
+  - `resources/views/public/support.blade.php`
+  - `resources/views/public/solutions/fnb.blade.php`
+  - `resources/views/landing.blade.php`
+  - `resources/views/public/partials/subpage_layout.blade.php`
+  - `resources/views/layouts/public_marketing.blade.php`
+  - `database/data/articles/199-cerita-warung-yang-sudah-naik-ke-scale-dari-omzet-80-juta-ke-2-milyar.md`
+  - `resources/views/public/home.blade.php` (deleted)
+  - `resources/views/public/resources/blog.blade.php` (deleted)
+  - `tests/Feature/Public/PublicPricingAndEntitlementConsistencyTest.php` (created)
+
+---
+
 ### [WORK-2026-10-30-371] Resolusi Gap & Audit Sistem Kuota Langganan: Konfigurasi Batas Sumber Daya Dinamis di Admin Cooca, Buffer Darurat Kasir POS (+5 Trx), & Sinkronisasi Real-Time Matriks limits.blade.php
 
 - **Date:** 2026-10-30
