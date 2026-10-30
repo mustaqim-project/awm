@@ -1,4 +1,6 @@
 ---
+title: "Cerita Warung yang Sudah Naik ke Scale: Dari Omzet 80 Juta ke 2 Milyar per Bulan"
+meta_title: "Cerita Warung yang Sudah Naik ke Scale: Dari Omzet 80 Juta ke 2 Milyar per Bulan"
 title: "Simulasi Strategi Warung: Langkah Terstruktur Menuju Skala Omzet Lebih Besar"
 meta_title: "Simulasi Strategi Warung: Langkah Terstruktur Menuju Skala Omzet Lebih Besar"
 meta_description: "Kisah transformasi usaha warung dari skala kecil menjadi bisnis besar berkat penerapan sistem dan strategi ekspansi yang tepat."
@@ -11,6 +13,7 @@ cover_image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=for
 reading_time: "5 menit"
 ---
 
+# Cerita Warung yang Sudah Naik ke Scale: Dari Omzet 80 Juta ke 2 Milyar per Bulan
 # Simulasi Strategi Warung: Langkah Terstruktur Menuju Skala Omzet Lebih Besar
 
 <div class="not-prose my-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-900 dark:text-blue-200 text-xs sm:text-sm leading-relaxed">
