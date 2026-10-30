@@ -97,5 +97,94 @@ return [
     'crm_feature_1_desc' => 'Ketahui menu atau barang favorit pelanggan setiap kali mereka bertransaksi di kasir atau pesan online.',
     'crm_feature_2_title' => 'Poin Belanja & Membership',
     'crm_feature_2_desc' => 'Berikan reward poin untuk setiap nominal transaksi tertentu yang dapat ditukar diskon di kunjungan berikutnya.',
+    // Extended SEO, Bento & Features
+    // HRM
+    'hrm_seo_title' => 'Software Kelola Karyawan, Shift & Absensi Wajah Toko | COOCA',
+    'hrm_seo_desc' => 'Aplikasi SDM & staf outlet: presensi biometrik wajah, radius GPS 50 meter, jadwal shift kerja, dan rekap slip gaji otomatis.',
+    'hrm_cta_pos' => 'Koneksi ke Shift Kasir',
+    'hrm_hero_rating' => 'Disiplin Tim & Efisiensi Payroll Cabang',
+    'hrm_check_face' => 'Wajah Biometrik & GPS',
+    'hrm_check_shift' => 'Rotasi Multi-Shift',
+    'hrm_check_comm' => 'Komisi Sales Otomatis',
+    'hrm_bento_face_title' => 'Presensi Biometrik Wajah & GPS',
+    'hrm_bento_face_badge' => 'Verifikasi Wajah AI & Geofence 50m',
+
+    // POS
+    'pos_seo_title' => 'Aplikasi Kasir Online & POS Terpadu UMKM | COOCA',
+    'pos_seo_desc' => 'Aplikasi POS kasir toko & restoran: scan barcode, QRIS dinamis, tiket dapur KOT, kitchen prep sheet, dan pembukuan otomatis.',
+    'pos_check_speed' => '< 3 Detik Checkout',
+    'pos_check_stock' => 'Auto Potong Stok Gudang',
+    'pos_check_receipt' => 'Cetak Struk Thermal & WA',
+    'pos_feature_ai_title' => 'Asisten AI Kasir & Deteksi Anomali',
+    'pos_feature_ai_desc' => 'Asisten pintar memindai pola jam sibuk toko, mendeteksi pembatalan struk mencurigakan, dan merekomendasikan upsell produk.',
+    'pos_feature_prep_title' => 'Kitchen Prep Sheet & Tiket Dapur (KOT)',
+    'pos_feature_prep_desc' => 'Cetak tiket masak terpisah ke dapur dan bar. Hitung kebutuhan bahan baku pagi hari dengan lembar kalkulasi persiapan dapur.',
+
+    // Inventori
+    'inv_seo_title' => 'Aplikasi Stok Barang & Pergudangan Terpadu | COOCA',
+    'inv_seo_desc' => 'Kelola stok fisik toko, mutasi multi-gudang, kartu stok transparan, surat jalan transfer cabang, dan stock opname digital.',
+    'inv_hero_rating' => 'Akurasi Stok & Eliminasi Selisih Fisik',
+    'inv_check_sync' => 'Sinkron Kasir POS Seketika',
+    'inv_check_transfer' => 'Surat Jalan Mutasi Cabang',
+    'inv_check_stock_card' => 'Kartu Stok & Jejak Audit Lengkap',
+    'inv_bom_desc' => 'Dirancang untuk kafe, bakery, dan bengkel perakitan. Tentukan bahan baku untuk setiap menu atau produk jadi. Saat kasir menjual produk, stok bahan mentah otomatis berkurang dari gudang.',
+    'inv_cycle_tag' => 'Alur Siklus Inventori Terpadu',
+
+    // Keuangan
+    'fin_seo_title' => 'Aplikasi Pembukuan & Manajemen Kas Usaha | COOCA',
+    'fin_seo_desc' => 'Kelola buku kas harian toko, rekonsiliasi settlement QRIS & bank, pencatatan kasbon pelanggan, dan pantau likuiditas kas usaha.',
+    'fin_hero_rating' => 'Kontrol Likuiditas & Multi-Bank',
+    'fin_check_reconcile' => 'Rekonsiliasi Bank Otomatis',
+    'fin_check_qris' => 'Settlement QRIS Presisi',
+    'fin_check_aging' => 'Laporan Umur Piutang (Aging AR)',
+    'fin_cta_acc' => 'Pelajari Modul Akuntansi',
+    'fin_feature_reconcile_title' => 'Otomasi Rekonsiliasi Kas & QRIS',
+    'fin_feature_reconcile_desc' => 'Sistem mencocokkan mutasi kas kasir dengan pencairan dana payment gateway dan rekening bank harian tanpa jeda.',
+
+    // Akuntansi
+    'acc_seo_title' => 'Software Akuntansi Otomatis SAK EMKM | COOCA',
+    'acc_seo_desc' => 'Laporan keuangan standar SAK EMKM: neraca saldo, buku besar, dan laba rugi otomatis dari transaksi kasir dan mutasi gudang.',
+    'acc_hero_rating' => 'Akurasi Jurnal & Standar SAK EMKM',
+    'acc_check_double_entry' => 'Double-Entry Otomatis',
+    'acc_check_emkm' => 'Standar SAK EMKM',
+    'acc_check_audit' => 'Neraca Laba Rugi Siap Audit',
+    'acc_cta_fin' => 'Koneksi ke Manajemen Kas',
+    'acc_feature_ledger_title' => 'Buku Besar & Neraca Saldo Otomatis',
+    'acc_feature_ledger_desc' => 'Setiap rupiah transaksi kasir langsung menghasilkan jurnal debit dan kredit akurat tanpa perlu input berulang.',
+
+    // Analitik
+    'analytics_seo_title' => 'Dashboard Analitik Bisnis & Wawasan AI | COOCA',
+    'analytics_seo_desc' => 'Wawasan operasional cerdas: pantau tren omzet cabang, produk terlaris, jam sibuk outlet, deteksi fraud kasir, dan integrasi 25 MCP tools.',
+    'analytics_hero_rating' => 'Akurasi Keputusan Bisnis Berbasis Data',
+    'analytics_check_realtime' => 'Dashboard Real-Time Multi-Cabang',
+    'analytics_check_drilldown' => 'Analisa Margin per SKU Produk',
+    'analytics_check_mcp' => '25 Model Context Protocol Tools',
+    'analytics_cta_erp' => 'Jelajahi Ekosistem ERP',
+    'analytics_feature_fraud_title' => 'Deteksi Kecurangan Kasir (Fraud Detection)',
+    'analytics_feature_fraud_desc' => 'Kecerdasan buatan memindai pembatalan struk mencurigakan, transaksi void di luar kewajaran, dan selisih kas fisik.',
+    'analytics_feature_mcp_title' => '25 Model Context Protocol (MCP) Tools',
+    'analytics_feature_mcp_desc' => 'Konektivitas langsung ke AI Agent terkemuka untuk automasi analisa dan tanya-jawab operasional bisnis Anda.',
+
+    // CRM
+    'crm_seo_title' => 'Aplikasi CRM & Loyalitas Pelanggan UMKM | COOCA',
+    'crm_seo_desc' => 'Retensi pembeli setia: kumpulkan poin belanja, atur tier membership, dan hubungi pelanggan via broadcast WhatsApp resmi.',
+    'crm_hero_rating' => 'Retensi Pelanggan & WhatsApp Broadcast',
+    'crm_check_wa' => 'Nomor WhatsApp Terhubung ID',
+    'crm_check_points' => 'Poin & Tier Member Otomatis',
+    'crm_check_retention' => 'Pemicu Repeat Order Terukur',
+    'crm_cta_pos' => 'Lihat Integrasi Kasir POS',
+    'crm_feature_loyalty_title' => 'Sistem Poin Belanja & Tier Membership',
+    'crm_feature_loyalty_desc' => 'Berikan reward poin untuk setiap nominal transaksi di kasir yang bisa ditukar diskon pada kunjungan berikutnya.',
+
+    // ERP Overview
+    'erp_seo_title' => 'Sistem Operasi Bisnis & ERP Terpadu UMKM | COOCA',
+    'erp_seo_desc' => 'Kelola seluruh operasional toko, gudang, kasir, pembelian supplier, dan laporan keuangan dalam satu sistem ERP cloud yang terjangkau.',
+    'erp_hero_rating' => '8 Modul Terpadu & Terintegrasi Penuh',
+    'erp_check_modular' => 'Modular On-Demand Sesuai Skala',
+    'erp_check_emkm' => 'Standar Akuntansi SAK EMKM',
+    'erp_check_multi_branch' => 'Multi-Cabang & Multi-Gudang',
+    'erp_cta_pos' => 'Lihat Fitur Kasir POS',
+    'erp_tidy_ops' => 'Rapikan Operasional Bisnis Anda',
+    'erp_tidy_ops_desc' => 'Waktunya mengelola bisnis dengan ERP yang ringan, handal, dan mudah dipahami tanpa beban biaya lisensi mahal.',
 ];
 

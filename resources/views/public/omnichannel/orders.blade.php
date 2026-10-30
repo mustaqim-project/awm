@@ -94,32 +94,31 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Omnichannel Order Lifecycle &amp; Fulfillment
+                                {{ __('public_omnichannel.ord_kicker') }}
                             </p>
                         </div>
 
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold tracking-tight text-white leading-[1.12] text-balance">
-                            Satukan Seluruh Alur Pesanan Bisnis <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Dalam Satu Pipeline Cepat</span>
+                            {{ app()->getLocale() === 'en' ? __('public_omnichannel.ord_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_omnichannel.ord_title')) }}
                         </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
-                            Pesanan datang dari kasir toko fisik, WhatsApp, toko online mandiri, hingga marketplace. COOCA mengonsolidasikan semuanya ke dalam satu pipeline visual teratur, merutekan ke cabang terdekat, dan memastikan setiap pesanan terkirim tepat waktu.
+                            {{ __('public_omnichannel.ord_subtitle') }}
                         </p>
 
                         {{-- Action CTAs (Left-aligned) --}}
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('public.demo') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Coba Demo Manajemen Order</span>
+                                <span>{{ __('public_omnichannel.btn_orders_demo') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <a href="{{ route('public.omnichannel.marketplace') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
-                                <span>Koneksi ke Marketplace</span>
+                                <span>{{ __('public_omnichannel.btn_connect_marketplace') }}</span>
                             </a>
                         </div>
 
@@ -127,15 +126,15 @@
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Agregasi POS, WA &amp; Marketplace</span>
+                                <span>{{ __('public_omnichannel.ord_reassurance_aggregation') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Smart Routing Cabang Terdekat</span>
+                                <span>{{ __('public_omnichannel.ord_reassurance_smart_routing') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Cetak Resi &amp; Picking Slip Massal</span>
+                                <span>{{ __('public_omnichannel.ord_reassurance_bulk_receipt') }}</span>
                             </div>
                         </div>
                     </div>

@@ -97,31 +97,31 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Transactional WhatsApp &amp; Digital Receipts
+                                {{ __('public_omnichannel.wa_kicker') }}
                             </p>
                         </div>
 
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                            {{ app()->getLocale() === 'en' ? __('public_omnichannel.wa_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_omnichannel.wa_title')) }}
+                        </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed text-pretty max-w-2xl">
-                            Kirimkan struk kasir digital tanpa kertas thermal, beri tahu pelanggan saat pesanan siap diambil, infokan status pengerjaan servis, dan tagih invoice jatuh tempo langsung ke chat WhatsApp resmi yang dibuka pelanggan setiap hari.
+                            {{ __('public_omnichannel.wa_subtitle') }}
                         </p>
 
                         {{-- Action CTAs (Left-aligned) --}}
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('public.demo') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Coba Demo Notifikasi WA</span>
+                                <span>{{ __('public_omnichannel.btn_try_demo') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <a href="{{ route('public.erp.pos') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm font-semibold text-sm hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
-                                <span>Koneksi ke Kasir POS</span>
+                                <span>{{ __('public_omnichannel.btn_connect_pos') }}</span>
                             </a>
                         </div>
 
@@ -129,15 +129,15 @@
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Struk Digital Resmi Tanpa Kertas</span>
+                                <span>{{ __('public_omnichannel.wa_reassurance_receipt') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Kirim Otomatis Tanpa Simpan Nomor</span>
+                                <span>{{ __('public_omnichannel.wa_reassurance_no_save') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Komunikasi Transaksional Anti-Spam</span>
+                                <span>{{ __('public_omnichannel.wa_reassurance_anti_spam') }}</span>
                             </div>
                         </div>
                     </div>
@@ -162,13 +162,13 @@
                                         <div class="font-bold text-white text-xs sm:text-sm truncate">Kopi Seduh Indonesia (Official)</div>
                                         <div class="text-[10px] text-emerald-400 flex items-center gap-1 truncate">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
-                                            <span>Akun Bisnis Terverifikasi</span>
+                                            <span>{{ __('public_omnichannel.wa_verified_business') }}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-slate-300 text-[10px] sm:text-xs font-mono shrink-0">
                                     <i data-lucide="lock" class="w-3 h-3 text-emerald-400"></i>
-                                    <span>End-to-End</span>
+                                    <span>{{ __('public_omnichannel.wa_meta_protocol') }}</span>
                                 </div>
                             </div>
 
@@ -369,12 +369,10 @@
                             <i data-lucide="bell-ring" class="w-5 h-5"></i>
                         </div>
                         <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Update Status Pesanan Real-Time
+                            {{ __('public_omnichannel.wa_status_update_title') }}
                         </h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Sempurna untuk laundry, bengkel kendaraan, dan jasa perbaikan. Saat teknisi mengubah status
-                            order menjadi 'Selesai', sistem otomatis mengirim pesan kepada pelanggan bahwa barang siap
-                            diambil.
+                            {{ __('public_omnichannel.wa_status_update_desc') }}
                         </p>
                     </div>
 
@@ -665,20 +663,19 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Mulai Komunikasi Transaksional Modern dengan Pelanggan Anda
+                        {{ __('public_omnichannel.wa_cta_bottom_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
-                        Tingkatkan efisiensi kasir, hemat jutaan rupiah biaya kertas struk, dan beri pengalaman terbaik
-                        untuk konsumen Anda dengan integrasi WhatsApp COOCA.
+                        {{ __('public_omnichannel.wa_cta_bottom_desc') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm transition-all shadow-lg shadow-[#007AFF]/25">
-                            Coba Demo Notifikasi WhatsApp
+                            {{ __('public_omnichannel.btn_try_demo') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm backdrop-blur-sm transition-all">
-                            Konsultasi Kebutuhan Toko
+                            {{ __('public_omnichannel.btn_consultation') }}
                         </a>
                     </div>
                 </div>

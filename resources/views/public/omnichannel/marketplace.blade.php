@@ -99,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse shrink-0"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Omnichannel Marketplace &amp; Centralized Inventory
+                                {{ __('public_omnichannel.mp_kicker') }}
                             </p>
                         </div>
 
@@ -107,15 +107,14 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.75rem] xl:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.22] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Sinkronkan Stok Toko Fisik &amp; Marketplace <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Tanpa Risiko Overselling</span>
+                                {{ app()->getLocale() === 'en' ? __('public_omnichannel.mp_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_omnichannel.mp_title')) }}
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Hentikan mimpi buruk membatalkan pesanan online karena barang sudah terlanjur dibeli orang di toko fisik. COOCA menyatukan stok gudang ke Shopee, Tokopedia, dan TikTok Shop secara real-time, memproses seluruh pesanan, dan mencetak resi massal.
+                            {{ __('public_omnichannel.mp_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Left-Aligned on Mobile, Tablet & Desktop) -->
@@ -123,25 +122,25 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_omnichannel.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_omnichannel.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('public.demo') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Coba Integrasi Marketplace</span>
+                                    <span>{{ __('public_omnichannel.btn_connect_marketplace') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @endif
                             <a href="{{ route('public.omnichannel.orders') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Lihat Alur Pesanan</span>
+                                <span>{{ __('public_omnichannel.ord_kicker') }}</span>
                             </a>
                         </div>
 
@@ -150,15 +149,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3.5 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Sinkronisasi Stok Real-Time</span>
+                                <span>{{ __('public_omnichannel.mp_reassurance_single_stock') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Cetak Resi Kurir Massal</span>
+                                <span>{{ __('public_omnichannel.mp_reassurance_auto_sync') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Akuntansi Komisi Otomatis</span>
+                                <span>{{ __('public_omnichannel.mp_reassurance_penalty_safe') }}</span>
                             </div>
                         </div>
                     </div>
@@ -397,9 +396,7 @@
                             Sinkronisasi Stok Otomatis Seketika (Zero Delay)
                         </h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Mesin inventori terpusat COOCA secara aktif memperbarui kuantitas persediaan di seluruh toko
-                            online saat ada pembelian di toko offline maupun kanal online lainnya. Hilangkan potensi
-                            overselling dan jaga skor performa toko Anda selalu sempurna.
+                            {{ __('public_omnichannel.mp_penalty_protection_desc') }}
                         </p>
                     </div>
 

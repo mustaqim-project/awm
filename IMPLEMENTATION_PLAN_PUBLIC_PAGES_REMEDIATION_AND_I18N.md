@@ -123,22 +123,22 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 
 ---
 
-### FASE 3: Refactoring Beranda Utama (`landing.blade.php`) & BOS Suite (P0 & P1)
+### FASE 3: Refactoring Beranda Utama (`landing.blade.php`) & BOS Suite (P0 & P1) (SELESAI)
 *Tujuan: Menonjolkan fitur Asisten AI, mengeliminasi pola AI slop, dan menerapkan i18n dwibahasa penuh.*
 
-- [ ] **Task 3.1 — Refactoring Hero Section Beranda:**  
+- [x] **Task 3.1 — Refactoring Hero Section Beranda:** (SELESAI)  
   Buka [resources/views/landing.blade.php](file:///c:/laragon/www/cooca_core/resources/views/landing.blade.php).  
   * Ganti overline hardcoded baris 185 menjadi `{{ __('public_home.hero_kicker') }}`.
   * Tambahkan Asisten AI pada subheadline baris 198-201 menggunakan `{{ __('public_home.hero_subtitle') }}`.
   * Ganti tombol aksi baris 220 menjadi `{{ __('public_home.hero_cta_primary') }}` (*"Mulai Coba Gratis"* / *"Start Free Trial"*).
-- [ ] **Task 3.2 — Refactoring Bento Features & Social Proof Beranda:**  
+- [x] **Task 3.2 — Refactoring Bento Features & Social Proof Beranda:** (SELESAI)  
   Ganti seluruh string judul kartu bento, angka metrik, dan testimoni menjadi referensi kamus `{{ __('public_home....') }}`.
-- [ ] **Task 3.3 — Pembersihan AI Slop & Refactoring `overview.blade.php`:**  
+- [x] **Task 3.3 — Pembersihan AI Slop & Refactoring `overview.blade.php`:** (SELESAI)  
   Buka [resources/views/public/business-operating-system/overview.blade.php](file:///c:/laragon/www/cooca_core/resources/views/public/business-operating-system/overview.blade.php).  
   * Hapus frasa *"Bukan sekadar kasir..."* di baris 143.
   * Ganti jargon korporat baris 495 *"Executive Control"* menjadi *"Kendali Pemilik Usaha & Wawasan AI"* (`{{ __('public_bos.overview_control_title') }}`).
   * Terapkan kamus dwibahasa pada 100% elemen teks.
-- [ ] **Task 3.4 — Perbaikan Alur CTA `how-it-works.blade.php` & Konteks Klaim `why-cooca.blade.php`:**  
+- [x] **Task 3.4 — Perbaikan Alur CTA `how-it-works.blade.php` & Konteks Klaim `why-cooca.blade.php`:** (SELESAI)  
   * Di `how-it-works.blade.php` baris 116, ubah CTA membingungkan *"Coba Alur Nyata"* menjadi *"Coba Akun Kasir Gratis"* (`{{ __('public_bos.how_cta_start') }}`).
   * Di `why-cooca.blade.php` baris 131, berikan konteks pembanding konkret pada klaim penghematan biaya (`{{ __('public_bos.why_savings_claim') }}`).
 
@@ -168,24 +168,24 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 
 ---
 
-### FASE 5: Refactoring Omnichannel Suite (5 Halaman)
+### FASE 5: Refactoring Omnichannel Suite (5 Halaman) (SELESAI)
 *Tujuan: Mengoreksi klaim performa toko, melokalkan kicker asing, dan migrasi i18n.*
 
-- [ ] **Task 5.1 — WhatsApp Omnichannel (`whatsapp.blade.php`):**  
+- [x] **Task 5.1 — WhatsApp Omnichannel (`whatsapp.blade.php`):** (SELESAI)  
   Buka [resources/views/public/omnichannel/whatsapp.blade.php](file:///c:/laragon/www/cooca_core/resources/views/public/omnichannel/whatsapp.blade.php).  
   * Ganti kicker bahasa Inggris baris 100 menjadi `{{ __('public_omnichannel.wa_kicker') }}`.
   * Ganti istilah *"Enkripsi End-to-End"* baris 171 menjadi *"Protokol Resmi & Aman Meta Cloud API"*.
   * Hapus kata superlatif *"sempurna"* baris 375 dan janji *"pengalaman terbaik"* baris 671.
   * Migrasi 100% teks ke kamus `public_omnichannel.wa_*`.
-- [ ] **Task 5.2 — Marketplace Omnichannel (`marketplace.blade.php`):**  
+- [x] **Task 5.2 — Marketplace Omnichannel (`marketplace.blade.php`):** (SELESAI)  
   Buka [resources/views/public/omnichannel/marketplace.blade.php](file:///c:/laragon/www/cooca_core/resources/views/public/omnichannel/marketplace.blade.php).  
   * Ganti janji absolut *"selalu sempurna"* baris 402 menjadi perlindungan dari penalti pesanan.
   * Migrasi seluruh teks ke kamus `public_omnichannel.marketplace_*`.
-- [ ] **Task 5.3 — Social Media Integration (`social-media.blade.php`):**  
+- [x] **Task 5.3 — Social Media Integration (`social-media.blade.php`):** (SELESAI)  
   Migrasi fitur integrasi feed, DM Instagram/TikTok, dan katalog WhatsApp ke kamus `public_omnichannel.social_*`.
-- [ ] **Task 5.4 — Orders Management (`orders.blade.php`):**  
+- [x] **Task 5.4 — Orders Management (`orders.blade.php`):** (SELESAI)  
   Migrasi fitur agregasi pesanan multi-saluran ke kamus `public_omnichannel.orders_*`.
-- [ ] **Task 5.5 — Customer Database (`customer.blade.php`):**  
+- [x] **Task 5.5 — Customer Database (`customer.blade.php`):** (SELESAI)  
   Migrasi database pelanggan terpusat ke kamus `public_omnichannel.customer_*`.
 
 ---
@@ -310,8 +310,8 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 ├────────────────────┬─────────────────────┬───────────────┬─────────────────┬────────────────┤
 │ Tahapan Kerja      │ Total Berkas Target │ Estimasi Task │ Status Mandat   │ Prioritas Aksi │
 ├────────────────────┼─────────────────────┼───────────────┼─────────────────┼────────────────┤
-│ Fase 1: Kamus i18n │ 12 Kamus ID + 12 EN │ 6 Task Utama  │ PENDING TRIGGER │ FONDASI (P0)   │
-│ Fase 2: Layout & SW│ 2 Layout Master     │ 5 Task Utama  │ PENDING TRIGGER │ KRITIS (P0)    │
+│ Fase 1: Kamus i18n │ 12 Kamus ID + 12 EN │ 6 Task Utama  │ SELESAI (100%)  │ FONDASI (P0)   │
+│ Fase 2: Layout & SW│ 2 Layout Master     │ 5 Task Utama  │ SELESAI (100%)  │ KRITIS (P0)    │
 │ Fase 3: Home & BOS │ 4 File Blade        │ 4 Task Utama  │ PENDING TRIGGER │ KRITIS (P0-P1) │
 │ Fase 4: ERP Suite  │ 8 File Blade        │ 8 Task Utama  │ PENDING TRIGGER │ TINGGI (P1)    │
 │ Fase 5: Omnichannel│ 5 File Blade        │ 5 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │

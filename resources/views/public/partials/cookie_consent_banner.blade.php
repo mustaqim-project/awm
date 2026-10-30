@@ -40,25 +40,25 @@
         </div>
         <div class="flex-1 min-w-0">
             <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white mb-1">
-                Privasi &amp; Cookie (Kepatuhan UU PDP)
+                {{ __('public_marketing.cookie_title') }}
             </h4>
             <p class="text-[11.5px] sm:text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                Kami menggunakan cookie esensial dan analitik untuk menjamin kelancaran sistem operasional serta kenyamanan Anda sesuai ketentuan UU Pelindungan Data Pribadi (UU PDP).
+                {{ __('public_marketing.cookie_desc') }}
             </p>
             <div class="flex items-center gap-2">
                 <button type="button"
                         @click="acceptAll()"
                         class="px-3.5 py-1.5 rounded-lg bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs tracking-tight shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[34px]">
-                    Setuju Semua
+                    {{ __('public_marketing.cookie_accept') }}
                 </button>
                 <button type="button"
                         @click="rejectOptional()"
-                        class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 font-medium text-xs tracking-tight transition-all min-h-[34px]">
-                    Hanya Esensial
+                        class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-slate-200 font-medium text-xs tracking-tight transition-all min-h-[34px]">
+                    {{ __('public_marketing.cookie_decline') }}
                 </button>
                 <a href="{{ route('public.privacy') }}"
                    class="text-[11px] text-slate-500 dark:text-slate-400 hover:text-[#007AFF] underline ml-auto">
-                    Pelajari
+                    {{ __('public_marketing.footer_privacy') }}
                 </a>
             </div>
         </div>

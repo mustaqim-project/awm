@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Inventori & Stok Multi-Gudang Toko | COOCA')
-@section('description', 'Aplikasi stok gudang multi-cabang: kartu stok perpetual, mutasi antar cabang, notifikasi restock, resep BOM, dan opname tanpa tutup toko.')
+@section('title', __('public_erp.inv_seo_title'))
+@section('description', __('public_erp.inv_seo_desc'))
 @section('keywords', 'software inventori barang, aplikasi stok gudang, manajemen stok multi gudang, kartu stok otomatis, sistem inventory indonesia')
 
-@section('og_title', 'Software Inventori & Stok Multi-Gudang Toko | COOCA')
-@section('og_description', 'Aplikasi stok gudang multi-cabang: kartu stok perpetual, mutasi antar cabang, notifikasi restock, resep BOM, dan opname tanpa tutup toko.')
+@section('og_title', __('public_erp.inv_seo_title'))
+@section('og_description', __('public_erp.inv_seo_desc'))
 
     @push('seo')
         <script type="application/ld+json">
@@ -104,7 +104,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                                 <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                    Perpetual Stock &amp; Multi-Warehouse Control
+                                    {{ __('public_erp.inv_hero_badge') }}
                                 </p>
                             </div>
                         </div>
@@ -120,19 +120,19 @@
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Hentikan barang hilang dan kehabisan stok saat pelanggan siap membeli. COOCA menyajikan kartu stok perpetual real-time, mutasi antar cabang dengan surat jalan, resep bahan baku (BOM), dan peringatan restock sebelum terlambat.
+                            {{ __('public_erp.inv_hero_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Modul Stok</span>
+                                <span>{{ __('public_erp.inv_hero_cta_primary') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.erp.pos') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Koneksi ke POS Kasir</span>
+                                <span>{{ __('public_erp.inv_hero_cta_secondary') }}</span>
                             </a>
                         </div>
 
@@ -162,7 +162,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">Akurasi Audit Stok &amp; Multi-Gudang</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.inv_rating_text') }}</span>
                             </div>
                         </div>
 
@@ -171,15 +171,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Kartu Stok Perpetual</span>
+                                <span>{{ __('public_erp.inv_checkpoint_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>HPP Moving Average</span>
+                                <span>{{ __('public_erp.inv_checkpoint_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Stock Opname Tanpa Tutup Toko</span>
+                                <span>{{ __('public_erp.inv_checkpoint_3') }}</span>
                             </div>
                         </div>
 
@@ -536,9 +536,7 @@
                             Resep Bahan Baku (BOM) &amp; Bundling
                         </h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                            Sempurna untuk kafe, bakery, dan bengkel perakitan. Definisikan bahan mentah untuk setiap item
-                            jadi. Saat produk terjual di kasir, stok biji kopi, gula, bumbu dapur, atau baut spare part
-                            otomatis berkurang di gudang.
+                            {{ __('public_erp.inv_bom_desc') }}
                         </p>
                     </div>
 
@@ -600,7 +598,7 @@
                 <div class="text-center max-w-3xl mx-auto mb-14">
                     <div
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/20 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
-                        <span>Siklus Inventori End-to-End</span>
+                        <span>{{ __('public_erp.inv_cycle_tag') }}</span>
                     </div>
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                         Bagaimana Stok Mengalir dalam Ekosistem COOCA

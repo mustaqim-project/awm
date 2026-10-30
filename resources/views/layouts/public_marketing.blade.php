@@ -1628,14 +1628,13 @@
                                 <i data-lucide="store" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <span class="text-xs font-bold text-white block">Solutions</span>
-                                <span class="text-[10px] text-slate-400 block">Solusi Spesifik 6 Sektor Industri</span>
+                                <span class="text-xs font-bold text-white block">{{ __('public_marketing.nav_solutions') }}</span>
+                                <span class="text-[10px] text-slate-400 block">{{ __('public_marketing.mobile_solutions_sub') }}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span
-                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">6
-                                Industri</span>
+                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">{{ __('public_marketing.badge_6_industries') }}</span>
                             <span class="inline-flex text-slate-400 transition-transform duration-200"
                                 :class="mobileSection === 'solutions' ? 'rotate-180 text-[#34C759]' : ''">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -1653,8 +1652,7 @@
                         class="p-3 pt-0 border-t border-white/10 space-y-3">
 
                         <div class="space-y-2 pt-2.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Solusi Sektor
-                                Industri</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.mega_solutions_title') }}</p>
                             <div class="grid grid-cols-1 gap-1.5">
                                 <!-- F&B & Resto -->
                                 <a href="{{ route('public.solutions.fnb') }}" @click="mobileMenu = false"
@@ -1664,9 +1662,8 @@
                                         <i data-lucide="utensils" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">F&amp;B &amp; Resto</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Meja, menu QR,
-                                            dapur, &amp; split bill</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_fnb') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_fnb_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1678,9 +1675,8 @@
                                         <i data-lucide="store" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Retail &amp; Toko</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Barcode scanner,
-                                            varian, &amp; multi-cabang</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_retail') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_retail_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1692,9 +1688,8 @@
                                         <i data-lucide="wrench" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Bengkel &amp; Otomotif</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">SPK, antrean
-                                            servis, part &amp; mekanik</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_workshop') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_workshop_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1706,10 +1701,8 @@
                                         <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Laundry Kiloan &amp;
-                                            Satuan</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Kiloan, satuan,
-                                            barcode rak &amp; status cuci</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_laundry') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_laundry_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1721,10 +1714,8 @@
                                         <i data-lucide="factory" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Manufaktur &amp;
-                                            Produksi</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">BOM, work order,
-                                            &amp; alokasi bahan baku</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_mfg') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_mfg_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1736,26 +1727,25 @@
                                         <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Services &amp; Jasa</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Booking
-                                            appointment, termin, &amp; invoicing</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.nav_sol_services') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.nav_sol_services_desc') }}</span>
                                     </div>
                                 </a>
                             </div>
 
                             <!-- Usaha Kecil Submenu (Prompt 5 Part B) -->
                             <div class="pt-2 border-t border-white/5 space-y-1.5">
-                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Solusi Usaha Kecil</p>
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.mega_niche_title') }}</p>
                                 <div class="grid grid-cols-2 gap-1.5">
-                                    <a href="{{ route('solusi.show', 'kasir-warung') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Warung Kelontong</a>
-                                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Kedai Kopi</a>
-                                    <a href="{{ route('solusi.show', 'kasir-kios') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Konter HP</a>
-                                    <a href="{{ route('solusi.show', 'kasir-salon') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Salon Kecantikan</a>
-                                    <a href="{{ route('solusi.show', 'kasir-barbershop') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Barbershop</a>
-                                    <a href="{{ route('solusi.show', 'kasir-irt') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Usaha Rumahan</a>
-                                    <a href="{{ route('solusi.show', 'kasir-apotek') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Apotek &amp; Obat</a>
-                                    <a href="{{ route('solusi.show', 'aplikasi-catering') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">Catering &amp; Porsi</a>
-                                    <a href="/aplikasi-kasir-gratis" @click="mobileMenu = false" class="p-2 rounded-lg bg-emerald-500/10 text-xs font-semibold text-emerald-300 hover:text-emerald-200 col-span-2">Aplikasi Kasir Gratis (Rp0)</a>
+                                    <a href="{{ route('solusi.show', 'kasir-warung') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_warung') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_cafe') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-kios') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_kios') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-salon') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_salon') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-barbershop') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_barber') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-irt') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_home') }}</a>
+                                    <a href="{{ route('solusi.show', 'kasir-apotek') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_pharmacy') }}</a>
+                                    <a href="{{ route('solusi.show', 'aplikasi-catering') }}" @click="mobileMenu = false" class="p-2 rounded-lg bg-white/[0.03] text-xs font-semibold text-slate-200 hover:text-[#00C2FF]">{{ __('public_marketing.niche_catering') }}</a>
+                                    <a href="/aplikasi-kasir-gratis" @click="mobileMenu = false" class="p-2 rounded-lg bg-emerald-500/10 text-xs font-semibold text-emerald-300 hover:text-emerald-200 col-span-2">{{ __('public_marketing.niche_free_pos_long') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -1767,12 +1757,9 @@
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
-                                            class="text-[9px] font-bold uppercase tracking-wider text-[#FF9500] block">Konsultasi
-                                            Solusi</span>
-                                        <span class="text-xs font-bold text-white block">Jadwalkan Konsultasi
-                                            Demo</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Sistem
-                                            khusus sesuai SOP industri Anda</span>
+                                            class="text-[9px] font-bold uppercase tracking-wider text-[#FF9500] block">{{ __('public_marketing.banner_demo_tag') }}</span>
+                                        <span class="text-xs font-bold text-white block">{{ __('public_marketing.banner_demo_mobile_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_marketing.banner_demo_mobile_desc') }}</span>
                                     </div>
                                     <div
                                         class="w-6 h-6 rounded-full bg-[#FF9500]/20 text-[#FF9500] flex items-center justify-center shrink-0">
@@ -1796,15 +1783,13 @@
                                 <i data-lucide="share-2" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <span class="text-xs font-bold text-white block">Omnichannel</span>
-                                <span class="text-[10px] text-slate-400 block">Kanal Penjualan, WhatsApp &amp;
-                                    CRM</span>
+                                <span class="text-xs font-bold text-white block">{{ __('public_marketing.nav_omnichannel') }}</span>
+                                <span class="text-[10px] text-slate-400 block">{{ __('public_marketing.mobile_omni_sub') }}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span
-                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">5
-                                Kanal</span>
+                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">{{ __('public_marketing.badge_5_channels') }}</span>
                             <span class="inline-flex text-slate-400 transition-transform duration-200"
                                 :class="mobileSection === 'omnichannel' ? 'rotate-180 text-[#FF2D55]' : ''">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -1822,8 +1807,7 @@
                         class="p-3 pt-0 border-t border-white/10 space-y-3">
 
                         <div class="space-y-2 pt-2.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Kanal
-                                Penjualan &amp; CRM Terpadu</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.mega_omni_title') }}</p>
                             <div class="space-y-1.5">
                                 <!-- Social Media -->
                                 <a href="{{ route('public.omnichannel.social-media') }}" @click="mobileMenu = false"
@@ -1833,9 +1817,8 @@
                                         <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Social Media Commerce</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Jadwal konten,
-                                            auto-reply, &amp; katalog multi-channel</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.social_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.social_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1847,9 +1830,8 @@
                                         <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">WhatsApp Official API</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Broadcast pesan
-                                            massal &amp; multi-agent live chat</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.wa_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.wa_mobile_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1861,9 +1843,8 @@
                                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Marketplace Hub</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Sinkronisasi stok
-                                            Shopee, Tokopedia, &amp; TikTok</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.marketplace_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.marketplace_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1875,9 +1856,8 @@
                                         <i data-lucide="clipboard-list" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Central Orders</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Satu inbox pesanan
-                                            terpadu untuk semua saluran</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.orders_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.orders_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1889,10 +1869,8 @@
                                         <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Customer Portal &amp;
-                                            CRM</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Program loyalty,
-                                            membership tier, &amp; poin belanja</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.crm_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.crm_item_desc') }}</span>
                                     </div>
                                 </a>
                             </div>
@@ -1905,12 +1883,9 @@
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
-                                            class="text-[9px] font-bold uppercase tracking-wider text-[#34C759] block">Automasi
-                                            WhatsApp &amp; POS</span>
-                                        <span class="text-xs font-bold text-white block">Eksplorasi Fitur
-                                            WhatsApp</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Semua Chat
-                                            &amp; Order Terhubung Otomatis</span>
+                                            class="text-[9px] font-bold uppercase tracking-wider text-[#34C759] block">{{ __('public_marketing.banner_omni_tag') }}</span>
+                                        <span class="text-xs font-bold text-white block">{{ __('public_marketing.banner_omni_mobile_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_marketing.banner_omni_mobile_desc') }}</span>
                                     </div>
                                     <div
                                         class="w-6 h-6 rounded-full bg-[#34C759]/20 text-[#34C759] flex items-center justify-center shrink-0">
@@ -1934,15 +1909,13 @@
                                 <i data-lucide="book-open" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <span class="text-xs font-bold text-white block">Resources</span>
-                                <span class="text-[10px] text-slate-400 block">Blog, Panduan, Studi Kasus &amp;
-                                    FAQ</span>
+                                <span class="text-xs font-bold text-white block">{{ __('public_marketing.nav_resources') }}</span>
+                                <span class="text-[10px] text-slate-400 block">{{ __('public_marketing.mobile_resources_sub') }}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span
-                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">4
-                                Edukasi</span>
+                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">{{ __('public_marketing.badge_4_edu') }}</span>
                             <span class="inline-flex text-slate-400 transition-transform duration-200"
                                 :class="mobileSection === 'resources' ? 'rotate-180 text-[#AF52DE]' : ''">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -1960,8 +1933,7 @@
                         class="p-3 pt-0 border-t border-white/10 space-y-3">
 
                         <div class="space-y-2 pt-2.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Pusat Edukasi
-                                &amp; Dokumentasi</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.mega_resources_title') }}</p>
                             <div class="space-y-1.5">
                                 <!-- Blog -->
                                 <a href="{{ route('blog.index') }}" @click="mobileMenu = false"
@@ -1971,10 +1943,8 @@
                                         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Blog &amp; Insight
-                                            Bisnis</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Artikel edukasi,
-                                            tren pasar, &amp; strategi</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.blog_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.blog_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1986,9 +1956,8 @@
                                         <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Panduan &amp; Tutorial</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Tutorial
-                                            step-by-step implementasi SOP dan POS</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.guides_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.guides_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -2000,9 +1969,8 @@
                                         <i data-lucide="award" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Studi Kasus UMKM</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Kisah nyata
-                                            pebisnis Indonesia scaling bersama COOCA</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.case_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.case_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -2014,9 +1982,8 @@
                                         <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Pusat Bantuan &amp; FAQ</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Jawaban cepat
-                                            pertanyaan teknis &amp; langganan</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.faq_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.faq_item_desc') }}</span>
                                     </div>
                                 </a>
                             </div>
@@ -2029,12 +1996,9 @@
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
-                                            class="text-[9px] font-bold uppercase tracking-wider text-[#AF52DE] block">Knowledge
-                                            Hub</span>
-                                        <span class="text-xs font-bold text-white block">Baca Panduan
-                                            Operasional</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Kuasai
-                                            Operasional Bisnis Bersama COOCA</span>
+                                            class="text-[9px] font-bold uppercase tracking-wider text-[#AF52DE] block">{{ __('public_marketing.banner_guides_tag') }}</span>
+                                        <span class="text-xs font-bold text-white block">{{ __('public_marketing.banner_guides_mobile_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_marketing.banner_guides_mobile_desc') }}</span>
                                     </div>
                                     <div
                                         class="w-6 h-6 rounded-full bg-[#AF52DE]/20 text-[#AF52DE] flex items-center justify-center shrink-0">
@@ -2055,8 +2019,8 @@
                         class="p-3 rounded-[14px] bg-gradient-to-r from-[#00C2FF]/10 via-white/[0.04] to-transparent border border-[#00C2FF]/30 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="tag" class="w-4 h-4 text-[#00C2FF]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">Pricing</span>
-                            <span class="text-[9px] text-[#00C2FF] block truncate">Paket &amp; Fitur</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.nav_pricing') }}</span>
+                            <span class="text-[9px] text-[#00C2FF] block truncate">{{ __('public_marketing.btn_sub_pricing') }}</span>
                         </div>
                     </a>
 
@@ -2065,8 +2029,8 @@
                         class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="play" class="w-4 h-4 text-[#34C759]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">Live Demo</span>
-                            <span class="text-[9px] text-slate-400 block truncate">Coba Sistem</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.btn_view_demo_short') }}</span>
+                            <span class="text-[9px] text-slate-400 block truncate">{{ __('public_marketing.btn_sub_demo') }}</span>
                         </div>
                     </a>
 
@@ -2075,8 +2039,8 @@
                         class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">Template Excel</span>
-                            <span class="text-[9px] text-slate-400 block truncate">Download Gratis</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.btn_excel_template') }}</span>
+                            <span class="text-[9px] text-slate-400 block truncate">{{ __('public_marketing.btn_sub_excel') }}</span>
                         </div>
                     </a>
 
@@ -2085,8 +2049,8 @@
                         class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="calculator" class="w-4 h-4 text-[#FF9500]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">Kalkulator</span>
-                            <span class="text-[9px] text-slate-400 block truncate">9 Tool Finansial</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.nav_calculators_short') }}</span>
+                            <span class="text-[9px] text-slate-400 block truncate">{{ __('public_marketing.btn_sub_calc') }}</span>
                         </div>
                     </a>
                 </div>
@@ -2110,14 +2074,14 @@
                             </svg>
                         </div>
                         <div>
-                            <span class="text-xs font-semibold text-white block">Tema Tampilan</span>
+                            <span class="text-xs font-semibold text-white block">{{ __('public_marketing.theme_label') }}</span>
                             <span class="text-[10px] text-slate-400 block"
-                                x-text="isDark ? 'Mode Gelap Aktif' : 'Mode Terang Aktif'"></span>
+                                x-text="isDark ? '{{ __('public_marketing.theme_dark_active') }}' : '{{ __('public_marketing.theme_light_active') }}'"></span>
                         </div>
                     </div>
                     <button type="button" @click="toggleTheme()"
                         class="px-3 py-1.5 rounded-[10px] bg-white/10 hover:bg-white/15 text-xs font-semibold text-white active:scale-95 transition-all">
-                        <span x-text="isDark ? 'Ganti ke Terang' : 'Ganti ke Gelap'"></span>
+                        <span x-text="isDark ? '{{ __('public_marketing.theme_switch_light') }}' : '{{ __('public_marketing.theme_switch_dark') }}'"></span>
                     </button>
                 </div>
             </div>

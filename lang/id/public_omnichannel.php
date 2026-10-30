@@ -14,14 +14,37 @@ return [
     'omni_title_lead' => 'Koneksikan Toko Fisik, Marketplace & WhatsApp dalam Satu Layar',
     'omni_subtitle_lead' => 'Kelola pesanan, inventori, dan pelanggan dari seluruh kanal jualan tanpa repot buka-tutup banyak aplikasi. Stok otomatis sinkron saat barang terjual di mana saja.',
 
-    // WhatsApp Integration
+    // Common Buttons
+    'btn_dashboard' => 'Dashboard',
+    'btn_try_demo' => 'Coba Demo Notifikasi WA',
+    'btn_connect_pos' => 'Koneksi ke Kasir POS',
+    'btn_connect_marketplace' => 'Koneksi ke Marketplace',
+    'btn_social_demo' => 'Coba Demo Media Sosial',
+    'btn_view_calendar' => 'Lihat Kalender Konten',
+    'btn_orders_demo' => 'Coba Demo Manajemen Order',
+    'btn_customer_demo' => 'Coba Demo Customer View',
+    'btn_consultation' => 'Konsultasi Kebutuhan Toko',
+    'btn_free_account' => 'Mulai Coba Gratis',
+
+    // ==========================================
+    // 1. WhatsApp Integration (whatsapp.blade.php)
+    // ==========================================
     'wa_kicker' => 'Integrasi WhatsApp Bisnis Resmi',
     'wa_title' => 'Kirim Struk Kasir & Nota Digital via WhatsApp Tanpa Simpan Nomor',
-    'wa_subtitle' => 'Kirim struk kasir digital otomatis, update status pengerjaan servis atau cucian, serta pengingat invoice langsung ke nomor WhatsApp pelanggan secara resmi dan profesional.',
+    'wa_subtitle' => 'Kirimkan struk kasir digital tanpa kertas thermal, beri tahu pelanggan saat pesanan siap diambil, infokan status pengerjaan servis, dan tagih invoice jatuh tempo langsung ke chat WhatsApp resmi yang dibuka pelanggan setiap hari.',
+    'wa_reassurance_receipt' => 'Struk Digital Resmi Tanpa Kertas',
+    'wa_reassurance_no_save' => 'Kirim Otomatis Tanpa Simpan Nomor',
+    'wa_reassurance_anti_spam' => 'Komunikasi Transaksional Anti-Spam',
+    'wa_meta_protocol' => 'Protokol Resmi & Aman Meta Cloud API',
+    'wa_verified_business' => 'Akun Bisnis Terverifikasi',
     'wa_feat_1' => 'Struk belanja digital interaktif dengan rincian lengkap',
     'wa_feat_2' => 'Notifikasi otomatis saat servis bengkel atau laundry selesai',
     'wa_feat_3' => 'Pengingat jatuh tempo invoice tagihan langsung ke pelanggan',
     'wa_feat_4' => 'Nomor pelanggan aman tersimpan di database bisnis, bukan HP pribadi kasir',
+    'wa_status_update_title' => 'Update Status Pesanan Real-Time',
+    'wa_status_update_desc' => 'Dirancang untuk usaha laundry, bengkel kendaraan, dan jasa perbaikan. Saat teknisi mengubah status order menjadi Selesai, sistem otomatis mengirim pesan kepada pelanggan bahwa barang siap diambil.',
+    'wa_cta_bottom_title' => 'Mulai Komunikasi Transaksional Modern dengan Pelanggan Anda',
+    'wa_cta_bottom_desc' => 'Tingkatkan efisiensi kasir, hemat jutaan rupiah biaya kertas struk, dan berikan layanan profesional yang lebih rapi dan nyaman untuk konsumen Anda dengan integrasi WhatsApp COOCA.',
     'wa_faq_1_q' => 'Bagaimana cara kerja pengiriman struk kasir lewat WhatsApp di COOCA?',
     'wa_faq_1_a' => 'Saat transaksi selesai di layar kasir POS, kasir cukup memasukkan nomor WhatsApp pelanggan dan menekan tombol Kirim Nota WA. Sistem menyiapkan pesan dengan tautan struk digital resmi yang langsung dapat dibuka oleh pelanggan.',
     'wa_faq_2_q' => 'Apakah staf toko harus menyimpan nomor telepon pelanggan ke kontak HP mereka?',
@@ -29,40 +52,60 @@ return [
     'wa_faq_3_q' => 'Apakah pesan WhatsApp ini aman dari pemblokiran (banned)?',
     'wa_faq_3_a' => 'COOCA mengutamakan komunikasi transaksional nyata yang memang diharapkan oleh pelanggan—seperti konfirmasi struk pembelian, status cucian selesai, atau nota servis kendaraan. Kami tidak memfasilitasi pesan spam massal tanpa izin sehingga reputasi nomor bisnis Anda tetap terjaga.',
 
-    // Marketplace Sync
+    // ==========================================
+    // 2. Marketplace Sync (marketplace.blade.php)
+    // ==========================================
     'mp_kicker' => 'Sinkronisasi Multi-Marketplace',
     'mp_title' => 'Integrasi Stok Shopee, Tokopedia & TikTok Shop Otomatis',
     'mp_subtitle' => 'Hindari penalti pembatalan pesanan akibat stok habis (overselling). Saat barang laku di kasir toko offline, stok di Shopee dan Tokopedia otomatis terpotong detik itu juga.',
+    'mp_reassurance_single_stock' => '1 Stok Terpusat Toko & Online',
+    'mp_reassurance_auto_sync' => 'Sinkronisasi Otomatis < 5 Detik',
+    'mp_reassurance_penalty_safe' => 'Bebas Penalti Pembatalan Pesanan',
+    'mp_penalty_protection_desc' => 'Mesin inventori terpusat COOCA secara aktif memperbarui kuantitas persediaan di seluruh toko online saat ada pembelian di toko offline maupun kanal online lainnya. Hilangkan risiko overselling dan lindungi toko Anda dari penalti pembatalan pesanan di marketplace.',
     'mp_feat_1' => 'Satu stok terpusat untuk toko offline dan semua toko marketplace',
     'mp_feat_2' => 'Otomatis potong stok serentak begitu pesanan masuk',
     'mp_feat_3' => 'Tarik pesanan multi-toko ke dalam satu dashboard pengiriman',
     'mp_feat_4' => 'Rekonsiliasi biaya admin dan potongan komisi per marketplace',
 
-    // Orders Hub
+    // ==========================================
+    // 3. Social Media Integration (social-media.blade.php)
+    // ==========================================
+    'soc_kicker' => 'Social Commerce & Chat-to-Invoice',
+    'soc_title' => 'Kelola Seluruh Kanal Media Sosial Bisnis Dari Satu Ruang Kerja Terpadu',
+    'soc_subtitle' => 'Hentikan repotnya berganti-ganti akun di smartphone. Jadwalkan konten promosi ke Instagram, Facebook, dan TikTok, sinkronkan langsung dengan katalog produk toko Anda, dan ubah pengikut media sosial menjadi pembeli nyata.',
+    'soc_reassurance_multi_acc' => 'Multi-Akun: IG, FB, & TikTok',
+    'soc_reassurance_pos_catalog' => 'Hubungkan ke Katalog POS',
+    'soc_reassurance_no_pwd_share' => 'Aman Tanpa Bagi Password',
+    'soc_feat_1' => 'Generate invoice dan tautan bayar instan langsung dari chat',
+    'soc_feat_2' => 'Mendukung QRIS instan dan transfer virtual account',
+    'soc_feat_3' => 'Verifikasi pembayaran otomatis tanpa perlu minta bukti transfer foto',
+    'soc_feat_4' => 'Stok langsung terkunci aman saat pembeli melakukan checkout',
+
+    // ==========================================
+    // 4. Orders Hub (orders.blade.php)
+    // ==========================================
     'ord_kicker' => 'Manajemen Pesanan Multisalur (Order Hub)',
-    'ord_title' => 'Satu Layar untuk Semua Pesanan Masuk: Kasir, Web & Marketplace',
-    'ord_subtitle' => 'Pantau dan proses pesanan dari kasir toko, WhatsApp order, Tokopedia, Shopee, dan TikTok Shop dalam alur kerja seragam dari verifikasi pembayaran hingga pengiriman kurir.',
+    'ord_title' => 'Satukan Seluruh Alur Pesanan Bisnis Dalam Satu Pipeline Cepat',
+    'ord_subtitle' => 'Pesanan datang dari kasir toko fisik, WhatsApp, toko online mandiri, hingga marketplace. COOCA mengonsolidasikan semuanya ke dalam satu pipeline visual teratur, merutekan ke cabang terdekat, dan memastikan setiap pesanan terkirim tepat waktu.',
+    'ord_reassurance_aggregation' => 'Agregasi POS, WA & Marketplace',
+    'ord_reassurance_smart_routing' => 'Smart Routing Cabang Terdekat',
+    'ord_reassurance_bulk_receipt' => 'Cetak Resi & Picking Slip Massal',
     'ord_feat_1' => 'Papan pesanan kanban terpadu lintas seluruh saluran penjualan',
     'ord_feat_2' => 'Cetak resi pengiriman dan label alamat sekali klik',
     'ord_feat_3' => 'Pelacakan nomor resi otomatis ke status pesanan pelanggan',
     'ord_feat_4' => 'Pemisahan pesanan pickup mandiri (ambil di toko) dan kirim kurir',
 
-    // Customer / CRM
+    // ==========================================
+    // 5. Customer Database (customer.blade.php)
+    // ==========================================
     'crm_kicker' => 'Database Pelanggan Tunggal (Single Customer View)',
     'crm_title' => 'Kenali Pelanggan Anda di Toko Offline Maupun Online',
-    'crm_subtitle' => 'Ketahui total belanja pelanggan, frekuensi kunjungan, riwayat produk favorit, dan poin loyalitas mereka di manapun mereka bertransaksi.',
+    'crm_subtitle' => 'Pelanggan berbelanja di kasir toko fisik, memesan via WhatsApp, dan checkout di marketplace online. COOCA menyatukan seluruh jejak interaksi tersebut menjadi satu profil utuh (Single Customer View) sehingga Anda mengenali nilai sebenarnya dari setiap konsumen.',
+    'crm_reassurance_single_view' => 'Single Customer View Offline & Online',
+    'crm_reassurance_loyalty' => 'Poin Loyalitas & Diskon Otomatis',
+    'crm_reassurance_receivables' => 'Pencatatan Kasbon & Batas Piutang',
     'crm_feat_1' => 'Profil pelanggan terpadu lintas toko fisik dan toko online',
     'crm_feat_2' => 'Pencatatan saldo kasbon / piutang pelanggan dengan limit ketat',
     'crm_feat_3' => 'Poin loyalitas dan diskon member otomatis di kasir POS',
     'crm_feat_4' => 'Segmentasi pelanggan aktif, loyal, dan yang sudah lama tidak belanja',
-
-    // Social Media Commerce
-    'soc_kicker' => 'Social Commerce & Chat-to-Invoice',
-    'soc_title' => 'Ubah DM Instagram & TikTok Menjadi Penjualan Nyata',
-    'soc_subtitle' => 'Buat tautan pembayaran (payment link) instan dari chat, terima pembayaran QRIS dan transfer bank, dan biarkan sistem memotong stok secara otomatis tanpa input ulang.',
-    'soc_feat_1' => 'Generate invoice dan tautan bayar instan langsung dari chat',
-    'soc_feat_2' => 'Mendukung QRIS instan dan transfer virtual account',
-    'soc_feat_3' => 'Verifikasi pembayaran otomatis tanpa perlu minta bukti transfer foto',
-    'soc_feat_4' => 'Stok langsung terkunci aman saat pembeli melakukan checkout',
 ];
-

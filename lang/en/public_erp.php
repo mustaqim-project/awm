@@ -97,5 +97,94 @@ return [
     'crm_feature_1_desc' => 'Identify customer favorite dishes or goods whenever they buy at the cashier counter or order online.',
     'crm_feature_2_title' => 'Loyalty Points & Membership Tiers',
     'crm_feature_2_desc' => 'Award points for every purchase amount that customers can redeem for discounts on subsequent visits.',
+    // Extended SEO, Bento & Features
+    // HRM
+    'hrm_seo_title' => 'Staff Management, Shift Roster & Face Attendance Software | COOCA',
+    'hrm_seo_desc' => 'Outlet staff HR app: biometric face verification, 50m GPS radius, shift roster management, and automated payslip generation.',
+    'hrm_cta_pos' => 'Connect to POS Cashier Shift',
+    'hrm_hero_rating' => 'Team Accountability & Store Payroll Efficiency',
+    'hrm_check_face' => 'Biometric Face & GPS',
+    'hrm_check_shift' => 'Multi-Shift Rostering',
+    'hrm_check_comm' => 'Automated Sales Commission',
+    'hrm_bento_face_title' => 'Biometric Face Verification & GPS Geofencing',
+    'hrm_bento_face_badge' => 'AI Facial Verification & 50m Radius',
+
+    // POS
+    'pos_seo_title' => 'Online Cloud POS & Integrated Cashier App | COOCA',
+    'pos_seo_desc' => 'Store & restaurant POS system: barcode scanner, dynamic QRIS, kitchen tickets, prep sheets, and automated bookkeeping.',
+    'pos_check_speed' => '< 3s Swift Checkout',
+    'pos_check_stock' => 'Auto Warehouse Deduction',
+    'pos_check_receipt' => 'Thermal & WhatsApp Receipts',
+    'pos_feature_ai_title' => 'AI Cashier Assistant & Anomaly Detection',
+    'pos_feature_ai_desc' => 'Intelligent assistant analyzes peak store hours, spots suspicious void receipts, and suggests product upsells.',
+    'pos_feature_prep_title' => 'Kitchen Prep Sheet & Order Tickets (KOT)',
+    'pos_feature_prep_desc' => 'Print separate order tickets to kitchen and bar stations. Calculate morning ingredient needs with automated prep sheets.',
+
+    // Inventori
+    'inv_seo_title' => 'Inventory & Warehouse Control System | COOCA',
+    'inv_seo_desc' => 'Manage physical store stock, multi-warehouse transfers, transparent stock cards, branch waybills, and digital stock opname.',
+    'inv_hero_rating' => 'Stock Precision & Physical Discrepancy Elimination',
+    'inv_check_sync' => 'Real-Time POS Cashier Sync',
+    'inv_check_transfer' => 'Branch Mutation Waybills',
+    'inv_check_stock_card' => 'Stock Cards & Full Audit Trails',
+    'inv_bom_desc' => 'Engineered for cafes, bakeries, and assembly workshops. Define raw materials for finished goods; ingredients deduct automatically upon cashier sale.',
+    'inv_cycle_tag' => 'Unified Inventory Workflow Cycle',
+
+    // Keuangan
+    'fin_seo_title' => 'Business Cash Management & Bookkeeping Software | COOCA',
+    'fin_seo_desc' => 'Manage store daily cash ledger, QRIS & bank settlement reconciliation, customer credit records, and monitor business cash liquidity.',
+    'fin_hero_rating' => 'Liquidity Control & Multi-Bank Sync',
+    'fin_check_reconcile' => 'Automated Bank Reconciliation',
+    'fin_check_qris' => 'Precise QRIS Settlement',
+    'fin_check_aging' => 'Accounts Receivable Aging Report',
+    'fin_cta_acc' => 'Explore Accounting Module',
+    'fin_feature_reconcile_title' => 'Automated Cash & QRIS Reconciliation',
+    'fin_feature_reconcile_desc' => 'The system reconciles cashier drawer cash shifts against payment gateway payouts and bank deposits seamlessly.',
+
+    // Akuntansi
+    'acc_seo_title' => 'Automated Accounting Software SAK EMKM Standard | COOCA',
+    'acc_seo_desc' => 'Compliant SAK EMKM financial statements: balance sheets, general ledgers, and automated P&L generated from cashier sales and inventory movements.',
+    'acc_hero_rating' => 'Double-Entry Precision & SAK EMKM Standard',
+    'acc_check_double_entry' => 'Automated Double-Entry',
+    'acc_check_emkm' => 'SAK EMKM Standard Compliant',
+    'acc_check_audit' => 'Audit-Ready Balance Sheet & P&L',
+    'acc_cta_fin' => 'Connect to Cash Treasury',
+    'acc_feature_ledger_title' => 'Automated General Ledger & Trial Balance',
+    'acc_feature_ledger_desc' => 'Every single rupiah of cashier sales directly produces accurate debit and credit journal entries without manual re-entry.',
+
+    // Analitik
+    'analytics_seo_title' => 'Business Intelligence & AI Executive Cockpit | COOCA',
+    'analytics_seo_desc' => 'Smart operational intelligence: monitor outlet turnover trends, top SKU margins, rush hours, cashier fraud detection, and 25 MCP tools integration.',
+    'analytics_hero_rating' => 'Data-Driven Business Decision Accuracy',
+    'analytics_check_realtime' => 'Real-Time Multi-Outlet Dashboard',
+    'analytics_check_drilldown' => 'Product SKU Margin Drill-Down',
+    'analytics_check_mcp' => '25 Model Context Protocol Tools',
+    'analytics_cta_erp' => 'Explore ERP Ecosystem',
+    'analytics_feature_fraud_title' => 'Cashier Fraud & Anomaly Detection',
+    'analytics_feature_fraud_desc' => 'Artificial intelligence detects abnormal receipt cancellations, suspicious void transactions, and physical drawer cash discrepancies.',
+    'analytics_feature_mcp_title' => '25 Model Context Protocol (MCP) Tools',
+    'analytics_feature_mcp_desc' => 'Direct connectivity to modern AI agents for automated operational analysis and real-time business Q&A.',
+
+    // CRM
+    'crm_seo_title' => 'MSME CRM & Customer Loyalty Software | COOCA',
+    'crm_seo_desc' => 'Nurture loyal buyers: earn shopping reward points, structure membership tiers, and re-engage customers via official WhatsApp broadcasts.',
+    'crm_hero_rating' => 'Customer Retention & WhatsApp Outreach',
+    'crm_check_wa' => 'WhatsApp Number as Unified ID',
+    'crm_check_points' => 'Automatic Points & Tier Upgrades',
+    'crm_check_retention' => 'Predictable Repeat Order Triggers',
+    'crm_cta_pos' => 'View POS Cashier Integration',
+    'crm_feature_loyalty_title' => 'Loyalty Reward Points & Member Tiers',
+    'crm_feature_loyalty_desc' => 'Award points for every purchase transaction that customers can redeem for discounts on their next visits.',
+
+    // ERP Overview
+    'erp_seo_title' => 'Unified Cloud ERP & Business Operating System | COOCA',
+    'erp_seo_desc' => 'Run store operations, warehouses, cashiers, supplier procurement, and accounting reports within an accessible, lightweight ERP system.',
+    'erp_hero_rating' => '8 Integrated Modules in Complete Harmony',
+    'erp_check_modular' => 'Modular On-Demand for Any Scale',
+    'erp_check_emkm' => 'Standard Accounting SAK EMKM',
+    'erp_check_multi_branch' => 'Multi-Branch & Multi-Warehouse',
+    'erp_cta_pos' => 'View POS Cashier Features',
+    'erp_tidy_ops' => 'Streamline Your Business Operations',
+    'erp_tidy_ops_desc' => 'Time to run your operations with a lightweight, reliable, and intuitive ERP without exorbitant corporate licensing fees.',
 ];
 

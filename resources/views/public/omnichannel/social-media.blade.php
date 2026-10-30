@@ -97,32 +97,31 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Omnichannel Social Media &amp; Product Showcase
+                                {{ __('public_omnichannel.soc_kicker') }}
                             </p>
                         </div>
 
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Kelola Seluruh Kanal Media Sosial Bisnis <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Dari Satu Ruang Kerja Terpadu</span>
+                            {{ app()->getLocale() === 'en' ? __('public_omnichannel.soc_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_omnichannel.soc_title')) }}
                         </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed text-pretty max-w-2xl">
-                            Hentikan repotnya berganti-ganti akun di smartphone. Jadwalkan konten promosi ke Instagram, Facebook, dan TikTok, sinkronkan langsung dengan katalog produk toko Anda, dan ubah pengikut media sosial menjadi pembeli nyata.
+                            {{ __('public_omnichannel.soc_subtitle') }}
                         </p>
 
                         {{-- Action CTAs (Left-aligned) --}}
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('public.demo') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Coba Demo Media Sosial</span>
+                                <span>{{ __('public_omnichannel.btn_social_demo') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <a href="{{ route('public.content.calendar') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm font-semibold text-sm hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
-                                <span>Lihat Kalender Konten</span>
+                                <span>{{ __('public_omnichannel.btn_view_calendar') }}</span>
                             </a>
                         </div>
 
@@ -130,15 +129,15 @@
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Multi-Akun: IG, FB, &amp; TikTok</span>
+                                <span>{{ __('public_omnichannel.soc_reassurance_multi_acc') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Hubungkan ke Katalog POS</span>
+                                <span>{{ __('public_omnichannel.soc_reassurance_pos_catalog') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Aman Tanpa Bagi Password</span>
+                                <span>{{ __('public_omnichannel.soc_reassurance_no_pwd_share') }}</span>
                             </div>
                         </div>
                     </div>

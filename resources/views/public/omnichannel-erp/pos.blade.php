@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Kasir POS Multi-Outlet & Stok Gudang | COOCA')
-@section('description', 'Aplikasi kasir POS toko & restoran: scan barcode, cetak struk Bluetooth, QRIS, serta otomatis potong stok gudang dan catat jurnal kasir.')
+@section('title', __('public_erp.pos_seo_title'))
+@section('description', __('public_erp.pos_seo_desc'))
 @section('keywords', 'software kasir online, aplikasi pos multi outlet, point of sale indonesia, pos terintegrasi stok, kasir barcode qris')
 
-@section('og_title', 'Aplikasi Kasir POS Multi-Outlet & Stok Gudang | COOCA')
-@section('og_description', 'Aplikasi kasir POS toko & restoran: scan barcode, cetak struk Bluetooth, QRIS, serta otomatis potong stok gudang dan catat jurnal kasir.')
+@section('og_title', __('public_erp.pos_seo_title'))
+@section('og_description', __('public_erp.pos_seo_desc'))
 
     @push('seo')
         <script type="application/ld+json">
@@ -103,7 +103,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Cloud Point of Sale &amp; Kasir Cepat
+                                {{ __('public_erp.pos_kicker') }}
                             </p>
                         </div>
 
@@ -111,26 +111,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                                {{ __('public_erp.pos_title') }}
+                            </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Layani pelanggan tanpa antre berlama-lama. Transaksi kilat dengan barcode dan QRIS, cetak struk thermal, catat pelanggan, dan biarkan COOCA memotong stok fisik serta membukukan jurnal keuangan otomatis di detik yang sama.
+                            {{ __('public_erp.pos_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Demo POS</span>
+                                <span>{{ __('public_erp.pos_cta_demo') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.pricing') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Lihat Paket &amp; Harga</span>
+                                <span>{{ __('public_erp.pos_cta_pricing') }}</span>
                             </a>
                         </div>
 
@@ -160,7 +160,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">Rating Keandalan Kasir &amp; POS</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.pos_hero_rating') }}</span>
                             </div>
                         </div>
 
@@ -169,15 +169,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>&lt; 3 Detik Checkout</span>
+                                <span>{{ __('public_erp.pos_check_speed') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Auto Potong Stok Gudang</span>
+                                <span>{{ __('public_erp.pos_check_stock') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Cetak Struk Thermal</span>
+                                <span>{{ __('public_erp.pos_check_receipt') }}</span>
                             </div>
                         </div>
 
@@ -652,6 +652,38 @@
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                         Pelanggan ingin bayar patungan atau bayar sebagian tunai dan sebagian QRIS? Fitur split payment dan
                         split order memungkinkan pembagian tagihan per item dengan sangat leluasa.
+                    </p>
+                </div>
+
+                {{-- Bento Card 6: AI Cashier Assistant (Span 6) --}}
+                <div
+                    class="md:col-span-6 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 space-y-4 shadow-sm">
+                    <div
+                        class="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                        <i data-lucide="bot" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_feature_ai_title') }}</h3>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">AI Assist</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        {{ __('public_erp.pos_feature_ai_desc') }}
+                    </p>
+                </div>
+
+                {{-- Bento Card 7: Kitchen Prep Sheet (Span 6) --}}
+                <div
+                    class="md:col-span-6 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 space-y-4 shadow-sm">
+                    <div
+                        class="w-11 h-11 rounded-2xl bg-orange-100 dark:bg-orange-950 flex items-center justify-center text-orange-600 dark:text-orange-400">
+                        <i data-lucide="utensils" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_feature_prep_title') }}</h3>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300">Kitchen</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                        {{ __('public_erp.pos_feature_prep_desc') }}
                     </p>
                 </div>
 

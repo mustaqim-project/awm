@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Kelola Karyawan, Shift & Absensi Toko | COOCA')
-@section('description', 'Aplikasi SDM & karyawan outlet: atur jadwal shift kerja, presensi GPS, pantau penjualan kasir, dan rekap gaji berbasis absensi nyata.')
-@section('og_title', 'Software Kelola Karyawan, Shift & Absensi Toko | COOCA')
-@section('og_description', 'Aplikasi SDM & karyawan outlet: atur jadwal shift kerja, presensi GPS, pantau penjualan kasir, dan rekap gaji berbasis absensi nyata.')
+@section('title', __('public_erp.hrm_seo_title'))
+@section('description', __('public_erp.hrm_seo_desc'))
+@section('og_title', __('public_erp.hrm_seo_title'))
+@section('og_description', __('public_erp.hrm_seo_desc'))
 @section('keywords',
     'software hrm karyawan outlet, aplikasi jadwal shift kasir, absensi gps toko, manajemen sdm retail, rekap gaji karyawan umkm')
 
@@ -104,7 +104,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                                 <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                    Store Crew Shift &amp; Staff Performance
+                                    {{ __('public_erp.hrm_kicker') }}
                                 </p>
                             </div>
                         </div>
@@ -113,28 +113,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Kelola Jadwal Shift, Absensi, &amp; Kinerja Staf Cabang <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Secara
-                                    Transparan</span>
+                                {{ __('public_erp.hrm_title') }}
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Hentikan kerumitan mengatur jadwal tukar shift lewat chat WhatsApp yang berantakan. Pantau kehadiran staf toko berbasis GPS/PIN kasir, ukur pencapaian target penjualan per karyawan, dan rekap gaji bulanan tanpa salah hitung.
+                            {{ __('public_erp.hrm_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Modul HRM Staf</span>
+                                <span>{{ __('public_erp.hrm_cta_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.erp.pos') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Koneksi ke Shift Kasir</span>
+                                <span>{{ __('public_erp.hrm_cta_pos') }}</span>
                             </a>
                         </div>
 
@@ -164,7 +162,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">Disiplin Tim &amp; Efisiensi Payroll Cabang</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.hrm_hero_rating') }}</span>
                             </div>
                         </div>
 
@@ -173,15 +171,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Geofence GPS &amp; PIN</span>
+                                <span>{{ __('public_erp.hrm_check_face') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Rotasi Multi-Shift</span>
+                                <span>{{ __('public_erp.hrm_check_shift') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Komisi Sales Otomatis</span>
+                                <span>{{ __('public_erp.hrm_check_comm') }}</span>
                             </div>
                         </div>
 
@@ -470,27 +468,26 @@
                     </div>
                 </div>
 
-                {{-- Bento Card 2: Presensi GPS & PIN Kasir (Span 5) --}}
+                {{-- Bento Card 2: Presensi Biometrik Wajah & GPS (Span 5) --}}
                 <div
                     class="md:col-span-5 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between shadow-sm">
                     <div class="space-y-4">
                         <div
                             class="w-11 h-11 rounded-2xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            <i data-lucide="scan-face" class="w-5 h-5"></i>
                         </div>
                         <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Absensi Anti Titip Absen
+                            {{ __('public_erp.hrm_bento_face_title') }}
                         </h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Karyawan hanya dapat melakukan clock-in saat berada di dalam radius toko yang ditentukan (GPS
-                            geofencing) atau dengan memasukkan PIN saat membuka laci kasir POS.
+                            {{ __('public_erp.hrm_feature_1_desc') }}
                         </p>
                     </div>
 
                     <div
                         class="mt-6 p-3 rounded-2xl bg-white dark:bg-[#060B1E]/60 border border-slate-200/80 dark:border-white/10 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 font-mono">
                         <span class="text-slate-500 dark:text-slate-400">Radius Lokasi Absen</span>
-                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">Maksimal 50 Meter Toko</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_erp.hrm_bento_face_badge') }}</span>
                     </div>
                 </div>
 

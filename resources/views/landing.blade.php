@@ -1445,24 +1445,23 @@
 
                         <!-- Pure Typographic Overline Kicker -->
                         <p class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-cyan-400">
-                            Saatnya Beralih ke COOCA
+                            {{ __('public_home.bottom_cta_kicker') }}
                         </p>
 
                         <!-- Main Headline (H2) -->
                         <h2
                             class="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-extrabold text-white tracking-tight leading-[1.12]">
-                            Mulai Rapikan Bisnis Anda Hari Ini
+                            {{ __('public_home.bottom_cta_title') }}
                         </h2>
 
                         <!-- Subheadline (H3) -->
                         <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-200 tracking-tight">
-                            Satu Platform Terpadu untuk Menggerakkan Bisnis UMKM Lebih Cerdas &amp; Presisi
+                            {{ __('public_home.bottom_cta_subtitle') }}
                         </h3>
 
                         <!-- Supporting Copy -->
                         <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                            Tidak perlu menggunakan banyak aplikasi terpisah. Mulai dari kebutuhan kasir esensial dan kembangkan modul
-                            sesuai skala pertumbuhan usaha Anda.
+                            {{ __('public_home.bottom_cta_desc') }}
                         </p>
 
                         <!-- 4 Step Flow Ribbon (Bento Tiles) -->
@@ -1470,22 +1469,22 @@
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">01</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Daftarkan usaha</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">{{ __('public_home.bottom_cta_step_1') }}</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">02</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Pilih modul</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">{{ __('public_home.bottom_cta_step_2') }}</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">03</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Hubungkan channel</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">{{ __('public_home.bottom_cta_step_3') }}</span>
                             </div>
                             <div
                                 class="p-3 rounded-[14px] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] transition-all group">
                                 <span class="text-cyan-400 font-bold block text-[11px] tabular-nums mb-1">04</span>
-                                <span class="text-xs font-semibold text-white/90 leading-snug block">Jalankan bisnis</span>
+                                <span class="text-xs font-semibold text-white/90 leading-snug block">{{ __('public_home.bottom_cta_step_4') }}</span>
                             </div>
                         </div>
 
@@ -1494,19 +1493,19 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="w-full sm:w-auto px-7 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_home.bottom_cta_btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="w-full sm:w-auto px-7 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_home.bottom_cta_btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('register') }}"
                                     class="w-full sm:w-auto px-7 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation">
-                                    <span>Coba COOCA Gratis</span>
+                                    <span>{{ __('public_home.bottom_cta_btn_free') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @endif
@@ -1521,7 +1520,7 @@
                             <div class="absolute -top-10 right-4 z-20 hidden sm:block text-right">
                                 <span style="font-family: 'Caveat', cursive;"
                                     class="text-2xl sm:text-3xl text-cyan-300 font-bold block transform -rotate-3 drop-shadow-[0_2px_10px_rgba(0,194,255,0.5)]">
-                                    Satu Sistem, Berbagai Kemudahan Usaha
+                                    {{ __('public_home.bottom_cta_annotation') }}
                                 </span>
                                 <!-- Hand-drawn curved arrow pointing to laptop -->
                                 <svg class="w-16 h-8 text-cyan-300 ml-auto mt-0.5" viewBox="0 0 100 50" fill="none"

@@ -99,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse shrink-0"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Unified Identity &amp; Cross-Channel Profile
+                                {{ __('public_omnichannel.crm_kicker') }}
                             </p>
                         </div>
 
@@ -107,14 +107,14 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.75rem] xl:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.22] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                                {{ app()->getLocale() === 'en' ? __('public_omnichannel.crm_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_omnichannel.crm_title')) }}
+                            </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Pelanggan berbelanja di kasir toko fisik, memesan via WhatsApp, dan checkout di marketplace online. COOCA menyatukan seluruh jejak interaksi tersebut menjadi satu profil utuh (Single Customer View) sehingga Anda mengenali nilai sebenarnya dari setiap konsumen.
+                            {{ __('public_omnichannel.crm_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Left-Aligned on Mobile, Tablet & Desktop) -->
@@ -122,25 +122,25 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_omnichannel.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_omnichannel.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('public.demo') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Coba Demo Customer View</span>
+                                    <span>{{ __('public_omnichannel.btn_customer_demo') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @endif
                             <a href="{{ route('public.erp.crm') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Pelajari Modul CRM Poin</span>
+                                <span>{{ __('public_omnichannel.crm_feat_3') }}</span>
                             </a>
                         </div>
 
@@ -149,15 +149,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3.5 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Resolusi Identitas Cerdas</span>
+                                <span>{{ __('public_omnichannel.crm_reassurance_single_view') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Riwayat Belanja Offline + Online</span>
+                                <span>{{ __('public_omnichannel.crm_reassurance_loyalty') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Kepatuhan Standar UU PDP</span>
+                                <span>{{ __('public_omnichannel.crm_reassurance_receivables') }}</span>
                             </div>
                         </div>
                     </div>

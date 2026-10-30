@@ -124,7 +124,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse shrink-0"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Business Operating System &amp; Omnichannel ERP
+                                {{ __('public_bos.overview_kicker') }}
                             </p>
                         </div>
 
@@ -132,15 +132,15 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.75rem] xl:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.22] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Satu Sistem Operasi untuk <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Seluruh Bisnis Anda</span>
+                                {{ __('public_bos.overview_title') }} <span
+                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_bos.overview_title_accent') }}</span>
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Bukan sekadar kasir atau software pembukuan terpisah. COOCA adalah sistem operasional terpadu yang menghubungkan kasir POS, persediaan gudang, arus kas, pesanan pelanggan, hingga laporan pemilik dalam satu database otomatis seketika.
+                            {{ __('public_bos.overview_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Left-Aligned on Mobile, Tablet & Desktop) -->
@@ -148,26 +148,26 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_bos.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_bos.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('register') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Coba COOCA Sekarang</span>
+                                    <span>{{ __('public_bos.overview_cta_try') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @endif
                             <a href="{{ route('public.bos.how-it-works') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
                                 <i data-lucide="play" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00C4D8]"></i>
-                                <span>Lihat Cara Kerja Sistem</span>
+                                <span>{{ __('public_bos.overview_cta_how') }}</span>
                             </a>
                         </div>
 
@@ -176,15 +176,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3.5 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Tanpa Duplikasi Input Manual</span>
+                                <span>{{ __('public_bos.overview_trust_no_duplicate') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Multi-Device: HP, Tablet & Laptop</span>
+                                <span>{{ __('public_bos.overview_trust_devices') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Isolasi Data Bisnis Aman</span>
+                                <span>{{ __('public_bos.overview_trust_secure') }}</span>
                             </div>
                         </div>
                     </div>
@@ -200,24 +200,24 @@
                         <div
                             class="hidden sm:block absolute -top-4 -right-3 z-30 bg-[#0A122C]/95 border border-white/20 rounded-[18px] p-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8),0_0_20px_rgba(0,196,216,0.2)] min-w-[160px] backdrop-blur-2xl text-white transform hover:-translate-y-0.5 transition-all">
                             <div class="flex items-center justify-between gap-2">
-                                <div class="text-[10.5px] text-slate-400 font-medium">Akurasi Finansial</div>
+                                <div class="text-[10.5px] text-slate-400 font-medium">{{ __('public_bos.overview_cockpit_financial_acc') }}</div>
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             </div>
-                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">Satu Data Terpadu</div>
+                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">{{ __('public_bos.overview_cockpit_single_data') }}</div>
                             <div class="text-[10.5px] font-semibold text-emerald-400 flex items-center gap-1 mt-0.5">
                                 <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                <span>Tanpa Selisih Catatan</span>
+                                <span>{{ __('public_bos.overview_cockpit_no_discrepancy') }}</span>
                             </div>
                         </div>
 
                         <!-- Floating Card Bottom-Left (Tablet & Desktop) -->
                         <div
                             class="hidden sm:block absolute -bottom-4 -left-3 z-30 bg-[#0A122C]/95 border border-white/20 rounded-[18px] p-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8),0_0_20px_rgba(0,122,255,0.2)] min-w-[155px] backdrop-blur-2xl text-white transform hover:-translate-y-0.5 transition-all">
-                            <div class="text-[10.5px] text-slate-400 font-medium">Jalur Alur Data</div>
-                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">Sinkron Seketika</div>
+                            <div class="text-[10.5px] text-slate-400 font-medium">{{ __('public_bos.overview_cockpit_pipeline') }}</div>
+                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">{{ __('public_bos.overview_cockpit_instant_sync') }}</div>
                             <div class="text-[10.5px] font-semibold text-[#00C4D8] flex items-center gap-1.5 mt-0.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Otomatis &amp; Terhubung</span>
+                                <span>{{ __('public_bos.overview_cockpit_auto_connected') }}</span>
                             </div>
                         </div>
 
@@ -236,10 +236,10 @@
                                     <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                     <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
                                 </div>
-                                <span class="text-xs font-mono font-medium text-slate-300 truncate">COOCA Engine &bull; Live Architecture</span>
+                                <span class="text-xs font-mono font-medium text-slate-300 truncate">{{ __('public_bos.overview_cockpit_engine_title') }}</span>
                                 <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 shrink-0 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                    Synced
+                                    {{ __('public_bos.overview_cockpit_synced') }}
                                 </span>
                             </div>
 
@@ -254,11 +254,11 @@
                                             <i data-lucide="shopping-bag" class="w-4 h-4 sm:w-4.5 sm:h-4.5"></i>
                                         </div>
                                         <div class="min-w-0 flex-1">
-                                            <div class="text-xs sm:text-sm font-bold text-white truncate">Channel Penjualan Terhubung</div>
-                                            <div class="text-[10.5px] sm:text-[11px] text-slate-400 truncate">Kasir POS &bull; Web Store &bull; WhatsApp</div>
+                                            <div class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_bos.overview_cockpit_ch_title') }}</div>
+                                            <div class="text-[10.5px] sm:text-[11px] text-slate-400 truncate">{{ __('public_bos.overview_cockpit_ch_desc') }}</div>
                                         </div>
                                     </div>
-                                    <span class="text-[10.5px] font-mono text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-500/10 shrink-0">Realtime Feed</span>
+                                    <span class="text-[10.5px] font-mono text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-500/10 shrink-0">{{ __('public_bos.overview_cockpit_ch_badge') }}</span>
                                 </div>
 
                                 <!-- Connector Indicator -->
@@ -276,12 +276,12 @@
                                                 <i data-lucide="cpu" class="w-4 h-4 sm:w-4.5 sm:h-4.5"></i>
                                             </div>
                                             <div class="min-w-0 flex-1">
-                                                <div class="text-xs sm:text-sm font-bold text-white truncate">COOCA Operating Engine</div>
-                                                <div class="text-[10.5px] sm:text-[11px] text-slate-300 truncate">Auto-BOM &bull; Potong Stok Bahan &bull; Jurnal Kas</div>
+                                                <div class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_bos.overview_cockpit_core_title') }}</div>
+                                                <div class="text-[10.5px] sm:text-[11px] text-slate-300 truncate">{{ __('public_bos.overview_cockpit_core_desc') }}</div>
                                             </div>
                                         </div>
                                         <span
-                                            class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#00C2FF]/20 text-[#00C2FF] border border-[#00C2FF]/30 shrink-0">Otomatisasi</span>
+                                            class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#00C2FF]/20 text-[#00C2FF] border border-[#00C2FF]/30 shrink-0">{{ __('public_bos.overview_cockpit_core_badge') }}</span>
                                     </div>
                                 </div>
 
@@ -299,19 +299,19 @@
                                             <i data-lucide="line-chart" class="w-4 h-4 sm:w-4.5 sm:h-4.5"></i>
                                         </div>
                                         <div class="min-w-0 flex-1">
-                                            <div class="text-xs sm:text-sm font-bold text-white truncate">Pusat Kendali Eksekutif Owner</div>
-                                            <div class="text-[10.5px] sm:text-[11px] text-slate-400 truncate">Laba Rugi &bull; Mutasi Kas &bull; Margin Bersih</div>
+                                            <div class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_bos.overview_cockpit_owner_title') }}</div>
+                                            <div class="text-[10.5px] sm:text-[11px] text-slate-400 truncate">{{ __('public_bos.overview_cockpit_owner_desc') }}</div>
                                         </div>
                                     </div>
-                                    <span class="text-[10.5px] font-mono font-bold text-emerald-400 tabular-nums px-2 py-0.5 rounded bg-emerald-500/10 shrink-0">0 Detik Delay</span>
+                                    <span class="text-[10.5px] font-mono font-bold text-emerald-400 tabular-nums px-2 py-0.5 rounded bg-emerald-500/10 shrink-0">{{ __('public_bos.overview_cockpit_owner_badge') }}</span>
                                 </div>
                             </div>
 
                             <!-- Live Status Banner -->
                             <div
                                 class="pt-2 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-mono">
-                                <span>Single Source of Truth</span>
-                                <span class="text-emerald-400 font-semibold">100% Akurasi Finansial</span>
+                                <span>{{ __('public_bos.overview_cockpit_footer_left') }}</span>
+                                <span class="text-emerald-400 font-semibold">{{ __('public_bos.overview_cockpit_footer_right') }}</span>
                             </div>
                         </div>
                     </div>
@@ -325,14 +325,12 @@
         <section class="py-16 sm:py-24 border-b border-black/[0.06] dark:border-white/[0.08]">
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="max-w-3xl space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#FF9500]">Realita di Lapangan</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#FF9500]">{{ __('public_bos.overview_problem_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        Mengapa Memakai Banyak Aplikasi Terpisah Malah Membuat Bisnis Rumit?
+                        {{ __('public_bos.overview_problem_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                        Banyak pengusaha UMKM memulai dengan software kasir di toko, mencatat stok di buku tulis, merekap
-                        pengeluaran di spreadsheet, lalu membalas chat pembeli di ponsel pribadi. Ketika cabang bertambah,
-                        data tercecer di mana-mana.
+                        {{ __('public_bos.overview_problem_subtitle') }}
                     </p>
                 </div>
 
@@ -345,11 +343,9 @@
                             class="w-10 h-10 rounded-[12px] bg-red-500/10 text-red-500 flex items-center justify-center font-bold">
                             <i data-lucide="copy-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">Input Berulang Kali yang Membuang Waktu</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_problem_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Kasir mengetik transaksi, admin menginput ulang nota ke Excel di malam hari, dan staf gudang
-                            menghitung sisa stok fisik secara manual. Kesalahan ketik satu angka membuat pembukuan selisih
-                            jutaan rupiah.
+                            {{ __('public_bos.overview_problem_1_desc') }}
                         </p>
                     </div>
 
@@ -360,11 +356,9 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
                             <i data-lucide="eye-off" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">Owner Kehilangan Visibilitas Real-Time</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_problem_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Saat owner sedang di luar kota, tidak ada cara cepat untuk mengetahui berapa uang kas fisik di
-                            laci kasir sekarang, apakah bahan baku utama menipis, atau cabang mana yang sedang merugi hari
-                            ini.
+                            {{ __('public_bos.overview_problem_2_desc') }}
                         </p>
                     </div>
 
@@ -375,10 +369,9 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
                             <i data-lucide="credit-card" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">Biaya Langganan Banyak Aplikasi Membengkak</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_problem_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Membayar software POS, software akuntansi, platform email/WA broadcast, dan tool inventory
-                            secara terpisah menghasilkan tagihan berulang mahal dengan fungsionalitas yang tumpang tindih.
+                            {{ __('public_bos.overview_problem_3_desc') }}
                         </p>
                     </div>
                 </div>
@@ -391,14 +384,12 @@
         <section class="py-16 sm:py-24 bg-white dark:bg-[#0C101B] border-b border-black/[0.06] dark:border-white/[0.08]">
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
                 <div class="max-w-3xl space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Arsitektur
-                        Terpadu</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">{{ __('public_bos.overview_arch_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        5 Lapisan Sistem Operasi Bisnis COOCA
+                        {{ __('public_bos.overview_arch_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                        Setiap modul di COOCA bukan pulau terisolasi. Mereka berkomunikasi melalui protokol data otomatis
-                        yang memastikan integritas stok, jurnal keuangan, dan analitik bisnis selalu sinkron.
+                        {{ __('public_bos.overview_arch_desc') }}
                     </p>
                 </div>
 
@@ -408,31 +399,23 @@
                     <div
                         class="lg:col-span-2 p-7 rounded-[24px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-[#007AFF] uppercase">Layer 01 &bull; Front
-                                Office</span>
+                            <span class="text-xs font-mono font-bold text-[#007AFF] uppercase">{{ __('public_bos.overview_layer_1_badge') }}</span>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF]">Channel
-                                Penjualan</span>
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF]">{{ __('public_bos.overview_layer_1_type') }}</span>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold leading-snug text-balance break-words">Kasir POS, Storefront Online, & Pesanan Meja</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_layer_1_title') }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed text-pretty">
-                            Pintu masuk seluruh transaksi: antarmuka kasir layar sentuh cepat, katalog toko online mandiri
-                            (cooca.id/{slug}), pemesanan QR meja kafe, dan order pesanan via WhatsApp. Semua mengalir ke
-                            satu antrean pemrosesan yang sama.
+                            {{ __('public_bos.overview_layer_1_desc') }}
                         </p>
                         <div class="pt-2 flex flex-wrap gap-2 text-xs font-medium text-neutral-700 dark:text-neutral-300">
                             <span
-                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">Kasir
-                                Kasir Cepat</span>
+                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">{{ __('public_bos.overview_layer_1_tag_pos') }}</span>
                             <span
-                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">QR
-                                Meja Kafe</span>
+                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">{{ __('public_bos.overview_layer_1_tag_qr') }}</span>
                             <span
-                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">Katalog
-                                Web</span>
+                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">{{ __('public_bos.overview_layer_1_tag_web') }}</span>
                             <span
-                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">Pencatat
-                                Pre-Order</span>
+                                class="px-3 py-1 rounded-[8px] bg-white dark:bg-white/10 border border-black/5 dark:border-white/10">{{ __('public_bos.overview_layer_1_tag_po') }}</span>
                         </div>
                     </div>
 
@@ -440,15 +423,13 @@
                     <div
                         class="p-7 rounded-[24px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-[#34C759] uppercase">Layer 02</span>
+                            <span class="text-xs font-mono font-bold text-[#34C759] uppercase">{{ __('public_bos.overview_layer_2_badge') }}</span>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#34C759]">Inventory
-                                Engine</span>
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#34C759]">{{ __('public_bos.overview_layer_2_type') }}</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Alokasi Stok & Resep Otomatis</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_layer_2_title') }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed text-pretty">
-                            Saat pesanan selesai, sistem otomatis memotong stok barang jadi atau bahan mentah sesuai Bill of
-                            Materials (BOM) resep produk. Tidak ada lagi stok fiktif.
+                            {{ __('public_bos.overview_layer_2_desc') }}
                         </p>
                     </div>
 
@@ -456,15 +437,13 @@
                     <div
                         class="p-7 rounded-[24px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-[#FF9500] uppercase">Layer 03</span>
+                            <span class="text-xs font-mono font-bold text-[#FF9500] uppercase">{{ __('public_bos.overview_layer_3_badge') }}</span>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#FF9500]/10 text-[#FF9500]">Financial
-                                Ledger</span>
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#FF9500]/10 text-[#FF9500]">{{ __('public_bos.overview_layer_3_type') }}</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Jurnal Pembukuan Otomatis</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_layer_3_title') }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed text-pretty">
-                            Uang kas masuk, diskon, biaya admin QRIS, dan harga pokok penjualan (HPP) langsung terjurnal ke
-                            buku besar akuntansi tanpa perlu sentuhan tangan staf akuntan.
+                            {{ __('public_bos.overview_layer_3_desc') }}
                         </p>
                     </div>
 
@@ -472,14 +451,13 @@
                     <div
                         class="p-7 rounded-[24px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-[#AF52DE] uppercase">Layer 04</span>
+                            <span class="text-xs font-mono font-bold text-[#AF52DE] uppercase">{{ __('public_bos.overview_layer_4_badge') }}</span>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#AF52DE]/10 text-[#AF52DE]">Automations</span>
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#AF52DE]/10 text-[#AF52DE]">{{ __('public_bos.overview_layer_4_type') }}</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Notifikasi & Komunikasi WhatsApp</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_layer_4_title') }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed text-pretty">
-                            Kirim nota struk belanja digital, konfirmasi pembayaran invoice, hingga pengingat kasbon jatuh
-                            tempo secara sopan dan terotomasi langsung ke nomor WhatsApp pembeli.
+                            {{ __('public_bos.overview_layer_4_desc') }}
                         </p>
                     </div>
 
@@ -487,15 +465,13 @@
                     <div
                         class="p-7 rounded-[24px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-mono font-bold text-[#00C2FF] uppercase">Layer 05</span>
+                            <span class="text-xs font-mono font-bold text-[#00C2FF] uppercase">{{ __('public_bos.overview_layer_5_badge') }}</span>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#00C2FF]/10 text-[#00C2FF]">Executive
-                                Intel</span>
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#00C2FF]/10 text-[#00C2FF]">{{ __('public_bos.overview_layer_5_type') }}</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Executive Control & AI Insights</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_control_title') }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed text-pretty">
-                            Pemilik bisnis memantau grafik margin laba bersih harian, produk paling laris, jam operasional
-                            paling ramai, dan proyeksi belanja restock gudang dari layar ponsel.
+                            {{ __('public_bos.overview_control_desc') }}
                         </p>
                     </div>
                 </div>
@@ -508,13 +484,12 @@
         <section class="py-16 sm:py-24 border-b border-black/[0.06] dark:border-white/[0.08]">
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="max-w-2xl space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-500">Alur Bisnis Konkret</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-500">{{ __('public_bos.overview_flow_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        Apa yang Terjadi Saat 1 Transaksi Selesai di COOCA?
+                        {{ __('public_bos.overview_flow_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                        Satu kali klik tombol bayar di kasir langsung menggerakkan seluruh ekosistem bisnis tanpa ada jeda
-                        atau proses rekapitulasi ulang di malam hari.
+                        {{ __('public_bos.overview_flow_desc') }}
                     </p>
                 </div>
 
@@ -523,60 +498,56 @@
                     <!-- Step 1 -->
                     <div
                         class="p-4 sm:p-6 rounded-[18px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-2.5 sm:space-y-3 relative">
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">LANGKAH 01</span>
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">{{ __('public_bos.overview_step_1_badge') }}</span>
                         <div
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold">
                             <i data-lucide="scan" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">Transaksi Diterima</h3>
+                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_step_1_title') }}</h3>
                         <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Kasir scan barcode atau pembeli bayar via QRIS di meja. Bukti bayar terverifikasi seketika dan
-                            nota struk tercetak via printer Bluetooth.
+                            {{ __('public_bos.overview_step_1_desc') }}
                         </p>
                     </div>
 
                     <!-- Step 2 -->
                     <div
                         class="p-4 sm:p-6 rounded-[18px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-2.5 sm:space-y-3 relative">
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">LANGKAH 02</span>
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">{{ __('public_bos.overview_step_2_badge') }}</span>
                         <div
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center font-bold">
                             <i data-lucide="package-minus" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">Stok & Bahan Terpotong</h3>
+                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_step_2_title') }}</h3>
                         <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Kartu stok perpetual gudang cabang langsung berkurang. Jika barang melewati batas minimum,
-                            notifikasi restock otomatis menyala.
+                            {{ __('public_bos.overview_step_2_desc') }}
                         </p>
                     </div>
 
                     <!-- Step 3 -->
                     <div
                         class="p-4 sm:p-6 rounded-[18px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-2.5 sm:space-y-3 relative">
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">LANGKAH 03</span>
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">{{ __('public_bos.overview_step_3_badge') }}</span>
                         <div
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center font-bold">
                             <i data-lucide="book-open-check" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">Jurnal Akuntansi Masuk</h3>
+                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_step_3_title') }}</h3>
                         <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Sistem mendebit Kas/Bank dan mengkredit Penjualan serta mengalokasikan Beban Pokok Penjualan
-                            (HPP) otomatis ke jurnal umum.
+                            {{ __('public_bos.overview_step_3_desc') }}
                         </p>
                     </div>
 
                     <!-- Step 4 -->
                     <div
                         class="p-4 sm:p-6 rounded-[18px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-2.5 sm:space-y-3 relative">
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">LANGKAH 04</span>
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-slate-400">{{ __('public_bos.overview_step_4_badge') }}</span>
                         <div
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold">
                             <i data-lucide="smartphone" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">Owner Melihat Hasil</h3>
+                        <h3 class="text-sm sm:text-base font-bold leading-snug text-balance break-words">{{ __('public_bos.overview_step_4_title') }}</h3>
                         <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
-                            Laba bersih, sisa kas riil, dan rekap omzet harian sudah terhitung rapi di dasbor ponsel pemilik
-                            tanpa menunggu laporan akhir bulan.
+                            {{ __('public_bos.overview_step_4_desc') }}
                         </p>
                     </div>
                 </div>
@@ -589,13 +560,12 @@
         <section class="py-16 sm:py-24 bg-white dark:bg-[#0C101B] border-b border-black/[0.06] dark:border-white/[0.08]">
             <div class="max-w-[900px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                 <div class="text-center space-y-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Tanya
-                        Jawab</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">{{ __('public_bos.overview_faq_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        Pertanyaan Seputar Business Operating System
+                        {{ __('public_bos.overview_faq_title') }}
                     </h2>
                     <p class="text-sm text-neutral-600 dark:text-neutral-400 text-pretty">
-                        Semua yang perlu Anda ketahui tentang transisi dari aplikasi terpisah ke sistem terpadu COOCA.
+                        {{ __('public_bos.overview_faq_desc') }}
                     </p>
                 </div>
 
@@ -605,16 +575,13 @@
                         class="rounded-[18px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden">
                         <button type="button" @click="openFaq = openFaq === 1 ? null : 1"
                             class="w-full p-5 text-left font-bold text-sm sm:text-base flex items-center justify-between gap-4 focus:outline-none">
-                            <span class="min-w-0 flex-1 leading-snug">Apa perbedaan Business Operating System dengan aplikasi kasir (POS) biasa?</span>
+                            <span class="min-w-0 flex-1 leading-snug">{{ __('public_bos.overview_faq_1_q') }}</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-[#007AFF] shrink-0"
                                 :class="openFaq === 1 ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="openFaq === 1" x-cloak
                             class="px-5 pb-5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06] pt-3 text-pretty">
-                            Aplikasi kasir biasa hanya mencatat apa yang dijual di kasir dan mencetak struk belanja.
-                            Sedangkan Business Operating System (COOCA) menghubungkan kasir tersebut dengan gudang bahan
-                            baku (stok terpotong otomatis), pembukuan keuangan (jurnal laba rugi terbit otomatis), database
-                            pelanggan CRM, notifikasi WhatsApp, hingga laporan manajemen owner secara real-time.
+                            {{ __('public_bos.overview_faq_1_a') }}
                         </div>
                     </div>
 
@@ -623,15 +590,13 @@
                         class="rounded-[18px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden">
                         <button type="button" @click="openFaq = openFaq === 2 ? null : 2"
                             class="w-full p-5 text-left font-bold text-sm sm:text-base flex items-center justify-between gap-4 focus:outline-none">
-                            <span class="min-w-0 flex-1 leading-snug">Apakah bisnis saya yang masih 1 outlet cocok menggunakan sistem ini?</span>
+                            <span class="min-w-0 flex-1 leading-snug">{{ __('public_bos.overview_faq_2_q') }}</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-[#007AFF] shrink-0"
                                 :class="openFaq === 2 ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="openFaq === 2" x-cloak
                             class="px-5 pb-5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06] pt-3 text-pretty">
-                            Sangat cocok. Justru memulai dengan sistem terpadu sejak 1 gerai akan mencegah kekacauan data
-                            saat bisnis Anda berekspansi ke cabang 2, 3, dan seterusnya. Anda tidak perlu repot migrasi
-                            sistem di kemudian hari karena COOCA dirancang modular dari skala pemula hingga multi-cabang.
+                            {{ __('public_bos.overview_faq_2_a') }}
                         </div>
                     </div>
 
@@ -640,16 +605,13 @@
                         class="rounded-[18px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden">
                         <button type="button" @click="openFaq = openFaq === 3 ? null : 3"
                             class="w-full p-5 text-left font-bold text-sm sm:text-base flex items-center justify-between gap-4 focus:outline-none">
-                            <span class="min-w-0 flex-1 leading-snug">Apakah data keuangan dan resep bisnis saya aman dan terpisah dari bisnis lain?</span>
+                            <span class="min-w-0 flex-1 leading-snug">{{ __('public_bos.overview_faq_3_q') }}</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-[#007AFF] shrink-0"
                                 :class="openFaq === 3 ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="openFaq === 3" x-cloak
                             class="px-5 pb-5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06] pt-3 text-pretty">
-                            Ya. COOCA menerapkan arsitektur isolasi multi-tenant yang ketat. Setiap bisnis memiliki partisi
-                            data independen dengan enkripsi AES-256 dan kontrol hak akses berbasis role (Kasir, Manajer,
-                            Owner). Staf kasir tidak akan bisa melihat laporan laba bersih atau resep rahasia yang hanya
-                            boleh diakses oleh pemilik.
+                            {{ __('public_bos.overview_faq_3_a') }}
                         </div>
                     </div>
 
@@ -658,15 +620,13 @@
                         class="rounded-[18px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden">
                         <button type="button" @click="openFaq = openFaq === 4 ? null : 4"
                             class="w-full p-5 text-left font-bold text-sm sm:text-base flex items-center justify-between gap-4 focus:outline-none">
-                            <span class="min-w-0 flex-1 leading-snug">Perangkat apa saja yang dibutuhkan untuk menjalankan COOCA?</span>
+                            <span class="min-w-0 flex-1 leading-snug">{{ __('public_bos.overview_faq_4_q') }}</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform text-[#007AFF] shrink-0"
                                 :class="openFaq === 4 ? 'rotate-180' : ''"></i>
                         </button>
                         <div x-show="openFaq === 4" x-cloak
                             class="px-5 pb-5 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06] pt-3 text-pretty">
-                            Anda tidak perlu membeli perangkat komputer mahal. Kasir dapat dijalankan cukup dari smartphone
-                            Android atau tablet yang sudah ada, terhubung ke printer thermal Bluetooth portabel. Manajemen
-                            stok dan pembukuan dapat diakses fleksibel dari browser laptop atau PC mana pun.
+                            {{ __('public_bos.overview_faq_4_a') }}
                         </div>
                     </div>
                 </div>
@@ -681,14 +641,12 @@
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                     <div>
                         <span
-                            class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Jelajahi
-                            Ekosistem</span>
-                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">Modul Inti yang Mendukung Business
-                            Operating System</h3>
+                            class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">{{ __('public_bos.overview_related_kicker') }}</span>
+                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">{{ __('public_bos.overview_related_title') }}</h3>
                     </div>
                     <a href="{{ route('public.erp.erp') }}"
                         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline shrink-0">
-                        <span>Lihat Seluruh Modul ERP</span>
+                        <span>{{ __('public_bos.overview_related_all') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -700,10 +658,9 @@
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center font-bold mb-2.5 sm:mb-3">
                             <i data-lucide="monitor" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <div class="text-sm sm:text-base font-bold group-hover:text-[#007AFF] transition-colors leading-snug text-balance">Point of Sale (POS)
+                        <div class="text-sm sm:text-base font-bold group-hover:text-[#007AFF] transition-colors leading-snug text-balance">{{ __('public_bos.overview_mod_pos_title') }}
                         </div>
-                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">Kasir cepat, cetak
-                            struk Bluetooth, barcode scan, & mutasi kas harian.</p>
+                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">{{ __('public_bos.overview_mod_pos_desc') }}</p>
                     </a>
 
                     <a href="{{ route('public.erp.inventory') }}"
@@ -712,10 +669,9 @@
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center font-bold mb-2.5 sm:mb-3">
                             <i data-lucide="boxes" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <div class="text-sm sm:text-base font-bold group-hover:text-[#34C759] transition-colors leading-snug text-balance">Software Inventory
+                        <div class="text-sm sm:text-base font-bold group-hover:text-[#34C759] transition-colors leading-snug text-balance">{{ __('public_bos.overview_mod_inv_title') }}
                         </div>
-                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">Multi-gudang, kartu
-                            stok perpetual, resep BOM, & reorder point.</p>
+                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">{{ __('public_bos.overview_mod_inv_desc') }}</p>
                     </a>
 
                     <a href="{{ route('public.erp.accounting') }}"
@@ -724,10 +680,9 @@
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center font-bold mb-2.5 sm:mb-3">
                             <i data-lucide="file-spreadsheet" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <div class="text-sm sm:text-base font-bold group-hover:text-[#FF9500] transition-colors leading-snug text-balance">Pembukuan Otomatis
+                        <div class="text-sm sm:text-base font-bold group-hover:text-[#FF9500] transition-colors leading-snug text-balance">{{ __('public_bos.overview_mod_acc_title') }}
                         </div>
-                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">Jurnal umum otomatis,
-                            buku besar, neraca, & laba rugi terbit tanpa delay.</p>
+                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">{{ __('public_bos.overview_mod_acc_desc') }}</p>
                     </a>
 
                     <a href="{{ route('public.omnichannel.whatsapp') }}"
@@ -736,10 +691,9 @@
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold mb-2.5 sm:mb-3">
                             <i data-lucide="message-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         </div>
-                        <div class="text-sm sm:text-base font-bold group-hover:text-emerald-500 transition-colors leading-snug text-balance">WhatsApp Commerce
+                        <div class="text-sm sm:text-base font-bold group-hover:text-emerald-500 transition-colors leading-snug text-balance">{{ __('public_bos.overview_mod_wa_title') }}
                         </div>
-                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">Kirim nota belanja
-                            digital, tagihan piutang, dan update pesanan resmi via WA.</p>
+                        <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 mt-1 leading-snug text-pretty">{{ __('public_bos.overview_mod_wa_desc') }}</p>
                     </a>
                 </div>
             </div>
@@ -758,26 +712,24 @@
 
                     <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 space-y-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">Langkah Praktis
-                                Berikutnya</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">{{ __('public_bos.overview_cta_bottom_kicker') }}</span>
                             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.2] text-balance break-words">
-                                Mulai Kendalikan Bisnis Anda dengan Business Operating System
+                                {{ __('public_bos.overview_cta_bottom_title') }}
                             </h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed text-pretty">
-                                Tinggalkan kerumitan spreadsheet tercecer dan input data berulang. Gabung bersama ratusan
-                                pemilik UMKM Indonesia yang mengelola toko lebih tertib, transparan, dan bebas selisih uang kasir bersama COOCA.
+                                {{ __('public_bos.overview_cta_bottom_desc') }}
                             </p>
                         </div>
 
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
                             <a href="{{ route('register') }}"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[48px]">
-                                <span>Daftar COOCA Gratis</span>
+                                <span>{{ __('public_bos.overview_cta_bottom_btn_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ route('public.pricing') }}"
                                 class="w-full py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[44px]">
-                                <span>Lihat Daftar Paket & Harga</span>
+                                <span>{{ __('public_bos.overview_cta_bottom_btn_pricing') }}</span>
                             </a>
                         </div>
                     </div>

@@ -77,7 +77,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse shrink-0"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Efisiensi Nyata Tanpa Biaya Tersembunyi
+                                {{ __('public_bos.why_kicker') }}
                             </p>
                         </div>
 
@@ -85,15 +85,14 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.75rem] xl:text-[3.5rem] font-extrabold text-white tracking-tight leading-[1.22] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                                Berhenti Membayar Banyak <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Software Terpisah yang Tidak Terhubung</span>
+                                {{ __('public_bos.why_title') }}
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Saat bisnis Anda tumbuh, memakai POS terpisah, stok terpisah, spreadsheet yang tercecer, dan broadcast WA pihak ketiga justru memicu biaya langganan mahal, data selisih, dan waktu terbuang.
+                            {{ __('public_bos.why_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Left-Aligned on Mobile, Tablet & Desktop) -->
@@ -101,43 +100,48 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_bos.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_bos.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('register') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                    <span>Beralih ke COOCA Sekarang</span>
+                                    <span>{{ __('public_bos.why_cta_switch') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @endif
                             <a href="{{ route('public.pricing') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Bandingkan Paket &amp; Biaya</span>
+                                <span>{{ __('public_bos.why_cta_pricing') }}</span>
                             </a>
                         </div>
 
                         <!-- Reassurance Checkpoints -->
-                        <div
-                            class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3.5 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Hemat Biaya s/d 75% Tiap Bulan</span>
+                        <div class="pt-0.5 sm:pt-1 space-y-2">
+                            <div
+                                class="flex flex-wrap items-center justify-start gap-x-3.5 sm:gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
+                                    <span>{{ __('public_bos.why_savings_claim') }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
+                                    <span>{{ __('public_bos.why_account_one') }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
+                                    <span>{{ __('public_bos.why_easy_migration') }}</span>
+                                </div>
                             </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>1 Akun untuk Seluruh Operasional</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0"></i>
-                                <span>Migrasi Data Mudah &amp; Didampingi</span>
-                            </div>
+                            <p class="text-[10px] sm:text-[11px] text-slate-400/90 leading-normal italic text-pretty">
+                                {{ __('public_bos.why_savings_note') }}
+                            </p>
                         </div>
                     </div>
 
