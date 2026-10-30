@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manajemen Karyawan, Shift & Absensi Outlet | COOCA')
-@section('description',
-    'Aplikasi manajemen staf dan SDM untuk toko ritel, F&B, dan jasa. Atur jadwal shift kerja, presensi digital GPS, pantau produktivitas penjualan kasir, dan rekap penggajian berbasis kehadiran.')
-@section('og_title', 'Software Manajemen Karyawan, Shift & Absensi Outlet | COOCA')
-@section('og_description',
-    'Aplikasi manajemen staf dan SDM untuk toko ritel, F&B, dan jasa. Atur jadwal shift kerja, presensi digital GPS, pantau produktivitas penjualan kasir, dan rekap penggajian berbasis kehadiran.')
+@section('title', 'Software Kelola Karyawan, Shift & Absensi Toko | COOCA')
+@section('description', 'Aplikasi SDM & karyawan outlet: atur jadwal shift kerja, presensi GPS, pantau penjualan kasir, dan rekap gaji berbasis absensi nyata.')
+@section('og_title', 'Software Kelola Karyawan, Shift & Absensi Toko | COOCA')
+@section('og_description', 'Aplikasi SDM & karyawan outlet: atur jadwal shift kerja, presensi GPS, pantau penjualan kasir, dan rekap gaji berbasis absensi nyata.')
 @section('keywords',
     'software hrm karyawan outlet, aplikasi jadwal shift kasir, absensi gps toko, manajemen sdm retail, rekap gaji karyawan umkm')
 

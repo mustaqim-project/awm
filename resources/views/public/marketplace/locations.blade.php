@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Direktori Bisnis & Toko UMKM Berdasarkan Kota | COOCA Marketplace')
-@section('description', 'Temukan toko online, kafe, bengkel, dan UMKM terdekat di kota Anda. Jelajahi bisnis lokal dari Jakarta, Bandung, Surabaya, Medan, Bali, hingga seluruh nusantara.')
+@section('title', 'Direktori Bisnis & Toko UMKM per Kota | COOCA')
+@section('description', 'Temukan toko online, kafe, bengkel, dan UMKM terdekat di kota Anda: jelajahi bisnis lokal dari Jakarta, Surabaya, hingga pelosok nusantara.')
 @section('keywords', 'direktori umkm per kota, toko umkm jakarta bandung surabaya, bisnis lokal terdekat, belanja produk kota terdekat, toko offline umkm')
 @section('canonical', route('marketplace.sub.locations'))
-@section('og_title', 'Direktori Bisnis & Toko UMKM Berdasarkan Kota | COOCA Marketplace')
-@section('og_description', 'Temukan dan dukung pelaku usaha UMKM lokal di kota tempat tinggal Anda dengan opsi kurir instan dan self pick-up.')
+@section('og_title', 'Direktori Bisnis & Toko UMKM per Kota | COOCA')
+@section('og_description', 'Temukan toko online, kafe, bengkel, dan UMKM terdekat di kota Anda: jelajahi bisnis lokal dari Jakarta, Surabaya, hingga pelosok nusantara.')
 @section('og_type', 'website')
 
 @push('seo')

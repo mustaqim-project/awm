@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap: Solusi Kasir & Stok | COOCA')
-@section('description', 'Temukan jawaban lengkap seputar skema lisensi gratis, kompatibilitas printer thermal, keamanan data cloud, mode kasir offline, dan panduan migrasi data bisnis ke COOCA.')
+@section('title', 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap | COOCA')
+@section('description', 'Jawaban lengkap seputar lisensi gratis, kompatibilitas printer thermal, keamanan cloud, mode kasir offline, dan panduan migrasi data COOCA.')
 @section('og_title', 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap | COOCA')
-@section('og_description', 'Pertanyaan yang sering diajukan seputar operasional, printer thermal, keamanan tenant, dan fitur kasir offline COOCA.')
+@section('og_description', 'Jawaban lengkap seputar lisensi gratis, kompatibilitas printer thermal, keamanan cloud, mode kasir offline, dan panduan migrasi data COOCA.')
 @section('canonical', route('public.resources.faq'))
 @section('og_type', 'website')
 

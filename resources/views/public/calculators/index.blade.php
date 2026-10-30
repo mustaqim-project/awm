@@ -1,7 +1,7 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Koleksi 8 Kalkulator Bisnis UMKM Online Gratis | COOCA')
-@section('description', 'Koleksi kalkulator bisnis gratis untuk UMKM: Kalkulator HPP, BEP Titik Impas, Margin Harga Jual, Laba Bersih, Gaji Karyawan, PPh Final 0.5%, dan Simulasi What-If.')
+@section('description', 'Koleksi kalkulator bisnis gratis untuk UMKM: kalkulator HPP, BEP titik impas, margin harga jual, laba bersih, gaji karyawan, dan PPh Final 0.5%.')
 @section('og_title', 'Koleksi 8 Kalkulator Bisnis UMKM Online Gratis | COOCA')
 @section('og_description', 'Hitung HPP, BEP titik impas, margin harga jual, laba bersih, gaji, dan simulasi bisnis gratis tanpa instalasi.')
 @section('canonical', route('kalkulator.index'))

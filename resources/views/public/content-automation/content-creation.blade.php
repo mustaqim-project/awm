@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Pembuatan Konten Promosi & Workflow Kreasi Bisnis | COOCA')
-@section('description',
-    'Transformasikan produk toko fisik Anda menjadi materi promosi media sosial yang memikat. Workflow kreasi konten terpadu: copywriting multi-format, visual produk, dan persetujuan draf sebelum tayang.')
-@section('og_title', 'Software Pembuatan Konten Promosi & Workflow Kreasi Bisnis | COOCA')
-@section('og_description',
-    'Transformasikan produk toko fisik Anda menjadi materi promosi media sosial yang memikat. Workflow kreasi konten terpadu: copywriting multi-format, visual produk, dan persetujuan draf sebelum tayang.')
+@section('title', 'Pembuatan Konten Promosi & Desain Produk Toko | COOCA')
+@section('description', 'Ubah foto produk toko jadi materi promosi medsos memikat: copywriting siap pakai, visual produk, dan persetujuan draf sebelum tayang.')
+@section('og_title', 'Pembuatan Konten Promosi & Desain Produk Toko | COOCA')
+@section('og_description', 'Ubah foto produk toko jadi materi promosi medsos memikat: copywriting siap pakai, visual produk, dan persetujuan draf sebelum tayang.')
 @section('keywords',
     'software pembuatan konten promosi, workflow kreasi konten bisnis, generator materi promosi produk, copywriting katalog toko, studio konten umkm')
 

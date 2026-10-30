@@ -1,8 +1,8 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Harga Jual (Markup vs Margin) Online Gratis | COOCA')
-@section('description', 'Kalkulator penetapan harga jual produk online. Hitung perbandingan formula markup vs profit margin dan temukan harga jual psikologis (charm pricing) untuk meningkatkan penjualan.')
-@section('og_title', 'Kalkulator Harga Jual (Markup vs Margin) Online Gratis | COOCA')
+@section('title', 'Kalkulator Harga Jual: Markup vs Margin Online | COOCA')
+@section('description', 'Kalkulator penetapan harga jual produk online. Bandingkan formula markup vs profit margin dan temukan harga jual psikologis yang optimal.')
+@section('og_title', 'Kalkulator Harga Jual: Markup vs Margin Online | COOCA')
 @section('og_description', 'Hitung harga jual optimal dengan perbandingan markup dan profit margin secara akurat.')
 @section('canonical', route('kalkulator.harga-jual'))
 @section('og_type', 'website')

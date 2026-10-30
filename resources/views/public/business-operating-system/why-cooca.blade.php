@@ -1,10 +1,10 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Mengapa Memilih COOCA: Solusi Bisnis Terintegrasi vs Terpisah | COOCA')
-@section('description', 'Berhenti membayar 5 aplikasi berbeda dan spreadsheet tercecer. COOCA menyatukan kasir POS, stok gudang, pembukuan keuangan, dan WhatsApp dalam satu ekosistem.')
+@section('title', 'Kenapa Pilih COOCA: Sistem Terpadu vs Terpisah | COOCA')
+@section('description', 'Berhenti bayar software terpisah dan spreadsheet tercecer. COOCA satukan kasir POS, stok gudang, pembukuan, dan WhatsApp dalam satu ekosistem terpadu.')
 @section('keywords', 'kenapa pilih cooca, software terintegrasi vs aplikasi terpisah, kelebihan erp umkm, aplikasi bisnis tanpa langganan mahal, efisiensi operasional toko')
 
-@section('og_title', 'Mengapa Memilih COOCA: Solusi Bisnis Terpadu vs Terpisah | COOCA')
+@section('og_title', 'Kenapa Pilih COOCA: Sistem Terpadu vs Terpisah | COOCA')
 @section('og_description', 'Berhenti bayar software terpisah. COOCA satukan kasir POS, stok resep, pembukuan riil, dan WhatsApp dalam satu sistem terpadu.')
 
 @push('seo')
@@ -93,7 +93,7 @@
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Saat bisnis Anda tumbuh, memakai POS terpisah, stok terpisah, spreadsheet spreadsheet tercecer, dan broadcast WA pihak ketiga justru memicu biaya langganan mahal, data selisih, dan waktu terbuang.
+                            Saat bisnis Anda tumbuh, memakai POS terpisah, stok terpisah, spreadsheet yang tercecer, dan broadcast WA pihak ketiga justru memicu biaya langganan mahal, data selisih, dan waktu terbuang.
                         </p>
 
                         <!-- Action Buttons (Left-Aligned on Mobile, Tablet & Desktop) -->

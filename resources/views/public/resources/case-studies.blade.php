@@ -6,10 +6,10 @@
     $caseStudyDisclaimer = $caseStudyConfig['disclaimer'] ?? 'Angka merupakan ilustrasi berdasarkan skenario umum dan bukan jaminan hasil.';
 @endphp
 
-@section('title', 'Contoh Skenario & Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
-@section('description', 'Pelajari contoh skenario bagaimana pelaku UMKM F&B, retail, bengkel, laundry, fashion, dan konveksi berhasil mengeliminasi selisih stok, memangkas biaya operasional, dan melipatgandakan profit bersama COOCA.')
-@section('og_title', 'Contoh Skenario & Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
-@section('og_description', 'Pelajari contoh skenario pemilik bisnis Indonesia mengeliminasi kebocoran stok, memangkas waktu rekap kasir, dan menumbuhkan cabang bersama COOCA.')
+@section('title', 'Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
+@section('description', 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.')
+@section('og_title', 'Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
+@section('og_description', 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.')
 @section('canonical', route('public.resources.case-studies'))
 @section('og_type', 'article')
 @section('keywords', 'studi kasus umkm, contoh skenario bisnis, efisiensi bisnis umkm, sistem kasir multi cabang, kontrol hpp makanan, aplikasi bengkel motor, software erp indonesia')

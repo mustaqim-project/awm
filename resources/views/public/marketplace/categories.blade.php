@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Jelajahi Kategori Bisnis & Produk UMKM | COOCA Marketplace')
-@section('description', 'Temukan produk dan layanan UMKM berdasarkan kategori industri: Kuliner & Kafe, Retail, Bengkel Otomotif, Laundry, Manufaktur Pabrikasi, dan Jasa Profesional.')
+@section('title', 'Kategori Bisnis & Produk UMKM Indonesia | COOCA')
+@section('description', 'Temukan produk & layanan UMKM per sektor: Kuliner & Kafe, Ritel, Bengkel Otomotif, Laundry, Manufaktur Pabrikasi, dan Jasa Profesional.')
 @section('keywords', 'kategori bisnis umkm, katalog industri umkm, produk kuliner fashion kerajinan jasa, direktori kategori umkm')
 @section('canonical', route('marketplace.sub.categories'))
-@section('og_title', 'Jelajahi Kategori Bisnis & Produk UMKM | COOCA Marketplace')
-@section('og_description', 'Navigasi terstruktur seluruh sektor usaha UMKM binaan COOCA di Indonesia.')
+@section('og_title', 'Kategori Bisnis & Produk UMKM Indonesia | COOCA')
+@section('og_description', 'Temukan produk & layanan UMKM per sektor: Kuliner & Kafe, Ritel, Bengkel Otomotif, Laundry, Manufaktur Pabrikasi, dan Jasa Profesional.')
 @section('og_type', 'website')
 
 @push('seo')

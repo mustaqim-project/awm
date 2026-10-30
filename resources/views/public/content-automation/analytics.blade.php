@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Analitik Konten Media Sosial & Konversi Penjualan | COOCA')
-@section('description',
-    'Evaluasi performa konten media sosial bisnis Anda secara objektif. Pantau jangkauan impresi, engagement rate, klik tautan katalog toko, hingga konversi omzet penjualan nyata.')
-@section('og_title', 'Software Analitik Konten Media Sosial & Konversi Penjualan | COOCA')
-@section('og_description',
-    'Evaluasi performa konten media sosial bisnis Anda secara objektif. Pantau jangkauan impresi, engagement rate, klik tautan katalog toko, hingga konversi omzet penjualan nyata.')
+@section('title', 'Analitik Konten Media Sosial & Konversi Omzet | COOCA')
+@section('description', 'Evaluasi performa konten medsos: pantau jangkauan impresi, engagement rate, klik katalog toko, hingga konversi omzet penjualan nyata.')
+@section('og_title', 'Analitik Konten Media Sosial & Konversi Omzet | COOCA')
+@section('og_description', 'Evaluasi performa konten medsos: pantau jangkauan impresi, engagement rate, klik katalog toko, hingga konversi omzet penjualan nyata.')
 @section('keywords',
     'software analitik konten, laporan performa media sosial, metrik engagement instagram facebook, analitik konversi konten penjualan, evaluasi promosi toko')
 

@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manajemen Keuangan & Arus Kas Bisnis Terintegrasi | COOCA')
-@section('description', 'Aplikasi manajemen keuangan bisnis dan cash flow operasional. Pantau saldo kas & bank multi-rekening, kontrol hutang piutang (AP/AR), kelola petty cash cabang, dan approval pengeluaran harian.')
+@section('title', 'Software Keuangan & Arus Kas Bisnis Terpadu | COOCA')
+@section('description', 'Aplikasi keuangan & cash flow bisnis: pantau saldo kas bank multi-rekening, kontrol hutang piutang, dan kelola petty cash cabang rapi.')
 @section('keywords', 'software manajemen keuangan, aplikasi cash flow bisnis, manajemen kas kecil petty cash, buku kas masuk keluar, kontrol hutang piutang')
 
-@section('og_title', 'Software Manajemen Keuangan & Arus Kas Bisnis Terintegrasi | COOCA')
-@section('og_description', 'Pantau saldo kas & bank multi-rekening, kontrol hutang piutang (AP/AR), kelola petty cash cabang, dan approval pengeluaran harian.')
+@section('og_title', 'Software Keuangan & Arus Kas Bisnis Terpadu | COOCA')
+@section('og_description', 'Aplikasi keuangan & cash flow bisnis: pantau saldo kas bank multi-rekening, kontrol hutang piutang, dan kelola petty cash cabang rapi.')
 
     @push('seo')
         <script type="application/ld+json">

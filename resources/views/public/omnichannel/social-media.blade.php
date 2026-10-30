@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manajemen Media Sosial & Multi-Akun Bisnis | COOCA')
-@section('description',
-    'Kelola seluruh akun Instagram, Facebook, dan TikTok bisnis Anda dari satu dashboard terpadu. Rencanakan kalender konten, jadwalkan publikasi otomatis, dan hubungkan langsung dengan katalog produk toko.')
-@section('og_title', 'Software Manajemen Media Sosial & Multi-Akun Bisnis | COOCA')
-@section('og_description',
-    'Kelola seluruh akun Instagram, Facebook, dan TikTok bisnis Anda dari satu dashboard terpadu. Rencanakan kalender konten, jadwalkan publikasi otomatis, dan hubungkan langsung dengan katalog produk toko.')
+@section('title', 'Kelola Multi-Akun Media Sosial Bisnis Toko | COOCA')
+@section('description', 'Kelola akun Instagram, Facebook, dan TikTok dari satu dasbor: jadwal tayang otomatis dan hubungkan langsung dengan katalog produk toko.')
+@section('og_title', 'Kelola Multi-Akun Media Sosial Bisnis Toko | COOCA')
+@section('og_description', 'Kelola akun Instagram, Facebook, dan TikTok dari satu dasbor: jadwal tayang otomatis dan hubungkan langsung dengan katalog produk toko.')
 @section('keywords',
     'software manajemen media sosial, aplikasi jadwal posting medsos, kelola multi akun instagram tiktok, social media scheduler bisnis, konten terintegrasi pos')
 

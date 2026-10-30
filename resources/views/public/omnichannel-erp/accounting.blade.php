@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Akuntansi Online & Laporan Keuangan SAK EMKM | COOCA')
-@section('description', 'Aplikasi akuntansi bisnis terintegrasi. Jurnal otomatis dari transaksi kasir dan stok, bagan akun (COA) standar SAK EMKM, buku besar, neraca saldo, serta laporan Laba Rugi dan Neraca real-time.')
+@section('title', 'Software Akuntansi Online & SAK EMKM Terpadu | COOCA')
+@section('description', 'Aplikasi akuntansi bisnis otomatis: jurnal dari kasir & stok, COA SAK EMKM, buku besar, neraca, serta laporan Laba Rugi real-time.')
 @section('keywords', 'software akuntansi online, laporan keuangan umkm, aplikasi pembukuan laba rugi neraca, auto journal kasir pos, software akuntansi sak emkm')
 
-@section('og_title', 'Software Akuntansi Online & Laporan Keuangan SAK EMKM | COOCA')
-@section('og_description', 'Jurnal otomatis dari transaksi kasir dan stok, bagan akun (COA) standar SAK EMKM, buku besar, neraca saldo, serta laporan Laba Rugi real-time.')
+@section('og_title', 'Software Akuntansi Online & SAK EMKM Terpadu | COOCA')
+@section('og_description', 'Aplikasi akuntansi bisnis otomatis: jurnal dari kasir & stok, COA SAK EMKM, buku besar, neraca, serta laporan Laba Rugi real-time.')
 
     @push('seo')
         <script type="application/ld+json">

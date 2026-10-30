@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Katalog Produk Unggulan UMKM Lokal Indonesia | COOCA Marketplace')
-@section('description', 'Jelajahi ribuan produk kuliner, pakaian, kerajinan, suku cadang, dan jasa dari produsen dan UMKM binaan COOCA di seluruh Indonesia. Stok real-time dan harga terbaik.')
+@section('title', 'Katalog Produk Unggulan UMKM Indonesia | COOCA')
+@section('description', 'Jelajahi produk kuliner, pakaian, kerajinan, dan jasa dari produsen UMKM lokal di seluruh Indonesia: stok real-time langsung dari kasir toko.')
 @section('keywords', 'katalog produk umkm, beli produk lokal indonesia, marketplace umkm terpercaya, produk toko online lokal, belanja produk binaan umkm')
 @section('canonical', route('marketplace.sub.products'))
-@section('og_title', 'Katalog Produk Unggulan UMKM Lokal Indonesia | COOCA Marketplace')
-@section('og_description', 'Temukan produk pilihan dari ribuan UMKM Indonesia. Belanja langsung dari pemilik usaha dengan stok nyata terhubung ke kasir.')
+@section('og_title', 'Katalog Produk Unggulan UMKM Indonesia | COOCA')
+@section('og_description', 'Jelajahi produk kuliner, pakaian, kerajinan, dan jasa dari produsen UMKM lokal di seluruh Indonesia: stok real-time langsung dari kasir toko.')
 @section('og_type', 'website')
 
 @push('seo')

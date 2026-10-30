@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Analitik Bisnis & Dashboard KPI Pemilik Usaha | COOCA')
-@section('description',
-    'Platform Business Intelligence (BI) dan dashboard eksekutif untuk pemilik bisnis retail, F&B, dan jasa. Pantau omzet real-time, margin kotor per SKU, perbandingan cabang, dan jam sibuk toko dalam satu layar.')
-@section('og_title', 'Software Analitik Bisnis & Dashboard KPI Pemilik Usaha | COOCA')
-@section('og_description',
-    'Platform Business Intelligence (BI) dan dashboard eksekutif untuk pemilik bisnis retail, F&B, dan jasa. Pantau omzet real-time, margin kotor per SKU, perbandingan cabang, dan jam sibuk toko dalam satu layar.')
+@section('title', 'Dasbor Analitik Bisnis & KPI Pemilik Usaha | COOCA')
+@section('description', 'Dasbor analitik bisnis real-time untuk pemilik toko: pantau omzet, margin per produk, performa cabang, dan jam sibuk dalam satu layar.')
+@section('og_title', 'Dasbor Analitik Bisnis & KPI Pemilik Usaha | COOCA')
+@section('og_description', 'Dasbor analitik bisnis real-time untuk pemilik toko: pantau omzet, margin per produk, performa cabang, dan jam sibuk dalam satu layar.')
 @section('keywords',
     'software analitik bisnis, dashboard kpi penjualan, laporan performa cabang, business intelligence umkm, analisis profit margin produk')
 

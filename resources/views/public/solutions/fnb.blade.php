@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Restoran & POS Kafe Terintegrasi Resep & Dapur | COOCA')
-@section('description',
-    'Solusi sistem operasi bisnis kuliner, kafe, resto, dan cloud kitchen. Manajemen meja, Kitchen Order Ticket (KOT), potong stok resep otomatis (BOM), dan pantau HPP porsi real-time.')
-@section('og_title', 'Software Restoran & POS Kafe Terintegrasi Resep & Dapur | COOCA')
-@section('og_description',
-    'Sistem operasi F&B terintegrasi: kasir meja cepat, tiket dapur KOT, pemotongan stok bahan baku otomatis, dan laporan HPP akurat.')
+@section('title', 'Aplikasi Kasir Restoran & Kafe: Resep & Dapur | COOCA')
+@section('description', 'Aplikasi kasir restoran & kafe: denah meja, tiket dapur KOT, potong stok resep (BOM) otomatis, dan hitung HPP porsi akurat tanpa selisih.')
+@section('og_title', 'Aplikasi Kasir Restoran & Kafe: Resep & Dapur | COOCA')
+@section('og_description', 'Aplikasi kasir restoran & kafe: denah meja, tiket dapur KOT, potong stok resep (BOM) otomatis, dan hitung HPP porsi akurat tanpa selisih.')
 @section('canonical', route('public.solutions.fnb'))
 @section('og_type', 'product')
 @section('keywords',
@@ -25,6 +23,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA bisa mencetak ke printer Bluetooth thermal dan LAN dapur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya. COOCA mendukung koneksi printer thermal Bluetooth (58mm dan 80mm) yang biasa digunakan di kasir mobile, serta printer kabel LAN (Ethernet) yang biasa dipasang di dalam area dapur yang bersuhu panas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika menu memiliki varian (contoh: Level Pedas, Less Sugar, Extra Shot)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA memiliki fitur modifier dan add-on dinamis. Anda dapat menambahkan opsi modifier berbayar (seperti Extra Shot Espresso +Rp 5.000) yang ikut memotong bahan baku tambahan, maupun modifier gratis (seperti Less Sugar / No Ice) yang tercetak jelas sebagai catatan koki/barista."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA cocok untuk usaha kuliner yang memiliki banyak cabang kafe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sangat cocok. COOCA didesain multi-outlet secara bawaan. Anda dapat memantau penjualan seluruh cabang dari satu dashboard, mendistribusikan bahan baku dari central kitchen (gudang pusat) ke tiap outlet cabang, dan membandingkan performa omzet per gerai secara real-time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara menangani bahan baku yang basi atau tumpah (spoilage/waste)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tersedia fitur Waste & Stock Adjustment. Staf dapur dapat mencatat bahan yang rusak atau tumpah disertai alasan. Sistem akan mencatatnya sebagai beban kerugian operasional sehingga catatan sisa fisik di gudang tetap sinkron dengan laporan keuangan."
+          }
+        }
+      ]
     }
     </script>
     @endpush

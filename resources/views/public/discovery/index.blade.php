@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Jelajah Toko & Direktori Bisnis UMKM Indonesia | COOCA')
-@section('description', 'Temukan ribuan toko online, kafe, restoran, butik, katering, dan layanan UMKM terpercaya di Indonesia. Belanja langsung tanpa perantara, pesan antar, atau reservasi meja online.')
+@section('description', 'Temukan toko online, kafe, restoran, butik, dan layanan UMKM terpercaya di Indonesia: belanja langsung tanpa perantara, pesan antar, atau reservasi.')
 @section('og_title', 'Jelajah Toko & Direktori Bisnis UMKM Indonesia | COOCA')
-@section('og_description', 'Temukan ribuan toko online, kafe, restoran, butik, katering, dan layanan UMKM terpercaya di Indonesia. Belanja langsung tanpa perantara.')
+@section('og_description', 'Temukan toko online, kafe, restoran, butik, dan layanan UMKM terpercaya di Indonesia: belanja langsung tanpa perantara, pesan antar, atau reservasi.')
 @section('canonical', route('public.discovery.index'))
 @section('og_type', 'website')
 @section('keywords', 'direktori umkm, jelajah toko online, toko lokal terdekat, belanja langsung umkm, pesan antar makanan lokal, reservasi resto kafe')

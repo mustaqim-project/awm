@@ -1,15 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manajemen Inventori & Stok Multi-Gudang Terintegrasi | COOCA')
-@section('description',
-    'Aplikasi inventori stok gudang multi-cabang terintegrasi. Pantau kartu stok perpetual, mutasi
-    antar cabang, reorder point otomatis, resep bahan baku (BOM), dan stock opname tanpa tutup toko.')
-@section('keywords',
-    'software inventori barang, aplikasi stok gudang, manajemen stok multi gudang, kartu stok otomatis,
-    sistem inventory indonesia')
+@section('title', 'Software Inventori & Stok Multi-Gudang Toko | COOCA')
+@section('description', 'Aplikasi stok gudang multi-cabang: kartu stok perpetual, mutasi antar cabang, notifikasi restock, resep BOM, dan opname tanpa tutup toko.')
+@section('keywords', 'software inventori barang, aplikasi stok gudang, manajemen stok multi gudang, kartu stok otomatis, sistem inventory indonesia')
 
-@section('og_title', 'Software Manajemen Inventori & Stok Multi-Gudang Terintegrasi | COOCA')
-@section('og_description', 'Pantau kartu stok perpetual, mutasi antar cabang, resep bahan baku (BOM), dan stock opname tanpa tutup toko.')
+@section('og_title', 'Software Inventori & Stok Multi-Gudang Toko | COOCA')
+@section('og_description', 'Aplikasi stok gudang multi-cabang: kartu stok perpetual, mutasi antar cabang, notifikasi restock, resep BOM, dan opname tanpa tutup toko.')
 
     @push('seo')
         <script type="application/ld+json">

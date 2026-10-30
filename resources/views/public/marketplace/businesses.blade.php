@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Direktori Toko & Bisnis UMKM Indonesia Terverifikasi | COOCA Marketplace')
-@section('description', 'Temukan ribuan toko online, bengkel, kafe, dan produsen UMKM lokal terverifikasi di seluruh Indonesia. Transaksi langsung ke pemilik usaha tanpa perantara.')
+@section('title', 'Direktori Toko & Bisnis UMKM Indonesia | COOCA')
+@section('description', 'Temukan toko online, bengkel, kafe, dan produsen UMKM lokal terverifikasi di seluruh Indonesia. Transaksi langsung tanpa perantara.')
 @section('keywords', 'direktori toko umkm, daftar bisnis lokal indonesia, toko online terverifikasi, cari toko umkm, marketplace toko lokal cooca')
 @section('canonical', route('marketplace.sub.businesses'))
-@section('og_title', 'Direktori Toko & Bisnis UMKM Indonesia Terverifikasi | COOCA Marketplace')
-@section('og_description', 'Jelajahi profil lengkap toko dan gerai fisik UMKM di seluruh Indonesia. Beli langsung dari produsen lokal terpercaya.')
+@section('og_title', 'Direktori Toko & Bisnis UMKM Indonesia | COOCA')
+@section('og_description', 'Temukan toko online, bengkel, kafe, dan produsen UMKM lokal terverifikasi di seluruh Indonesia. Transaksi langsung tanpa perantara.')
 @section('og_type', 'website')
 
 @push('seo')

@@ -780,12 +780,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Sales</span>
+                            <span>Kasir &amp; Penjualan (POS)</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Kelola POS, order, quotation, invoice, dan penjualan.
+                            Catat transaksi kasir kilat, terima QRIS, cetak struk thermal, dan kirim nota digital ke WhatsApp pembeli.
                         </p>
                     </a>
 
@@ -798,12 +798,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Inventory</span>
+                            <span>Stok Barang &amp; Gudang</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Pantau stok, warehouse, purchasing, material, hingga pergerakan inventory.
+                            Pantau persediaan toko dan gudang cabang, alur kulakan ke supplier, dan peringatan barang habis otomatis.
                         </p>
                     </a>
 
@@ -816,12 +816,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Finance</span>
+                            <span>Arus Kas &amp; Pembukuan</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Hubungkan transaksi bisnis dengan finance dan accounting.
+                            Setiap transaksi kasir otomatis jadi jurnal. Lihat uang masuk-keluar dan laporan laba rugi instan tanpa Excel.
                         </p>
                     </a>
 
@@ -834,12 +834,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Customer</span>
+                            <span>Data &amp; Loyalitas Pelanggan</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Kelola customer, relationship, aktivitas, dan riwayat transaksi.
+                            Simpan kontak pembeli, kumpulkan poin belanja, dan kirim promo terarah via WhatsApp agar pelanggan terus kembali.
                         </p>
                     </a>
 
@@ -866,12 +866,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Social Media</span>
+                            <span>Media Sosial Bisnis</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Hubungkan akun social media dan kelola konten dari satu tempat.
+                            Kelola materi promosi toko di Instagram, TikTok, Facebook, dan Threads langsung dari etalase kasir.
                         </p>
                     </a>
 
@@ -884,12 +884,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Content Automation</span>
+                            <span>Otomasi Konten Promosi</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Plan, schedule, publish, dan monitor konten bisnis.
+                            Tarik foto dan harga produk jualan menjadi materi postingan promosi media sosial dalam hitungan menit.
                         </p>
                     </a>
 
@@ -902,12 +902,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Marketplace</span>
+                            <span>Marketplace &amp; Toko Online</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Hubungkan bisnis dengan customer dan channel penjualan.
+                            Buka etalase toko online resmi dan jangkau pembeli baru di direktori UMKM tanpa potongan biaya perantara.
                         </p>
                     </a>
 
@@ -920,12 +920,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Analytics &amp; AI</span>
+                            <span>Dasbor Analitik &amp; AI</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Ubah data bisnis menjadi insight untuk membantu pengambilan keputusan.
+                            Pantau laba bersih harian, produk terlaris, dan jam operasional paling ramai langsung dari ponsel Anda.
                         </p>
                     </a>
 
@@ -1295,19 +1295,19 @@
                     <a href="{{ route('public.solutions.fnb') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"
-                            alt="F&B Restoran"
+                            alt="F&B Restoran dan Kafe"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">F&amp;B</span>
+                                <span class="text-xs font-bold">F&amp;B / Kafe</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                POS &bull; Recipe &bull; BOM &bull; Inventory &bull; Purchasing &bull; Finance
+                                Kasir Meja &bull; Resep Bahan &bull; Tiket Dapur &bull; Laba Harian
                             </p>
                         </div>
                     </a>
@@ -1316,19 +1316,19 @@
                     <a href="{{ route('public.solutions.retail') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80"
-                            alt="Retail Toko"
+                            alt="Retail Toko dan Minimarket"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Retail</span>
+                                <span class="text-xs font-bold">Ritel &amp; Toko</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Barcode &bull; POS &bull; Inventory &bull; Purchasing &bull; Customer
+                                Scan Barcode &bull; Stok Dus/Pcs &bull; Kasbon &bull; Laba Harian
                             </p>
                         </div>
                     </a>
@@ -1337,19 +1337,19 @@
                     <a href="{{ route('public.solutions.workshop') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=600&q=80"
-                            alt="Bengkel"
+                            alt="Bengkel Motor dan Mobil"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Workshop</span>
+                                <span class="text-xs font-bold">Bengkel Kendaraan</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Service &bull; Spare Parts &bull; Customer &bull; Inventory &bull; Finance
+                                SPK Servis &bull; Stok Sparepart &bull; Komisi Mekanik
                             </p>
                         </div>
                     </a>
@@ -1358,19 +1358,19 @@
                     <a href="{{ route('public.solutions.laundry') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=600&q=80"
-                            alt="Laundry"
+                            alt="Laundry Kiloan dan Satuan"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Laundry</span>
+                                <span class="text-xs font-bold">Laundry Kiloan</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Order &bull; Weight &bull; Production &bull; Inventory &bull; Customer
+                                Timbangan Kiloan &bull; Nomor Rak &bull; Nota WhatsApp
                             </p>
                         </div>
                     </a>
@@ -1379,19 +1379,19 @@
                     <a href="{{ route('public.solutions.manufacturing') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
-                            alt="Manufacturing"
+                            alt="Manufaktur Produksi UMKM"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Manufacturing</span>
+                                <span class="text-xs font-bold">Manufaktur Produksi</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Material &bull; BOM &bull; Production &bull; MRP &bull; Inventory
+                                Bahan Baku &bull; Formula Produksi &bull; Hitung HPP Riil
                             </p>
                         </div>
                     </a>
@@ -1400,19 +1400,19 @@
                     <a href="{{ route('public.solutions.services') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
-                            alt="Services Jasa"
+                            alt="Bisnis Jasa dan Servis"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Services</span>
+                                <span class="text-xs font-bold">Bisnis Jasa</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Customer &bull; Booking &bull; Project &bull; Invoice &bull; Finance
+                                Jadwal Booking &bull; Invoice DP &bull; Riwayat Pelanggan
                             </p>
                         </div>
                     </a>

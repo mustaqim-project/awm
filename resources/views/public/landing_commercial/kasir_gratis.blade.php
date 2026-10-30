@@ -172,7 +172,7 @@
                                 <span class="text-slate-400 text-sm font-semibold">/ selamanya</span>
                             </div>
                             <p class="text-slate-300 text-sm mb-6 pb-6 border-b border-white/10">
-                                Solusi terbaik untuk warung pemula, penjual makanan rumahan, dan wirausaha mikro yang baru memulai langkah digitalisasi.
+                                Pilihan tepat untuk warung pemula, penjual makanan rumahan, dan rintisan usaha mikro yang ingin berjualan rapi tanpa modal software.
                             </p>
 
                             <ul class="space-y-3.5 text-sm text-slate-200 mb-8">

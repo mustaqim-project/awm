@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8">
@@ -41,7 +41,7 @@
             \App\Domain\Storage\AdminStorage::publicUrl($seoOgImageSetting) ?? asset('assets/seo/cooca-og-default.jpg');
 
         $siteAppName = \App\Models\SystemSetting::get('app_name', 'COOCA');
-        $siteTagline = \App\Models\SystemSetting::get('site_tagline', 'Aplikasi Kasir POS & Software ERP UMKM');
+        $siteTagline = \App\Models\SystemSetting::get('site_tagline') ?: __('public_marketing.brand_tagline_full');
         $seoMetaTitle = \App\Models\SystemSetting::get(
             'seo_meta_title',
             'COOCA: Aplikasi Kasir POS & Software ERP UMKM Indonesia',
@@ -68,6 +68,11 @@
         'noindex' => $noindex ?? false,
         'robots' => $robots ?? null,
     ])
+
+    <!-- Multilingual Hreflang Tags -->
+    <link rel="alternate" hreflang="id" href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" />
+    <link rel="alternate" hreflang="en" href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" />
+    <link rel="alternate" hreflang="x-default" href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" />
 
     <!-- Webmaster Verification -->
     @if (!empty($seoGoogleVerification))
@@ -517,7 +522,7 @@
                         :class="platformDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.bos.*') || request()->routeIs('public.erp.*') || request()->routeIs('public.content.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>Platform</span>
+                        <span>{{ __('public_marketing.nav_platform') }}</span>
                         <span class="inline-flex transition-transform duration-200" :class="platformDropdown ? 'rotate-180' : ''">
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
                         </span>
@@ -531,7 +536,7 @@
                         :class="solutionDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.solutions.*') || request()->routeIs('solusi.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>Solutions</span>
+                        <span>{{ __('public_marketing.nav_solutions') }}</span>
                         <span class="inline-flex transition-transform duration-200" :class="solutionDropdown ? 'rotate-180' : ''">
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
                         </span>
@@ -545,7 +550,7 @@
                         :class="omniDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.omnichannel.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>Omnichannel</span>
+                        <span>{{ __('public_marketing.nav_omnichannel') }}</span>
                         <span class="inline-flex transition-transform duration-200" :class="omniDropdown ? 'rotate-180' : ''">
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
                         </span>
@@ -559,7 +564,7 @@
                         :class="resourceDropdown ? 'bg-white/10 text-white' : (
                             {{ request()->routeIs('public.resources.*') || request()->routeIs('blog.*') ? 'true' : 'false' }} ?
                             'text-[#00C2FF] font-semibold' : '')">
-                        <span>Resources</span>
+                        <span>{{ __('public_marketing.nav_resources') }}</span>
                         <span class="inline-flex transition-transform duration-200" :class="resourceDropdown ? 'rotate-180' : ''">
                             <i data-lucide="chevron-down" class="w-3.5 h-3.5 xl:w-4 xl:h-4"></i>
                         </span>
@@ -568,12 +573,26 @@
                     <!-- 5. Pricing (Direct Link) -->
                     <a href="{{ route('public.pricing') }}"
                         @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
-                        class="px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all {{ request()->routeIs('public.pricing') ? 'text-[#00C2FF] font-semibold' : '' }}">Pricing</a>
+                        class="px-3.5 xl:px-4 py-2.5 rounded-[12px] hover:text-white hover:bg-white/10 transition-all {{ request()->routeIs('public.pricing') ? 'text-[#00C2FF] font-semibold' : '' }}">{{ __('public_marketing.nav_pricing') }}</a>
                 </nav>
 
                 <!-- Action Controls & Theme Toggle -->
                 <div class="flex items-center gap-2 sm:gap-2.5"
                     @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false">
+                    <!-- Bilingual Language Switcher (Desktop & Tablet) -->
+                    <div class="hidden sm:inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
+                        <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}"
+                           class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'id' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}"
+                           title="{{ __('public_marketing.lang_id') }}" aria-label="{{ __('public_marketing.lang_id') }}">
+                            ID
+                        </a>
+                        <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}"
+                           class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'en' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}"
+                           title="{{ __('public_marketing.lang_en') }}" aria-label="{{ __('public_marketing.lang_en') }}">
+                            EN
+                        </a>
+                    </div>
+
                     <!-- Apple Theme Switcher Button (Desktop & Tablet only) -->
                     <button type="button" @click="toggleTheme()"
                         class="hidden sm:flex w-10 h-10 sm:w-11 sm:h-11 lg:w-10 lg:h-10 rounded-full items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 active:scale-[0.95] transition-all"
@@ -609,7 +628,7 @@
                         @else
                             <a href="{{ route('register') }}"
                                 class="inline-flex items-center justify-center px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all">
-                                <span>Coba Gratis</span>
+                                <span>{{ __('public_marketing.cta_free_short') }}</span>
                             </a>
                         @endif
                     </div>
@@ -633,12 +652,12 @@
                                 class="group px-3.5 py-2.5 text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 rounded-[12px] transition-all min-h-[42px] flex items-center gap-1.5">
                                 <i data-lucide="user"
                                     class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors"></i>
-                                <span>Login</span>
+                                <span>{{ __('public_marketing.nav_login') }}</span>
                             </a>
                             <a href="{{ route('register') }}"
                                 class="group relative inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0 px-4.5 xl:px-6 py-2.5 rounded-[12px] xl:rounded-[14px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm xl:text-[14.5px] tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] min-h-[44px] transition-all">
-                                <span class="hidden min-[1150px]:inline">Coba COOCA Gratis</span>
-                                <span class="inline min-[1150px]:hidden">Coba Gratis</span>
+                                <span class="hidden min-[1150px]:inline">{{ __('public_marketing.cta_free_trial') }}</span>
+                                <span class="inline min-[1150px]:hidden">{{ __('public_marketing.cta_free_short') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-4 h-4 transition-transform group-hover:translate-x-1 shrink-0"></i>
                             </a>
@@ -1329,6 +1348,24 @@
                 x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
                 class="absolute top-full inset-x-0 w-full lg:hidden bg-[#060913] text-slate-200 border-t border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.95)] max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain p-3.5 sm:p-5 space-y-3 pb-28 z-50">
 
+                <!-- 0. Mobile Language Switcher & Quick Controls -->
+                <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="languages" class="w-4 h-4 text-[#00C2FF]"></i>
+                        <span class="text-xs font-semibold text-slate-300">{{ __('public_marketing.lang_selector_label') }}</span>
+                    </div>
+                    <div class="inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold">
+                        <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}"
+                           class="px-3 py-1 rounded-full transition-all {{ app()->getLocale() === 'id' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-300 hover:text-white' }}">
+                            ID
+                        </a>
+                        <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}"
+                           class="px-3 py-1 rounded-full transition-all {{ app()->getLocale() === 'en' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-300 hover:text-white' }}">
+                            EN
+                        </a>
+                    </div>
+                </div>
+
                 <!-- 1. Top Auth & User Profile Card -->
                 @if (auth('admin')->check())
                     <div
@@ -1382,11 +1419,11 @@
                         <div class="flex items-center gap-2 shrink-0">
                             <a href="{{ route('login') }}" @click="mobileMenu = false"
                                 class="px-3 py-1.5 rounded-[10px] bg-white/10 hover:bg-white/15 text-white text-xs font-semibold active:scale-95 transition-all">
-                                Masuk
+                                {{ __('public_marketing.nav_login') }}
                             </a>
                             <a href="{{ route('register') }}" @click="mobileMenu = false"
                                 class="px-3.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white text-xs font-bold shadow-xs active:scale-95 transition-all flex items-center gap-1">
-                                <span>Daftar</span>
+                                <span>{{ __('public_marketing.nav_register') }}</span>
                                 <i data-lucide="arrow-right" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -1398,12 +1435,12 @@
                     <a href="{{ route('landing') }}" @click="mobileMenu = false"
                         class="py-2.5 px-2 rounded-[14px] bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] active:scale-95 transition-all text-center flex flex-col items-center justify-center gap-1 group {{ request()->routeIs('landing') || request()->is('/') ? 'ring-1 ring-[#00C2FF]/50 bg-white/[0.08]' : '' }}">
                         <i data-lucide="home" class="w-4 h-4 text-[#00C2FF]"></i>
-                        <span class="text-xs font-semibold text-white truncate w-full">Beranda</span>
+                        <span class="text-xs font-semibold text-white truncate w-full">{{ __('public_marketing.nav_home') }}</span>
                     </a>
                     <a href="{{ route('marketplace.index') }}" @click="mobileMenu = false"
                         class="py-2.5 px-2 rounded-[14px] bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] active:scale-95 transition-all text-center flex flex-col items-center justify-center gap-1 group {{ request()->routeIs('marketplace.*') ? 'ring-1 ring-[#FF9500]/50 bg-white/[0.08]' : '' }}">
                         <i data-lucide="shopping-bag" class="w-4 h-4 text-[#FF9500]"></i>
-                        <span class="text-xs font-semibold text-white truncate w-full">Marketplace</span>
+                        <span class="text-xs font-semibold text-white truncate w-full">{{ __('public_marketing.nav_marketplace') }}</span>
                     </a>
                     <a href="{{ route('public.discovery.index') }}" @click="mobileMenu = false"
                         class="py-2.5 px-2 rounded-[14px] bg-white/[0.04] border border-white/10 hover:bg-white/[0.08] active:scale-95 transition-all text-center flex flex-col items-center justify-center gap-1 group {{ request()->routeIs('public.discovery.*') || request()->routeIs('public.directory.*') ? 'ring-1 ring-[#34C759]/50 bg-white/[0.08]' : '' }}">
@@ -2273,7 +2310,7 @@
                         <!-- Col 1: Platform -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
-                                Platform</p>
+                                {{ __('public_marketing.footer_col_platform') }}</p>
                             <nav
                                 class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
                                 <a href="{{ route('public.erp.erp') }}"
@@ -2294,7 +2331,7 @@
                         <!-- Col 2: Solutions -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
-                                Solutions</p>
+                                {{ __('public_marketing.footer_col_solutions') }}</p>
                             <nav
                                 class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
                                 <a href="{{ route('public.solutions.fnb') }}"
@@ -2328,7 +2365,7 @@
                         <!-- Col 3: Resources -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
-                                Resources</p>
+                                {{ __('public_marketing.footer_col_resources') }}</p>
                             <nav
                                 class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
                                 <a href="{{ route('blog.index') }}"
@@ -2355,7 +2392,7 @@
                         <!-- Col 4: Company -->
                         <div class="space-y-3.5">
                             <p class="font-bold text-white uppercase text-xs sm:text-[13px] tracking-wider">
-                                Company</p>
+                                {{ __('public_marketing.footer_col_company') }}</p>
                             <nav
                                 class="flex flex-col space-y-2.5 sm:space-y-3 text-sm sm:text-[14.5px] text-slate-400">
                                 <a href="{{ route('public.about') }}"
@@ -2396,19 +2433,26 @@
                     </div>
 
                     <div class="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2">
+                        <!-- Bilingual Switcher in Footer -->
+                        <div class="inline-flex items-center p-0.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium">
+                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" class="px-2.5 py-0.5 rounded-full transition-all {{ app()->getLocale() === 'id' ? 'bg-white/20 text-white font-bold' : 'text-slate-400 hover:text-white' }}" title="{{ __('public_marketing.lang_id') }}">ID</a>
+                            <span class="text-white/20">|</span>
+                            <a href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" class="px-2.5 py-0.5 rounded-full transition-all {{ app()->getLocale() === 'en' ? 'bg-white/20 text-white font-bold' : 'text-slate-400 hover:text-white' }}" title="{{ __('public_marketing.lang_en') }}">EN</a>
+                        </div>
+
                         <a href="{{ route('public.privacy') }}"
                             class="text-slate-400 hover:text-white transition-colors">
-                            Privacy
+                            {{ __('public_marketing.footer_privacy') }}
                         </a>
 
                         <a href="{{ route('public.terms') }}"
                             class="text-slate-400 hover:text-white transition-colors">
-                            Terms
+                            {{ __('public_marketing.footer_terms') }}
                         </a>
 
                         <a href="{{ route('public.support') }}"
                             class="text-slate-400 hover:text-white transition-colors">
-                            Support
+                            {{ __('public_marketing.footer_support') }}
                         </a>
                     </div>
 
@@ -2441,7 +2485,7 @@
                                         class="w-[19px] h-[19px] sm:w-5 sm:h-5 transition-transform group-active:scale-90 {{ $isHomeActive ? 'stroke-[2.2]' : 'stroke-[1.75]' }}"></i>
                                 </div>
                                 <span
-                                    class="text-xs font-semibold tracking-tight mt-0.5 {{ $isHomeActive ? 'text-[#00C2FF]' : '' }}">Beranda</span>
+                                    class="text-xs font-semibold tracking-tight mt-0.5 {{ $isHomeActive ? 'text-[#00C2FF]' : '' }}">{{ __('public_marketing.nav_home') }}</span>
                                 @if ($isHomeActive)
                                     <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5 opacity-60"></span>
                                 @else
@@ -2464,7 +2508,7 @@
                                         class="w-[19px] h-[19px] sm:w-5 sm:h-5 transition-transform group-active:scale-90 {{ $isPlatformActive ? 'stroke-[2.2]' : 'stroke-[1.75]' }}"></i>
                                 </div>
                                 <span
-                                    class="text-xs font-semibold tracking-tight mt-0.5 {{ $isPlatformActive ? 'text-[#00C2FF]' : '' }}">Platform</span>
+                                    class="text-xs font-semibold tracking-tight mt-0.5 {{ $isPlatformActive ? 'text-[#00C2FF]' : '' }}">{{ __('public_marketing.nav_platform') }}</span>
                                 @if ($isPlatformActive)
                                     <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5 opacity-60"></span>
                                 @else
@@ -2485,8 +2529,7 @@
                                     class="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform group-hover:scale-110 group-active:scale-90 stroke-[2.2]"></i>
                             </a>
                             <span
-                                class="text-xs font-bold tracking-tight mt-1.5 {{ $isSolusiActive ? 'text-[#00C2FF]' : 'text-slate-300' }}">Solusi
-                                POS</span>
+                                class="text-xs font-bold tracking-tight mt-1.5 {{ $isSolusiActive ? 'text-[#00C2FF]' : 'text-slate-300' }}">{{ __('public_marketing.nav_solutions') }}</span>
                             @if ($isSolusiActive)
                                 <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5 opacity-60"></span>
                             @else
@@ -2534,7 +2577,7 @@
                                 : ($isWeb
                                     ? route('dashboard')
                                     : route('login'));
-                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : 'Masuk');
+                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : __('public_marketing.nav_login'));
                             $tabIcon = $isAuth ? 'layout-dashboard' : 'user';
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">

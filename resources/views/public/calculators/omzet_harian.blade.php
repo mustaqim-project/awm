@@ -1,8 +1,8 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Target Omzet Harian & Jumlah Transaksi Online | COOCA')
-@section('description', 'Kalkulator target omzet harian online untuk toko dan kafe. Pecah target omzet bulanan menjadi target omzet harian, jumlah transaksi pembeli, dan nilai keranjang belanja rata-rata.')
-@section('og_title', 'Kalkulator Target Omzet Harian & Jumlah Transaksi Online | COOCA')
+@section('title', 'Kalkulator Target Omzet Harian Toko Online | COOCA')
+@section('description', 'Kalkulator target omzet online: pecah target bulanan jadi omzet harian, jumlah transaksi kasir, dan rata-rata nilai belanja per pembeli.')
+@section('og_title', 'Kalkulator Target Omzet Harian Toko Online | COOCA')
 @section('og_description', 'Pecah target omzet bulanan Anda menjadi target transaksi harian dan rata-rata struk kasir yang terukur.')
 @section('canonical', route('kalkulator.omzet-harian'))
 @section('og_type', 'website')

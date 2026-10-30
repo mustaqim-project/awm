@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Laundry Kiloan & Satuan: Timbangan, Rak & Notifikasi WA | COOCA')
-@section('description', 'Solusi aplikasi kasir laundry kiloan dan dry cleaning satuan. Input timbangan desimal presisi, penomoran rak baju, pantau status cuci multi-tahap, dan notifikasi WhatsApp otomatis saat cucian siap diambil.')
-@section('og_title', 'Software Laundry Kiloan & Satuan: Timbangan, Rak & Notifikasi WA | COOCA')
-@section('og_description', 'Kelola cucian kiloan dan satuan tanpa takut baju tertukar. Dilengkapi nomor rak penyimpanan dan kirim pesan WhatsApp otomatis saat baju beres.')
+@section('title', 'Aplikasi Kasir Laundry: Timbangan & Nota WA | COOCA')
+@section('description', 'Aplikasi kasir laundry kiloan & satuan: timbangan desimal, nomor rak, status cuci berjenjang, dan notifikasi WhatsApp otomatis saat cucian selesai.')
+@section('og_title', 'Aplikasi Kasir Laundry: Timbangan & Nota WA | COOCA')
+@section('og_description', 'Aplikasi kasir laundry kiloan & satuan: timbangan desimal, nomor rak, status cuci berjenjang, dan notifikasi WhatsApp otomatis saat cucian selesai.')
 @section('canonical', route('public.solutions.laundry'))
 @section('og_type', 'product')
 @section('keywords', 'software laundry kiloan, aplikasi kasir laundry, sistem manajemen laundry, software dry cleaning satuan, aplikasi laundry sepatu helm, cetak nota laundry bluetooth, notifikasi wa laundry')
@@ -22,6 +22,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Bagaimana mencetak label tag anti air pada pakaian pelanggan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA mendukung printer label thermal standar. Anda dapat mencetak stiker atau kertas tag kecil berisi Nomor Nota, Nama Pelanggan, dan Jumlah Potong pakaian yang disematkan ke keranjang atau pakaian agar tidak tertukar selama proses mencuci."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah pelanggan bisa membayar uang muka (DP) atau bayar saat cucian diambil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. COOCA mendukung 3 status pembayaran: Bayar Lunas di Awal, Bayar DP Sebagian, atau Bayar Saat Ambil (COD). Kasir dapat dengan cepat melihat sisa tagihan yang harus dilunasi pelanggan saat baju diambil."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika usaha laundry saya memiliki beberapa cabang gerai penerimaan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sistem multi-outlet COOCA memungkinkan Anda membuka banyak titik drop-point/outlet penerimaan cucian, sementara proses pencucian dan setrika dilakukan di workshop utama (central laundry). Pergerakan cucian antar outlet tercatat rapi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA membutuhkan perangkat komputer khusus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tidak. Kasir laundry dapat dioperasikan langsung dari smartphone Android, tablet, iPad, maupun laptop yang sudah Anda miliki saat ini, serta dapat terhubung ke printer Bluetooth portabel 58mm."
+          }
+        }
+      ]
     }
     </script>
     @endpush

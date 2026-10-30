@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Notifikasi WhatsApp Bisnis, Struk Kasir & Invoice Digital | COOCA')
-@section('description',
-    'Hubungkan sistem operasional bisnis Anda dengan WhatsApp. Kirim struk kasir digital otomatis, notifikasi status pesanan, update pengerjaan servis, dan pengingat invoice langsung ke chat pelanggan.')
-@section('og_title', 'Software Notifikasi WhatsApp Bisnis, Struk Kasir & Invoice Digital | COOCA')
-@section('og_description',
-    'Hubungkan sistem operasional bisnis Anda dengan WhatsApp. Kirim struk kasir digital otomatis, notifikasi status pesanan, update pengerjaan servis, dan pengingat invoice langsung ke chat pelanggan.')
+@section('title', 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA')
+@section('description', 'Kirim struk kasir digital otomatis, update status pesanan, dan pengingat invoice langsung ke WhatsApp pelanggan tanpa repot simpan nomor.')
+@section('og_title', 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA')
+@section('og_description', 'Kirim struk kasir digital otomatis, update status pesanan, dan pengingat invoice langsung ke WhatsApp pelanggan tanpa repot simpan nomor.')
 @section('keywords',
     'software notifikasi whatsapp bisnis, kirim struk kasir via wa, invoice digital whatsapp, notifikasi pesanan wa umkm, reminder tagihan whatsapp')
 

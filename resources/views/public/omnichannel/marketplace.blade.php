@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Integrasi Marketplace & Sinkronisasi Stok Toko Fisik | COOCA')
-@section('description',
-    'Hubungkan toko Shopee, Tokopedia, dan TikTok Shop Anda dengan toko fisik. Sinkronisasi stok otomatis seketika (anti-overselling), proses pesanan terpusat, dan cetak resi pengiriman massal.')
-@section('og_title', 'Software Integrasi Marketplace & Sinkronisasi Stok Toko Fisik | COOCA')
-@section('og_description',
-    'Hubungkan toko Shopee, Tokopedia, dan TikTok Shop Anda dengan toko fisik. Sinkronisasi stok otomatis seketika (anti-overselling), proses pesanan terpusat, dan cetak resi pengiriman massal.')
+@section('title', 'Integrasi Marketplace & Sinkronisasi Stok Toko | COOCA')
+@section('description', 'Hubungkan Shopee, Tokopedia, & TikTok Shop dengan toko fisik: sinkronisasi stok seketika bebas overselling dan proses pesanan terpusat.')
+@section('og_title', 'Integrasi Marketplace & Sinkronisasi Stok Toko | COOCA')
+@section('og_description', 'Hubungkan Shopee, Tokopedia, & TikTok Shop dengan toko fisik: sinkronisasi stok seketika bebas overselling dan proses pesanan terpusat.')
 @section('keywords',
     'software integrasi marketplace, sinkronisasi stok shopee tokopedia, aplikasi omnichannel marketplace, kelola toko online terpusat, stok gudang marketplace pos')
 

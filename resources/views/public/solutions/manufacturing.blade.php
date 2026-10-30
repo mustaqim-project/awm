@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manufaktur & Produksi UMKM: BOM, Work Order & HPP | COOCA')
-@section('description', 'Solusi sistem manufaktur dan pabrikasi UMKM: konveksi, makanan olahan, dan kerajinan. Multi-level Bill of Materials (BOM), perintah kerja produksi (SPK), kalkulasi HPP akurat, dan kontrol bahan baku.')
-@section('og_title', 'Software Manufaktur & Produksi UMKM: BOM, Work Order & HPP | COOCA')
-@section('og_description', 'Kendalikan formula resep BOM bahan baku, jadwalkan perintah produksi, dan hitung HPP produk jadi secara akurat tanpa margin tekor.')
+@section('title', 'Aplikasi Manufaktur UMKM: BOM, SPK & Hitung HPP | COOCA')
+@section('description', 'Aplikasi manufaktur UMKM: formula BOM bahan baku, perintah kerja produksi (SPK), kalkulasi HPP produk jadi, dan kontrol sisa stok bahan akurat.')
+@section('og_title', 'Aplikasi Manufaktur UMKM: BOM, SPK & Hitung HPP | COOCA')
+@section('og_description', 'Aplikasi manufaktur UMKM: formula BOM bahan baku, perintah kerja produksi (SPK), kalkulasi HPP produk jadi, dan kontrol sisa stok bahan akurat.')
 @section('canonical', route('public.solutions.manufacturing'))
 @section('og_type', 'product')
 @section('keywords', 'software manufaktur umkm, aplikasi produksi pabrik, sistem kontrol bom hpp, software konveksi garmen, aplikasi pabrik makanan, software hpp manufaktur, work order produksi')
@@ -22,6 +22,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA bisa mencatat pekerjaan maklon / CMT ke pihak ketiga?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. Anda dapat membuat Surat Jalan Pengiriman Bahan Mentah ke mitra CMT/penjahit luar, mencatat ongkos jasa jahit maklon per potong, dan menerima kembali produk setengah jadi atau barang jadi ke gudang Anda secara terdata."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika terjadi perbedaan pemakaian bahan nyata vs takaran BOM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA memiliki fitur Real Material Consumption Adjustment. Operator dapat menginput jumlah riil bahan yang terpakai jika terjadi penyusutan atau pemborosan di lini produksi. Sistem akan menghitung varians biaya (cost variance) secara transparan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA cocok untuk usaha makanan olahan dengan expired date?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sangat cocok. Anda dapat mengaktifkan fitur Batch & Expiry Date Tracking. Setiap kali produk jadi selesai dikemas, sistem mencetak label nomor batch dan tanggal kadaluwarsa, serta menerapkan metode rotasi stok FEFO (First Expired First Out)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana produk jadi terhubung ke modul penjualan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Begitu Work Order berstatus 'Completed', persediaan barang jadi langsung tersinkronisasi ke katalog POS Kasir toko offline dan stok marketplace online tanpa perlu input ulang manual."
+          }
+        }
+      ]
     }
     </script>
     @endpush

@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software CRM & Sistem Loyalitas Pelanggan Terintegrasi POS | COOCA')
-@section('description',
-    'Aplikasi CRM dan database pelanggan multi-cabang untuk bisnis retail & jasa. Bangun program membership poin, lacak riwayat belanja omnichannel, dan segmentasi otomatis untuk meningkatkan repeat order.')
-@section('og_title', 'Software CRM & Sistem Loyalitas Pelanggan Terintegrasi POS | COOCA')
-@section('og_description',
-    'Aplikasi CRM dan database pelanggan multi-cabang untuk bisnis retail & jasa. Bangun program membership poin, lacak riwayat belanja omnichannel, dan segmentasi otomatis untuk meningkatkan repeat order.')
+@section('title', 'Software CRM & Loyalitas Pelanggan Toko | COOCA')
+@section('description', 'Aplikasi CRM & membership loyalitas pelanggan: lacak riwayat belanja di kasir & online, kumpulkan poin reward, dan picu repeat order.')
+@section('og_title', 'Software CRM & Loyalitas Pelanggan Toko | COOCA')
+@section('og_description', 'Aplikasi CRM & membership loyalitas pelanggan: lacak riwayat belanja di kasir & online, kumpulkan poin reward, dan picu repeat order.')
 @section('keywords',
     'software crm pelanggan, sistem membership loyalitas poin, database pelanggan retail, aplikasi retensi pelanggan, crm terintegrasi pos')
 

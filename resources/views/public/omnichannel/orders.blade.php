@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Manajemen Pesanan Omnichannel & Order Fulfillment | COOCA')
-@section('description',
-    'Satukan pesanan dari kasir POS toko fisik, website, WhatsApp, dan marketplace ke dalam satu pipeline pemrosesan terpadu. Rute pesanan ke cabang terdekat, cetak label massal, dan lacak status pengiriman.')
-@section('og_title', 'Software Manajemen Pesanan Omnichannel & Order Fulfillment | COOCA')
-@section('og_description',
-    'Satukan pesanan dari kasir POS toko fisik, website, WhatsApp, dan marketplace ke dalam satu pipeline pemrosesan terpadu. Rute pesanan ke cabang terdekat, cetak label massal, dan lacak status pengiriman.')
+@section('title', 'Manajemen Pesanan Omnichannel & Toko Online | COOCA')
+@section('description', 'Satukan pesanan kasir toko fisik, WhatsApp, dan marketplace dalam satu antrean. Cetak resi pengiriman dan lacak paket tanpa tertukar.')
+@section('og_title', 'Manajemen Pesanan Omnichannel & Toko Online | COOCA')
+@section('og_description', 'Satukan pesanan kasir toko fisik, WhatsApp, dan marketplace dalam satu antrean. Cetak resi pengiriman dan lacak paket tanpa tertukar.')
 @section('keywords',
     'software manajemen pesanan omnichannel, aplikasi order fulfillment, sistem proses pesanan toko online fisik, agregasi pesanan marketplace pos, order lifecycle indonesia')
 

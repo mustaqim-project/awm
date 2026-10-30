@@ -1,8 +1,8 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator PPh Final UMKM 0.5% (PP 55/2022) Online Gratis | COOCA')
-@section('description', 'Kalkulator simulasi pajak PPh Final 0.5% UMKM online gratis sesuai UU HPP dan PP 55/2022. Lengkap dengan perhitungan batas omzet Rp 500 juta bebas pajak per tahun.')
-@section('og_title', 'Kalkulator PPh Final UMKM 0.5% (PP 55/2022) Online Gratis | COOCA')
+@section('title', 'Kalkulator PPh Final UMKM 0.5% (PP 55/2022) | COOCA')
+@section('description', 'Kalkulator PPh Final 0.5% UMKM online gratis sesuai PP 55/2022. Lengkap dengan simulasi batas omzet Rp 500 juta bebas pajak per tahun.')
+@section('og_title', 'Kalkulator PPh Final UMKM 0.5% (PP 55/2022) | COOCA')
 @section('og_description', 'Hitung kewajiban pajak UMKM 0.5% secara akurat dengan batasan omzet tidak kena pajak Rp 500 juta.')
 @section('canonical', route('kalkulator.pph-final'))
 @section('og_type', 'website')

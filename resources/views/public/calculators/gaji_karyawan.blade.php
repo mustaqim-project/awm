@@ -1,7 +1,7 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Kalkulator Gaji Karyawan UMKM & Upah Harian Online | COOCA')
-@section('description', 'Kalkulator penghitungan gaji staf dan karyawan UMKM online. Hitung gaji pokok harian/bulanan, tunjangan makan, uang lembur, dan potongan kasbon secara transparan.')
+@section('description', 'Kalkulator gaji staf dan karyawan UMKM: hitung gaji pokok harian/bulanan, tunjangan makan, uang lembur, dan potongan kasbon secara transparan.')
 @section('og_title', 'Kalkulator Gaji Karyawan UMKM & Upah Harian Online | COOCA')
 @section('og_description', 'Kelola perhitungan payroll karyawan gerai Anda secara rapi: gaji pokok, tunjangan, dan lembur.')
 @section('canonical', route('kalkulator.gaji-karyawan'))

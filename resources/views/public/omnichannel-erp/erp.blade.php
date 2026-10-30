@@ -1,10 +1,10 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software ERP Terintegrasi untuk UMKM & Bisnis Berkembang | COOCA')
-@section('description', 'COOCA Omnichannel ERP menyatukan kasir POS, stok multi-gudang, purchasing, keuangan, akuntansi, CRM, dan karyawan dalam satu sistem terpadu tanpa biaya mahal.')
+@section('title', 'Software ERP UMKM: Kasir, Stok & Pembukuan | COOCA')
+@section('description', 'COOCA Omnichannel ERP menyatukan kasir POS, stok multi-gudang, keuangan, akuntansi, dan CRM dalam satu sistem tanpa biaya mahal.')
 @section('keywords', 'software erp umkm, omnichannel erp indonesia, sistem erp toko, software manajemen operasional terintegrasi, erp kasir gudang akuntansi')
 
-@section('og_title', 'Software ERP Terintegrasi untuk UMKM & Bisnis Berkembang | COOCA')
+@section('og_title', 'Software ERP UMKM: Kasir, Stok & Pembukuan | COOCA')
 @section('og_description', 'COOCA Omnichannel ERP menyatukan kasir POS, persediaan gudang, purchasing, akuntansi riil, dan CRM dalam satu sistem terpadu.')
 
 @push('seo')

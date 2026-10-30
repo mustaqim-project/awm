@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Simulasi Bisnis What-If (Sensitivitas Biaya & Diskon) Online Gratis | COOCA')
-@section('description', 'Alat simulasi What-If bisnis UMKM online. Uji skenario kenaikan harga bahan baku, kenaikan upah tenaga kerja, atau dampak pemberian diskon promo terhadap sisa keuntungan bersih.')
-@section('og_title', 'Simulasi Bisnis What-If (Sensitivitas Biaya & Diskon) Online Gratis | COOCA')
-@section('og_description', 'Uji skenario kenaikan harga bahan baku, upah kerja, atau dampak pemberian diskon terhadap sisa keuntungan bersih usaha Anda.')
+@section('title', 'Kalkulator Simulasi Skenario Laba Toko | COOCA')
+@section('description', 'Simulasi skenario bisnis UMKM: uji dampak kenaikan harga bahan baku, penyesuaian upah, dan promo diskon terhadap sisa laba bersih toko.')
+@section('og_title', 'Kalkulator Simulasi Skenario Laba Toko | COOCA')
+@section('og_description', 'Simulasi skenario bisnis UMKM: uji dampak kenaikan harga bahan baku, penyesuaian upah, dan promo diskon terhadap sisa laba bersih toko.')
 @section('canonical', route('kalkulator.simulasi-what-if'))
 @section('og_type', 'website')
 @section('keywords', 'simulasi bisnis what-if, kalkulator sensitivitas biaya, dampak diskon terhadap laba, skenario kenaikan bahan baku, simulator bisnis umkm online')

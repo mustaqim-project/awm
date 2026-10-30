@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Bengkel Motor & Mobil: SPK, Stok Sparepart & Komisi Mekanik | COOCA')
-@section('description', 'Solusi sistem manajemen bengkel motor dan mobil. Surat Perintah Kerja (SPK) digital, lacak histori servis plat nomor, potong stok sparepart & oli otomatis, komisi montir, dan reminder WhatsApp.')
-@section('og_title', 'Software Bengkel Motor & Mobil: SPK, Stok Sparepart & Komisi Mekanik | COOCA')
-@section('og_description', 'Tinggalkan nota kertas minyak. Catat histori servis plat kendaraan, kelola stok oli & suku cadang, dan hitung komisi montir otomatis.')
+@section('title', 'Aplikasi Bengkel Motor & Mobil: SPK & Komisi Montir | COOCA')
+@section('description', 'Aplikasi bengkel motor & mobil: SPK digital, histori servis plat nomor, potong stok suku cadang & oli otomatis, komisi montir, dan nota WhatsApp.')
+@section('og_title', 'Aplikasi Bengkel Motor & Mobil: SPK & Komisi Montir | COOCA')
+@section('og_description', 'Aplikasi bengkel motor & mobil: SPK digital, histori servis plat nomor, potong stok suku cadang & oli otomatis, komisi montir, dan nota WhatsApp.')
 @section('canonical', route('public.solutions.workshop'))
 @section('og_type', 'product')
 @section('keywords', 'software bengkel terintegrasi, aplikasi bengkel motor mobil, sistem manajemen bengkel, software kasir bengkel, surat perintah kerja bengkel spk, komisi mekanik montir, stok sparepart bengkel')
@@ -22,6 +22,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah satu SPK bisa dikerjakan oleh lebih dari satu mekanik?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. Anda dapat mengalokasikan mekanik berbeda untuk setiap item pekerjaan jasa. Misalnya, pengerjaan kelistrikan dialokasikan ke Mekanik A, sementara servis suspensi/kaki-kaki dialokasikan ke Mekanik B. Komisi masing-masing montir akan dihitung secara proporsional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA cocok untuk bengkel motor maupun bengkel mobil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya. Sistem dirancang fleksibel untuk bengkel motor umum, authorized dealer, bengkel mobil, bengkel AC mobil, variasi/aksesoris, hingga spesialis ban (spooring-balancing). Kolom data nomor rangka, nomor mesin, dan kilometer dapat disesuaikan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mencatat oli curah (drum) yang dijual per liter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA mendukung multi-satuan dengan nilai desimal. Anda dapat membeli oli dalam kemasan drum 200 liter, lalu menjualnya per 0.8 liter, 1 liter, atau 3.5 liter ke pelanggan saat servis. Stok drum berkurang secara presisi tanpa pembulatan kasar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana mencetak struk nota servis agar terlihat resmi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA mendukung cetak struk thermal 58mm/80mm untuk printer kasir cepat, serta invoice format A4/A5 menggunakan printer biasa lengkap dengan logo bengkel, tanda tangan mekanik, dan ketentuan garansi perbaikan."
+          }
+        }
+      ]
     }
     </script>
     @endpush

@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Kalender Konten Editorial & Jadwal Promosi Bisnis | COOCA')
-@section('description',
-    'Rencanakan dan pantau seluruh jadwal publikasi konten media sosial bisnis Anda sebulan penuh di muka. Kalender editorial visual drag-and-drop terhubung ke Instagram, Facebook, dan WhatsApp.')
-@section('og_title', 'Software Kalender Konten Editorial & Jadwal Promosi Bisnis | COOCA')
-@section('og_description',
-    'Rencanakan dan pantau seluruh jadwal publikasi konten media sosial bisnis Anda sebulan penuh di muka. Kalender editorial visual drag-and-drop terhubung ke Instagram, Facebook, dan WhatsApp.')
+@section('title', 'Kalender Konten & Jadwal Promosi Bisnis Online | COOCA')
+@section('description', 'Rencanakan jadwal konten medsos sebulan penuh: kalender editorial visual terhubung langsung ke Instagram, Facebook, dan katalog toko.')
+@section('og_title', 'Kalender Konten & Jadwal Promosi Bisnis Online | COOCA')
+@section('og_description', 'Rencanakan jadwal konten medsos sebulan penuh: kalender editorial visual terhubung langsung ke Instagram, Facebook, dan katalog toko.')
 @section('keywords',
     'software kalender konten, aplikasi jadwal promosi bisnis, editorial calendar medsos, perencanaan konten produk, jadwal posting instagram facebook')
 

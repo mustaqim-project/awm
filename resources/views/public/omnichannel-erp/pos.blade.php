@@ -1,16 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Kasir POS Multi-Outlet Terintegrasi ERP & Stok | COOCA')
-@section('description',
-    'Software Point of Sale (POS) modern untuk retail, F&B, dan jasa. Transaksi kasir secepat kilat,
-    cetak struk Bluetooth, barcode scanner, QRIS dinamis, dan langsung memotong stok serta membukukan jurnal keuangan
-    otomatis.')
-@section('keywords',
-    'software kasir online, aplikasi pos multi outlet, point of sale indonesia, pos terintegrasi stok,
-    kasir barcode qris')
+@section('title', 'Aplikasi Kasir POS Multi-Outlet & Stok Gudang | COOCA')
+@section('description', 'Aplikasi kasir POS toko & restoran: scan barcode, cetak struk Bluetooth, QRIS, serta otomatis potong stok gudang dan catat jurnal kasir.')
+@section('keywords', 'software kasir online, aplikasi pos multi outlet, point of sale indonesia, pos terintegrasi stok, kasir barcode qris')
 
-@section('og_title', 'Aplikasi Kasir POS Multi-Outlet Terintegrasi ERP & Stok | COOCA')
-@section('og_description', 'Kasir POS cepat dengan cetak struk Bluetooth, barcode scanner, QRIS dinamis, dan potong stok bahan baku otomatis seketika.')
+@section('og_title', 'Aplikasi Kasir POS Multi-Outlet & Stok Gudang | COOCA')
+@section('og_description', 'Aplikasi kasir POS toko & restoran: scan barcode, cetak struk Bluetooth, QRIS, serta otomatis potong stok gudang dan catat jurnal kasir.')
 
     @push('seo')
         <script type="application/ld+json">

@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Bisnis Jasa & Servis: Booking Jadwal, Teknisi & Invoice | COOCA')
-@section('description', 'Solusi aplikasi bisnis jasa, barbershop, klinik, salon, dan servis AC panggilan. Kalender booking janji temu, penugasan teknisi/staf, invoice DP & pelunasan bertahap, dan pengingat WhatsApp anti no-show.')
-@section('og_title', 'Software Bisnis Jasa & Servis: Booking Jadwal, Teknisi & Invoice | COOCA')
-@section('og_description', 'Atur jadwal booking klien tanpa bentrok, distribusikan pekerjaan teknisi, terbitkan invoice DP dan pelunasan bertahap, serta hitung komisi tim transparan.')
+@section('title', 'Aplikasi Bisnis Jasa & Servis: Booking & Invoice | COOCA')
+@section('description', 'Aplikasi bisnis jasa, salon & servis: booking janji temu, penugasan teknisi, invoice DP & pelunasan bertahap, serta pengingat WhatsApp anti no-show.')
+@section('og_title', 'Aplikasi Bisnis Jasa & Servis: Booking & Invoice | COOCA')
+@section('og_description', 'Aplikasi bisnis jasa, salon & servis: booking janji temu, penugasan teknisi, invoice DP & pelunasan bertahap, serta pengingat WhatsApp anti no-show.')
 @section('canonical', route('public.solutions.services'))
 @section('og_type', 'product')
 @section('keywords', 'software bisnis jasa, aplikasi manajemen booking servis, sistem invoicing jasa, software barbershop salon, aplikasi servis ac panggilan, jadwal teknisi lapangan, komisi terapis staf')
@@ -22,6 +22,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA cocok untuk jasa panggilan (home service) maupun studio di tempat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, sangat fleksibel. Untuk bisnis studio/klinik (seperti salon atau barbershop), sistem mengelola ketersediaan kursi atau ruangan perawatan. Untuk jasa panggilan (seperti servis AC atau pembersihan rumah), sistem mencatat alamat klien dan rute penugasan teknisi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika klien membutuhkan penambahan pekerjaan atau sparepart di lokasi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Teknisi atau kasir dapat menambahkan item jasa tambahan maupun material suku cadang langsung ke dalam Surat Perintah Kerja aktif dari smartphone. Invoice pelunasan akan otomatis mengakumulasikan biaya baru tersebut secara transparan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mengirim invoice dan kuitansi pembayaran resmi ke klien?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA menyediakan fitur cetak invoice PDF profesional berlogo perusahaan Anda yang dapat dikirimkan langsung ke email atau WhatsApp klien dalam bentuk tautan digital resmi yang aman."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA mendukung skema kontrak servis berkala (maintenance retainer)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. Anda dapat mengatur jadwal kunjungan berulang (bulanan/triwulanan) untuk klien korporat dengan sistem pengingat otomatis sebelum jadwal servis jatuh tempo."
+          }
+        }
+      ]
     }
     </script>
     @endpush

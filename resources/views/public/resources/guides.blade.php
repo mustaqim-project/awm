@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM | COOCA')
-@section('description', 'Panduan langkah demi langkah implementasi sistem COOCA: setup awal gerai, pairing printer Bluetooth thermal 58mm/80mm, impor Excel massal, dan SOP buka-tutup kasir.')
+@section('description', 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, impor Excel produk massal, dan SOP buka-tutup kasir.')
 @section('og_title', 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM | COOCA')
-@section('og_description', 'Tutorial langkah demi langkah menyiapkan gerai, menghubungkan printer thermal, dan menjalankan SOP kasir profesional.')
+@section('og_description', 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, impor Excel produk massal, dan SOP buka-tutup kasir.')
 @section('canonical', route('public.resources.guides'))
 @section('og_type', 'article')
 @section('keywords', 'panduan cooca, cara setting printer kasir bluetooth, sop kasir toko, cara impor produk excel, cara stok opname akurat, tutorial pos android')

@@ -55,6 +55,46 @@
         ]
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Apa perbedaan Business Operating System dengan aplikasi kasir (POS) biasa?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Aplikasi kasir biasa hanya mencatat apa yang dijual di kasir dan mencetak struk belanja. Sedangkan Business Operating System (COOCA) menghubungkan kasir tersebut dengan gudang bahan baku (stok terpotong otomatis), pembukuan keuangan (jurnal laba rugi terbit otomatis), database pelanggan CRM, notifikasi WhatsApp, hingga laporan manajemen owner secara real-time."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Apakah bisnis saya yang masih 1 outlet cocok menggunakan sistem ini?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sangat cocok. Justru memulai dengan sistem terpadu sejak 1 gerai akan mencegah kekacauan data saat bisnis Anda berekspansi ke cabang 2, 3, dan seterusnya. Anda tidak perlu repot migrasi sistem di kemudian hari karena COOCA dirancang modular dari skala pemula hingga multi-cabang."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Apakah data keuangan dan resep bisnis saya aman dan terpisah dari bisnis lain?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ya. COOCA menerapkan arsitektur isolasi multi-tenant yang ketat. Setiap bisnis memiliki partisi data independen dengan enkripsi AES-256 dan kontrol hak akses berbasis role (Kasir, Manajer, Owner). Staf kasir tidak akan bisa melihat laporan laba bersih atau resep rahasia yang hanya boleh diakses oleh pemilik."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Perangkat apa saja yang dibutuhkan untuk menjalankan COOCA?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Anda tidak perlu membeli perangkat komputer mahal. Kasir dapat dijalankan cukup dari smartphone Android atau tablet yang sudah ada, terhubung ke printer thermal Bluetooth portabel. Manajemen stok dan pembukuan dapat diakses fleksibel dari browser laptop atau PC mana pun."
+                }
+            }
+        ]
+    }
+    </script>
 @endpush
 
 @section('content')
@@ -163,10 +203,10 @@
                                 <div class="text-[10.5px] text-slate-400 font-medium">Akurasi Finansial</div>
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             </div>
-                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">100% Real-Time</div>
+                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">Satu Data Terpadu</div>
                             <div class="text-[10.5px] font-semibold text-emerald-400 flex items-center gap-1 mt-0.5">
                                 <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                <span>Single Source of Truth</span>
+                                <span>Tanpa Selisih Catatan</span>
                             </div>
                         </div>
 
@@ -174,10 +214,10 @@
                         <div
                             class="hidden sm:block absolute -bottom-4 -left-3 z-30 bg-[#0A122C]/95 border border-white/20 rounded-[18px] p-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8),0_0_20px_rgba(0,122,255,0.2)] min-w-[155px] backdrop-blur-2xl text-white transform hover:-translate-y-0.5 transition-all">
                             <div class="text-[10.5px] text-slate-400 font-medium">Jalur Alur Data</div>
-                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">0 Detik Delay</div>
+                            <div class="text-base font-extrabold text-white tabular-nums tracking-tight mt-0.5">Sinkron Seketika</div>
                             <div class="text-[10.5px] font-semibold text-[#00C4D8] flex items-center gap-1.5 mt-0.5">
                                 <span class="w-1.5 h-1.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Sync Otomatis</span>
+                                <span>Otomatis &amp; Terhubung</span>
                             </div>
                         </div>
 
@@ -725,7 +765,7 @@
                             </h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed text-pretty">
                                 Tinggalkan kerumitan spreadsheet tercecer dan input data berulang. Gabung bersama ratusan
-                                pemilik UMKM Indonesia yang mengelola toko lebih tenang dan pasti profit bersama COOCA.
+                                pemilik UMKM Indonesia yang mengelola toko lebih tertib, transparan, dan bebas selisih uang kasir bersama COOCA.
                             </p>
                         </div>
 

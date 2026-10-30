@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Kasir Retail & Minimarket Multi-Outlet Terintegrasi | COOCA')
-@section('description',
-    'Solusi aplikasi kasir dan manajemen toko retail, minimarket, butik, dan swalayan. Barcode scanner cepat, konversi multi-satuan (dus ke pcs), harga grosir bertingkat, dan kontrol ribuan SKU.')
-@section('og_title', 'Software Kasir Retail & Minimarket Multi-Outlet Terintegrasi | COOCA')
-@section('og_description',
-    'Kelola ribuan SKU barang, scan barcode secepat kilat, konversi satuan dus ke pcs otomatis, dan kendalikan stok antar cabang toko.')
+@section('title', 'Aplikasi Kasir Toko & Minimarket: Barcode & Stok | COOCA')
+@section('description', 'Aplikasi kasir retail & minimarket: scan barcode cepat, konversi satuan dus ke pcs, harga grosir bertingkat, dan kontrol ribuan SKU antar cabang.')
+@section('og_title', 'Aplikasi Kasir Toko & Minimarket: Barcode & Stok | COOCA')
+@section('og_description', 'Aplikasi kasir retail & minimarket: scan barcode cepat, konversi satuan dus ke pcs, harga grosir bertingkat, dan kontrol ribuan SKU antar cabang.')
 @section('canonical', route('public.solutions.retail'))
 @section('og_type', 'product')
 @section('keywords',
@@ -25,6 +23,46 @@
         "price": "0",
         "priceCurrency": "IDR"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah saya harus membeli alat scanner barcode khusus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tidak wajib. COOCA mendukung kamera smartphone atau tablet Anda sebagai barcode scanner langsung. Namun jika toko Anda melayani antrean padat, Anda dapat menghubungkan barcode scanner USB atau Bluetooth standar (1D/2D) tanpa perlu install driver tambahan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana mencetak label barcode untuk barang yang tidak memiliki barcode pabrik?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA memiliki generator barcode internal. Untuk produk lokal, jajanan kiloan, pakaian, atau produk custom, sistem akan men-generate kode barcode unik yang dapat langsung Anda cetak menggunakan printer label stiker thermal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah COOCA bisa mentransfer stok barang antar cabang toko retail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bisa. Tersedia fitur Mutasi / Transfer Stok Antar Gudang & Cabang. Cabang A dapat mengajukan permintaan transfer, Cabang B melakukan konfirmasi pengiriman barang, dan stok di kedua cabang otomatis ter-update saat barang diterima di tujuan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana keamanan uang kas kasir dari potensi kecurangan karyawan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "COOCA menerapkan sistem Blind Close Cashier. Saat tutup shift, kasir harus menghitung uang tunai fisik di laci tanpa diberitahu total nominal di sistem. Jika terjadi selisih lebih atau kurang, owner akan langsung menerima notifikasi rekap detail per kasir."
+          }
+        }
+      ]
     }
     </script>
     @endpush

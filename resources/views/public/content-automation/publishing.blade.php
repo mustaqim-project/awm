@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
-@section('description',
-    'Otomasi publikasi konten media sosial bisnis tanpa perlu unggah manual. Antrean penayangan otomatis ke Instagram dan Facebook, sinkronisasi waktu terjadwal, dan laporan status penerbitan real-time.')
-@section('og_title', 'Software Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
-@section('og_description',
-    'Otomasi publikasi konten media sosial bisnis tanpa perlu unggah manual. Antrean penayangan otomatis ke Instagram dan Facebook, sinkronisasi waktu terjadwal, dan laporan status penerbitan real-time.')
+@section('title', 'Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
+@section('description', 'Otomasi publikasi konten media sosial bisnis tanpa unggah manual: antrean tayang Instagram dan Facebook dengan jadwal terjadwal rapi.')
+@section('og_title', 'Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
+@section('og_description', 'Otomasi publikasi konten media sosial bisnis tanpa unggah manual: antrean tayang Instagram dan Facebook dengan jadwal terjadwal rapi.')
 @section('keywords',
     'software publikasi otomatis media sosial, auto publish instagram facebook, aplikasi antrean posting medsos, penjadwalan konten otomatis, social media dispatch engine')
 

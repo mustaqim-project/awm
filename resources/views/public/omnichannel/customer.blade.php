@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Omnichannel Customer & Single Customer View Terpadu | COOCA')
-@section('description',
-    'Satukan data pelanggan dari toko fisik, website, WhatsApp, dan marketplace ke dalam Single Customer View. Kenali riwayat belanja utuh pelanggan di seluruh channel penjualan Anda.')
-@section('og_title', 'Software Omnichannel Customer & Single Customer View Terpadu | COOCA')
-@section('og_description',
-    'Satukan data pelanggan dari toko fisik, website, WhatsApp, dan marketplace ke dalam Single Customer View. Kenali riwayat belanja utuh pelanggan di seluruh channel penjualan Anda.')
+@section('title', 'Database Pelanggan Terpadu & CRM Omnichannel | COOCA')
+@section('description', 'Satukan data pelanggan dari toko fisik, WhatsApp, dan marketplace ke dalam satu profil. Pantau riwayat belanja utuh tanpa data ganda.')
+@section('og_title', 'Database Pelanggan Terpadu & CRM Omnichannel | COOCA')
+@section('og_description', 'Satukan data pelanggan dari toko fisik, WhatsApp, dan marketplace ke dalam satu profil. Pantau riwayat belanja utuh tanpa data ganda.')
 @section('keywords',
     'software omnichannel customer, single customer view indonesia, database pelanggan lintas channel, konsolidasi data pembeli toko fisik online, resolusi identitas crm')
 

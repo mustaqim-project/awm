@@ -1,7 +1,7 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Kalkulator HPP & Harga Jual Online Gratis | COOCA')
-@section('description', 'Kalkulator HPP (Harga Pokok Penjualan) 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan tentukan target markup atau margin keuntungan secara instan.')
+@section('description', 'Kalkulator HPP 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan target margin keuntungan secara instan.')
 @section('og_title', 'Kalkulator HPP & Harga Jual Online Gratis | COOCA')
 @section('og_description', 'Kalkulator HPP 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan tentukan target margin keuntungan.')
 @section('canonical', route('kalkulator.hpp'))

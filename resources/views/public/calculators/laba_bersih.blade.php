@@ -1,8 +1,8 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Laba Bersih (Net Profit) Usaha Online Gratis | COOCA')
-@section('description', 'Kalkulator simulasi laba bersih (net profit) UMKM online. Hitung pendapatan kotor, HPP barang terjual, biaya operasional, gaji, sewa, listrik, dan pajak untuk mengetahui laba bersih riil.')
-@section('og_title', 'Kalkulator Laba Bersih (Net Profit) Usaha Online Gratis | COOCA')
+@section('title', 'Kalkulator Laba Bersih Usaha Online | COOCA')
+@section('description', 'Kalkulator laba bersih (net profit) UMKM online. Hitung omzet kotor, HPP, biaya operasional, dan pajak untuk mengetahui keuntungan riil.')
+@section('og_title', 'Kalkulator Laba Bersih Usaha Online | COOCA')
 @section('og_description', 'Simulasikan laba bersih usaha Anda secara akurat setelah dikurangi HPP, beban operasional, dan pajak.')
 @section('canonical', route('kalkulator.laba-bersih'))
 @section('og_type', 'website')

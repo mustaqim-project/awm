@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Blog & Edukasi Bisnis UMKM | Panduan Finansial & Kasir - COOCA')
-@section('description', 'Pusat edukasi dan panduan praktis UMKM Indonesia. Pelajari tutorial cara hitung HPP, BEP, pembukuan kas, serta wawasan seputar kasir POS digital dan AI bisnis.')
-@section('og_title', 'Blog & Edukasi Bisnis UMKM | Panduan Finansial & Kasir - COOCA')
-@section('og_description', 'Pusat edukasi dan panduan praktis UMKM Indonesia. Pelajari tutorial cara hitung HPP, BEP, pembukuan kas, serta wawasan seputar kasir POS digital.')
+@section('title', 'Blog & Edukasi Bisnis UMKM: Finansial & Kasir | COOCA')
+@section('description', 'Pusat edukasi bisnis UMKM: tutorial hitung HPP, BEP titik impas, pembukuan kas, serta tips operasional kasir POS dan stok toko.')
+@section('og_title', 'Blog & Edukasi Bisnis UMKM: Finansial & Kasir | COOCA')
+@section('og_description', 'Pusat edukasi bisnis UMKM: tutorial hitung HPP, BEP titik impas, pembukuan kas, serta tips operasional kasir POS dan stok toko.')
 @section('canonical', route('blog.index'))
 @section('og_type', 'website')
 @section('keywords', 'blog umkm indonesia, tutorial pembukuan usaha, cara hitung hpp makanan, cara hitung bep, tips bisnis toko kecil, ai untuk umkm')
