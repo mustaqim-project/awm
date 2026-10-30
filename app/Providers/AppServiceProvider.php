@@ -88,23 +88,23 @@ class AppServiceProvider extends ServiceProvider
             ];
 
             $majorIndustrySolutions = [
-                ['name' => 'F&B & Resto', 'desc' => 'Meja, menu QR, dapur, & split bill', 'route' => 'public.solutions.fnb', 'icon' => 'utensils', 'color' => '#FF9500', 'bg' => 'amber'],
-                ['name' => 'Retail & Toko', 'desc' => 'Barcode scanner, varian, & multi-cabang', 'route' => 'public.solutions.retail', 'icon' => 'store', 'color' => '#00C2FF', 'bg' => 'cyan'],
-                ['name' => 'Bengkel & Otomotif', 'desc' => 'SPK, antrean servis, part & mekanik', 'route' => 'public.solutions.workshop', 'icon' => 'wrench', 'color' => '#FF3B30', 'bg' => 'red'],
-                ['name' => 'Laundry Kiloan & Satuan', 'desc' => 'Kiloan, satuan, barcode rak & status cuci', 'route' => 'public.solutions.laundry', 'icon' => 'sparkles', 'color' => '#34C759', 'bg' => 'emerald'],
-                ['name' => 'Manufaktur & Produksi', 'desc' => 'BOM, work order, & alokasi bahan baku', 'route' => 'public.solutions.manufacturing', 'icon' => 'factory', 'color' => '#AF52DE', 'bg' => 'purple'],
-                ['name' => 'Services & Jasa', 'desc' => 'Booking appointment, termin, & invoicing', 'route' => 'public.solutions.services', 'icon' => 'briefcase', 'color' => '#007AFF', 'bg' => 'blue'],
+                ['name' => __('public_marketing.nav_sol_fnb'), 'desc' => __('public_marketing.nav_sol_fnb_desc'), 'route' => 'public.solutions.fnb', 'icon' => 'utensils', 'color' => '#FF9500', 'bg' => 'amber'],
+                ['name' => __('public_marketing.nav_sol_retail'), 'desc' => __('public_marketing.nav_sol_retail_desc'), 'route' => 'public.solutions.retail', 'icon' => 'store', 'color' => '#00C2FF', 'bg' => 'cyan'],
+                ['name' => __('public_marketing.nav_sol_workshop'), 'desc' => __('public_marketing.nav_sol_workshop_desc'), 'route' => 'public.solutions.workshop', 'icon' => 'wrench', 'color' => '#FF3B30', 'bg' => 'red'],
+                ['name' => __('public_marketing.nav_sol_laundry'), 'desc' => __('public_marketing.nav_sol_laundry_desc'), 'route' => 'public.solutions.laundry', 'icon' => 'sparkles', 'color' => '#34C759', 'bg' => 'emerald'],
+                ['name' => __('public_marketing.nav_sol_mfg'), 'desc' => __('public_marketing.nav_sol_mfg_desc'), 'route' => 'public.solutions.manufacturing', 'icon' => 'factory', 'color' => '#AF52DE', 'bg' => 'purple'],
+                ['name' => __('public_marketing.nav_sol_services'), 'desc' => __('public_marketing.nav_sol_services_desc'), 'route' => 'public.solutions.services', 'icon' => 'briefcase', 'color' => '#007AFF', 'bg' => 'blue'],
             ];
 
             $nicheSolutions = [
-                ['name' => 'Warung Kelontong', 'slug' => 'kasir-warung', 'icon' => 'shopping-bag'],
-                ['name' => 'Kedai Kopi & Kafe', 'slug' => 'kasir-cafe-kecil', 'icon' => 'coffee'],
-                ['name' => 'Konter HP & Kios', 'slug' => 'kasir-kios', 'icon' => 'smartphone'],
-                ['name' => 'Salon Kecantikan', 'slug' => 'kasir-salon', 'icon' => 'scissors'],
-                ['name' => 'Barbershop', 'slug' => 'kasir-barbershop', 'icon' => 'user-check'],
-                ['name' => 'Usaha Rumahan & IRT', 'slug' => 'kasir-irt', 'icon' => 'home'],
-                ['name' => 'Apotek & Toko Obat', 'slug' => 'kasir-apotek', 'icon' => 'pill'],
-                ['name' => 'Catering & Prasmanan', 'slug' => 'aplikasi-catering', 'icon' => 'utensils'],
+                ['name' => __('public_marketing.niche_warung'), 'slug' => 'kasir-warung', 'icon' => 'shopping-bag'],
+                ['name' => __('public_marketing.niche_cafe'), 'slug' => 'kasir-cafe-kecil', 'icon' => 'coffee'],
+                ['name' => __('public_marketing.niche_kios'), 'slug' => 'kasir-kios', 'icon' => 'smartphone'],
+                ['name' => __('public_marketing.niche_salon'), 'slug' => 'kasir-salon', 'icon' => 'scissors'],
+                ['name' => __('public_marketing.niche_barber'), 'slug' => 'kasir-barbershop', 'icon' => 'user-check'],
+                ['name' => __('public_marketing.niche_home'), 'slug' => 'kasir-irt', 'icon' => 'home'],
+                ['name' => __('public_marketing.niche_pharmacy'), 'slug' => 'kasir-apotek', 'icon' => 'pill'],
+                ['name' => __('public_marketing.niche_catering'), 'slug' => 'aplikasi-catering', 'icon' => 'utensils'],
             ];
 
             $view->with([

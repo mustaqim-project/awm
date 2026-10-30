@@ -180,9 +180,9 @@
                         class="lg:col-span-6 space-y-5 sm:space-y-6 lg:space-y-7 text-left flex flex-col items-start w-full">
                         <!-- Pure Typographic Overline Kicker with Pulse Dot -->
                         <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                            <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Aplikasi Kasir, Stok &amp; Pembukuan UMKM
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#00C2FF] animate-pulse"></span>
+                            <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C2FF]">
+                                {{ __('public_home.hero_kicker') }}
                             </p>
                         </div>
 
@@ -190,14 +190,14 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4.5rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                    {{ app()->getLocale() === 'en' ? __('public_home.hero_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_home.hero_title')) }}
                 </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Cukup dari HP atau tablet. Catat transaksi kasir, cetak struk thermal, potong stok otomatis, dan pantau laba harian tanpa spreadsheet rumit.
+                            {{ __('public_home.hero_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
@@ -205,19 +205,19 @@
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_home.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
                                     class="h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
-                                    <span>Dashboard</span>
+                                    <span>{{ __('public_home.btn_dashboard') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('register') }}"
                                     class="h-11 sm:h-12 px-6 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 border border-white/20 touch-action-manipulation">
-                                    <span>Mulai Coba Gratis</span>
+                                    <span>{{ __('public_home.hero_cta_primary') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @endif
@@ -266,7 +266,7 @@
                                             <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">{{ $socialProofRating }} / 5.0</span>
                                         </div>
                                     @endif
-                                    <span class="text-xs text-slate-400 font-medium">Dari {{ $socialProofUsers }} Pemilik Usaha &amp; UMKM</span>
+                                    <span class="text-xs text-slate-400 font-medium">{{ __('public_home.hero_social_proof_count', ['users' => $socialProofUsers]) }}</span>
                                 </div>
                             </div>
                         @else
@@ -274,14 +274,14 @@
                             <div class="pt-0.5 sm:pt-1 inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11.5px] sm:text-xs text-slate-300 backdrop-blur-sm shadow-xs">
                                 <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
                                     <i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-emerald-400"></i>
-                                    <span class="text-white">Gratis untuk mulai</span>
+                                    <span class="text-white">{{ __('public_home.trust_badge_free') }}</span>
                                 </div>
                                 <span class="text-slate-500">•</span>
-                                <span>Tanpa kartu kredit</span>
+                                <span>{{ __('public_home.trust_badge_no_card') }}</span>
                                 <span class="text-slate-500">•</span>
-                                <span>Data milik Anda 100%</span>
+                                <span>{{ __('public_home.trust_badge_data_owner') }}</span>
                                 <span class="text-slate-500">•</span>
-                                <span class="text-[#00C2FF] font-medium">Dibuat untuk UMKM Indonesia</span>
+                                <span class="text-[#00C2FF] font-medium">{{ __('public_home.trust_badge_made_for') }}</span>
                             </div>
                         @endif
 
@@ -290,15 +290,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-4 sm:gap-x-5 gap-y-1.5 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Gratis Selamanya (s.d. {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln)</span>
+                                <span>{{ __('public_home.reassurance_free', ['limit' => $tierLimits['free']['pos'] ?? 30]) }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Tanpa Kartu Kredit</span>
+                                <span>{{ __('public_home.reassurance_no_card') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Siap 2 Menit</span>
+                                <span>{{ __('public_home.reassurance_ready') }}</span>
                             </div>
                         </div>
 
@@ -531,12 +531,12 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">Operasional</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_operations') }}</span>
                                 <!-- Hover Micro-Badge -->
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'operasional' ? '!opacity-100' : ''">
-                                    Otomasi &amp; Inventory
+                                    {{ __('public_home.node_operations_hover') }}
                                 </span>
                             </div>
 
@@ -581,12 +581,11 @@
                                     </span>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">Social
-                                    Media</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_social') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'social' ? '!opacity-100' : ''">
-                                    IG, TikTok, FB, Threads
+                                    {{ __('public_home.node_social_hover') }}
                                 </span>
                             </div>
 
@@ -603,11 +602,11 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">WhatsApp</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_whatsapp') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'whatsapp' ? '!opacity-100' : ''">
-                                    Multi-Agent &amp; Bot
+                                    {{ __('public_home.node_whatsapp_hover') }}
                                 </span>
                             </div>
 
@@ -632,11 +631,11 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">POS</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_pos') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'pos' ? '!opacity-100' : ''">
-                                    Kasir Toko &amp; QRIS
+                                    {{ __('public_home.node_pos_hover') }}
                                 </span>
                             </div>
 
@@ -663,12 +662,11 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center whitespace-nowrap">Content<br
-                                        class="sm:hidden"> Automation</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center whitespace-nowrap">{{ __('public_home.node_content') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'automation' ? '!opacity-100' : ''">
-                                    Auto-Post &amp; AI
+                                    {{ __('public_home.node_content_hover') }}
                                 </span>
                             </div>
 
@@ -696,11 +694,11 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">Website</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_website') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'website' ? '!opacity-100' : ''">
-                                    Katalog &amp; Web Store
+                                    {{ __('public_home.node_website_hover') }}
                                 </span>
                             </div>
 
@@ -725,11 +723,11 @@
                                     </svg>
                                 </div>
                                 <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">Customer</span>
+                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_customer') }}</span>
                                 <span
                                     class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
                                     :class="activeNode === 'customer' ? '!opacity-100' : ''">
-                                    CRM &amp; Loyalty
+                                    {{ __('public_home.node_customer_hover') }}
                                 </span>
                             </div>
 
@@ -751,19 +749,19 @@
                 <div class="text-center max-w-4xl mx-auto space-y-3">
                     <p
                         class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                        Satu Ekosistem untuk Bisnis Anda
+                        {{ __('public_home.ecosystem_kicker') }}
                     </p>
                     <h2
                         class="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                        Semua Kebutuhan Bisnis Anda, Terhubung Jadi Satu
+                        {{ __('public_home.ecosystem_title') }}
                     </h2>
                     <p class="text-xs sm:text-sm font-semibold text-[#007AFF] uppercase tracking-wider">
-                        Satu Platform Praktis Tanpa Aplikasi yang Tercecer
+                        {{ __('public_home.ecosystem_subtitle') }}
                     </p>
                     <div
                         class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto space-y-2">
                         <p class="font-bold text-slate-900 dark:text-white pt-1">
-                            COOCA menghubungkan semuanya.
+                            {{ __('public_home.ecosystem_tag') }}
                         </p>
                     </div>
                 </div>
@@ -780,12 +778,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Kasir &amp; Penjualan (POS)</span>
+                            <span>{{ __('public_home.card_pos_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Catat transaksi kasir kilat, terima QRIS, cetak struk thermal, dan kirim nota digital ke WhatsApp pembeli.
+                            {{ __('public_home.card_pos_desc') }}
                         </p>
                     </a>
 
@@ -798,12 +796,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Stok Barang &amp; Gudang</span>
+                            <span>{{ __('public_home.card_stock_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Pantau persediaan toko dan gudang cabang, alur kulakan ke supplier, dan peringatan barang habis otomatis.
+                            {{ __('public_home.card_stock_desc') }}
                         </p>
                     </a>
 
@@ -816,12 +814,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Arus Kas &amp; Pembukuan</span>
+                            <span>{{ __('public_home.card_finance_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Setiap transaksi kasir otomatis jadi jurnal. Lihat uang masuk-keluar dan laporan laba rugi instan tanpa Excel.
+                            {{ __('public_home.card_finance_desc') }}
                         </p>
                     </a>
 
@@ -834,12 +832,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Data &amp; Loyalitas Pelanggan</span>
+                            <span>{{ __('public_home.card_customer_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Simpan kontak pembeli, kumpulkan poin belanja, dan kirim promo terarah via WhatsApp agar pelanggan terus kembali.
+                            {{ __('public_home.card_customer_desc') }}
                         </p>
                     </a>
 
@@ -866,12 +864,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Media Sosial Bisnis</span>
+                            <span>{{ __('public_home.card_social_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Kelola materi promosi toko di Instagram, TikTok, Facebook, dan Threads langsung dari etalase kasir.
+                            {{ __('public_home.card_social_desc') }}
                         </p>
                     </a>
 
@@ -884,12 +882,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Otomasi Konten Promosi</span>
+                            <span>{{ __('public_home.card_content_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Tarik foto dan harga produk jualan menjadi materi postingan promosi media sosial dalam hitungan menit.
+                            {{ __('public_home.card_content_desc') }}
                         </p>
                     </a>
 
@@ -902,12 +900,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Marketplace &amp; Toko Online</span>
+                            <span>{{ __('public_home.card_marketplace_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Buka etalase toko online resmi dan jangkau pembeli baru di direktori UMKM tanpa potongan biaya perantara.
+                            {{ __('public_home.card_marketplace_desc') }}
                         </p>
                     </a>
 
@@ -920,12 +918,12 @@
                         </div>
                         <h3
                             class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-1 sm:mb-1.5 flex items-center justify-between">
-                            <span>Dasbor Analitik &amp; AI</span>
+                            <span>{{ __('public_home.card_analytics_title') }}</span>
                             <i data-lucide="arrow-right"
                                 class="w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#007AFF]"></i>
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Pantau laba bersih harian, produk terlaris, dan jam operasional paling ramai langsung dari ponsel Anda.
+                            {{ __('public_home.card_analytics_desc') }}
                         </p>
                     </a>
 
@@ -946,21 +944,20 @@
                         class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
                         <div>
                             <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                Buat Sekali, Jangkau Banyak Channel
+                                {{ __('public_home.split_content_kicker') }}
                             </span>
                             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                                Content Automation &bull; Kelola Konten, Maksimalkan Dampak
+                                {{ __('public_home.split_content_title') }}
                             </h3>
                             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                Buat dan kelola konten promosi bisnis tanpa repot pindah aplikasi. Rencanakan, buat, jadwalkan,
-                                tayangkan, dan pantau performa promosi dalam satu alur kerja terhubung.
+                                {{ __('public_home.split_content_desc') }}
                             </p>
                         </div>
 
                         <div>
                             <a href="{{ route('public.content.creation') }}"
                                 class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>Pelajari Content Automation</span>
+                                <span>{{ __('public_home.split_content_btn') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -987,12 +984,10 @@
                                         </svg>
                                     </div>
                                     <span
-                                        class="text-[11.5px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">Kopi
-                                        Susu Aren
-                                        Spesial</span>
+                                        class="text-[11.5px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">{{ __('public_home.split_content_mock_title') }}</span>
                                 </div>
                                 <p class="text-[10.5px] sm:text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
-                                    Awali pagi harimu dengan sensasi creamy gula aren murni. Promo buy 1 get 1 hari ini!
+                                    {{ __('public_home.split_content_mock_desc') }}
                                 </p>
                             </div>
 
@@ -1001,8 +996,7 @@
                                 class="rounded-2xl border border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-slate-900/60 p-3 flex flex-col justify-between">
                                 <div
                                     class="text-[10.5px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                                    Jadwal
-                                    Posting</div>
+                                    {{ __('public_home.split_content_schedule_label') }}</div>
                                 <div class="space-y-2">
                                     <div
                                         class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800 text-[11px] sm:text-xs">
@@ -1072,21 +1066,20 @@
                         class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
                         <div>
                             <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                Temukan Bisnis &amp; Produk UMKM
+                                {{ __('public_home.split_marketplace_kicker') }}
                             </span>
                             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                                COOCA Marketplace &bull; Temukan &amp; Jual Lebih Mudah
+                                {{ __('public_home.split_marketplace_title') }}
                             </h3>
                             <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                Temukan bisnis dan produk unggulan dari berbagai kategori usaha. Toko Anda mendapatkan etalase
-                                online tambahan untuk menjangkau pembeli baru.
+                                {{ __('public_home.split_marketplace_desc') }}
                             </p>
                         </div>
 
                         <div>
                             <a href="{{ route('marketplace.index') }}"
                                 class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>Kunjungi Marketplace</span>
+                                <span>{{ __('public_home.split_marketplace_btn') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -1126,16 +1119,16 @@
                                         <i data-lucide="search" class="w-4 h-4 text-slate-400 ml-2 shrink-0"></i>
                                         <input type="text" name="q" x-model="query"
                                             @input.debounce.300ms="searchProducts()"
-                                            placeholder="Cari produk atau bisnis..." autocomplete="off"
+                                            placeholder="{{ __('public_home.split_marketplace_search_placeholder') }}" autocomplete="off"
                                             class="w-full bg-transparent border-0 text-[16px] sm:text-xs text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-0 p-1">
                                         <button type="submit"
                                             class="shrink-0 px-4 py-2.5 rounded-xl bg-[#00C2FF] hover:bg-[#00B4D8] text-slate-950 font-bold text-xs shadow-sm hover:scale-105 active:scale-95 transition-all min-h-[44px] touch-action-manipulation">
-                                            Cari
+                                            {{ __('public_home.split_marketplace_search_submit') }}
                                         </button>
                                         <div
                                             class="hidden sm:flex items-center gap-1 text-[10px] text-slate-500 bg-white dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-100 dark:border-white/5 shrink-0">
                                             <i data-lucide="map-pin" class="w-3 h-3 text-rose-500"></i>
-                                            <span>Semua Kota</span>
+                                            <span>{{ __('public_home.split_marketplace_all_cities') }}</span>
                                         </div>
                                     </div>
                                 </form>
@@ -1145,7 +1138,7 @@
                                     class="absolute left-0 right-0 top-full mt-2 z-30 bg-white dark:bg-[#151D2F] border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden divide-y divide-slate-100 dark:divide-white/5">
                                     <div
                                         class="px-3 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50/50 dark:bg-white/[0.02]">
-                                        Produk Terverifikasi
+                                        {{ __('public_home.split_marketplace_verified_heading') }}
                                     </div>
                                     <div class="max-h-60 overflow-y-auto">
                                         <template x-for="item in results" :key="item.id">
@@ -1160,7 +1153,7 @@
                                                         x-text="item.name"></div>
                                                     <div class="flex items-center gap-2 text-[10px] text-slate-500">
                                                         <span x-text="item.category"></span>
-                                                        <span>â€¢</span>
+                                                        <span>•</span>
                                                         <span class="font-medium text-[#00C2FF]"
                                                             x-text="item.formatted_price"></span>
                                                     </div>
@@ -1172,7 +1165,7 @@
                                     </div>
                                     <a :href="'{{ route('marketplace.search') }}?q=' + encodeURIComponent(query)"
                                         class="block p-2 text-center text-[11px] font-bold text-[#00C2FF] hover:bg-[#00C2FF]/10 transition-colors">
-                                        Lihat Semua Hasil untuk "<span x-text="query"></span>" &rarr;
+                                        {{ __('public_home.split_marketplace_view_all_prefix') }} "<span x-text="query"></span>" &rarr;
                                     </a>
                                 </div>
                             </div>
@@ -1180,17 +1173,17 @@
                             <!-- Category Filter Chips -->
                             <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs -mx-1 px-1">
                                 <a href="{{ route('marketplace.search') }}"
-                                    class="px-3.5 py-2 rounded-full bg-[#00C2FF] text-white font-bold shrink-0 hover:bg-[#00B4D8] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Semua</a>
+                                    class="px-3.5 py-2 rounded-full bg-[#00C2FF] text-white font-bold shrink-0 hover:bg-[#00B4D8] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_all') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'fnb']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">F&amp;B</a>
+                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_fnb') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'retail']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Retail</a>
+                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_retail') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'service']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Workshop</a>
+                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_workshop') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'service']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Laundry</a>
+                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_laundry') }}</a>
                                 <a href="{{ route('marketplace.search') }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">Lainnya</a>
+                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_other') }}</a>
                             </div>
 
                             <!-- Mini Product Showcase or Honest Merchant Invitation (Prompt 3 Compliant) -->
@@ -1214,7 +1207,8 @@
                                                 class="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]">
                                                 {{ $product->name }}
                                             </div>
-                                            <div class="text-[10px] sm:text-[11px] text-slate-400 truncate">
+                                            <div
+                                                class="text-[10px] sm:text-[11px] text-slate-400 truncate">
                                                 {{ $product->category?->name ?? 'Produk' }}
                                             </div>
                                             <div
@@ -1236,15 +1230,15 @@
                                     </div>
                                     <div class="space-y-0.5">
                                         <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                                            Jadilah merchant pertama di kota Anda!
+                                            {{ __('public_home.split_marketplace_empty_title') }}
                                         </h4>
                                         <p class="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
-                                            Buka etalase toko online instan terintegrasi kasir POS, terima pesanan langsung, dan tampil di direktori lokal.
+                                            {{ __('public_home.split_marketplace_empty_desc') }}
                                         </p>
                                     </div>
                                     <a href="{{ route('register') }}"
                                         class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-[11px] sm:text-xs font-semibold shadow-sm transition">
-                                        <span>Buka Toko Online Gratis</span>
+                                        <span>{{ __('public_home.split_marketplace_empty_btn') }}</span>
                                         <i data-lucide="arrow-right" class="w-3 h-3"></i>
                                     </a>
                                 </div>
@@ -1269,20 +1263,20 @@
                     <div class="space-y-2">
                         <p
                             class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                            Modul Khusus Industri
+                            {{ __('public_home.solutions_section_kicker') }}
                         </p>
                         <h2
                             class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15]">
-                            Cocok untuk Berbagai Jenis Usaha
+                            {{ __('public_home.solutions_section_title') }}
                         </h2>
                         <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
-                            COOCA menyesuaikan fitur dan alur kerja otomatis berdasarkan karakteristik operasional usaha Anda.
+                            {{ __('public_home.solutions_section_desc') }}
                         </p>
                     </div>
                     <div>
                         <a href="{{ route('public.solutions.fnb') }}"
                             class="inline-flex items-center gap-2 px-6 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-[0_4px_16px_rgba(0,122,255,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                            <span>Lihat Solusi Lengkap</span>
+                            <span>{{ __('public_home.solutions_section_btn') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
@@ -1302,12 +1296,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">F&amp;B / Kafe</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_fnb_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Kasir Meja &bull; Resep Bahan &bull; Tiket Dapur &bull; Laba Harian
+                                {{ __('public_home.solution_fnb_features') }}
                             </p>
                         </div>
                     </a>
@@ -1323,12 +1317,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Ritel &amp; Toko</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_retail_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Scan Barcode &bull; Stok Dus/Pcs &bull; Kasbon &bull; Laba Harian
+                                {{ __('public_home.solution_retail_features') }}
                             </p>
                         </div>
                     </a>
@@ -1344,12 +1338,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Bengkel Kendaraan</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_workshop_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                SPK Servis &bull; Stok Sparepart &bull; Komisi Mekanik
+                                {{ __('public_home.solution_workshop_features') }}
                             </p>
                         </div>
                     </a>
@@ -1365,12 +1359,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Laundry Kiloan</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_laundry_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Timbangan Kiloan &bull; Nomor Rak &bull; Nota WhatsApp
+                                {{ __('public_home.solution_laundry_features') }}
                             </p>
                         </div>
                     </a>
@@ -1386,12 +1380,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Manufaktur Produksi</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_mfg_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Bahan Baku &bull; Formula Produksi &bull; Hitung HPP Riil
+                                {{ __('public_home.solution_mfg_features') }}
                             </p>
                         </div>
                     </a>
@@ -1407,12 +1401,12 @@
                         </div>
                         <div class="absolute bottom-3 inset-x-3 text-white space-y-1">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold">Bisnis Jasa</span>
+                                <span class="text-xs font-bold">{{ __('public_home.solution_services_name') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 group-hover:opacity-100 transition-all"></i>
                             </div>
                             <p class="text-xs text-slate-300 leading-tight">
-                                Jadwal Booking &bull; Invoice DP &bull; Riwayat Pelanggan
+                                {{ __('public_home.solution_services_features') }}
                             </p>
                         </div>
                     </a>
@@ -1421,14 +1415,14 @@
 
                 <div class="mt-8 text-center space-y-3">
                     <p class="text-xs text-slate-500 dark:text-slate-400">
-                        Dan berbagai jenis bisnis lainnya yang membutuhkan fleksibilitas serta integrasi tanpa batas.
+                        {{ __('public_home.solutions_footer_text') }}
                     </p>
                     <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
-                        <a href="/aplikasi-kasir-gratis" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Aplikasi Kasir Gratis</a>
-                        <a href="/aplikasi-kasir-android" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Android</a>
-                        <a href="/aplikasi-kasir-offline" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Offline</a>
-                        <a href="{{ route('solusi.show', 'kasir-apotek') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Kasir Apotek</a>
-                        <a href="{{ route('solusi.show', 'aplikasi-catering') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">Aplikasi Catering</a>
+                        <a href="/aplikasi-kasir-gratis" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">{{ __('public_home.solution_tag_free') }}</a>
+                        <a href="/aplikasi-kasir-android" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">{{ __('public_home.solution_tag_android') }}</a>
+                        <a href="/aplikasi-kasir-offline" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">{{ __('public_home.solution_tag_offline') }}</a>
+                        <a href="{{ route('solusi.show', 'kasir-apotek') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">{{ __('public_home.solution_tag_pharmacy') }}</a>
+                        <a href="{{ route('solusi.show', 'aplikasi-catering') }}" class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">{{ __('public_home.solution_tag_catering') }}</a>
                     </div>
                 </div>
             </div>

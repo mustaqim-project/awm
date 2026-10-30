@@ -701,7 +701,7 @@
                             <div class="col-span-2 space-y-4">
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                    Fitur
+                                    {{ __('public_marketing.mega_features_title') }}
                                 </p>
 
                                 <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -715,11 +715,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Point of Sale
+                                                {{ __('public_marketing.pos_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Hubungkan pesanan, pembayaran, dan pembukuan
+                                                {{ __('public_marketing.pos_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -734,11 +734,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Arus Kas &amp; Pembukuan
+                                                {{ __('public_marketing.accounting_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Catat pemasukan, pengeluaran &amp; kas toko
+                                                {{ __('public_marketing.accounting_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -753,11 +753,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Belanja Bahan &amp; Pemasok
+                                                {{ __('public_marketing.inventory_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Kelola pesanan beli (PO) &amp; supplier
+                                                {{ __('public_marketing.inventory_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -772,11 +772,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Rekap Omzet &amp; Laba
+                                                {{ __('public_marketing.revenue_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Pantau omzet harian &amp; laba bersih toko
+                                                {{ __('public_marketing.revenue_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -791,11 +791,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Cetak Struk &amp; Nota Kasir
+                                                {{ __('public_marketing.receipt_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Printer thermal bluetooth &amp; nota WA
+                                                {{ __('public_marketing.receipt_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -806,7 +806,7 @@
                             <div class="col-span-1 space-y-4">
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                    Platform
+                                    {{ __('public_marketing.mega_platform_title') }}
                                 </p>
 
                                 <div class="space-y-4">
@@ -820,11 +820,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Asisten Teks Promosi AI
+                                                {{ __('public_marketing.ai_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Buat caption medsos &amp; deskripsi barang
+                                                {{ __('public_marketing.ai_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -839,11 +839,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Faktur Penjualan &amp; Tagihan
+                                                {{ __('public_marketing.invoice_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Kelola invoice tempo &amp; piutang usaha
+                                                {{ __('public_marketing.invoice_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -858,11 +858,11 @@
                                         <div>
                                             <span
                                                 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                                Integrasi Bawaan
+                                                {{ __('public_marketing.integrations_item_title') }}
                                             </span>
                                             <span
                                                 class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                                Hubungkan ERP, HRIS &amp; tools
+                                                {{ __('public_marketing.integrations_item_desc') }}
                                             </span>
                                         </div>
                                     </a>
@@ -877,7 +877,7 @@
                             <div>
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-3">
-                                    Rilis Terbaru
+                                    {{ __('public_marketing.mega_release_title') }}
                                 </p>
 
                                 <!-- Showcase Banner Card (Dark Spring Release Card) -->
@@ -903,12 +903,12 @@
                                 <div class="mt-4">
                                     <a href="{{ route('public.omnichannel.whatsapp') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>Nota &amp; Notifikasi WhatsApp</span>
+                                        <span>{{ __('public_marketing.banner_spring_title') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Kirim nota struk belanja digital PDF &amp; pengingat tagihan otomatis langsung ke nomor WhatsApp pelanggan.
+                                        {{ __('public_marketing.banner_spring_desc') }}
                                     </p>
                                 </div>
                             </div>
@@ -932,7 +932,7 @@
                         <!-- LEFT 8 COLS: SOLUSI SEKTOR INDUSTRI -->
                         <div class="col-span-8 space-y-4">
                             <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                Solusi Sektor Industri
+                                {{ __('public_marketing.mega_solutions_title') }}
                             </p>
 
                             <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -960,7 +960,7 @@
                             <!-- SUBMENU: USAHA KECIL & SPESIFIK -->
                             <div class="pt-4 border-t border-slate-200/80 dark:border-white/10 space-y-2.5">
                                 <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                    Solusi Usaha Kecil &amp; Mikro
+                                    {{ __('public_marketing.mega_niche_title') }}
                                 </p>
                                 <div class="grid grid-cols-3 gap-2">
                                     @foreach($nicheSolutions ?? [] as $niche)
@@ -971,7 +971,7 @@
                                     @endforeach
                                     <a href="/aplikasi-kasir-gratis" class="px-3 py-2 rounded-xl text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors flex items-center gap-2">
                                         <i data-lucide="gift" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                        <span>Kasir Gratis Rp0</span>
+                                        <span>{{ __('public_marketing.niche_free_pos') }}</span>
                                     </a>
                                 </div>
                             </div>
@@ -983,7 +983,7 @@
                             <div>
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-3">
-                                    Konsultasi Solusi
+                                    {{ __('public_marketing.mega_consult_title') }}
                                 </p>
 
                                 <!-- Showcase Banner Card -->
@@ -1012,13 +1012,12 @@
                                 <div class="mt-4">
                                     <a href="{{ route('public.demo') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>Jadwalkan Konsultasi Demo</span>
+                                        <span>{{ __('public_marketing.banner_demo_title') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Diskusikan konfigurasi alur kerja, integrasi hardware, dan modul yang sesuai
-                                        skala bisnis Anda bersama tim kami.
+                                        {{ __('public_marketing.banner_demo_desc') }}
                                     </p>
                                 </div>
                             </div>
@@ -1042,7 +1041,7 @@
                         <!-- LEFT 8 COLS: KANAL PENJUALAN & CRM -->
                         <div class="col-span-8 space-y-4">
                             <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                Kanal Penjualan &amp; CRM Terpadu
+                                {{ __('public_marketing.mega_omni_title') }}
                             </p>
 
                             <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -1056,11 +1055,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF2D55] transition-colors block">
-                                            Social Media Commerce
+                                            {{ __('public_marketing.social_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Jadwal konten, auto-reply, &amp; katalog multi-channel
+                                            {{ __('public_marketing.social_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1075,11 +1074,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#34C759] transition-colors block">
-                                            WhatsApp Official API
+                                            {{ __('public_marketing.wa_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Broadcast pesan massal &amp; multi-agent live chat
+                                            {{ __('public_marketing.wa_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1094,11 +1093,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF9500] transition-colors block">
-                                            Marketplace Hub
+                                            {{ __('public_marketing.marketplace_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Sinkronisasi stok Shopee, Tokopedia, &amp; TikTok
+                                            {{ __('public_marketing.marketplace_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1113,11 +1112,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors block">
-                                            Central Orders
+                                            {{ __('public_marketing.orders_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Satu inbox pesanan terpadu untuk semua saluran
+                                            {{ __('public_marketing.orders_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1132,11 +1131,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#5856D6] transition-colors block">
-                                            Customer Portal &amp; CRM
+                                            {{ __('public_marketing.crm_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Program loyalty, membership tier, &amp; poin belanja
+                                            {{ __('public_marketing.crm_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1149,7 +1148,7 @@
                             <div>
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-3">
-                                    Sorotan Omnichannel
+                                    {{ __('public_marketing.mega_omni_highlight') }}
                                 </p>
 
                                 <!-- Showcase Banner Card -->
@@ -1165,11 +1164,10 @@
 
                                     <div class="relative z-10">
                                         <span
-                                            class="text-[11px] font-bold uppercase tracking-wider text-[#34C759] block mb-1">Automasi
-                                            WhatsApp &amp; POS</span>
+                                            class="text-[11px] font-bold uppercase tracking-wider text-[#34C759] block mb-1">{{ __('public_marketing.banner_omni_tag') }}</span>
                                         <div
                                             class="text-xl sm:text-2xl font-black text-white tracking-tighter leading-tight font-sans">
-                                            Semua Chat &amp; Order Terhubung Otomatis
+                                            {{ __('public_marketing.banner_omni_title') }}
                                         </div>
                                     </div>
                                 </a>
@@ -1178,13 +1176,12 @@
                                 <div class="mt-4">
                                     <a href="{{ route('public.omnichannel.whatsapp') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>Eksplorasi Fitur WhatsApp</span>
+                                        <span>{{ __('public_marketing.btn_explore') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Kelola pesanan dari toko fisik, chat WhatsApp, dan e-commerce dalam satu
-                                        dashboard tanpa takut selisih stok.
+                                        {{ __('public_marketing.banner_omni_desc') }}
                                     </p>
                                 </div>
                             </div>
@@ -1208,7 +1205,7 @@
                         <!-- LEFT 8 COLS: PUSAT EDUKASI & DOKUMENTASI -->
                         <div class="col-span-8 space-y-4">
                             <p class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-                                Pusat Edukasi &amp; Dokumentasi
+                                {{ __('public_marketing.mega_resources_title') }}
                             </p>
 
                             <div class="grid grid-cols-2 gap-x-6 gap-y-4">
@@ -1222,11 +1219,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#00C2FF] transition-colors block">
-                                            Blog &amp; Insight Bisnis
+                                            {{ __('public_marketing.blog_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Artikel edukasi, tren pasar, &amp; strategi pertumbuhan
+                                            {{ __('public_marketing.blog_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1241,11 +1238,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#34C759] transition-colors block">
-                                            Panduan &amp; Tutorial
+                                            {{ __('public_marketing.guides_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Tutorial step-by-step implementasi SOP dan POS
+                                            {{ __('public_marketing.guides_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1260,11 +1257,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#FF9500] transition-colors block">
-                                            Studi Kasus UMKM
+                                            {{ __('public_marketing.case_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Kisah nyata pebisnis Indonesia scaling bersama COOCA
+                                            {{ __('public_marketing.case_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1279,11 +1276,11 @@
                                     <div>
                                         <span
                                             class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#AF52DE] transition-colors block">
-                                            Pusat Bantuan &amp; FAQ
+                                            {{ __('public_marketing.faq_item_title') }}
                                         </span>
                                         <span
                                             class="text-xs text-slate-500 dark:text-slate-400 leading-snug block mt-0.5">
-                                            Jawaban cepat untuk pertanyaan teknis &amp; langganan
+                                            {{ __('public_marketing.faq_item_desc') }}
                                         </span>
                                     </div>
                                 </a>
@@ -1296,7 +1293,7 @@
                             <div>
                                 <p
                                     class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-3">
-                                    Pusat Pengetahuan
+                                    {{ __('public_marketing.mega_knowledge_title') }}
                                 </p>
 
                                 <!-- Showcase Banner Card -->
@@ -1312,11 +1309,10 @@
 
                                     <div class="relative z-10">
                                         <span
-                                            class="text-[11px] font-bold uppercase tracking-wider text-[#AF52DE] block mb-1">Knowledge
-                                            Hub</span>
+                                            class="text-[11px] font-bold uppercase tracking-wider text-[#AF52DE] block mb-1">{{ __('public_marketing.banner_guides_tag') }}</span>
                                         <div
                                             class="text-xl sm:text-2xl font-black text-white tracking-tighter leading-tight font-sans">
-                                            Kuasai Operasional Bisnis Bersama COOCA
+                                            {{ __('public_marketing.banner_guides_title') }}
                                         </div>
                                     </div>
                                 </a>
@@ -1325,13 +1321,12 @@
                                 <div class="mt-4">
                                     <a href="{{ route('public.resources.guides') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>Baca Panduan Operasional</span>
+                                        <span>{{ __('public_marketing.btn_read_more') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
                                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                        Tutorial lengkap mulai dari setup awal toko, pencatatan jurnal keuangan, hingga
-                                        strategi pemasaran omnichannel.
+                                        {{ __('public_marketing.banner_guides_desc') }}
                                     </p>
                                 </div>
                             </div>
@@ -1461,15 +1456,13 @@
                                 <i data-lucide="layers" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <span class="text-xs font-bold text-white block">Platform</span>
-                                <span class="text-[10px] text-slate-400 block">Fitur Operasional, ERP Core &amp;
-                                    AI</span>
+                                <span class="text-xs font-bold text-white block">{{ __('public_marketing.nav_platform') }}</span>
+                                <span class="text-[10px] text-slate-400 block">{{ __('public_marketing.mobile_platform_sub') }}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span
-                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">8
-                                Modul</span>
+                                class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-slate-300">{{ __('public_marketing.badge_8_modules') }}</span>
                             <span class="inline-flex text-slate-400 transition-transform duration-200"
                                 :class="mobileSection === 'platform' ? 'rotate-180 text-[#00C2FF]' : ''">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -1488,8 +1481,7 @@
 
                         <!-- Sub-Section 1: Fitur -->
                         <div class="space-y-2 pt-2.5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Fitur
-                                Operasional</p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.mega_features_title') }}</p>
                             <div class="space-y-1.5">
                                 <!-- Point of Sale -->
                                 <a href="{{ route('public.erp.pos') }}" @click="mobileMenu = false"
@@ -1499,9 +1491,8 @@
                                         <i data-lucide="monitor" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Point of Sale</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Hubungkan pesanan,
-                                            pembayaran, dan pembukuan</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.pos_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.pos_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1513,9 +1504,8 @@
                                         <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Arus Kas &amp; Pembukuan</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Catat pemasukan,
-                                            pengeluaran &amp; kas toko</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.accounting_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.accounting_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1527,9 +1517,8 @@
                                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Belanja Bahan &amp; Pemasok</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Kelola pesanan beli
-                                            (PO) &amp; supplier</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.inventory_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.inventory_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1541,9 +1530,8 @@
                                         <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Rekap Omzet &amp; Laba</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Pantau omzet harian
-                                            &amp; laba bersih toko</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.revenue_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.revenue_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1555,9 +1543,8 @@
                                         <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Cetak Struk &amp; Nota Kasir</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Printer thermal
-                                            bluetooth &amp; nota WA</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.receipt_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.receipt_item_desc') }}</span>
                                     </div>
                                 </a>
                             </div>
@@ -1565,8 +1552,7 @@
 
                         <!-- Sub-Section 2: Platform Core -->
                         <div class="space-y-2 pt-1 border-t border-white/5">
-                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">Platform Core
-                            </p>
+                            <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1">{{ __('public_marketing.platform_core') }}</p>
                             <div class="space-y-1.5">
                                 <!-- Asisten Teks Promosi AI -->
                                 <a href="{{ route('public.content.creation') }}" @click="mobileMenu = false"
@@ -1576,9 +1562,8 @@
                                         <i data-lucide="zap" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-[#00C2FF] text-xs">Asisten Teks Promosi AI</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Buat caption medsos
-                                            &amp; deskripsi barang</span>
+                                        <span class="font-bold block text-[#00C2FF] text-xs">{{ __('public_marketing.ai_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.ai_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1590,9 +1575,8 @@
                                         <i data-lucide="globe" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Faktur Penjualan &amp; Tagihan</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Kelola invoice tempo
-                                            &amp; piutang usaha</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.invoice_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.invoice_item_desc') }}</span>
                                     </div>
                                 </a>
 
@@ -1604,9 +1588,8 @@
                                         <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <span class="font-bold block text-white text-xs">Integrasi Bawaan</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight">Hubungkan ERP,
-                                            HRIS &amp; tools</span>
+                                        <span class="font-bold block text-white text-xs">{{ __('public_marketing.integrations_item_title') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight">{{ __('public_marketing.integrations_item_desc') }}</span>
                                     </div>
                                 </a>
                             </div>
@@ -1619,11 +1602,9 @@
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
-                                            class="text-[9px] font-bold uppercase tracking-wider text-[#00C2FF] block">Rilis
-                                            Terbaru</span>
+                                            class="text-[9px] font-bold uppercase tracking-wider text-[#00C2FF] block">{{ __('public_marketing.banner_spring_tag') }}</span>
                                         <span class="text-xs font-bold text-white block">WhatsApp AI Agents</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">Chat
-                                            langsung dengan ledger pembukuan Anda</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_marketing.banner_spring_desc_short') }}</span>
                                     </div>
                                     <div
                                         class="w-6 h-6 rounded-full bg-[#00C2FF]/20 text-[#00C2FF] flex items-center justify-center shrink-0">
