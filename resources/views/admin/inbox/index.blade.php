@@ -2292,7 +2292,8 @@ function adminInboxHub() {
 
                 const adminChannel = pusher.subscribe('admin.inbox');
                 adminChannel.bind('message.sent', (data) => {
-                    console.log('[AdminInbox] Reverb real-time broadcast received:', data);
+                    // Broadcast received: refresh messages safely
+                    // no debug logging in production
                     this.pollLiveUpdates();
                 });
             } catch (err) {
@@ -3758,7 +3759,8 @@ COOCA menyediakan Paket FREE (Rp 0) Gratis Selamanya untuk Solo Owner di mana ha
 
             // 4. Parse Markdown links [Title](URL) into styled clickable action buttons
             safe = safe.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s\)]+)\)/g, (match, title, url) => {
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
+                const cleanUrl = url.replace(/["'<>&]/g, '');
+                return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
             });
 
             // 5. Parse any remaining bare URLs (https://... or http://...) that are not inside an <a> tag
@@ -3776,7 +3778,11 @@ COOCA menyediakan Paket FREE (Rp 0) Gratis Selamanya untuk Solo Owner di mana ha
         showToastNotification(msg) {
             const toast = document.createElement('div');
             toast.className = 'fixed bottom-5 right-5 z-50 px-4 py-3 rounded-[12px] bg-purple-900 text-white text-[12.5px] font-medium shadow-xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200';
-            toast.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>${msg}</span>`;
+            const dot = document.createElement('span');
+            dot.className = 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+            const textNode = document.createElement('span');
+            textNode.textContent = msg;
+            toast.replaceChildren(dot, textNode);
             document.body.appendChild(toast);
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');

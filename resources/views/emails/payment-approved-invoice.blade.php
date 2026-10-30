@@ -151,12 +151,12 @@
     <div class="container">
         <div class="header">
             <img src="https://cooca.id/assets/image/1785229034_logo_dark.png" alt="Cooca Logo" class="logo">
-            <h1>Pembayaran Berhasil Diverifikasi</h1>
+            <h1>{{ __('emails.payment_verified_success') }}</h1>
             <p>Kwitansi & Faktur Resmi Langganan Cooca</p>
         </div>
         <div class="content">
             <div class="success-box">
-                <h3>Terima Kasih atas Kepercayaan Anda!</h3>
+                <h3>{{ __('emails.thank_you_trust') }}</h3>
                 <p>Paket langganan bisnis Anda telah aktif dan siap digunakan secara penuh.</p>
             </div>
 
@@ -228,7 +228,7 @@
             </div>
 
             <a href="{{ route('dashboard') }}" class="btn">
-                Masuk ke Workspace Bisnis Anda
+                {{ __('emails.btn_enter_workspace') }}
             </a>
         </div>
         <div class="footer">

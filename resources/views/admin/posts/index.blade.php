@@ -433,7 +433,8 @@
                                             </button>
                                             <form action="{{ route('admin.posts.categories.destroy', $category) }}"
                                                 method="POST"
-                                                onsubmit="return AppAlert.confirmSubmit(event, this, 'Hapus kategori {{ $category->name }}? Artikel terkait akan tetap ada namun tidak memiliki kategori.', 'Hapus Kategori?', 'danger')">
+                                                data-confirm="Hapus kategori {{ $category->name }}? Artikel terkait akan tetap ada namun tidak memiliki kategori."
+                                                onsubmit="return AppAlert.confirmSubmit(event, this, this.dataset.confirm, 'Hapus Kategori?', 'danger')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -548,7 +549,8 @@
                                             @if (!in_array($cluster->code, ['tutorial', 'edukasi']))
                                                 <form action="{{ route('admin.posts.clusters.destroy', $cluster) }}"
                                                     method="POST"
-                                                    onsubmit="return AppAlert.confirmSubmit(event, this, 'Hapus cluster {{ $cluster->name }}? Artikel terkait akan tetap ada.', 'Hapus Cluster?', 'danger')">
+                                                    data-confirm="Hapus cluster {{ $cluster->name }}? Artikel terkait akan tetap ada."
+                                                onsubmit="return AppAlert.confirmSubmit(event, this, this.dataset.confirm, 'Hapus Cluster?', 'danger')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"

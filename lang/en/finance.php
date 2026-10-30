@@ -938,4 +938,12 @@ return [
     'export_balance_sheet_tooltip' => 'Export Balance Sheet to Excel (XLSX)',
     'export_trial_balance_tooltip' => 'Export Trial Balance to Excel (XLSX)',
     'export_general_ledger_tooltip' => 'Export General Ledger to Excel (XLSX)',
+    'internet_pulsa_wi_fi_toko' => 'Internet & Pulsa Wi-Fi store',
+    'gaji_upah_gaji_staf_upah' => 'Salary & Upah Salary staff upah',
+    'konsumsi_staf_makan_siang_s' => 'Konsumsi Staff Makan siang, s',
+    'pajak_retribusi_pajak_daer' => 'Tax & Retribusi Tax daer',
+    'kasbon_karyawan_talangan_kas' => 'Kasbon Employee Talangan cash',
+    'lain_lain_others_wajib_isi' => 'Lain-lain / Others Wajib isi',
+    'bukti_transfer_settlement' => 'Bukti Transfer Settlement',
+    'parameter_biaya_penjualan' => 'Parameter Biaya & Sales',
 ];

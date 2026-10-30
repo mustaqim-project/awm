@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Verifikasi WhatsApp Pelanggan - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => '{{ __('customer.otp_heading') }} Pelanggan - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8"
@@ -11,7 +11,7 @@
                     <i data-lucide="smartphone" class="w-8 h-8"></i>
                 </div>
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Verifikasi WhatsApp
+                    {{ __('customer.otp_heading') }}
                 </h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                     Masukkan kode 6 digit OTP yang dikirimkan ke WhatsApp <span class="font-mono font-bold text-slate-900 dark:text-white px-2 py-0.5 rounded bg-slate-100 dark:bg-white/10">{{ $phone }}</span>
@@ -45,7 +45,7 @@
                     <!-- Dev Testing Bypass Alert -->
                     <div class="mb-5 p-3.5 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] text-xs sm:text-sm flex items-center gap-2">
                         <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
-                        <span><strong>Bypass / Pengujian:</strong> Gunakan kode OTP <code class="font-mono font-bold bg-[#007AFF]/15 px-1.5 py-0.5 rounded">123456</code> untuk verifikasi instan.</span>
+                        <span><strong>{{ __('customer.otp_bypass_dev') }}</strong> Gunakan kode OTP <code class="font-mono font-bold bg-[#007AFF]/15 px-1.5 py-0.5 rounded">123456</code> untuk verifikasi instan.</span>
                     </div>
                 @endif
 
@@ -61,7 +61,7 @@
                     <div class="mb-5 p-3.5 rounded-xl bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#FF3B30] dark:text-[#FF453A] text-xs">
                         <div class="font-semibold mb-1 flex items-center gap-1.5 text-sm">
                             <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                            <span>Verifikasi Belum Berhasil:</span>
+                            <span>{{ __('customer.otp_errors_summary') }}</span>
                         </div>
                         <ul class="list-disc list-inside space-y-1 text-xs opacity-90 pl-1">
                             @foreach ($errors->all() as $error)
@@ -102,7 +102,7 @@
 
                     <button type="submit" :disabled="submitting" :class="submitting ? 'opacity-60 cursor-not-allowed' : ''"
                         class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
-                        <span>Verifikasi &amp; Masuk Akun</span>
+                        <span>{{ __('customer.btn_verify_enter') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </form>
@@ -114,8 +114,8 @@
                         :class="cooldown() > 0 ? 'opacity-40 cursor-not-allowed' : ''"
                         class="min-h-[44px] px-3 py-2 text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 rounded">
                         <i data-lucide="refresh-cw" class="w-3.5 h-3.5" :class="cooldown() > 0 ? 'animate-spin' : ''"></i>
-                        <span x-show="cooldown() <= 0">Kirim Ulang Kode OTP</span>
-                        <span x-show="cooldown() > 0">Kirim ulang dalam <span class="font-mono font-bold" x-text="cooldown()"></span> detik</span>
+                        <span x-show="cooldown() <= 0">{{ __('customer.btn_resend_otp') }}</span>
+                        <span x-show="cooldown() > 0">{{ __('customer.resend_in') }} <span class="font-mono font-bold" x-text="cooldown()"></span> {{ __('customer.seconds') }}</span>
                     </button>
                 </form>
 
@@ -124,7 +124,7 @@
                     Nomor WhatsApp salah atau tidak aktif?
                     <a href="{{ route('customer.profile.complete') }}"
                         class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors ml-1">
-                        Ubah Nomor WhatsApp
+                        {{ __('customer.btn_change_wa') }}
                     </a>
                 </div>
 
@@ -133,7 +133,7 @@
                     @csrf
                     <button type="submit"
                         class="min-h-[40px] px-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-[#FF3B30] dark:hover:text-[#FF453A] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/20 rounded">
-                        Keluar dari sesi akun
+                        {{ __('customer.btn_logout_session') }}
                     </button>
                 </form>
             </div>

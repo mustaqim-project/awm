@@ -97,4 +97,6 @@ return [
     'no_time_limit' => 'Tanpa Batas Waktu',
     'status_active' => 'Aktif',
     'status_inactive' => 'Nonaktif',
+    'contoh_diskon_pembukaan' => 'Contoh: Diskon Pembukaan',
+    'contoh_10_atau_15000' => 'Contoh: 10 atau 15000',
 ];

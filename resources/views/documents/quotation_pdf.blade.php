@@ -198,7 +198,7 @@
                 @endif
             </div>
             <div class="meta-col text-right">
-                <h3>Detail Penawaran:</h3>
+                <h3>{{ __('documents.quotation_details_colon') }}</h3>
                 <p>Tanggal:
                     {{ $quotation->quotation_date ? \Carbon\Carbon::parse($quotation->quotation_date)->format('d M Y') : date('d M Y') }}
                 </p>

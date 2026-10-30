@@ -1,4 +1,4 @@
-@extends('layouts.customer', ['title' => 'Pengaturan Profil & Buku Alamat'])
+@extends('layouts.customer', ['title' => __('customer.profile_settings_title')])
 
 @section('content')
 <div class="max-w-2xl mx-auto space-y-6"
@@ -7,7 +7,7 @@
         isEditing: false,
         addressFormUrl: '{{ route('customer.addresses.store') }}',
         addressFormMethod: 'POST',
-        modalTitle: 'Tambah Alamat Pengiriman Baru',
+        modalTitle: '{{ __('customer.btn_add_address') }} Pengiriman Baru',
         geoLoading: false,
         geoStatus: '',
         areaSearchQuery: '',
@@ -37,7 +37,7 @@
             this.isEditing = false;
             this.addressFormUrl = '{{ route('customer.addresses.store') }}';
             this.addressFormMethod = 'POST';
-            this.modalTitle = 'Tambah Alamat Pengiriman Baru';
+            this.modalTitle = '{{ __('customer.btn_add_address') }} Pengiriman Baru';
             this.geoStatus = '';
             this.areaSearchQuery = '';
             this.areaSearchResults = [];
@@ -270,7 +270,7 @@
 
     {{-- Header --}}
     <div class="space-y-1">
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Pengaturan Profil &amp; Alamat</h1>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('customer.profile_address_settings') }}</h1>
         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Kelola identitas akun, multi-alamat pengiriman dengan presisi GPS &amp; Biteship, serta kata sandi Anda.</p>
     </div>
 
@@ -304,7 +304,7 @@
 
             <div class="flex items-center gap-2 pb-1 border-b border-slate-200/80 dark:border-white/10">
                 <span class="w-6 h-6 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center">1</span>
-                <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Data Diri &amp; Kontak</h2>
+                <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{{ __('customer.personal_data_heading') }}</h2>
             </div>
 
             <div>
@@ -354,7 +354,7 @@
             <div class="pt-2">
                 <button type="submit"
                     class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-bold text-xs sm:text-sm shadow-sm transition active:scale-[0.99] cursor-pointer">
-                    <span>Simpan Kontak</span>
+                    <span>{{ __('customer.btn_save_contact') }}</span>
                     <i data-lucide="check" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -367,14 +367,14 @@
             <div class="flex items-center gap-2">
                 <span class="w-6 h-6 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center">2</span>
                 <div>
-                    <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Buku Alamat Pengiriman</h2>
+                    <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{{ __('customer.shipping_address_book') }}</h2>
                     <p class="text-[11px] text-slate-500 dark:text-slate-400">Dukungan banyak alamat (Rumah, Kantor, Toko) dengan koordinat GPS &amp; Biteship</p>
                 </div>
             </div>
             <button type="button" @click="openAddModal()"
                 class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#007AFF] hover:bg-[#006fe6] text-white text-xs font-semibold shadow-sm transition active:scale-[0.98] cursor-pointer">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span>Tambah Alamat</span>
+                <span>{{ __('customer.btn_add_address') }}</span>
             </button>
         </div>
 
@@ -419,15 +419,13 @@
                                     <span class="text-slate-300 dark:text-white/20">•</span>
                                 @endif
                                 <button type="button" @click='openEditModal(@json($addr))'
-                                    class="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium cursor-pointer">
-                                    Ubah
-                                </button>
+                                    class="text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium cursor-pointer">{{ __('customer.btn_edit') }}</button>
                                 <span class="text-slate-300 dark:text-white/20">•</span>
                                 <form action="{{ route('customer.addresses.destroy', $addr->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus alamat ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-xs text-red-500 hover:text-red-700 font-medium cursor-pointer">
-                                        Hapus
+                                        {{ __('customer.btn_delete') }}
                                     </button>
                                 </form>
                             </div>
@@ -462,13 +460,13 @@
                     <i data-lucide="map-pin" class="w-6 h-6"></i>
                 </div>
                 <div class="space-y-1">
-                    <div class="font-semibold text-sm text-slate-800 dark:text-slate-200">Belum ada alamat pengiriman tersimpan</div>
+                    <div class="font-semibold text-sm text-slate-800 dark:text-slate-200">{{ __('customer.no_saved_addresses') }}</div>
                     <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">Tambahkan alamat rumah atau kantor Anda untuk mempermudah pemesanan instan dengan kalkulasi kurir akurat.</p>
                 </div>
                 <button type="button" @click="openAddModal()"
                     class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#007AFF] hover:bg-[#006fe6] text-white text-xs font-semibold shadow-sm transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                    <span>Tambah Alamat Sekarang</span>
+                    <span>{{ __('customer.btn_add_address_now') }}</span>
                 </button>
             </div>
         @endif
@@ -479,7 +477,7 @@
         <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-white/10">
             <div class="flex items-center gap-2">
                 <span class="w-6 h-6 rounded-full bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center">3</span>
-                <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Keamanan &amp; Kata Sandi</h2>
+                <h2 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">{{ __('customer.security_password_heading') }}</h2>
             </div>
             <button type="button" @click="changePass = !changePass"
                 class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline cursor-pointer"
@@ -502,7 +500,7 @@
                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
                         <i data-lucide="lock" class="w-4 h-4"></i>
                     </div>
-                    <input type="password" name="current_password" id="current_password" required placeholder="Masukkan kata sandi saat ini"
+                    <input type="password" name="current_password" id="current_password" required placeholder="{{ __('customer.input_current_password_placeholder') }}"
                         class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white transition-all outline-none">
                 </div>
             </div>
@@ -516,7 +514,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
                             <i data-lucide="key-round" class="w-4 h-4"></i>
                         </div>
-                        <input type="password" name="new_password" id="new_password" required minlength="6" placeholder="Min. 6 karakter"
+                        <input type="password" name="new_password" id="new_password" required minlength="6" placeholder="{{ __('customer.min_6_chars_placeholder') }}"
                             class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white transition-all outline-none">
                     </div>
                 </div>
@@ -528,7 +526,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
                         </div>
-                        <input type="password" name="new_password_confirmation" id="new_password_confirmation" required minlength="6" placeholder="Ulangi kata sandi baru"
+                        <input type="password" name="new_password_confirmation" id="new_password_confirmation" required minlength="6" placeholder="{{ __('customer.repeat_new_password_placeholder') }}"
                             class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white transition-all outline-none">
                     </div>
                 </div>
@@ -536,7 +534,7 @@
 
             <button type="submit"
                 class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#007AFF] hover:bg-[#006fe6] text-white font-bold text-xs sm:text-sm shadow-sm transition active:scale-[0.99] cursor-pointer">
-                <span>Update Kata Sandi</span>
+                <span>{{ __('customer.btn_update_password') }}</span>
                 <i data-lucide="check" class="w-4 h-4"></i>
             </button>
         </form>
@@ -593,7 +591,7 @@
                             Nama Penerima <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="recipient_name" x-model="form.recipient_name" required
-                            placeholder="Nama Lengkap"
+                            placeholder="{{ __('customer.full_name_placeholder') }}"
                             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1E2638] text-xs sm:text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/20">
                     </div>
                     <div>
@@ -634,7 +632,7 @@
                         </label>
                         <div class="relative">
                             <input type="text" x-model="areaSearchQuery" @input.debounce.350ms="searchBiteshipAreas()"
-                                placeholder="Ketik minimal 3 huruf (cth: Kebayoran, Dago, 12420)..."
+                                placeholder="{{ __('customer.location_subdistrict_placeholder') }}"
                                 class="w-full pl-9 pr-8 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1E2638] text-xs text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/20">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                                 <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -705,7 +703,7 @@
                     </div>
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-600 dark:text-slate-300 mb-0.5">Kota/Kab</label>
-                        <input type="text" name="city" x-model="form.city" placeholder="Kota"
+                        <input type="text" name="city" x-model="form.city" placeholder="{{ __('customer.city_placeholder') }}"
                             class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1E2638] text-xs text-slate-900 dark:text-white outline-none">
                     </div>
                     <div>
@@ -727,7 +725,7 @@
                         Catatan Kurir (Opsional)
                     </label>
                     <input type="text" name="notes" x-model="form.notes"
-                        placeholder="Contoh: Titipkan di pos satpam atau telpon sebelum sampai"
+                        placeholder="{{ __('customer.address_delivery_notes_placeholder') }}"
                         class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1E2638] text-xs text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/20">
                 </div>
 
@@ -744,11 +742,11 @@
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-white/10">
                     <button type="button" @click="showAddressModal = false"
                         class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition cursor-pointer">
-                        Batal
+                        {{ __('customer.btn_cancel') }}
                     </button>
                     <button type="submit"
                         class="px-5 py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#006fe6] text-white text-xs font-bold shadow-md transition active:scale-[0.98] cursor-pointer">
-                        Simpan Alamat
+                        {{ __('customer.btn_save_address') }}
                     </button>
                 </div>
             </form>

@@ -111,4 +111,7 @@ return [
     'individual_customer' => 'Individual Customer',
     'registered_customer' => 'Registered Customer',
     'credit_balance' => 'Credit Balance',
+    'export_seluruh_direktori_pelanggan_ke_file' => 'Export seluruh direktori customer to file Excel (.xlsx)',
+    'import_data_pelanggan_massal_dari_file' => 'Import data customer massal dari file Excel',
+    'import_pelanggan_via_excel_interac' => 'Import Customer via Excel Interac',
 ];

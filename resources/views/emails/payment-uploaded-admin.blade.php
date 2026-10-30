@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifikasi Pembayaran Masuk</title>
+    <title>{{ __('emails.incoming_payment_notification') }}</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -105,7 +105,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Notifikasi Pembayaran Masuk</h1>
+            <h1>{{ __('emails.incoming_payment_notification') }}</h1>
         </div>
         <div class="content">
             <div class="badge">Menunggu Verifikasi Admin</div>
@@ -152,7 +152,7 @@
             </table>
 
             <a href="{{ url('/admin/billing-packages/payments') }}" class="btn">
-                Buka Panel Admin & Review Bukti Transfer
+                {{ __('emails.btn_open_admin_review') }}
             </a>
         </div>
         <div class="footer">

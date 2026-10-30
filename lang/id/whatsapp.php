@@ -426,4 +426,5 @@ return [
     'guide_step_2_desc'                => 'Pilih akun & nomor toko',
     'guide_step_3_title'               => '3. Langsung Terhubung',
     'guide_step_3_desc'                => 'Siap kirim struk digital',
+    'buka_pengaturan_whatsapp' => 'Buka Pengaturan WhatsApp',
 ];

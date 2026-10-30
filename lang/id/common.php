@@ -109,4 +109,12 @@ return array (
   'change_theme' => 'Ganti Tema',
   'all_rights_reserved' => 'Hak cipta dilindungi undang-undang.',
   'cooca_tagline' => 'Platform Operasi Bisnis Terpadu UMKM Indonesia',
+
+  'setujui_hubungkan_ke_chatgpt' => 'Setujui & Hubungkan ke ChatGPT',
+  'hubungkan_cooca_dengan_chatgpt' => 'Hubungkan COOCA dengan ChatGPT',
+  'presensi_berhasil_dicatat' => 'Presensi Berhasil Dicatat',
+  'close_modal' => 'Tutup Modal',
+  'download_pdf' => 'Unduh PDF',
+  'status' => 'Status',
+  'save_changes' => 'Simpan Perubahan',
 );

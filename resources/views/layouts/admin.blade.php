@@ -1113,7 +1113,7 @@
                             </a>
                         @endif
 
-                        <a href="{{ route('landing') }}" target="_blank" @click="profileDropdownOpen = false"
+                        <a href="{{ route('landing') }}" target="_blank" rel="noopener noreferrer" @click="profileDropdownOpen = false"
                             class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center justify-between gap-2.5 transition active:scale-[0.98]">
                             <div class="flex items-center gap-2.5 min-w-0">
                                 <i data-lucide="external-link" class="w-4 h-4 text-[#007AFF] shrink-0"></i>

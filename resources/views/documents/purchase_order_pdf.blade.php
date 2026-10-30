@@ -187,21 +187,21 @@
                 @endif
             </div>
             <div class="doc-title">
-                <h1>SURAT PESANAN (PO)</h1>
+                <h1>{{ __('documents.po_title') }}</h1>
                 <p>#{{ $po->po_number }}</p>
             </div>
         </div>
 
         <div class="meta-grid">
             <div class="meta-col">
-                <h3>Pemasok / Supplier:</h3>
+                <h3>{{ __('documents.supplier_colon') }}</h3>
                 <p>{{ $supplier->name ?? 'Supplier' }}</p>
                 @if ($supplier && $supplier->phone)
                     <p style="color: #64748b; font-size: 13px;">Telp: {{ $supplier->phone }}</p>
                 @endif
             </div>
             <div class="meta-col text-right">
-                <h3>Informasi Pesanan:</h3>
+                <h3>{{ __('documents.order_info_colon') }}</h3>
                 <p>Tanggal PO: {{ $po->po_date ? \Carbon\Carbon::parse($po->po_date)->format('d M Y') : date('d M Y') }}
                 </p>
                 <p style="color: #64748b; font-size: 13px;">Status: {{ strtoupper($po->status ?? 'DRAFT') }}</p>

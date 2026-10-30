@@ -738,7 +738,7 @@
                             <i data-lucide="download" class="w-3.5 h-3.5"></i>
                             <span>{{ __('ai.inventory.export_csv') }}</span>
                         </button>
-                        <button type="button" @click="showAllStockModal = false" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-white transition active:scale-95" aria-label="Tutup modal">
+                        <button type="button" @click="showAllStockModal = false" class="min-w-[44px] min-h-[44px] rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-white transition active:scale-95" aria-label="{{ __('common.close_modal') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>

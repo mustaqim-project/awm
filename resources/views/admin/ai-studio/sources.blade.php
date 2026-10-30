@@ -110,7 +110,9 @@
                             <i data-lucide="{{ $hasActiveCreds ? 'key' : 'alert-circle' }}" class="w-3.5 h-3.5"></i>
                             <span>{{ $hasActiveCreds ? 'Kredensial Terenkripsi Aktif' : 'Kredensial Belum Dikonfigurasi' }}</span>
                         </span>
-                        <button type="button" @click="openCredentialsModal('{{ $source->id }}', '{{ addslashes($source->name) }}')"
+                        <button type="button" @click="openCredentialsModal($el.dataset.id, $el.dataset.name)"
+                            data-id="{{ $source->id }}"
+                            data-name="{{ $source->name }}"
                             class="text-[11px] font-bold underline hover:opacity-80">
                             {{ $hasActiveCreds ? 'Ubah' : 'Pasang' }}
                         </button>
@@ -120,7 +122,13 @@
                     <div class="p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] space-y-1.5 text-[11px]">
                         <div class="flex items-center justify-between">
                             <span class="font-bold text-black/70 dark:text-white/70">Kebijakan Lisensi:</span>
-                            <button type="button" @click="openPolicyModal('{{ $source->id }}', '{{ addslashes($source->name) }}', {{ $policy?->allow_commercial_use ? 'true' : 'false' }}, {{ $policy?->require_attribution ? 'true' : 'false' }}, {{ $policy?->retention_days ?? 90 }}, '{{ addslashes($policy?->disclaimer_template ?? '') }}')"
+                            <button type="button" @click="openPolicyModal($el.dataset.id, $el.dataset.name, $el.dataset.commercial === '1', $el.dataset.attrib === '1', parseInt($el.dataset.retention), $el.dataset.disclaimer)"
+                                data-id="{{ $source->id }}"
+                                data-name="{{ $source->name }}"
+                                data-commercial="{{ $policy?->allow_commercial_use ? '1' : '0' }}"
+                                data-attrib="{{ $policy?->require_attribution ? '1' : '0' }}"
+                                data-retention="{{ $policy?->retention_days ?? 90 }}"
+                                data-disclaimer="{{ $policy?->disclaimer_template ?? '' }}"
                                 class="text-[#007AFF] font-semibold hover:underline">
                                 Atur
                             </button>
@@ -150,14 +158,21 @@
                         Sinkron: {{ $source->last_synced_at ? $source->last_synced_at->diffForHumans() : 'Belum pernah' }}
                     </span>
                     <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" @click="syncSingleSource('{{ $source->id }}', '{{ addslashes($source->name) }}')"
+                        <button type="button" @click="syncSingleSource($el.dataset.id, $el.dataset.name)"
+                            data-id="{{ $source->id }}"
+                            data-name="{{ $source->name }}"
                             :disabled="syncingSourceId === '{{ $source->id }}'"
                             class="px-2.5 py-1 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[11px] font-bold text-[#34C759] transition-all disabled:opacity-50 flex items-center gap-1"
                             title="Tarik konten visual & prompt terbaru dari sumber ini">
                             <i data-lucide="refresh-cw" class="w-3 h-3" :class="{ 'animate-spin': syncingSourceId === '{{ $source->id }}' }"></i>
                             <span x-text="syncingSourceId === '{{ $source->id }}' ? 'Menyinkronkan...' : 'Sinkronkan'"></span>
                         </button>
-                        <button type="button" @click="openEditSourceModal('{{ $source->id }}', '{{ addslashes($source->name) }}', '{{ $source->driver_class }}', {{ $source->fetch_frequency_minutes }}, {{ $source->rate_limit_per_minute }})"
+                        <button type="button" @click="openEditSourceModal($el.dataset.id, $el.dataset.name, $el.dataset.driver, parseInt($el.dataset.freq), parseInt($el.dataset.limit))"
+                            data-id="{{ $source->id }}"
+                            data-name="{{ $source->name }}"
+                            data-driver="{{ $source->driver_class }}"
+                            data-freq="{{ $source->fetch_frequency_minutes }}"
+                            data-limit="{{ $source->rate_limit_per_minute }}"
                             class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[11px] font-semibold text-black/70 dark:text-white/70 transition-all">
                             Edit
                         </button>

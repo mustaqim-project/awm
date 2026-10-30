@@ -158,4 +158,11 @@ return [
     'bottom_cta_btn_free' => 'Try COOCA for Free',
     'bottom_cta_btn_dashboard' => 'Dashboard',
     'bottom_cta_annotation' => 'One System, Endless Business Ease',
+    'umkm_catalog' => 'SME Catalog',
+    'ind_fnb' => 'F&B Restaurant and Cafe',
+    'ind_retail' => 'Retail Store and Minimarket',
+    'ind_workshop' => 'Auto & Motor Workshop',
+    'ind_laundry' => 'Laundry and Dry Cleaning',
+    'ind_manufacturing' => 'SME Manufacturing Production',
+    'ind_services' => 'Service & Professional Business',
 ];

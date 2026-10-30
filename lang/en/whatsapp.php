@@ -426,4 +426,5 @@ return [
     'guide_step_2_desc'                => 'Select account & store number',
     'guide_step_3_title'               => '3. Instantly Connected',
     'guide_step_3_desc'                => 'Ready to send digital receipts',
+    'buka_pengaturan_whatsapp' => 'Open Settings WhatsApp',
 ];

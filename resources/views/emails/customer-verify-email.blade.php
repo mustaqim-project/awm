@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Alamat Email Anda</title>
+    <title>{{ __('emails.verify_email_address') }} Anda</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -77,7 +77,7 @@
     <div class="container">
         <div class="header">
             <h1>Cooca</h1>
-            <p>Verifikasi Alamat Email Akun Pelanggan</p>
+            <p>{{ __('emails.verify_email_address') }} Akun Pelanggan</p>
         </div>
         <div class="body">
             <p>Halo <strong>{{ $customer->name }}</strong>,</p>
@@ -86,7 +86,7 @@
                 ini:</p>
 
             <div style="text-align: center;">
-                <a href="{{ $verificationUrl }}" class="btn">Verifikasi Alamat Email</a>
+                <a href="{{ $verificationUrl }}" class="btn">{{ __('emails.verify_email_address') }}</a>
             </div>
 
             <p style="font-size: 13px; color: #636366;">Tautan verifikasi ini berlaku selama 60 menit. Jika Anda tidak

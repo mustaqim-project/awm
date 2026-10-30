@@ -175,7 +175,9 @@ final class AdminPostController extends Controller implements HasMiddleware
             $validated['category'] = 'Umum';
         }
 
-        $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        if (isset($validated['content'])) {
+            $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        }
         $validated['slug'] = !empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['title']);
         $validated['is_published'] = $request->boolean('is_published');
         $validated['published_at'] = $validated['is_published'] ? now() : null;
@@ -258,7 +260,9 @@ final class AdminPostController extends Controller implements HasMiddleware
             $validated['category_id'] = $categoryModel->id;
         }
 
-        $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        if (isset($validated['content'])) {
+            $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        }
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_published'] = $request->boolean('is_published');
 
@@ -364,7 +368,9 @@ final class AdminPostController extends Controller implements HasMiddleware
             'sort_order' => 'nullable|integer',
         ]);
 
-        $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        if (isset($validated['content'])) {
+            $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        }
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);
@@ -438,7 +444,9 @@ final class AdminPostController extends Controller implements HasMiddleware
         ]);
 
         $validated['code'] = Str::lower(trim($validated['code']));
-        $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        if (isset($validated['content'])) {
+            $validated['content'] = HtmlSanitizer::clean($validated['content']);
+        }
         $validated['slug'] = Str::slug($validated['slug']);
         $validated['is_active'] = $request->boolean('is_active', true);
         $validated['sort_order'] = (int) ($validated['sort_order'] ?? 0);

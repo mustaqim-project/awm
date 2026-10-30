@@ -184,7 +184,7 @@
     <div class="container">
         <div class="header">
             <img src="https://cooca.id/assets/image/1785229034_logo_dark.png" alt="Cooca Logo" class="logo">
-            <h1>Workspace Bisnis Diaktifkan Kembali</h1>
+            <h1>{{ __('emails.business_reactivated_title') }}</h1>
             <p>Operasional & Transaksi Bisnis Telah Pulih Sepenuhnya</p>
         </div>
 
@@ -200,7 +200,7 @@
             </p>
 
             <div class="success-box">
-                <h3>Status: Aktif Penuh</h3>
+                <h3>{{ __('emails.status_fully_active') }}</h3>
                 <p>Seluruh pembatasan akses telah dicabut. Anda dan tim dapat kembali menggunakan seluruh fitur Cooca tanpa kendala.</p>
             </div>
 
@@ -224,7 +224,7 @@
             </table>
 
             <div class="restored-list">
-                <h4>Fitur yang Sudah Dapat Digunakan Kembali:</h4>
+                <h4>{{ __('emails.features_restored') }}</h4>
                 <ul>
                     <li><strong>Transaksi Kasir POS:</strong> Kasir dapat kembali membuka shift, melayani pelanggan, dan menerima pembayaran.</li>
                     <li><strong>Penjualan & Penagihan:</strong> Pembuatan invoice, surat jalan, dan penerimaan pesanan kembali aktif.</li>
@@ -238,7 +238,7 @@
             </p>
 
             <a href="https://cooca.id/login" class="btn-primary" target="_blank" rel="noopener noreferrer">
-                Masuk ke Dashboard Bisnis
+                {{ __('emails.btn_enter_dashboard') }}
             </a>
         </div>
 

@@ -293,7 +293,8 @@
                                             </button>
                                             @endif
                                             @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.delete'))
-                                            <form action="{{ route('admin.promos.destroy', $promo) }}" method="POST" onsubmit="return confirm('Hapus permanen kode promo {{ $promo->code }}?')">
+                                            <form action="{{ route('admin.promos.destroy', $promo) }}" method="POST" data-confirm="Hapus permanen kode promo {{ $promo->code }}?"
+                                                onsubmit="return confirm(this.dataset.confirm)">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="p-1.5 rounded-[8px] hover:bg-red-500/10 text-red-500 transition-colors" title="Hapus Promo">

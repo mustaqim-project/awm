@@ -938,4 +938,12 @@ return [
     'export_balance_sheet_tooltip' => 'Export Neraca Keuangan ke Excel (XLSX)',
     'export_trial_balance_tooltip' => 'Export Neraca Saldo ke Excel (XLSX)',
     'export_general_ledger_tooltip' => 'Export Buku Besar ke Excel (XLSX)',
+    'internet_pulsa_wi_fi_toko' => 'Internet & Pulsa Wi-Fi toko,',
+    'gaji_upah_gaji_staf_upah' => 'Gaji & Upah Gaji staf, upah',
+    'konsumsi_staf_makan_siang_s' => 'Konsumsi Staf Makan siang, s',
+    'pajak_retribusi_pajak_daer' => 'Pajak & Retribusi Pajak daer',
+    'kasbon_karyawan_talangan_kas' => 'Kasbon Karyawan Talangan kas',
+    'lain_lain_others_wajib_isi' => 'Lain-lain / Others Wajib isi',
+    'bukti_transfer_settlement' => 'Bukti Transfer Settlement',
+    'parameter_biaya_penjualan' => 'Parameter Biaya & Penjualan',
 ];

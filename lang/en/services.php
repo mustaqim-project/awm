@@ -125,4 +125,7 @@ return [
         'deleted_success' => 'Service \':name\' has been deleted.',
         'archived_due_to_transactions' => 'Service \':name\' has active transaction history and has been archived as Inactive to protect accounting integrity.',
     ],
+    'pilih_semua_layanan' => 'Select All Services',
+    'layanan_kode' => 'Services & Code',
+    'kategori' => 'Category',
 ];

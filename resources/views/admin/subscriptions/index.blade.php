@@ -606,7 +606,9 @@
                                     <td class="px-4 py-3">
                                         @if ($p->payment_proof_path)
                                             <button type="button"
-                                                @click="imageModalOpen = true; modalImageUrl = '{{ $p->getProofUrl() }}'; modalTitle = 'Bukti Transfer #{{ $p->order_number }} - {{ $p->business->name ?? '' }}'"
+                                                @click="imageModalOpen = true; modalImageUrl = $el.dataset.url; modalTitle = $el.dataset.title"
+                                                data-url="{{ $p->getProofUrl() }}"
+                                                data-title="Bukti Transfer #{{ $p->order_number }} - {{ $p->business->name ?? '' }}"
                                                 class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-[#30B0C7]/10 text-[#30B0C7] dark:text-[#40C8E0] hover:bg-[#30B0C7]/20 transition text-[11px] font-semibold"><i
                                                     data-lucide="image" class="w-3.5 h-3.5"
                                                     stroke-width="1.5"></i><span>Lihat Struk</span></button>

@@ -109,4 +109,12 @@ return array (
   'change_theme' => 'Change Theme',
   'all_rights_reserved' => 'All rights reserved.',
   'cooca_tagline' => 'Integrated Business Operating System for Indonesian MSMEs',
+
+  'setujui_hubungkan_ke_chatgpt' => 'Approve & Connect to ChatGPT',
+  'hubungkan_cooca_dengan_chatgpt' => 'Connect COOCA with ChatGPT',
+  'presensi_berhasil_dicatat' => 'Attendance Successfully Recorded',
+  'close_modal' => 'Close Modal',
+  'download_pdf' => 'Download PDF',
+  'status' => 'Status',
+  'save_changes' => 'Save Changes',
 );

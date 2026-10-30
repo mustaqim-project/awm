@@ -366,4 +366,6 @@ return [
     'bin_location_created' => 'Storage bin / shelf location has been created.',
     'bin_location_deleted' => 'Storage bin / shelf location has been deleted.',
     'geocoding_saved' => 'Warehouse coordinates and geofencing radius have been saved.',
+    'tutup' => 'Close',
+    'rp_number_format_loc_total_valuation' => 'Rp {{ number_format($loc->total_valuation ?? 0, 0, \',\', \'.\') }}',
 ];

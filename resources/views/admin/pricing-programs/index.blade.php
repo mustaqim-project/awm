@@ -318,7 +318,7 @@
                                     <span>Tambah Batch</span>
                                 </button>
 
-                                <button type="button" @click="openEditProgram({{ json_encode($program) }})"
+                                <button type="button" @click="openEditProgram(@js($program))"
                                     class="h-8 px-2.5 rounded-[10px] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black/70 dark:text-white/70 text-xs font-medium transition"
                                     title="Edit Program">
                                     <i data-lucide="settings" class="w-3.5 h-3.5"></i>
@@ -437,13 +437,13 @@
                                                     </span>
 
                                                     @if(Auth::guard('admin')->user()?->hasPermission('admin.pricing_programs.manage'))
-                                                        <button type="button" @click="openEditBatch({{ json_encode($batch) }})"
+                                                        <button type="button" @click="openEditBatch(@js($batch))"
                                                             class="p-1 rounded-[6px] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition"
                                                             title="Edit Konfigurasi Batch">
                                                             <i data-lucide="edit" class="w-3.5 h-3.5"></i>
                                                         </button>
 
-                                                        <button type="button" @click="openNextBatchLink({{ json_encode($batch) }})"
+                                                        <button type="button" @click="openNextBatchLink(@js($batch))"
                                                             class="p-1 rounded-[6px] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition"
                                                             title="Tentukan Batch Berikutnya">
                                                             <i data-lucide="arrow-right-circle" class="w-3.5 h-3.5"></i>

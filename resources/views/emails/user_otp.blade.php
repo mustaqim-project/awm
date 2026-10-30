@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kode Verifikasi (OTP) COOCA</title>
+    <title>{{ __('emails.otp_code_title') }} COOCA</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -180,7 +180,7 @@
         <!-- HEADER -->
         <div class="header">
             <span class="badge">Keamanan Akun Resmi COOCA</span>
-            <h1>Kode Verifikasi (OTP)</h1>
+            <h1>{{ __('emails.otp_code_title') }}</h1>
             <p>{{ $action ?? 'Verifikasi Keamanan Akses Akun' }}</p>
         </div>
 
@@ -225,7 +225,7 @@
                 SaaS Business Operating System All-in-One untuk UMKM Indonesia.
             </p>
             <p style="margin: 0;">
-                Butuh bantuan operasional? Kunjungi <a href="https://cooca.id/docs">Pusat Bantuan & Panduan COOCA</a> atau hubungi <a href="mailto:support@cooca.id">support@cooca.id</a>.
+                Butuh bantuan operasional? Kunjungi <a href="https://cooca.id/docs">{{ __('emails.cooca_help_center') }}</a> atau hubungi <a href="mailto:support@cooca.id">support@cooca.id</a>.
             </p>
         </div>
     </div>

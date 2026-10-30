@@ -165,7 +165,9 @@
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
                             <span class="font-mono font-bold text-[#007AFF] text-xs">{{ number_format($biz->ai_credits_balance ?? 0) }}</span>
-                            <button type="button" @click="quickGrant('{{ $biz->id }}', '{{ addslashes($biz->name) }}')"
+                            <button type="button" @click="quickGrant($el.dataset.id, $el.dataset.name)"
+                                data-id="{{ $biz->id }}"
+                                data-name="{{ $biz->name }}"
                                 class="px-2 py-1 rounded-[6px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF] hover:text-white text-[10px] font-bold transition-all">
                                 + Hibah
                             </button>

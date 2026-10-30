@@ -96,7 +96,7 @@
                         type="button"
                         @click="openAvatarModal(selectedAgent)"
                         class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 text-slate-800 dark:text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
-                        title="Ubah penampilan avatar karakter ini"
+                        title="{{ __('ai.ubah_penampilan_avatar_karakter_ini') }}"
                     >
                         <i data-lucide="palette" class="w-3.5 h-3.5 text-purple-500"></i>
                         <span>{{ __('ai.hud.change_avatar') }}</span>

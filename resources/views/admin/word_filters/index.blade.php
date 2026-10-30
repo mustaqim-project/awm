@@ -264,7 +264,7 @@
                                 <!-- Actions -->
                                 <td class="py-3.5 px-4 text-right">
                                     <div class="inline-flex items-center gap-1.5 justify-end">
-                                        <button type="button" @click="openEdit({{ json_encode($filter) }})"
+                                        <button type="button" @click="openEdit(@js($filter))"
                                             class="p-1.5 rounded-[9px] text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer"
                                             title="Ubah Aturan">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
@@ -272,7 +272,8 @@
 
                                         @if(Auth::guard('admin')->user()?->hasPermission('admin.word_filters.delete'))
                                         <form method="POST" action="{{ route('admin.word-filters.destroy', $filter) }}"
-                                            onsubmit="return confirm('Hapus kata '{{ $filter->word }}' dari filter moderasi?')">
+                                            data-confirm="Hapus kata &quot;{{ $filter->word }}&quot; dari filter moderasi?"
+                                            onsubmit="return confirm(this.dataset.confirm)">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"

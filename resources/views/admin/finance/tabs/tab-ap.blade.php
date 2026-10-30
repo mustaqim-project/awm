@@ -162,7 +162,9 @@
                                     </div>
                                 @endif
                                 @if($ap->attachment_url)
-                                    <button type="button" @click="previewImage('{{ $ap->attachment_url }}', 'Tagihan {{ $ap->bill_number }} - {{ $ap->vendor_name }}')"
+                                    <button type="button" @click="previewImage($el.dataset.url, $el.dataset.title)"
+                                         data-url="{{ $ap->attachment_url }}"
+                                         data-title="Tagihan {{ $ap->bill_number }} - {{ $ap->vendor_name }}"
                                         class="inline-flex items-center gap-1 text-[10.5px] font-medium text-[#007AFF] hover:underline mt-1 cursor-pointer">
                                         <i data-lucide="paperclip" class="w-3 h-3"></i>
                                         <span>Lihat Faktur/Tagihan</span>
@@ -244,7 +246,7 @@
                             <td class="py-3.5 px-4 text-center">
                                 @if($ap->status !== 'paid' && (float) $ap->balance_due > 0.01)
                                     @if(Auth::guard('admin')->user()?->hasPermission('admin.finance.manage'))
-                                        <button type="button" @click="openPayAp({{ json_encode($ap) }})"
+                                        <button type="button" @click="openPayAp(@js($ap))"
                                             class="h-8 px-3 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5">
                                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
                                             <span>Bayar Tagihan</span>
@@ -286,7 +288,9 @@
                                                         </span>
 
                                                         @if($pay->attachment_url)
-                                                            <button type="button" @click="previewImage('{{ $pay->attachment_url }}', 'Bukti Transfer Keluar {{ $pay->payment_number }}')"
+                                                            <button type="button" @click="previewImage($el.dataset.url, $el.dataset.title)"
+                                         data-url="{{ $pay->attachment_url }}"
+                                         data-title="Bukti Transfer Keluar {{ $pay->payment_number }}"
                                                                 class="text-[#007AFF] hover:underline font-semibold inline-flex items-center gap-1 cursor-pointer">
                                                                 <i data-lucide="image" class="w-3 h-3"></i>
                                                                 <span>Bukti Transfer Keluar</span>

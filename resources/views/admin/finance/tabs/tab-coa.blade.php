@@ -78,7 +78,7 @@
                             </span>
 
                             @if(Auth::guard('admin')->user()?->hasPermission('admin.finance.manage'))
-                                <button type="button" @click="openEditAccount({{ json_encode($acc) }})"
+                                <button type="button" @click="openEditAccount(@js($acc))"
                                     class="w-7 h-7 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
                                     title="Ubah Akun">
                                     <i data-lucide="pencil" class="w-3 h-3"></i>

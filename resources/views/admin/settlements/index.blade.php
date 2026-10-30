@@ -195,7 +195,7 @@
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-black dark:text-white">{{ $settlement->destination_bank ?: 'Belum ditentukan' }}</span>
                                     @if($settlement->destination_bank)
-                                        <button type="button" @click="copyToClipboard('{{ $settlement->destination_bank }}')" title="Salin rekening"
+                                        <button type="button" @click="copyToClipboard($el.dataset.bank)" data-bank="{{ $settlement->destination_bank }}" title="Salin rekening"
                                             class="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-black/40 dark:text-white/40">
                                             <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                                         </button>
@@ -229,14 +229,26 @@
                                 <div class="flex items-center justify-center gap-1.5">
                                     @if($settlement->status === 'completed' && $settlement->proof_image_path)
                                         <button type="button"
-                                            @click="openViewProofModal('{{ $settlement->proof_image_url }}', '{{ $settlement->settlement_number }}', '{{ $settlement->business?->name }}', '{{ number_format($settlement->net_amount, 0, ',', '.') }}', '{{ $settlement->destination_bank }}', '{{ $settlement->transferred_at ? $settlement->transferred_at->format('d M Y H:i') : '-' }}', '{{ addslashes($settlement->admin_notes ?? '') }}')"
+                                            @click="openViewProofModal($el.dataset.url, $el.dataset.number, $el.dataset.business, $el.dataset.amount, $el.dataset.bank, $el.dataset.transferred, $el.dataset.notes)"
+                                            data-url="{{ $settlement->proof_image_url }}"
+                                            data-number="{{ $settlement->settlement_number }}"
+                                            data-business="{{ $settlement->business?->name }}"
+                                            data-amount="{{ number_format($settlement->net_amount, 0, ',', '.') }}"
+                                            data-bank="{{ $settlement->destination_bank }}"
+                                            data-transferred="{{ $settlement->transferred_at ? $settlement->transferred_at->format('d M Y H:i') : '-' }}"
+                                            data-notes="{{ $settlement->admin_notes ?? '' }}"
                                             class="h-8 px-3 rounded-[9px] text-[11.5px] font-semibold bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] transition flex items-center gap-1.5 shadow-xs">
                                             <i data-lucide="image" class="w-3.5 h-3.5"></i>
                                             <span>Lihat Bukti</span>
                                         </button>
                                     @elseif($settlement->status === 'pending')
                                         <button type="button"
-                                            @click="openUploadModal('{{ $settlement->id }}', '{{ $settlement->settlement_number }}', '{{ $settlement->business?->name }}', '{{ number_format($settlement->net_amount, 0, ',', '.') }}', '{{ $settlement->destination_bank }}')"
+                                            @click="openUploadModal($el.dataset.id, $el.dataset.number, $el.dataset.business, $el.dataset.amount, $el.dataset.bank)"
+                                            data-id="{{ $settlement->id }}"
+                                            data-number="{{ $settlement->settlement_number }}"
+                                            data-business="{{ $settlement->business?->name }}"
+                                            data-amount="{{ number_format($settlement->net_amount, 0, ',', '.') }}"
+                                            data-bank="{{ $settlement->destination_bank }}"
                                             class="h-8 px-3 rounded-[9px] text-[11.5px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition flex items-center gap-1.5 shadow-xs">
                                             <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i>
                                             <span>Transfer &amp; Upload Bukti</span>

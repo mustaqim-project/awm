@@ -1668,4 +1668,7 @@ return [
     'one_day_express' => 'Kilat 1 Hari',
     'status_delivering' => 'Dalam Pengantaran',
     'status_payment_expired' => 'Waktu Pembayaran Habis',
+    'hub_pesanan_omnichannel' => 'Hub Pesanan Omnichannel',
+    'testingrate' => 'TestingRate:',
+    'area_id_bull_kode' => 'Area ID: &bull; Kode',
 ];

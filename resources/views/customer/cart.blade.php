@@ -38,7 +38,7 @@
             <a href="{{ route('customer.stores') }}"
                class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#007AFF] text-white rounded-xl text-xs font-bold hover:bg-[#0062CC] transition-colors shadow-xs">
                 <i data-lucide="compass" class="w-4 h-4"></i>
-                <span>Jelajahi Toko UMKM</span>
+                <span>{{ __('customer.explore_stores') }}</span>
             </a>
         </div>
     @else
@@ -137,7 +137,7 @@
                     {{-- Remove --}}
                     <button onclick="removeItem('{{ $cart->business->slug }}', '{{ $item->id }}')"
                             class="w-8 h-8 rounded-lg flex items-center justify-center text-black/30 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors shrink-0"
-                            title="Hapus dari keranjang">
+                            title="{{ __('customer.cart_delete_title') }}">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -156,7 +156,7 @@
                     @csrf
                     <button type="submit"
                             class="w-full sm:w-auto px-5 py-2.5 bg-[#007AFF] text-white rounded-[12px] font-bold text-xs hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-xs min-h-[44px]">
-                        <span>Lanjut Checkout</span>
+                        <span>{{ __('customer.proceed_checkout') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </button>
                 </form>

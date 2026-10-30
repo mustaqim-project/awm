@@ -105,8 +105,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Bot
-                        Platform</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Bot Platform</span>
                     <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] flex items-center justify-center shrink-0"
                         :class="status === 'connected' ? 'bg-[#34C759]/15 text-[#34C759]' :
                             'bg-black/5 dark:bg-white/10 text-black/40 dark:text-white/40'">
@@ -128,8 +127,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Merchant
-                        WABA</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Merchant WABA</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center shrink-0">
                         <i data-lucide="store" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -151,8 +149,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Pengingat
-                        Tagihan</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Pengingat Tagihan</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center shrink-0">
                         <i data-lucide="bell" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -175,8 +172,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Keberhasilan
-                        Kirim</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Keberhasilan Kirim</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center shrink-0">
                         <i data-lucide="check-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -265,7 +261,7 @@
             x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
             class="space-y-6">
 
-            {{-- 1. HERO CARD: LIVE STATUS BOT PLATFORM META --}}
+            {{-- 1. HERO CARD: LIVE STATUS Bot Platform META --}}
             <div
                 class="rounded-[22px] sm:rounded-[24px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-md border border-black/[0.08] dark:border-white/[0.08] shadow-sm p-5 sm:p-7 space-y-6 w-full min-w-0">
                 <div
@@ -306,7 +302,7 @@
                             </div>
                             <p class="text-[12.5px] text-black/60 dark:text-white/60 leading-relaxed max-w-2xl">
                                 Kanal resmi Meta WhatsApp Cloud API (Graph API v26.0) tingkat induk (Parent). Digunakan
-                                untuk pengiriman OTP otentikasi login, reset PIN, verifikasi akun, dan pengingat tagihan
+                                untuk pengiriman OTP otentikasi login, reset PIN, verifikasi akun, dan Pengingat Tagihan
                                 langganan SaaS.
                             </p>
                         </div>
@@ -475,9 +471,7 @@
                     {{-- 1. Meta App ID --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta
-                            App ID (META_WA_APP_ID)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta App ID (META_WA_APP_ID)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ $platformApp['app_id'] ?: 'Belum Dikonfigurasi' }}
                         </div>
@@ -486,9 +480,7 @@
                     {{-- 2. Meta App Secret --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta
-                            App Secret (META_WA_APP_SECRET)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta App Secret (META_WA_APP_SECRET)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ !empty($platformApp['app_secret']) ? '••••••••••••••••' : 'Belum Dikonfigurasi' }}
                         </div>
@@ -497,9 +489,7 @@
                     {{-- 3. Embedded Signup Config ID --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Embedded
-                            Signup Config ID (META_WA_CONFIG_ID)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Embedded Signup Config ID (META_WA_CONFIG_ID)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ $platformApp['config_id'] ?: 'Opsional / Default' }}
                         </div>
@@ -508,9 +498,7 @@
                     {{-- 4. Webhook Verify Token --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Webhook
-                            Verify Token (META_WA_WEBHOOK_VERIFY_TOKEN)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Webhook Verify Token (META_WA_WEBHOOK_VERIFY_TOKEN)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ $platformApp['webhook_verify_token'] ?: 'Belum Dikonfigurasi' }}
                         </div>
@@ -519,9 +507,7 @@
                     {{-- 5. Graph API Version --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Graph
-                            API Version (META_WA_GRAPH_VERSION)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Graph API Version (META_WA_GRAPH_VERSION)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ $platformApp['graph_version'] ?: 'v26.0' }}
                         </div>
@@ -530,9 +516,7 @@
                     {{-- 6. Graph API Base URL --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Graph
-                            API Base URL (META_WA_GRAPH_URL)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Graph API Base URL (META_WA_GRAPH_URL)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
                             {{ $platformApp['graph_url'] ?: 'https://graph.facebook.com' }}
                         </div>
@@ -563,9 +547,7 @@
                     {{-- 9. Meta System User Permanent Access Token --}}
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
-                        <span
-                            class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta
-                            System User Permanent Access Token (META_WA_TOKEN)</span>
+                        <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta System User Permanent Access Token (META_WA_TOKEN)</span>
                         <div class="text-[13px] font-bold text-[#248A3D] dark:text-[#30D158] flex items-center gap-1.5">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
                             <span>{{ !empty($metaCreds['token']) ? 'Tersimpan Terenkripsi (AES-256)' : 'Belum Ada Token' }}</span>
@@ -2127,7 +2109,7 @@
         </div>
 
         {{-- ========================================================================= --}}
-        {{-- TAB 5: MONITORING MERCHANT WABA (PLATFORM PARENT OVERSIGHT)               --}}
+        {{-- TAB 5: MONITORING Merchant WABA (PLATFORM PARENT OVERSIGHT)               --}}
         {{-- ========================================================================= --}}
         <div x-show="activeTab === 'merchants'" x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
@@ -2669,7 +2651,9 @@
                         const escaped = String(text)
                             .replace(/&/g, '&amp;')
                             .replace(/</g, '&lt;')
-                            .replace(/>/g, '&gt;');
+                            .replace(/>/g, '&gt;')
+                            .replace(/"/g, '&quot;')
+                            .replace(/'/g, '&#039;');
                         return escaped.replace(/(\{\{\d+\}\})/g,
                             '<span class="px-1.5 py-0.5 rounded-[4px] bg-[#007AFF]/15 text-[#007AFF] font-mono text-[11px] font-semibold">$1</span>'
                         );

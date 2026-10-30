@@ -1,4 +1,4 @@
-@extends('layouts.customer', ['title' => 'Riwayat Belanja'])
+@extends('layouts.customer', ['title' => '{{ __('customer.orders_history_title') }}'])
 
 @section('content')
 <div class="space-y-6">
@@ -6,7 +6,7 @@
     {{-- Page Header & Search --}}
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-black dark:text-white tracking-tight">Riwayat Belanja</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold text-black dark:text-white tracking-tight">{{ __('customer.orders_history_title') }}</h1>
             <p class="text-[13px] text-black/55 dark:text-white/55">Daftar seluruh transaksi belanja Anda di seluruh etalase UMKM.</p>
         </div>
 
@@ -16,7 +16,7 @@
                 <input type="hidden" name="status" value="{{ request('status') }}">
             @endif
             <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 dark:text-white/40"></i>
-            <input type="search" name="q" value="{{ $search }}" placeholder="Cari nomor pesanan / item..."
+            <input type="search" name="q" value="{{ $search }}" placeholder="{{ __('customer.search_order_placeholder') }}"
                    class="w-full h-10 pl-9 pr-3 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
         </form>
     </div>
@@ -56,7 +56,7 @@
             @if($status !== 'all' || $search !== '')
                 <a href="{{ route('customer.orders') }}"
                    class="inline-flex items-center gap-1.5 text-[12.5px] text-[#007AFF] font-semibold hover:underline">
-                    <span>Hapus Filter &amp; Tampilkan Semua</span>
+                    <span>{{ __('customer.btn_clear_filter_all') }}</span>
                 </a>
             @endif
         </div>
@@ -198,13 +198,13 @@
                                     <a href="{{ $payUrl }}"
                                        class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-semibold transition active:scale-[0.97] flex items-center gap-1.5 shadow-xs min-h-[44px]">
                                         <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
-                                        <span>Lanjutkan Pembayaran</span>
+                                        <span>{{ __('customer.btn_continue_payment') }}</span>
                                     </a>
                                 @endif
 
                                 <a href="{{ route('customer.orders.detail', $order->id) }}"
                                    class="h-9 px-4 rounded-[10px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white text-[12.5px] font-semibold transition active:scale-[0.97] flex items-center gap-1 min-h-[44px]">
-                                    <span>Lihat Rincian</span>
+                                    <span>{{ __('customer.btn_view_details') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>

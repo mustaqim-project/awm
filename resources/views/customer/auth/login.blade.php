@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Masuk Akun Pelanggan - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => '{{ __('customer.btn_login') }} - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
@@ -24,7 +24,7 @@
                         <span>Belanja di {{ $store->name }}</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Masuk Akun Pelanggan
+                        {{ __('customer.btn_login') }}
                     </h1>
                     <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                         Satu akun terpadu untuk belanja, lacak pesanan, dan promo di <strong>{{ $store->name }}</strong> serta seluruh toko merchant COOCA.
@@ -34,7 +34,7 @@
                         <i data-lucide="shopping-bag" class="w-8 h-8 text-white"></i>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Masuk Akun Pelanggan
+                        {{ __('customer.btn_login') }}
                     </h1>
                     <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                         Satu akun terpadu untuk belanja cepat, lacak pesanan, dan nikmati promo di semua merchant COOCA.
@@ -89,7 +89,7 @@
                         <path fill="#34A853"
                             d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z" />
                     </svg>
-                    <span>Lanjutkan dengan Google</span>
+                    <span>{{ __('customer.continue_with_google') }}</span>
                 </a>
 
                 <!-- Divider -->
@@ -119,7 +119,7 @@
                             </div>
                             <input type="text" name="login" id="customer_login" x-model="loginValue" required autofocus
                                 class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all text-[16px] sm:text-base outline-none"
-                                placeholder="Contoh: nama@email.com atau 08123456789">
+                                placeholder="{{ __('customer.email_phone_login_placeholder') }}">
                         </div>
                     </div>
 
@@ -157,7 +157,7 @@
                     <!-- Primary CTA Button -->
                     <button type="submit"
                         class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
-                        <span>Masuk Akun Pelanggan</span>
+                        <span>{{ __('customer.btn_login') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </form>
@@ -168,7 +168,7 @@
                         Belum memiliki akun pelanggan?
                         <a href="{{ route('customer.register', ['store' => isset($store) && $store ? $store->slug : null, 'redirect' => $redirectTo]) }}"
                             class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 rounded ml-1">
-                            Daftar Akun Baru
+                            {{ __('customer.btn_register_new') }}
                         </a>
                     </div>
                     @if (isset($store) && $store)
@@ -176,7 +176,7 @@
                             <a href="{{ url('/' . $store->slug) }}"
                                 class="text-xs text-slate-500 dark:text-slate-400 hover:text-[#007AFF] dark:hover:text-[#0A84FF] transition-colors inline-flex items-center gap-1">
                                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                                <span>Kembali ke Etalase {{ $store->name }}</span>
+                                <span>{{ __('customer.btn_back_to_showcase') }} {{ $store->name }}</span>
                             </a>
                         </div>
                     @endif

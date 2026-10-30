@@ -1668,4 +1668,7 @@ return [
     'one_day_express' => '1 Day Express',
     'status_delivering' => 'Out for Delivery',
     'status_payment_expired' => 'Payment Expired',
+    'hub_pesanan_omnichannel' => 'Hub Order Omnichannel',
+    'testingrate' => 'TestingRate:',
+    'area_id_bull_kode' => 'Area ID: &bull; Code',
 ];

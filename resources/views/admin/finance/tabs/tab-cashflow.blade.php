@@ -97,7 +97,9 @@
                             <td class="px-4 py-4 whitespace-nowrap text-center">
                                 @if($trx->attachment_url)
                                     <button type="button"
-                                        @click="previewImage('{{ $trx->attachment_url }}', '{{ addslashes($trx->title) }} ({{ $trx->transaction_number }})')"
+                                        @click="previewImage($el.dataset.url, $el.dataset.title)"
+                                    data-url="{{ $trx->attachment_url }}"
+                                    data-title="{{ $trx->title }} ({{ $trx->transaction_number }})"
                                         class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-[11px] font-semibold text-black/70 dark:text-white/70 transition-all cursor-pointer group"
                                         title="Klik untuk melihat bukti gambar kuitansi/struk">
                                         <img src="{{ $trx->attachment_url }}" alt="Thumbnail" class="w-4.5 h-4.5 rounded-[4px] object-cover border border-black/10 dark:border-white/10 shrink-0">
@@ -114,14 +116,14 @@
                                 <div class="flex items-center justify-end gap-1.5">
                                     @if(Auth::guard('admin')->user()?->hasPermission('admin.finance.manage'))
                                         <button type="button"
-                                            @click="openEdit({{ json_encode($trx) }})"
+                                            @click="openEdit(@js($trx))"
                                             class="w-8 h-8 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
                                             title="Ubah Transaksi">
                                             <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                         </button>
 
                                         <button type="button"
-                                            @click="openDelete({{ json_encode($trx) }})"
+                                            @click="openDelete(@js($trx))"
                                             class="w-8 h-8 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-[#FF3B30]/15 text-black/60 dark:text-white/60 hover:text-[#FF3B30] flex items-center justify-center transition-all cursor-pointer"
                                             title="Hapus Transaksi">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>

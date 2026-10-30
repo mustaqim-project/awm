@@ -160,7 +160,8 @@
                                 {{-- Terbitkan Faktur dari SO --}}
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <form action="{{ route('admin.b2b.orders.generate-invoice', $o) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Terbitkan Faktur Penjualan (Invoice) dari Pesanan SO {{ $o->so_number }}?');">
+                                        data-confirm="Terbitkan Faktur Penjualan (Invoice) dari Pesanan SO {{ $o->so_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         <button type="submit"
                                             class="h-8 px-2.5 rounded-[9px] bg-[#0284c7] hover:bg-[#0369a1] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
@@ -174,7 +175,8 @@
                                 {{-- Hapus Pesanan jika belum ada faktur aktif --}}
                                 @if(!$o->invoices()->where('status', '!=', 'void')->exists() && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
                                     <form action="{{ route('admin.b2b.orders.destroy', $o) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Hapus Pesanan Penjualan {{ $o->so_number }}?');">
+                                        data-confirm="Hapus Pesanan Penjualan {{ $o->so_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

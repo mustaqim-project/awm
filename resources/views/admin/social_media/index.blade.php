@@ -1088,7 +1088,10 @@
                                     </div>
 
                                     <button type="button"
-                                        @click="openReplyModal('{{ $c->id }}', '{{ addslashes($c->from_name ?: 'User') }}', '{{ addslashes($c->message) }}')"
+                                        @click="openReplyModal($el.dataset.id, $el.dataset.from, $el.dataset.message)"
+                                        data-id="{{ $c->id }}"
+                                        data-from="{{ $c->from_name ?: 'User' }}"
+                                        data-message="{{ $c->message }}"
                                         class="min-h-[32px] px-3 rounded-[9px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                                         <i data-lucide="reply" class="w-3.5 h-3.5"></i>
                                         <span>Balas</span>
@@ -2632,7 +2635,7 @@
     <script>
         function adminSocialCenter() {
             return {
-                activeTab: '{{ $tab }}',
+                activeTab: @js($tab),
                 openCreatePostModal: false,
                 replyModalOpen: false,
                 editModalOpen: false,

@@ -15,7 +15,7 @@
             <a href="{{ route('customer.cart') }}"
                class="inline-flex items-center gap-2 h-10 px-4 bg-[#007AFF] text-white rounded-[12px] text-sm font-semibold hover:bg-[#0071E3] transition active:scale-[0.98] shadow-sm">
                 <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-                <span>Lihat Keranjang</span>
+                <span>{{ __('customer.btn_view_cart') }}</span>
             </a>
         </div>
 
@@ -23,7 +23,7 @@
         <form method="GET" action="{{ route('customer.stores') }}" class="mt-5">
             <div class="relative max-w-md">
                 <input type="text" name="q" value="{{ $search }}"
-                       placeholder="Cari nama toko, kota, atau kategori..."
+                       placeholder="{{ __('customer.stores_search_placeholder') }}"
                        class="w-full pl-10 pr-4 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-white dark:bg-[#2C2C2E] text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 shadow-xs">
                 <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
             </div>

@@ -203,7 +203,9 @@
                                         @if ($account->qr_image_path)
                                             <div>
                                                 <button type="button"
-                                                    @click="openQris('{{ $account->qr_image_url }}', '{{ addslashes($account->bank_name) }}')"
+                                                    @click="openQris($el.dataset.url, $el.dataset.title)"
+                                                    data-url="{{ $account->qr_image_url }}"
+                                                    data-title="{{ $account->bank_name }}"
                                                     class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#34C759] dark:text-[#30D158] bg-[#34C759]/10 hover:bg-[#34C759]/18 px-2 py-0.5 rounded-[6px] transition">
                                                     <i data-lucide="qr-code" class="w-3 h-3" stroke-width="2"></i>
                                                     <span>Lihat QR Code</span>

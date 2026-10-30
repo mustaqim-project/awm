@@ -366,4 +366,6 @@ return [
     'bin_location_created' => 'Rak / bin lokasi penyimpanan berhasil dibuat.',
     'bin_location_deleted' => 'Rak / bin lokasi penyimpanan berhasil dihapus.',
     'geocoding_saved' => 'Koordinat dan radius geofencing gudang berhasil disimpan.',
+    'tutup' => 'Tutup',
+    'rp_number_format_loc_total_valuation' => 'Rp {{ number_format($loc->total_valuation ?? 0, 0, \',\', \'.\') }}',
 ];

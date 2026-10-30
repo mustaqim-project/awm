@@ -282,7 +282,7 @@
                                     @click="testProviderConnection('{{ $slug }}')"
                                     :disabled="testingProvider === '{{ $slug }}'"
                                     class="px-3 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-xs font-semibold text-black dark:text-white transition flex items-center gap-1.5 active:scale-95">
-                                <i data-lucide="radio" class="w-3.5 h-3.5 text-blue-500" :class="testingProvider === '{{ $slug }}' ? 'animate-pulse text-amber-500' : ''"></i>
+                                <i data-lucide="radio" class="w-3.5 h-3.5 text-blue-500" :class="{{ __('ai.testingprovider_slug_animate_pulse_text_amber') }} ''"></i>
                                 <span x-text="testingProvider === '{{ $slug }}' ? '{{ __('ai.providers.testing') }}' : '{{ __('ai.providers.test_connection') }}'"></span>
                             </button>
 
@@ -303,7 +303,7 @@
 <script>
 function aiProvidersApp() {
     return {
-        testingProvider: null,
+        {{ __('ai.testingprovider') }} null,
         detectingModels: null,
         showKey: {},
         providers: {},

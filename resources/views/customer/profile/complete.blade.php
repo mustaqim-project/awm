@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Lengkapi Profil Pelanggan - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => '{{ __('customer.complete_profile_heading') }} Pelanggan - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
                     <i data-lucide="user-check" class="w-8 h-8"></i>
                 </div>
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Lengkapi Profil
+                    {{ __('customer.complete_profile_heading') }}
                 </h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                     Tambahkan nomor WhatsApp untuk pengiriman OTP aktivasi, konfirmasi pesanan, dan informasi kurir.
@@ -106,7 +106,7 @@
                                 <i data-lucide="map-pin" class="w-4 h-4"></i>
                             </div>
                             <textarea name="shipping_address" id="shipping_address" rows="3"
-                                placeholder="Nama jalan, nomor rumah/gedung, RT/RW, kelurahan, kecamatan, kota..."
+                                placeholder="{{ __('customer.complete_address_placeholder') }}"
                                 class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none resize-none">{{ old('shipping_address', $customer->shipping_address) }}</textarea>
                         </div>
                         <p class="mt-1 text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
@@ -118,7 +118,7 @@
                     <div class="pt-2">
                         <button type="submit"
                             class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
-                            <span>Simpan &amp; Lanjutkan Verifikasi WhatsApp</span>
+                            <span>{{ __('customer.btn_save_continue_wa') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -129,7 +129,7 @@
                     @csrf
                     <button type="submit"
                         class="min-h-[40px] px-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-[#FF3B30] dark:hover:text-[#FF453A] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/20 rounded">
-                        Gunakan akun lain / Keluar
+                        {{ __('customer.btn_use_other_account') }}
                     </button>
                 </form>
             </div>

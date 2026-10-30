@@ -283,7 +283,7 @@
             <!-- Button CTA -->
             <div class="action-container">
                 <a href="{{ $invoiceUrl }}" class="btn-primary" target="_blank">
-                    Lihat Dokumen Faktur Resmi
+                    {{ __('emails.view_official_invoice') }}
                 </a>
             </div>
         </div>

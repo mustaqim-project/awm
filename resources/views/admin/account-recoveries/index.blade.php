@@ -285,7 +285,7 @@
                                 <!-- Action Buttons: Modal-First Inspection & Direct Link -->
                                 <td class="py-4 px-4 text-right whitespace-nowrap">
                                     <div class="inline-flex items-center gap-1.5">
-                                        <button type="button" @click="openInspection({{ json_encode($recPayload) }})"
+                                        <button type="button" @click="openInspection(@js($recPayload))"
                                             class="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[36px] rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/18 text-[#007AFF] dark:text-[#0A84FF] font-semibold text-xs transition-all active:scale-[0.98]">
                                             <span>Periksa Berkas</span>
                                             <i data-lucide="scan-eye" class="w-3.5 h-3.5"></i>
@@ -402,7 +402,7 @@
 
                         <!-- Action Buttons: Modal Sheet & Full Page -->
                         <div class="pt-1 flex items-center gap-2">
-                            <button type="button" @click="openInspection({{ json_encode($recPayload) }})"
+                            <button type="button" @click="openInspection(@js($recPayload))"
                                 class="flex-1 min-h-[48px] py-3 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
                                 <i data-lucide="scan-eye" class="w-4 h-4"></i>
                                 <span>Periksa Berkas</span>

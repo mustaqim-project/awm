@@ -136,7 +136,7 @@
         </div>
         <div class="content">
             <div class="warning-box">
-                <h3>Jangan Biarkan Operasional Bisnis Terhenti!</h3>
+                <h3>{{ __('emails.plan_expiry_warning') }}</h3>
                 <p>Masa aktif paket <strong>{{ $subscription->plan_code }}</strong> untuk usaha
                     <strong>{{ $subscription->business?->name }}</strong> akan segera berakhir.
                 </p>

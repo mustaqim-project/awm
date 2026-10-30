@@ -97,4 +97,6 @@ return [
     'no_time_limit' => 'No Expiration Date',
     'status_active' => 'Active',
     'status_inactive' => 'Inactive',
+    'contoh_diskon_pembukaan' => 'Example Discount Pembukaan',
+    'contoh_10_atau_15000' => 'Example 10 atau 15000',
 ];

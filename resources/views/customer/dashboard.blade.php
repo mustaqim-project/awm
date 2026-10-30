@@ -1,4 +1,4 @@
-@extends('layouts.customer', ['title' => 'Dashboard Pelanggan'])
+@extends('layouts.customer', ['title' => __('customer.dashboard_title')])
 
 @section('content')
 <div class="space-y-6">
@@ -37,33 +37,33 @@
 
     {{-- Quick Stat Bento Grid --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
-        {{-- Menunggu Bayar --}}
+        {{-- {{ __('customer.tab_waiting_payment') }} --}}
         <a href="{{ route('customer.orders', ['status' => 'pending_payment']) }}"
            class="bento-card bento-card-interactive p-5 flex flex-col justify-between group">
             <div class="flex items-center justify-between">
-                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">Menunggu Bayar</span>
+                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">{{ __('customer.tab_waiting_payment') }}</span>
                 <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
                     <i data-lucide="clock" class="w-4 h-4"></i>
                 </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl sm:text-3xl font-extrabold text-[#FF9500] tabular-nums">{{ $stats['pending_payment'] }}</div>
-                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">Segera unggah bukti bayar</span>
+                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">{{ __('customer.upload_payment_proof_hint') }}</span>
             </div>
         </a>
 
-        {{-- Sedang Diproses --}}
+        {{-- {{ __('customer.tab_processing') }} --}}
         <a href="{{ route('customer.orders', ['status' => 'processing']) }}"
            class="bento-card bento-card-interactive p-5 flex flex-col justify-between group">
             <div class="flex items-center justify-between">
-                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">Sedang Diproses</span>
+                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">{{ __('customer.tab_processing') }}</span>
                 <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                     <i data-lucide="package" class="w-4 h-4"></i>
                 </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl sm:text-3xl font-extrabold text-[#007AFF] tabular-nums">{{ $stats['processing'] }}</div>
-                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">Pesanan disiapkan toko</span>
+                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">{{ __('customer.store_preparing_hint') }}</span>
             </div>
         </a>
 
@@ -71,14 +71,14 @@
         <a href="{{ route('customer.orders', ['status' => 'completed']) }}"
            class="bento-card bento-card-interactive p-5 flex flex-col justify-between group">
             <div class="flex items-center justify-between">
-                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">Pesanan Selesai</span>
+                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">{{ __('customer.tab_completed') }}</span>
                 <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
                     <i data-lucide="check-circle" class="w-4 h-4"></i>
                 </div>
             </div>
             <div class="mt-3">
                 <div class="text-2xl sm:text-3xl font-extrabold text-[#34C759] tabular-nums">{{ $stats['completed'] }}</div>
-                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">Transaksi sukses</span>
+                <span class="text-[11.5px] text-black/45 dark:text-white/45 block mt-0.5">{{ __('customer.successful_transaction') }}</span>
             </div>
         </a>
 
@@ -86,30 +86,30 @@
         <a href="{{ route('customer.cart') }}"
            class="bento-card bento-card-interactive p-5 flex flex-col justify-between group">
             <div class="flex items-center justify-between">
-                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">Keranjang Saya</span>
+                <span class="text-[12px] font-bold text-black/55 dark:text-white/55">{{ __('customer.tab_my_cart') }}</span>
                 <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center">
                     <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                 </div>
             </div>
             <div class="mt-3">
-                <div class="text-2xl sm:text-3xl font-extrabold text-black dark:text-white tabular-nums">Lihat</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-black dark:text-white tabular-nums">{{ __('customer.view') }}</div>
                 <span class="text-[11.5px] text-[#007AFF] font-semibold block mt-0.5 flex items-center gap-1">
-                    Buka Keranjang Belanja &rarr;
+                    {{ __('customer.open_cart_btn') }} &rarr;
                 </span>
             </div>
         </a>
     </div>
 
-    {{-- Pesanan Terbaru Section --}}
+    {{-- {{ __('customer.recent_orders') }} Section --}}
     <div class="bento-card p-6 sm:p-7 space-y-5">
         <div class="flex items-center justify-between gap-4 border-b border-black/5 dark:border-white/5 pb-4">
             <div>
-                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">Pesanan Terbaru</h2>
+                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('customer.recent_orders') }}</h2>
                 <p class="text-[12.5px] text-black/50 dark:text-white/50">Status pelacakan dan konfirmasi pembayaran pesanan Anda.</p>
             </div>
             <a href="{{ route('customer.orders') }}"
                class="text-[12.5px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                <span>Lihat Semua ({{ $stats['total_orders'] }})</span>
+                <span>{{ __('customer.view_all') }} ({{ $stats['total_orders'] }})</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -118,13 +118,13 @@
             <div class="py-12 text-center text-black/40 dark:text-white/40 space-y-3">
                 <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1 opacity-50"></i>
                 <div class="space-y-1">
-                    <p class="text-[14px] font-semibold text-black/70 dark:text-white/70">Belum ada riwayat pesanan</p>
+                    <p class="text-[14px] font-semibold text-black/70 dark:text-white/70">{{ __('customer.no_order_history') }}</p>
                     <p class="text-[12.5px]">Mulai belanja di salah satu toko UMKM mitra COOCA sekarang.</p>
                 </div>
                 <a href="{{ route('public.discovery.index') }}"
                    class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[#007AFF] text-white text-[13px] font-semibold hover:opacity-90 transition shadow-sm">
                     <i data-lucide="compass" class="w-4 h-4"></i>
-                    <span>Jelajahi Toko UMKM</span>
+                    <span>{{ __('customer.explore_stores') }}</span>
                 </a>
             </div>
         @else
@@ -177,7 +177,7 @@
                                 @elseif(in_array($order->status, ['paid', 'processing', 'ready']))
                                     <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#007AFF]">
                                         <i data-lucide="package" class="w-3 h-3"></i>
-                                        <span>Sedang Diproses</span>
+                                        <span>{{ __('customer.tab_processing') }}</span>
                                     </span>
                                 @elseif($order->status === 'completed')
                                     <span class="inline-flex items-center gap-1 text-[11px] font-bold text-[#34C759]">
@@ -199,13 +199,13 @@
                                     <a href="{{ $payUrl }}"
                                        class="h-8 px-3 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold transition active:scale-[0.97] flex items-center gap-1 shadow-xs min-h-[36px]">
                                         <i data-lucide="credit-card" class="w-3 h-3"></i>
-                                        <span>Bayar Sekarang</span>
+                                        <span>{{ __('customer.pay_now') }}</span>
                                     </a>
                                 @endif
 
                                 <a href="{{ route('customer.orders.detail', $order->id) }}"
                                    class="h-8 px-3 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 text-[12px] font-semibold transition active:scale-[0.97] flex items-center gap-1 min-h-[36px]">
-                                    <span>Detail</span>
+                                    <span>{{ __('customer.detail') }}</span>
                                     <i data-lucide="chevron-right" class="w-3 h-3"></i>
                                 </a>
                             </div>

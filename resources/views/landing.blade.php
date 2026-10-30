@@ -1241,7 +1241,7 @@
                                                     @else
                                                         <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200/70 dark:from-slate-800 dark:to-slate-700/60 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 group-hover:scale-105 transition-transform duration-300">
                                                             <i data-lucide="package" class="w-5 h-5 mb-0.5 opacity-60"></i>
-                                                            <span class="text-[9px] font-medium tracking-tight">Katalog UMKM</span>
+                                                            <span class="text-[9px] font-medium tracking-tight">{{ __('public_home.umkm_catalog') }}</span>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -1334,7 +1334,7 @@
                     <a href="{{ route('public.solutions.fnb') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"
-                            alt="F&B Restoran dan Kafe"
+                            alt="{{ __('public_home.ind_fnb') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
@@ -1355,7 +1355,7 @@
                     <a href="{{ route('public.solutions.retail') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80"
-                            alt="Retail Toko dan Minimarket"
+                            alt="{{ __('public_home.ind_retail') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
@@ -1376,7 +1376,7 @@
                     <a href="{{ route('public.solutions.workshop') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=600&q=80"
-                            alt="Bengkel Motor dan Mobil"
+                            alt="{{ __('public_home.ind_workshop') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
@@ -1397,7 +1397,7 @@
                     <a href="{{ route('public.solutions.laundry') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=600&q=80"
-                            alt="Laundry Kiloan dan Satuan"
+                            alt="{{ __('public_home.ind_laundry') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
@@ -1418,7 +1418,7 @@
                     <a href="{{ route('public.solutions.manufacturing') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
-                            alt="Manufaktur Produksi UMKM"
+                            alt="{{ __('public_home.ind_manufacturing') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
@@ -1439,7 +1439,7 @@
                     <a href="{{ route('public.solutions.services') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
-                            alt="Bisnis Jasa dan Servis"
+                            alt="{{ __('public_home.ind_services') }}"
                             loading="lazy" width="600" height="400"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">

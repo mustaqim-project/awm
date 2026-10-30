@@ -201,7 +201,9 @@
 
                             @if ($recovery->identity_card_path)
                                 <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                    @click="openImage('{{ $recovery->getIdentityCardUrl() }}', 'Foto KTP Pemohon: {{ $recovery->applicant_name }}')">
+                                    @click="openImage($el.dataset.url, $el.dataset.title)"
+                                    data-url="{{ $recovery->getIdentityCardUrl() }}"
+                                    data-title="Foto KTP Pemohon: {{ $recovery->applicant_name }}">
                                     <img src="{{ $recovery->getIdentityCardUrl() }}" alt="KTP Pemohon"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                     <div
@@ -262,7 +264,9 @@
                                 @else
                                     <!-- Image Preview -->
                                     <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                        @click="openImage('{{ $recovery->getBusinessProofUrl() }}', 'Bukti Usaha: {{ $recovery->business_name }}')">
+                                        @click="openImage($el.dataset.url, $el.dataset.title)"
+                                        data-url="{{ $recovery->getBusinessProofUrl() }}"
+                                        data-title="Bukti Usaha: {{ $recovery->business_name }}">
                                         <img src="{{ $recovery->getBusinessProofUrl() }}" alt="Bukti Usaha"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                         <div
@@ -301,7 +305,9 @@
 
                             @if ($recovery->selfie_proof_path)
                                 <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
-                                    @click="openImage('{{ $recovery->getSelfieProofUrl() }}', 'Selfie Pemohon: {{ $recovery->applicant_name }}')">
+                                    @click="openImage($el.dataset.url, $el.dataset.title)"
+                                    data-url="{{ $recovery->getSelfieProofUrl() }}"
+                                    data-title="Selfie Pemohon: {{ $recovery->applicant_name }}">
                                     <img src="{{ $recovery->getSelfieProofUrl() }}" alt="Selfie Pemohon"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                     <div

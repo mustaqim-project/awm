@@ -98,7 +98,7 @@
         <!-- Chat Stream Body (Balon Percakapan Identik Gambar 1) -->
         <div id="cooca-chat-message-stream" class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 bg-[#070B12]/80 scroll-smooth">
             
-            <!-- Alert jika belum ada provider AI aktif -->
+            <!-- Alert jika {{ __('ai.belum_ada_provider_ai_aktif') }}>
             <template x-if="!hasConfiguredProvider">
                 <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs flex items-center justify-between gap-3">
                     <div class="flex items-center gap-2">

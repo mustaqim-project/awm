@@ -719,7 +719,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('Terjadi kesalahan jaringan: ' + err.message);
+                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
                 }
             } finally {
                 this.isSubmitting = false;
@@ -783,7 +783,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('Terjadi kesalahan jaringan: ' + err.message);
+                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
                 }
             } finally {
                 this.isSubmitting = false;
@@ -837,7 +837,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('Terjadi kesalahan jaringan: ' + err.message);
+                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
                 }
             } finally {
                 this.isSubmitting = false;

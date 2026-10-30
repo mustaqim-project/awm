@@ -1,4 +1,4 @@
-@extends('layouts.customer', ['title' => 'Rincian Pesanan ' . $order->order_number])
+@extends('layouts.customer', ['title' => __('customer.order_details_title') . ' ' . $order->order_number])
 
 @section('content')
 <div class="space-y-6">
@@ -182,11 +182,11 @@
         <div>
             <a href="{{ route('customer.orders') }}" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#007AFF] hover:underline mb-1">
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                <span>Kembali ke Riwayat Belanja</span>
+                <span>{{ __('customer.btn_back_to_orders') }}</span>
             </a>
             <div class="flex flex-wrap items-center gap-2.5">
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-black dark:text-white tracking-tight">
-                    Pesanan #{{ $order->order_number }}
+                    {{ __('customer.order_number_heading') }}{{ $order->order_number }}
                 </h1>
                 
                 {{-- 1. Semantic Status Badge (Sesuai Urutan Siklus Hidup Sistem) --}}
@@ -373,7 +373,7 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h3 class="text-[15px] font-bold text-black dark:text-white tracking-tight">
-                                Pesanan Bersama: {{ $group->title }}
+                                {{ __('customer.group_order_colon') }} {{ $group->title }}
                             </h3>
                             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#AF52DE]/15 text-[#AF52DE]">
                                 Group Order
@@ -425,7 +425,7 @@
             {{-- Items Card --}}
             <div class="bento-card p-6 space-y-4">
                 <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight pb-3 border-b border-black/5 dark:border-white/5">
-                    Daftar Produk Pesanan
+                    {{ __('customer.ordered_products_heading') }}
                 </h2>
 
                 <div class="divide-y divide-black/5 dark:divide-white/5">
@@ -498,7 +498,7 @@
             <div class="bento-card p-6 space-y-3.5">
                 <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
                     <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">
-                        Informasi Pengiriman &amp; Logistik
+                        {{ __('customer.shipping_logistics_heading') }}
                     </h2>
                     @if($shippingInfo)
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold {{ $shippingInfo['badge_class'] }} border flex items-center gap-1 shadow-2xs">
@@ -570,7 +570,7 @@
                             @if($order->shipping_tracking_url)
                                 <a href="{{ $order->shipping_tracking_url }}" target="_blank"
                                     class="px-2.5 py-1 rounded-[8px] bg-black/10 dark:bg-white/10 hover:bg-black/15 text-black dark:text-white text-[11px] font-bold transition flex items-center gap-1">
-                                    <span>Lacak di Ekspedisi</span>
+                                    <span>{{ __('customer.btn_track_expedition') }}</span>
                                     <i data-lucide="external-link" class="w-3 h-3"></i>
                                 </a>
                             @endif
@@ -600,7 +600,7 @@
                         <div class="flex items-center gap-2">
                             <i data-lucide="star" class="w-4 h-4 text-[#FF9500] fill-[#FF9500]"></i>
                             <h2 class="text-[16px] font-bold text-black dark:text-white tracking-tight">
-                                Ulasan Produk Pembeli
+                                {{ __('customer.customer_reviews_heading') }}
                             </h2>
                         </div>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20 flex items-center gap-1">
@@ -638,7 +638,7 @@
                                     </div>
                                     <template x-if="isSubmitted && !isEditing">
                                         <button type="button" @click="isEditing = true" class="text-xs text-[#007AFF] font-bold hover:underline cursor-pointer">
-                                            Ubah Ulasan
+                                            {{ __('customer.btn_edit_review') }}
                                         </button>
                                     </template>
                                 </div>
@@ -686,18 +686,16 @@
                                             <label class="text-[11px] uppercase tracking-wider text-black/45 dark:text-white/45 font-bold block mb-1">
                                                 Komentar Ulasan
                                             </label>
-                                            <textarea name="reviews[0][review_text]" x-model="reviewText" rows="2" placeholder="Bagikan kepuasan Anda mengenai produk ini..."
+                                            <textarea name="reviews[0][review_text]" x-model="reviewText" rows="2" placeholder="{{ __('customer.feedback_placeholder') }}"
                                                 class="w-full p-2.5 rounded-[10px] bg-white dark:bg-black/30 border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition resize-none"></textarea>
                                         </div>
 
                                         <div class="flex items-center justify-end gap-2">
                                             <template x-if="isEditing">
-                                                <button type="button" @click="isEditing = false" class="px-3 py-1.5 rounded-[8px] bg-black/5 dark:bg-white/10 text-xs font-semibold text-black dark:text-white cursor-pointer">
-                                                    Batal
-                                                </button>
+                                                <button type="button" @click="isEditing = false" class="px-3 py-1.5 rounded-[8px] bg-black/5 dark:bg-white/10 text-xs font-semibold text-black dark:text-white cursor-pointer">{{ __('customer.btn_cancel') }}</button>
                                             </template>
                                             <button type="submit" class="px-4 py-1.5 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold shadow-xs transition active:scale-95 cursor-pointer">
-                                                Kirim Ulasan
+                                                {{ __('customer.btn_send_review') }}
                                             </button>
                                         </div>
                                     </form>
@@ -747,7 +745,7 @@
                     
                     <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
                         <div class="text-left">
-                            <h2 class="font-bold text-[16px] text-black dark:text-white">QRIS Pembayaran</h2>
+                            <h2 class="font-bold text-[16px] text-black dark:text-white">{{ __('customer.qris_payment_heading') }}</h2>
                             <p class="text-[11px] text-black/50 dark:text-white/50">Scan via GoPay, OVO, Dana, BCA, Mandiri, atau m-Banking</p>
                         </div>
                         <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20">
@@ -765,7 +763,7 @@
 
                     <!-- QR Code Render Card -->
                     <div class="p-4 rounded-[20px] bg-white border border-black/10 shadow-inner flex flex-col items-center justify-center relative mx-auto max-w-xs">
-                        <img src="{{ $qrImageUrl }}" alt="QRIS Code Pesanan #{{ $order->order_number }}" class="w-52 h-52 object-contain rounded-xl">
+                        <img src="{{ $qrImageUrl }}" alt="{{ __('customer.qris_alt', ['number' => $order->order_number]) }}" class="w-52 h-52 object-contain rounded-xl">
                         <div class="mt-2.5 text-[10.5px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
                             <span>Menunggu Pembayaran...</span>
@@ -807,21 +805,21 @@
                         <a href="{{ $qrImageUrl }}" target="_blank" download="qris-pesanan-{{ $order->order_number }}.png"
                             class="w-full h-10 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
                             <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                            <span>Unduh Gambar QR</span>
+                            <span>{{ __('customer.btn_download_qr') }}</span>
                         </a>
 
                         @if ($publicTrackingUrl)
                             <a href="{{ $publicTrackingUrl }}" target="_blank"
                                 class="w-full h-10 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Lanjutkan Pembayaran (Halaman Penuh)</span>
+                                <span>{{ __('customer.btn_continue_payment_full') }}</span>
                             </a>
                         @endif
 
                         @if ($order->gateway_pay_url)
                             <a href="{{ $order->gateway_pay_url }}" target="_blank"
                                 class="w-full h-10 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                                <span>Buka Gateway TriPay</span>
+                                <span>{{ __('customer.btn_open_tripay') }}</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         @endif
@@ -833,7 +831,7 @@
                                 <input type="hidden" name="cancel_reason" value="Dibatalkan oleh pelanggan di portal">
                                 <button type="submit" class="w-full h-10 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 text-[#FF3B30] text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
                                     <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
-                                    <span>Batalkan Pesanan Ini</span>
+                                    <span>{{ __('customer.btn_cancel_order') }}</span>
                                 </button>
                             </form>
                         @endif
@@ -868,7 +866,7 @@
                     </div>
 
                     <div class="space-y-1">
-                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight">Pembayaran Telah Lunas</h3>
+                        <h3 class="text-lg font-bold text-black dark:text-white tracking-tight">{{ __('customer.payment_fully_paid') }}</h3>
                         <p class="text-[12.5px] text-black/55 dark:text-white/55">
                             Transaksi diverifikasi otomatis via {{ $order->payment_channel ?: 'QRIS' }}.
                         </p>
@@ -903,7 +901,7 @@
                                 @csrf
                                 <button type="submit" class="w-full h-10 rounded-[10px] bg-[#34C759] hover:bg-[#30D158] text-white text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer">
                                     <i data-lucide="check" class="w-4 h-4"></i>
-                                    <span>Konfirmasi Pesanan Diterima</span>
+                                    <span>{{ __('customer.btn_confirm_received') }}</span>
                                 </button>
                             </form>
                         </div>

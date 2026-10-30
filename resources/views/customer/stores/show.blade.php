@@ -68,7 +68,7 @@
                     <a href="{{ route('customer.stores') }}"
                         class="inline-flex items-center gap-1.5 px-3.5 py-2 border border-black/10 dark:border-white/10 rounded-xl text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                        <span>Daftar Toko</span>
+                        <span>{{ __('customer.btn_stores_list') }}</span>
                     </a>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 class="mt-5 flex flex-wrap gap-2.5">
                 <div class="relative flex-1 min-w-[200px]">
                     <input type="text" name="q" value="{{ $search }}"
-                        placeholder="Cari produk di toko ini..."
+                        placeholder="{{ __('customer.store_products_search_placeholder') }}"
                         class="w-full pl-9 pr-4 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#2C2C2E] text-xs focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                     <i data-lucide="search"
                         class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute left-3 top-1/2 -translate-y-1/2"></i>
@@ -94,9 +94,7 @@
                     </select>
                 @endif
                 <button type="submit"
-                    class="px-4 py-2 bg-[#007AFF] text-white rounded-xl text-xs font-bold hover:bg-[#0062CC] transition">
-                    Cari
-                </button>
+                    class="px-4 py-2 bg-[#007AFF] text-white rounded-xl text-xs font-bold hover:bg-[#0062CC] transition">{{ __('customer.btn_search') }}</button>
             </form>
         </div>
 
@@ -146,7 +144,7 @@
                                     data-product-id="{{ $product->id }}"
                                     class="mt-2.5 w-full py-2 bg-[#007AFF] text-white text-xs font-bold rounded-xl hover:bg-[#0062CC] active:scale-95 transition-all flex items-center justify-center gap-1.5 shadow-xs">
                                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                                    <span>Tambah ke Keranjang</span>
+                                    <span>{{ __('customer.btn_add_to_cart') }}</span>
                                 </button>
                             </div>
                         </div>

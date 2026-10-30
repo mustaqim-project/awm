@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Daftar Akun Pelanggan - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => '{{ __('customer.register_heading') }} - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-12rem)] py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -23,7 +23,7 @@
                         <span>Registrasi Pembeli di {{ $store->name }}</span>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Daftar Akun Pelanggan
+                        {{ __('customer.register_heading') }}
                     </h1>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
                         Nikmati kemudahan transaksi, pelacakan pesanan real-time, dan promo di <strong>{{ $store->name }}</strong>.
@@ -33,7 +33,7 @@
                         <i data-lucide="user-plus" class="w-8 h-8 text-white"></i>
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Daftar Akun Pelanggan Baru
+                        {{ __('customer.register_new_heading') }}
                     </h1>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
                         Satu akun terpadu untuk belanja, melacak riwayat transaksi, dan promo di seluruh merchant COOCA.
@@ -80,7 +80,7 @@
                             <path fill="#34A853"
                                 d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16c1.8 3.7 5.6 7 10.1 7z" />
                         </svg>
-                        <span>Daftar Cepat dengan Google</span>
+                        <span>{{ __('customer.btn_register_google') }}</span>
                     </a>
 
                     <!-- Divider -->
@@ -162,7 +162,7 @@
                                 </div>
                                 <input :type="showPassword ? 'text' : 'password'" name="password" id="password" required minlength="6"
                                     class="w-full pl-10 pr-11 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none"
-                                    placeholder="Min. 6 karakter">
+                                    placeholder="{{ __('customer.min_6_chars_placeholder') }}">
                                 <button type="button" @click="showPassword = !showPassword"
                                     :aria-label="showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'"
                                     class="absolute right-0 top-0 bottom-0 w-11 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 focus:outline-none transition-colors cursor-pointer">
@@ -182,7 +182,7 @@
                                 </div>
                                 <input :type="showPasswordConfirm ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" required minlength="6"
                                     class="w-full pl-10 pr-11 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none"
-                                    placeholder="Ulangi sandi">
+                                    placeholder="{{ __('customer.register_repeat_password') }}">
                                 <button type="button" @click="showPasswordConfirm = !showPasswordConfirm"
                                     :aria-label="showPasswordConfirm ? 'Sembunyikan konfirmasi sandi' : 'Tampilkan konfirmasi sandi'"
                                     class="absolute right-0 top-0 bottom-0 w-11 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 focus:outline-none transition-colors cursor-pointer">
@@ -205,7 +205,7 @@
                                 <i data-lucide="map-pin" class="w-4 h-4"></i>
                             </div>
                             <textarea name="shipping_address" id="shipping_address" rows="2"
-                                placeholder="Nama jalan, nomor rumah/gedung, kelurahan, kecamatan, kota..."
+                                placeholder="{{ __('customer.register_address_placeholder') }}"
                                 class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all outline-none resize-none">{{ old('shipping_address') }}</textarea>
                         </div>
                         <p class="mt-1 text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
@@ -217,7 +217,7 @@
                     <div class="pt-2">
                         <button type="submit"
                             class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
-                            <span>Daftar &amp; Masuk Otomatis</span>
+                            <span>{{ __('customer.btn_register_auto_login') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -227,7 +227,7 @@
                         Sudah memiliki akun pelanggan?
                         <a href="{{ route('customer.login', ['store' => isset($store) && $store ? $store->slug : null, 'redirect' => $redirectTo]) }}"
                             class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 rounded ml-1">
-                            Masuk Sekarang
+                            {{ __('customer.btn_login_now') }}
                         </a>
                     </div>
 
@@ -236,7 +236,7 @@
                             <a href="{{ url('/' . $store->slug) }}"
                                 class="text-xs text-slate-500 dark:text-slate-400 hover:text-[#007AFF] dark:hover:text-[#0A84FF] transition-colors inline-flex items-center gap-1">
                                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                                <span>Kembali ke Etalase Toko {{ $store->name }}</span>
+                                <span>{{ __('customer.btn_back_to_store') }} {{ $store->name }}</span>
                             </a>
                         </div>
                     @endif

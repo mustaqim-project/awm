@@ -141,7 +141,8 @@
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     @if($r->status === 'draft' || $r->status === 'pending')
                                         <form action="{{ route('admin.b2b.returns.approve', $r) }}" method="POST" class="inline"
-                                            onsubmit="return confirm('Setujui (Approve) retur penjualan {{ $r->return_number }}?');">
+                                            data-confirm="Setujui (Approve) retur penjualan {{ $r->return_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                             @csrf
                                             <button type="submit"
                                                 class="h-8 px-2.5 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
@@ -152,7 +153,8 @@
                                         </form>
                                     @elseif($r->status === 'approved')
                                         <form action="{{ route('admin.b2b.returns.complete', $r) }}" method="POST" class="inline"
-                                            onsubmit="return confirm('Selesaikan (Complete) retur penjualan {{ $r->return_number }} dan pulihkan stok inventori?');">
+                                            data-confirm="Selesaikan (Complete) retur penjualan {{ $r->return_number }} dan pulihkan stok inventori?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                             @csrf
                                             <button type="submit"
                                                 class="h-8 px-2.5 rounded-[9px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
@@ -167,7 +169,8 @@
                                 {{-- Tolak Retur jika belum selesai --}}
                                 @if($r->status !== 'completed' && $r->status !== 'rejected' && Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
                                     <form action="{{ route('admin.b2b.returns.reject', $r) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Tolak klaim retur {{ $r->return_number }}?');">
+                                        data-confirm="Tolak klaim retur {{ $r->return_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         <button type="submit"
                                             class="h-8 w-8 rounded-[9px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B25E00] dark:text-[#FF9F0A] transition-all inline-flex items-center justify-center cursor-pointer"
@@ -180,7 +183,8 @@
                                 {{-- Hapus Retur jika belum selesai --}}
                                 @if($r->status !== 'completed' && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
                                     <form action="{{ route('admin.b2b.returns.destroy', $r) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Hapus klaim retur {{ $r->return_number }}?');">
+                                        data-confirm="Hapus klaim retur {{ $r->return_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

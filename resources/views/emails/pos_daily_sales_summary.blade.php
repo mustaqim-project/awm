@@ -268,7 +268,7 @@
             @endif
 
             <a href="{{ $dashboardUrl }}" class="btn-cta">
-                Buka Laporan POS Lengkap &rarr;
+                {{ __('emails.view_full_pos_report') }} &rarr;
             </a>
         </div>
 

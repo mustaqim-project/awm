@@ -125,4 +125,7 @@ return [
         'deleted_success' => 'Layanan \':name\' telah dihapus.',
         'archived_due_to_transactions' => 'Layanan \':name\' memiliki riwayat transaksi aktif, status dialihkan menjadi Nonaktif untuk menjaga integritas laporan keuangan.',
     ],
+    'pilih_semua_layanan' => 'Pilih Semua Layanan',
+    'layanan_kode' => 'Layanan & Kode',
+    'kategori' => 'Kategori',
 ];

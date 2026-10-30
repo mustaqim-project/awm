@@ -158,4 +158,11 @@ return [
     'bottom_cta_btn_free' => 'Coba COOCA Gratis',
     'bottom_cta_btn_dashboard' => 'Dashboard',
     'bottom_cta_annotation' => 'Satu Sistem, Berbagai Kemudahan Usaha',
+    'umkm_catalog' => 'Katalog UMKM',
+    'ind_fnb' => 'F&B Restoran dan Kafe',
+    'ind_retail' => 'Retail Toko dan Minimarket',
+    'ind_workshop' => 'Bengkel Motor dan Mobil',
+    'ind_laundry' => 'Laundry Kiloan dan Satuan',
+    'ind_manufacturing' => 'Manufaktur Produksi UMKM',
+    'ind_services' => 'Bisnis Jasa dan Servis',
 ];

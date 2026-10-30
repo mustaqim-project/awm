@@ -166,7 +166,8 @@
                                 {{-- Konversi ke SO jika belum konversi --}}
                                 @if(!$q->salesOrder && Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <form action="{{ route('admin.b2b.quotations.convert', $q) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Konversi Penawaran {{ $q->quotation_number }} menjadi Pesanan Penjualan (SO)?');">
+                                        data-confirm="Konversi Penawaran {{ $q->quotation_number }} menjadi Pesanan Penjualan (SO)?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         <button type="submit"
                                             class="h-8 px-2.5 rounded-[9px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
@@ -180,7 +181,8 @@
                                 {{-- Hapus Penawaran jika belum konversi --}}
                                 @if(!$q->salesOrder && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
                                     <form action="{{ route('admin.b2b.quotations.destroy', $q) }}" method="POST" class="inline"
-                                        onsubmit="return confirm('Hapus Surat Penawaran {{ $q->quotation_number }}?');">
+                                        data-confirm="Hapus Surat Penawaran {{ $q->quotation_number }}?"
+                                        onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pemberitahuan Penangguhan Akun Bisnis</title>
+    <title>{{ __('emails.business_suspended_title') }}</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -185,7 +185,7 @@
     <div class="container">
         <div class="header">
             <img src="https://cooca.id/assets/image/1785229034_logo_dark.png" alt="Cooca Logo" class="logo">
-            <h1>Pemberitahuan Penangguhan Akun Bisnis</h1>
+            <h1>{{ __('emails.business_suspended_title') }}</h1>
             <p>Operasional Transaksi Dinonaktifkan Sementara</p>
         </div>
 
@@ -201,7 +201,7 @@
             </p>
 
             <div class="reason-box">
-                <h3>Alasan Penangguhan:</h3>
+                <h3>{{ __('emails.suspension_reason') }}</h3>
                 <p>"{{ $reason }}"</p>
             </div>
 

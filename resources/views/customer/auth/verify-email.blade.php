@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => 'Verifikasi Email Pelanggan - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => '{{ __('customer.verify_email_heading') }} - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
                     <i data-lucide="mail-check" class="w-8 h-8"></i>
                 </div>
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Verifikasi Email Pelanggan
+                    {{ __('customer.verify_email_heading') }}
                 </h1>
                 <p class="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                     Satu langkah lagi untuk mengaktifkan akun belanja pelanggan Anda di COOCA.
@@ -51,7 +51,7 @@
                     <button type="submit"
                         class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
                         <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>Kirim Ulang Tautan Verifikasi</span>
+                        <span>{{ __('customer.btn_resend_verification_link') }}</span>
                     </button>
                 </form>
 
@@ -60,13 +60,13 @@
                     @if (auth('customer')->user()?->hasVerifiedEmail())
                         <a href="{{ route('customer.dashboard') }}"
                             class="text-[#007AFF] dark:text-[#0A84FF] hover:underline font-semibold flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 rounded">
-                            <span>Lanjut ke Dashboard</span>
+                            <span>{{ __('customer.btn_continue_to_dashboard') }}</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </a>
                     @else
                         <a href="{{ route('customer.dashboard') }}"
                             class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-                            Lewati ke Dashboard
+                            {{ __('customer.btn_skip_to_dashboard') }}
                         </a>
                     @endif
 
@@ -75,7 +75,7 @@
                         <button type="submit"
                             class="text-[#FF3B30] dark:text-[#FF453A] hover:underline font-semibold flex items-center gap-1.5 py-1 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/20 rounded cursor-pointer">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
-                            <span>Keluar Akun</span>
+                            <span>{{ __('customer.btn_logout') }}</span>
                         </button>
                     </form>
                 </div>
