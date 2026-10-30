@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Simulasi Skenario Laba Toko | COOCA')
-@section('description', 'Simulasi skenario bisnis UMKM: uji dampak kenaikan harga bahan baku, penyesuaian upah, dan promo diskon terhadap sisa laba bersih toko.')
-@section('og_title', 'Kalkulator Simulasi Skenario Laba Toko | COOCA')
-@section('og_description', 'Simulasi skenario bisnis UMKM: uji dampak kenaikan harga bahan baku, penyesuaian upah, dan promo diskon terhadap sisa laba bersih toko.')
+@section('title', __('public_calculators.sim_seo_title'))
+@section('description', __('public_calculators.sim_seo_desc'))
+@section('og_title', __('public_calculators.sim_seo_title'))
+@section('og_description', __('public_calculators.sim_seo_desc'))
 @section('canonical', route('kalkulator.simulasi-what-if'))
 @section('og_type', 'website')
 @section('keywords', 'simulasi bisnis what-if, kalkulator sensitivitas biaya, dampak diskon terhadap laba, skenario kenaikan bahan baku, simulator bisnis umkm online')
@@ -43,12 +43,12 @@
             <!-- Breadcrumbs (Apple Inset Style) -->
             <nav class="flex items-center gap-2 text-xs text-[#6E6E73] dark:text-[#86868B]">
                 <a href="{{ route('landing') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Beranda</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span>/</span>
                 <a href="{{ route('kalkulator.index') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Kalkulator</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_hub') }}</a>
                 <span>/</span>
-                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">Simulasi What-If</span>
+                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">{{ __('public_calculators.sim_title') }}</span>
             </nav>
 
             <!-- ═══ HERO SECTION (Mandatory 2-Grid Layout) ═══ -->
@@ -59,17 +59,16 @@
                     <div class="space-y-2">
                         <p
                             class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                            Simulasi Pengambilan Keputusan Bisnis
+                            {{ __('public_calculators.sim_kicker') }}
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                            Simulasi Skenario <span class="text-[#007AFF] dark:text-[#0A84FF]">What-If UMKM</span>
+                            {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_calculators.sim_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">
-                        Apa yang terjadi pada keuntungan Anda jika harga bahan baku naik 15%? Atau jika Anda memberi diskon
-                        promo 20%? Uji dampaknya secara langsung sebelum mengambil risiko di dunia nyata.
+                        {{ __('public_calculators.sim_subtitle') }}
                     </p>
 
                     <!-- Reassurance Points for UMKM 40-65 -->
@@ -77,11 +76,11 @@
                         class="pt-1 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-[#6E6E73] dark:text-[#86868B]">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Uji Dampak Kenaikan Harga Bahan</span>
+                            <span>{{ __('public_calculators.sim_check_1') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Simulasi Efek Promo Diskon Kasir</span>
+                            <span>{{ __('public_calculators.sim_check_2') }}</span>
                         </div>
                     </div>
                 </div>
@@ -317,8 +316,7 @@
                         Bagi UMKM?</h3>
                     <p>
                         Banyak pengusaha UMKM terlena memberikan diskon besar tanpa memperhitungkan berapa lonjakan kuantiti
-                        penjualan yang dibutuhkan untuk menutupi margin keuntungan yang tergerus. Simulasi sensitivitas
-                        What-If membantu Anda mengambil keputusan berbasis data nyata, bukan sekadar intuisi.
+                        penjualan yang dibutuhkan untuk menutupi margin keuntungan yang tergerus. {{ __('public_calculators.what_if_edu_desc') }}
                     </p>
                 </div>
 

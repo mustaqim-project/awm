@@ -1,10 +1,10 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Marketplace UMKM Indonesia | COOCA')
-@section('description', 'Belanja produk UMKM lokal terpercaya langsung dari pemilik usaha. Kuliner, busana, kerajinan, jasa, dan ribuan produk lainnya.')
+@section('title', __('public_marketplace.mkt_title') . ' | COOCA')
+@section('description', __('public_marketplace.mkt_subtitle', ['products' => number_format($totalProducts), 'stores' => number_format($totalStores)]))
 @section('canonical', route('marketplace.index'))
-@section('og_title', 'Marketplace UMKM Indonesia | COOCA')
-@section('og_description', 'Belanja produk UMKM lokal terpercaya langsung dari pemilik usaha tanpa perantara.')
+@section('og_title', __('public_marketplace.mkt_title') . ' | COOCA')
+@section('og_description', __('public_marketplace.mkt_subtitle', ['products' => number_format($totalProducts), 'stores' => number_format($totalStores)]))
 @section('og_type', 'website')
 
 @push('seo')
@@ -35,7 +35,7 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
             {{-- Breadcrumb --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_marketing.nav_home') }}</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
                 <span class="text-[#00C4D8] font-semibold" aria-current="page">Marketplace UMKM</span>
             </nav>
@@ -44,60 +44,60 @@
                 {{-- Left: Headline, Search, Actions (Mobile Center, Desktop Left ~ 7 cols) --}}
                 <div class="lg:col-span-7 space-y-6 text-center mx-auto flex flex-col items-center lg:text-left lg:items-start lg:mx-0">
                     <div class="space-y-3 w-full">
-                        <!-- Pure Typographic Overline Kicker (Zero Pill Abuse) -->
+                        <!-- Pure Typographic Overline Kicker -->
                         <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Direktori UMKM Indonesia Terverifikasi
+                            {{ __('public_marketplace.mkt_kicker') }}
                         </p>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold text-white tracking-tight leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Belanja Langsung dari <span class="text-[#00C4D8]">Pemilik Usaha Lokal.</span>
+                            {{ __('public_marketplace.mkt_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Temukan {{ number_format($totalProducts) }} produk unggulan dari {{ number_format($totalStores) }} toko UMKM terverifikasi di seluruh Indonesia. Transaksi langsung, aman, dan tanpa potongan biaya perantara.
+                        {{ __('public_marketplace.mkt_subtitle', ['products' => number_format($totalProducts), 'stores' => number_format($totalStores)]) }}
                     </p>
 
                     {{-- Search Input Form --}}
                     <form method="GET" action="{{ route('marketplace.search') }}" class="pt-1 w-full max-w-[32rem] lg:max-w-none">
                         <div class="relative flex items-center bg-[#0E1E45]/80 rounded-[20px] border border-white/15 p-1.5 shadow-2xl backdrop-blur-md focus-within:ring-2 focus-within:ring-[#00C4D8] transition">
                             <i data-lucide="search" class="w-5 h-5 ml-3.5 text-slate-400 shrink-0"></i>
-                            <input type="text" name="q" placeholder="Cari nama produk, toko, atau kota..."
+                            <input type="text" name="q" placeholder="{{ __('public_marketplace.mkt_search_placeholder') }}"
                                 class="w-full bg-transparent border-0 px-3.5 py-3 text-[16px] text-white placeholder-slate-400 focus:outline-none">
                             <button type="submit"
                                 class="shrink-0 h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold shadow-lg shadow-[#007AFF]/25 active:scale-[0.98] transition min-h-[44px]">
-                                Cari
+                                {{ __('public_marketplace.mkt_search_submit') }}
                             </button>
                         </div>
                     </form>
 
-                    {{-- Quick Action Hub (Centered on Mobile, Row on Desktop) --}}
+                    {{-- Quick Action Hub --}}
                     <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1 w-full sm:w-auto">
                         @if (auth('customer')->guest())
                             <a href="{{ route('customer.login') }}"
                                 class="h-11 px-5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 transition active:scale-[0.98] min-h-[44px]">
                                 <i data-lucide="user" class="w-4 h-4 shrink-0"></i>
-                                <span>Masuk Sebagai Pembeli</span>
+                                <span>{{ __('public_marketplace.mkt_buyer_login') }}</span>
                             </a>
                         @else
                             <a href="{{ route('customer.dashboard') }}"
                                 class="h-11 px-5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 transition active:scale-[0.98] min-h-[44px]">
                                 <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i>
-                                <span>Dashboard Saya</span>
+                                <span>{{ __('public_marketplace.mkt_buyer_dashboard') }}</span>
                             </a>
                         @endif
 
                         <a href="{{ route('login') }}"
                             class="h-11 px-5 rounded-[14px] bg-white/10 hover:bg-white/15 text-white border border-white/15 text-xs sm:text-sm font-semibold transition active:scale-[0.98] flex items-center gap-2 backdrop-blur-sm min-h-[44px]">
                             <i data-lucide="store" class="w-4 h-4 shrink-0"></i>
-                            <span>Masuk Toko</span>
+                            <span>{{ __('public_marketplace.mkt_store_login') }}</span>
                         </a>
 
                         @if (auth('web')->guest())
                             <a href="{{ route('register') }}"
                                 class="h-11 px-5 rounded-[14px] bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold hover:bg-emerald-500/25 transition active:scale-[0.98] flex items-center gap-2 min-h-[44px]">
                                 <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i>
-                                <span>Buka Toko Gratis</span>
+                                <span>{{ __('public_marketplace.mkt_store_open_free') }}</span>
                             </a>
                         @endif
                     </div>
@@ -111,10 +111,10 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
-                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">Katalog UMKM Terverifikasi</span>
+                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">{{ __('public_marketplace.mkt_badge_verified') }}</span>
                             </div>
                             <span class="text-[11px] font-semibold text-[#00C4D8] bg-[#00C4D8]/15 border border-[#00C4D8]/30 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                                <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Terkurasi
+                                <i data-lucide="badge-check" class="w-3.5 h-3.5"></i> {{ __('public_marketplace.mkt_badge_curated') }}
                             </span>
                         </div>
 
@@ -135,7 +135,7 @@
 
                             <div class="p-3 rounded-[14px] bg-[#060B1E]/80 border border-white/10 flex items-center justify-between text-xs">
                                 <div class="space-y-0.5">
-                                    <span class="text-slate-400">Produk Unggulan</span>
+                                    <span class="text-slate-400">{{ __('public_marketplace.mkt_featured_product_tag') }}</span>
                                     <div class="font-semibold text-white">Kopi Arabika Ciwidey (250g)</div>
                                 </div>
                                 <div class="text-right">
@@ -148,11 +148,11 @@
                         <div class="grid grid-cols-2 gap-3 text-xs">
                             <div class="p-3 rounded-[14px] bg-white/5 border border-white/10 flex items-center gap-2">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-                                <span class="text-slate-200 font-medium">Bebas Penipuan</span>
+                                <span class="text-slate-200 font-medium">{{ __('public_marketplace.mkt_trust_safe') }}</span>
                             </div>
                             <div class="p-3 rounded-[14px] bg-white/5 border border-white/10 flex items-center gap-2">
                                 <i data-lucide="truck" class="w-4 h-4 text-[#00C4D8]"></i>
-                                <span class="text-slate-200 font-medium">Kirim Seluruh RI</span>
+                                <span class="text-slate-200 font-medium">{{ __('public_marketplace.mkt_trust_shipping') }}</span>
                             </div>
                         </div>
                     </div>
@@ -171,8 +171,8 @@
                         <i data-lucide="store" class="w-5 h-5"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">Direktori Bisnis</div>
-                        <div class="text-[11px] text-[#86868B]">Toko Terverifikasi</div>
+                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">{{ __('public_marketplace.mkt_nav_directory') }}</div>
+                        <div class="text-[11px] text-[#86868B]">{{ __('public_marketplace.mkt_nav_directory_sub') }}</div>
                     </div>
                 </a>
 
@@ -182,8 +182,8 @@
                         <i data-lucide="package" class="w-5 h-5"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Katalog Produk</div>
-                        <div class="text-[11px] text-[#86868B]">{{ number_format($totalProducts) }} Barang/Jasa</div>
+                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{{ __('public_marketplace.mkt_nav_catalog') }}</div>
+                        <div class="text-[11px] text-[#86868B]">{{ __('public_marketplace.mkt_nav_catalog_sub', ['count' => number_format($totalProducts)]) }}</div>
                     </div>
                 </a>
 
@@ -193,8 +193,8 @@
                         <i data-lucide="layout-grid" class="w-5 h-5"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Kategori Usaha</div>
-                        <div class="text-[11px] text-[#86868B]">Sektor Industri</div>
+                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{{ __('public_marketplace.mkt_nav_categories') }}</div>
+                        <div class="text-[11px] text-[#86868B]">{{ __('public_marketplace.mkt_nav_categories_sub') }}</div>
                     </div>
                 </a>
 
@@ -204,8 +204,8 @@
                         <i data-lucide="map-pin" class="w-5 h-5"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Sentra Kota</div>
-                        <div class="text-[11px] text-[#86868B]">Wilayah Seluruh RI</div>
+                        <div class="text-xs sm:text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">{{ __('public_marketplace.mkt_nav_locations') }}</div>
+                        <div class="text-[11px] text-[#86868B]">{{ __('public_marketplace.mkt_nav_locations_sub') }}</div>
                     </div>
                 </a>
             </div>
@@ -219,12 +219,12 @@
         <section class="space-y-6">
             <div class="flex items-center justify-between gap-4 border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
                 <div>
-                    <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">Kategori Usaha</h2>
-                    <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">Temukan produk dan jasa berdasarkan sektor bidang bisnis</p>
+                    <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.mkt_cat_section_title') }}</h2>
+                    <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">{{ __('public_marketplace.mkt_cat_section_desc') }}</p>
                 </div>
                 <a href="{{ route('marketplace.sub.categories') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                    <span>Semua Kategori</span>
+                    <span>{{ __('public_marketplace.mkt_cat_all_link') }}</span>
                     <i data-lucide="chevron-right" class="w-4 h-4"></i>
                 </a>
             </div>
@@ -238,7 +238,7 @@
                         </div>
                         <div>
                             <span class="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7] block group-hover:text-[#007AFF] transition-colors">{{ $cat['label'] }}</span>
-                            <span class="text-xs text-[#86868B] tabular-nums mt-0.5 block">{{ $cat['count'] }} toko</span>
+                            <span class="text-xs text-[#86868B] tabular-nums mt-0.5 block">{{ __('public_marketplace.mkt_cat_store_count', ['count' => $cat['count']]) }}</span>
                         </div>
                     </a>
                 @endforeach
@@ -250,12 +250,12 @@
             <section class="space-y-6">
                 <div class="flex items-center justify-between gap-4 border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
                     <div>
-                        <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">Produk Pilihan</h2>
-                        <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">Rekomendasi dari gerai UMKM terverifikasi</p>
+                        <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.mkt_popular_title') }}</h2>
+                        <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">{{ __('public_marketplace.mkt_popular_desc') }}</p>
                     </div>
                     <a href="{{ route('marketplace.sub.products') }}"
                         class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Semua Produk</span>
+                        <span>{{ __('public_marketplace.mkt_popular_all') }}</span>
                         <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -296,19 +296,19 @@
                 </div>
             </section>
         @else
-            {{-- Empty State (Prompt 3 Compliant) --}}
+            {{-- Empty State --}}
             <section class="p-8 sm:p-12 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-center space-y-4 shadow-sm">
                 <div class="w-14 h-14 rounded-2xl bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto">
                     <i data-lucide="store" class="w-7 h-7"></i>
                 </div>
                 <div class="max-w-md mx-auto space-y-1.5">
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jadilah merchant pertama di kota Anda!</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_marketplace.mkt_empty_merchant_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                        Belum ada produk publik yang terdaftar. Buka toko online Anda sekarang dan nikmati integrasi kasir POS instan gratis.
+                        {{ __('public_marketplace.mkt_empty_merchant_desc') }}
                     </p>
                 </div>
                 <a href="{{ route('register') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold shadow-sm transition">
-                    <span>Daftarkan Usaha Saya</span>
+                    <span>{{ __('public_marketplace.mkt_empty_merchant_cta') }}</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </section>
@@ -319,12 +319,12 @@
             <section class="space-y-6">
                 <div class="flex items-center justify-between gap-4 border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
                     <div>
-                        <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">Toko Terdaftar</h2>
-                        <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">Jelajahi profil lengkap usaha UMKM</p>
+                        <h2 class="text-2xl font-bold tracking-tight text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.mkt_stores_title') }}</h2>
+                        <p class="text-xs sm:text-sm text-[#86868B] mt-0.5">{{ __('public_marketplace.mkt_stores_desc') }}</p>
                     </div>
                     <a href="{{ route('marketplace.sub.businesses') }}"
                         class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Semua Direktori Toko</span>
+                        <span>{{ __('public_marketplace.mkt_stores_all') }}</span>
                         <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -354,7 +354,7 @@
                             <div class="flex items-center gap-4 text-xs text-[#86868B]">
                                 <span class="flex items-center gap-1 tabular-nums font-medium">
                                     <i data-lucide="package" class="w-3.5 h-3.5"></i>
-                                    {{ $store->products_count }} produk
+                                    {{ __('public_marketplace.mkt_store_products_count', ['count' => $store->products_count]) }}
                                 </span>
                                 @if ($store->address)
                                     <span class="flex items-center gap-1 truncate">
@@ -375,7 +375,7 @@
             </section>
         @endif
 
-        {{-- Seller Acquisition Banner (Midnight #060B1E Bento Card) --}}
+        {{-- Seller Acquisition Banner --}}
         <section class="relative p-8 sm:p-14 rounded-[28px] bg-[#060B1E] text-white border border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden text-center space-y-6">
             <div class="absolute -right-20 -top-20 w-80 h-80 bg-[#007AFF]/15 rounded-full blur-[100px] pointer-events-none"></div>
             <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-[#00C4D8]/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -383,24 +383,24 @@
             <div class="relative z-10 space-y-4 max-w-2xl mx-auto">
                 <div class="text-xs font-semibold uppercase tracking-wider text-[#00C4D8] inline-flex items-center gap-1.5">
                     <i data-lucide="store" class="w-4 h-4 text-emerald-400"></i>
-                    <span>Untuk Pengusaha &amp; Pemilik Toko</span>
+                    <span>{{ __('public_marketplace.mkt_seller_banner_tag') }}</span>
                 </div>
                 <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Buka Katalog Toko Online Anda Sendiri di COOCA
+                    {{ __('public_marketplace.mkt_seller_banner_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-                    Kelola stok toko, catat penjualan kasir, dan terima pesanan online langsung tanpa potongan komisi per transaksi. 100% gratis selamanya.
+                    {{ __('public_marketplace.mkt_seller_banner_desc') }}
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-3.5 pt-3">
                     <a href="{{ route('register') }}"
                         class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition min-h-[48px]">
                         <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        <span>Daftar Buka Toko Gratis</span>
+                        <span>{{ __('public_marketplace.mkt_seller_banner_cta_reg') }}</span>
                     </a>
                     <a href="{{ route('login') }}"
                         class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition active:scale-95 flex items-center gap-2 min-h-[48px]">
                         <i data-lucide="log-in" class="w-4 h-4"></i>
-                        <span>Masuk Dashboard Kasir</span>
+                        <span>{{ __('public_marketplace.mkt_seller_banner_cta_login') }}</span>
                     </a>
                 </div>
             </div>

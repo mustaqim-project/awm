@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator HPP & Harga Jual Online Gratis | COOCA')
-@section('description', 'Kalkulator HPP 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan target margin keuntungan secara instan.')
-@section('og_title', 'Kalkulator HPP & Harga Jual Online Gratis | COOCA')
-@section('og_description', 'Kalkulator HPP 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan tentukan target margin keuntungan.')
+@section('title', __('public_calculators.hpp_seo_title'))
+@section('description', __('public_calculators.hpp_seo_desc'))
+@section('og_title', __('public_calculators.hpp_seo_title'))
+@section('og_description', __('public_calculators.hpp_seo_desc'))
 @section('canonical', route('kalkulator.hpp'))
 @section('og_type', 'website')
 @section('keywords', 'kalkulator hpp, hitung harga pokok penjualan online, rumus hpp makanan, kalkulator margin keuntungan, hitung harga jual f&b')
@@ -43,12 +43,12 @@
             <!-- Breadcrumbs (Apple Inset Style) -->
             <nav class="flex items-center gap-2 text-xs text-[#6E6E73] dark:text-[#86868B]">
                 <a href="{{ route('landing') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Beranda</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span>/</span>
                 <a href="{{ route('kalkulator.index') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Kalkulator</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_hub') }}</a>
                 <span>/</span>
-                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">Kalkulator HPP</span>
+                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">{{ __('public_calculators.hpp_title') }}</span>
             </nav>
 
             <!-- ═══ HERO SECTION (Mandatory 2-Grid Layout) ═══ -->
@@ -59,17 +59,16 @@
                     <div class="space-y-2">
                         <p
                             class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                            Metode 3-Pilar Akuntansi Standar SAK EMKM
+                            {{ __('public_calculators.hpp_kicker') }}
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                            {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_calculators.hpp_title') }}
+                        </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">
-                        Ketahui modal pokok riil per porsi makanan, minuman, atau produk jualan Anda. Hindari jebakan harga
-                        jual murah yang ternyata membuat usaha tekor dan merugi tanpa disadari.
+                        {{ __('public_calculators.hpp_subtitle') }}
                     </p>
 
                     <!-- Reassurance Points for UMKM 40-65 -->
@@ -77,15 +76,15 @@
                         class="pt-1 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-[#6E6E73] dark:text-[#86868B]">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Hitung Bahan Pokok</span>
+                            <span>{{ __('public_calculators.hpp_check_1') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Alokasi Upah Karyawan</span>
+                            <span>{{ __('public_calculators.hpp_check_2') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Beban Listrik, Gas &amp; Plastik</span>
+                            <span>{{ __('public_calculators.hpp_check_3') }}</span>
                         </div>
                     </div>
                 </div>
@@ -101,25 +100,24 @@
                                 <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-black/10"></span>
                                 <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-black/10"></span>
                             </div>
-                            <span class="text-xs font-semibold text-[#8E8E93] dark:text-[#98989D]">Rumus Aman Harga
-                                Pokok</span>
+                            <span class="text-xs font-semibold text-[#8E8E93] dark:text-[#98989D]">{{ __('public_calculators.hpp_formula_title') }}</span>
                             <div class="w-6"></div>
                         </div>
 
                         <div class="space-y-2.5 text-xs text-[#48484A] dark:text-[#AEAEB2]">
                             <div
                                 class="flex items-center justify-between p-2.5 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <span class="font-medium">1. Bahan Mentah &amp; Wadah</span>
+                                <span class="font-medium">{{ __('public_calculators.hpp_formula_mat') }}</span>
                                 <span class="font-mono font-bold text-[#007AFF] dark:text-[#0A84FF]">Material</span>
                             </div>
                             <div
                                 class="flex items-center justify-between p-2.5 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <span class="font-medium">2. Upah Masak / Produksi</span>
+                                <span class="font-medium">{{ __('public_calculators.hpp_formula_lab') }}</span>
                                 <span class="font-mono font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Labor</span>
                             </div>
                             <div
                                 class="flex items-center justify-between p-2.5 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E]">
-                                <span class="font-medium">3. Listrik, Gas, Air, Plastik</span>
+                                <span class="font-medium">{{ __('public_calculators.hpp_formula_ovh') }}</span>
                                 <span class="font-mono font-bold text-[#FF9500] dark:text-[#FF9F0A]">Overhead</span>
                             </div>
                         </div>
@@ -127,7 +125,7 @@
                         <div
                             class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs">
                             <span class="text-[#6E6E73] dark:text-[#86868B]">Hasil Akhir:</span>
-                            <span class="font-bold text-[#34C759] dark:text-[#30D158]">= Modal Murni (HPP)</span>
+                            <span class="font-bold text-[#34C759] dark:text-[#30D158]">{{ __('public_calculators.hpp_formula_result') }}</span>
                         </div>
                     </div>
                 </div>
@@ -324,11 +322,11 @@
                             <!-- Conversion CTA -->
                             <div class="pt-5 border-t border-black/[0.06] dark:border-white/[0.08] space-y-2">
                                 <p class="text-[11px] text-[#6E6E73] dark:text-[#86868B] text-center">
-                                    Ingin HPP resep langsung terpotong saat kasir input pesanan?
+                                    {{ __('public_calculators.hpp_cta_kasir_prompt') }}
                                 </p>
                                 <a href="{{ route('register') }}"
                                     class="w-full glow-btn py-3.5 rounded-[14px] text-white font-semibold text-xs flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
-                                    <span>Buka Akun Kasir Gratis</span>
+                                    <span>{{ __('public_calculators.hpp_cta_kasir_btn') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             </div>

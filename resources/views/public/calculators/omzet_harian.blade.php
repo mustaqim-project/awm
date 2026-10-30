@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Target Omzet Harian Toko Online | COOCA')
-@section('description', 'Kalkulator target omzet online: pecah target bulanan jadi omzet harian, jumlah transaksi kasir, dan rata-rata nilai belanja per pembeli.')
-@section('og_title', 'Kalkulator Target Omzet Harian Toko Online | COOCA')
-@section('og_description', 'Pecah target omzet bulanan Anda menjadi target transaksi harian dan rata-rata struk kasir yang terukur.')
+@section('title', __('public_calculators.rev_seo_title'))
+@section('description', __('public_calculators.rev_seo_desc'))
+@section('og_title', __('public_calculators.rev_seo_title'))
+@section('og_description', __('public_calculators.rev_seo_desc'))
 @section('canonical', route('kalkulator.omzet-harian'))
 @section('og_type', 'website')
 @section('keywords', 'kalkulator omzet harian, hitung target penjualan bulanan, average order value kasir, target transaksi toko, sales target breakdown')
@@ -43,12 +43,12 @@
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-[#6E6E73] dark:text-[#86868B]">
                 <a href="{{ route('landing') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Beranda</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span>/</span>
                 <a href="{{ route('kalkulator.index') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Kalkulator</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_hub') }}</a>
                 <span>/</span>
-                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">Kalkulator Target Omzet</span>
+                <span class="text-[#007AFF] dark:text-[#0A84FF] font-semibold">{{ __('public_calculators.rev_title') }}</span>
             </nav>
 
             <!-- ═══ HERO SECTION (Mandatory 2-Grid Layout) ═══ -->
@@ -59,17 +59,16 @@
                     <div class="space-y-2">
                         <p
                             class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                            Pemecahan Target Penjualan Harian
+                            {{ __('public_calculators.rev_kicker') }}
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                            Kalkulator Target <span class="text-[#007AFF] dark:text-[#0A84FF]">Omzet Harian</span>
+                            {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_calculators.rev_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">
-                        Jangan biarkan target bulanan terasa mustahil dicapai. Pecah menjadi target transaksi riil per hari
-                        dan jumlah struk kasir yang perlu Anda layani setiap shift.
+                        {{ __('public_calculators.rev_subtitle') }}
                     </p>
 
                     <!-- Reassurance Points for UMKM 40-65 -->
@@ -77,11 +76,11 @@
                         class="pt-1 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-[#6E6E73] dark:text-[#86868B]">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Hitung Target Omzet per Hari Buka</span>
+                            <span>{{ __('public_calculators.rev_check_1') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Ketahui Jumlah Struk Kasir (AOV)</span>
+                            <span>{{ __('public_calculators.rev_check_2') }}</span>
                         </div>
                     </div>
                 </div>

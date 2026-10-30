@@ -4,10 +4,10 @@
     $pageSeo = \App\Services\Seo\SeoMetadataService::getPageSeo();
 @endphp
 
-@section('title', $pageSeo['title'] ?? 'Aplikasi Kasir Gratis Selamanya untuk UMKM | COOCA')
-@section('description', $pageSeo['description'] ?? ('Aplikasi kasir gratis selamanya untuk UMKM. Kelola ' . ($tierLimits['free']['outlet'] ?? 1) . ' toko, ' . ($tierLimits['free']['product'] ?? 10) . ' produk, dan ' . ($tierLimits['free']['pos'] ?? 30) . ' transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.'))
-@section('og_title', $pageSeo['og_title'] ?? 'Aplikasi Kasir Gratis Selamanya untuk UMKM | COOCA')
-@section('og_description', $pageSeo['og_description'] ?? ('Aplikasi kasir gratis selamanya untuk UMKM. Kelola ' . ($tierLimits['free']['outlet'] ?? 1) . ' toko, ' . ($tierLimits['free']['product'] ?? 10) . ' produk, dan ' . ($tierLimits['free']['pos'] ?? 30) . ' transaksi/bulan tanpa kartu kredit. Bisa cetak struk dan terima QRIS.'))
+@section('title', $pageSeo['title'] ?? __('public_commercial.free_title') . ' | COOCA')
+@section('description', $pageSeo['description'] ?? __('public_commercial.free_subtitle'))
+@section('og_title', $pageSeo['og_title'] ?? __('public_commercial.free_title') . ' | COOCA')
+@section('og_description', $pageSeo['og_description'] ?? __('public_commercial.free_subtitle'))
 @section('canonical', url('/aplikasi-kasir-gratis'))
 @section('og_type', 'product')
 
@@ -34,42 +34,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Apakah aplikasi kasir gratis COOCA benar-benar gratis selamanya?",
+          "name": "{{ __('public_commercial.free_faq_q1') }}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Benar. Paket Gratis COOCA dapat digunakan selamanya tanpa batas masa trial (bukan uji coba 14 hari) dan tidak memerlukan kartu kredit sama sekali."
+            "text": "{{ __('public_commercial.free_faq_a1') }}"
           }
         },
         {
           "@type": "Question",
-          "name": "Apa saja batasan kuota pada paket aplikasi kasir gratis COOCA?",
+          "name": "{{ __('public_commercial.free_faq_q2') }}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Paket Gratis mencakup {{ $tierLimits['free']['outlet'] ?? 1 }} outlet toko, kapasitas hingga {{ $tierLimits['free']['product'] ?? 10 }} master produk, dan kuota {{ $tierLimits['free']['pos'] ?? 30 }} transaksi penjualan per bulan. Sangat ideal untuk warung, kios, usaha rumahan, dan rintisan awal UMKM."
+            "text": "{{ __('public_commercial.free_faq_a2', ['outlet' => $tierLimits['free']['outlet'] ?? 1, 'product' => $tierLimits['free']['product'] ?? 10, 'pos' => $tierLimits['free']['pos'] ?? 30]) }}"
           }
         },
         {
           "@type": "Question",
-          "name": "Apakah bisa mencetak struk kasir menggunakan printer Bluetooth pada paket gratis?",
+          "name": "{{ __('public_commercial.free_faq_q3') }}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Bisa. Paket Gratis mendukung pencetakan nota fisik ke printer thermal Bluetooth 58mm dan 80mm serta pengiriman nota digital langsung ke WhatsApp pelanggan."
+            "text": "{{ __('public_commercial.free_faq_a3') }}"
           }
         },
         {
           "@type": "Question",
-          "name": "Apakah data penjualan saya akan hilang jika kuota transaksi {{ $tierLimits['free']['pos'] ?? 30 }} per bulan habis?",
+          "name": "{{ __('public_commercial.free_faq_q4') }}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Data transaksi Anda 100% aman dan tersimpan permanen di cloud. Anda tetap dapat melihat seluruh riwayat laporan penjualan. Kuota transaksi akan di-reset otomatis setiap tanggal 1 awal bulan baru, atau Anda dapat upgrade ke paket Standard kapan saja."
+            "text": "{{ __('public_commercial.free_faq_a4') }}"
           }
         },
         {
           "@type": "Question",
-          "name": "Berapa lama waktu yang dibutuhkan untuk mendaftar dan mulai berjualan?",
+          "name": "{{ __('public_commercial.free_faq_q5') }}",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Hanya butuh 2 menit. Cukup daftarkan nama usaha dan nomor telepon Anda, masukkan produk dagangan, dan kasir langsung siap dipakai melayani pembeli."
+            "text": "{{ __('public_commercial.free_faq_a5') }}"
           }
         }
       ]
@@ -83,14 +83,14 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Beranda",
-          "item": "https://cooca.id"
+          "name": "{{ __('public_marketing.nav_home') }}",
+          "item": "{{ url('/') }}"
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Aplikasi Kasir Gratis",
-          "item": "https://cooca.id/aplikasi-kasir-gratis"
+          "name": "{{ __('public_commercial.free_kicker') }}",
+          "item": "{{ url('/aplikasi-kasir-gratis') }}"
         }
       ]
     }
@@ -111,16 +111,16 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Bebas Biaya &bull; Tanpa Kartu Kredit &bull; Tanpa Batas Trial
+                                {{ __('public_commercial.free_hero_badge') }}
                             </p>
                         </div>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.14] text-balance">
-                            {{ \App\Services\Seo\SeoMetadataService::getH1('Aplikasi Kasir Gratis Selamanya untuk Usaha UMKM') }}
+                            {{ \App\Services\Seo\SeoMetadataService::getH1(__('public_commercial.free_title')) }}
                         </h1>
 
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
-                            Mulai digitalisasi kasir toko, warung, atau kedai kopi Anda hari ini tanpa keluar uang sepeser pun. Nikmati aplikasi kasir POS lengkap dengan cetak struk thermal, scan barcode kamera HP, pembayaran QRIS, dan rekap omzet otomatis langsung dari smartphone Anda.
+                            {{ __('public_commercial.free_hero_desc') }}
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-left w-full">
@@ -128,35 +128,35 @@
                                 <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
                                     <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ $tierLimits['free']['outlet'] ?? 1 }} Toko & {{ $tierLimits['free']['product'] ?? 10 }} Produk Gratis Selamanya</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ __('public_commercial.free_hero_pill_1', ['outlet' => $tierLimits['free']['outlet'] ?? 1, 'product' => $tierLimits['free']['product'] ?? 10]) }}</span>
                             </div>
                             <div class="p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5">
                                 <div class="w-6 h-6 rounded-lg bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
                                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200">Cetak Thermal Bluetooth & Nota WA</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ __('public_commercial.free_hero_pill_2') }}</span>
                             </div>
                             <div class="p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5">
                                 <div class="w-6 h-6 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center shrink-0 mt-0.5 border border-purple-400/20">
                                     <i data-lucide="scan" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200">Scan Barcode via Kamera Smartphone</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ __('public_commercial.free_hero_pill_3') }}</span>
                             </div>
                             <div class="p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5">
                                 <div class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-400/20">
                                     <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200">Terima QRIS & Tunai Otomatis</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200">{{ __('public_commercial.free_hero_pill_4') }}</span>
                             </div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-4">
                             <a href="/register" class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C4D8] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#007AFF]/30 hover:brightness-110 active:scale-[0.99] transition-all">
-                                <span>Daftar Gratis 2 Menit</span>
+                                <span>{{ __('public_commercial.free_cta_register') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="/pricing" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm sm:text-base border border-white/15 transition-all">
-                                <span>Bandingkan Semua Paket</span>
+                                <span>{{ __('public_commercial.free_cta_compare') }}</span>
                             </a>
                         </div>
                     </div>
@@ -165,45 +165,45 @@
                     <div class="lg:col-span-5 w-full">
                         <div class="relative rounded-2xl bg-gradient-to-b from-white/10 to-white/[0.03] border border-white/15 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold uppercase tracking-wider mb-4">
-                                <span>Paket Starter UMKM</span>
+                                <span>{{ __('public_commercial.free_card_badge') }}</span>
                             </div>
                             <div class="flex items-baseline gap-2 mb-2">
-                                <span class="text-4xl sm:text-5xl font-black text-white">Rp 0</span>
-                                <span class="text-slate-400 text-sm font-semibold">/ selamanya</span>
+                                <span class="text-4xl sm:text-5xl font-black text-white">{{ __('public_commercial.free_card_price') }}</span>
+                                <span class="text-slate-400 text-sm font-semibold">{{ __('public_commercial.free_card_period') }}</span>
                             </div>
                             <p class="text-slate-300 text-sm mb-6 pb-6 border-b border-white/10">
-                                Pilihan tepat untuk warung pemula, penjual makanan rumahan, dan rintisan usaha mikro yang ingin berjualan rapi tanpa modal software.
+                                {{ __('public_commercial.free_card_desc') }}
                             </p>
 
                             <ul class="space-y-3.5 text-sm text-slate-200 mb-8">
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>{{ $tierLimits['free']['outlet'] ?? 1 }} Lokasi Toko</strong> (Outlet Tunggal)</span>
+                                    <span>{!! __('public_commercial.free_card_item_1', ['outlet' => '<strong>' . ($tierLimits['free']['outlet'] ?? 1) . '</strong>']) !!}</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>Hingga {{ $tierLimits['free']['product'] ?? 10 }} Produk</strong> Aktif</span>
+                                    <span>{!! __('public_commercial.free_card_item_2', ['product' => '<strong>' . ($tierLimits['free']['product'] ?? 10) . '</strong>']) !!}</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span><strong>{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi Kasir</strong> per Bulan</span>
+                                    <span>{!! __('public_commercial.free_card_item_3', ['pos' => '<strong>' . ($tierLimits['free']['pos'] ?? 30) . '</strong>']) !!}</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span>Pencatatan Tunai, Transfer & QRIS</span>
+                                    <span>{{ __('public_commercial.free_card_item_4') }}</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span>Cetak Struk Bluetooth & Kirim Nota WA</span>
+                                    <span>{{ __('public_commercial.free_card_item_5') }}</span>
                                 </li>
                                 <li class="flex items-center gap-3">
                                     <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                    <span>Laporan Omzet Harian Otomatis</span>
+                                    <span>{{ __('public_commercial.free_card_item_6') }}</span>
                                 </li>
                             </ul>
 
                             <a href="/register" class="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-white text-slate-900 font-bold text-sm hover:bg-slate-100 transition-colors">
-                                <span>Mulai Pakai Sekarang</span>
+                                <span>{{ __('public_commercial.free_card_cta') }}</span>
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -215,12 +215,12 @@
         {{-- 2. MASALAH PENCATATAN MANUAL YANG DITUNTASKAN --}}
         <section class="py-16 sm:py-20 max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mb-12 text-left">
-                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">Tantangan Bisnis UMKM</span>
+                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">{{ __('public_commercial.free_pain_kicker') }}</span>
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Mengapa Masih Menggunakan Buku Kertas atau Kalkulator Manual?
+                    {{ __('public_commercial.free_pain_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
-                    Banyak pemilik usaha kecil menunda menggunakan aplikasi kasir karena menganggap software kasir itu mahal, membutuhkan perangkat komputer canggih, atau biaya langganan bulanan yang membebani cash flow. Akibatnya, masalah-masalah klasik ini terus berulang:
+                    {{ __('public_commercial.free_pain_subtitle') }}
                 </p>
             </div>
 
@@ -229,9 +229,9 @@
                     <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center font-bold">
                         <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Uang Kas Sering Selisih</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_pain_1_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Saat tutup kasir di sore atau malam hari, nominal uang di laci fisik sering tidak cocok dengan hitungan nota kertas. Mencari selisih nota yang tercecer membuang waktu berjam-jam.
+                        {{ __('public_commercial.free_pain_1_desc') }}
                     </p>
                 </div>
 
@@ -239,9 +239,9 @@
                     <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
                         <i data-lucide="clock" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Antrean Pembeli Lambat</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_pain_2_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Menghitung harga belanjaan satu per satu dengan kalkulator meja rawan salah pencet, membuat antrean pembeli menumpuk dan pelanggan kehilangan kesabaran.
+                        {{ __('public_commercial.free_pain_2_desc') }}
                     </p>
                 </div>
 
@@ -249,9 +249,9 @@
                     <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center font-bold">
                         <i data-lucide="trending-down" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Tidak Tahu Untung Bersih Riil</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_pain_3_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Omzet tampak ramai, tetapi tidak pernah tahu berapa laba bersih yang sesungguhnya karena uang pribadi dan uang operasional warung tercampur baur tanpa laporan pembukuan.
+                        {{ __('public_commercial.free_pain_3_desc') }}
                     </p>
                 </div>
             </div>
@@ -261,12 +261,12 @@
         <section class="py-16 sm:py-20 bg-slate-50 dark:bg-white/[0.02] border-y border-slate-200 dark:border-white/10">
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl mb-12 text-left">
-                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">Transparansi Fitur</span>
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">{{ __('public_commercial.free_comp_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                        Perbandingan Paket Gratis vs Paket Berbayar COOCA
+                        {{ __('public_commercial.free_comp_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
-                        Kami percaya setiap usaha berhak memulai digitalisasi tanpa beban. Mulai dengan paket Gratis, dan tingkatkan paket langganan Anda secara fleksibel saat usaha Anda semakin berkembang.
+                        {{ __('public_commercial.free_comp_subtitle') }}
                     </p>
                 </div>
 
@@ -274,62 +274,62 @@
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
                             <tr class="border-b border-slate-200 dark:border-white/10 bg-slate-100/70 dark:bg-white/5">
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Fitur & Kapasitas</th>
-                                <th class="p-4 sm:p-5 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">Gratis (Rp 0)</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Standard (Rp {{ $pricingData['standard']['monthly_price_formatted'] }})</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Premium (Rp {{ $pricingData['premium']['monthly_price_formatted'] }})</th>
-                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">Prestige (Rp {{ $pricingData['prestige']['monthly_price_formatted'] }})</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_th_feature') }}</th>
+                                <th class="p-4 sm:p-5 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">{{ __('public_commercial.free_comp_th_free') }}</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_th_standard', ['price' => $pricingData['standard']['monthly_price_formatted']]) }}</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_th_premium', ['price' => $pricingData['premium']['monthly_price_formatted']]) }}</th>
+                                <th class="p-4 sm:p-5 font-bold text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_th_prestige', ['price' => $pricingData['prestige']['monthly_price_formatted']]) }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-200 dark:divide-white/10 text-slate-700 dark:text-slate-300">
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Jumlah Outlet Toko</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['outlet'] ?? 1 }} Outlet</td>
-                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Cabang</td>
-                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang</td>
-                                <td class="p-4 sm:p-5">Multi-Cabang Tak Terbatas</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_outlets') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ __('public_commercial.free_comp_val_outlets_free', ['outlet' => $tierLimits['free']['outlet'] ?? 1]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_outlets_std', ['outlet' => $tierLimits['standard']['outlet'] ?? 2]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_outlets_prem', ['outlet' => $tierLimits['premium']['outlet'] ?? 5]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_outlets_prest') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Kapasitas Master Produk</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['product'] ?? 10 }} Produk</td>
-                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['product'] ?? null) ? $tierLimits['standard']['product'] . ' Produk' : 'Tanpa Batas' }}</td>
-                                <td class="p-4 sm:p-5">Tanpa Batas</td>
-                                <td class="p-4 sm:p-5">Tanpa Batas</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_products') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ __('public_commercial.free_comp_val_prod_free', ['product' => $tierLimits['free']['product'] ?? 10]) }}</td>
+                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['product'] ?? null) ? __('public_commercial.free_comp_val_prod_free', ['product' => $tierLimits['standard']['product']]) : __('public_commercial.free_comp_val_unlimited') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_unlimited') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_unlimited') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Batas Transaksi Kasir</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi / Bulan</td>
-                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi / Bulan' : 'Tanpa Batas' }}</td>
-                                <td class="p-4 sm:p-5">Tanpa Batas</td>
-                                <td class="p-4 sm:p-5">Tanpa Batas</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_pos') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 font-semibold text-emerald-600 dark:text-emerald-400">{{ __('public_commercial.free_comp_val_pos_free', ['pos' => $tierLimits['free']['pos'] ?? 30]) }}</td>
+                                <td class="p-4 sm:p-5">{{ ($tierLimits['standard']['pos'] ?? null) ? __('public_commercial.free_comp_val_pos_format', ['count' => number_format($tierLimits['standard']['pos'], 0, ',', '.')]) : __('public_commercial.free_comp_val_unlimited') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_unlimited') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_unlimited') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Cetak Struk Bluetooth & Nota WA</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_receipt') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Scan Barcode Kamera HP</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
-                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">&#10003; Ya</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_barcode') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
+                                <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400 font-bold">{{ __('public_commercial.free_comp_val_yes') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Manajemen Akun Kasir & Hak Akses</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-400">{{ $tierLimits['free']['user'] ?? 1 }} Akun Owner</td>
-                                <td class="p-4 sm:p-5">{{ $tierLimits['standard']['user'] ?? 3 }} Akun Kasir</td>
-                                <td class="p-4 sm:p-5">Hingga {{ $tierLimits['premium']['user'] ?? 10 }} Staf Kasir</td>
-                                <td class="p-4 sm:p-5">Hak Akses Role Kustom Penuh</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_roles') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-400">{{ __('public_commercial.free_comp_val_roles_free', ['user' => $tierLimits['free']['user'] ?? 1]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_std', ['user' => $tierLimits['standard']['user'] ?? 3]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_prem', ['user' => $tierLimits['premium']['user'] ?? 10]) }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_prest') }}</td>
                             </tr>
                             <tr>
-                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">Laporan Keuangan & Laba Rugi</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5">Rekap Kas Harian</td>
-                                <td class="p-4 sm:p-5">Laba Kotor & Margin</td>
-                                <td class="p-4 sm:p-5">Laba Rugi & Arus Kas Penuh</td>
-                                <td class="p-4 sm:p-5">Akuntansi Lengkap & Neraca</td>
+                                <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_reports') }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5">{{ __('public_commercial.free_comp_val_rep_free') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_rep_std') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_rep_prem') }}</td>
+                                <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_rep_prest') }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -340,37 +340,37 @@
         {{-- 4. CARA DAFTAR 2 MENIT --}}
         <section class="py-16 sm:py-20 max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mb-12 text-left">
-                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">Panduan Cepat</span>
+                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">{{ __('public_commercial.free_steps_kicker') }}</span>
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Cara Daftar Aplikasi Kasir Gratis Hanya dalam 2 Menit
+                    {{ __('public_commercial.free_steps_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
-                    Tidak ada syarat rumit, tidak memerlukan kartu kredit, dan tanpa proses instalasi server yang membingungkan. Ikuti 3 langkah praktis ini:
+                    {{ __('public_commercial.free_steps_subtitle') }}
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="relative p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10">
-                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">01</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Buat Akun Usaha</h3>
+                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">{{ __('public_commercial.free_step_1_num') }}</span>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_step_1_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Klik tombol pendaftaran, masukkan nama usaha Anda (misal: "Warung Berkah Ibu Sari") dan nomor WhatsApp atau alamat email aktif Anda.
+                        {{ __('public_commercial.free_step_1_desc') }}
                     </p>
                 </div>
 
                 <div class="relative p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10">
-                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">02</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Input Produk atau Scan Barcode</h3>
+                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">{{ __('public_commercial.free_step_2_num') }}</span>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_step_2_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Tambahkan menu atau barang dagangan Anda. Anda bisa mengetik nama produk dan harga jual, atau scan langsung barcode kemasan produk menggunakan kamera smartphone.
+                        {{ __('public_commercial.free_step_2_desc') }}
                     </p>
                 </div>
 
                 <div class="relative p-6 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/80 dark:border-white/10">
-                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">03</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Langsung Siap Transaksi</h3>
+                    <span class="text-4xl font-black text-[#007AFF]/20 dark:text-[#00C4D8]/20 block mb-3">{{ __('public_commercial.free_step_3_num') }}</span>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_step_3_title') }}</h3>
                     <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Buka layar POS Kasir di browser atau aplikasi Android, pilih barang yang dibeli pelanggan, dan terima pembayaran tunai atau scan QRIS langsung. Selesai!
+                        {{ __('public_commercial.free_step_3_desc') }}
                     </p>
                 </div>
             </div>
@@ -380,45 +380,45 @@
         <section class="py-16 sm:py-20 bg-slate-50 dark:bg-white/[0.02] border-t border-slate-200 dark:border-white/10">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-12 text-center">
-                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">Tanya Jawab</span>
+                    <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block mb-2">{{ __('public_commercial.free_faq_kicker') }}</span>
                     <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Pertanyaan Seputar Aplikasi Kasir Gratis COOCA
+                        {{ __('public_commercial.free_faq_title') }}
                     </h2>
                 </div>
 
                 <div class="space-y-4">
                     <div class="p-6 rounded-2xl bg-white dark:bg-[#060B1E] border border-slate-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Apakah aplikasi kasir gratis COOCA benar-benar gratis selamanya?</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_faq_q1') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Benar. Paket Gratis COOCA dapat digunakan selamanya tanpa batas masa trial (bukan uji coba 14 hari) dan tidak memerlukan kartu kredit sama sekali. Kami mendedikasikan paket ini untuk mendukung pertumbuhan ekonomi wirausaha mikro dan UMKM di seluruh nusantara.
+                            {{ __('public_commercial.free_faq_a1') }}
                         </p>
                     </div>
 
                     <div class="p-6 rounded-2xl bg-white dark:bg-[#060B1E] border border-slate-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Apa saja batasan kuota pada paket aplikasi kasir gratis COOCA?</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_faq_q2') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Paket Gratis mencakup 1 outlet toko, kapasitas hingga 50 master produk, dan kuota 100 transaksi penjualan per bulan. Kapasitas ini sangat ideal untuk warung, kios sembako, gerobak kuliner, penjahit rumahan, dan bisnis rintisan awal.
+                            {{ __('public_commercial.free_faq_a2', ['outlet' => $tierLimits['free']['outlet'] ?? 1, 'product' => $tierLimits['free']['product'] ?? 10, 'pos' => $tierLimits['free']['pos'] ?? 30]) }}
                         </p>
                     </div>
 
                     <div class="p-6 rounded-2xl bg-white dark:bg-[#060B1E] border border-slate-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Apakah bisa mencetak struk kasir menggunakan printer Bluetooth pada paket gratis?</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_faq_q3') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Bisa. Paket Gratis mendukung pencetakan nota fisik ke printer thermal Bluetooth 58mm dan 80mm serta fitur pengiriman nota digital langsung ke WhatsApp pelanggan tanpa tambahan biaya.
+                            {{ __('public_commercial.free_faq_a3') }}
                         </p>
                     </div>
 
                     <div class="p-6 rounded-2xl bg-white dark:bg-[#060B1E] border border-slate-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Apakah data penjualan saya akan hilang jika kuota transaksi 100 per bulan habis?</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_faq_q4') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Data transaksi Anda 100% aman dan tersimpan permanen di cloud. Anda tetap dapat membuka dashboard dan mengecek riwayat laporan penjualan. Kuota transaksi 100 akan otomatis di-reset menjadi baru setiap tanggal 1 awal bulan, atau Anda bisa upgrade ke paket Standard Rp39.000/bulan kapan saja tanpa kehilangan data.
+                            {{ __('public_commercial.free_faq_a4') }}
                         </p>
                     </div>
 
                     <div class="p-6 rounded-2xl bg-white dark:bg-[#060B1E] border border-slate-200 dark:border-white/10">
-                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">Berapa lama waktu yang dibutuhkan untuk mendaftar dan mulai berjualan?</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-2">{{ __('public_commercial.free_faq_q5') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Hanya butuh 2 menit. Cukup daftarkan nama usaha dan nomor telepon Anda, masukkan beberapa produk dagangan, dan kasir langsung siap dipakai melayani pembeli pertama Anda.
+                            {{ __('public_commercial.free_faq_a5') }}
                         </p>
                     </div>
                 </div>
@@ -429,18 +429,18 @@
         <section class="py-16 sm:py-20 bg-gradient-to-br from-[#060B1E] via-[#081232] to-[#060B1E] text-white border-t border-white/10">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-snug">
-                    Tutup Kebocoran Kasir & Rapikan Usaha Anda Hari Ini
+                    {{ __('public_commercial.free_final_title') }}
                 </h2>
                 <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                    Bergabunglah bersama ribuan wirausaha UMKM di Indonesia yang telah meninggalkan cara catat manual. Gratis selamanya, tanpa resiko finansial, dan data milik Anda 100%.
+                    {{ __('public_commercial.free_final_subtitle') }}
                 </p>
                 <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#00C4D8] text-white font-bold text-base shadow-xl shadow-[#007AFF]/25 hover:brightness-110 transition-all">
-                        <span>Buka Akun Kasir Gratis</span>
+                        <span>{{ __('public_commercial.free_final_cta') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                     <a href="/pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-base border border-white/15 transition-all">
-                        <span>Pelajari Paket Berbayar</span>
+                        <span>{{ __('public_commercial.free_final_cta_secondary') }}</span>
                     </a>
                 </div>
             </div>

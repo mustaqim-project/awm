@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator Harga Jual: Markup vs Margin Online | COOCA')
-@section('description', 'Kalkulator penetapan harga jual produk online. Bandingkan formula markup vs profit margin dan temukan harga jual psikologis yang optimal.')
-@section('og_title', 'Kalkulator Harga Jual: Markup vs Margin Online | COOCA')
-@section('og_description', 'Hitung harga jual optimal dengan perbandingan markup dan profit margin secara akurat.')
+@section('title', __('public_calculators.price_seo_title'))
+@section('description', __('public_calculators.price_seo_desc'))
+@section('og_title', __('public_calculators.price_seo_title'))
+@section('og_description', __('public_calculators.price_seo_desc'))
 @section('canonical', route('kalkulator.harga-jual'))
 @section('og_type', 'website')
 @section('keywords', 'kalkulator harga jual, hitung markup dan margin, rumus harga jual barang, kalkulator harga psikologis, pricing calculator umkm')
@@ -43,12 +43,12 @@
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-[#6E6E73] dark:text-[#86868B]">
                 <a href="{{ route('landing') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Beranda</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span>/</span>
                 <a href="{{ route('kalkulator.index') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Kalkulator</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_hub') }}</a>
                 <span>/</span>
-                <span class="text-[#FF9500] dark:text-[#FF9F0A] font-semibold">Kalkulator Harga Jual</span>
+                <span class="text-[#FF9500] dark:text-[#FF9F0A] font-semibold">{{ __('public_calculators.price_title') }}</span>
             </nav>
 
             <!-- ═══ HERO SECTION (Mandatory 2-Grid Layout) ═══ -->
@@ -59,17 +59,16 @@
                     <div class="space-y-2">
                         <p
                             class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#FF9500] dark:text-[#FF9F0A]">
-                            Strategi Penentuan Harga
+                            {{ __('public_calculators.price_kicker') }}
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                            Kalkulator Harga Jual &amp; <span class="text-[#FF9500] dark:text-[#FF9F0A]">Margin Laba</span>
+                            {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_calculators.price_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">
-                        Jangan sampai tertukar antara Markup dan Margin. Masukkan modal dasar Anda untuk melihat opsi harga
-                        jual yang menguntungkan dan aman saat promosi.
+                        {{ __('public_calculators.price_subtitle') }}
                     </p>
 
                     <!-- Reassurance Points for UMKM 40-65 -->
@@ -77,11 +76,11 @@
                         class="pt-1 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-[#6E6E73] dark:text-[#86868B]">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Bandingkan Markup vs Margin</span>
+                            <span>{{ __('public_calculators.price_check_1') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Hitung Laba Bersih per Unit</span>
+                            <span>{{ __('public_calculators.price_check_2') }}</span>
                         </div>
                     </div>
                 </div>

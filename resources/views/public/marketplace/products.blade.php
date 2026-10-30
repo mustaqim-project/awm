@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Katalog Produk Unggulan UMKM Indonesia | COOCA')
-@section('description', 'Jelajahi produk kuliner, pakaian, kerajinan, dan jasa dari produsen UMKM lokal di seluruh Indonesia: stok real-time langsung dari kasir toko.')
+@section('title', __('public_marketplace.prod_title') . ' | COOCA')
+@section('description', __('public_marketplace.prod_desc'))
 @section('keywords', 'katalog produk umkm, beli produk lokal indonesia, marketplace umkm terpercaya, produk toko online lokal, belanja produk binaan umkm')
 @section('canonical', route('marketplace.sub.products'))
-@section('og_title', 'Katalog Produk Unggulan UMKM Indonesia | COOCA')
-@section('og_description', 'Jelajahi produk kuliner, pakaian, kerajinan, dan jasa dari produsen UMKM lokal di seluruh Indonesia: stok real-time langsung dari kasir toko.')
+@section('og_title', __('public_marketplace.prod_title') . ' | COOCA')
+@section('og_description', __('public_marketplace.prod_desc'))
 @section('og_type', 'website')
 
 @push('seo')
@@ -13,8 +13,8 @@
 {
   "@@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Katalog Produk UMKM COOCA",
-  "description": "Katalog produk dan etalase barang/jasa UMKM Indonesia terhubung dengan stok kasir real-time.",
+  "name": "{{ __('public_marketplace.prod_title') }}",
+  "description": "{{ __('public_marketplace.prod_desc') }}",
   "url": "{{ route('marketplace.sub.products') }}"
 }
 </script>
@@ -45,40 +45,40 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
             {{-- Breadcrumb --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_marketing.nav_home') }}</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
                 <a href="{{ route('marketplace.index') }}" class="hover:text-white transition-colors">Marketplace</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
-                <span class="text-[#00C4D8] font-semibold" aria-current="page">Katalog Produk</span>
+                <span class="text-[#00C4D8] font-semibold" aria-current="page">{{ __('public_marketplace.prod_breadcrumb') }}</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {{-- Left: Header & Search Bar (7 Cols) --}}
                 <div class="lg:col-span-7 space-y-6 text-center mx-auto flex flex-col items-center lg:text-left lg:items-start lg:mx-0">
                     <div class="space-y-3 w-full">
-                        <!-- Pure Typographic Overline Kicker (Zero Pill Abuse) -->
+                        <!-- Pure Typographic Overline Kicker -->
                         <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Katalog Produk Asli UMKM
+                            {{ __('public_marketplace.prod_kicker') }}
                         </p>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold text-white tracking-tight leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Katalog Produk Pilihan Langsung dari <span class="text-[#00C4D8]">Produsen &amp; Penjual</span>
+                            {{ __('public_marketplace.prod_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Dukung produk lokal berkualitas. Setiap transaksi terhubung langsung ke persediaan inventaris gerai penjual, menjamin stok selalu siap kirim atau siap diambil di tempat.
+                        {{ __('public_marketplace.prod_desc') }}
                     </p>
 
                     {{-- Search Form --}}
                     <form method="GET" action="{{ route('marketplace.search') }}" class="pt-1 w-full max-w-[32rem] lg:max-w-none">
                         <div class="relative flex items-center bg-[#0E1E45]/80 rounded-[20px] border border-white/15 p-1.5 shadow-2xl backdrop-blur-md focus-within:ring-2 focus-within:ring-[#00C4D8] transition">
                             <i data-lucide="search" class="w-5 h-5 ml-3.5 text-slate-400 shrink-0" aria-hidden="true"></i>
-                            <input type="text" name="q" placeholder="Cari nama barang, kuliner, pakaian, atau jasa..."
+                            <input type="text" name="q" placeholder="{{ __('public_marketplace.prod_search_placeholder') }}"
                                 class="w-full bg-transparent border-0 px-3.5 py-3 text-[16px] text-white placeholder-slate-400 focus:outline-none">
                             <button type="submit"
                                 class="shrink-0 h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold shadow-lg shadow-[#007AFF]/25 active:scale-[0.98] transition min-h-[44px]">
-                                Cari Produk
+                                {{ __('public_marketplace.prod_search_btn') }}
                             </button>
                         </div>
                     </form>
@@ -87,11 +87,11 @@
                     <div class="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-5 text-xs text-slate-400">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="layers" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                            <span>Stok Terhubung Riil</span>
+                            <span>{{ __('public_marketplace.prod_trust_stock') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                            <span>Harga Asli Produsen</span>
+                            <span>{{ __('public_marketplace.prod_trust_price') }}</span>
                         </div>
                     </div>
                 </div>
@@ -104,11 +104,11 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
-                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">Katalog Siap Kirim</span>
+                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">{{ __('public_marketplace.prod_showcase_header') }}</span>
                             </div>
                             <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 shrink-0">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                Stok Siap
+                                {{ __('public_marketplace.prod_showcase_ready') }}
                             </span>
                         </div>
 
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="text-right shrink-0">
                                     <div class="text-base font-extrabold text-white">Rp 65.000</div>
-                                    <div class="text-[10px] text-slate-400">Harga Gerai</div>
+                                    <div class="text-[10px] text-slate-400">{{ __('public_marketplace.prod_showcase_price_tag') }}</div>
                                 </div>
                             </div>
 
@@ -135,11 +135,11 @@
                             <div class="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 text-xs text-slate-300">
                                 <div class="flex items-center gap-1.5 p-2 rounded-[10px] bg-white/[0.04]">
                                     <i data-lucide="truck" class="w-3.5 h-3.5 text-[#00C4D8]"></i>
-                                    <span class="text-[11px] truncate">Kirim Hari Ini</span>
+                                    <span class="text-[11px] truncate">{{ __('public_marketplace.prod_showcase_ship_today') }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 p-2 rounded-[10px] bg-white/[0.04]">
                                     <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                    <span class="text-[11px] truncate">0% Biaya Titip</span>
+                                    <span class="text-[11px] truncate">{{ __('public_marketplace.prod_showcase_zero_fee') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -148,9 +148,9 @@
                         <div class="p-3 rounded-[16px] bg-[#007AFF]/15 border border-[#007AFF]/30 flex items-center justify-between text-xs">
                             <div class="flex items-center gap-2 text-white font-medium">
                                 <i data-lucide="shopping-bag" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                                <span>Pesan Langsung ke Pemilik Toko</span>
+                                <span>{{ __('public_marketplace.prod_direct_order') }}</span>
                             </div>
-                            <span class="text-[11px] text-[#00C4D8] font-semibold">Tanpa Perantara</span>
+                            <span class="text-[11px] text-[#00C4D8] font-semibold">{{ __('public_marketplace.prod_no_middleman') }}</span>
                         </div>
                     </div>
                 </div>
@@ -165,27 +165,27 @@
         <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs font-semibold">
             <a href="{{ route('marketplace.sub.products') }}"
                 class="px-4 py-2 rounded-full bg-[#007AFF] text-white shadow-sm shrink-0 transition">
-                Semua Produk
+                {{ __('public_marketplace.prod_filter_all') }}
             </a>
             <a href="{{ route('marketplace.search', ['harga' => 'murah']) }}"
                 class="px-4 py-2 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 shrink-0 transition">
-                Di Bawah Rp 50rb
+                {{ __('public_marketplace.prod_filter_under_50k') }}
             </a>
             <a href="{{ route('marketplace.search', ['harga' => 'sedang']) }}"
                 class="px-4 py-2 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 shrink-0 transition">
-                Rp 50rb - Rp 200rb
+                {{ __('public_marketplace.prod_filter_50k_200k') }}
             </a>
             <a href="{{ route('marketplace.search', ['harga' => 'mahal']) }}"
                 class="px-4 py-2 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 shrink-0 transition">
-                Di Atas Rp 200rb
+                {{ __('public_marketplace.prod_filter_above_200k') }}
             </a>
             <a href="{{ route('marketplace.search', ['tipe' => 'goods']) }}"
                 class="px-4 py-2 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 shrink-0 transition">
-                Barang Fisik
+                {{ __('public_marketplace.prod_filter_goods') }}
             </a>
             <a href="{{ route('marketplace.search', ['tipe' => 'service']) }}"
                 class="px-4 py-2 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] text-[#1D1D1F] dark:text-[#F5F5F7] hover:border-[#007AFF]/40 shrink-0 transition">
-                Layanan Jasa
+                {{ __('public_marketplace.prod_filter_service') }}
             </a>
         </div>
 
@@ -227,7 +227,7 @@
                             <span class="font-mono font-bold text-sm sm:text-base text-[#1D1D1F] dark:text-[#F5F5F7]">
                                 Rp {{ number_format((float) $product->selling_price, 0, ',', '.') }}
                             </span>
-                            <span class="text-xs text-[#007AFF] font-semibold group-hover:underline">Beli</span>
+                            <span class="text-xs text-[#007AFF] font-semibold group-hover:underline">{{ __('public_marketplace.prod_btn_buy') }}</span>
                         </div>
                     </a>
                 @endforeach
@@ -243,14 +243,14 @@
                 <div class="w-12 h-12 rounded-[14px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
                     <i data-lucide="package-search" class="w-6 h-6" aria-hidden="true"></i>
                 </div>
-                <h3 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Belum Ada Produk Ditampilkan</h3>
+                <h3 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_empty_title') }}</h3>
                 <p class="text-xs sm:text-sm text-[#86868B] leading-relaxed">
-                    Saat ini etalase produk publik sedang diperbarui oleh penjual. Anda juga dapat mendaftarkan produk usaha Anda sendiri.
+                    {{ __('public_marketplace.prod_empty_desc') }}
                 </p>
                 <div class="pt-2">
                     <a href="{{ route('register') }}"
                         class="h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold inline-flex items-center gap-2 shadow-sm transition min-h-[44px]">
-                        <span>Mulai Jual Produk</span>
+                        <span>{{ __('public_marketplace.prod_empty_cta') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -260,8 +260,8 @@
         {{-- Product Guarantee Bento --}}
         <section class="p-6 sm:p-10 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-6 shadow-sm">
             <div class="max-w-2xl">
-                <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] block">Jaminan Berbelanja</span>
-                <h2 class="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-1">Mengapa Berbelanja di COOCA Marketplace?</h2>
+                <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] block">{{ __('public_marketplace.prod_guarantee_kicker') }}</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-1">{{ __('public_marketplace.prod_guarantee_title') }}</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -269,24 +269,24 @@
                     <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                         <i data-lucide="layers" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Stok Kasir Sinkron</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Persediaan produk selalu real-time karena langsung tersambung ke sistem POS kasir penjual.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_1_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.prod_guar_1_desc') }}</p>
                 </div>
 
                 <div class="p-5 rounded-[18px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.04] space-y-2">
                     <div class="w-9 h-9 rounded-[10px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="handshake" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Harga Langsung Produsen</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Tanpa biaya perantara yang mencekik, Anda mendapatkan harga terbaik langsung dari produsen lokal.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_2_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.producer_price_desc') }}</p>
                 </div>
 
                 <div class="p-5 rounded-[18px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.04] space-y-2">
                     <div class="w-9 h-9 rounded-[10px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                         <i data-lucide="qr-code" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Pembayaran Mudah QRIS</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Dukungan pembayaran QRIS nasional, transfer bank, dan konfirmasi langsung ke nomor WhatsApp toko.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_3_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.prod_guar_3_desc') }}</p>
                 </div>
             </div>
         </section>
@@ -299,23 +299,23 @@
             <div class="relative z-10 space-y-5 max-w-2xl mx-auto">
                 <div class="text-xs font-semibold uppercase tracking-wider text-[#00C4D8] inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#007AFF]/15 border border-[#00C4D8]/30">
                     <i data-lucide="shield-check" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
-                    <span>Dukung Produk Buatan Indonesia</span>
+                    <span>{{ __('public_marketplace.prod_cta_support') }}</span>
                 </div>
                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Mulai Belanja atau Daftarkan Produk Usaha Anda
+                    {{ __('public_marketplace.prod_cta_title') }}
                 </h3>
                 <p class="text-sm text-slate-300 leading-relaxed">
-                    Setiap pembelian yang Anda lakukan membantu perputaran modal pelaku usaha mikro, kecil, dan menengah di tanah air.
+                    {{ __('public_marketplace.prod_cta_desc') }}
                 </p>
                 <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-                    <a href="{{ route('marketplace.search') }}"
+                    <a href="{{ route('register') }}"
                         class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all min-h-[48px]">
-                        <span>Cari Produk Spesifik</span>
-                        <i data-lucide="search" class="w-4 h-4" aria-hidden="true"></i>
+                        <span>{{ __('public_marketplace.prod_cta_reg') }}</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                     </a>
                     <a href="{{ route('marketplace.index') }}"
                         class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm min-h-[48px]">
-                        <span>Beranda Marketplace</span>
+                        <span>{{ __('public_marketplace.prod_cta_home') }}</span>
                     </a>
                 </div>
             </div>

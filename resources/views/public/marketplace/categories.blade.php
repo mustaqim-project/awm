@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kategori Bisnis & Produk UMKM Indonesia | COOCA')
-@section('description', 'Temukan produk & layanan UMKM per sektor: Kuliner & Kafe, Ritel, Bengkel Otomotif, Laundry, Manufaktur Pabrikasi, dan Jasa Profesional.')
+@section('title', __('public_marketplace.cat_title') . ' | COOCA')
+@section('description', __('public_marketplace.cat_desc'))
 @section('keywords', 'kategori bisnis umkm, katalog industri umkm, produk kuliner fashion kerajinan jasa, direktori kategori umkm')
 @section('canonical', route('marketplace.sub.categories'))
-@section('og_title', 'Kategori Bisnis & Produk UMKM Indonesia | COOCA')
-@section('og_description', 'Temukan produk & layanan UMKM per sektor: Kuliner & Kafe, Ritel, Bengkel Otomotif, Laundry, Manufaktur Pabrikasi, dan Jasa Profesional.')
+@section('og_title', __('public_marketplace.cat_title') . ' | COOCA')
+@section('og_description', __('public_marketplace.cat_desc'))
 @section('og_type', 'website')
 
 @push('seo')
@@ -13,8 +13,8 @@
 {
   "@@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Kategori Marketplace UMKM COOCA",
-  "description": "Klasifikasi industri dan kategori produk UMKM Indonesia.",
+  "name": "{{ __('public_marketplace.cat_title') }}",
+  "description": "{{ __('public_marketplace.cat_desc') }}",
   "url": "{{ route('marketplace.sub.categories') }}"
 }
 </script>
@@ -30,9 +30,8 @@
 
     $categoriesData = [
         'fnb' => [
-            'title' => 'Kuliner & F&B',
-            'desc' =>
-                'Kedai kopi, kafe, makanan beku (frozen food), camilan khas daerah, bumbu olahan, dan katering acara.',
+            'title' => __('public_marketplace.cat_fnb_title'),
+            'desc' => __('public_marketplace.cat_fnb_desc'),
             'icon' => 'utensils',
             'color' => 'amber',
             'count' => \App\Models\Business::where($baseScope)
@@ -41,9 +40,8 @@
             'tags' => ['Kopi Arabika', 'Frozen Food', 'Kue Basah', 'Sambal Kemasan', 'Katering Sehat'],
         ],
         'retail' => [
-            'title' => 'Retail & Swalayan',
-            'desc' =>
-                'Toko kelontong modern, minimarket sembako, butik pakaian, hijab, batik tradisional, dan perlengkapan harian.',
+            'title' => __('public_marketplace.cat_retail_title'),
+            'desc' => __('public_marketplace.cat_retail_desc'),
             'icon' => 'store',
             'color' => 'blue',
             'count' => \App\Models\Business::where($baseScope)
@@ -54,9 +52,8 @@
             'tags' => ['Pakaian Muslim', 'Batik Tulis', 'Sembako Grosir', 'Kosmetik BPOM', 'Alat Tulis'],
         ],
         'workshop' => [
-            'title' => 'Bengkel & Otomotif',
-            'desc' =>
-                'Suku cadang motor dan mobil, pelumas oli mesin, aksesoris variasi, ban, dan layanan perbaikan kendaraan.',
+            'title' => __('public_marketplace.cat_workshop_title'),
+            'desc' => __('public_marketplace.cat_workshop_desc'),
             'icon' => 'wrench',
             'color' => 'slate',
             'count' => \App\Models\Business::where($baseScope)
@@ -70,9 +67,8 @@
             'tags' => ['Oli Mesin', 'Kampas Rem', 'Ban Tubeless', 'Aksesoris Motor', 'Servis Berkala'],
         ],
         'laundry' => [
-            'title' => 'Laundry & Kebersihan',
-            'desc' =>
-                'Layanan cuci kiloan, dry cleaning pakaian formal, laundry sepatu, helm, bed cover, dan perlengkapan deterjen.',
+            'title' => __('public_marketplace.cat_laundry_title'),
+            'desc' => __('public_marketplace.cat_laundry_desc'),
             'icon' => 'droplets',
             'color' => 'cyan',
             'count' => \App\Models\Business::where($baseScope)
@@ -85,9 +81,8 @@
             'tags' => ['Cuci Kiloan', 'Dry Cleaning Jas', 'Laundry Sepatu', 'Cuci Karpet', 'Parfum Laundry'],
         ],
         'manufacture' => [
-            'title' => 'Produsen & Pabrikasi',
-            'desc' =>
-                'Konveksi garmen pakaian, pengrajin mebel kayu, produk anyaman lokal, kemasan produk, dan industri kreatif rumahan.',
+            'title' => __('public_marketplace.cat_mfg_title'),
+            'desc' => __('public_marketplace.cat_mfg_desc'),
             'icon' => 'factory',
             'color' => 'indigo',
             'count' => \App\Models\Business::where($baseScope)
@@ -100,9 +95,8 @@
             'tags' => ['Konveksi Kaos', 'Mebel Jepara', 'Kerajinan Kulit', 'Dus Kemasan', 'Pabrik Snack'],
         ],
         'service' => [
-            'title' => 'Jasa & Servis Profesional',
-            'desc' =>
-                'Jasa servis AC rumah/kantor, barbershop, salon kecantikan, studio foto, desainer grafis, dan konsultasi legal usaha.',
+            'title' => __('public_marketplace.cat_service_title'),
+            'desc' => __('public_marketplace.cat_service_desc'),
             'icon' => 'briefcase',
             'color' => 'violet',
             'count' => \App\Models\Business::where($baseScope)
@@ -129,29 +123,29 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
             {{-- Breadcrumb --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_marketing.nav_home') }}</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
                 <a href="{{ route('marketplace.index') }}" class="hover:text-white transition-colors">Marketplace</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
-                <span class="text-[#00C4D8] font-semibold" aria-current="page">Kategori Usaha</span>
+                <span class="text-[#00C4D8] font-semibold" aria-current="page">{{ __('public_marketplace.cat_breadcrumb') }}</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {{-- Left: Header & Sector Narrative (7 Cols) --}}
                 <div class="lg:col-span-7 space-y-6 text-center mx-auto flex flex-col items-center lg:text-left lg:items-start lg:mx-0">
                     <div class="space-y-3 w-full">
-                        <!-- Pure Typographic Overline Kicker (Zero Pill Abuse) -->
+                        <!-- Pure Typographic Overline Kicker -->
                         <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Klasifikasi Sektor Bisnis
+                            {{ __('public_marketplace.cat_kicker') }}
                         </p>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold text-white tracking-tight leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Jelajahi Berbagai Kategori <span class="text-[#00C4D8]">Produk &amp; Layanan Bisnis</span>
+                            {{ __('public_marketplace.cat_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Setiap toko dan produk di COOCA dikelompokkan secara terstruktur berdasarkan sektor industri, memudahkan Anda menemukan barang kebutuhan harian maupun layanan profesional terdekat.
+                        {{ __('public_marketplace.cat_desc') }}
                     </p>
 
                     {{-- Quick Action Links --}}
@@ -159,12 +153,12 @@
                         <a href="{{ route('marketplace.sub.businesses') }}"
                             class="h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 transition active:scale-[0.98] min-h-[44px]">
                             <i data-lucide="store" class="w-4 h-4 shrink-0"></i>
-                            <span>Buka Direktori Toko</span>
+                            <span>{{ __('public_marketplace.cat_btn_stores') }}</span>
                         </a>
                         <a href="{{ route('marketplace.sub.products') }}"
                             class="h-11 px-5 rounded-[14px] bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition active:scale-[0.98] flex items-center gap-2 backdrop-blur-sm min-h-[44px]">
                             <i data-lucide="package" class="w-4 h-4 shrink-0"></i>
-                            <span>Lihat Katalog Produk</span>
+                            <span>{{ __('public_marketplace.cat_btn_products') }}</span>
                         </a>
                     </div>
                 </div>
@@ -177,9 +171,9 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
-                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">Sektor Terkoneksi</span>
+                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">{{ __('public_marketplace.cat_showcase_title') }}</span>
                             </div>
-                            <span class="text-[11px] font-mono text-[#00C4D8] font-bold">100% Terverifikasi</span>
+                            <span class="text-[11px] font-mono text-[#00C4D8] font-bold">{{ __('public_marketplace.cat_showcase_badge') }}</span>
                         </div>
 
                         {{-- 4 Sector Bento Tiles --}}
@@ -188,36 +182,36 @@
                                 <div class="w-8 h-8 rounded-[10px] bg-amber-500/15 text-amber-400 flex items-center justify-center">
                                     <i data-lucide="utensils" class="w-4 h-4"></i>
                                 </div>
-                                <div class="text-xs font-bold text-white">Kuliner &amp; F&amp;B</div>
+                                <div class="text-xs font-bold text-white">{{ __('public_marketplace.cat_fnb_title') }}</div>
                                 <div class="text-[10px] text-slate-400">Resto &bull; Kafe &bull; Frozen</div>
                             </div>
                             <div class="p-3.5 rounded-[16px] bg-[#060B1E]/60 border border-white/10 space-y-2">
                                 <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
                                     <i data-lucide="store" class="w-4 h-4"></i>
                                 </div>
-                                <div class="text-xs font-bold text-white">Retail Swalayan</div>
+                                <div class="text-xs font-bold text-white">{{ __('public_marketplace.cat_retail_title') }}</div>
                                 <div class="text-[10px] text-slate-400">Kelontong &bull; Butik &bull; Grosir</div>
                             </div>
                             <div class="p-3.5 rounded-[16px] bg-[#060B1E]/60 border border-white/10 space-y-2">
                                 <div class="w-8 h-8 rounded-[10px] bg-slate-500/15 text-slate-300 flex items-center justify-center">
                                     <i data-lucide="wrench" class="w-4 h-4"></i>
                                 </div>
-                                <div class="text-xs font-bold text-white">Otomotif &amp; Bengkel</div>
+                                <div class="text-xs font-bold text-white">{{ __('public_marketplace.cat_workshop_title') }}</div>
                                 <div class="text-[10px] text-slate-400">Sparepart &bull; Servis Motor</div>
                             </div>
                             <div class="p-3.5 rounded-[16px] bg-[#060B1E]/60 border border-white/10 space-y-2">
                                 <div class="w-8 h-8 rounded-[10px] bg-[#00C4D8]/15 text-[#00C4D8] flex items-center justify-center">
                                     <i data-lucide="droplets" class="w-4 h-4"></i>
                                 </div>
-                                <div class="text-xs font-bold text-white">Laundry &amp; Jasa</div>
+                                <div class="text-xs font-bold text-white">{{ __('public_marketplace.cat_laundry_title') }}</div>
                                 <div class="text-[10px] text-slate-400">Kiloan &bull; Dry Cleaning</div>
                             </div>
                         </div>
 
                         {{-- Footer Badge --}}
                         <div class="p-2.5 rounded-[12px] bg-white/[0.04] border border-white/5 flex items-center justify-between text-xs text-slate-400">
-                            <span class="truncate">Integrasi Inventaris Riil</span>
-                            <span class="text-emerald-400 font-semibold shrink-0">Aktif</span>
+                            <span class="truncate">{{ __('public_marketplace.cat_inventory_sync') }}</span>
+                            <span class="text-emerald-400 font-semibold shrink-0">{{ __('public_marketplace.cat_active') }}</span>
                         </div>
                     </div>
                 </div>
@@ -238,7 +232,7 @@
                                 <i data-lucide="{{ $cat['icon'] }}" class="w-6 h-6" aria-hidden="true"></i>
                             </div>
                             <span class="px-3 py-1 rounded-full bg-[#F2F2F7] dark:bg-[#2C2C2E] text-xs font-mono font-semibold text-[#86868B]">
-                                {{ $cat['count'] }} Toko Terdaftar
+                                {{ __('public_marketplace.cat_stores_registered', ['count' => $cat['count']]) }}
                             </span>
                         </div>
 
@@ -264,7 +258,7 @@
                     <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <a href="{{ route('marketplace.search', ['kategori' => $key]) }}"
                             class="w-full h-11 rounded-[14px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-[#007AFF] hover:text-white dark:hover:bg-[#007AFF] text-xs font-semibold text-[#1D1D1F] dark:text-[#F5F5F7] flex items-center justify-center gap-2 transition-all min-h-[44px]">
-                            <span>Lihat Produk {{ $cat['title'] }}</span>
+                            <span>{{ __('public_marketplace.cat_view_products', ['sector' => $cat['title']]) }}</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -274,25 +268,25 @@
 
         {{-- Related Links --}}
         <section class="border-t border-black/[0.06] dark:border-white/[0.08] pt-12 space-y-6">
-            <h3 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Kanal Direktori Lainnya</h3>
+            <h3 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.cat_other_channels') }}</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a href="{{ route('marketplace.sub.businesses') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
-                    <span class="text-xs uppercase font-bold text-[#007AFF]">Direktori Toko</span>
+                    <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_stores') }}</span>
                     <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        Semua Toko Terverifikasi</h4>
+                        {{ __('public_marketplace.cat_channel_stores_sub') }}</h4>
                 </a>
                 <a href="{{ route('marketplace.sub.products') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
-                    <span class="text-xs uppercase font-bold text-[#007AFF]">Katalog Produk</span>
+                    <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_products') }}</span>
                     <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        Semua Produk Unggulan</h4>
+                        {{ __('public_marketplace.cat_channel_products_sub') }}</h4>
                 </a>
                 <a href="{{ route('marketplace.sub.locations') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
-                    <span class="text-xs uppercase font-bold text-[#007AFF]">Wilayah Kota</span>
+                    <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_locations') }}</span>
                     <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        Cari Berdasarkan Kota</h4>
+                        {{ __('public_marketplace.cat_channel_locations_sub') }}</h4>
                 </a>
             </div>
         </section>
@@ -305,23 +299,23 @@
             <div class="relative z-10 space-y-5 max-w-2xl mx-auto">
                 <div class="text-xs font-semibold uppercase tracking-wider text-[#00C4D8] inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#007AFF]/15 border border-[#00C4D8]/30">
                     <i data-lucide="store" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
-                    <span>Tingkatkan Visibilitas Bisnis Anda</span>
+                    <span>{{ __('public_marketplace.cat_cta_badge') }}</span>
                 </div>
                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Daftarkan Usaha Anda ke Kategori yang Sesuai
+                    {{ __('public_marketplace.cat_cta_title') }}
                 </h3>
                 <p class="text-sm text-slate-300 leading-relaxed">
-                    Dapatkan calon pelanggan baru yang mencari produk atau layanan di industri Anda setiap hari melalui jaringan marketplace COOCA.
+                    {{ __('public_marketplace.cat_cta_desc') }}
                 </p>
                 <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                     <a href="{{ route('register') }}"
                         class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all min-h-[48px]">
-                        <span>Buka Toko Gratis</span>
+                        <span>{{ __('public_marketplace.cat_cta_btn') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                     </a>
                     <a href="{{ route('marketplace.index') }}"
                         class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm min-h-[48px]">
-                        <span>Beranda Marketplace</span>
+                        <span>{{ __('public_marketplace.cat_cta_home') }}</span>
                     </a>
                 </div>
             </div>

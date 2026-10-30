@@ -71,6 +71,8 @@ return [
     'hpp_result_total_batch' => 'Total Biaya Produksi per Batch',
     'hpp_result_selling_price' => 'Rekomendasi Harga Jual',
     'hpp_result_gross_profit' => 'Laba Kotor per Unit',
+    'hpp_cta_kasir_prompt' => 'Ingin HPP resep langsung terpotong saat kasir input pesanan?',
+    'hpp_cta_kasir_btn' => 'Buka Akun Kasir Gratis',
 
     // 2. BEP (Titik Impas)
     'bep_seo_title' => 'Kalkulator BEP (Break Even Point) Online Gratis | COOCA',

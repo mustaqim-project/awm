@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Direktori Bisnis & Toko UMKM per Kota | COOCA')
-@section('description', 'Temukan toko online, kafe, bengkel, dan UMKM terdekat di kota Anda: jelajahi bisnis lokal dari Jakarta, Surabaya, hingga pelosok nusantara.')
+@section('title', __('public_marketplace.loc_title') . ' | COOCA')
+@section('description', __('public_marketplace.loc_desc'))
 @section('keywords', 'direktori umkm per kota, toko umkm jakarta bandung surabaya, bisnis lokal terdekat, belanja produk kota terdekat, toko offline umkm')
 @section('canonical', route('marketplace.sub.locations'))
-@section('og_title', 'Direktori Bisnis & Toko UMKM per Kota | COOCA')
-@section('og_description', 'Temukan toko online, kafe, bengkel, dan UMKM terdekat di kota Anda: jelajahi bisnis lokal dari Jakarta, Surabaya, hingga pelosok nusantara.')
+@section('og_title', __('public_marketplace.loc_title') . ' | COOCA')
+@section('og_description', __('public_marketplace.loc_desc'))
 @section('og_type', 'website')
 
 @push('seo')
@@ -13,8 +13,8 @@
 {
   "@@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Direktori Lokasi Toko UMKM COOCA",
-  "description": "Direktori pencarian toko dan bisnis UMKM berdasarkan cakupan wilayah dan kota di Indonesia.",
+  "name": "{{ __('public_marketplace.loc_title') }}",
+  "description": "{{ __('public_marketplace.loc_desc') }}",
   "url": "{{ route('marketplace.sub.locations') }}"
 }
 </script>
@@ -123,40 +123,40 @@
         <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
             {{-- Breadcrumb --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_marketing.nav_home') }}</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
                 <a href="{{ route('marketplace.index') }}" class="hover:text-white transition-colors">Marketplace</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
-                <span class="text-[#00C4D8] font-semibold" aria-current="page">Cakupan Wilayah</span>
+                <span class="text-[#00C4D8] font-semibold" aria-current="page">{{ __('public_marketplace.loc_breadcrumb') }}</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {{-- Left: Header, City Search & Trust Info (7 Cols) --}}
                 <div class="lg:col-span-7 space-y-6 text-center mx-auto flex flex-col items-center lg:text-left lg:items-start lg:mx-0">
                     <div class="space-y-3 w-full">
-                        <!-- Pure Typographic Overline Kicker (Zero Pill Abuse) -->
+                        <!-- Pure Typographic Overline Kicker -->
                         <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Cakupan Wilayah Nusantara
+                            {{ __('public_marketplace.loc_kicker') }}
                         </p>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold text-white tracking-tight leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Temukan Bisnis &amp; <span class="text-[#00C4D8]">Toko Lokal di Kota Anda</span>
+                            {{ __('public_marketplace.loc_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Dukung pertumbuhan perputaran ekonomi daerah. Jelajahi ribuan pelaku usaha yang memiliki gerai fisik maupun etalase online di kota tempat tinggal Anda.
+                        {{ __('public_marketplace.loc_desc') }}
                     </p>
 
                     {{-- City Search Form --}}
                     <form method="GET" action="{{ route('marketplace.search') }}" class="pt-1 w-full max-w-[32rem] lg:max-w-none">
                         <div class="relative flex items-center bg-[#0E1E45]/80 rounded-[20px] border border-white/15 p-1.5 shadow-2xl backdrop-blur-md focus-within:ring-2 focus-within:ring-[#00C4D8] transition">
                             <i data-lucide="map-pin" class="w-5 h-5 ml-3.5 text-slate-400 shrink-0" aria-hidden="true"></i>
-                            <input type="text" name="q" placeholder="Ketik nama kota, misalnya: Bandung, Surabaya, Solo..."
+                            <input type="text" name="q" placeholder="{{ __('public_marketplace.loc_search_placeholder') }}"
                                 class="w-full bg-transparent border-0 px-3.5 py-3 text-[16px] text-white placeholder-slate-400 focus:outline-none">
                             <button type="submit"
                                 class="shrink-0 h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold shadow-lg shadow-[#007AFF]/25 active:scale-[0.98] transition min-h-[44px]">
-                                Cari Kota
+                                {{ __('public_marketplace.loc_search_btn') }}
                             </button>
                         </div>
                     </form>
@@ -165,11 +165,11 @@
                     <div class="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-5 text-xs text-slate-400">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="compass" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                            <span>Sentra Usaha Daerah</span>
+                            <span>{{ __('public_marketplace.loc_trust_hub') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="map" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                            <span>500+ Kota Terjangkau</span>
+                            <span>{{ __('public_marketplace.loc_trust_cities') }}</span>
                         </div>
                     </div>
                 </div>
@@ -182,25 +182,25 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
-                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">Jangkauan Wilayah</span>
+                                <span class="text-xs font-mono font-semibold text-slate-300 ml-2">{{ __('public_marketplace.loc_cockpit_title') }}</span>
                             </div>
                             <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 shrink-0">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                Live Sync
+                                {{ __('public_marketplace.loc_cockpit_live') }}
                             </span>
                         </div>
 
                         {{-- 3 Key Regional Metrics Bento --}}
                         <div class="grid grid-cols-2 gap-2.5">
                             <div class="p-3.5 rounded-[16px] bg-[#060B1E]/60 border border-white/10 space-y-1">
-                                <div class="text-[11px] text-slate-400">Total Hub Wilayah</div>
-                                <div class="text-xl font-bold text-white">6 Koridor</div>
-                                <div class="text-[10px] text-[#00C4D8]">Jawa hingga Papua</div>
+                                <div class="text-[11px] text-slate-400">{{ __('public_marketplace.loc_cockpit_hubs_label') }}</div>
+                                <div class="text-xl font-bold text-white">{{ __('public_marketplace.loc_cockpit_hubs_val') }}</div>
+                                <div class="text-[10px] text-[#00C4D8]">{{ __('public_marketplace.loc_cockpit_hubs_sub') }}</div>
                             </div>
                             <div class="p-3.5 rounded-[16px] bg-[#060B1E]/60 border border-white/10 space-y-1">
-                                <div class="text-[11px] text-slate-400">Ambil di Gerai</div>
-                                <div class="text-xl font-bold text-emerald-400">Tersedia</div>
-                                <div class="text-[10px] text-slate-400">Pick-up langsung</div>
+                                <div class="text-[11px] text-slate-400">{{ __('public_marketplace.loc_cockpit_pickup_label') }}</div>
+                                <div class="text-xl font-bold text-emerald-400">{{ __('public_marketplace.loc_cockpit_pickup_val') }}</div>
+                                <div class="text-[10px] text-slate-400">{{ __('public_marketplace.loc_cockpit_pickup_sub') }}</div>
                             </div>
                         </div>
 
@@ -209,9 +209,9 @@
                             <div class="text-xs font-semibold text-slate-300 flex items-center justify-between">
                                 <span class="flex items-center gap-1.5">
                                     <i data-lucide="navigation" class="w-3.5 h-3.5 text-[#00C4D8]"></i>
-                                    <span>Kota Teraktif Minggu Ini</span>
+                                    <span>{{ __('public_marketplace.loc_cockpit_active_cities') }}</span>
                                 </span>
-                                <span class="text-[10px] font-mono text-emerald-400 font-bold">100% Realtime</span>
+                                <span class="text-[10px] font-mono text-emerald-400 font-bold">{{ __('public_marketplace.loc_cockpit_realtime') }}</span>
                             </div>
                             <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
                                 <span class="px-2.5 py-1 rounded-[8px] bg-white/5 border border-white/10">Bandung</span>
@@ -264,8 +264,8 @@
         {{-- Advantages of Local Buying Bento --}}
         <section class="p-6 sm:p-10 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-6 shadow-sm">
             <div class="max-w-2xl">
-                <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] block">Keuntungan Berbelanja Lokal</span>
-                <h2 class="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-1">Mengapa Membeli dari UMKM di Kota Anda?</h2>
+                <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] block">{{ __('public_marketplace.loc_bento_kicker') }}</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mt-1">{{ __('public_marketplace.loc_bento_title') }}</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -273,24 +273,24 @@
                     <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                         <i data-lucide="zap" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Pengiriman Instan Cepat</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Pesan barang kebutuhan atau kuliner dengan kurir instan sameday, tiba di tangan Anda dalam beberapa jam saja.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_1_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_1_desc') }}</p>
                 </div>
 
                 <div class="p-5 rounded-[18px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.04] space-y-2">
                     <div class="w-9 h-9 rounded-[10px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="store" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Ambil Sendiri (Self Pick-up)</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Pesan online lewat storefront penjual dan ambil paket pesanan langsung di toko fisik tanpa biaya kirim.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_2_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_2_desc') }}</p>
                 </div>
 
                 <div class="p-5 rounded-[18px] bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/[0.04] dark:border-white/[0.04] space-y-2">
                     <div class="w-9 h-9 rounded-[10px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                         <i data-lucide="coins" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Hemat Biaya Ongkos Kirim</h4>
-                    <p class="text-xs text-[#86868B] leading-relaxed">Jarak pengiriman yang lebih dekat memangkas biaya ekspedisi secara signifikan dibandingkan memesan dari luar pulau.</p>
+                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_3_title') }}</h4>
+                    <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_3_desc') }}</p>
                 </div>
             </div>
         </section>
@@ -303,23 +303,23 @@
             <div class="relative z-10 space-y-5 max-w-2xl mx-auto">
                 <div class="text-xs font-semibold uppercase tracking-wider text-[#00C4D8] inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#007AFF]/15 border border-[#00C4D8]/30">
                     <i data-lucide="map-pin" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
-                    <span>Jangkau Pembeli di Kota Anda</span>
+                    <span>{{ __('public_marketplace.loc_cta_badge') }}</span>
                 </div>
                 <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Daftarkan Alamat Toko Fisik Anda Sekarang
+                    {{ __('public_marketplace.loc_cta_title') }}
                 </h3>
                 <p class="text-sm text-slate-300 leading-relaxed">
-                    Daftar akun COOCA dan cantumkan lokasi cabang gerai Anda agar calon pembeli di sekitar kota Anda dapat menemukan toko Anda dengan mudah.
+                    {{ __('public_marketplace.loc_cta_desc') }}
                 </p>
                 <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                     <a href="{{ route('register') }}"
                         class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all min-h-[48px]">
-                        <span>Buka Toko Gratis</span>
+                        <span>{{ __('public_marketplace.loc_cta_btn') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                     </a>
                     <a href="{{ route('marketplace.index') }}"
                         class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm min-h-[48px]">
-                        <span>Beranda Marketplace</span>
+                        <span>{{ __('public_marketplace.loc_cta_home') }}</span>
                     </a>
                 </div>
             </div>

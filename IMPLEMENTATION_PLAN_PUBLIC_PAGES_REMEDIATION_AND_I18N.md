@@ -218,23 +218,23 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 ### FASE 7: Refactoring Kalkulator Finansial (9 Halaman)
 *Tujuan: Mempertahankan akurasi engine akuntansi dan migrasi dwibahasa penuh.*
 
-- [ ] **Task 7.1   Hub Kalkulator (`index.blade.php`):**  
+- [x] **Task 7.1   Hub Kalkulator (`index.blade.php`):** (SELESAI)  
   Migrasi katalog 9 alat hitung finansial ke kamus `public_calculators.hub_*`.
-- [ ] **Task 7.2   Kalkulator HPP (`hpp.blade.php`):**  
+- [x] **Task 7.2   Kalkulator HPP (`hpp.blade.php`):** (SELESAI)  
   Migrasi simulasi 3 pilar SAK EMKM dan microcopy konversi ke POS ke kamus `public_calculators.hpp_*`.
-- [ ] **Task 7.3   Kalkulator BEP (`bep.blade.php`):**  
+- [x] **Task 7.3   Kalkulator BEP (`bep.blade.php`):** (SELESAI)  
   Migrasi kalkulator titik impas ke kamus `public_calculators.bep_*`.
-- [ ] **Task 7.4   Kalkulator Harga Jual (`harga_jual.blade.php`):**  
+- [x] **Task 7.4   Kalkulator Harga Jual (`harga_jual.blade.php`):** (SELESAI)  
   Migrasi simulasi margin dan markup ke kamus `public_calculators.pricing_*`.
-- [ ] **Task 7.5   Kalkulator Laba Bersih (`laba_bersih.blade.php`):**  
+- [x] **Task 7.5   Kalkulator Laba Bersih (`laba_bersih.blade.php`):** (SELESAI)  
   Migrasi simulasi laba kotor vs laba operasional ke kamus `public_calculators.net_profit_*`.
-- [ ] **Task 7.6   Kalkulator Gaji Karyawan (`gaji_karyawan.blade.php`):**  
+- [x] **Task 7.6   Kalkulator Gaji Karyawan (`gaji_karyawan.blade.php`):** (SELESAI)  
   Migrasi pembagian gaji pokok, tunjangan, dan bonus ke kamus `public_calculators.payroll_*`.
-- [ ] **Task 7.7   Kalkulator PPh Final (`pph_final.blade.php`):**  
+- [x] **Task 7.7   Kalkulator PPh Final (`pph_final.blade.php`):** (SELESAI)  
   Migrasi simulasi tarif PPh Final UMKM 0.5% (PP 55/2022) ke kamus `public_calculators.tax_*`.
-- [ ] **Task 7.8   Kalkulator Omzet Harian (`omzet_harian.blade.php`):**  
+- [x] **Task 7.8   Kalkulator Omzet Harian (`omzet_harian.blade.php`):** (SELESAI)  
   Migrasi rekap omzet harian ke kamus `public_calculators.revenue_*`.
-- [ ] **Task 7.9   Simulasi What-If (`simulasi_what_if.blade.php`):**  
+- [x] **Task 7.9   Simulasi What-If (`simulasi_what_if.blade.php`):** (SELESAI)  
   Bersihkan frasa AI *"bukan sekadar intuisi"* baris 321 dan migrasi ke kamus `public_calculators.what_if_*`.
 
 ---
@@ -316,7 +316,7 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 │ Fase 4: ERP Suite  │ 8 File Blade        │ 8 Task Utama  │ SELESAI (100%)  │ TINGGI (P1)    │
 │ Fase 5: Omnichannel│ 5 File Blade        │ 5 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │
 │ Fase 6: Solusi UMKM│ 7 File Blade        │ 7 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │
-│ Fase 7: Kalkulator │ 9 File Blade        │ 9 Task Utama  │ PENDING TRIGGER │ SEDANG (P2)    │
+│ Fase 7: Kalkulator │ 9 File Blade        │ 9 Task Utama  │ SELESAI (100%)  │ SEDANG (P2)    │
 │ Fase 8: Komersial  │ 9 File Blade        │ 6 Task Utama  │ PENDING TRIGGER │ TINGGI (P0-P2) │
 │ Fase 9: Resources  │ 8 File Blade        │ 5 Task Utama  │ PENDING TRIGGER │ SEDANG (P2)    │
 │ Fase 10: Blog Edit │ 102 File (MD+Blade) │ 3 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │

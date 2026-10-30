@@ -71,6 +71,8 @@ return [
     'hpp_result_total_batch' => 'Total Batch Production Cost',
     'hpp_result_selling_price' => 'Recommended Selling Price',
     'hpp_result_gross_profit' => 'Gross Profit per Unit',
+    'hpp_cta_kasir_prompt' => 'Want recipe COGS deducted automatically whenever cashiers take orders?',
+    'hpp_cta_kasir_btn' => 'Open Free POS Account',
 
     // 2. BEP (Break Even Point)
     'bep_seo_title' => 'Free Online Break-Even Point (BEP) Calculator | COOCA',

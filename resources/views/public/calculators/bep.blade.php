@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalkulator BEP (Break Even Point) Online Gratis | COOCA')
-@section('description', 'Kalkulator BEP (Titik Impas) online gratis untuk UMKM. Hitung berapa unit produk atau nominal rupiah omzet yang harus dicapai agar bisnis tidak merugi.')
-@section('og_title', 'Kalkulator BEP (Break Even Point) Online Gratis | COOCA')
-@section('og_description', 'Ketahui batas minimal penjualan bulanan Anda. Penjualan di atas titik BEP adalah keuntungan murni bagi usaha.')
+@section('title', __('public_calculators.bep_seo_title'))
+@section('description', __('public_calculators.bep_seo_desc'))
+@section('og_title', __('public_calculators.bep_seo_title'))
+@section('og_description', __('public_calculators.bep_seo_desc'))
 @section('canonical', route('kalkulator.bep'))
 @section('og_type', 'website')
 @section('keywords', 'kalkulator bep, hitung titik impas online, rumus break even point rupiah, bep unit warung, kalkulator bep umkm')
@@ -43,12 +43,12 @@
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-[#6E6E73] dark:text-[#86868B]">
                 <a href="{{ route('landing') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Beranda</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span>/</span>
                 <a href="{{ route('kalkulator.index') }}"
-                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">Kalkulator</a>
+                    class="hover:text-[#1D1D1F] dark:hover:text-[#F5F5F7] transition-colors">{{ __('public_calculators.calc_breadcrumb_hub') }}</a>
                 <span>/</span>
-                <span class="text-[#34C759] dark:text-[#30D158] font-semibold">Kalkulator BEP</span>
+                <span class="text-[#34C759] dark:text-[#30D158] font-semibold">{{ __('public_calculators.bep_title') }}</span>
             </nav>
 
             <!-- ═══ HERO SECTION (Mandatory 2-Grid Layout) ═══ -->
@@ -59,17 +59,16 @@
                     <div class="space-y-2">
                         <p
                             class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#34C759] dark:text-[#30D158]">
-                            Titik Impas Bebas Rugi
+                            {{ __('public_calculators.bep_kicker') }}
                         </p>
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-[1.15] text-balance break-words">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                            {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_calculators.bep_title') }}
+                        </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-[#48484A] dark:text-[#AEAEB2] leading-relaxed max-w-xl font-normal text-pretty break-words">
-                        Ketahui batas minimal penjualan bulanan Anda. Penjualan di atas titik BEP adalah keuntungan murni
-                        bagi usaha, sedangkan di bawahnya adalah kerugian operasional.
+                        {{ __('public_calculators.bep_subtitle') }}
                     </p>
 
                     <!-- Reassurance Points for UMKM 40-65 -->
@@ -77,11 +76,11 @@
                         class="pt-1 flex flex-wrap items-center gap-y-2 gap-x-5 text-xs text-[#6E6E73] dark:text-[#86868B]">
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Hitung Target Unit &amp; Rupiah</span>
+                            <span>{{ __('public_calculators.bep_check_1') }}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i data-lucide="check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]"></i>
-                            <span>Pisahkan Biaya Tetap &amp; Variabel</span>
+                            <span>{{ __('public_calculators.bep_check_2') }}</span>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Discovery Directory Translations (English)
+    |--------------------------------------------------------------------------
+    */
+
+    'disc_meta_title' => 'Explore Stores & Indonesian MSME Business Directory | COOCA',
+    'disc_meta_desc' => 'Discover verified online stores, cafes, restaurants, boutiques, and trusted MSME services across Indonesia: direct shopping without intermediaries, delivery, or reservations.',
+    'disc_schema_name' => 'Explore Stores & Indonesian MSME Business Directory COOCA',
+    'disc_schema_desc' => 'Directory of verified online stores and official Indonesian MSME profiles.',
+    'disc_breadcrumb_home' => 'Home',
+    'disc_breadcrumb' => 'Explore Stores & Showcases',
+    'disc_kicker' => 'VERIFIED MSME DIRECTORY',
+    'disc_title' => 'Explore Official Local MSME Stores & Showcases',
+    'disc_desc' => 'Discover brick-and-mortar stores, cafes, service providers, and artisan makers in your neighborhood. Transact directly with business owners without intermediary surcharges.',
+    'disc_search_placeholder' => 'Search store names, business categories, or cities...',
+    'disc_search_btn' => 'Search',
+    'disc_stat_stores' => ':count Stores',
+    'disc_stat_stores_sub' => 'Officially listed',
+    'disc_stat_verified' => 'Verified',
+    'disc_stat_verified_sub' => 'Validated owner identity',
+    'disc_stat_direct' => 'Direct',
+    'disc_stat_direct_sub' => 'Zero intermediary fees',
+    'disc_widget_title' => 'Active Business Directory',
+    'disc_widget_badge' => 'Realtime',
+    'disc_widget_headline' => 'Services Available Nationwide',
+    'disc_widget_zero_cut' => 'No Commissions',
+    'disc_cap_pickup' => 'Store Pickup',
+    'disc_cap_delivery' => 'Local Courier',
+    'disc_cap_reservation' => 'Reservation',
+    'disc_cap_po' => 'PO Orders',
+    'disc_widget_status' => 'Store Status: Officially Listed & 0% Transaction Fees',
+    'disc_widget_register' => 'Register Your Business',
+    'disc_cat_all' => 'All Categories (:count)',
+    'disc_cap_filter_label' => 'Service Options:',
+    'disc_cap_filter_pickup' => 'Self Pickup',
+    'disc_cap_filter_delivery' => 'Store Courier',
+    'disc_cap_filter_scheduled' => 'Scheduled Pre-Order',
+    'disc_cap_filter_request' => 'Custom Request',
+    'disc_cap_filter_po' => 'B2B Phased PO',
+    'disc_cap_filter_reservation' => 'Table / Service Booking',
+    'disc_empty_title' => 'No Stores Found',
+    'disc_empty_desc' => 'No stores matched your search query ":query". Try different keywords or clear the category filter.',
+    'disc_empty_reset' => 'Reset All Filters',
+    'disc_card_verified' => 'Verified Merchant',
+    'disc_card_default_desc' => 'Accepting direct online orders, ready for store pickup or delivery with friendly customer service.',
+    'disc_card_default_loc' => 'Indonesia',
+    'disc_card_badge_delivery' => 'Store Courier',
+    'disc_card_badge_pickup' => 'Self Pickup',
+    'disc_card_badge_po' => 'Pre-Order',
+    'disc_card_badge_custom' => 'Custom Order',
+    'disc_card_badge_reservation' => 'Reservation',
+    'disc_card_badge_b2b_po' => 'B2B PO',
+    'disc_card_products_count' => ':count',
+    'disc_card_products_active' => 'Active Products',
+    'disc_card_visit' => 'Visit Store',
+    'disc_banner_badge' => 'NEW MERCHANT ONBOARDING',
+    'disc_banner_title' => 'Own a Business and Want to Appear in this Directory?',
+    'disc_banner_desc' => 'Open a free online storefront forever with COOCA. Manage product catalogs, accept local deliveries, and receive direct payments without commission cuts.',
+    'disc_banner_cta' => 'Open Free Store Now',
+];

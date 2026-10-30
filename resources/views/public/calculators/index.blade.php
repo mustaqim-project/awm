@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Koleksi 8 Kalkulator Bisnis UMKM Online Gratis | COOCA')
-@section('description', 'Koleksi kalkulator bisnis gratis untuk UMKM: kalkulator HPP, BEP titik impas, margin harga jual, laba bersih, gaji karyawan, dan PPh Final 0.5%.')
-@section('og_title', 'Koleksi 8 Kalkulator Bisnis UMKM Online Gratis | COOCA')
-@section('og_description', 'Hitung HPP, BEP titik impas, margin harga jual, laba bersih, gaji, dan simulasi bisnis gratis tanpa instalasi.')
+@section('title', __('public_calculators.hub_seo_title'))
+@section('description', __('public_calculators.hub_seo_desc'))
+@section('og_title', __('public_calculators.hub_seo_title'))
+@section('og_description', __('public_calculators.hub_seo_desc'))
 @section('canonical', route('kalkulator.index'))
 @section('og_type', 'website')
 @section('keywords', 'kalkulator bisnis umkm, kalkulator hpp online, kalkulator bep gratis, hitung harga jual margin, simulasi laba rugi, kalkulator pph 0.5')
@@ -51,9 +51,9 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
 
             <!-- Breadcrumb Navigation -->
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_calculators.calc_breadcrumb_home') }}</a>
                 <span aria-hidden="true" class="text-white/20">/</span>
-                <span class="text-[#00C4D8] font-semibold" aria-current="page">Alat Hitung Bisnis UMKM</span>
+                <span class="text-[#00C4D8] font-semibold" aria-current="page">{{ __('public_calculators.calc_breadcrumb_hub') }}</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -63,16 +63,16 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div class="space-y-3 w-full">
                         <!-- Pure Typographic Kicker -->
                         <div class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Alat Bantu Keputusan Finansial UMKM
+                            {{ __('public_calculators.hub_kicker') }}
                         </div>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold tracking-tight text-white leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Kalkulator Finansial &amp; HPP Presisi
+                            {{ __('public_calculators.hub_title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Ambil keputusan harga jual dan kelola modal dengan pasti. Hitung biaya bahan baku per porsi, tentukan titik impas (BEP), dan simulasikan laba bersih riil secara instan tanpa perlu registrasi.
+                        {{ __('public_calculators.hub_subtitle') }}
                     </p>
 
                     <!-- Trust Checkpoints -->
@@ -80,25 +80,22 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="p-3.5 rounded-[16px] bg-white/[0.05] border border-white/10">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>100% Gratis</span>
+                                <span>{{ __('public_calculators.hub_badge_free') }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-0.5">Tanpa registrasi</div>
                         </div>
 
                         <div class="p-3.5 rounded-[16px] bg-white/[0.05] border border-white/10">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                                <span>Standar Akurat</span>
+                                <span>{{ __('public_calculators.hub_badge_standard') }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-0.5">Rumus akuntansi riil</div>
                         </div>
 
                         <div class="p-3.5 rounded-[16px] bg-white/[0.05] border border-white/10">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                                <span>Privasi Aman</span>
+                                <span>{{ __('public_calculators.hub_badge_privacy') }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-400 mt-0.5">Dihitung di browser</div>
                         </div>
                     </div>
 
@@ -106,13 +103,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3.5 w-full sm:w-auto">
                         <a href="#katalog-kalkulator"
                             class="h-12 px-7 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition shadow-lg shadow-[#007AFF]/25 min-h-[48px]">
-                            <span>Pilih Alat Hitung</span>
+                            <span>{{ __('public_calculators.hub_btn_choose') }}</span>
                             <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i>
                         </a>
                         <a href="{{ route('kalkulator.hpp') }}"
                             class="h-12 px-6 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold flex items-center justify-center gap-2 transition active:scale-[0.98] backdrop-blur-sm min-h-[48px]">
                             <i data-lucide="layers" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                            <span>Hitung HPP Kuliner</span>
+                            <span>{{ __('public_calculators.hub_btn_cogs') }}</span>
                         </a>
                     </div>
                 </div>
@@ -138,12 +135,12 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
                                 <span class="text-xs font-mono font-semibold text-slate-300 ml-2">
-                                    Simulasi Instan HPP &amp; Laba
+                                    {{ __('public_calculators.hub_sim_title') }}
                                 </span>
                             </div>
                             <span class="text-[11px] font-semibold text-emerald-400 bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                Simulator Langsung
+                                {{ __('public_calculators.hub_sim_badge') }}
                             </span>
                         </div>
 
@@ -151,7 +148,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-300 mb-1.5">
-                                    Modal Bahan Pokok (Rp)
+                                    {{ __('public_calculators.hub_sim_cost') }}
                                 </label>
                                 <input type="number" x-model.number="sampleCost" step="1000" min="1000"
                                     class="w-full h-11 px-4 rounded-[12px] bg-white/[0.05] border border-white/15 text-[16px] sm:text-sm font-semibold tabular-nums text-white focus:outline-none focus:ring-2 focus:ring-[#00C4D8]/30 focus:border-[#00C4D8]">
@@ -159,7 +156,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
 
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label class="text-xs font-semibold text-slate-300">Target Margin Laba</label>
+                                    <label class="text-xs font-semibold text-slate-300">{{ __('public_calculators.hub_sim_margin') }}</label>
                                     <span class="text-xs font-bold text-[#00C4D8]" x-text="targetMargin + '%'"></span>
                                 </div>
                                 <input type="range" min="10" max="80" step="5"
@@ -170,16 +167,16 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <!-- Real-Time Calculation Result Card -->
                         <div class="p-4 sm:p-5 rounded-[18px] bg-[#060B1E]/70 border border-white/10 space-y-3">
                             <div class="flex items-center justify-between">
-                                <span class="text-xs text-slate-300">Harga Jual Rekomendasi:</span>
+                                <span class="text-xs text-slate-300">{{ __('public_calculators.hub_sim_rec_price') }}</span>
                                 <span class="text-xs font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/25 px-2 py-0.5 rounded-[6px]">
-                                    Aman Dari Rugi
+                                    {{ __('public_calculators.hub_sim_safe_tag') }}
                                 </span>
                             </div>
                             <p class="text-2xl sm:text-3xl font-extrabold tabular-nums text-white">
                                 Rp <span x-text="sellingPrice.toLocaleString('id-ID')"></span>
                             </p>
                             <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
-                                <span class="text-slate-400">Estimasi Laba per Porsi:</span>
+                                <span class="text-slate-400">{{ __('public_calculators.hub_sim_est_profit') }}</span>
                                 <span class="font-bold text-emerald-400 tabular-nums">
                                     +Rp <span x-text="profitAmount.toLocaleString('id-ID')"></span>
                                 </span>
@@ -188,7 +185,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
 
                         <a href="{{ route('kalkulator.hpp') }}"
                             class="w-full h-11 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-lg shadow-[#007AFF]/25 active:scale-[0.98]">
-                            <span>Buka Kalkulator HPP Lengkap dengan Takaran Bahan</span>
+                            <span>{{ __('public_calculators.hub_sim_btn_full') }}</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                         </a>
                     </div>
@@ -206,13 +203,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
         <section id="katalog-kalkulator" class="space-y-8 scroll-mt-24">
             <div class="max-w-2xl space-y-2">
                 <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] dark:text-[#0A84FF] block">
-                    KATALOG PERHITUNGAN
+                    {{ __('public_calculators.hub_catalog_overline') }}
                 </span>
                 <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight text-balance">
-                    Pilih Alat Hitung Sesuai Kebutuhan Anda
+                    {{ __('public_calculators.hub_catalog_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
-                    Didesain dengan petunjuk yang jelas dan bahasa Indonesia yang mudah dipahami pemilik usaha.
+                    {{ __('public_calculators.hub_catalog_subtitle') }}
                 </p>
             </div>
 
@@ -457,18 +454,18 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <div class="space-y-2 max-w-xl text-center lg:text-left">
                 <div class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF] inline-flex items-center gap-1.5">
                     <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
-                    <span>OTOMATISASI PENUH</span>
+                    <span>{{ __('public_calculators.calc_cta_erp_badge') }}</span>
                 </div>
                 <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Otomatiskan Seluruh Perhitungan Ini di Kasir COOCA
+                    {{ __('public_calculators.calc_cta_erp_title') }}
                 </h3>
                 <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    Tidak perlu lagi menghitung satu per satu secara manual. Setiap transaksi kasir POS otomatis memotong stok bahan baku, menghitung HPP secara riil, dan menyusun laporan laba rugi harian.
+                    {{ __('public_calculators.calc_cta_erp_desc') }}
                 </p>
             </div>
             <a href="{{ route('register') }}"
                 class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center gap-2 shrink-0 shadow-xs active:scale-[0.98] transition">
-                <span>Daftar Akun Gratis Sekarang</span>
+                <span>{{ __('public_calculators.calc_cta_erp_button') }}</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </section>

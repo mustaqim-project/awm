@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Discovery Directory Translations (Indonesian)
+    |--------------------------------------------------------------------------
+    */
+
+    'disc_meta_title' => 'Jelajah Toko & Direktori Bisnis UMKM Indonesia | COOCA',
+    'disc_meta_desc' => 'Temukan toko online, kafe, restoran, butik, dan layanan UMKM terpercaya di Indonesia: belanja langsung tanpa perantara, pesan antar, atau reservasi.',
+    'disc_schema_name' => 'Jelajah Toko & Direktori Bisnis UMKM Indonesia COOCA',
+    'disc_schema_desc' => 'Direktori toko online dan profil resmi UMKM Indonesia terverifikasi.',
+    'disc_breadcrumb_home' => 'Beranda',
+    'disc_breadcrumb' => 'Jelajah Toko & Etalase',
+    'disc_kicker' => 'DIREKTORI UMKM TERVERIFIKASI',
+    'disc_title' => 'Jelajah Toko & Etalase Resmi UMKM Lokal',
+    'disc_desc' => 'Temukan toko fisik, kafe, penyedia jasa servis, dan produsen kreatif di sekitar Anda. Transaksi langsung ke pemilik usaha tanpa biaya perantara tambahan.',
+    'disc_search_placeholder' => 'Cari nama toko, jenis usaha, atau kota...',
+    'disc_search_btn' => 'Cari',
+    'disc_stat_stores' => ':count Toko',
+    'disc_stat_stores_sub' => 'Terdaftar resmi',
+    'disc_stat_verified' => 'Terverifikasi',
+    'disc_stat_verified_sub' => 'Identitas pemilik sah',
+    'disc_stat_direct' => 'Langsung',
+    'disc_stat_direct_sub' => 'Bebas komisi perantara',
+    'disc_widget_title' => 'Direktori Bisnis Aktif',
+    'disc_widget_badge' => 'Realtime',
+    'disc_widget_headline' => 'Layanan Tersedia di Seluruh Indonesia',
+    'disc_widget_zero_cut' => 'Bebas Potongan',
+    'disc_cap_pickup' => 'Ambil di Toko',
+    'disc_cap_delivery' => 'Kurir Lokal',
+    'disc_cap_reservation' => 'Reservasi',
+    'disc_cap_po' => 'Pesanan PO',
+    'disc_widget_status' => 'Status Toko: Terdaftar Resmi & Bebas Biaya Transaksi',
+    'disc_widget_register' => 'Daftarkan Usaha Anda',
+    'disc_cat_all' => 'Semua Kategori (:count)',
+    'disc_cap_filter_label' => 'Opsi Layanan:',
+    'disc_cap_filter_pickup' => 'Ambil Sendiri',
+    'disc_cap_filter_delivery' => 'Kurir Toko',
+    'disc_cap_filter_scheduled' => 'Pre-Order Terjadwal',
+    'disc_cap_filter_request' => 'Custom Request',
+    'disc_cap_filter_po' => 'PO B2B Bertahap',
+    'disc_cap_filter_reservation' => 'Reservasi Meja/Jasa',
+    'disc_empty_title' => 'Toko Belum Ditemukan',
+    'disc_empty_desc' => 'Tidak ada toko yang sesuai dengan pencarian ":query". Silakan gunakan kata kunci lain atau hapus filter kategori.',
+    'disc_empty_reset' => 'Reset Semua Filter',
+    'disc_card_verified' => 'Toko Terverifikasi',
+    'disc_card_default_desc' => 'Melayani pemesanan langsung online, siap kirim atau ambil di toko dengan pelayanan ramah.',
+    'disc_card_default_loc' => 'Indonesia',
+    'disc_card_badge_delivery' => 'Kurir Toko',
+    'disc_card_badge_pickup' => 'Ambil Sendiri',
+    'disc_card_badge_po' => 'Pre-Order',
+    'disc_card_badge_custom' => 'Custom Order',
+    'disc_card_badge_reservation' => 'Reservasi',
+    'disc_card_badge_b2b_po' => 'PO B2B',
+    'disc_card_products_count' => ':count',
+    'disc_card_products_active' => 'Produk Aktif',
+    'disc_card_visit' => 'Kunjungi Toko',
+    'disc_banner_badge' => 'PENDAFTARAN TOKO BARU',
+    'disc_banner_title' => 'Punya Usaha dan Ingin Tampil di Direktori Ini?',
+    'disc_banner_desc' => 'Buka etalase toko online gratis selamanya di COOCA. Kelola katalog produk, terima pesanan antar, dan terima pembayaran langsung tanpa potongan komisi per transaksi.',
+    'disc_banner_cta' => 'Buka Toko Gratis Sekarang',
+];

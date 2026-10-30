@@ -1,12 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', ($search ? Str::limit("Hasil: {$search}", 40) : 'Katalog Produk & Direktori UMKM') . ' | COOCA')
-@section('description',
-    'Jelajahi dan temukan aneka produk lokal berkualitas dari ribuan bisnis UMKM Indonesia. Belanja langsung, dukung produk lokal terpercaya.')
+@section('title', ($search ? Str::limit(__('public_marketplace.srch_meta_title_result', ['search' => $search]), 40) : __('public_marketplace.srch_meta_title_default')))
+@section('description', __('public_marketplace.srch_meta_desc'))
 
 @section('canonical', route('marketplace.search'))
-@section('og_title', ($search ? Str::limit("Hasil: {$search}", 40) : 'Katalog Produk & Direktori UMKM') . ' | COOCA')
-@section('og_description', 'Jelajahi dan temukan aneka produk lokal berkualitas dari ribuan bisnis UMKM Indonesia.')
+@section('og_title', ($search ? Str::limit(__('public_marketplace.srch_meta_title_result', ['search' => $search]), 40) : __('public_marketplace.srch_meta_title_default')))
+@section('og_description', __('public_marketplace.srch_meta_desc'))
 @section('og_type', 'website')
 @if(request()->filled('q') || request()->filled('category') || request()->filled('city') || request()->filled('sort') || request()->filled('business_type'))
 @section('robots', 'noindex, follow')
@@ -17,7 +16,7 @@
     {
       "@@context": "https://schema.org",
       "@type": "SearchResultsPage",
-      "name": "Pencarian Produk COOCA Marketplace",
+      "name": "{{ __('public_marketplace.srch_schema_name') }}",
       "url": "{{ route('marketplace.search') }}"
     }
     </script>
@@ -61,24 +60,24 @@
         }
 
         $sortOptions = [
-            'terbaru' => ['label' => 'Terbaru', 'icon' => 'clock'],
-            'terpopuler' => ['label' => 'Terpopuler', 'icon' => 'trending-up'],
-            'harga_rendah' => ['label' => 'Termurah', 'icon' => 'arrow-down-narrow-wide'],
-            'harga_tinggi' => ['label' => 'Termahal', 'icon' => 'arrow-up-wide-narrow'],
-            'nama' => ['label' => 'Nama A-Z', 'icon' => 'arrow-down-a-z'],
+            'terbaru' => ['label' => __('public_marketplace.srch_sort_latest'), 'icon' => 'clock'],
+            'terpopuler' => ['label' => __('public_marketplace.srch_sort_popular'), 'icon' => 'trending-up'],
+            'harga_rendah' => ['label' => __('public_marketplace.srch_sort_price_low'), 'icon' => 'arrow-down-narrow-wide'],
+            'harga_tinggi' => ['label' => __('public_marketplace.srch_sort_price_high'), 'icon' => 'arrow-up-wide-narrow'],
+            'nama' => ['label' => __('public_marketplace.srch_sort_az'), 'icon' => 'arrow-down-a-z'],
         ];
 
         $typeOptions = [
-            '' => ['label' => 'Semua Tipe', 'icon' => 'layers'],
-            'goods' => ['label' => 'Barang Fisik', 'icon' => 'package'],
-            'service' => ['label' => 'Jasa & Layanan', 'icon' => 'briefcase'],
-            'preorder' => ['label' => 'Pre-Order', 'icon' => 'clock'],
+            '' => ['label' => __('public_marketplace.srch_type_all'), 'icon' => 'layers'],
+            'goods' => ['label' => __('public_marketplace.srch_type_goods'), 'icon' => 'package'],
+            'service' => ['label' => __('public_marketplace.srch_type_service'), 'icon' => 'briefcase'],
+            'preorder' => ['label' => __('public_marketplace.srch_type_preorder'), 'icon' => 'clock'],
         ];
 
         $pricePresetOptions = [
-            'murah' => '< 50rb',
-            'sedang' => '50rb - 200rb',
-            'mahal' => '> 200rb',
+            'murah' => __('public_marketplace.srch_preset_cheap'),
+            'sedang' => __('public_marketplace.srch_preset_mid'),
+            'mahal' => __('public_marketplace.srch_preset_high'),
         ];
 
         $categoryLabels = [
@@ -105,14 +104,14 @@
             <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
                 {{-- Breadcrumb --}}
                 <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-400">
-                    <a href="{{ route('landing') }}" class="hover:text-white transition">Beranda</a>
+                    <a href="{{ route('landing') }}" class="hover:text-white transition">{{ __('public_marketplace.mkt_breadcrumb_home') }}</a>
                     <span aria-hidden="true" class="text-white/20">/</span>
                     <a href="{{ route('marketplace.index') }}" class="hover:text-white transition inline-flex items-center gap-1">
                         <i data-lucide="store" class="w-3.5 h-3.5"></i>
-                        <span>Marketplace</span>
+                        <span>{{ __('public_marketplace.mkt_breadcrumb_marketplace') }}</span>
                     </a>
                     <span aria-hidden="true" class="text-white/20">/</span>
-                    <span class="text-[#00C4D8] font-semibold" aria-current="page">Cari Produk</span>
+                    <span class="text-[#00C4D8] font-semibold" aria-current="page">{{ __('public_marketplace.srch_breadcrumb') }}</span>
                     @if ($category && $category !== 'semua' && isset($categories[$category]))
                         <span aria-hidden="true" class="text-white/20">/</span>
                         <span class="text-white font-medium">{{ $categories[$category]['label'] }}</span>
@@ -123,22 +122,22 @@
                     <div class="space-y-2 w-full">
                         <!-- Pure Typographic Overline Kicker (Zero Pill Abuse) -->
                         <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                            Pencarian Produk &amp; Direktori UMKM
+                            {{ __('public_marketplace.srch_kicker') }}
                         </p>
 
                         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
                             @if ($search)
-                                Hasil Pencarian: <span class="text-[#00C4D8]">"{{ $search }}"</span>
+                                {{ __('public_marketplace.srch_title_query', ['query' => $search]) }}
                             @elseif ($category && $category !== 'semua' && isset($categories[$category]))
-                                Kategori: <span class="text-[#00C4D8]">{{ $categories[$category]['label'] }}</span>
+                                {{ __('public_marketplace.srch_title_category', ['category' => $categories[$category]['label']]) }}
                             @else
-                                Katalog Produk &amp; <span class="text-[#00C4D8]">Toko UMKM Lokal</span>
+                                {{ __('public_marketplace.srch_title_default') }}
                             @endif
                         </h1>
                     </div>
 
                     <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-2xl mx-auto lg:mx-0">
-                        Jelajahi produk lokal berkualitas langsung dari ribuan pemilik bisnis di seluruh Indonesia dengan stok sinkron kasir real-time.
+                        {{ __('public_marketplace.srch_desc') }}
                     </p>
                 </div>
 
@@ -169,12 +168,12 @@
                         <div class="relative flex-1 flex items-center bg-[#060B1E]/70 rounded-[16px] px-3.5 py-1 border border-white/10 focus-within:ring-2 focus-within:ring-[#00C4D8] focus-within:border-transparent transition">
                             <i data-lucide="search" class="w-5 h-5 text-slate-400 shrink-0"></i>
                             <input type="text" name="q" value="{{ $search }}"
-                                placeholder="Cari produk, toko UMKM, atau kategori..." autocomplete="off"
+                                placeholder="{{ __('public_marketplace.srch_placeholder') }}" autocomplete="off"
                                 class="w-full bg-transparent border-0 px-3 py-2.5 text-[16px] sm:text-sm text-white placeholder:text-slate-400 focus:outline-none">
                             @if ($search !== '')
                                 <a href="{{ route('marketplace.search', request()->except(['q', 'page'])) }}"
                                     class="p-1 rounded-full text-slate-400 hover:text-white transition"
-                                    title="Hapus kata kunci">
+                                    title="{{ __('public_marketplace.srch_clear_query') }}">
                                     <i data-lucide="x" class="w-4 h-4"></i>
                                 </a>
                             @endif
@@ -184,14 +183,14 @@
                             <button type="submit"
                                 class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[16px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-sm font-semibold shadow-lg shadow-[#007AFF]/25 active:scale-[0.98] transition min-h-[44px]">
                                 <i data-lucide="search" class="w-4 h-4"></i>
-                                <span>Cari</span>
+                                <span>{{ __('public_marketplace.srch_btn') }}</span>
                             </button>
 
                             {{-- Mobile Filter Trigger Button --}}
                             <button type="button" @click="mobileFilterOpen = true"
                                 class="lg:hidden inline-flex items-center justify-center gap-2 px-4 py-3 rounded-[16px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold transition min-h-[44px]">
                                 <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
-                                <span>Filter</span>
+                                <span>{{ __('public_marketplace.srch_filter_btn') }}</span>
                                 @if ($activeFilterCount > 0)
                                     <span
                                         class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[10px] font-bold flex items-center justify-center tabular-nums">
@@ -204,7 +203,7 @@
 
                     {{-- Quick Keyword Suggestions --}}
                     <div class="mt-3 pt-3 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-                        <span class="text-slate-400 shrink-0 font-medium">Populer:</span>
+                        <span class="text-slate-400 shrink-0 font-medium">{{ __('public_marketplace.srch_popular_tag') }}</span>
                         @php
                             $popularKeywords = [
                                 'Kopi',
@@ -244,14 +243,14 @@
                         <div class="flex items-center justify-between pb-4 border-b border-slate-200/80 dark:border-white/10">
                             <div class="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
                                 <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#007AFF]"></i>
-                                <span>Filter Produk</span>
+                                <span>{{ __('public_marketplace.srch_filter_title') }}</span>
                             </div>
                             @if ($hasActiveFilters)
                                 <a href="{{ route('marketplace.search') }}"
                                     class="text-xs font-medium text-rose-500 hover:text-rose-600 dark:text-rose-400 flex items-center gap-1 transition"
-                                    title="Reset semua filter">
+                                    title="{{ __('public_marketplace.srch_reset') }}">
                                     <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-                                    <span>Reset</span>
+                                    <span>{{ __('public_marketplace.srch_reset') }}</span>
                                 </a>
                             @endif
                         </div>
@@ -259,7 +258,7 @@
                         {{-- 1. KATEGORI FILTER (Shopee / Tokopedia tree list) --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
-                                <span>Kategori</span>
+                                <span>{{ __('public_marketplace.srch_cat_title') }}</span>
                                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
                             </h4>
 
@@ -273,7 +272,7 @@
                                     <div class="flex items-center gap-2.5">
                                         <i data-lucide="layout-grid"
                                             class="w-3.5 h-3.5 {{ $isAllActive ? 'text-white' : 'text-[#007AFF]' }}"></i>
-                                        <span>Semua Kategori</span>
+                                        <span>{{ __('public_marketplace.srch_cat_all') }}</span>
                                     </div>
                                     @if ($isAllActive)
                                         <i data-lucide="check" class="w-3.5 h-3.5 text-white"></i>
@@ -309,7 +308,7 @@
                         {{-- 2. BATAS HARGA (Shopee / Tokopedia price input + presets) --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                Batas Harga
+                                {{ __('public_marketplace.srch_price_title') }}
                             </h4>
 
                             <form method="GET" action="{{ route('marketplace.search') }}" class="space-y-2.5">
@@ -331,13 +330,13 @@
                                     <div class="relative flex items-center bg-slate-50 dark:bg-[#070A14] rounded-[12px] px-3 py-1.5 border border-slate-200 dark:border-white/10 focus-within:ring-2 focus-within:ring-[#007AFF]">
                                         <span class="text-xs font-bold text-slate-400 mr-1.5">Rp</span>
                                         <input type="number" name="min_harga" value="{{ $minPrice }}"
-                                            placeholder="Harga Minimum" min="0" step="1000"
+                                            placeholder="{{ __('public_marketplace.srch_price_min') }}" min="0" step="1000"
                                             class="w-full bg-transparent border-0 p-0 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none tabular-nums">
                                     </div>
                                     <div class="relative flex items-center bg-slate-50 dark:bg-[#070A14] rounded-[12px] px-3 py-1.5 border border-slate-200 dark:border-white/10 focus-within:ring-2 focus-within:ring-[#007AFF]">
                                         <span class="text-xs font-bold text-slate-400 mr-1.5">Rp</span>
                                         <input type="number" name="max_harga" value="{{ $maxPrice }}"
-                                            placeholder="Harga Maksimum" min="0" step="1000"
+                                            placeholder="{{ __('public_marketplace.srch_price_max') }}" min="0" step="1000"
                                             class="w-full bg-transparent border-0 p-0 text-[16px] sm:text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none tabular-nums">
                                     </div>
                                 </div>
@@ -345,13 +344,13 @@
                                 <button type="submit"
                                     class="w-full py-2 px-3 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold transition active:scale-[0.98] shadow-sm flex items-center justify-center gap-1.5 min-h-[36px]">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                    <span>Terapkan Harga</span>
+                                    <span>{{ __('public_marketplace.srch_price_apply') }}</span>
                                 </button>
                             </form>
 
                             {{-- Quick Price Range Chips --}}
                             <div class="pt-1">
-                                <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1.5">Pilihan Cepat:</span>
+                                <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mb-1.5">{{ __('public_marketplace.srch_quick_choices') }}</span>
                                 <div class="flex flex-wrap gap-1.5">
                                     @foreach ($pricePresetOptions as $prKey => $prLabel)
                                         @php
@@ -369,7 +368,7 @@
                         {{-- 3. TIPE PRODUK (Ready Stock, Jasa, Pre-Order) --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                                Tipe Produk
+                                {{ __('public_marketplace.srch_type_title') }}
                             </h4>
                             <div class="space-y-1">
                                 @foreach ($typeOptions as $tKey => $tData)
@@ -395,18 +394,17 @@
                         <div class="p-3.5 rounded-[16px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2.5 text-xs">
                             <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
-                                <span>UMKM Terdaftar</span>
+                                <span>{{ __('public_marketplace.srch_trust_title') }}</span>
                             </div>
                             <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                                Semua toko dan produk di Cooca Marketplace telah diverifikasi dan dikelola langsung oleh
-                                pemilik usaha lokal.
+                                {{ __('public_marketplace.srch_trust_desc') }}
                             </p>
                             <div class="pt-1 flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
                                 <span class="inline-flex items-center gap-1">
-                                    <i data-lucide="message-circle" class="w-3 h-3 text-[#007AFF]"></i> WhatsApp
+                                    <i data-lucide="message-circle" class="w-3 h-3 text-[#007AFF]"></i> {{ __('public_marketplace.srch_channel_wa') }}
                                 </span>
                                 <span class="inline-flex items-center gap-1">
-                                    <i data-lucide="truck" class="w-3 h-3 text-[#FF9500]"></i> Ambil / Kirim
+                                    <i data-lucide="truck" class="w-3 h-3 text-[#FF9500]"></i> {{ __('public_marketplace.srch_channel_pickup') }}
                                 </span>
                             </div>
                         </div>
@@ -427,23 +425,21 @@
                             <div>
                                 <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                                     @if ($search)
-                                        Hasil Pencarian: "{{ $search }}"
+                                        {{ __('public_marketplace.srch_title_query', ['query' => $search]) }}
                                     @elseif ($category && $category !== 'semua' && isset($categories[$category]))
                                         {{ $categories[$category]['label'] }}
                                     @else
-                                        Semua Produk UMKM
+                                        {{ __('public_marketplace.srch_all_products') }}
                                     @endif
                                 </h2>
                                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                                    Menampilkan <span
-                                        class="font-bold text-slate-900 dark:text-white tabular-nums">{{ $products->total() }}</span>
-                                    produk siap transaksi
+                                    {{ __('public_marketplace.srch_showing_ready', ['count' => $products->total()]) }}
                                 </p>
                             </div>
 
                             {{-- Shopee / Tokopedia Segmented Sort Tabs --}}
                             <div class="flex items-center gap-2 shrink-0">
-                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 hidden md:inline-block">Urutkan:</span>
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 hidden md:inline-block">{{ __('public_marketplace.srch_sort_title') }}</span>
 
                                 {{-- Desktop Segmented Tabs --}}
                                 <div class="hidden sm:inline-flex items-center bg-slate-100 dark:bg-[#070A14] p-1 rounded-[14px] border border-slate-200/80 dark:border-white/5">
@@ -468,7 +464,7 @@
                                             <option
                                                 value="{{ route('marketplace.search', array_merge(request()->except(['urut', 'page']), ['urut' => $sortKey])) }}"
                                                 {{ $sort === $sortKey ? 'selected' : '' }}>
-                                                Urutkan: {{ $sortData['label'] }}
+                                                {{ __('public_marketplace.srch_sort_prefix', ['sort' => $sortData['label']]) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -481,7 +477,7 @@
                             <a href="{{ route('marketplace.search', request()->except(['kategori', 'page'])) }}"
                                 class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition inline-flex items-center gap-1.5 {{ empty($category) || $category === 'semua' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15' }}">
                                 <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                                <span>Semua</span>
+                                <span>{{ __('public_marketplace.srch_cat_all_chip') }}</span>
                             </a>
                             @foreach ($categories as $catKey => $catData)
                                 @php
@@ -498,11 +494,11 @@
                         {{-- Active Filter Dismissal Tags (Tokopedia Style) --}}
                         @if ($hasActiveFilters)
                             <div class="pt-2 border-t border-slate-200/80 dark:border-white/10 flex flex-wrap items-center gap-2">
-                                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Filter Aktif:</span>
+                                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('public_marketplace.srch_active_filters') }}</span>
 
                                 @if ($search !== '')
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#38BDF8] border border-[#007AFF]/20">
-                                        <span>Cari: "{{ $search }}"</span>
+                                        <span>{{ __('public_marketplace.srch_active_query', ['query' => $search]) }}</span>
                                         <a href="{{ route('marketplace.search', request()->except(['q', 'page'])) }}"
                                             class="hover:opacity-75">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -531,7 +527,7 @@
                                     </span>
                                 @elseif ($priceRange && isset($pricePresetOptions[$priceRange]))
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#38BDF8] border border-[#007AFF]/20">
-                                        <span>Harga: {{ $pricePresetOptions[$priceRange] }}</span>
+                                        <span>{{ __('public_marketplace.srch_active_price_prefix', ['range' => $pricePresetOptions[$priceRange]]) }}</span>
                                         <a href="{{ route('marketplace.search', request()->except(['harga', 'min_harga', 'max_harga', 'page'])) }}"
                                             class="hover:opacity-75">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -552,7 +548,7 @@
                                 <a href="{{ route('marketplace.search') }}"
                                     class="text-xs font-semibold text-rose-500 hover:text-rose-600 dark:text-rose-400 inline-flex items-center gap-1 px-2 py-1 rounded-md transition">
                                     <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-                                    <span>Hapus Semua</span>
+                                    <span>{{ __('public_marketplace.srch_active_clear_all') }}</span>
                                 </a>
                             </div>
                         @endif
@@ -583,12 +579,12 @@
                                         @if ($product->is_preorder)
                                             <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[8px] text-[10px] font-bold bg-[#FF9500] text-white shadow-sm flex items-center gap-1 backdrop-blur-sm">
                                                 <i data-lucide="clock" class="w-3 h-3"></i>
-                                                <span>PO {{ $product->preorder_lead_days ? $product->preorder_lead_days . ' hr' : 'Pre-Order' }}</span>
+                                                <span>{{ __('public_marketplace.srch_card_po_days', ['days' => $product->preorder_lead_days ?: 'PO']) }}</span>
                                             </span>
                                         @elseif ($product->type === 'service')
                                             <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[8px] text-[10px] font-bold bg-[#AF52DE] text-white shadow-sm flex items-center gap-1 backdrop-blur-sm">
                                                 <i data-lucide="briefcase" class="w-3 h-3"></i>
-                                                <span>Layanan</span>
+                                                <span>{{ __('public_marketplace.srch_card_service') }}</span>
                                             </span>
                                         @endif
 
@@ -619,11 +615,11 @@
                                                 <i data-lucide="store" class="w-3 h-3 text-[#007AFF] shrink-0"></i>
                                                 <span class="truncate font-medium">{{ $product->business->name }}</span>
                                                 <i data-lucide="badge-check" class="w-3 h-3 text-[#34C759] shrink-0"
-                                                    title="Toko Terverifikasi"></i>
+                                                    title="{{ __('public_marketplace.srch_card_verified') }}"></i>
                                             </div>
                                             <div class="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500">
                                                 <i data-lucide="map-pin" class="w-2.5 h-2.5 shrink-0"></i>
-                                                <span class="truncate">{{ $product->business->storeSetting?->city ?: 'Indonesia' }}</span>
+                                                <span class="truncate">{{ $product->business->storeSetting?->city ?: __('public_marketplace.srch_card_default_loc') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -645,11 +641,10 @@
 
                             <div class="space-y-1.5 max-w-md mx-auto">
                                 <h3 class="font-bold text-lg sm:text-xl text-slate-900 dark:text-white">
-                                    Tidak Ada Produk yang Ditemukan
+                                    {{ __('public_marketplace.srch_empty_title') }}
                                 </h3>
                                 <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                                    Coba ubah kata kunci pencarian, sesuaikan rentang harga, atau reset filter kategori
-                                    untuk melihat seluruh produk UMKM.
+                                    {{ __('public_marketplace.srch_empty_desc') }}
                                 </p>
                             </div>
 
@@ -657,12 +652,12 @@
                                 <a href="{{ route('marketplace.search') }}"
                                     class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs sm:text-sm font-semibold shadow-md active:scale-[0.98] transition min-h-[44px]">
                                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-                                    <span>Reset Semua Filter</span>
+                                    <span>{{ __('public_marketplace.srch_empty_reset') }}</span>
                                 </a>
                                 <a href="{{ route('marketplace.index') }}"
                                     class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[12px] bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/15 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold transition min-h-[44px]">
                                     <i data-lucide="store" class="w-4 h-4"></i>
-                                    <span>Kembali ke Beranda</span>
+                                    <span>{{ __('public_marketplace.srch_empty_home') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -694,7 +689,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
                         <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span>Filter Produk</span>
+                        <span>{{ __('public_marketplace.srch_filter_title') }}</span>
                     </div>
                     <button type="button" @click="mobileFilterOpen = false"
                         class="p-1.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
@@ -708,12 +703,12 @@
 
                 {{-- Mobile Categories --}}
                 <div class="space-y-2.5">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Kategori Produk</h4>
+                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_drawer_cat') }}</h4>
                     <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('marketplace.search', request()->except(['kategori', 'page'])) }}"
                             class="p-2.5 rounded-[12px] text-xs font-semibold flex items-center gap-2 transition {{ empty($category) || $category === 'semua' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white' }}">
                             <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                            <span>Semua</span>
+                            <span>{{ __('public_marketplace.srch_cat_all_chip') }}</span>
                         </a>
                         @foreach ($categories as $catKey => $catData)
                             <a href="{{ route('marketplace.search', array_merge(request()->except(['kategori', 'page']), ['kategori' => $catKey])) }}"
@@ -733,7 +728,7 @@
 
                 {{-- Mobile Price Range --}}
                 <div class="space-y-3 pt-3 border-t border-slate-200/80 dark:border-white/10">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Batas Harga</h4>
+                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_price_title') }}</h4>
                     <form method="GET" action="{{ route('marketplace.search') }}" class="space-y-2.5">
                         @if ($search !== '')
                             <input type="hidden" name="q" value="{{ $search }}">
@@ -751,27 +746,27 @@
                         <div class="grid grid-cols-2 gap-2">
                             <div class="relative flex items-center bg-slate-50 dark:bg-[#070A14] rounded-[12px] px-3 py-2 border border-slate-200 dark:border-white/10">
                                 <span class="text-xs font-bold text-slate-400 mr-1.5">Rp</span>
-                                <input type="number" name="min_harga" value="{{ $minPrice }}" placeholder="Min"
+                                <input type="number" name="min_harga" value="{{ $minPrice }}" placeholder="{{ __('public_marketplace.srch_price_min') }}"
                                     min="0" step="1000"
                                     class="w-full bg-transparent border-0 p-0 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none tabular-nums">
                             </div>
                             <div class="relative flex items-center bg-slate-50 dark:bg-[#070A14] rounded-[12px] px-3 py-2 border border-slate-200 dark:border-white/10">
                                 <span class="text-xs font-bold text-slate-400 mr-1.5">Rp</span>
-                                <input type="number" name="max_harga" value="{{ $maxPrice }}" placeholder="Maks"
+                                <input type="number" name="max_harga" value="{{ $maxPrice }}" placeholder="{{ __('public_marketplace.srch_price_max') }}"
                                     min="0" step="1000"
                                     class="w-full bg-transparent border-0 p-0 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none tabular-nums">
                             </div>
                         </div>
                         <button type="submit"
                             class="w-full py-2.5 rounded-[12px] bg-[#007AFF] text-white text-xs font-semibold shadow-sm min-h-[44px]">
-                            Terapkan Rentang Harga
+                            {{ __('public_marketplace.srch_drawer_price_apply') }}
                         </button>
                     </form>
                 </div>
 
                 {{-- Mobile Product Type --}}
                 <div class="space-y-2 pt-3 border-t border-slate-200/80 dark:border-white/10">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tipe Produk</h4>
+                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_type_title') }}</h4>
                     <div class="grid grid-cols-2 gap-2">
                         @foreach ($typeOptions as $tKey => $tData)
                             <a href="{{ route('marketplace.search', array_merge(request()->except(['tipe', 'page']), $tKey ? ['tipe' => $tKey] : [])) }}"
@@ -789,11 +784,11 @@
             <div class="p-4 border-t border-slate-200/80 dark:border-white/10 bg-slate-50 dark:bg-[#070A14] flex items-center gap-3 shrink-0">
                 <a href="{{ route('marketplace.search') }}"
                     class="flex-1 py-3 px-4 rounded-[14px] bg-slate-200 dark:bg-white/10 text-center text-xs font-semibold text-slate-900 dark:text-white transition min-h-[44px] flex items-center justify-center">
-                    Reset Semua
+                    {{ __('public_marketplace.srch_active_clear_all') }}
                 </a>
                 <button type="button" @click="mobileFilterOpen = false"
                     class="flex-1 py-3 px-4 rounded-[14px] bg-[#007AFF] text-center text-xs font-semibold text-white shadow-md transition min-h-[44px] flex items-center justify-center">
-                    Tutup & Tampilkan
+                    {{ __('public_marketplace.srch_drawer_close') }}
                 </button>
             </div>
 
