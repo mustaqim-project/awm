@@ -1434,7 +1434,7 @@
                     <div class="flex items-center gap-2 w-full sm:w-auto">
                         <button type="button" @click="closeComparison()"
                             class="px-5 py-2.5 rounded-[12px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-800 dark:text-slate-200 font-semibold text-xs sm:text-sm min-h-[44px]">
-                            {{ __(\'common.close\') }}
+                            {{ __('common.close') }}
                         </button>
                         <a href="{{ route('register') }}"
                             class="flex-1 sm:flex-initial px-6 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
@@ -1592,7 +1592,7 @@
                     class="p-4 sm:p-5 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0">
                     <button type="button" @click="closeDetail()"
                         class="px-4 py-2.5 rounded-[12px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-800 dark:text-slate-200 font-semibold text-xs sm:text-sm min-h-[44px]">
-                        {{ __(\'common.close\') }}
+                        {{ __('common.close') }}
                     </button>
                     <a href="{{ route('register') }}"
                         class="px-5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm min-h-[44px] flex items-center justify-center">

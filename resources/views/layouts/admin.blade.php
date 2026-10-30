@@ -974,8 +974,8 @@
             <div class="hidden sm:flex items-center p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 gap-0.5">
                 <!-- Fullscreen Toggle Button -->
                 <button type="button" @click="toggleFullscreen()"
-                    :title="isFullscreen ? '{{ __(\'common.exit_fullscreen\') }}' : '{{ __(\'common.fullscreen\') }}'"
-                    aria-label="{{ __(\'common.toggle_fullscreen\') }}"
+                    :title="isFullscreen ? '{{ __('common.exit_fullscreen') }}' : '{{ __('common.fullscreen') }}'"
+                    aria-label="{{ __('common.toggle_fullscreen') }}"
                     class="flex h-7 w-7 rounded-[6px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 transition-all items-center justify-center shrink-0 active:scale-95 cursor-pointer">
                     <i x-show="!isFullscreen" data-lucide="maximize" class="w-3.5 h-3.5"></i>
                     <i x-show="isFullscreen" data-lucide="minimize" class="w-3.5 h-3.5 text-[#007AFF]" style="display: none;"></i>

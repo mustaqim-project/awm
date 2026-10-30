@@ -602,7 +602,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                 <!-- Modal Actions -->
                 <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                     <span class="text-xs text-slate-500 dark:text-slate-400">Dapat dicetak sebagai panduan kerja staf</span>
-                    <button @click="closeSopModal()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __(\'common.close\') }}</button>
+                    <button @click="closeSopModal()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __('common.close') }}</button>
                 </div>
 
             </div>

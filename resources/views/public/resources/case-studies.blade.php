@@ -616,7 +616,7 @@
                             class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">
                             {{ __('public_resources.cs_modal_apply_now') }} &rarr;
                         </a>
-                        <button @click="closeDetail()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __(\'common.close\') }}</button>
+                        <button @click="closeDetail()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __('common.close') }}</button>
                     </div>
 
                 </div>
