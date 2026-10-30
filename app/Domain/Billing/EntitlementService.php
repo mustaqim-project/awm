@@ -337,13 +337,87 @@ final class EntitlementService
         return $sub;
     }
 
+    public const POS_EMERGENCY_BUFFER = 5;
+
+    /**
+     * Get dynamic or fallback quota limit for a given tier and resource.
+     * Checks SystemSetting first (tier_limit_{tier}_{resource}), falling back to code constants.
+     * Null means unlimited.
+     */
+    public function getTierLimit(string $tier, string $resource): ?int
+    {
+        $settingKey = "tier_limit_{$tier}_{$resource}";
+        $val = SystemSetting::get($settingKey);
+
+        if ($val !== null && $val !== '') {
+            $trimmed = trim((string) $val);
+            if ($trimmed === '-1' || strtolower($trimmed) === 'unlimited' || strtolower($trimmed) === 'null') {
+                return null;
+            }
+            if (is_numeric($trimmed)) {
+                return max(0, (int) $trimmed);
+            }
+        }
+
+        // Fallback to code constants
+        return match ($resource) {
+            'product' => array_key_exists($tier, self::TIER_PRODUCT_LIMITS) ? self::TIER_PRODUCT_LIMITS[$tier] : self::FREE_PRODUCT_LIMIT,
+            'recipe' => array_key_exists($tier, self::TIER_RECIPE_LIMITS) ? self::TIER_RECIPE_LIMITS[$tier] : self::FREE_RECIPE_LIMIT,
+            'material' => array_key_exists($tier, self::TIER_MATERIAL_LIMITS) ? self::TIER_MATERIAL_LIMITS[$tier] : self::FREE_MATERIAL_LIMIT,
+            'customer' => array_key_exists($tier, self::TIER_CUSTOMER_LIMITS) ? self::TIER_CUSTOMER_LIMITS[$tier] : self::FREE_CUSTOMER_LIMIT,
+            'supplier' => array_key_exists($tier, self::TIER_SUPPLIER_LIMITS) ? self::TIER_SUPPLIER_LIMITS[$tier] : self::FREE_SUPPLIER_LIMIT,
+            'outlet' => array_key_exists($tier, self::TIER_OUTLET_LIMITS) ? self::TIER_OUTLET_LIMITS[$tier] : self::FREE_OUTLET_LIMIT,
+            'warehouse' => array_key_exists($tier, self::TIER_WAREHOUSE_LIMITS) ? self::TIER_WAREHOUSE_LIMITS[$tier] : self::FREE_WAREHOUSE_LIMIT,
+            'total_location', 'location' => array_key_exists($tier, self::TIER_TOTAL_LOCATION_LIMITS) ? self::TIER_TOTAL_LOCATION_LIMITS[$tier] : 2,
+            'user' => array_key_exists($tier, self::TIER_USER_PER_OWNER_LIMITS) ? self::TIER_USER_PER_OWNER_LIMITS[$tier] : 1,
+            'business' => array_key_exists($tier, self::TIER_BUSINESS_LIMITS) ? self::TIER_BUSINESS_LIMITS[$tier] : self::FREE_BUSINESS_LIMIT,
+            'pos' => array_key_exists($tier, self::TIER_MONTHLY_POS_LIMITS) ? self::TIER_MONTHLY_POS_LIMITS[$tier] : self::FREE_POS_MONTHLY_LIMIT,
+            'invoice' => array_key_exists($tier, self::TIER_MONTHLY_INVOICE_LIMITS) ? self::TIER_MONTHLY_INVOICE_LIMITS[$tier] : self::FREE_INVOICE_MONTHLY_LIMIT,
+            'po' => array_key_exists($tier, self::TIER_MONTHLY_PO_LIMITS) ? self::TIER_MONTHLY_PO_LIMITS[$tier] : self::FREE_PO_MONTHLY_LIMIT,
+            'whatsapp' => array_key_exists($tier, self::TIER_WHATSAPP_LIMITS) ? self::TIER_WHATSAPP_LIMITS[$tier] : self::FREE_WHATSAPP_MONTHLY_LIMIT,
+            'social' => array_key_exists($tier, self::TIER_SOCIAL_LIMITS) ? self::TIER_SOCIAL_LIMITS[$tier] : self::FREE_SOCIAL_POST_MONTHLY_LIMIT,
+            'table' => array_key_exists($tier, self::TIER_TABLE_LIMITS) ? self::TIER_TABLE_LIMITS[$tier] : 0,
+            default => null,
+        };
+    }
+
+    /**
+     * Get complete tier limits matrix for UI rendering and comparison tables.
+     *
+     * @return array<string, array<string, ?int>>
+     */
+    public function getAllTierLimits(): array
+    {
+        $tiers = [
+            BusinessSubscription::TIER_FREE,
+            BusinessSubscription::TIER_STANDARD,
+            BusinessSubscription::TIER_PREMIUM,
+            BusinessSubscription::TIER_PRESTIGE,
+        ];
+
+        $resources = [
+            'product', 'recipe', 'material', 'customer', 'supplier',
+            'outlet', 'warehouse', 'total_location', 'user', 'business',
+            'pos', 'invoice', 'po', 'whatsapp', 'table',
+        ];
+
+        $matrix = [];
+        foreach ($tiers as $tier) {
+            foreach ($resources as $resource) {
+                $matrix[$tier][$resource] = $this->getTierLimit($tier, $resource);
+            }
+        }
+
+        return $matrix;
+    }
+
     /**
      * Get Product limit for business. Null means unlimited.
      */
     public function getProductLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_PRODUCT_LIMITS) ? self::TIER_PRODUCT_LIMITS[$tier] : self::FREE_PRODUCT_LIMIT;
+        return $this->getTierLimit($tier, 'product');
     }
 
     /**
@@ -367,7 +441,7 @@ final class EntitlementService
     public function getRecipeLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_RECIPE_LIMITS) ? self::TIER_RECIPE_LIMITS[$tier] : self::FREE_RECIPE_LIMIT;
+        return $this->getTierLimit($tier, 'recipe');
     }
 
     /**
@@ -393,7 +467,7 @@ final class EntitlementService
     public function canCreateInvoiceThisMonth(Business $business): bool
     {
         $tier = $this->getSubscription($business)->getTier();
-        $limit = array_key_exists($tier, self::TIER_MONTHLY_INVOICE_LIMITS) ? self::TIER_MONTHLY_INVOICE_LIMITS[$tier] : null;
+        $limit = $this->getTierLimit($tier, 'invoice');
         if ($limit === null) {
             return true;
         }
@@ -444,7 +518,7 @@ final class EntitlementService
         }
 
         $highestTier = app(OwnerStorageQuotaService::class)->getHighestTierForOwner($owner);
-        $userLimit = array_key_exists($highestTier, self::TIER_USER_PER_OWNER_LIMITS) ? self::TIER_USER_PER_OWNER_LIMITS[$highestTier] : 1;
+        $userLimit = $this->getTierLimit($highestTier, 'user');
 
         if ($userLimit === null) {
             return true;
@@ -474,13 +548,11 @@ final class EntitlementService
     {
         if ($target instanceof User) {
             $highestTier = app(OwnerStorageQuotaService::class)->getHighestTierForOwner($target);
-            return array_key_exists($highestTier, self::TIER_BUSINESS_LIMITS)
-                ? self::TIER_BUSINESS_LIMITS[$highestTier]
-                : self::FREE_BUSINESS_LIMIT;
+            return $this->getTierLimit($highestTier, 'business');
         }
 
         $tier = $this->getSubscription($target)->getTier();
-        return array_key_exists($tier, self::TIER_BUSINESS_LIMITS) ? self::TIER_BUSINESS_LIMITS[$tier] : self::FREE_BUSINESS_LIMIT;
+        return $this->getTierLimit($tier, 'business');
     }
 
     /**
@@ -512,7 +584,7 @@ final class EntitlementService
     public function getMaterialLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_MATERIAL_LIMITS) ? self::TIER_MATERIAL_LIMITS[$tier] : self::FREE_MATERIAL_LIMIT;
+        return $this->getTierLimit($tier, 'material');
     }
 
     /**
@@ -535,7 +607,7 @@ final class EntitlementService
     public function getCustomerLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_CUSTOMER_LIMITS) ? self::TIER_CUSTOMER_LIMITS[$tier] : self::FREE_CUSTOMER_LIMIT;
+        return $this->getTierLimit($tier, 'customer');
     }
 
     /**
@@ -558,7 +630,7 @@ final class EntitlementService
     public function getSupplierLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_SUPPLIER_LIMITS) ? self::TIER_SUPPLIER_LIMITS[$tier] : self::FREE_SUPPLIER_LIMIT;
+        return $this->getTierLimit($tier, 'supplier');
     }
 
     /**
@@ -581,8 +653,7 @@ final class EntitlementService
     public function getLocationLimit(Business $business, string $type): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        $map = ($type === 'warehouse') ? self::TIER_WAREHOUSE_LIMITS : self::TIER_OUTLET_LIMITS;
-        return array_key_exists($tier, $map) ? $map[$tier] : 1;
+        return $this->getTierLimit($tier, $type === 'warehouse' ? 'warehouse' : 'outlet');
     }
 
     /**
@@ -591,9 +662,7 @@ final class EntitlementService
     public function getTotalLocationLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_TOTAL_LOCATION_LIMITS)
-            ? self::TIER_TOTAL_LOCATION_LIMITS[$tier]
-            : 2;
+        return $this->getTierLimit($tier, 'total_location');
     }
 
     /**
@@ -642,7 +711,7 @@ final class EntitlementService
     public function canCreatePurchaseOrderThisMonth(Business $business): bool
     {
         $tier = $this->getSubscription($business)->getTier();
-        $limit = array_key_exists($tier, self::TIER_MONTHLY_PO_LIMITS) ? self::TIER_MONTHLY_PO_LIMITS[$tier] : null;
+        $limit = $this->getTierLimit($tier, 'po');
         if ($limit === null) {
             return true;
         }
@@ -652,18 +721,63 @@ final class EntitlementService
     }
 
     /**
+     * Get monthly POS transaction limit for business. Null means unlimited.
+     */
+    public function getMonthlyPosLimit(Business $business): ?int
+    {
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->getTierLimit($tier, 'pos');
+    }
+
+    /**
      * Can business process a new POS transaction this calendar month?
+     * Includes a 5-transaction emergency buffer to prevent in-store cashiers locking out during customer rushes.
      */
     public function canCreatePosTransactionThisMonth(Business $business): bool
     {
-        $tier = $this->getSubscription($business)->getTier();
-        $limit = array_key_exists($tier, self::TIER_MONTHLY_POS_LIMITS) ? self::TIER_MONTHLY_POS_LIMITS[$tier] : null;
+        $limit = $this->getMonthlyPosLimit($business);
         if ($limit === null) {
             return true;
         }
 
         $used = $this->getMonthlyUsage($business, QuotaMonthlyUsage::TYPE_POS);
-        return $used < $limit;
+        $effectiveLimit = $limit + self::POS_EMERGENCY_BUFFER;
+
+        return $used < $effectiveLimit;
+    }
+
+    /**
+     * Check if the business is currently running on the emergency POS buffer (within limit to limit + 5).
+     */
+    public function isPosInEmergencyBuffer(Business $business): bool
+    {
+        $limit = $this->getMonthlyPosLimit($business);
+        if ($limit === null) {
+            return false;
+        }
+
+        $used = $this->getMonthlyUsage($business, QuotaMonthlyUsage::TYPE_POS);
+        return $used >= $limit && $used < ($limit + self::POS_EMERGENCY_BUFFER);
+    }
+
+    /**
+     * Get remaining emergency buffer transactions (0 if not in buffer or exhausted).
+     */
+    public function getPosRemainingEmergencyBuffer(Business $business): int
+    {
+        $limit = $this->getMonthlyPosLimit($business);
+        if ($limit === null) {
+            return 0;
+        }
+
+        $used = $this->getMonthlyUsage($business, QuotaMonthlyUsage::TYPE_POS);
+        $bufferLimit = $limit + self::POS_EMERGENCY_BUFFER;
+
+        if ($used >= $limit && $used < $bufferLimit) {
+            return $bufferLimit - $used;
+        }
+
+        return 0;
     }
 
     /**
@@ -693,7 +807,7 @@ final class EntitlementService
         }
 
         $tier = $this->getSubscription($business)->getTier();
-        $limit = array_key_exists($tier, self::TIER_SOCIAL_LIMITS) ? self::TIER_SOCIAL_LIMITS[$tier] : self::FREE_SOCIAL_POST_MONTHLY_LIMIT;
+        $limit = $this->getTierLimit($tier, 'social');
         if ($limit === null) {
             return true;
         }
@@ -709,7 +823,7 @@ final class EntitlementService
     public function canSendWhatsAppThisMonth(Business $business): bool
     {
         $tier = $this->getSubscription($business)->getTier();
-        $limit = array_key_exists($tier, self::TIER_WHATSAPP_LIMITS) ? self::TIER_WHATSAPP_LIMITS[$tier] : self::FREE_WHATSAPP_MONTHLY_LIMIT;
+        $limit = $this->getTierLimit($tier, 'whatsapp');
         if ($limit === null) {
             return true;
         }
@@ -724,7 +838,7 @@ final class EntitlementService
     public function getTableLimit(Business $business): ?int
     {
         $tier = $this->getSubscription($business)->getTier();
-        return array_key_exists($tier, self::TIER_TABLE_LIMITS) ? self::TIER_TABLE_LIMITS[$tier] : 0;
+        return $this->getTierLimit($tier, 'table');
     }
 
     /**
@@ -1112,14 +1226,14 @@ final class EntitlementService
         };
 
         $tier = $sub->getTier();
-        $tierUserLimit = array_key_exists($tier, self::TIER_USER_PER_OWNER_LIMITS) ? self::TIER_USER_PER_OWNER_LIMITS[$tier] : 1;
-        $tierBusinessLimit = array_key_exists($tier, self::TIER_BUSINESS_LIMITS) ? self::TIER_BUSINESS_LIMITS[$tier] : 1;
-        $tierTableLimit = array_key_exists($tier, self::TIER_TABLE_LIMITS) ? self::TIER_TABLE_LIMITS[$tier] : null;
+        $tierUserLimit = $this->getTierLimit($tier, 'user');
+        $tierBusinessLimit = $this->getTierLimit($tier, 'business');
+        $tierTableLimit = $this->getTierLimit($tier, 'table');
 
         $tierLabel = match ($tier) {
             BusinessSubscription::TIER_PRESTIGE => 'Prestige Plan (Rp199.000/bln)',
             BusinessSubscription::TIER_PREMIUM => 'Premium Plan (Rp89.000/bln)',
-            BusinessSubscription::TIER_STANDARD => 'Standard Plan (Rp29.000/bln)',
+            BusinessSubscription::TIER_STANDARD => 'Standard Plan (Rp39.000/bln)',
             default => 'Free Plan (Rp0)',
         };
 
@@ -1138,22 +1252,25 @@ final class EntitlementService
             'users'      => $buildStat($userCount,     $tierUserLimit),
 
             // Business master data
-            'products'   => $buildStat($productCount,   array_key_exists($tier, self::TIER_PRODUCT_LIMITS) ? self::TIER_PRODUCT_LIMITS[$tier] : self::FREE_PRODUCT_LIMIT),
-            'materials'  => $buildStat($materialCount,  array_key_exists($tier, self::TIER_MATERIAL_LIMITS) ? self::TIER_MATERIAL_LIMITS[$tier] : self::FREE_MATERIAL_LIMIT),
-            'customers'  => $buildStat($customerCount,  array_key_exists($tier, self::TIER_CUSTOMER_LIMITS) ? self::TIER_CUSTOMER_LIMITS[$tier] : self::FREE_CUSTOMER_LIMIT),
-            'suppliers'  => $buildStat($supplierCount,  array_key_exists($tier, self::TIER_SUPPLIER_LIMITS) ? self::TIER_SUPPLIER_LIMITS[$tier] : self::FREE_SUPPLIER_LIMIT),
-            'outlets'    => $buildStat($outletCount,    array_key_exists($tier, self::TIER_OUTLET_LIMITS) ? self::TIER_OUTLET_LIMITS[$tier] : self::FREE_OUTLET_LIMIT),
-            'warehouses' => $buildStat($warehouseCount, array_key_exists($tier, self::TIER_WAREHOUSE_LIMITS) ? self::TIER_WAREHOUSE_LIMITS[$tier] : self::FREE_WAREHOUSE_LIMIT),
+            'products'   => $buildStat($productCount,   $this->getTierLimit($tier, 'product')),
+            'materials'  => $buildStat($materialCount,  $this->getTierLimit($tier, 'material')),
+            'customers'  => $buildStat($customerCount,  $this->getTierLimit($tier, 'customer')),
+            'suppliers'  => $buildStat($supplierCount,  $this->getTierLimit($tier, 'supplier')),
+            'outlets'    => $buildStat($outletCount,    $this->getTierLimit($tier, 'outlet')),
+            'warehouses' => $buildStat($warehouseCount, $this->getTierLimit($tier, 'warehouse')),
             'locations'  => $buildStat($outletCount + $warehouseCount, $this->getTotalLocationLimit($business)),
-            'recipes'    => $buildStat($recipeCount,    array_key_exists($tier, self::TIER_RECIPE_LIMITS) ? self::TIER_RECIPE_LIMITS[$tier] : self::FREE_RECIPE_LIMIT),
+            'recipes'    => $buildStat($recipeCount,    $this->getTierLimit($tier, 'recipe')),
             'tables'     => $buildStat($tableCount,     $tierTableLimit),
 
             // Monthly quotas
-            'invoices_this_month' => $buildStat($invoiceMonthCount, array_key_exists($tier, self::TIER_MONTHLY_INVOICE_LIMITS) ? self::TIER_MONTHLY_INVOICE_LIMITS[$tier] : null),
-            'po_this_month'       => $buildStat($poMonthCount,      array_key_exists($tier, self::TIER_MONTHLY_PO_LIMITS) ? self::TIER_MONTHLY_PO_LIMITS[$tier] : null),
-            'pos_this_month'      => $buildStat($posMonthCount,     array_key_exists($tier, self::TIER_MONTHLY_POS_LIMITS) ? self::TIER_MONTHLY_POS_LIMITS[$tier] : null),
-            'social_posts_this_month' => $buildStat($socialPostsMonthCount, $hasSocialAddon ? null : (array_key_exists($tier, self::TIER_SOCIAL_LIMITS) ? self::TIER_SOCIAL_LIMITS[$tier] : self::FREE_SOCIAL_POST_MONTHLY_LIMIT)),
-            'whatsapp_this_month'     => $buildStat($waMonthCount,          array_key_exists($tier, self::TIER_WHATSAPP_LIMITS) ? self::TIER_WHATSAPP_LIMITS[$tier] : self::FREE_WHATSAPP_MONTHLY_LIMIT),
+            'invoices_this_month' => $buildStat($invoiceMonthCount, $this->getTierLimit($tier, 'invoice')),
+            'po_this_month'       => $buildStat($poMonthCount,      $this->getTierLimit($tier, 'po')),
+            'pos_this_month'      => $buildStat($posMonthCount,     $this->getTierLimit($tier, 'pos')),
+            'pos_in_emergency_buffer' => $this->isPosInEmergencyBuffer($business),
+            'pos_remaining_buffer' => $this->getPosRemainingEmergencyBuffer($business),
+            'pos_emergency_buffer_total' => self::POS_EMERGENCY_BUFFER,
+            'social_posts_this_month' => $buildStat($socialPostsMonthCount, $hasSocialAddon ? null : $this->getTierLimit($tier, 'social')),
+            'whatsapp_this_month'     => $buildStat($waMonthCount,          $this->getTierLimit($tier, 'whatsapp')),
             'has_social_addon'        => $hasSocialAddon,
 
             // AI & Storage

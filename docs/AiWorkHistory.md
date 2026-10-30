@@ -33,6 +33,71 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-30-371] Resolusi Gap & Audit Sistem Kuota Langganan: Konfigurasi Batas Sumber Daya Dinamis di Admin Cooca, Buffer Darurat Kasir POS (+5 Trx), & Sinkronisasi Real-Time Matriks limits.blade.php
+
+- **Date:** 2026-10-30
+- **Status:** COMPLETED
+- **Module:** SaaS Billing, Entitlements, POS Checkout, Superadmin Settings (`app/Domain/Billing/EntitlementService.php`, `app/Http/Controllers/Admin/AdminSettingController.php`, `app/Http/Controllers/Admin/AdminBillingPackageController.php`, `app/Http/Controllers/Web/Billing/BillingAndLimitWebController.php`, `app/Http/Middleware/CheckResourceEntitlement.php`, `resources/views/admin/billing-packages/index.blade.php`, `resources/views/app/billing/limits.blade.php`, `tests/Feature/DynamicTierQuotaAndEmergencyBufferTest.php`)
+- **Feature:** Resolusi komprehensif atas 4 temuan gap sistem dan audit limit pengguna:
+  1. **Konfigurasi Kuota Dinamis via Admin Panel:** Menghubungkan batas kuota master data (produk, resep, bahan baku, pelanggan, pemasok, staf, meja resto, lokasi cabang) dan kuota transaksi bulanan (kasir POS, faktur, PO, WhatsApp) ke `SystemSetting::get('tier_limit_{tier}_{resource}')`, dengan konstanta kode `EntitlementService` sebagai fallback default yang aman.
+  2. **Emergency Buffer POS Kasir (+5 Transaksi):** Penambahan toleransi darurat 5 transaksi kasir saat kuota bulanan habis (`isPosInEmergencyBuffer()`) agar kasir toko fisik tidak langsung terkunci saat jam sibuk antrean pelanggan, disertai header peringatan dan indikator sisa buffer pada UI kasir.
+  3. **Sinkronisasi Matriks limits.blade.php:** Mengganti angka kuota statis pada kartu paket dan tabel perbandingan fitur (`expandedMatrix`) dengan matriks dinamis `$tierLimits` yang dihasilkan langsung dari `EntitlementService::getAllTierLimits()`.
+  4. **Penyempurnaan Pesan Penegakan & Mitigasi:** Mempertegas penegakan toleransi masa tenggang 3 hari (`past_due`), perlindungan harga Early Adopter (price lock 7 hari), dan kebijakan No Data Punishment di mana data tenant tetap aman 100% saat langganan berakhir.
+- **Work Type:** Architecture | Security & Entitlements | Superadmin CMS | POS Hardening | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha UMKM mengandalkan COOCA untuk kasir toko, manajemen produk, faktur, dan stok. Sebelumnya, batas kuota per tier (Free: 10 produk, 30 kasir POS; Standard: 100 produk, 1.000 kasir POS, dsb.) di-*hardcode* dalam konstanta PHP sehingga Superadmin tidak dapat mengubah kuota promosi tanpa deployment kode. Selain itu, penolakan kasir POS yang keras di kuota ke-31 berisiko menghentikan operasional toko saat antrean pelanggan sedang ramai.
+- **Masalah/Target:** Mengeliminasi celah antara konfigurasi Admin dengan penegakan di backend, memberikan bantalan darurat di kasir toko fisik, dan memastikan transparansi status kuota di halaman `/settings?tab=limits` dan `/admin/billing-packages`.
+
+#### 2. What Was Done
+- Menambahkan metode `getTierLimit(string $tier, string $resource): ?int` dan `getAllTierLimits(): array` di `EntitlementService.php`.
+- Memperbarui `getProductLimit`, `getRecipeLimit`, `getMaterialLimit`, `getCustomerLimit`, `getSupplierLimit`, `getLocationLimit`, `getTotalLocationLimit`, `getBusinessLimit`, `canAddMember`, `canCreateInvoiceThisMonth`, `canCreatePurchaseOrderThisMonth`, `canSendWhatsAppThisMonth`, dan `getTableLimit` untuk mengonsumsi batasan dinamis dari `SystemSetting`.
+- Menerapkan `canCreatePosTransactionThisMonth` dengan toleransi buffer `POS_EMERGENCY_BUFFER = 5`, serta menambahkan helper `isPosInEmergencyBuffer()` dan `getPosRemainingEmergencyBuffer()`.
+- Menambahkan form input batas kuota sumber daya per tier di Admin Console (`resources/views/admin/billing-packages/index.blade.php`), serta handler `tier_limit_*` di `AdminSettingController::updateBilling()`.
+- Menginjeksi `$tierLimits` melalui `BillingAndLimitWebController.php` dan `AdminBillingPackageController.php`.
+- Memperbarui `limits.blade.php` untuk menampilkan indikator buffer darurat di Pillar 3, serta mereferensikan `$tierLimits` pada kartu paket Free/Standard dan tabel matriks perbandingan fitur.
+- Menyusun test suite otomatis `DynamicTierQuotaAndEmergencyBufferTest.php` (4 tests, 21 assertions, 100% passed) dan memverifikasi seluruh test suite billing (15 tests, 58 assertions, 100% passed).
+
+---
+
+### [WORK-2026-10-30-370] Resolusi Error Halaman Complete Profile (/complete-profile): SyntaxError Alert, Alpine Component Cascading Uncaught ReferenceError, & Content Security Policy (CSP) Whitelist
+
+- **Date:** 2026-10-30
+- **Status:** COMPLETED
+- **Module:** Auth Onboarding, Complete Profile, Web Security Headers, Public Marketing Layout (`resources/views/auth/complete-profile.blade.php`, `resources/views/layouts/public_marketing.blade.php`, `app/Http/Middleware/WebSecurityHeaders.php`, `tests/Feature/CompleteProfileFixTest.php`)
+- **Feature:** Perbaikan komprehensif error browser pada halaman `/complete-profile` meliputi: eliminasi syntax error Blade HTML entity encoding pada script JavaScript `alert()`, penanganan konflik siklus hidup Lucide vs Alpine.js pada ikon navbar & tombol GPS yang memicu error cascading `is not defined`, perkuatan deklarasi `Alpine.data` dan `window` scope untuk komponen `businessSetupLocation` & `marketingLayout`, serta pemutakhiran Content Security Policy (CSP) headers untuk me-whitelist Google Tag Manager, Google Analytics, Leaflet OpenStreetMap tiles, Nominatim geocoding, dan asset sourcemaps.
+- **Work Type:** Bug Fix | Security Hardening | Frontend Architecture (Alpine.js + Lucide) | Automated Testing
+
+#### 1. Business Context & Objective
+- **Konteks:** Halaman `/complete-profile` merupakan gerbang wajib onboarding awal bagi setiap merchant/business owner setelah mendaftar di COOCA untuk melengkapi identitas usaha dan menetapkan titik peta lokasi fisik cabang utama (digunakan pada struk kasir POS, faktur, dan kalkulasi ongkir ekspedisi).
+- **Masalah:** Saat membuka halaman `https://cooca.id/complete-profile`, browser memunculkan serangkaian error:
+  1. Pelanggaran Content Security Policy (CSP): Google Tag Manager (`gtag/js`) diblokir oleh `script-src`, serta sourcemaps (`lucide.min.js.map` dan `leaflet.js.map`) diblokir oleh `connect-src`.
+  2. SyntaxError pada baris 2875: `alert({{ json_encode(...) }})` dirender Blade menjadi `alert(&quot;...&quot;)` yang memicu `Uncaught SyntaxError: Unexpected token '&'`, menggagalkan eksekusi seluruh blok `<script>` komponen `businessSetupLocation()`.
+  3. Cascading Alpine.js Errors: Kegagalan parsing script lokasi menyebabkan `businessSetupLocation is not defined`, memicu 20+ turunan error `ReferenceError` pada seluruh model form wilayah (`searchQuery`, `isSearching`, `selectedArea`, `latitude`, `longitude`, `isGpsLoading`, `useCurrentGps`).
+  4. Dropdown Navbar Alpine Errors: Direktif `:class` yang ditempelkan langsung pada elemen `<i data-lucide="chevron-down">` dievaluasi gagal saat Lucide me-replace node DOM menjadi `<svg>`, memunculkan error `platformDropdown`, `solutionDropdown`, `omniDropdown`, `resourceDropdown`, dan `mobileSection is not defined`.
+
+#### 2. What Was Done
+1. **Perbaikan Script SyntaxError (`resources/views/auth/complete-profile.blade.php`):**
+   - Mengganti interpolasi Blade yang keliru `{{ json_encode(...) }}` pada pemanggilan `alert()` menjadi `{!! json_encode(...) !!}` tanpa entity escaping.
+   - Mengganti atribut teks dinamis GPS label dari string `x-text` bervalue encoded menjadi deklarasi deklaratif `<span x-show="isGpsLoading">` dan `<span x-show="!isGpsLoading">`.
+   - Mengamankan pemanggilan `businessSetupLocation` dengan mendaftarkannya pada `window.businessSetupLocation` dan `Alpine.data('businessSetupLocation', ...)` serta membungkus inisialisasi peta Leaflet dan Lucide dalam `this.$nextTick()`.
+2. **Isolasi Mutasi DOM Lucide Icons (`resources/views/layouts/public_marketing.blade.php` & `complete-profile.blade.php`):**
+   - Memindahkan seluruh direktif `:class` dari tag `<i data-lucide="...">` ke elemen pembungkus `<span class="inline-flex transition-transform ...">` pada seluruh dropdown header (Platform, Solutions, Omnichannel, Resources) dan accordion mobile.
+   - Membungkus ikon crosshair GPS pada form lokasi ke dalam `<span :class="{'animate-spin': isGpsLoading}">`, mencegah tabrakan siklus hidup node DOM saat `lucide.createIcons()` mengganti tag `<i>` dengan `<svg>`.
+   - Menunda eksekusi `lucide.createIcons()` di dalam `marketingLayout.init()` ke dalam `this.$nextTick()`.
+3. **Penyempurnaan Kebijakan CSP (`app/Http/Middleware/WebSecurityHeaders.php`):**
+   - Menambahkan `https://www.googletagmanager.com`, `https://www.google-analytics.com`, `https://ssl.google-analytics.com` ke dalam direktif `script-src` dan `img-src`.
+   - Menambahkan domain geocoding & tile Leaflet `https://nominatim.openstreetmap.org`, `https://*.tile.openstreetmap.org` serta domain analitik dan sourcemap CDN (`https://cdn.jsdelivr.net`, `https://unpkg.com`, `https://cdnjs.cloudflare.com`) ke dalam direktif `connect-src`.
+4. **Automated Testing (`tests/Feature/CompleteProfileFixTest.php`):**
+   - Membangun test suite otomatis untuk memvalidasi output HTML rendered halaman `auth.complete-profile` bebas dari entitas `&quot;` di dalam blok script, memastikan `businessSetupLocation` dan `marketingLayout` terdaftar di Alpine/window, serta memverifikasi header CSP mengizinkan Google Analytics dan CDN assets. (Semua test lulus 100%).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Http/Middleware/WebSecurityHeaders.php`
+  - `resources/views/auth/complete-profile.blade.php`
+  - `resources/views/layouts/public_marketing.blade.php`
+  - `tests/Feature/CompleteProfileFixTest.php`
+
 ### [WORK-2026-10-28-369] Implementasi Penuh Modul COOCA AI Studio Generation & Viral Inspiration Library (Hulu-ke-Hilir: Bagian 1 s.d. Bagian 7)
 
 - **Date:** 2026-10-28

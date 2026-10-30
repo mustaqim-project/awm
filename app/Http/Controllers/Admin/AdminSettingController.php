@@ -908,7 +908,30 @@ final class AdminSettingController extends Controller implements HasMiddleware
             SystemSetting::set('subscription_price_annual', (string) $validated['subscription_price_standard_annual'], 'billing');
         }
 
-        return back()->with('success', 'Harga & kuota default billing Cooca berhasil diperbarui.');
+        // Process dynamic resource quota limits per tier
+        $tiers = ['free', 'standard', 'premium', 'prestige'];
+        $resources = [
+            'product', 'recipe', 'material', 'customer', 'supplier',
+            'outlet', 'warehouse', 'total_location', 'user', 'business',
+            'pos', 'invoice', 'po', 'whatsapp', 'table',
+        ];
+
+        foreach ($tiers as $t) {
+            foreach ($resources as $r) {
+                $field = "tier_limit_{$t}_{$r}";
+                if ($request->has($field)) {
+                    $raw = $request->input($field);
+                    if ($raw === null || trim((string) $raw) === '' || (int) $raw < 0) {
+                        $val = '-1'; // Unlimited
+                    } else {
+                        $val = (string) (int) $raw;
+                    }
+                    SystemSetting::set($field, $val, 'billing');
+                }
+            }
+        }
+
+        return back()->with('success', 'Harga & batas kuota paket billing Cooca berhasil diperbarui.');
     }
 
     /**

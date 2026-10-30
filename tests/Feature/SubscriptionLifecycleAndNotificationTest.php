@@ -30,6 +30,7 @@ class SubscriptionLifecycleAndNotificationTest extends TestCase
     {
         Mail::fake();
         Storage::fake('public');
+        \App\Models\SystemSetting::set('admin_notification_email', 'agungmustaqim28@gmail.com');
 
         $user = User::factory()->create(['name' => 'Owner Test', 'email' => 'owner@example.com']);
         $business = Business::create(['name' => 'Kedai Kopi Test', 'currency' => 'IDR']);

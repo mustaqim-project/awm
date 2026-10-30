@@ -77,7 +77,7 @@ final class CheckResourceEntitlement
                 'invoice' => 'Faktur Penjualan Bulanan',
                 'purchase_order' => 'Purchase Order Bulanan',
                 'po' => 'Purchase Order Bulanan',
-                'pos' => 'Transaksi POS Kasir Bulanan',
+                'pos' => 'Transaksi POS Kasir Bulanan (termasuk toleransi darurat +5 transaksi toko)',
                 'table' => 'Meja Kasir Dine-in',
                 'transfer_stock' => 'Transfer Stok Antar-Cabang (Fitur Paket Premium)',
                 'kds' => 'Kitchen Display System (KDS) (Fitur Paket Premium)',
@@ -102,8 +102,8 @@ final class CheckResourceEntitlement
             $upgradeFee = match ($resourceType) {
                 'pph21', 'payroll_wa' => 'Prestige (Rp199.000/bln)',
                 'recipe', 'transfer_stock', 'kds', 'branch_pricing', 'commission', 'loan', 'daily_worker', 'bpjs', 'thr', 'outlet', 'warehouse' => 'Premium (Rp89.000/bln)',
-                'mcp', 'ai' => 'Standard (Rp29.000/bln), Premium (Rp89.000/bln), atau Prestige (Rp199.000/bln)',
-                'pos', 'table', 'invoice', 'purchase_order', 'po', 'product', 'material', 'customer', 'supplier', 'member', 'user' => 'Standard (Rp29.000/bln) atau Premium (Rp89.000/bln)',
+                'mcp', 'ai' => 'Standard (Rp39.000/bln), Premium (Rp89.000/bln), atau Prestige (Rp199.000/bln)',
+                'pos', 'table', 'invoice', 'purchase_order', 'po', 'product', 'material', 'customer', 'supplier', 'member', 'user' => 'Standard (Rp39.000/bln) atau Premium (Rp89.000/bln)',
                 default => 'paket yang lebih tinggi',
             };
 
@@ -120,6 +120,15 @@ final class CheckResourceEntitlement
                 ->with('error', "Batas kuota {$label} telah tercapai. Data lama Anda tetap aman (No Data Punishment). Silakan tingkatkan paket Anda ke {$upgradeFee} untuk menambah data baru.");
         }
 
-        return $next($request);
+        $response = $next($request);
+
+        // Attach emergency buffer metadata for POS transactions
+        if ($resourceType === 'pos' && $this->entitlementService->isPosInEmergencyBuffer($business)) {
+            $remaining = $this->entitlementService->getPosRemainingEmergencyBuffer($business);
+            $response->headers->set('X-POS-Emergency-Buffer', 'active');
+            $response->headers->set('X-POS-Emergency-Buffer-Remaining', (string) $remaining);
+        }
+
+        return $response;
     }
 }

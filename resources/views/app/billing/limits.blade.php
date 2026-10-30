@@ -153,8 +153,15 @@
                 <div
                     class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between gap-2 flex-wrap">
                     <span class="shrink-0">{{ __('billing.reset_date_1') }}</span>
-                    <span
-                        class="font-bold text-emerald-600 dark:text-emerald-400 text-right shrink-0">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
+                    @if (!empty($usage['pos_in_emergency_buffer']))
+                        <span class="font-bold text-amber-600 dark:text-amber-400 text-right shrink-0 flex items-center gap-1 font-mono">
+                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-500"></i>
+                            <span>Buffer Darurat (Sisa: {{ $usage['pos_remaining_buffer'] }} Trx)</span>
+                        </span>
+                    @else
+                        <span
+                            class="font-bold text-emerald-600 dark:text-emerald-400 text-right shrink-0">{{ $usage['is_core'] ? __('billing.no_quota') : ($pos['is_reached'] ?? false ? __('billing.limit_reached') : __('billing.available')) }}</span>
+                    @endif
                 </div>
             </div>
 
@@ -365,12 +372,12 @@
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>1 Bisnis Cooca</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>10 Produk &amp; 3 Resep</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>10 Bahan Baku</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>15 Pelanggan &amp; 2 Pemasok</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>30 Transaksi Kasir POS / bln</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>3 Faktur &amp; 3 PO / bln</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>10 Notifikasi WA / bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['product'] ?? 10 }} Produk &amp; {{ $tierLimits['free']['recipe'] ?? 3 }} Resep</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['material'] ?? 10 }} Bahan Baku</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['customer'] ?? 15 }} Pelanggan &amp; {{ $tierLimits['free']['supplier'] ?? 2 }} Pemasok</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi Kasir POS / bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['invoice'] ?? 3 }} Faktur &amp; {{ $tierLimits['free']['po'] ?? 3 }} PO / bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['whatsapp'] ?? 10 }} Notifikasi WA / bln</span></li>
                             <li class="flex items-center gap-1.5 text-rose-500/80 dark:text-rose-400/80"><i data-lucide="lock" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i><span>Fitur AI &amp; Gateway MCP Terkunci</span></li>
                             <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Transfer Stok Antar-Cabang</span></li>
                             <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Kitchen Display System (KDS)</span></li>
@@ -429,18 +436,18 @@
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>1 Bisnis Cooca</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>100 Produk</strong> &amp; 20 Resep HPP</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>30 Bahan Baku</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>100 Pelanggan &amp; 5 Pemasok</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>1.000 Kasir POS / bln</strong></span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>15 Faktur &amp; 15 PO / bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>{{ $tierLimits['standard']['product'] ?? 100 }} Produk</strong> &amp; {{ $tierLimits['standard']['recipe'] ?? 20 }} Resep HPP</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['material'] ?? 30 }} Bahan Baku</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['customer'] ?? 100 }} Pelanggan &amp; {{ $tierLimits['standard']['supplier'] ?? 5 }} Pemasok</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>{{ number_format($tierLimits['standard']['pos'] ?? 1000, 0, ',', '.') }} Kasir POS / bln</strong></span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['invoice'] ?? 15 }} Faktur &amp; {{ $tierLimits['standard']['po'] ?? 15 }} PO / bln</span></li>
                             @if($business->hasDineInFeature())
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>5 Meja Kasir POS (Dine-In)</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['table'] ?? 5 }} Meja Kasir POS (Dine-In)</span></li>
                             @endif
                             <li class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Akses Fitur AI &amp; Gateway MCP (1 Token)</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Otorisasi PIN Kasir &amp; Laci Kas</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Ekspor / Impor Massal Excel</span></li>
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>50 Notifikasi WA / bln</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['whatsapp'] ?? 50 }} Notifikasi WA / bln</span></li>
                         </ul>
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -737,9 +744,9 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Akun Pengguna Staf / Karyawan</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 (Solo Owner)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 Karyawan</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">10 Karyawan</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['user'] ?? 1 }} (Solo Owner)</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['user'] ?? 3 }} Karyawan</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ $tierLimits['premium']['user'] ?? 10 }} Karyawan</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
@@ -759,36 +766,36 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Katalog Produk &amp; SKU</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">10 Produk</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">100 Produk</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['product'] ?? 10 }} Produk</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['product'] ?? 100 }} Produk</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['product'] ?? null) ? $tierLimits['premium']['product'].' Produk' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['product'] ?? null) ? $tierLimits['prestige']['product'].' Produk' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Formula Resep HPP / BOM</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 Resep</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">20 Resep</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['recipe'] ?? 3 }} Resep</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['recipe'] ?? 20 }} Resep</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Bahan Baku (Raw Materials)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">10 Bahan</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">30 Bahan</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['material'] ?? 10 }} Bahan</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['material'] ?? 30 }} Bahan</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Kontak Pelanggan CRM</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">15 Kontak</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">100 Kontak</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">1.000 Kontak</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['customer'] ?? 15 }} Kontak</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['customer'] ?? 100 }} Kontak</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ number_format($tierLimits['premium']['customer'] ?? 1000, 0, ',', '.') }} Kontak</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Pemasok / Vendor</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">2 Vendor</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">5 Vendor</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['supplier'] ?? 2 }} Vendor</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['supplier'] ?? 5 }} Vendor</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
@@ -802,31 +809,31 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Transaksi Kasir POS</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">30 struk / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-semibold text-emerald-600">1.000 struk / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['pos'] ?? 30 }} struk / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-semibold text-emerald-600">{{ number_format($tierLimits['standard']['pos'] ?? 1000, 0, ',', '.') }} struk / bln</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Faktur Penjualan B2B (Invoices)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 faktur / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">15 faktur / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['invoice'] ?? 3 }} faktur / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['invoice'] ?? 15 }} faktur / bln</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Purchase Order Pembelian (PO)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 PO / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">15 PO / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['po'] ?? 3 }} PO / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['po'] ?? 15 }} PO / bln</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Struk Notifikasi WhatsApp Gateway</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">10 pesan / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">50 pesan / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">200 pesan / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">1.000 pesan / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['whatsapp'] ?? 10 }} pesan / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['whatsapp'] ?? 50 }} pesan / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ $tierLimits['premium']['whatsapp'] ?? 200 }} pesan / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ number_format($tierLimits['prestige']['whatsapp'] ?? 1000, 0, ',', '.') }} pesan / bln</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Jadwal Postingan Media Sosial</td>
