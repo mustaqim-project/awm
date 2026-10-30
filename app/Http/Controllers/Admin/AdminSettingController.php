@@ -931,7 +931,19 @@ final class AdminSettingController extends Controller implements HasMiddleware
             }
         }
 
-        return back()->with('success', 'Harga & batas kuota paket billing Cooca berhasil diperbarui.');
+        // Process dynamic feature locks/gates per tier
+        if ($request->has('features_submitted')) {
+            $features = array_keys(\App\Domain\Billing\EntitlementService::FEATURE_DEFINITIONS);
+            foreach ($tiers as $t) {
+                foreach ($features as $f) {
+                    $field = "tier_feature_{$t}_{$f}";
+                    $enabled = $request->boolean($field) ? '1' : '0';
+                    SystemSetting::set($field, $enabled, 'billing');
+                }
+            }
+        }
+
+        return back()->with('success', 'Harga, batas kuota, dan matriks hak akses fitur paket billing Cooca berhasil diperbarui.');
     }
 
     /**

@@ -168,6 +168,191 @@ final class EntitlementService
         BusinessSubscription::TIER_PRESTIGE => null,
     ];
 
+    // ── 4-Tier Feature Access & Lock Definitions (§Blueprint v2.3) ───────────
+    public const FEATURE_DEFINITIONS = [
+        'ai' => [
+            'label' => 'Akses Fitur AI & Prediksi Cerdas (BYOAI / Gemini)',
+            'desc' => 'Asisten bisnis AI, analisis tren penjualan, dan otomatisasi konten.',
+            'icon' => 'sparkles',
+            'category' => 'AI & Integrasi Modern',
+        ],
+        'mcp' => [
+            'label' => 'Gateway MCP (Model Context Protocol)',
+            'desc' => 'Koneksi eksternal AI agent ke database via protokol MCP terisolasi.',
+            'icon' => 'cpu',
+            'category' => 'AI & Integrasi Modern',
+        ],
+        'transfer_stock' => [
+            'label' => 'Surat Jalan Transfer Stok Antar-Cabang & Gudang',
+            'desc' => 'Perpindahan stok bahan baku dan produk multi-lokasi dengan otorisasi terima.',
+            'icon' => 'truck',
+            'category' => 'Multi-Cabang & Restoran',
+        ],
+        'branch_pricing' => [
+            'label' => 'Multi-Pricing (Beda Harga Jual per Cabang Toko)',
+            'desc' => 'Penyesuaian harga jual dinamis berdasarkan lokasi pasar gerai.',
+            'icon' => 'tag',
+            'category' => 'Multi-Cabang & Restoran',
+        ],
+        'kds' => [
+            'label' => 'Kitchen Display System (KDS Layar Dapur Real-time)',
+            'desc' => 'Layar pesanan antrian dapur interaktif untuk operasional kafe/resto.',
+            'icon' => 'monitor',
+            'category' => 'Multi-Cabang & Restoran',
+        ],
+        'self_order' => [
+            'label' => 'Self-Order QR Meja Pelanggan',
+            'desc' => 'Pelanggan pesan dan bayar mandiri langsung dari meja makan.',
+            'icon' => 'qr-code',
+            'category' => 'Multi-Cabang & Restoran',
+        ],
+        'pos_pin' => [
+            'label' => 'Otorisasi PIN Kasir, Shift & Laci Kas',
+            'desc' => 'Kontrol pencegahan kecurangan kasir, audit shift dan void transaksi.',
+            'icon' => 'key',
+            'category' => 'Kasir POS & Operasional',
+        ],
+        'commission' => [
+            'label' => 'Sistem Komisi Kinerja Staf & Kasir',
+            'desc' => 'Perhitungan insentif otomatis per transaksi struk kasir atau SPK jasa.',
+            'icon' => 'award',
+            'category' => 'HRM & Penggajian',
+        ],
+        'loan' => [
+            'label' => 'Buku Kasbon & Cicilan Pinjaman Karyawan',
+            'desc' => 'Pencatatan pinjaman staf dengan pemotongan otomatis saat penggajian.',
+            'icon' => 'wallet',
+            'category' => 'HRM & Penggajian',
+        ],
+        'daily_worker' => [
+            'label' => 'Skema Pekerja Harian Lepas (Daily Worker)',
+            'desc' => 'Manajemen upah harian, shift panggilan, dan borongan pekerjaan.',
+            'icon' => 'clock',
+            'category' => 'HRM & Penggajian',
+        ],
+        'bpjs' => [
+            'label' => 'Kalkulasi BPJS Ketenagakerjaan & Kesehatan',
+            'desc' => 'Perhitungan premi BPJS TK (JKK, JKM, JHT, JP) & BPJS Kesehatan otomatis.',
+            'icon' => 'shield-check',
+            'category' => 'HRM & Penggajian',
+        ],
+        'thr' => [
+            'label' => 'Kalkulasi THR Prorata Berbasis Tanggal Masuk (Join Date)',
+            'desc' => 'Perhitungan tunjangan hari raya otomatis sesuai regulasi ketenagakerjaan.',
+            'icon' => 'gift',
+            'category' => 'HRM & Penggajian',
+        ],
+        'payroll_wa' => [
+            'label' => 'Slip Gaji Digital Otomatis via WhatsApp',
+            'desc' => 'Pengiriman slip gaji resmi terenkripsi langsung ke nomor WA staf.',
+            'icon' => 'send',
+            'category' => 'HRM & Penggajian',
+        ],
+        'pph21' => [
+            'label' => 'Pajak Karyawan PPh 21 TER (PP 58/2023) & Rekonsiliasi Des',
+            'desc' => 'Perhitungan pajak bulanan Tarif Efektif Rata-rata A/B/C dan bukti potong 1721-A1.',
+            'icon' => 'file-text',
+            'category' => 'Perpajakan & Akuntansi',
+        ],
+        'branch_accounting' => [
+            'label' => 'Jurnal Akuntansi & Laba Rugi per Cabang / Konsolidasi',
+            'desc' => 'Laporan laba rugi spesifik cabang dan konsolidasi multi-cabang.',
+            'icon' => 'bar-chart-3',
+            'category' => 'Perpajakan & Akuntansi',
+        ],
+        'import' => [
+            'label' => 'Impor Massal Data Excel / CSV',
+            'desc' => 'Impor produk, bahan baku, pelanggan, dan kontak dari file spreadsheet.',
+            'icon' => 'upload',
+            'category' => 'Manajemen Data',
+        ],
+        'export' => [
+            'label' => 'Ekspor Massal Data Excel / CSV / PDF',
+            'desc' => 'Ekspor seluruh pembukuan, transaksi kasir, dan master data.',
+            'icon' => 'download',
+            'category' => 'Manajemen Data',
+        ],
+    ];
+
+    public const DEFAULT_TIER_FEATURES = [
+        BusinessSubscription::TIER_FREE => [
+            'ai' => false,
+            'mcp' => false,
+            'transfer_stock' => false,
+            'branch_pricing' => false,
+            'kds' => false,
+            'self_order' => false,
+            'pos_pin' => false,
+            'commission' => false,
+            'loan' => false,
+            'daily_worker' => false,
+            'bpjs' => false,
+            'thr' => false,
+            'payroll_wa' => false,
+            'pph21' => false,
+            'branch_accounting' => false,
+            'import' => false,
+            'export' => false,
+        ],
+        BusinessSubscription::TIER_STANDARD => [
+            'ai' => true,
+            'mcp' => true,
+            'transfer_stock' => false,
+            'branch_pricing' => false,
+            'kds' => false,
+            'self_order' => false,
+            'pos_pin' => true,
+            'commission' => false,
+            'loan' => false,
+            'daily_worker' => false,
+            'bpjs' => false,
+            'thr' => false,
+            'payroll_wa' => false,
+            'pph21' => false,
+            'branch_accounting' => false,
+            'import' => true,
+            'export' => true,
+        ],
+        BusinessSubscription::TIER_PREMIUM => [
+            'ai' => true,
+            'mcp' => true,
+            'transfer_stock' => true,
+            'branch_pricing' => true,
+            'kds' => true,
+            'self_order' => true,
+            'pos_pin' => true,
+            'commission' => true,
+            'loan' => true,
+            'daily_worker' => true,
+            'bpjs' => true,
+            'thr' => true,
+            'payroll_wa' => false,
+            'pph21' => false,
+            'branch_accounting' => true,
+            'import' => true,
+            'export' => true,
+        ],
+        BusinessSubscription::TIER_PRESTIGE => [
+            'ai' => true,
+            'mcp' => true,
+            'transfer_stock' => true,
+            'branch_pricing' => true,
+            'kds' => true,
+            'self_order' => true,
+            'pos_pin' => true,
+            'commission' => true,
+            'loan' => true,
+            'daily_worker' => true,
+            'bpjs' => true,
+            'thr' => true,
+            'payroll_wa' => true,
+            'pph21' => true,
+            'branch_accounting' => true,
+            'import' => true,
+            'export' => true,
+        ],
+    ];
+
     // ── Business-level Master Data Limits (Legacy Backward Compatibility) ─────
     public const FREE_PRODUCT_LIMIT           = 10;
     public const FREE_RECIPE_LIMIT            = 3;
@@ -418,6 +603,46 @@ final class EntitlementService
     }
 
     /**
+     * Check if a specific feature is enabled for a given subscription tier.
+     * Checks SystemSetting override ('tier_feature_{tier}_{feature}') first, falling back to DEFAULT_TIER_FEATURES.
+     */
+    public function isFeatureEnabled(string $tier, string $feature): bool
+    {
+        $settingKey = "tier_feature_{$tier}_{$feature}";
+        $val = SystemSetting::get($settingKey);
+
+        if ($val !== null && $val !== '') {
+            return in_array(strtolower(trim((string) $val)), ['1', 'true', 'yes', 'on', 'enabled'], true);
+        }
+
+        return self::DEFAULT_TIER_FEATURES[$tier][$feature] ?? false;
+    }
+
+    /**
+     * Get 4-tier by 17-feature matrix for UI and admin toggling.
+     *
+     * @return array<string, array<string, bool>>
+     */
+    public function getAllTierFeatures(): array
+    {
+        $tiers = [
+            BusinessSubscription::TIER_FREE,
+            BusinessSubscription::TIER_STANDARD,
+            BusinessSubscription::TIER_PREMIUM,
+            BusinessSubscription::TIER_PRESTIGE,
+        ];
+
+        $matrix = [];
+        foreach ($tiers as $tier) {
+            foreach (array_keys(self::FEATURE_DEFINITIONS) as $feature) {
+                $matrix[$tier][$feature] = $this->isFeatureEnabled($tier, $feature);
+            }
+        }
+
+        return $matrix;
+    }
+
+    /**
      * Get Product limit for business. Null means unlimited.
      */
     public function getProductLimit(Business $business): ?int
@@ -492,6 +717,11 @@ final class EntitlementService
     public function canAccessAi(Business $business): bool
     {
         $sub = $this->getSubscription($business);
+        $tier = $sub->getTier();
+
+        if (! $this->isFeatureEnabled($tier, 'ai')) {
+            return false;
+        }
 
         // Core plans (Standard, Premium, Prestige) have full access to AI capabilities (BYOAI / unmetered)
         if ($sub->isCorePlan()) {
@@ -504,13 +734,12 @@ final class EntitlementService
 
     /**
      * Can business access Model Context Protocol (MCP) integrations & gateway?
-     * MCP is an advanced capability requiring an active paid subscription (Standard, Premium, Prestige).
      */
     public function canAccessMcp(Business $business): bool
     {
-        $sub = $this->getSubscription($business);
+        $tier = $this->getSubscription($business)->getTier();
 
-        return $sub->isCorePlan();
+        return $this->isFeatureEnabled($tier, 'mcp');
     }
 
     /**
@@ -905,89 +1134,126 @@ final class EntitlementService
     // ── Feature Access Checks ─────────────────────────────────────────────────
 
     /**
-     * Can business use Import Data feature? Free = disabled.
+     * Can business use Import Data feature? Free = disabled by default, configurable.
      */
     public function canImportData(Business $business): bool
     {
-        return $this->getSubscription($business)->isCorePlan();
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'import');
     }
 
     /**
-     * Can business use Export Data feature? Free = disabled.
+     * Can business use Export Data feature? Free = disabled by default, configurable.
      */
     public function canExportData(Business $business): bool
     {
-        return $this->getSubscription($business)->isCorePlan();
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'export');
     }
 
     // ── Multi-Branch & Central Kitchen Feature Gates (§Blueprint v2.3) ────────
 
     /**
-     * Can business transfer stock between branches/warehouses? (Tier Premium & Prestige)
+     * Can business transfer stock between branches/warehouses?
      */
     public function canTransferStock(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'transfer_stock');
     }
 
     /**
-     * Can business set specific product prices per branch? (Tier Premium & Prestige)
+     * Can business set specific product prices per branch?
      */
     public function canSetBranchPrices(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'branch_pricing');
+    }
+
+    /**
+     * Can business use Kitchen Display System (KDS Layar Dapur)?
+     */
+    public function canUseKds(Business $business): bool
+    {
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'kds');
+    }
+
+    /**
+     * Can business offer Self-Order QR Meja Pelanggan?
+     */
+    public function canUseSelfOrder(Business $business): bool
+    {
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'self_order');
+    }
+
+    /**
+     * Can business use Cashier POS PIN & Cash Drawer controls?
+     */
+    public function canUsePosPin(Business $business): bool
+    {
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'pos_pin');
     }
 
     // ── HRM & Payroll Feature Gates (§Blueprint v2.3) ─────────────────────────
 
     /**
-     * Can business calculate and track employee commissions per transaction/SPK? (Tier Premium & Prestige)
+     * Can business calculate and track employee commissions per transaction/SPK?
      */
     public function canCalculateCommissions(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'commission');
     }
 
     /**
-     * Can business manage employee loans and automated salary deductions? (Tier Premium & Prestige)
+     * Can business manage employee loans and automated salary deductions?
      */
     public function canManageEmployeeLoans(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'loan');
     }
 
     /**
-     * Can business manage Daily Workers / Pekerja Harian Lepas? (Tier Premium & Prestige)
+     * Can business manage Daily Workers / Pekerja Harian Lepas?
      */
     public function canManageDailyWorkers(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'daily_worker');
     }
 
     /**
-     * Can business calculate BPJS Ketenagakerjaan & Kesehatan? (Tier Premium & Prestige)
+     * Can business calculate BPJS Ketenagakerjaan & Kesehatan?
      */
     public function canCalculateBPJS(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'bpjs');
     }
 
     /**
-     * Can business calculate prorated THR based on join date? (Tier Premium & Prestige)
+     * Can business calculate prorated THR based on join date?
      */
     public function canCalculateTHR(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PREMIUM);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'thr');
     }
 
-    // ── Tax Compliance Engine Feature Gates (§Blueprint v2.3) ─────────────────
+    // ── Tax Compliance Engine & Branch Accounting Feature Gates (§Blueprint v2.3) ─
 
     /**
-     * Can business calculate PPh 21 TER (PP 58/2023) and December Pasal 17 reconciliation? (Tier Prestige only)
+     * Can business calculate PPh 21 TER (PP 58/2023) and December Pasal 17 reconciliation?
      */
     public function canCalculatePPh21(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PRESTIGE);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'pph21');
     }
 
     /**
@@ -999,11 +1265,21 @@ final class EntitlementService
     }
 
     /**
-     * Can business send automated salary slips via WhatsApp? (Tier Prestige only)
+     * Can business send automated salary slips via WhatsApp?
      */
     public function canAutomatePayrollWhatsApp(Business $business): bool
     {
-        return $this->getSubscription($business)->hasTier(BusinessSubscription::TIER_PRESTIGE);
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'payroll_wa');
+    }
+
+    /**
+     * Can business use per-branch / consolidated branch accounting?
+     */
+    public function canUseBranchAccounting(Business $business): bool
+    {
+        $tier = $this->getSubscription($business)->getTier();
+        return $this->isFeatureEnabled($tier, 'branch_accounting');
     }
 
     /**
@@ -1295,11 +1571,13 @@ final class EntitlementService
             ],
             'storage' => $storage,
 
-            // Feature flags
-            'can_import' => $isCore,
-            'can_export' => $isCore,
+            // Feature flags (Strictly dynamic from SystemSetting via EntitlementService)
+            'can_import' => $this->canImportData($business),
+            'can_export' => $this->canExportData($business),
             'can_create_table' => $this->canCreateTable($business),
-            'can_use_kds' => $sub->hasTier(BusinessSubscription::TIER_PREMIUM),
+            'can_use_kds' => $this->canUseKds($business),
+            'can_use_self_order' => $this->canUseSelfOrder($business),
+            'can_use_pos_pin' => $this->canUsePosPin($business),
             'can_transfer_stock' => $this->canTransferStock($business),
             'can_set_branch_prices' => $this->canSetBranchPrices($business),
             'can_calculate_commissions' => $this->canCalculateCommissions($business),
@@ -1310,6 +1588,7 @@ final class EntitlementService
             'can_calculate_pph21' => $this->canCalculatePPh21($business),
             'can_track_pph_final_umkm' => $this->canTrackPPhFinalUMKM($business),
             'can_automate_payroll_wa' => $this->canAutomatePayrollWhatsApp($business),
+            'can_use_branch_accounting' => $this->canUseBranchAccounting($business),
         ];
 
         if (! app()->environment('testing')) {

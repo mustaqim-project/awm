@@ -434,16 +434,126 @@
                                 </table>
                             </div>
 
+                            <!-- ══════════════════════════════════════════════════════════════ -->
+                            <!-- ═══ MATRIKS HAK AKSES & KUNCI FITUR PER PAKET ═══════════════ -->
+                            <!-- ══════════════════════════════════════════════════════════════ -->
+                            <div class="pt-6 border-t border-black/[0.06] dark:border-white/[0.08] space-y-4">
+                                <input type="hidden" name="features_submitted" value="1">
+
+                                <!-- Section Title & Legend Banner -->
+                                <div class="rounded-[18px] p-4 bg-gradient-to-r from-purple-500/[0.05] via-indigo-500/[0.05] to-blue-500/[0.05] border border-black/[0.06] dark:border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div>
+                                        <h4 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2">
+                                            <div class="w-7 h-7 rounded-[8px] bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 shrink-0">
+                                                <i data-lucide="lock" class="w-4 h-4" stroke-width="2"></i>
+                                            </div>
+                                            <span>Matriks Hak Akses &amp; Kunci Fitur per Paket (Feature Access &amp; Lock Matrix)</span>
+                                        </h4>
+                                        <p class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
+                                            Atur fitur yang dibuka (unlocked) atau dikunci (locked) untuk tiap level paket. Pengaturan ini langsung mengontrol middleware otorisasi sistem dan indikator gembok pada halaman limits pelanggan.
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                                            <i data-lucide="check" class="w-3.5 h-3.5"></i> Centang = Terbuka
+                                        </span>
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-[8px] text-[11px] font-semibold bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-500/20">
+                                            <i data-lucide="lock" class="w-3.5 h-3.5"></i> Kosong = Terkunci
+                                        </span>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $featuresByCategory = [];
+                                    $fDefs = $featureDefinitions ?? \App\Domain\Billing\EntitlementService::FEATURE_DEFINITIONS;
+                                    foreach ($fDefs as $fKey => $fMeta) {
+                                        $cat = $fMeta['category'] ?? 'Lainnya';
+                                        $featuresByCategory[$cat][$fKey] = $fMeta;
+                                    }
+                                @endphp
+
+                                <!-- Responsive 4-Tier Feature Matrix Table -->
+                                <div class="overflow-x-auto rounded-[18px] border border-black/[0.08] dark:border-white/[0.1] bg-white/60 dark:bg-black/20 shadow-xs">
+                                    <table class="w-full text-left border-collapse min-w-[760px]">
+                                        <thead>
+                                            <tr class="bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/[0.06] dark:border-white/[0.08]">
+                                                <th class="py-3.5 px-4 text-[12px] font-bold text-black/70 dark:text-white/70 w-[32%]">
+                                                    Modul &amp; Fitur Sistem
+                                                </th>
+                                                @foreach($tierCols as $tierKey => $tierMeta)
+                                                    <th class="py-3.5 px-3 text-center w-[17%]">
+                                                        <div class="inline-flex flex-col items-center">
+                                                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold border {{ $tierMeta['badge'] }}">
+                                                                {{ $tierMeta['name'] }}
+                                                            </span>
+                                                            <span class="text-[10px] text-black/40 dark:text-white/40 mt-0.5">{{ $tierMeta['desc'] }}</span>
+                                                        </div>
+                                                    </th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.05]">
+                                            @foreach($featuresByCategory as $catName => $catItems)
+                                                <!-- Category Divider Row -->
+                                                <tr class="bg-black/[0.02] dark:bg-white/[0.03]">
+                                                    <td colspan="5" class="py-2 px-4">
+                                                        <div class="flex items-center gap-2">
+                                                            <i data-lucide="layers" class="w-3.5 h-3.5 text-purple-600" stroke-width="2"></i>
+                                                            <span class="text-[11px] font-extrabold text-black/70 dark:text-white/70 uppercase tracking-wider">{{ $catName }}</span>
+                                                            <span class="text-[10px] text-black/40 dark:text-white/40">({{ count($catItems) }} fitur)</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                @foreach($catItems as $featKey => $fMeta)
+                                                    <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
+                                                        <td class="py-2.5 px-4">
+                                                            <div class="flex items-start gap-2.5">
+                                                                <div class="w-6 h-6 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0 mt-0.5">
+                                                                    <i data-lucide="{{ $fMeta['icon'] }}" class="w-3 h-3" stroke-width="1.75"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="text-[12px] font-bold text-black dark:text-white">{{ $fMeta['label'] }}</div>
+                                                                    <div class="text-[10px] text-black/50 dark:text-white/50 leading-tight">{{ $fMeta['desc'] }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        @foreach($tierCols as $tierKey => $tierMeta)
+                                                            @php
+                                                                $isEnabled = !empty($tierFeatures[$tierKey][$featKey]);
+                                                            @endphp
+                                                            <td class="py-2 px-2 align-middle text-center">
+                                                                <label class="inline-flex items-center gap-1.5 cursor-pointer select-none">
+                                                                    <input type="checkbox"
+                                                                        name="tier_feature_{{ $tierKey }}_{{ $featKey }}"
+                                                                        value="1"
+                                                                        {{ $isEnabled ? 'checked' : '' }}
+                                                                        class="w-4 h-4 rounded text-[#007AFF] border-black/20 dark:border-white/20 focus:ring-[#007AFF] transition cursor-pointer"
+                                                                    >
+                                                                    <span class="text-[10px] font-bold {{ $isEnabled ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500' }}">
+                                                                        {{ $isEnabled ? 'Aktif' : 'Terkunci' }}
+                                                                    </span>
+                                                                </label>
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             <!-- Bottom Action / Confirmation Banner -->
                             <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
                                 <div class="text-[11.5px] text-black/60 dark:text-white/60 flex items-center gap-2">
                                     <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                                    <span>Semua 17 batas kuota di atas langsung tersimpan ke <strong>SystemSetting</strong> dan aktif secara instan di sistem.</span>
+                                    <span>Semua 17 batas kuota dan 17 kunci fitur di atas langsung tersimpan ke <strong>SystemSetting</strong> dan aktif secara instan di sistem.</span>
                                 </div>
                                 <button type="submit"
                                     class="h-9 px-5 rounded-[12px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-2 shadow-sm shrink-0">
                                     <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                    <span>Simpan Semua Batas Kuota &amp; Harga</span>
+                                    <span>Simpan Semua Batas Kuota, Fitur &amp; Harga</span>
                                 </button>
                             </div>
                         </div>

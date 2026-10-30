@@ -358,29 +358,41 @@
                         <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-slate-50 dark:bg-slate-800/50 text-[10.5px] font-mono border border-slate-200/60 dark:border-slate-700/60 text-center">
                             <div>
                                 <div class="text-slate-400 text-[9px] uppercase">Storage</div>
-                                <div class="font-bold text-slate-800 dark:text-slate-200">1 GB</div>
+                                <div class="font-bold text-slate-800 dark:text-slate-200">{{ $tierLimits['free']['storage_gb'] ?? 1 }} GB</div>
                             </div>
                             <div>
                                 <div class="text-slate-400 text-[9px] uppercase">Staf</div>
-                                <div class="font-bold text-slate-800 dark:text-slate-200">1 Akun</div>
+                                <div class="font-bold text-slate-800 dark:text-slate-200">{{ $tierLimits['free']['user'] ?? 1 }} Akun</div>
                             </div>
                             <div>
                                 <div class="text-slate-400 text-[9px] uppercase">Lokasi</div>
-                                <div class="font-bold text-slate-800 dark:text-slate-200">1 Toko</div>
+                                <div class="font-bold text-slate-800 dark:text-slate-200">{{ $tierLimits['free']['total_location'] ?? 1 }} Toko</div>
                             </div>
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>1 Bisnis Cooca</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['business'] ?? 1 }} Bisnis Cooca</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['product'] ?? 10 }} Produk &amp; {{ $tierLimits['free']['recipe'] ?? 3 }} Resep</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['material'] ?? 10 }} Bahan Baku</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['customer'] ?? 15 }} Pelanggan &amp; {{ $tierLimits['free']['supplier'] ?? 2 }} Pemasok</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi Kasir POS / bln</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['invoice'] ?? 3 }} Faktur &amp; {{ $tierLimits['free']['po'] ?? 3 }} PO / bln</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>{{ $tierLimits['free']['whatsapp'] ?? 10 }} Notifikasi WA / bln</span></li>
-                            <li class="flex items-center gap-1.5 text-rose-500/80 dark:text-rose-400/80"><i data-lucide="lock" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i><span>Fitur AI &amp; Gateway MCP Terkunci</span></li>
-                            <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Transfer Stok Antar-Cabang</span></li>
-                            <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Kitchen Display System (KDS)</span></li>
+                            @if(!empty($tierFeatures['free']['ai']))
+                                <li class="flex items-center gap-1.5 text-emerald-600 font-semibold"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i><span>Akses Fitur AI &amp; Gateway MCP Aktif</span></li>
+                            @else
+                                <li class="flex items-center gap-1.5 text-rose-500/80 dark:text-rose-400/80"><i data-lucide="lock" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i><span>Fitur AI &amp; Gateway MCP Terkunci</span></li>
+                            @endif
+                            @if(!empty($tierFeatures['free']['transfer_stock']))
+                                <li class="flex items-center gap-1.5 text-emerald-600 font-semibold"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i><span>Transfer Stok Antar-Cabang</span></li>
+                            @else
+                                <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Transfer Stok Antar-Cabang</span></li>
+                            @endif
+                            @if(!empty($tierFeatures['free']['kds']))
+                                <li class="flex items-center gap-1.5 text-emerald-600 font-semibold"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i><span>Kitchen Display System (KDS)</span></li>
+                            @else
+                                <li class="flex items-center gap-1.5 text-slate-400 line-through"><i data-lucide="x" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i><span>Kitchen Display System (KDS)</span></li>
+                            @endif
                         </ul>
                     </div>
                     <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -422,20 +434,20 @@
                         <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-emerald-50/70 dark:bg-emerald-950/30 text-[10.5px] font-mono border border-emerald-200/60 dark:border-emerald-800/60 text-center">
                             <div>
                                 <div class="text-emerald-600/70 dark:text-emerald-400/70 text-[9px] uppercase">Storage</div>
-                                <div class="font-bold text-emerald-800 dark:text-emerald-300">3 GB</div>
+                                <div class="font-bold text-emerald-800 dark:text-emerald-300">{{ $tierLimits['standard']['storage_gb'] ?? 3 }} GB</div>
                             </div>
                             <div>
                                 <div class="text-emerald-600/70 dark:text-emerald-400/70 text-[9px] uppercase">Staf</div>
-                                <div class="font-bold text-emerald-800 dark:text-emerald-300">3 Staf</div>
+                                <div class="font-bold text-emerald-800 dark:text-emerald-300">{{ $tierLimits['standard']['user'] ?? 3 }} Staf</div>
                             </div>
                             <div>
                                 <div class="text-emerald-600/70 dark:text-emerald-400/70 text-[9px] uppercase">Lokasi</div>
-                                <div class="font-bold text-emerald-800 dark:text-emerald-300">2 Lokasi</div>
+                                <div class="font-bold text-emerald-800 dark:text-emerald-300">{{ $tierLimits['standard']['total_location'] ?? 2 }} Lokasi</div>
                             </div>
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>1 Bisnis Cooca</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['business'] ?? 1 }} Bisnis Cooca</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span><strong>{{ $tierLimits['standard']['product'] ?? 100 }} Produk</strong> &amp; {{ $tierLimits['standard']['recipe'] ?? 20 }} Resep HPP</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['material'] ?? 30 }} Bahan Baku</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['customer'] ?? 100 }} Pelanggan &amp; {{ $tierLimits['standard']['supplier'] ?? 5 }} Pemasok</span></li>
@@ -444,9 +456,17 @@
                             @if($business->hasDineInFeature())
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['table'] ?? 5 }} Meja Kasir POS (Dine-In)</span></li>
                             @endif
+                            @if(!empty($tierFeatures['standard']['ai']))
                             <li class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Akses Fitur AI &amp; Gateway MCP (1 Token)</span></li>
+                            @else
+                            <li class="flex items-center gap-1.5 text-rose-500/80 dark:text-rose-400/80"><i data-lucide="lock" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i><span>Fitur AI &amp; Gateway MCP Terkunci</span></li>
+                            @endif
+                            @if(!empty($tierFeatures['standard']['pos_pin']))
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Otorisasi PIN Kasir &amp; Laci Kas</span></li>
+                            @endif
+                            @if(!empty($tierFeatures['standard']['export']) || !empty($tierFeatures['standard']['import']))
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>Ekspor / Impor Massal Excel</span></li>
+                            @endif
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i><span>{{ $tierLimits['standard']['whatsapp'] ?? 50 }} Notifikasi WA / bln</span></li>
                         </ul>
                     </div>
@@ -494,20 +514,20 @@
                         <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-indigo-50/70 dark:bg-indigo-950/30 text-[10.5px] font-mono border border-indigo-200/60 dark:border-indigo-800/60 text-center">
                             <div>
                                 <div class="text-indigo-600/70 dark:text-indigo-400/70 text-[9px] uppercase">Storage</div>
-                                <div class="font-bold text-indigo-800 dark:text-indigo-300">10 GB</div>
+                                <div class="font-bold text-indigo-800 dark:text-indigo-300">{{ ($tierLimits['premium']['storage_gb'] ?? null) ? $tierLimits['premium']['storage_gb'].' GB' : '10 GB' }}</div>
                             </div>
                             <div>
                                 <div class="text-indigo-600/70 dark:text-indigo-400/70 text-[9px] uppercase">Staf</div>
-                                <div class="font-bold text-indigo-800 dark:text-indigo-300">10 Staf</div>
+                                <div class="font-bold text-indigo-800 dark:text-indigo-300">{{ ($tierLimits['premium']['user'] ?? null) ? $tierLimits['premium']['user'].' Staf' : '10 Staf' }}</div>
                             </div>
                             <div>
                                 <div class="text-indigo-600/70 dark:text-indigo-400/70 text-[9px] uppercase">Lokasi</div>
-                                <div class="font-bold text-indigo-800 dark:text-indigo-300">5 Lokasi</div>
+                                <div class="font-bold text-indigo-800 dark:text-indigo-300">{{ ($tierLimits['premium']['total_location'] ?? null) ? $tierLimits['premium']['total_location'].' Lokasi' : '5 Lokasi' }}</div>
                             </div>
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span><strong>3 Bisnis</strong> ({{ __('billing.premium_three_businesses') }})</span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span><strong>{{ ($tierLimits['premium']['business'] ?? null) ? $tierLimits['premium']['business'].' Bisnis' : '3 Bisnis' }}</strong> ({{ __('billing.premium_three_businesses') }})</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_catalog') }}</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_pos') }}</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-indigo-600 shrink-0"></i><span>{{ __('billing.premium_unlimited_invoices') }}</span></li>
@@ -561,20 +581,20 @@
                         <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-purple-50/70 dark:bg-purple-950/30 text-[10.5px] font-mono border border-purple-200/60 dark:border-purple-800/60 text-center">
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Storage</div>
-                                <div class="font-bold text-purple-800 dark:text-purple-300">30 GB</div>
+                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ ($tierLimits['prestige']['storage_gb'] ?? null) ? $tierLimits['prestige']['storage_gb'].' GB' : '30 GB' }}</div>
                             </div>
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Staf</div>
-                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ __('billing.unlimited_free') }}</div>
+                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ ($tierLimits['prestige']['user'] ?? null) ? $tierLimits['prestige']['user'].' Staf' : __('billing.unlimited_free') }}</div>
                             </div>
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Lokasi</div>
-                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ __('billing.unlimited_free') }}</div>
+                                <div class="font-bold text-purple-800 dark:text-purple-300">{{ ($tierLimits['prestige']['total_location'] ?? null) ? $tierLimits['prestige']['total_location'].' Lokasi' : __('billing.unlimited_free') }}</div>
                             </div>
                         </div>
 
                         <ul class="space-y-1.5 pt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>{{ __('billing.prestige_unlimited_business') }}</strong></span></li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span><strong>{{ ($tierLimits['prestige']['business'] ?? null) ? $tierLimits['prestige']['business'].' Bisnis' : __('billing.prestige_unlimited_business') }}</strong></span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_unlimited_branches') }}</span></li>
                             <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_unlimited_staff') }}</span></li>
                             <li class="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-semibold"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 shrink-0"></i><span>{{ __('billing.prestige_tax_pph21') }}</span></li>
@@ -714,18 +734,46 @@
                                     <td class="py-2.5 px-3 text-center text-purple-600"><i data-lucide="check" class="w-4 h-4 inline"></i></td>
                                 </tr>
                                 <tr>
-                                    <td class="py-2.5 px-4 font-medium">Draft Balasan AI Grounded di Kotak Masuk Terpadu</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-emerald-600"><i data-lucide="check" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600"><i data-lucide="check" class="w-4 h-4 inline"></i></td>
+                                    <td class="py-2.5 px-4 font-medium">Fitur Asisten &amp; Prediksi AI (BYOAI / Gemini)</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasAi = !empty($tierFeatures[$tKey]['ai']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasAi ? 'text-emerald-600' : 'text-slate-400',
+                                                default => $hasAi ? 'text-emerald-600' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasAi)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Gateway MCP (Model Context Protocol Universal)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="lock" class="w-4 h-4 text-rose-500 inline"></i> Terkunci</td>
-                                    <td class="py-2.5 px-3 text-center font-mono text-emerald-600">1 Token Aktif</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Multi-Client (5 Token)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">Dedicated Unlimited</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasMcp = !empty($tierFeatures[$tKey]['mcp']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasMcp ? 'text-emerald-600' : 'text-slate-400',
+                                                default => $hasMcp ? 'text-emerald-600' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasMcp)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
 
                                 <!-- GRUP 2: AKUN OWNER & KAPASITAS DASAR -->
@@ -737,24 +785,24 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Maksimal Entitas Bisnis / Toko</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Bisnis</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Bisnis</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Hingga 3 Bisnis</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['business'] ?? 1 }} Bisnis</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['business'] ?? 1 }} Bisnis</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['business'] ?? null) ? 'Hingga '.$tierLimits['premium']['business'].' Bisnis' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['business'] ?? null) ? 'Hingga '.$tierLimits['prestige']['business'].' Bisnis' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Akun Pengguna Staf / Karyawan</td>
                                     <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['user'] ?? 1 }} (Solo Owner)</td>
                                     <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['user'] ?? 3 }} Karyawan</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ $tierLimits['premium']['user'] ?? 10 }} Karyawan</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['user'] ?? null) ? $tierLimits['premium']['user'].' Karyawan' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['user'] ?? null) ? $tierLimits['prestige']['user'].' Karyawan' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Kapasitas Cloud Storage Terproteksi</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 GB</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 GB</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">10 GB</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">30 GB (+ Top-up)</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['storage_gb'] ?? 1 }} GB</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['storage_gb'] ?? 3 }} GB</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ $tierLimits['premium']['storage_gb'] ?? 10 }} GB</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ $tierLimits['prestige']['storage_gb'] ?? 30 }} GB (+ Top-up)</td>
                                 </tr>
 
                                 <!-- GRUP 3: MASTER DATA & STOK -->
@@ -837,10 +885,10 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Jadwal Postingan Media Sosial</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">3 post / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">10 post / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">30 post / bln</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['social'] ?? 3 }} post / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['social'] ?? 10 }} post / bln</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['social'] ?? null) ? $tierLimits['premium']['social'].' post / bln' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['social'] ?? null) ? $tierLimits['prestige']['social'].' post / bln' : '∞ Unlimited' }}</td>
                                 </tr>
 
                                 <!-- GRUP 5: MULTI-CABANG & RESTORAN F&B -->
@@ -852,53 +900,109 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Cabang Toko / Outlet Fisik</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Outlet</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Outlet</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Hingga 3 Cabang</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['outlet'] ?? 1 }} Outlet</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['outlet'] ?? 1 }} Outlet</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['outlet'] ?? null) ? 'Hingga '.$tierLimits['premium']['outlet'].' Cabang' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['outlet'] ?? null) ? 'Hingga '.$tierLimits['prestige']['outlet'].' Cabang' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Gudang / Dapur Pusat (Central Kitchen)</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Gudang</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">1 Gudang</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Hingga 3 Gudang</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['warehouse'] ?? 1 }} Gudang</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['warehouse'] ?? 1 }} Gudang</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['warehouse'] ?? null) ? 'Hingga '.$tierLimits['premium']['warehouse'].' Gudang' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['warehouse'] ?? null) ? 'Hingga '.$tierLimits['prestige']['warehouse'].' Gudang' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Surat Jalan Transfer Stok Antar-Cabang</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Bebas Transfer</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Bebas Transfer</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasTransfer = !empty($tierFeatures[$tKey]['transfer_stock']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasTransfer ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasTransfer ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasTransfer)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Bebas Transfer
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Multi-Pricing (Beda Harga per Cabang Toko)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i> 1 Harga</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i> 1 Harga</td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Beda Harga</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Beda Harga</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasPricing = !empty($tierFeatures[$tKey]['branch_pricing']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasPricing ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasPricing ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasPricing)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Beda Harga
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> 1 Harga
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 @if($business->hasDineInFeature())
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Denah Meja Kasir POS (Dine-In)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400">0 Meja</td>
-                                    <td class="py-2.5 px-3 text-center font-mono">5 Meja</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">∞ Unlimited</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">∞ Unlimited</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['free']['table'] ?? 0 }} Meja</td>
+                                    <td class="py-2.5 px-3 text-center font-mono">{{ $tierLimits['standard']['table'] ?? 5 }} Meja</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">{{ ($tierLimits['premium']['table'] ?? null) ? $tierLimits['premium']['table'].' Meja' : '∞ Unlimited' }}</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ ($tierLimits['prestige']['table'] ?? null) ? $tierLimits['prestige']['table'].' Meja' : '∞ Unlimited' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Kitchen Display System (KDS Layar Dapur)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasKds = !empty($tierFeatures[$tKey]['kds']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasKds ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasKds ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasKds)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Self-Order QR Meja Pelanggan</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Aktif</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasSelfOrder = !empty($tierFeatures[$tKey]['self_order']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasSelfOrder ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasSelfOrder ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasSelfOrder)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 @endif
 
@@ -911,10 +1015,24 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Otorisasi PIN Kasir &amp; Shift Kasir</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-emerald-600"><i data-lucide="check" class="w-4 h-4 inline"></i> PIN Kasir</td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Custom Roles</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Granular RBAC</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasPin = !empty($tierFeatures[$tKey]['pos_pin']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasPin ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasPin ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasPin)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Presensi Shift / Absensi Karyawan</td>
@@ -925,45 +1043,129 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Sistem Komisi Kinerja Staf / Kasir</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Per Struk</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Komisi Bertingkat</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasComm = !empty($tierFeatures[$tKey]['commission']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasComm ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasComm ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasComm)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Buku Kasbon &amp; Cicilan Pinjaman Karyawan</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-500">Catatan Kasar</td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Buku Cicilan</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Auto-Potong Gaji</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasLoan = !empty($tierFeatures[$tKey]['loan']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasLoan ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasLoan ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasLoan)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Buku Cicilan
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Skema Pekerja Harian Lepas (Daily Worker)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Upah Harian</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Harian + Borongan</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasDaily = !empty($tierFeatures[$tKey]['daily_worker']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasDaily ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasDaily ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasDaily)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Upah Harian
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Kalkulasi BPJS TK &amp; BPJS Kesehatan</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Kalkulator Persentase</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Modul Terpadu</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasBpjs = !empty($tierFeatures[$tKey]['bpjs']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasBpjs ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasBpjs ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasBpjs)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Terpadu
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Kalkulasi THR Berbasis Tanggal Masuk (Join Date)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">Rumus Manual</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Otomatis Join Date</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasThr = !empty($tierFeatures[$tKey]['thr']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold',
+                                                'prestige' => 'text-purple-600 font-bold',
+                                                'standard' => $hasThr ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasThr ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasThr)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Otomatis Join Date
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Slip Gaji Digital via WhatsApp Otomatis</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-500 bg-indigo-50/30 dark:bg-indigo-950/10">Rekap Sederhana</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Auto-Kirim Slip WA</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasWaSlip = !empty($tierFeatures[$tKey]['payroll_wa']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => $hasWaSlip ? 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold' : 'text-slate-400',
+                                                'prestige' => $hasWaSlip ? 'text-purple-600 font-bold' : 'text-slate-400',
+                                                'standard' => $hasWaSlip ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasWaSlip ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasWaSlip)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Auto-Kirim Slip WA
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
 
                                 <!-- GRUP 7: PERPAJAKAN & PEMBUKUAN KEUANGAN -->
@@ -989,24 +1191,66 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Pajak Karyawan PPh 21 TER (PP 58/2023)</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-500 bg-indigo-50/30 dark:bg-indigo-950/10">Estimasi Bruto</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> TER A/B/C + Des</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasPph21 = !empty($tierFeatures[$tKey]['pph21']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => $hasPph21 ? 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold' : 'text-slate-400',
+                                                'prestige' => $hasPph21 ? 'text-purple-600 font-bold' : 'text-slate-400',
+                                                'standard' => $hasPph21 ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasPph21 ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasPph21)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> TER A/B/C + Des
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Jurnal Akuntansi Otomatis &amp; Laba Rugi Cabang</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-slate-400"><i data-lucide="x" class="w-4 h-4 inline"></i></td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> per Cabang</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Konsolidasian</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasBranchAcc = !empty($tierFeatures[$tKey]['branch_accounting']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => $hasBranchAcc ? 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold' : 'text-slate-400',
+                                                'prestige' => $hasBranchAcc ? 'text-purple-600 font-bold' : 'text-slate-400',
+                                                'standard' => $hasBranchAcc ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasBranchAcc ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasBranchAcc)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Aktif
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td class="py-2.5 px-4 font-medium">Ekspor &amp; Impor Massal Excel/CSV</td>
-                                    <td class="py-2.5 px-3 text-center text-slate-500">Ekspor Dasar</td>
-                                    <td class="py-2.5 px-3 text-center text-emerald-600"><i data-lucide="check" class="w-4 h-4 inline"></i> Lengkap</td>
-                                    <td class="py-2.5 px-3 text-center text-indigo-600 font-bold bg-indigo-50/30 dark:bg-indigo-950/10"><i data-lucide="check" class="w-4 h-4 inline"></i> Lengkap</td>
-                                    <td class="py-2.5 px-3 text-center text-purple-600 font-bold"><i data-lucide="check" class="w-4 h-4 inline"></i> Lengkap</td>
+                                    @foreach(['free', 'standard', 'premium', 'prestige'] as $tKey)
+                                        @php
+                                            $hasData = !empty($tierFeatures[$tKey]['export']) || !empty($tierFeatures[$tKey]['import']);
+                                            $highlightClass = match($tKey) {
+                                                'premium' => $hasData ? 'bg-indigo-50/30 dark:bg-indigo-950/10 text-indigo-600 font-bold' : 'text-slate-400',
+                                                'prestige' => $hasData ? 'text-purple-600 font-bold' : 'text-slate-400',
+                                                'standard' => $hasData ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                                default => $hasData ? 'text-emerald-600 font-bold' : 'text-slate-400',
+                                            };
+                                        @endphp
+                                        <td class="py-2.5 px-3 text-center {{ $highlightClass }}">
+                                            @if($hasData)
+                                                <i data-lucide="check" class="w-4 h-4 inline"></i> Lengkap
+                                            @else
+                                                <i data-lucide="lock" class="w-3.5 h-3.5 inline text-rose-500/80"></i> Terkunci
+                                            @endif
+                                        </td>
+                                    @endforeach
                                 </tr>
 
                                 <!-- GRUP 8: JAMINAN KEAMANAN & DUKUNGAN -->
@@ -1035,7 +1279,7 @@
                                     <td class="py-2.5 px-3 text-center text-slate-500 font-mono">Komunitas</td>
                                     <td class="py-2.5 px-3 text-center font-mono">Email Support</td>
                                     <td class="py-2.5 px-3 text-center font-mono font-bold text-indigo-600 bg-indigo-50/30 dark:bg-indigo-950/10">WhatsApp CS</td>
-                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">24/7 Dedicated Manager</td>
+                                    <td class="py-2.5 px-3 text-center font-mono font-bold text-purple-600">{{ $supportSla['response_time'] ?? 'Prioritas WA (< 15 Menit)' }}</td>
                                 </tr>
                             </tbody>
                             <tfoot class="bg-slate-50/80 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800">

@@ -6,21 +6,24 @@
 @section('og_description', 'Pelajari bagaimana COOCA mengamankan data transaksi kasir, keuangan, dan data pelanggan UMKM dengan arsitektur multi-tenant berstandar enterprise.')
 @section('canonical', url('/security'))
 
-@section('content')
-<script type="application/ld+json">
-{!! json_encode([
-    '@context' => 'https://schema.org',
-    '@type' => 'WebPage',
-    'name' => 'Keamanan Sistem & Perlindungan Data COOCA',
-    'description' => 'Dokumentasi standar keamanan, isolasi tenant, enkripsi, dan kepatuhan regulasi UU PDP No. 27/2022 pada platform COOCA.',
-    'url' => url('/security'),
-    'publisher' => [
+@push('seo')
+    <script type="application/ld+json">
+    {!! json_encode([
+      '@context' => 'https://schema.org',
+      '@type' => 'WebPage',
+      'name' => 'Keamanan Sistem & Perlindungan Data COOCA',
+      'description' => 'Dokumentasi standar keamanan, isolasi tenant, enkripsi, dan kepatuhan regulasi UU PDP No. 27/2022 pada platform COOCA.',
+      'url' => url('/security'),
+      'publisher' => [
         '@type' => 'Organization',
         'name' => 'COOCA',
         'url' => url('/'),
-    ],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-</script>
+      ],
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
+@endpush
+
+@section('content')
 <div class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors pb-24">
 
     <!-- ══════════════════════════════════════════════════════════════════════════ -->
@@ -264,3 +267,4 @@
 
 </div>
 @endsection
+

@@ -53,6 +53,8 @@ final class BillingAndLimitWebController extends Controller implements HasMiddle
         $annualDiscountBadge  = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
         $tierPrices           = $this->entitlementService->getAllTierPrices($business);
         $tierLimits           = $this->entitlementService->getAllTierLimits();
+        $tierFeatures         = $this->entitlementService->getAllTierFeatures();
+        $featureDefinitions   = EntitlementService::FEATURE_DEFINITIONS;
 
         // Active AI Provider Configuration (BYOAI)
         $activeAiConfig = \App\Models\AiProviderConfig::where('business_id', $business->id)
@@ -69,6 +71,8 @@ final class BillingAndLimitWebController extends Controller implements HasMiddle
             'annualDiscountBadge',
             'tierPrices',
             'tierLimits',
+            'tierFeatures',
+            'featureDefinitions',
             'activeAiConfig'
         ));
     }

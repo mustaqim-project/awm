@@ -82,3 +82,4 @@ Halaman `/security` (dan redirect 301 dari `/keamanan`) mempublikasikan 5 pilar 
 Pengujian kepatuhan dan integritas pemasaran publik dikawal oleh suite pengujian otomatis:
 - `tests/Feature/PublicMarketingConsistencyAndRoutesTest.php` (7 skenario: verifikasi sinkronisasi harga/limit dari DB, pembuktian anti-hardcoding dengan update nilai DB, verifikasi pilar halaman `/security`, redirect 301 `/resources/blog`, bebas 404 pada seluruh tautan mega-menu, metadata E-E-A-T artikel, dan SLA dinamis).
 - `tests/Feature/PublicPagesStructureTest.php` (7 skenario struktur halaman publik dan kepatuhan Bento UI).
+

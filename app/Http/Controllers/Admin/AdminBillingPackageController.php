@@ -55,7 +55,10 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
         $storageTopupPrice = SystemSetting::get('storage_topup_price', '50000');
         $storageTopupGb = SystemSetting::get('storage_topup_gb', '1');
 
-        $tierLimits = app(\App\Domain\Billing\EntitlementService::class)->getAllTierLimits();
+        $entitlementService = app(\App\Domain\Billing\EntitlementService::class);
+        $tierLimits = $entitlementService->getAllTierLimits();
+        $tierFeatures = $entitlementService->getAllTierFeatures();
+        $featureDefinitions = \App\Domain\Billing\EntitlementService::FEATURE_DEFINITIONS;
 
         return view('admin.billing-packages.index', compact(
             'type',
@@ -76,7 +79,9 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
             'ownerStorageLimitGb',
             'storageTopupPrice',
             'storageTopupGb',
-            'tierLimits'
+            'tierLimits',
+            'tierFeatures',
+            'featureDefinitions'
         ));
     }
 

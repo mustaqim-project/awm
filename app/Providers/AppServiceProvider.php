@@ -89,6 +89,7 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with([
                 'tierLimits' => $entitlement->getAllTierLimits(),
+                'tierFeatures' => $entitlement->getAllTierFeatures(),
                 'pricingData' => $pricingData,
                 'annualDiscountBadge' => \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan'),
                 'supportSla' => $supportSla,
