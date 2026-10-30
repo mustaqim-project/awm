@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kenapa Pilih COOCA: Sistem Terpadu vs Terpisah | COOCA')
-@section('description', 'Berhenti bayar software terpisah dan spreadsheet tercecer. COOCA satukan kasir POS, stok gudang, pembukuan, dan WhatsApp dalam satu ekosistem terpadu.')
+@section('title', __('public_bos.why_seo_title'))
+@section('description', __('public_bos.why_seo_desc'))
 @section('keywords', 'kenapa pilih cooca, software terintegrasi vs aplikasi terpisah, kelebihan erp umkm, aplikasi bisnis tanpa langganan mahal, efisiensi operasional toko')
 
-@section('og_title', 'Kenapa Pilih COOCA: Sistem Terpadu vs Terpisah | COOCA')
-@section('og_description', 'Berhenti bayar software terpisah. COOCA satukan kasir POS, stok resep, pembukuan riil, dan WhatsApp dalam satu sistem terpadu.')
+@section('og_title', __('public_bos.why_seo_title'))
+@section('og_description', __('public_bos.why_seo_desc'))
 
 @push('seo')
     <script type="application/ld+json">
@@ -268,9 +268,7 @@
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="max-w-3xl space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-red-500">Biaya Tersembunyi</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        4 Dampak Buruk Menggunakan Sistem Terpisah pada Bisnis Anda
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.why_impact_title") }}</h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                         Bukan hanya masalah uang langganan, aplikasi yang tidak terintegrasi menguras energi operasional dan
                         membahayakan kelangsungan usaha.
@@ -285,7 +283,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
                             <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">1. Kebocoran Modal Akibat Selisih Stok & Kas</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{!! __("public_bos.why_impact_1_title") !!}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Saat kasir tidak terhubung dengan kartu stok gudang, kehilangan barang sering kali baru disadari
                             berminggu-minggu kemudian saat stock opname. Anda tidak bisa melacak apakah barang hilang,
@@ -300,7 +298,7 @@
                             class="w-10 h-10 rounded-[12px] bg-red-500/10 text-red-500 flex items-center justify-center font-bold">
                             <i data-lucide="clock" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">2. Laporan Keuangan Selalu Terlambat Masuk</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __("public_bos.why_impact_2_title") }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Pemilik bisnis baru mengetahui apakah toko untung atau rugi di tanggal 15 bulan berikutnya,
                             setelah semua nota kertas diketik ulang. Keputusan bisnis penting jadi terlambat diambil karena
@@ -315,7 +313,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold">
                             <i data-lucide="users-2" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">3. Karyawan Pusing Menghafal Banyak Akun</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __("public_bos.why_impact_3_title") }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Staf baru harus diajari 3-4 software berbeda: password kasir, password inventory, spreadsheet
                             drive, dan aplikasi perpesanan. Tingkat kesalahan operasional staf meningkat dan onboarding
@@ -330,7 +328,7 @@
                             class="w-10 h-10 rounded-[12px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center font-bold">
                             <i data-lucide="trending-down" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold leading-snug text-balance break-words">4. Sulit Buka Cabang Baru dengan Percaya Diri</h3>
+                        <h3 class="text-lg font-bold leading-snug text-balance break-words">{{ __("public_bos.why_impact_4_title") }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Setiap membuka outlet baru, kekacauan operasional berlipat ganda. Pemilik tidak berani
                             berekspansi karena satu cabang saja sudah menyita seluruh waktu dan perhatian akibat kontrol
@@ -350,9 +348,7 @@
                     <span
                         class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Perbandingan
                         Langsung</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        COOCA vs Kombinasi Aplikasi Konvensional
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.why_vs_conventional") }}</h2>
                     <p class="text-sm text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto text-pretty">
                         Ketahui mengapa ratusan pelaku usaha beralih ke satu sistem operasi terpadu.
                     </p>
@@ -549,9 +545,7 @@
                 <div class="text-center space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Tanya
                         Jawab</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        Pertanyaan Seputar Beralih ke COOCA
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.why_faq_title") }}</h2>
                     <p class="text-sm text-neutral-600 dark:text-neutral-400 text-pretty">
                         Ketahui betapa mudahnya memindahkan data bisnis lama Anda ke ekosistem terpadu COOCA.
                     </p>
@@ -619,12 +613,11 @@
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Langkah
                             Cerdas</span>
-                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">Pelajari Bagian Lain dari Ekosistem COOCA
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">{{ __("public_bos.why_explore_ecosystem") }}</h3>
                     </div>
                     <a href="{{ route('public.pricing') }}"
                         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline shrink-0">
-                        <span>Lihat Rincian Biaya</span>
+                        <span>{{ __("public_bos.why_view_costs") }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -693,9 +686,7 @@
                         <div class="lg:col-span-8 space-y-3">
                             <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">Ambil Kendali Bisnis
                                 Anda</span>
-                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.2] text-balance break-words">
-                                Sudah Waktunya Menyatukan Operasional Bisnis Anda
-                            </h2>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.why_cta_time_to_unify") }}</h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed text-pretty">
                                 Mulai dari versi gratis hari ini dan rasakan bagaimana rasanya pulang ke rumah dengan tenang
                                 karena seluruh kasir, stok, dan kas toko terpantau rapi.
@@ -705,12 +696,12 @@
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
                             <a href="{{ route('register') }}"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[48px]">
-                                <span>Daftar COOCA Sekarang</span>
+                                <span>{{ __("public_bos.why_register_now") }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ route('public.support') }}"
                                 class="w-full py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[44px]">
-                                <span>Konsultasi dengan Tim Support</span>
+                                <span>{{ __("public_bos.why_consult_support") }}</span>
                             </a>
                         </div>
                     </div>

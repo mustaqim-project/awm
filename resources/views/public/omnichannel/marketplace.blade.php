@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Integrasi Marketplace & Sinkronisasi Stok Toko | COOCA')
-@section('description', 'Hubungkan Shopee, Tokopedia, & TikTok Shop dengan toko fisik: sinkronisasi stok seketika bebas overselling dan proses pesanan terpusat.')
-@section('og_title', 'Integrasi Marketplace & Sinkronisasi Stok Toko | COOCA')
-@section('og_description', 'Hubungkan Shopee, Tokopedia, & TikTok Shop dengan toko fisik: sinkronisasi stok seketika bebas overselling dan proses pesanan terpusat.')
+@section('title', __('public_omnichannel.marketplace_seo_title'))
+@section('description', __('public_omnichannel.marketplace_seo_desc'))
+@section('og_title', __('public_omnichannel.marketplace_seo_title'))
+@section('og_description', __('public_omnichannel.marketplace_seo_desc'))
 @section('keywords',
     'software integrasi marketplace, sinkronisasi stok shopee tokopedia, aplikasi omnichannel marketplace, kelola toko online terpusat, stok gudang marketplace pos')
 
@@ -342,7 +342,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
                             <i data-lucide="printer" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Buka-Tutup Banyak Tab Seller Center
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.mp_pain_1_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Staf gudang harus login ke 4 tab browser terpisah untuk mencetak label pengiriman satu per satu.
@@ -392,9 +392,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="refresh-cw" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Sinkronisasi Stok Otomatis Seketika (Zero Delay)
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.mp_feat_sync_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             {{ __('public_omnichannel.mp_penalty_protection_desc') }}
                         </p>
@@ -442,7 +440,7 @@
                         class="w-11 h-11 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-[#007AFF]">
                         <i data-lucide="tags" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Pembaruan Harga Fleksibel</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.mp_feat_price_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Ubah harga jual atau naikkan harga sedikit di marketplace untuk menutup biaya komisi platform tanpa
                         perlu menyunting satu per satu di setiap seller center.
@@ -470,7 +468,7 @@
                         class="w-11 h-11 rounded-2xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-500">
                         <i data-lucide="scan-barcode" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Scan Barcode Sebelum Kirim</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.mp_feat_scan_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Verifikasi barang yang dimasukkan ke kardus dengan barcode scanner untuk memastikan tipe dan varian
                         warna sesuai dengan yang dipesan pembeli.
@@ -495,7 +493,7 @@
                         <span>Siklus Penjualan Multi-Channel</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                        Bagaimana Transaksi Marketplace Mengalir di COOCA
+                        {{ __('public_omnichannel.mp_flow_kicker') }}
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-base mt-3">
                         Mengintegrasikan dunia e-commerce dengan operasional fisik toko secara mulus.
@@ -522,7 +520,7 @@
                             class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs border border-amber-500/30">
                             2
                         </div>
-                        <h3 class="text-base font-bold text-white">Pengambilan & Kemas Gudang</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.mp_step_pack_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Staf gudang mencetak resi pengiriman kurir dan nota ambil barang, lalu melakukan scan barcode
                             untuk memastikan barang yang dikemas tepat.
@@ -646,7 +644,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_omnichannel.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -660,7 +658,7 @@
                     </div>
                     <h3
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Pesanan Terpadu
+                        {{ __('public_omnichannel.mp_mod_orders_title') }}
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kelola siklus pesanan dari checkout,
                         packing, hingga siap kirim.</p>
@@ -674,7 +672,7 @@
                     </div>
                     <h3
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Stok Gudang Terpusat
+                        {{ __('public_omnichannel.mod_inventory') }}
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kartu stok perpetual yang menjadi sumber
                         kebenaran tunggal stok barang.</p>
@@ -687,9 +685,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_pos') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kasir toko fisik yang berbagi kuantitas stok
                         yang sama dengan marketplace.</p>
                 </a>

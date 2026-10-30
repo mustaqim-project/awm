@@ -354,7 +354,7 @@
                 <div class="max-w-3xl space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-[#FF3B30]">Masalah ERP Konvensional</span>
                     <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
-                        Mengapa Kebanyakan Software ERP Gagal Diterapkan di Bisnis Berkembang?
+                        {{ __('public_erp.erp_pain_kicker') }}
                     </h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
                         Banyak pengusaha mencoba beralih ke software ERP korporat, namun berujung proyek mangkrak dan uang
@@ -369,7 +369,7 @@
                             class="w-10 h-10 rounded-[12px] bg-red-500/10 text-red-500 flex items-center justify-center font-bold">
                             <i data-lucide="banknote" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold">Biaya Awal Selangit</h3>
+                        <h3 class="text-lg font-bold">{{ __('public_erp.erp_pain_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             ERP tradisional mematok biaya implementasi puluhan hingga ratusan juta rupiah di muka, ditambah
                             biaya konsultan per jam dan biaya lisensi per user yang sangat membebani cash flow bisnis UMKM.
@@ -382,7 +382,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold">
                             <i data-lucide="layers" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold">Terlalu Rumit untuk Staf Toko</h3>
+                        <h3 class="text-lg font-bold">{{ __('public_erp.erp_pain_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             Formulir puluhan kolom dan navigasi kaku membuat kasir dan staf gudang frustrasi. Akhirnya,
                             karyawan kembali mencatat di kertas atau Excel karena sistem baru terlalu lambat dan
@@ -396,7 +396,7 @@
                             class="w-10 h-10 rounded-[12px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center font-bold">
                             <i data-lucide="hourglass" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-lg font-bold">Implementasi Berbulan-bulan</h3>
+                        <h3 class="text-lg font-bold">{{ __('public_erp.erp_pain_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             Proses setup memakan waktu 3-6 bulan hanya untuk kustomisasi modul. Bisnis Anda membutuhkan
                             solusi yang langsung siap dipakai dalam hitungan menit tanpa menghentikan operasional toko yang
@@ -440,7 +440,7 @@
                     <div
                         class="p-6 rounded-[22px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
                         <span class="text-xs font-mono font-bold text-[#34C759]">02 &bull; GUDANG & STOK</span>
-                        <h3 class="text-base font-bold">Penerimaan & Kartu Stok</h3>
+                        <h3 class="text-base font-bold">{{ __('public_erp.erp_step_stock_title') }}</h3>
                         <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             Barang masuk otomatis menambah kuantitas di gudang yang ditentukan. Nilai HPP modal rata-rata
                             tertimbang (FIFO/Average) terhitung presisi.
@@ -450,7 +450,7 @@
                     <div
                         class="p-6 rounded-[22px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
                         <span class="text-xs font-mono font-bold text-[#FF9500]">03 &bull; KASIR POS</span>
-                        <h3 class="text-base font-bold">Penjualan di Kasir Toko</h3>
+                        <h3 class="text-base font-bold">{{ __('public_erp.erp_step_pos_title') }}</h3>
                         <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             Barang dijual lewat kasir POS. Stok langsung terpotong, struk tercetak, dan uang kas masuk
                             diverifikasi sesuai metode pembayaran.
@@ -460,7 +460,7 @@
                     <div
                         class="p-6 rounded-[22px] bg-[#F5F5F7] dark:bg-[#161B26] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
                         <span class="text-xs font-mono font-bold text-purple-500">04 &bull; KEUANGAN & LABA</span>
-                        <h3 class="text-base font-bold">Laporan Laba Rugi Terbit</h3>
+                        <h3 class="text-base font-bold">{{ __('public_erp.erp_step_pl_title') }}</h3>
                         <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
                             Pendapatan, biaya HPP, dan margin laba bersih terakumulasi di buku besar akuntansi dan tersaji
                             di dasbor keuangan owner.
@@ -553,7 +553,7 @@
                     </div>
                     <a href="{{ route('public.pricing') }}"
                         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline">
-                        <span>Lihat Harga Paket ERP</span>
+                        <span>{{ __('public_erp.btn_view_pricing_erp') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -625,7 +625,7 @@
                         <div class="lg:col-span-8 space-y-3">
                             <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">{{ __('public_erp.erp_tidy_ops') }}</span>
                             <h2 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
-                                Waktunya Mengelola Bisnis dengan ERP yang Ringan dan Handal
+                                {{ __('public_erp.erp_bottom_cta_title') }}
                             </h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed">
                                 {{ __('public_erp.erp_tidy_ops_desc') }}
@@ -635,7 +635,7 @@
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
                             <a href="{{ route('register') }}"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[48px]">
-                                <span>Daftar Akun ERP Gratis</span>
+                                <span>{{ __('public_erp.btn_register_erp_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ route('public.demo') }}"

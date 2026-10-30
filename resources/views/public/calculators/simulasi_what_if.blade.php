@@ -299,7 +299,7 @@
                             <div class="pt-2">
                                 <a href="{{ route('register') }}"
                                     class="w-full py-3.5 rounded-[16px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
-                                    <span>Gunakan Simulasi Real-Time di Cooca</span>
+                                    <span>{{ __("public_calculators.btn_use_realtime_sim") }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             </div>
@@ -323,7 +323,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div
                         class="p-5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
-                        <h4 class="font-bold text-[#007AFF] dark:text-[#0A84FF] mb-2">Jebakan Diskon Promo</h4>
+                        <h4 class="font-bold text-[#007AFF] dark:text-[#0A84FF] mb-2">{{ __("public_calculators.sim_trap_discount_promo") }}</h4>
                         <p class="text-xs text-[#6E6E73] dark:text-[#86868B] leading-relaxed">
                             Jika margin keuntungan Anda adalah 30%, memberikan diskon 15% mengharuskan Anda menjual
                             <strong>100% lebih banyak volume</strong> hanya untuk menghasilkan nominal laba bersih yang

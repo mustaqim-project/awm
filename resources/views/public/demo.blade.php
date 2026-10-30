@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Coba Demo Interaktif COOCA: Simulasi Kasir & Ekosistem Bisnis')
-@section('description', 'Uji coba langsung antarmuka kasir cepat, manajemen stok resep bahan baku, dan laporan laba bersih COOCA tanpa instalasi dan tanpa biaya.')
-@section('og_title', 'Coba Demo Interaktif COOCA: Simulasi Kasir & Ekosistem Bisnis')
-@section('og_description', 'Eksplorasi modul kasir, pemotongan stok otomatis, dan dasbor pemilik bisnis COOCA secara langsung.')
+@section('title', __('public_marketing.demo_seo_title'))
+@section('description', __('public_marketing.demo_seo_desc'))
+@section('og_title', __('public_marketing.demo_seo_title'))
+@section('og_description', __('public_marketing.demo_seo_desc'))
 @section('canonical', route('public.demo'))
 @section('og_type', 'website')
 
@@ -50,8 +50,7 @@
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Rasakan Kemudahan COOCA di Layar Anda <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Tanpa Instalasi</span>
+                            {{ __('public_marketing.demo_hero_title_lead') }} <span class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_marketing.demo_hero_title_highlight') }}</span>
                         </h1>
 
                         {{-- Subtitle Paragraph --}}
@@ -98,7 +97,7 @@
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
                                 <i data-lucide="video" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
-                                <span>Minta Demo Panduan Video Call</span>
+                                <span>{{ __('public_marketing.btn_request_video_demo') }}</span>
                             </a>
                         </div>
 
@@ -189,7 +188,7 @@
                             <div class="pt-1">
                                 <a href="{{ route('register') }}"
                                     class="w-full h-11 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-[#007AFF]/25 transition">
-                                    <span>Buka Akses Demo Sekarang</span>
+                                    <span>{{ __('public_marketing.btn_open_demo_access') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -197,11 +196,11 @@
                             {{-- Floating Badges --}}
                             <div class="hidden sm:flex absolute -top-3.5 -right-3.5 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#060B1E]/95 border border-emerald-500/40 shadow-xl backdrop-blur-md text-[11px] font-medium text-white">
                                 <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Interactive Sandbox: <strong class="text-emerald-400">Ready</strong></span>
+                                <span>{{ __('public_marketing.demo_badge_simulation') }}: <strong class="text-emerald-400">{{ __('public_marketing.demo_badge_ready') }}</strong></span>
                             </div>
                             <div class="hidden sm:flex absolute -bottom-3.5 -left-3.5 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#060B1E]/95 border border-[#00C4D8]/40 shadow-xl backdrop-blur-md text-[11px] font-medium text-white">
                                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-[#00C4D8]"></i>
-                                <span>Reset Demo 1-Klik</span>
+                                <span>{{ __('public_marketing.demo_badge_reset') }}</span>
                             </div>
                         </div>
                     </div>
@@ -231,7 +230,7 @@
                             class="w-10 h-10 rounded-[12px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center shrink-0">
                             <i data-lucide="shopping-cart" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">1. Alur Transaksi Kasir POS Cepat</h3>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.demo_step_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Coba menambahkan produk dengan barcode, pilih modifier topping, masukkan diskon toko, pisah
                             tagihan antar tamu (split bill), dan cetak struk pembayaran dalam hitungan detik.
@@ -244,8 +243,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                             <i data-lucide="layers" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">2. Manajemen Resep & Inventaris
-                            Otomatis</h3>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.demo_step_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Lihat bagaimana bahan mentah (biji kopi, susu, kain, sparepart) terpotong otomatis di kartu stok
                             begitu kasir menekan tombol bayar, tanpa perlu rekap fisik berulang.
@@ -258,8 +256,7 @@
                             class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                             <i data-lucide="message-circle" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">3. Notifikasi WhatsApp & Otomasi
-                            Pelanggan</h3>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.demo_step_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Simulasikan pengiriman nota digital ke nomor WhatsApp pelanggan, pengingat jadwal servis rutin,
                             serta notifikasi saat cucian laundry telah selesai disetrika.
@@ -272,7 +269,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
                             <i data-lucide="line-chart" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">4. Dasbor Eksekutif Pemilik Bisnis
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.demo_step_4_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Pantau pergerakan arus kas masuk dan keluar secara live, margin keuntungan kotor, jam-jam
@@ -290,7 +287,7 @@
                         Alur Uji Coba
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Tiga Langkah Mudah Menguji Coba COOCA
+                        {{ __('public_marketing.demo_how_to_title') }}
                     </h2>
                 </div>
 
@@ -298,21 +295,21 @@
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-[#007AFF]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Buka Akses Sandbox</h4>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_sandbox_title') }}</h4>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Daftarkan akun gratis dengan
                             email aktif dan pilih jenis industri usaha Anda.</p>
                     </div>
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-amber-500">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Coba Transaksi Kasir</h4>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_cashier_title') }}</h4>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Gunakan contoh produk yang
                             telah kami sediakan untuk mencoba proses checkout.</p>
                     </div>
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-emerald-500">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Siap untuk Jualan Riil</h4>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_ready_title') }}</h4>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Hapus data uji coba kapan
                             saja dan masukkan katalog produk toko Anda yang sebenarnya.</p>
                     </div>
@@ -396,7 +393,7 @@
                         <span>Coba Sekarang Tanpa Komitmen Pembayaran</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
-                        Mulai Eksplorasi Demo COOCA dalam 60 Detik
+                        {{ __('public_marketing.demo_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed text-pretty">
                         Daftar akun gratis hari ini dan rasakan perbedaan sistem operasi bisnis yang dirancang dengan
@@ -405,12 +402,12 @@
                     <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Akses Demo Gratis</span>
+                            <span>{{ __('public_marketing.btn_access_free_demo') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_marketing.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

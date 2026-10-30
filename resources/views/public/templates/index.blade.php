@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Download Gratis Template Pembukuan & Excel UMKM | COOCA')
-@section('description', 'Koleksi template pembukuan Excel gratis untuk UMKM: Buku Kas Harian Warung, Laporan Keuangan Sederhana, Kartu Stok Opname, dan Invoice Profesional.')
-@section('og_title', 'Download Gratis Template Pembukuan & Excel UMKM | COOCA')
-@section('og_description', 'Koleksi template pembukuan Excel gratis untuk UMKM: Buku Kas Harian Warung, Laporan Keuangan Sederhana, Kartu Stok Opname, dan Invoice.')
+@section('title', __('public_templates.meta_title'))
+@section('description', __('public_templates.meta_desc'))
+@section('og_title', __('public_templates.meta_title'))
+@section('og_description', __('public_templates.meta_desc'))
 @section('canonical', route('template.index'))
 @section('og_type', 'website')
 @section('keywords', 'template pembukuan excel gratis, download format buku kas warung, template laporan laba rugi sederhana, excel stok opname toko, invoice gratis umkm')
@@ -51,7 +51,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
 
             <!-- Breadcrumb Navigation -->
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_templates.breadcrumb_home') }}</a>
                 <span aria-hidden="true" class="text-slate-600">/</span>
                 <span class="text-[#0A84FF] font-semibold" aria-current="page">Template Spreadsheet UMKM</span>
             </nav>
@@ -106,13 +106,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3.5 w-full sm:w-auto">
                         <a href="#daftar-template"
                             class="h-12 px-7 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition shadow-sm min-h-[48px]">
-                            <span>Pilih &amp; Download Template</span>
+                            <span>{!! __("public_templates.btn_choose_download") !!}</span>
                             <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i>
                         </a>
                         <a href="{{ route('register') }}"
                             class="h-12 px-6 rounded-[14px] bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] text-white text-sm font-semibold flex items-center justify-center gap-2 transition active:scale-[0.98] min-h-[48px]">
                             <i data-lucide="zap" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                            <span>Pakai Kasir Cloud Otomatis</span>
+                            <span>{{ __("public_templates.btn_use_cloud_pos") }}</span>
                         </a>
                     </div>
                 </div>
@@ -190,7 +190,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     KATALOG SPREADSHEET
                 </span>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
-                    Pilih Template Sesuai Kebutuhan Usaha
+                    {{ __("public_templates.section_choose_template") }}
                 </h2>
             </div>
 
@@ -253,7 +253,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <span>INGIN LEBIH OTOMATIS TANPA EXCEL MANUAL?</span>
                 </div>
                 <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Coba Aplikasi Kasir COOCA 100% Gratis
+                    {{ __("public_templates.cta_try_free") }}
                 </h3>
                 <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     Setiap transaksi otomatis membuat laporan laba rugi, memotong stok barang gudang, dan mencetak struk kasir tanpa Anda harus mengetik rumus manual di Excel.
@@ -261,7 +261,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             </div>
             <a href="{{ route('register') }}"
                 class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center gap-2 shrink-0 shadow-xs active:scale-[0.98] transition">
-                <span>Daftar Akun Gratis Sekarang</span>
+                <span>{{ __("public_templates.btn_register_free_now") }}</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </section>

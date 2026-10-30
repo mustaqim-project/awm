@@ -225,4 +225,7 @@ return [
     'services_short' => 'Services',
     'calc_hpp_short' => 'Costing',
     'plan_free_solo' => 'Free Plan (Solo)',
+    'main_navigation' => 'Main Navigation',
+    'close_menu' => 'Close Menu',
+    'toggle_sidebar' => 'Toggle Sidebar',
 ];

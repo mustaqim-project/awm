@@ -315,7 +315,7 @@
             <div class="hidden lg:flex flex-1 max-w-md mx-4">
                 <div class="relative w-full">
                     <input type="text" x-model="searchQuery" @input="filterProducts()"
-                        placeholder="Cari menu makanan, minuman, cemilan..."
+                        placeholder="{{ __('qr_order.search_menu_placeholder') }}"
                         class="w-full h-10 pl-9 pr-8 rounded-[12px] bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/10 text-xs text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     <svg class="w-4 h-4 text-white/40 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -332,11 +332,11 @@
                 <!-- Tracking Status Button -->
                 <button type="button" @click="showTrackingModal = true"
                     class="h-9 px-3 rounded-[10px] bg-white/10 hover:bg-white/15 active:scale-95 text-white text-[12px] font-semibold flex items-center gap-1.5 transition border border-white/10"
-                    title="Riwayat & Status Pesanan">
+                    title="{{ __('qr_order.order_history_title') }}">
                     <svg class="w-4 h-4 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" />
                     </svg>
-                    <span class="hidden sm:inline">Status Pesanan</span>
+                    <span class="hidden sm:inline">{{ __("qr_order.order_status") }}</span>
                     <span x-show="recentOrders.length > 0" class="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#34C759] text-white tabular-nums" x-text="recentOrders.length"></span>
                 </button>
 
@@ -380,7 +380,7 @@
                     <div class="lg:hidden">
                         <div class="relative w-full">
                             <input type="text" x-model="searchQuery" @input="filterProducts()"
-                                placeholder="Cari menu makanan atau minuman..."
+                                placeholder="{{ __('qr_order.search_menu_placeholder') }}"
                                 class="w-full h-10 pl-9 pr-8 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-xs text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             <svg class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -397,7 +397,7 @@
                         <button type="button" @click="selectCategory('all')"
                             :class="selectedCategory === 'all' ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/30' : 'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'"
                             class="h-8 sm:h-9 px-4 rounded-[10px] text-xs font-semibold whitespace-nowrap transition-all active:scale-[0.97] flex items-center gap-1.5">
-                            <span>Semua Menu</span>
+                            <span>{{ __('qr_order.all_menu') }}</span>
                             <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold tabular-nums"
                                 :class="selectedCategory === 'all' ? 'bg-white/20 text-white' : 'bg-black/10 dark:bg-white/15 text-black/60 dark:text-white/60'"
                                 x-text="allProducts.length"></span>
@@ -429,13 +429,13 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-[11px] font-bold text-[#007AFF] dark:text-[#0A84FF] uppercase tracking-wider">Status Meja {{ $table->table_number }}</div>
+                                    <div class="text-[11px] font-bold text-[#007AFF] dark:text-[#0A84FF] uppercase tracking-wider">{{ __("qr_order.table_status_prefix", ["table" => $table->table_number]) }}</div>
                                     <div class="text-[13px] font-bold text-black dark:text-white mt-0.5" x-text="recentOrders.length + ' Pesanan sedang diproses'"></div>
                                 </div>
                             </div>
                             <button type="button" @click="showTrackingModal = true"
                                 class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-98 text-white text-xs font-bold transition shadow-sm self-start sm:self-auto">
-                                Pantau Status Pesanan
+                                {{ __("qr_order.monitor_order_status") }}
                             </button>
                         </div>
                     </template>
@@ -488,14 +488,14 @@
                                         <div>
                                             <div class="font-extrabold text-[13px] sm:text-[14px] text-black dark:text-white tabular-nums tracking-tight"
                                                 x-text="formatRupiah(product.selling_price)"></div>
-                                            <span class="text-[10px] text-black/40 dark:text-white/40" x-text="'/' + (product.unit_name || 'Porsi')"></span>
+                                            <span class="text-[10px] text-black/40 dark:text-white/40" x-text="'/' + (product.unit_name || @js(__('qr_order.portion_unit')))"></span>
                                         </div>
 
                                         <button type="button" :disabled="!product.is_available"
                                             class="h-8 px-3 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 disabled:bg-black/10 dark:disabled:bg-white/10 text-white disabled:text-black/30 dark:disabled:text-white/30 text-[11.5px] font-semibold flex items-center gap-1 shadow-sm transition">
-                                            <span x-show="product.is_available && (!product.modifier_groups || product.modifier_groups.length === 0)">+ Tambah</span>
-                                            <span x-show="product.is_available && product.modifier_groups && product.modifier_groups.length > 0">Pilih</span>
-                                            <span x-show="!product.is_available">Habis</span>
+                                            <span x-show="product.is_available && (!product.modifier_groups || product.modifier_groups.length === 0)">{{ __('qr_order.btn_add') }}</span>
+                                            <span x-show="product.is_available && product.modifier_groups && product.modifier_groups.length > 0">{{ __('qr_order.btn_choose') }}</span>
+                                            <span x-show="!product.is_available">{{ __('qr_order.btn_sold_out') }}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -509,9 +509,9 @@
                         <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-black/40 dark:text-white/40">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
                         </div>
-                        <h4 class="font-bold text-[15px] text-black dark:text-white">Tidak Ada Menu Ditemukan</h4>
+                        <h4 class="font-bold text-[15px] text-black dark:text-white">{{ __('qr_order.empty_menu_title') }}</h4>
                         <p class="text-xs text-black/50 dark:text-white/50 max-w-xs mx-auto">
-                            Coba ubah kata kunci pencarian atau pilih kategori menu lainnya.
+                            {{ __('qr_order.empty_menu_desc') }}
                         </p>
                     </div>
                 </div>
@@ -535,7 +535,7 @@
                 <div class="px-5 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-3 shrink-0">
                     <div>
                         <div class="flex items-center gap-2">
-                            <h2 class="font-bold text-[16px] text-black dark:text-white tracking-tight">Keranjang Pesanan</h2>
+                            <h2 class="font-bold text-[16px] text-black dark:text-white tracking-tight">{{ __('qr_order.cart_title') }}</h2>
                             <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] tabular-nums"
                                 x-text="cartTotalItems + ' Item'"></span>
                         </div>
@@ -545,7 +545,7 @@
                     <div class="flex items-center gap-1.5">
                         <button type="button" x-show="cart.length > 0" @click="clearCart()"
                             class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition">
-                            Kosongkan
+                            {{ __('qr_order.cart_empty_btn') }}
                         </button>
                         <button type="button" @click="showCartModal = false"
                             class="pos-cart-btn-close w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition">
@@ -561,13 +561,13 @@
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
                         </div>
                         <div class="min-w-0">
-                            <div class="text-[12px] font-bold text-black dark:text-white truncate" x-text="customerName ? customerName : 'Tamu Tanpa Nama'"></div>
-                            <div class="text-[10.5px] text-black/45 dark:text-white/45 tabular-nums truncate" x-text="customerPhone ? customerPhone : 'Klik ubah untuk isi No. WhatsApp'"></div>
+                            <div class="text-[12px] font-bold text-black dark:text-white truncate" x-text="customerName ? customerName : @js(__('qr_order.customer_guest_anonymous'))"></div>
+                            <div class="text-[10.5px] text-black/45 dark:text-white/45 tabular-nums truncate" x-text="customerPhone ? customerPhone : @js(__('qr_order.customer_phone_prompt'))"></div>
                         </div>
                     </div>
                     <button type="button" @click="showCustomerModal = true"
                         class="text-[11.5px] font-semibold text-[#007AFF] hover:underline shrink-0">
-                        Ubah
+                        {{ __("qr_order.btn_change") }}
                     </button>
                 </div>
 
@@ -596,7 +596,7 @@
                                     </template>
                                 </div>
                                 <button type="button" @click="removeFromCart(idx)"
-                                    class="w-6 h-6 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition shrink-0" title="Hapus item">
+                                    class="w-6 h-6 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition shrink-0" title="{{ __('qr_order.btn_remove_item') }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
@@ -623,7 +623,7 @@
                     <!-- General Table Notes -->
                     <div>
                         <input type="text" x-model="orderGeneralNotes"
-                            placeholder="Catatan Meja (Contoh: Antar bersamaan, sendok 3)..."
+                            placeholder="{{ __('qr_order.table_notes_placeholder') }}"
                             class="w-full h-9 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-xs text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -636,11 +636,11 @@
                             <div class="flex items-center justify-between">
                                 <span class="font-bold text-[11.5px] flex items-center gap-1">
                                     <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /></svg>
-                                    Bayar QRIS
+                                    {{ __('qr_order.pay_qris') }}
                                 </span>
                                 <span class="w-2 h-2 rounded-full" :class="paymentMode === 'pay_now' ? 'bg-[#007AFF]' : 'bg-black/20 dark:bg-white/20'"></span>
                             </div>
-                            <span class="text-[9.5px] text-[#34C759] font-bold mt-1">Langsung Diproses</span>
+                            <span class="text-[9.5px] text-[#34C759] font-bold mt-1">{{ __('qr_order.pay_qris_badge') }}</span>
                         </button>
 
                         <!-- Pay at Cashier -->
@@ -650,18 +650,18 @@
                             <div class="flex items-center justify-between">
                                 <span class="font-bold text-[11.5px] flex items-center gap-1">
                                     <svg class="w-3.5 h-3.5 text-black/60 dark:text-white/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.25A2.25 2.25 0 010 18.75V10.5M18 21h3.75A2.25 2.25 0 0024 18.75V10.5m-24 0l12-7.5 12 7.5M3.75 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21" /></svg>
-                                    Bayar di Kasir
+                                    {{ __('qr_order.pay_cashier') }}
                                 </span>
                                 <span class="w-2 h-2 rounded-full" :class="paymentMode === 'pay_at_cashier' ? 'bg-[#007AFF]' : 'bg-black/20 dark:bg-white/20'"></span>
                             </div>
-                            <span class="text-[9.5px] text-black/45 dark:text-white/45 mt-1">Tunai / EDC Kasir</span>
+                            <span class="text-[9.5px] text-black/45 dark:text-white/45 mt-1">{{ __("qr_order.pay_cashier_desc") }}</span>
                         </button>
                     </div>
 
                     <!-- Total Amount Breakdown -->
                     <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                         <div>
-                            <span class="text-[11px] uppercase tracking-wider font-semibold text-black/50 dark:text-white/50">Total Pembayaran</span>
+                            <span class="text-[11px] uppercase tracking-wider font-semibold text-black/50 dark:text-white/50">{{ __("qr_order.total_payment") }}</span>
                             <div class="text-[18px] sm:text-[20px] font-black text-[#34C759] dark:text-[#30D158] tabular-nums leading-tight"
                                 x-text="formatRupiah(cartTotalAmount)"></div>
                         </div>
@@ -772,7 +772,7 @@
                                         <span x-show="opt.price_delta > 0" class="text-[#34C759] dark:text-[#30D158]"
                                             x-text="'+ ' + formatRupiah(opt.price_delta)"></span>
                                         <span x-show="opt.price_delta <= 0" class="text-black/40 dark:text-white/40">+Rp 0</span>
-                                        <span x-show="!opt.is_available" class="ml-1 text-[10px] text-[#FF3B30] uppercase">Habis</span>
+                                        <span x-show="!opt.is_available" class="ml-1 text-[10px] text-[#FF3B30] uppercase">{{ __('qr_order.btn_sold_out') }}</span>
                                     </div>
                                 </label>
                             </template>
@@ -801,7 +801,7 @@
 
                 <button type="button" @click="commitCustomizationToCart()"
                     class="flex-1 h-12 px-5 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold flex items-center justify-between shadow-sm transition">
-                    <span>Tambahkan ke Pesanan</span>
+                    <span>{{ __('qr_order.btn_add_to_order') }}</span>
                     <span class="tabular-nums font-black text-sm" x-text="formatRupiah(calculatedItemTotal)"></span>
                 </button>
             </div>
@@ -818,8 +818,8 @@
             @click.outside="closeQrisModal()">
             <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
                 <div class="text-left">
-                    <h3 class="font-bold text-[16px] text-black dark:text-white">QRIS Meja {{ $table->table_number }}</h3>
-                    <p class="text-[11px] text-black/50 dark:text-white/50">Scan dengan GoPay, OVO, BCA, Mandiri, atau m-Banking</p>
+                    <h3 class="font-bold text-[16px] text-black dark:text-white">{{ __('qr_order.qris_table_title', ['table' => $table->table_number]) }}</h3>
+                    <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('qr_order.qris_instruction') }}</p>
                 </div>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20">
                     Bebas Biaya Admin
@@ -828,7 +828,7 @@
 
             <!-- Amount Box -->
             <div class="p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 flex items-center justify-between">
-                <span class="text-xs text-black/60 dark:text-white/60 font-medium">Total Pembayaran</span>
+                <span class="text-xs text-black/60 dark:text-white/60 font-medium">{{ __("qr_order.total_payment") }}</span>
                 <span class="font-black text-[18px] text-[#34C759] dark:text-[#30D158] tabular-nums"
                     x-text="activePaymentData ? formatRupiah(activePaymentTotal) : ''"></span>
             </div>
@@ -836,22 +836,22 @@
             <!-- QR Code Render Card -->
             <div class="p-4 rounded-[20px] bg-white border border-black/10 shadow-inner flex flex-col items-center justify-center relative">
                 <template x-if="activePaymentData && activePaymentData.qr_url">
-                    <img :src="activePaymentData.qr_url" alt="QRIS Code" class="w-56 h-56 object-contain rounded-lg">
+                    <img :src="activePaymentData.qr_url" alt="{{ __("qr_order.pay_qris") }}" class="w-56 h-56 object-contain rounded-lg">
                 </template>
                 <div class="mt-2 text-[10.5px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] animate-ping"></span>
-                    <span>Menunggu Pembayaran...</span>
+                    <span>{{ __('qr_order.qris_waiting') }}</span>
                 </div>
             </div>
 
             <!-- Countdown Timer & Auto Polling Notice -->
             <div class="space-y-1 text-xs">
                 <div class="flex items-center justify-center gap-1.5 text-black/70 dark:text-white/70 font-semibold">
-                    <span>Sisa Waktu Bayar:</span>
+                    <span>{{ __('qr_order.qris_time_left') }}</span>
                     <span class="font-mono text-[#FF9500] font-extrabold tabular-nums" x-text="qrisCountdownFormatted">15:00</span>
                 </div>
                 <p class="text-[11px] text-black/40 dark:text-white/40">
-                    Halaman akan otomatis terverifikasi begitu Anda selesai membayar.
+                    {{ __('qr_order.qris_auto_verify') }}
                 </p>
             </div>
 
@@ -860,12 +860,12 @@
                 <template x-if="activePaymentData && activePaymentData.qr_url">
                     <a :href="activePaymentData.qr_url" target="_blank" download="qris-meja-{{ $table->table_number }}.png"
                         class="w-full h-10 rounded-[12px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>Unduh / Simpan QR</span>
+                        <span>{{ __('qr_order.btn_save_qr') }}</span>
                     </a>
                 </template>
                 <button type="button" @click="closeQrisModal()"
                     class="w-full h-10 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-black/60 dark:text-white/60 font-semibold text-xs transition">
-                    Tutup Sementara (Bayar Nanti di Kasir)
+                    {{ __('qr_order.btn_close_pay_later') }}
                 </button>
             </div>
         </div>
@@ -906,7 +906,7 @@
                     </div>
                     <input type="tel" x-model="customerPhone"
                         @input="customerPhone = formatPhoneNumber($event.target.value)"
-                        placeholder="Contoh: 08123456789 atau 628123456789"
+                        placeholder="{{ __('qr_order.phone_input_placeholder') }}"
                         :class="{
                             'border-[#34C759] dark:border-[#30D158] focus:ring-[#34C759]/50': isPhoneValid,
                             'border-[#FF3B30] dark:border-[#FF453A] focus:ring-[#FF3B30]/50': customerPhone.length > 0 && !isPhoneValid,
@@ -914,7 +914,7 @@
                         }"
                         class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border text-[16px] sm:text-xs font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 transition">
                     <p class="text-[10.5px] text-black/45 dark:text-white/45 mt-1">
-                        Gunakan nomor aktif 10–15 digit untuk notifikasi pesanan & bukti pembayaran.
+                        {{ __('qr_order.phone_hint') }}
                     </p>
                 </div>
             </div>
@@ -922,7 +922,7 @@
             <div class="pt-2">
                 <button type="button" @click="saveCustomerInfo()" :disabled="!isCustomerValid"
                     class="w-full h-11 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-1.5">
-                    <span>Mulai Pilih Menu</span>
+                    <span>{{ __("qr_order.btn_start_select_menu") }}</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                 </button>
             </div>
@@ -944,14 +944,14 @@
             </div>
 
             <div>
-                <h3 class="font-bold text-base text-black dark:text-white">Status Pesanan Meja {{ $table->table_number }}</h3>
-                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Pesanan Anda telah diterima oleh kasir &amp; dapur.</p>
+                <h3 class="font-bold text-base text-black dark:text-white">{{ __("qr_order.tracking_title", ["table" => $table->table_number]) }}</h3>
+                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">{{ __("qr_order.tracking_subtitle") }}</p>
             </div>
 
             <!-- Recent Orders Feed -->
             <div class="max-h-56 overflow-y-auto space-y-2.5 text-left pr-1">
                 <template x-if="recentOrders.length === 0">
-                    <div class="text-center py-6 text-xs text-black/40 dark:text-white/40">Belum ada riwayat pesanan di meja ini.</div>
+                    <div class="text-center py-6 text-xs text-black/40 dark:text-white/40">{{ __("qr_order.no_order_history") }}</div>
                 </template>
 
                 <template x-for="ord in recentOrders" :key="ord.id">
@@ -961,7 +961,7 @@
                             <div class="flex items-center gap-1.5">
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold"
                                     :class="ord.is_paid ? 'bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20' : 'bg-[#FF9500]/10 text-[#FF9500] border border-[#FF9500]/20'"
-                                    x-text="ord.is_paid ? 'Lunas' : 'Belum Bayar'"></span>
+                                    x-text="ord.is_paid ? @js(__('qr_order.status_paid')) : @js(__('qr_order.status_unpaid'))"></span>
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#007AFF]/10 text-[#007AFF] uppercase"
                                     x-text="ord.status"></span>
                             </div>
@@ -975,7 +975,7 @@
                             <template x-if="!ord.is_paid && ord.gateway_qr_url">
                                 <button type="button" @click="reopenPaymentModal(ord)"
                                     class="h-7 px-3 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[11px] font-bold shadow-xs active:scale-95 transition flex items-center gap-1">
-                                    <span>Bayar QRIS</span>
+                                    <span>{{ __("qr_order.pay_qris") }}</span>
                                 </button>
                             </template>
                         </div>
@@ -1438,7 +1438,7 @@
                             this.showTrackingModal = true;
                         }
                     } catch (e) {
-                        this.showToast('Terjadi kesalahan jaringan: ' + e.message, 'error');
+                        this.showToast(@js(__('qr_order.network_error', ['error' => ''])) + e.message, 'error');
                     } finally {
                         this.isSubmitting = false;
                     }

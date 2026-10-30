@@ -1,10 +1,10 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Peta Situs (HTML Sitemap) | COOCA')
-@section('description', 'Daftar lengkap seluruh halaman resmi COOCA: modul POS, ERP, kalkulator bisnis gratis, solusi industri, template pembukuan, dan direktori bisnis.')
+@section('description', __('public_marketing.sitemap_seo_desc'))
 
 @section('og_title', 'Peta Situs (HTML Sitemap) | COOCA')
-@section('og_description', 'Daftar lengkap struktur navigasi, solusi industri, alat kalkulator, dan halaman resmi COOCA.')
+@section('og_description', __('public_marketing.sitemap_seo_desc'))
 
 @section('content')
     <div class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors pb-24">
@@ -33,7 +33,7 @@
                         </div>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Peta Situs Resmi <span class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Ekosistem COOCA</span>
+                            {{ __('public_marketing.sitemap_hero_lead') }} <span class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_marketing.sitemap_hero_highlight') }}</span>
                         </h1>
 
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
@@ -57,7 +57,7 @@
                             <a href="{{ url('/sitemap.xml') }}" target="_blank" rel="noopener"
                                 class="h-8 px-3.5 rounded-xl text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0066DF] transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-[0.98]">
                                 <i data-lucide="file-code-2" class="w-3.5 h-3.5"></i>
-                                <span>Buka Raw XML</span>
+                                <span>{{ __('public_marketing.btn_open_raw_xml') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3 text-white/70"></i>
                             </a>
                         </div>

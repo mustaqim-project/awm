@@ -31,13 +31,13 @@
 
                 <!-- Breadcrumbs (Clean Apple HIG Hairline Nav) -->
                 <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-400 overflow-x-auto py-1">
-                    <a href="{{ route('landing') }}" class="hover:text-[#00C4D8] transition-colors shrink-0">Beranda</a>
+                    <a href="{{ route('landing') }}" class="hover:text-[#00C4D8] transition-colors shrink-0">{{ __('common.home') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white/20 shrink-0"></i>
                     @if (isset($category))
                         <span class="shrink-0 text-slate-400">{{ $category }}</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white/20 shrink-0"></i>
                     @endif
-                    <span class="text-white font-semibold shrink-0">{{ $title ?? 'Detail' }}</span>
+                    <span class="text-white font-semibold shrink-0">{{ $title ?? __('common.details') }}</span>
                 </nav>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -56,14 +56,14 @@
                         </div>
 
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-[32rem] lg:max-w-2xl font-normal text-pretty break-words mx-auto lg:mx-0">
-                            {{ $subtitle ?? ($description ?? 'Sistem operasional bisnis terpadu untuk UMKM Indonesia. Menghubungkan kasir, pembukuan, stok, dan pelanggan tanpa pencatatan manual ganda.') }}
+                            {{ $subtitle ?? ($description ?? __('public_marketing.default_subpage_subtitle')) }}
                         </p>
 
                         <!-- Action Buttons (Centered on Mobile, Row on Desktop) -->
                         <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('register') }}"
                                 class="px-8 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[50px]">
-                                <span>Mulai Sekarang - Gratis</span>
+                                <span>{{ __('public_marketing.btn_start_now_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text={{ urlencode('Halo Tim COOCA, saya ingin konsultasi mengenai ' . ($title ?? 'solusi bisnis')) }}"
@@ -190,14 +190,13 @@
                     <section class="space-y-6 sm:space-y-8">
                         <div class="max-w-2xl space-y-2">
                             <p class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                                Kemampuan &amp; Fitur</p>
+                                {!! __('public_marketing.subpage_features_kicker') !!}</p>
                             <h2
                                 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] tracking-tight leading-tight text-balance break-words">
-                                Didesain Khusus untuk Kemudahan Operasional Anda
+                                {{ __('public_marketing.subpage_features_title') }}
                             </h2>
                             <p class="text-sm sm:text-base text-[#6E6E73] dark:text-[#86868B] leading-relaxed text-pretty break-words">
-                                Setiap fungsi dirancang agar langsung dapat digunakan tanpa perlu pelatihan teknis yang
-                                rumit.
+                                {{ __('public_marketing.subpage_features_desc') }}
                             </p>
                         </div>
 
@@ -273,21 +272,20 @@
 
                         <div class="lg:col-span-8 space-y-3">
                             <p class="text-xs font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Langkah Mudah Berikutnya
+                                {{ __('public_marketing.subpage_next_step') }}
                             </p>
                             <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight text-balance break-words">
-                                Mulai Otomatisasi Bisnis Anda Hari Ini
+                                {{ __('public_marketing.subpage_cta_title') }}
                             </h2>
                             <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl font-normal text-pretty break-words">
-                                Bergabunglah bersama ribuan pengusaha UMKM di Indonesia yang telah menghemat waktu dan
-                                meningkatkan kepastian laba bersama Cooca. Tanpa biaya pendaftaran, tanpa kartu kredit.
+                                {{ __('public_marketing.subpage_cta_desc') }}
                             </p>
                         </div>
 
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
                             <a href="{{ route('register') }}"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition min-h-[48px]">
-                                <span>Daftar Gratis Sekarang</span>
+                                <span>{{ __('public_marketing.btn_register_free_now') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>

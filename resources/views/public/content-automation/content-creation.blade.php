@@ -266,7 +266,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
                             <i data-lucide="help-circle" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Writer's Block Setiap Hari</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{!! __('public_content.create_pain_writers_block') !!}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Menghabiskan 2 jam setiap pagi hanya untuk menatap layar kosong dan bingung harus menulis
                             caption apa untuk mempromosikan produk toko hari ini.
@@ -280,7 +280,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
                             <i data-lucide="folder-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Foto & Data Produk Tercecer</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{!! __("public_content.create_pain_scattered_photos") !!}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Foto produk tersimpan di Google Drive, harga ada di kasir POS, dan spesifikasi bahan ada di
                             catatan dapur. Proses mengumpulkan bahan memakan waktu seharian.
@@ -294,7 +294,7 @@
                             class="w-10 h-10 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="message-square-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Salah Tulis Harga & Promo</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{!! __("public_content.create_pain_wrong_pricing") !!}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Admin konten salah mencantumkan harga diskon di Instagram tanpa verifikasi, menyebabkan komplain
                             dari pembeli saat membayar di meja kasir toko.
@@ -328,9 +328,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="box" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Kreasi Konten Langsung dari Produk Nyata
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __("public_content.create_bento_from_products") }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Cukup pilih item dari sistem POS atau stok gudang Anda. Sistem langsung menyajikan foto produk
                             resmi, harga asli, keunggulan bahan baku, dan tautan belanja yang tervalidasi tanpa risiko salah
@@ -355,9 +353,7 @@
                             class="w-11 h-11 rounded-2xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-500">
                             <i data-lucide="check-square" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Alur Persetujuan & Koreksi Draf
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{!! __("public_content.create_bento_approval_flow") !!}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Staf konten menyiapkan draf teks dan materi visual, sementara pemilik bisnis atau manajer
                             marketing dapat menyetujui atau menambahkan catatan revisi sebelum jadwal tayang.
@@ -445,7 +441,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Pilih Produk Unggulan</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.create_step_select_product") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Pilih produk yang ingin dipromosikan langsung dari daftar menu kasir atau inventori gudang yang
                             memiliki stok berlimpah.
@@ -471,7 +467,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Review & Persetujuan</h3>
+                        <h3 class="text-base font-bold text-white">{!! __("public_content.create_step_review_approval") !!}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Staf mengirimkan draf ke pemilik bisnis. Owner memeriksa kata-kata dan visual promo, lalu
                             memberikan persetujuan dengan satu tombol.
@@ -484,7 +480,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Masuk Kalender Tayang</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.create_step_enter_calendar") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Materi konten yang telah disetujui langsung ditempatkan pada slot tanggal dan jam tayang di
                             modul Kalender Konten COOCA.
@@ -574,7 +570,7 @@
                 </div>
                 <a href="{{ route('public.content.calendar') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lanjut ke Kalender Konten</span>
+                    <span>{{ __("public_content.btn_next_to_calendar") }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -601,9 +597,7 @@
                         <i data-lucide="send" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Publikasi Otomatis
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.anl_mod_auto_publish") }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Antrean tayang multi-kanal ke media sosial
                         tanpa unggah manual.</p>
                 </a>

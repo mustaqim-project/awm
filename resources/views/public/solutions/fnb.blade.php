@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Kasir Restoran & Kafe: Resep & Dapur | COOCA')
-@section('description', 'Aplikasi kasir restoran & kafe: denah meja, tiket dapur KOT, potong stok resep (BOM) otomatis, dan hitung HPP porsi akurat tanpa selisih.')
-@section('og_title', 'Aplikasi Kasir Restoran & Kafe: Resep & Dapur | COOCA')
-@section('og_description', 'Aplikasi kasir restoran & kafe: denah meja, tiket dapur KOT, potong stok resep (BOM) otomatis, dan hitung HPP porsi akurat tanpa selisih.')
+@section('title', __('public_solutions.fnb_seo_title'))
+@section('description', __('public_solutions.fnb_seo_desc'))
+@section('og_title', __('public_solutions.fnb_seo_title'))
+@section('og_description', __('public_solutions.fnb_seo_desc'))
 @section('canonical', route('public.solutions.fnb'))
 @section('og_type', 'product')
 @section('keywords',
@@ -143,7 +143,7 @@
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true"></i>
-                                <span>Tanya Solusi Kuliner</span>
+                                <span>{{ __('public_solutions.btn_ask_culinary') }}</span>
                             </a>
                         </div>
 
@@ -285,7 +285,7 @@
                         Tantangan Nyata Industri F&B
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
-                        Kendala Operasional yang Menggerus Margin Restoran dan Kafe
+                        {{ __('public_solutions.fnb_pain_kicker') }}
                     </h2>
                 </div>
 
@@ -320,7 +320,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             03</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Laba Semu Akibat Fluktuasi Harga Bahan
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_pain_leak_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Resto terlihat ramai setiap malam tetapi saldo kas tidak bertambah karena HPP menu tidak
@@ -337,7 +337,7 @@
                         Kapabilitas Khusus F&B
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Fitur Operasional yang Dibangun Khusus untuk Kuliner
+                        {{ __('public_solutions.fnb_feat_kicker') }}
                     </h2>
                 </div>
 
@@ -348,7 +348,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
                             <i data-lucide="layers" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Resep & Potong Stok Bahan (BOM)</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_bom_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Definisikan takaran bahan baku menu Anda (hingga 20 resep di Paket Standard atau tanpa batas di Paket Premium). Setiap 1 porsi menu terjual di kasir, stok biji kopi, susu, atau daging otomatis terpotong presisi.
                         </p>
@@ -374,7 +374,7 @@
                             class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
                             <i data-lucide="layout-grid" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Denah Meja Visual & Split Bill</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_table_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Pantau meja terisi, kosong, atau sedang reservasi. Kasir dapat dengan cepat memindahkan meja
                             tamu, menggabungkan meja, atau memisahkan tagihan pembayaran per orang.
@@ -387,7 +387,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center">
                             <i data-lucide="qr-code" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pemesanan Mandiri QR di Meja</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_qr_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Tamu dapat memindai barcode QR yang ditempel di meja untuk melihat buku menu digital, memesan
                             langsung dari HP, dan bayar lewat QRIS tanpa menunggu staf.
@@ -413,8 +413,7 @@
                             class="w-10 h-10 rounded-[12px] bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
                             <i data-lucide="clock" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Shift Kasir & Tutup Buku Anti
-                            Selisih</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_shift_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Pencatatan kas modal awal, penerimaan tunai, QRIS, kartu debit, dan pengeluaran petty cash.
                             Laporan tutup shift kasir tercetak rapi untuk mencegah kebocoran uang kas.
@@ -435,14 +434,14 @@
                         Alur Ekosistem Kuliner
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-white mt-1">
-                        Bagaimana COOCA Menghubungkan Dapur, Kasir, dan Finansial
+                        {{ __('public_solutions.fnb_flow_kicker') }}
                     </h2>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">Pemesanan Masuk</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_order_title') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed">Pelayan input via tablet atau tamu scan QR
                             mandiri di meja.</p>
                     </div>
@@ -460,7 +459,7 @@
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-purple-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">Jurnal Kas Masuk</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_cash_title') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed">Pembayaran lunas langsung tercatat di laporan
                             laba rugi owner.</p>
                     </div>
@@ -549,35 +548,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jelajahi Solusi Industri & Modul Terkait</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Kasir</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            POS Kasir Cepat</h4>
+                            {{ __('public_solutions.cross_title_pos_fast') }}</h4>
                     </a>
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Stok</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Manajemen Stok & BOM</h4>
+                            {{ __('public_solutions.cross_title_stock_bom') }}</h4>
                     </a>
                     <a href="{{ route('public.solutions.retail') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Solusi Industri</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Retail & Swalayan</h4>
+                            {{ __('public_solutions.cross_title_retail') }}</h4>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Kasir Cafe</h4>
+                            {{ __('public_solutions.cross_title_cafe') }}</h4>
                     </a>
                 </div>
             </section>
@@ -599,7 +598,7 @@
                         <span>Tersedia untuk Android, Tablet, Laptop & Printer Kasir</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Tingkatkan Kecepatan Pelayanan Kafe dan Resto Anda Sekarang
+                        {{ __('public_solutions.fnb_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
                         Daftar akun COOCA hari ini dan nikmati kemudahan mencatat pesanan meja, sinkronisasi tiket dapur,
@@ -609,12 +608,12 @@
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Coba F&B POS Gratis</span>
+                            <span>{{ __('public_solutions.btn_try_fnb_free') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_solutions.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

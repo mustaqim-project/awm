@@ -364,9 +364,7 @@
         <section class="py-16 sm:py-20 bg-[#FAFAFC] dark:bg-[#070A14] border-y border-slate-200/80 dark:border-white/10">
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
-                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">
-                        Tantangan Manajemen Staf
-                    </h2>
+                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_erp.hrm_pain_kicker') }}</h2>
                     <p class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                         Apakah Anda Sering Kehilangan Waktu Mengurus Jadwal & Rekap Gaji Karyawan?
                     </p>
@@ -449,9 +447,7 @@
                             class="w-11 h-11 rounded-2xl bg-teal-100 dark:bg-teal-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="calendar-days" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Penyusunan Roster Shift Multi-Cabang
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.hrm_feat_roster_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Susun jadwal kerja tim dengan drag-and-drop sederhana untuk pola shift pagi, siang, malam,
                             maupun split shift. Staf langsung menerima jadwal mereka di smartphone masing-masing, lengkap
@@ -498,7 +494,7 @@
                         class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                         <i data-lucide="award" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Pencatatan Komisi Otomatis</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.hrm_feat_comm_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Setiap transaksi di kasir dapat diatribusikan ke staf penjual atau teknisi pengerja. Sistem otomatis
                         mengumpulkan nominal komisi sesuai target bulanan yang telah ditetapkan.
@@ -526,7 +522,7 @@
                         class="w-11 h-11 rounded-2xl bg-amber-100 dark:bg-amber-950 flex items-center justify-center text-amber-600 dark:text-amber-400">
                         <i data-lucide="receipt" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Rekap Gaji Siap Bayar</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.hrm_feat_payroll_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Ekspor rekapitulasi gaji bulanan yang menggabungkan gaji pokok per shift, tunjangan kehadiran,
                         potongan keterlambatan, dan komisi penjualan langsung ke modul Keuangan.
@@ -573,7 +569,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             2
                         </div>
-                        <h3 class="text-base font-bold text-white">Presensi Masuk Shift</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.hrm_step_clockin_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Staf tiba di toko dan membuka shift kasir dengan PIN unik. Waktu kedatangan dan modal awal kasir
                             tercatat rapi di sistem secara real-time.
@@ -599,7 +595,7 @@
                             class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-xs border border-purple-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Otomasi ke Beban Gaji</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.hrm_step_expense_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Di akhir periode, rekap jam kerja dan komisi disetujui owner dan langsung dicatat sebagai Beban
                             Gaji Karyawan di modul Akuntansi & Finance.
@@ -694,7 +690,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#00C4D8] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_erp.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -707,9 +703,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_pos_label') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Buka dan tutup shift kasir dengan
                         rekonsiliasi laci kas akurat.</p>
                 </a>
@@ -735,9 +729,7 @@
                         <i data-lucide="book-open" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Akuntansi Biaya SDM
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_hr_accounting') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Jurnal otomatis beban gaji dan komisi
                         penjualan ke pos akun laba rugi.</p>
                 </a>
@@ -772,7 +764,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Tertibkan Jadwal & Produktivitas Tim Anda Sekarang
+                        {{ __('public_erp.hrm_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Bebaskan manajer toko dari kerumitan shift manual dan ciptakan lingkungan kerja yang adil dan
@@ -785,7 +777,7 @@
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm backdrop-blur-sm transition-all">
-                            Konsultasi Kebutuhan Staf
+                            {{ __('public_erp.btn_consult_staff') }}
                         </a>
                     </div>
                 </div>

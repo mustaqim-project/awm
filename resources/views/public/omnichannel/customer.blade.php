@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Database Pelanggan Terpadu & CRM Omnichannel | COOCA')
-@section('description', 'Satukan data pelanggan dari toko fisik, WhatsApp, dan marketplace ke dalam satu profil. Pantau riwayat belanja utuh tanpa data ganda.')
-@section('og_title', 'Database Pelanggan Terpadu & CRM Omnichannel | COOCA')
-@section('og_description', 'Satukan data pelanggan dari toko fisik, WhatsApp, dan marketplace ke dalam satu profil. Pantau riwayat belanja utuh tanpa data ganda.')
+@section('title', __('public_omnichannel.customer_seo_title'))
+@section('description', __('public_omnichannel.customer_seo_desc'))
+@section('og_title', __('public_omnichannel.customer_seo_title'))
+@section('og_description', __('public_omnichannel.customer_seo_desc'))
 @section('keywords',
     'software omnichannel customer, single customer view indonesia, database pelanggan lintas channel, konsolidasi data pembeli toko fisik online, resolusi identitas crm')
 
@@ -321,8 +321,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
                             <i data-lucide="user-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pelanggan VIP Dianggap Pembeli Biasa
-                        </h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.cust_pain_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Konsumen telah berbelanja jutaan rupiah di Shopee toko Anda, namun saat datang ke outlet fisik
                             kasir memperlakukannya seperti pembeli pertama yang tidak dikenal.
@@ -336,7 +335,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
                             <i data-lucide="copy" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Duplikasi Data & Kontak Ganda</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.cust_pain_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Satu orang pelanggan tercatat 3 kali di spreadsheet berbeda dengan nomor handphone yang sama,
                             membuat analisis ukuran belanja (Customer Lifetime Value) menjadi keliru.
@@ -350,7 +349,7 @@
                             class="w-10 h-10 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="target" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Promosi Tidak Tepat Sasaran</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.cust_pain_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Mengirimkan kupon diskon barang yang baru saja dibeli pelanggan kemarin di toko online. Konsumen
                             merasa promosi Anda tidak dipersonalisasi dan mengabaikan penawaran berikutnya.
@@ -363,9 +362,7 @@
         {{-- 3. CORE OMNICHANNEL CUSTOMER CAPABILITIES: Bento Apple HIG --}}
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                    Fitur Single Customer View COOCA
-                </h2>
+                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">{{ __('public_omnichannel.cust_feature_kicker') }}</h2>
                 <p class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
                     Membangun Hubungan Personal dengan Setiap Konsumen
                 </p>
@@ -384,9 +381,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="merge" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Penyatuan Profil Otomatis (Smart Identity Merge)
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.cust_feat_1_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Ketika pembeli memasukkan nomor HP atau email yang sama saat bertransaksi di kasir maupun saat
                             checkout toko online, sistem secara otomatis menggabungkan profil mereka ke dalam satu identitas
@@ -411,9 +406,7 @@
                             class="w-11 h-11 rounded-2xl bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-500">
                             <i data-lucide="heart" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Preferensi & Catatan Layanan Toko
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.cust_feat_2_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Simpan catatan penting seperti selera pesanan, tipe kendaraan, ukuran pakaian, hingga alamat
                             pengiriman favorit yang langsung tampil di layar kasir POS saat nama pelanggan dipanggil.
@@ -434,7 +427,7 @@
                         class="w-11 h-11 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-[#007AFF]">
                         <i data-lucide="history" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Riwayat Transaksi Lengkap</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.cust_feat_3_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Lihat tanggal pembelian, produk yang dibeli, dan metode pembayaran di setiap channel penjualan dalam
                         satu linimasa kronologis yang teratur.
@@ -487,7 +480,7 @@
                         <span>Siklus Penyatuan Identitas Konsumen</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                        Bagaimana Data Pelanggan Bersatu di COOCA
+                        {{ __('public_omnichannel.cust_flow_kicker') }}
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-base mt-3">
                         Mengintegrasikan setiap interaksi belanja menjadi hubungan bisnis jangka panjang.
@@ -501,7 +494,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Interaksi di Berbagai Kanal</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.cust_step_1_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Pelanggan melakukan transaksi di kasir POS toko fisik, memesan lewat chat WhatsApp, atau membeli
                             di marketplace online resmi Anda.
@@ -527,7 +520,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Profil 360° Terupdate</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.cust_step_2_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Total belanja seumur hidup (CLV), status tier loyalty member, dan preferensi produk langsung
                             terbarui di seluruh sistem secara real-time.
@@ -540,7 +533,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Layanan Lebih Personal</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.cust_step_3_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Staf toko menyapa pelanggan dengan hangat, menawarkan produk pelengkap yang relevan, dan
                             meningkatkan kepuasan serta loyalitas belanja.
@@ -639,7 +632,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_omnichannel.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -666,9 +659,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_pos') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Tampilkan profil dan preferensi pelanggan
                         langsung di meja kasir.</p>
                 </a>
@@ -717,7 +708,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Mulai Kenali Pelanggan Anda Secara Menyeluruh
+                        {{ __('public_omnichannel.cust_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Satukan database pelanggan lintas saluran Anda dan hadirkan pengalaman belanja personal yang

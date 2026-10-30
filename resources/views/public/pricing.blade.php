@@ -1,12 +1,10 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Daftar Harga & Paket Transparan Tanpa Biaya Tersembunyi | COOCA')
-@section('description',
-    'Pilihan paket jujur dan transparan untuk UMKM Indonesia. Mulai dari gratis selamanya hingga
-    paket lengkap multi-cabang. Tanpa biaya instalasi dan bebas upgrade kapan saja.')
+@section('title', __('public_marketing.pricing_seo_title'))
+@section('description', __('public_marketing.pricing_seo_desc'))
 
-@section('og_title', 'Daftar Harga & Paket Transparan | COOCA')
-@section('og_description', 'Pilihan paket jujur dan terjangkau untuk UMKM Indonesia. Mulai gratis selamanya tanpa kartu kredit hingga paket multi-cabang lengkap.')
+@section('og_title', __('public_marketing.pricing_seo_title'))
+@section('og_description', __('public_marketing.pricing_seo_desc'))
 
 @section('content')
 @php
@@ -141,13 +139,13 @@
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Mulai Gratis Sekarang</span>
+                                <span>{{ __('public_marketing.btn_start_free_now') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <button type="button" @click="openComparison()"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px] cursor-pointer">
                                 <i data-lucide="columns-3" class="w-4 h-4 text-[#00C4D8] shrink-0"></i>
-                                <span>Bandingkan Semua Fitur</span>
+                                <span>{{ __('public_marketing.btn_compare_all_features') }}</span>
                             </button>
                         </div>
 
@@ -209,7 +207,7 @@
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight">Rp 0</div>
                                     <div class="text-[10px] text-emerald-400 font-medium">1 Toko &bull; {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln</div>
                                     <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, {{ $tierLimits['free']['product'] ?? 10 }} produk</div>
-                                    <a href="/aplikasi-kasir-gratis" class="text-[10px] text-emerald-400 font-semibold hover:underline block pt-1">Detail Paket Gratis &rarr;</a>
+                                    <a href="/aplikasi-kasir-gratis" class="text-[10px] text-emerald-400 font-semibold hover:underline block pt-1">{{ __('public_marketing.btn_free_plan_detail') }} &rarr;</a>
                                 </div>
 
                                 <!-- Plan 2: Standard (Populer) -->
@@ -289,7 +287,7 @@
                                 <div
                                     class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                                     Mulai Usaha</div>
-                                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">Gratis</h2>
+                                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">{{ __('billing.plan_free') }}</h2>
                                 <p
                                     class="text-xs text-slate-600 dark:text-slate-400 mt-1 min-h-[34px] leading-relaxed text-pretty">
                                     Cocok untuk toko kelontong, warung, atau usaha rumahan yang baru merintis.
@@ -342,12 +340,12 @@
                         <div class="space-y-2 pt-4">
                             <a href="{{ route('register') }}"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-100 dark:bg-white/[0.08] hover:bg-slate-200 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                                Mulai Gratis Sekarang
+                                {{ __('public_marketing.btn_start_free_now') }}
                             </a>
 
                             <button type="button" @click="openDetail('free')"
                                 class="w-full py-2 text-center text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition">
-                                Lihat Rincian Fitur
+                                {{ __('public_marketing.btn_view_feature_details') }}
                             </button>
                         </div>
                     </div>
@@ -426,12 +424,12 @@
                         <div class="space-y-2 pt-4">
                             <a href="{{ route('register') }}"
                                 class="w-full py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm text-center transition shadow-sm active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                                Pilih Paket Standard
+                                {{ __('public_marketing.btn_choose_standard') }}
                             </a>
 
                             <button type="button" @click="openDetail('standard')"
                                 class="w-full py-2 text-center text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition">
-                                Lihat Rincian Fitur
+                                {{ __('public_marketing.btn_view_feature_details') }}
                             </button>
                         </div>
                     </div>
@@ -503,12 +501,12 @@
                         <div class="space-y-2 pt-4">
                             <a href="{{ route('register') }}"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                                Pilih Paket Premium
+                                {{ __('public_marketing.btn_choose_premium') }}
                             </a>
 
                             <button type="button" @click="openDetail('premium')"
                                 class="w-full py-2 text-center text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition">
-                                Lihat Rincian Fitur
+                                {{ __('public_marketing.btn_view_feature_details') }}
                             </button>
                         </div>
                     </div>
@@ -583,12 +581,12 @@
                         <div class="space-y-2 pt-4">
                             <a href="{{ route('register') }}"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-100 dark:bg-white/[0.08] hover:bg-slate-200 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                                Pilih Paket Prestige
+                                {{ __('public_marketing.btn_choose_prestige') }}
                             </a>
 
                             <button type="button" @click="openDetail('prestige')"
                                 class="w-full py-2 text-center text-xs font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition">
-                                Lihat Rincian Fitur
+                                {{ __('public_marketing.btn_view_feature_details') }}
                             </button>
                         </div>
                     </div>
@@ -617,7 +615,7 @@
                                 </div>
                                 <h3
                                     class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
-                                    Bingung Memilih Paket? Jawab 3 Pertanyaan Ini
+                                    {{ __('public_marketing.pricing_wizard_title') }}
                                 </h3>
                                 <p
                                     class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
@@ -645,14 +643,14 @@
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-3 rounded-[14px] border text-xs sm:text-sm text-center transition min-h-[48px] flex items-center justify-center">
-                                            2 – 3 Cabang
+                                            {{ __('public_marketing.btn_branches_2_3') }}
                                         </button>
                                         <button type="button" @click="calcOutlets = 'multi'; refreshIcons()"
                                             :class="calcOutlets === 'multi' ?
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-3 rounded-[14px] border text-xs sm:text-sm text-center transition min-h-[48px] flex items-center justify-center">
-                                            Lebih dari 3 Cabang
+                                            {{ __('public_marketing.btn_branches_more_3') }}
                                         </button>
                                     </div>
                                 </div>
@@ -675,7 +673,7 @@
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-3 rounded-[14px] border text-xs sm:text-sm text-center transition min-h-[48px] flex items-center justify-center">
-                                            Ada Kasir, Staf Gudang, atau Admin
+                                            {{ __('public_marketing.btn_has_staff') }}
                                         </button>
                                     </div>
                                 </div>
@@ -691,21 +689,21 @@
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-2.5 rounded-[14px] border text-xs text-center transition min-h-[48px] flex items-center justify-center leading-tight">
-                                            Cetak Struk &amp; Nota Cepat
+                                            {{ __('public_marketing.btn_fast_receipt') }}
                                         </button>
                                         <button type="button" @click="calcNeed = 'stock_hpp'; refreshIcons()"
                                             :class="calcNeed === 'stock_hpp' ?
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-2.5 rounded-[14px] border text-xs text-center transition min-h-[48px] flex items-center justify-center leading-tight">
-                                            Kontrol Stok &amp; Modal HPP
+                                            {{ __('public_marketing.btn_stock_cogs') }}
                                         </button>
                                         <button type="button" @click="calcNeed = 'omnichannel'; refreshIcons()"
                                             :class="calcNeed === 'omnichannel' ?
                                                 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold' :
                                                 'border-black/[0.08] dark:border-white/[0.1] text-slate-700 dark:text-slate-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'"
                                             class="p-2.5 rounded-[14px] border text-xs text-center transition min-h-[48px] flex items-center justify-center leading-tight">
-                                            Sinkron Stok Marketplace
+                                            {{ __('public_marketing.btn_sync_marketplace') }}
                                         </button>
                                         <button type="button" @click="calcNeed = 'ai_buss'; refreshIcons()"
                                             :class="calcNeed === 'ai_buss' ?
@@ -743,7 +741,7 @@
                                     dan mencetak nota tanpa keluar biaya sepeser pun.
                                 </p>
                                 <a href="/aplikasi-kasir-gratis" class="text-xs text-[#007AFF] dark:text-[#00C4D8] font-bold hover:underline inline-flex items-center gap-1">
-                                    <span>Pelajari Rincian Fitur Paket Kasir Gratis</span>
+                                    <span>{{ __('public_marketing.btn_learn_free_details') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
@@ -808,7 +806,7 @@
                             <div class="pt-2">
                                 <a href="{{ route('register') }}"
                                     class="w-full py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm text-center transition shadow-sm active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                                    Daftar dengan Paket Ini
+                                    {{ __('public_marketing.btn_register_this_plan') }}
                                 </a>
                             </div>
                         </div>
@@ -904,8 +902,7 @@
                                 <i data-lucide="printer" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-base font-bold text-slate-900 dark:text-white">Dukungan Mesin Kasir &amp;
-                                    Printer</h4>
+                                <h4 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_marketing.pricing_hardware_support_title') }}</h4>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
                                     Kompatibel dengan printer thermal bluetooth 58mm/80mm, laci uang kasir (cash drawer),
                                     dan barcode scanner.
@@ -946,7 +943,7 @@
                                 KESEMPATAN KHUSUS
                             </div>
                             <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                                Coba 1 Bulan Gratis Paket Berbayar Tanpa Risiko
+                                {{ __('public_marketing.pricing_trial_1_month_title') }}
                             </h3>
                             <p
                                 class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed text-pretty">
@@ -959,7 +956,7 @@
                     <div class="shrink-0 w-full sm:w-auto">
                         <a href="{{ route('register') }}"
                             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm transition active:scale-[0.98] min-h-[48px]">
-                            <span>Daftar Sekarang</span>
+                            <span>{{ __('public_marketing.btn_register_now') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     </div>
@@ -989,7 +986,7 @@
 
                     <a href="{{ route('public.resources.faq') }}"
                         class="text-xs sm:text-sm font-bold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1 transition-colors self-start sm:self-auto shrink-0">
-                        <span>Lihat Semua FAQ</span>
+                        <span>{{ __('public_marketing.btn_view_all_faq') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                     </a>
                 </div>
@@ -1095,8 +1092,7 @@
                             class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden">
                             <button type="button" @click="toggleFaq(6)"
                                 class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-slate-900 dark:text-white cursor-pointer min-h-[48px]">
-                                <span class="min-w-0 flex-1 leading-snug">Apakah saya bisa berpindah paket kapan
-                                    saja?</span>
+                                <span class="min-w-0 flex-1 leading-snug">{{ __('public_marketing.faq_can_switch_plans') }}</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 transition-transform shrink-0"
                                     :class="openFaq === 6 ? 'rotate-180 text-[#007AFF]' : ''"></i>
                             </button>
@@ -1126,7 +1122,7 @@
                             KONSULTASI GRATIS TANPA KEWAJIBAN MEMBELI
                         </div>
                         <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Masih Ragu atau Butuh Penjelasan Lebih Lanjut?
+                            {{ __('public_marketing.pricing_still_hesitant_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-pretty">
                             Bapak dan Ibu dapat langsung berkonsultasi santai dengan tim kami via WhatsApp. Kami siap
@@ -1145,7 +1141,7 @@
 
                         <a href="{{ route('register') }}"
                             class="px-6 py-3.5 rounded-[14px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-900 dark:text-white font-semibold text-xs sm:text-sm transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
-                            Coba Paket Gratis Sendiri
+                            {{ __('public_marketing.btn_try_free_solo') }}
                         </a>
                     </div>
                 </div>
@@ -1186,7 +1182,7 @@
                             MATRIKS PERBANDINGAN LENGKAP
                         </div>
                         <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
-                            Bandingkan Semua Fitur Paket COOCA
+                            {{ __('public_marketing.pricing_compare_features_title') }}
                         </h3>
                     </div>
 
@@ -1235,7 +1231,7 @@
                     <div class="space-y-3">
                         <h4
                             class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                            1. Kapasitas &amp; Batas Kuota Toko
+                            {{ __('public_marketing.pricing_sec_1_capacity') }}
                         </h4>
                         <div class="rounded-[16px] border border-black/[0.06] dark:border-white/[0.08] overflow-x-auto">
                             <table class="w-full min-w-[550px] text-left text-xs sm:text-sm">
@@ -1284,7 +1280,7 @@
                     <div class="space-y-3">
                         <h4
                             class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                            2. Fitur Kasir &amp; Nota Penjualan
+                            {{ __('public_marketing.pricing_sec_2_pos') }}
                         </h4>
                         <div class="rounded-[16px] border border-black/[0.06] dark:border-white/[0.08] overflow-x-auto">
                             <table class="w-full min-w-[550px] text-left text-xs sm:text-sm">
@@ -1343,7 +1339,7 @@
                     <div class="space-y-3">
                         <h4
                             class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                            3. Inventori, Stok &amp; Bahan Baku
+                            {{ __('public_marketing.pricing_sec_3_inv') }}
                         </h4>
                         <div class="rounded-[16px] border border-black/[0.06] dark:border-white/[0.08] overflow-x-auto">
                             <table class="w-full min-w-[550px] text-left text-xs sm:text-sm">
@@ -1438,7 +1434,7 @@
                     <div class="flex items-center gap-2 w-full sm:w-auto">
                         <button type="button" @click="closeComparison()"
                             class="px-5 py-2.5 rounded-[12px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-800 dark:text-slate-200 font-semibold text-xs sm:text-sm min-h-[44px]">
-                            Tutup
+                            {{ __(\'common.close\') }}
                         </button>
                         <a href="{{ route('register') }}"
                             class="flex-1 sm:flex-initial px-6 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
@@ -1483,7 +1479,7 @@
                             RINCIAN SPESIFIKASI
                         </div>
                         <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white capitalize mt-0.5">
-                            Paket <span x-text="activeDetailModal"></span>
+                            {{ __('public_marketing.pricing_modal_plan_prefix') }} <span x-text="activeDetailModal"></span>
                         </h3>
                     </div>
 
@@ -1596,11 +1592,11 @@
                     class="p-4 sm:p-5 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0">
                     <button type="button" @click="closeDetail()"
                         class="px-4 py-2.5 rounded-[12px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-800 dark:text-slate-200 font-semibold text-xs sm:text-sm min-h-[44px]">
-                        Tutup
+                        {{ __(\'common.close\') }}
                     </button>
                     <a href="{{ route('register') }}"
                         class="px-5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm min-h-[44px] flex items-center justify-center">
-                        Daftar Sekarang
+                        {{ __('public_marketing.btn_register_now') }}
                     </a>
                 </div>
 

@@ -28,6 +28,11 @@ return [
         'daily_eval' => 'Daily Evaluation',
         'review_proposals' => 'Review Proposals',
         'ai_studio' => 'AI Studio',
+        'chat_ask' => 'Chat / Ask AI',
+        'action_approval' => 'Action Approval',
+        'office_hq' => 'AI Office Headquarters',
+        'pos' => 'POS Cashier',
+        'pos_terminal_tooltip' => 'Open POS Cashier Terminal',
     ],
 
     'pos' => [

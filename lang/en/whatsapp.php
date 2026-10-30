@@ -416,4 +416,14 @@ return [
     'csv_logs_status'                  => 'Status',
     'csv_logs_meta_id'                 => 'Meta Message ID',
     'csv_logs_error'                   => 'Meta Response / Error',
+
+    // WhatsApp Meta Setup Guide Component
+    'guide_official_method'            => 'Official Meta WhatsApp 1-Click Method',
+    'guide_official_desc'              => 'Official account registration is completed instantly via Meta Facebook official popup. Simply sign in to your Facebook account, select or register your business WhatsApp phone number, and WhatsApp Cloud API integration is connected automatically with a free tier of 1,000 conversations/month.',
+    'guide_step_1_title'               => '1. Open Meta Popup',
+    'guide_step_1_desc'                => 'Click connect button',
+    'guide_step_2_title'               => '2. Facebook Login',
+    'guide_step_2_desc'                => 'Select account & store number',
+    'guide_step_3_title'               => '3. Instantly Connected',
+    'guide_step_3_desc'                => 'Ready to send digital receipts',
 ];

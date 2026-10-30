@@ -184,4 +184,30 @@ return [
     'why_unified_system' => 'Sistem Terpadu Bebas Duplikasi Data',
     'why_account_one' => '1 Akun untuk Seluruh Operasional Toko',
     'why_easy_migration' => 'Migrasi Data Mudah & Didampingi',
+
+    // New additions
+    'how_seo_desc' => 'Pelajari alur data otomatis COOCA: dari transaksi kasir POS langsung potong stok bahan baku resep dan catat pembukuan laba rugi real-time.',
+    'how_back_to_overview' => 'Kembali ke Overview BOS',
+    'btn_register_free_now' => 'Daftar Gratis Sekarang',
+    'how_examples_title' => 'Lihat Contoh Nyata di Dua Jenis Bisnis',
+    'how_explore_components' => 'Eksplorasi Komponen Sistem Terhubung',
+    'how_cta_bottom_title' => 'Buktikan Kemudahan Alur Kerja COOCA pada Toko Anda',
+
+    'overview_seo_title' => 'Business Operating System untuk Kendali Operasional Bisnis | COOCA',
+    'overview_seo_desc' => 'COOCA adalah Business Operating System terpadu: kasir POS, pembukuan, stok gudang, dan pesanan online tersinkronisasi otomatis.',
+
+    'why_seo_title' => 'Kenapa Pilih COOCA: Sistem Terpadu vs Terpisah | COOCA',
+    'why_seo_desc' => 'Berhenti bayar software terpisah dan spreadsheet tercecer. COOCA satukan kasir POS, stok resep, pembukuan akuntansi, dan WhatsApp CRM.',
+    'why_view_costs' => 'Lihat Rincian Biaya',
+    'why_register_now' => 'Daftar COOCA Sekarang',
+    'why_consult_support' => 'Konsultasi dengan Tim Support',
+    'why_impact_title' => '4 Dampak Buruk Menggunakan Sistem Terpisah pada Bisnis Anda',
+    'why_impact_1_title' => '1. Kebocoran Modal Akibat Selisih Stok & Kas',
+    'why_impact_2_title' => '2. Laporan Keuangan Selalu Terlambat Masuk',
+    'why_impact_3_title' => '3. Karyawan Pusing Menghafal Banyak Akun',
+    'why_impact_4_title' => '4. Sulit Buka Cabang Baru dengan Percaya Diri',
+    'why_vs_conventional' => 'COOCA vs Kombinasi Aplikasi Konvensional',
+    'why_faq_title' => 'Pertanyaan Seputar Beralih ke COOCA',
+    'why_explore_ecosystem' => 'Pelajari Bagian Lain dari Ekosistem COOCA',
+    'why_cta_time_to_unify' => 'Sudah Waktunya Menyatukan Operasional Bisnis Anda',
 ];

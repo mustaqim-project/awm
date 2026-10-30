@@ -1,12 +1,12 @@
 @php
     $status = (int) ($exception?->getStatusCode() ?? 400);
     $content = match ($status) {
-        401 => ['title' => 'Sesi diperlukan', 'message' => 'Silakan masuk terlebih dahulu untuk melanjutkan.', 'homeLabel' => 'Masuk'],
-        403 => ['title' => 'Akses ditolak', 'message' => 'Anda tidak memiliki izin untuk mengakses atau menjalankan tindakan ini.', 'homeLabel' => 'Ke Dashboard'],
-        404 => ['title' => 'Halaman tidak ditemukan', 'message' => 'Alamat yang Anda buka tidak tersedia atau datanya sudah dipindahkan.', 'homeLabel' => 'Ke Beranda'],
-        419 => ['title' => 'Sesi kedaluwarsa', 'message' => 'Halaman ini sudah terlalu lama terbuka. Muat ulang halaman lalu coba lagi.', 'homeLabel' => 'Muat Ulang'],
-        429 => ['title' => 'Terlalu banyak permintaan', 'message' => 'Permintaan sedang dibatasi sementara. Tunggu sebentar lalu coba lagi.', 'homeLabel' => 'Coba Lagi'],
-        default => ['title' => 'Permintaan tidak dapat diproses', 'message' => 'Permintaan ini tidak dapat diproses. Periksa data Anda lalu coba lagi.', 'homeLabel' => 'Ke Beranda'],
+        401 => ['title' => __('errors.401_title'), 'message' => __('errors.401_message'), 'homeLabel' => __('errors.btn_login')],
+        403 => ['title' => __('errors.403_title'), 'message' => __('errors.403_message'), 'homeLabel' => __('errors.btn_dashboard')],
+        404 => ['title' => __('errors.404_title'), 'message' => __('errors.404_message'), 'homeLabel' => __('errors.btn_home')],
+        419 => ['title' => __('errors.419_title'), 'message' => __('errors.419_message'), 'homeLabel' => __('errors.btn_reload')],
+        429 => ['title' => __('errors.429_title'), 'message' => __('errors.429_message'), 'homeLabel' => __('errors.btn_retry')],
+        default => ['title' => __('errors.400_title'), 'message' => __('errors.400_message'), 'homeLabel' => __('errors.btn_home')],
     };
     $homeUrl = $status === 401 ? route('login') : (Route::has('dashboard') ? route('dashboard') : url('/'));
     if ($status === 419) $homeUrl = url()->current();

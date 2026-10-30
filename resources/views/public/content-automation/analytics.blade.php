@@ -295,7 +295,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
                             <i data-lucide="help-circle" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Tidak Tahu Konten yang Berhasil</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __("public_content.anl_pain_1_title") }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Ketika penjualan toko mendadak ramai minggu ini, Anda tidak tahu postingan mana yang menjadi
                             pemicunya sehingga tidak bisa mengulangi strategi promosi tersebut.
@@ -344,9 +344,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="mouse-pointer" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Pelacakan Konversi ke Kasir & Toko Online
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{!! __("public_content.anl_bento_conv_title") !!}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Setiap postingan dilengkapi dengan tautan produk dan voucher diskon yang unik. Saat konsumen
                             menggunakan kupon tersebut di kasir outlet fisik atau checkout online, sistem mencatat nilai
@@ -422,7 +420,7 @@
                         class="w-11 h-11 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500">
                         <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Ekspor Laporan Cepat</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __("public_content.anl_bento_export_title") }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Unduh rekapan metrik performa konten dalam format PDF yang rapi untuk bahan rapat evaluasi bulanan
                         bersama tim pemasaran dan pemilik usaha.
@@ -461,7 +459,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Konten Tayang di Medsos</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.anl_step_live") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Materi promosi diterbitkan otomatis ke Instagram dan Facebook lengkap dengan tautan pesanan
                             produk yang unik.
@@ -487,7 +485,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Validasi Transaksi Kasir</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.anl_step_pos_val") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Pembeli yang datang ke toko atau memesan online menukarkan kupon promosi. Nilai rupiah belanja
                             langsung dikaitkan ke postingan tersebut.
@@ -594,7 +592,7 @@
                 </div>
                 <a href="{{ route('public.content.creation') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Kembali ke Studio Kreasi</span>
+                    <span>{{ __("public_content.btn_back_to_studio") }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -607,9 +605,7 @@
                         <i data-lucide="send" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Publikasi Otomatis
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.anl_mod_auto_publish") }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Antrean tayang multi-kanal yang dipantau
                         oleh modul analitik.</p>
                 </a>
@@ -635,9 +631,7 @@
                         <i data-lucide="trending-up" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Analitik Bisnis Eksekutif
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.anl_mod_exec_analytics") }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Pantau dampak keseluruhan pemasaran terhadap
                         laba bersih perusahaan.</p>
                 </a>
@@ -649,9 +643,7 @@
                         <i data-lucide="share-2" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Akun Medsos
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.anl_mod_social_accounts") }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kelola integrasi akun Instagram dan Facebook
                         Page bisnis terpadu.</p>
                 </a>

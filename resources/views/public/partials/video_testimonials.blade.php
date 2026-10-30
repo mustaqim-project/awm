@@ -7,13 +7,13 @@
     <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
             <span class="text-xs font-bold text-[#007AFF] uppercase tracking-wider block">
-                Video Cerita UMKM
+                {{ __('public_marketing.video_kicker') }}
             </span>
             <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Simak Pengalaman Langsung dari Lapangan
+                {{ __('public_marketing.video_title') }}
             </h2>
             <p class="text-sm text-slate-600 dark:text-slate-400">
-                Wawancara dan dokumentasi langsung operasional toko menggunakan aplikasi COOCA.
+                {{ __('public_marketing.video_desc') }}
             </p>
         </div>
 

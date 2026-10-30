@@ -105,4 +105,23 @@ return [
     'role_admin' => 'Admin',
     'role_owner' => 'Owner / Store Owner',
     'close_modal' => 'Close modal',
+
+    // Stepper component specific
+    'stepper_title'                  => 'Multi-Tier Authorization Governance (MAR)',
+    'stepper_subtitle'               => 'Document requires multi-level approval before funds can be disbursed or confirmed.',
+    'status_fully_approved_badge'    => 'Fully Approved (Ready for Execution)',
+    'status_rejected_badge'          => 'Rejected by Approver',
+    'waiting_level_badge'            => 'Awaiting Approval Level :level of :total',
+    'maker_draft_badge'              => 'Maker (Draft)',
+    'maker_staff_default'            => 'Drafting Staff',
+    'btn_approve_document'           => 'Approve Document',
+    'btn_reject_action'              => 'Reject Document',
+    'modal_confirm_approve_heading'  => 'Confirm Approval',
+    'modal_confirm_reject_heading'   => 'Confirm Rejection',
+    'approve_notice_proceed'         => 'By approving, this document will advance to the next verification level or proceed to official execution.',
+    'reject_notice_warning'          => 'Rejection will halt the transaction and return the document to the drafter for revisions.',
+    'reject_reason_placeholder_step' => 'Explain why the document was rejected so the drafter can make revisions...',
+    'ready_execution'                => 'Ready for Execution',
+    'locked_status'                  => 'Locked',
+    'eligible_authority_notice'      => 'You are authorized to take action on this document at <strong>Level :level</strong>.',
 ];

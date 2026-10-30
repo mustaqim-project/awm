@@ -367,7 +367,7 @@
                                 <button
                                     class="px-3 py-1 rounded-lg bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-[10px] flex items-center gap-1 transition-colors shrink-0 self-end sm:self-auto">
                                     <i data-lucide="message-square" class="w-3 h-3"></i>
-                                    <span>Kirim WA</span>
+                                    <span>{{ __('public_erp.btn_send_whatsapp') }}</span>
                                 </button>
                             </div>
 
@@ -401,8 +401,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400">
                             <i data-lucide="user-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pelanggan Setia Hilang Tanpa
-                            Disadari</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.crm_pain_lost_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Seorang pelanggan yang biasanya datang seminggu dua kali tiba-tiba tidak pernah muncul lagi
                             selama 2 bulan. Tanpa sistem CRM, Anda baru menyadarinya saat mereka sudah beralih ke
@@ -417,7 +416,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="database-zap" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Data Kontak Dibawa Kabur Staf</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.crm_pain_theft_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Nomor kontak klien hanya tersimpan di WhatsApp pribadi karyawan penjualan atau kasir. Begitu
                             staf tersebut resign, seluruh hubungan bisnis dengan pelanggan tersebut terputus total.
@@ -445,9 +444,7 @@
         {{-- 3. CORE CRM FEATURES: Bento Apple HIG --}}
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-white dark:bg-[#0B132B]">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">
-                    Fitur CRM & Retensi Pelanggan
-                </h2>
+                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_erp.crm_feature_kicker') }}</h2>
                 <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     Membangun Komunitas Pelanggan yang Terus Bertransaksi
                 </p>
@@ -467,9 +464,7 @@
                             class="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="contact-2" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Profil Pelanggan 360° yang Lengkap
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.crm_feat_360_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Ketahui siapa pelanggan Anda secara mendalam: riwayat belanja offline dan online, produk yang
                             paling sering dibeli, tanggal ulang tahun, catatan alergi/preferensi khusus, serta total nominal
@@ -518,7 +513,7 @@
                         class="w-11 h-11 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                         <i data-lucide="pie-chart" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Segmentasi Otomatis (RFM)</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.crm_feat_rfm_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Sistem mengelompokkan pelanggan secara pintar: Pelanggan Setia (Loyal), Pelanggan Baru, Pelanggan
                         Nilai Tinggi (Big Spenders), hingga Pelanggan Pasif (At-Risk) yang sudah lama tidak berkunjung.
@@ -532,7 +527,7 @@
                         class="w-11 h-11 rounded-2xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                         <i data-lucide="bell" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Pemicu Promo Otomatis</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.crm_feat_promo_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Kirim pesan otomatis saat ulang tahun pelanggan, ucapan terima kasih setelah pembelian pertama, atau
                         voucher pengingat bagi pelanggan yang belum berkunjung lebih dari 30 hari.
@@ -564,9 +559,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/15 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>Siklus Hubungan Pelanggan Berkelanjutan</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Bagaimana COOCA Membantu Bisnis Mempertahankan Pelanggan
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">{{ __('public_erp.crm_flow_kicker') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3">
                         Setiap interaksi pelanggan di kasir maupun online diubah menjadi data yang dapat ditindaklanjuti
                         untuk menghasilkan penjualan berikutnya.
@@ -580,7 +573,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Input Mudah di Kasir</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.crm_step_pos_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Saat bayar, kasir cukup menanyakan nomor WhatsApp. Pelanggan langsung terdaftar tanpa formulir
                             kertas yang merepotkan dan langsung mendapatkan poin belanja.
@@ -593,7 +586,7 @@
                             class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold text-xs border border-pink-500/30">
                             2
                         </div>
-                        <h3 class="text-base font-bold text-white">Riwayat Terkonsolidasi</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.crm_step_history_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Setiap transaksi berikutnya-baik di cabang lain maupun melalui toko online-otomatis menambahkan
                             riwayat belanja ke profil pelanggan yang sama.
@@ -713,7 +706,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#00C4D8] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_erp.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -726,9 +719,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_pos_label') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Identifikasi member dan potong poin diskon
                         langsung di meja kasir.</p>
                 </a>
@@ -768,9 +759,7 @@
                         <i data-lucide="trending-up" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Analitik Retensi Pelanggan
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_retention_analytics') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Pantau rasio repeat order dan nilai Customer
                         Lifetime Value (CLV).</p>
                 </a>
@@ -791,7 +780,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Bangun Hubungan Kuat dengan Pelanggan Bisnis Anda
+                        {{ __('public_erp.crm_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Mulai kelola database pelanggan secara terpusat dan raih pertumbuhan omzet berkelanjutan melalui

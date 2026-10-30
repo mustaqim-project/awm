@@ -245,7 +245,7 @@
                         Tantangan Sehari-hari
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Sering Mengalami Kendala Ini di Usaha Anda?
+                        {{ __('public_solutions.show_pain_title') }}
                     </h2>
                 </div>
 
@@ -327,7 +327,7 @@
                             Cara Kerja Praktis
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                            Hanya 3 Langkah Mudah untuk Memulai
+                            {{ __('public_solutions.show_steps_title') }}
                         </h2>
                         <p class="text-sm text-slate-600 dark:text-slate-400">
                             Tanpa instalasi server yang rumit. Sistem siap dipakai dalam waktu kurang dari 2 menit.
@@ -367,13 +367,13 @@
                         </p>
                     </div>
                     <a href="{{ $solution['parent_solution']['url'] }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-white/10 hover:bg-slate-50 dark:hover:bg-white/15 border border-slate-200 dark:border-white/15 text-[#007AFF] dark:text-white font-semibold text-xs sm:text-sm shrink-0 transition-all shadow-sm">
-                        <span>Lihat Solusi Terpadu</span>
+                        <span>{{ __('public_solutions.btn_view_unified') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                     </a>
                 </section>
             @endif
 
-            {{-- Section: FAQ (Pertanyaan yang Sering Diajukan) --}}
+            {{-- Section: FAQ ({{ __('public_solutions.show_faq_title') }}) --}}
             @if (!empty($solution['faqs']))
                 <section class="space-y-8">
                     <div class="text-center max-w-2xl mx-auto space-y-2">
@@ -381,7 +381,7 @@
                             Tanya Jawab Seputar Fitur
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                            Pertanyaan yang Sering Diajukan
+                            {{ __('public_solutions.show_faq_title') }}
                         </h2>
                     </div>
 

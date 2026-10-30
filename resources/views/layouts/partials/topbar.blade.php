@@ -177,7 +177,7 @@
         <!-- Desktop Sidebar Collapse Toggle Button (macOS Window Control Style) -->
         <button @click="toggleSidebarCollapse()" type="button"
             class="hidden lg:flex items-center justify-center w-8.5 h-8.5 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white rounded-[8px] hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 shrink-0 transition-all cursor-pointer"
-            :title="sidebarCollapsed ? '{{ __('navigation.expand_sidebar') }}' : '{{ __('navigation.collapse_sidebar') }}'" aria-label="Toggle Sidebar">
+            :title="sidebarCollapsed ? '{{ __('navigation.expand_sidebar') }}' : '{{ __('navigation.collapse_sidebar') }}'" aria-label="{{ __('navigation.toggle_sidebar') }}">
             <i :data-lucide="sidebarCollapsed ? 'panel-left-open' : 'panel-left-close'" class="w-4 h-4"></i>
         </button>
 
@@ -220,7 +220,7 @@
             <!-- Fullscreen Toggle Button (Desktop md+) -->
             <button type="button" @click="toggleFullscreen()"
                 :title="isFullscreen ? '{{ __('navigation.fullscreen_exit') }}' : '{{ __('navigation.fullscreen_enter') }}'"
-                aria-label="Toggle Fullscreen"
+                aria-label="{{ __('navigation.fullscreen_enter') }}"
                 class="hidden md:flex h-7 w-7 rounded-[6px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-white/70 dark:hover:bg-white/10 transition-all items-center justify-center shrink-0 active:scale-95 cursor-pointer">
                 <i x-show="!isFullscreen" data-lucide="maximize" class="w-3.5 h-3.5"></i>
                 <i x-show="isFullscreen" data-lucide="minimize" class="w-3.5 h-3.5 text-[#007AFF]"
@@ -477,7 +477,7 @@
                             <button type="submit"
                                 class="w-full px-2.5 py-1.5 rounded-[8px] text-[#FF9500] dark:text-[#FF9F0A] hover:bg-[#FF9500]/15 flex items-center gap-2 transition active:scale-98 text-left font-bold text-[12px] cursor-pointer">
                                 <i data-lucide="arrow-left-to-line" class="w-3.5 h-3.5 shrink-0" stroke-width="2.5"></i>
-                                <span>Kembali ke Admin Console</span>
+                                <span>{{ __('common.back_to_admin_console') }}</span>
                             </button>
                         </form>
                     </div>

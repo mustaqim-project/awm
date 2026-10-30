@@ -416,4 +416,14 @@ return [
     'csv_logs_status'                  => 'Status',
     'csv_logs_meta_id'                 => 'Meta Message ID',
     'csv_logs_error'                   => 'Respon / Error Meta',
+
+    // WhatsApp Meta Setup Guide Component
+    'guide_official_method'            => 'Metode 1-Klik Meta WhatsApp Resmi',
+    'guide_official_desc'              => 'Pendaftaran akun resmi dilakukan secara instan melalui popup resmi Meta Facebook. Cukup login ke akun Facebook Anda, pilih atau daftarkan nomor telepon WhatsApp bisnis, dan integrasi WhatsApp Cloud API langsung terhubung secara otomatis dengan kuota gratis 1.000 percakapan/bulan.',
+    'guide_step_1_title'               => '1. Buka Popup Meta',
+    'guide_step_1_desc'                => 'Klik tombol hubungkan',
+    'guide_step_2_title'               => '2. Masuk Facebook',
+    'guide_step_2_desc'                => 'Pilih akun & nomor toko',
+    'guide_step_3_title'               => '3. Langsung Terhubung',
+    'guide_step_3_desc'                => 'Siap kirim struk digital',
 ];

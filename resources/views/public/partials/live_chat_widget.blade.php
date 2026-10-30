@@ -19,7 +19,7 @@
              x-transition:leave-end="opacity-0 translate-y-2 scale-95"
              class="hidden sm:block pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
              @click="toggleChat()">
-            <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs" aria-label="Tutup sapaan live chat">
+            <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs" aria-label="{{ __('public_marketing.live_chat_close_greeting') }}">
                 ✕
             </button>
             <div class="flex items-center gap-2 mb-1">
@@ -41,7 +41,7 @@
             <button type="button" 
                     @click="toggleChat()" 
                     :aria-expanded="isOpen"
-                    aria-label="Buka Live Chat COOCA"
+                    aria-label="{{ __('public_marketing.live_chat_open') }}"
                     class="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-center shadow-[0_10px_35px_rgba(124,58,237,0.5)] hover:shadow-[0_14px_45px_rgba(124,58,237,0.7)] hover:scale-105 active:scale-95 transition-all">
                 
                 {{-- Glowing pulse ring when closed --}}
@@ -122,7 +122,7 @@
 
                 {{-- Close Button --}}
                 <button type="button" @click="isOpen = false" 
-                        title="Tutup Chat"
+                        title="{{ __('public_marketing.live_chat_close') }}"
                         class="w-8 h-8 rounded-full hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -143,7 +143,7 @@
                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                     </svg>
                 </div>
-                <h4 class="text-[15px] font-bold text-gray-900 dark:text-white">Selamat Datang di Support COOCA</h4>
+                <h4 class="text-[15px] font-bold text-gray-900 dark:text-white">{{ __('public_marketing.live_chat_welcome_title') }}</h4>
                 <p class="text-[12px] text-gray-500 dark:text-gray-400 mt-1 max-w-[320px] mx-auto leading-relaxed">
                     Mohon isi data diri Anda di bawah ini agar tim kami dapat memberikan solusi terbaik untuk bisnis Anda.
                 </p>
@@ -208,7 +208,7 @@
                             Pertanyaan / Kebutuhan Bisnis <span class="text-rose-500">*</span>
                         </label>
                         <textarea x-model="formData.message" required rows="3"
-                                  placeholder="Ceritakan kendala operasional atau modul apa yang ingin Anda tanyakan..."
+                                  placeholder="{{ __('public_marketing.live_chat_issue_placeholder') }}"
                                   class="w-full p-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-none"></textarea>
                     </div>
                 </div>
@@ -319,7 +319,7 @@
                 <div class="p-3 bg-white dark:bg-[#1E1E24] border-t border-gray-200 dark:border-white/10 shrink-0">
                     <form @submit.prevent="sendFollowupMessage()" class="flex items-center gap-2">
                         <input type="text" x-model="newMessage" 
-                               placeholder="Ketik balasan pesan Anda..." 
+                               placeholder="{{ __('public_marketing.live_chat_reply_placeholder') }}" 
                                :disabled="isSending"
                                class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
                         
@@ -604,7 +604,7 @@ function coocaLiveChatWidget() {
                         }, 700);
                     }
                 } else {
-                    this.errorMessage = data.message || 'Gagal memulai live chat. Silakan periksa kembali input Anda.';
+                    this.errorMessage = data.message || @js(__('public_marketing.live_chat_failed_start'));
                 }
             } catch (err) {
                 this.errorMessage = 'Terjadi gangguan jaringan: ' + err.message;

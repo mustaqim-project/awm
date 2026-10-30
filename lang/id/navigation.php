@@ -225,4 +225,7 @@ return [
     'services_short' => 'Servis',
     'calc_hpp_short' => 'HPP',
     'plan_free_solo' => 'Paket Free (Solo)',
+    'main_navigation' => 'Navigasi Utama',
+    'close_menu' => 'Tutup Menu',
+    'toggle_sidebar' => 'Toggle Sidebar',
 ];

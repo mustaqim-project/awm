@@ -1,8 +1,8 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Download Gratis: ' . $template['name'] . ' | COOCA')
+@section('title', __('public_templates.meta_title_show', ['name' => $template['name']]))
 @section('description', 'Download gratis ' . $template['name'] . '. ' . $template['description'])
-@section('og_title', 'Download Gratis: ' . $template['name'] . ' | COOCA')
+@section('og_title', __('public_templates.meta_title_show', ['name' => $template['name']]))
 @section('og_description', 'Download gratis ' . $template['name'] . '. ' . $template['description'])
 @section('canonical', route('template.show', $template['slug']))
 @section('og_type', 'article')
@@ -52,7 +52,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_templates.breadcrumb_home') }}</a>
                 <span aria-hidden="true" class="text-slate-600">/</span>
                 <a href="{{ route('template.index') }}" class="hover:text-white transition-colors">Template Spreadsheet</a>
                 <span aria-hidden="true" class="text-slate-600">/</span>
@@ -84,7 +84,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="p-6 sm:p-7 rounded-[22px] bg-white/[0.04] border border-white/[0.08] space-y-4 shadow-sm w-full text-left">
                             <h2 class="text-xs font-bold uppercase tracking-wider text-[#0A84FF] flex items-center gap-2">
                                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                                <span>Keunggulan Formula Dalam Template Ini:</span>
+                                <span>{{ __("public_templates.section_formula_advantages") }}</span>
                             </h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                 @foreach ($template['highlights'] as $hl)
@@ -157,7 +157,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                                     this.submitted = true;
                                     window.location.href = this.downloadUrl;
                                 } else {
-                                    this.errorMessage = data.message || 'Terjadi kesalahan, silakan coba lagi.';
+                                    this.errorMessage = data.message || @js(__('public_templates.error_try_again'));
                                 }
                             } catch (e) {
                                 this.submitted = true;
@@ -173,7 +173,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             <div class="w-12 h-12 rounded-[14px] bg-[#007AFF]/20 text-[#0A84FF] flex items-center justify-center mx-auto mb-2 border border-[#0A84FF]/30">
                                 <i data-lucide="download" class="w-6 h-6"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-white">Unduh Spreadsheet Gratis</h3>
+                            <h3 class="text-xl font-bold text-white">{{ __("public_templates.section_download_sheet") }}</h3>
                             <p class="text-xs sm:text-sm text-slate-400">
                                 Masukkan kontak Anda agar kami dapat mengirimkan file serta pembaruan rumus terbaru.
                             </p>
@@ -213,7 +213,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                                 <label class="block text-xs font-semibold text-slate-300 mb-1.5">
                                     Email (Opsional)
                                 </label>
-                                <input type="email" x-model="form.email" placeholder="email@contohtoko.com"
+                                <input type="email" x-model="form.email" placeholder="{{ __('public_templates.input_email_placeholder') }}"
                                     class="w-full h-11 px-4 bg-white/[0.06] border border-white/[0.12] rounded-[12px] text-white text-[16px] sm:text-sm focus:border-[#0A84FF] focus:ring-2 focus:ring-[#0A84FF]/20 focus:outline-none transition placeholder-slate-400">
                             </div>
 
@@ -254,7 +254,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             <a :href="downloadUrl" download
                                 class="w-full h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition active:scale-[0.98]">
                                 <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Unduh Ulang Spreadsheet (.xlsx)</span>
+                                <span>{{ __("public_templates.btn_redownload") }}</span>
                             </a>
                         </div>
 
@@ -262,7 +262,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             <p class="text-xs text-slate-400 mb-2">Ingin coba aplikasi kasir &amp; pembukuan otomatis?</p>
                             <a href="{{ route('register') }}"
                                 class="text-sm font-bold text-[#0A84FF] hover:underline inline-flex items-center gap-1.5">
-                                <span>Daftar COOCA Gratis Selamanya</span>
+                                <span>{{ __("public_templates.btn_register_forever_free") }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -279,7 +279,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-8">
         <section class="space-y-6">
             <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                Template Bisnis Lainnya untuk Anda
+                {{ __("public_templates.section_other_templates") }}
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 @foreach ($otherTemplates as $ot)
@@ -292,7 +292,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             </h4>
                         </div>
                         <span class="text-xs text-[#007AFF] dark:text-[#0A84FF] font-semibold mt-4 flex items-center gap-1.5">
-                            <span>Download Gratis</span>
+                            <span>{{ __("public_templates.btn_download_free") }}</span>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>
                         </span>
                     </a>

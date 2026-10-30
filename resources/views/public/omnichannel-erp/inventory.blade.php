@@ -395,7 +395,7 @@
                                     <span class="truncate">HPP Moving Average: Aktif</span>
                                 </span>
                                 <a href="{{ route('public.demo') }}"
-                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">Buka Kartu Stok &rarr;</a>
+                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">{{ __('public_erp.btn_open_stock_card') }} &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -414,7 +414,7 @@
                         <span>Tantangan Inventori Retail &amp; UMKM</span>
                     </div>
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Di Mana Sebenarnya Uang Bisnis Anda Menguap di Gudang?
+                        {{ __('public_erp.inv_pain_kicker') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-3 font-normal">
                         Banyak bisnis bangkrut bukan karena tidak laku, melainkan karena modal tertimbun mati dalam bentuk
@@ -444,7 +444,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="truck" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Stok Hilang Saat Pengiriman Cabang
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.inv_pain_transit_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Gudang pusat mengirim 50 unit barang ke outlet, namun cabang hanya menerima 45 unit. Tanpa
@@ -478,7 +478,7 @@
                     <span>Fitur Cerdas Manajemen Stok</span>
                 </div>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Visibilitas Total dari Pembelian Sampai Penjualan Akhir
+                    {{ __('public_erp.inv_visibility_title') }}
                 </h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-3 font-normal">
                     Dirancang khusus untuk mendukung operasional yang dinamis, mulai dari gudang bahan baku hingga display
@@ -496,9 +496,7 @@
                             class="w-11 h-11 rounded-2xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                             <i data-lucide="network" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Multi-Gudang &amp; Mutasi Antar Cabang Terkontrol
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.inv_feat_transfer_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Kelola gudang pusat, gudang display, dan stok toko per cabang secara mandiri. Ketika stok di
                             satu outlet menipis, buat Transfer Order resmi. Sistem mencatat status pengiriman, pengemudi,
@@ -554,7 +552,7 @@
                         class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-[#007AFF] dark:text-[#38BDF8]">
                         <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Kartu Stok Perpetual</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.inv_feat_perpetual_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                         Setiap mutasi barang memiliki referensi nomor dokumen yang sah (PO, Faktur Penjualan, atau Berita
                         Acara Kerusakan). Tidak ada angka stok yang berubah secara tiba-tiba tanpa jejak staf penginput.
@@ -600,9 +598,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/20 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>{{ __('public_erp.inv_cycle_tag') }}</span>
                     </div>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Bagaimana Stok Mengalir dalam Ekosistem COOCA
-                    </h2>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">{{ __('public_erp.inv_flow_kicker') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3 font-normal">
                         Inventori COOCA terhubung erat dengan modul Pembelian (Purchasing), Kasir (POS), dan Akuntansi tanpa
                         sekat.
@@ -627,7 +623,7 @@
                         <div
                             class="w-8 h-8 rounded-lg bg-teal-500/30 text-teal-300 flex items-center justify-center font-bold text-xs border border-teal-500/40">
                             2</div>
-                        <h3 class="text-base font-bold text-white">Perhitungan HPP Otomatis</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.inv_step_cogs_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed font-normal">
                             Nilai pembelian baru dikalkulasi dengan saldo stok lama menggunakan metode Moving Average. Modul
                             akuntansi menerbitkan hutang usaha (AP) dan menambah nilai aset persediaan.
@@ -639,7 +635,7 @@
                         <div
                             class="w-8 h-8 rounded-lg bg-blue-500/30 text-blue-300 flex items-center justify-center font-bold text-xs border border-blue-500/40">
                             3</div>
-                        <h3 class="text-base font-bold text-white">Distribusi ke Cabang Toko</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.inv_step_dist_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed font-normal">
                             Gudang pusat mendistribusikan barang ke cabang-cabang ritel dengan Surat Jalan Transfer. Stok
                             gudang pusat berkurang, status in-transit aktif sampai kasir cabang melakukan scan terima.
@@ -651,7 +647,7 @@
                         <div
                             class="w-8 h-8 rounded-lg bg-purple-500/30 text-purple-300 flex items-center justify-center font-bold text-xs border border-purple-500/40">
                             4</div>
-                        <h3 class="text-base font-bold text-white">Penjualan &amp; Pengurangan Stok</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.inv_step_sale_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed font-normal">
                             Kasir scan barcode di POS atau pesanan masuk dari marketplace online. Stok cabang terpotong,
                             nilai HPP langsung dicatat ke laporan laba rugi, dan sisa stok siap dijual kembali.
@@ -668,8 +664,7 @@
                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00C4D8]/15 text-[#0096B4] dark:text-[#00C4D8] text-xs font-bold uppercase tracking-wider mb-2">
                     <span>Pertanyaan Umum</span>
                 </div>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Tanya Jawab
-                    Seputar Inventori &amp; Gudang</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.inv_faq_kicker') }}</h2>
             </div>
 
             <div class="space-y-4">
@@ -747,7 +742,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_erp.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -760,8 +755,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)</h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_pos_label') }}</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Kasir cepat yang langsung memotong stok
                         outlet secara real-time.</p>
                 </a>
@@ -786,8 +780,7 @@
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Solusi Retail</h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_retail_solution') }}</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Kelola ribuan SKU produk, barcode, dan
                         rantai pasok multi-toko.</p>
                 </a>
@@ -821,7 +814,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Hentikan Kerugian Akibat Stok Selisih Mulai Hari Ini
+                        {{ __('public_erp.inv_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300 font-normal">
                         Dapatkan visibilitas 100% atas persediaan barang Anda di setiap gudang dan cabang toko dengan COOCA
@@ -830,11 +823,11 @@
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm transition-all shadow-lg shadow-[#007AFF]/25">
-                            Coba Demo Modul Stok
+                            {{ __('public_erp.btn_demo_stock') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 transition-all">
-                            Konsultasi Kebutuhan Gudang
+                            {{ __('public_erp.btn_consult_warehouse') }}
                         </a>
                     </div>
                 </div>

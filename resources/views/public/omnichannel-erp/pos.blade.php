@@ -439,16 +439,14 @@
                                     <div class="space-y-2 pt-2">
                                         <div class="grid grid-cols-2 gap-1.5 text-[10px]">
                                             <button
-                                                class="py-1 px-1.5 rounded-lg bg-white/10 text-slate-300 border border-white/15 font-medium hover:bg-white/15">QRIS
-                                                Dinamis</button>
+                                                class="py-1 px-1.5 rounded-lg bg-white/10 text-slate-300 border border-white/15 font-medium hover:bg-white/15">{{ __('public_erp.btn_qris_dynamic') }}</button>
                                             <button
-                                                class="py-1 px-1.5 rounded-lg bg-white/10 text-slate-300 border border-white/15 font-medium hover:bg-white/15">Tunai
-                                                (Cash)</button>
+                                                class="py-1 px-1.5 rounded-lg bg-white/10 text-slate-300 border border-white/15 font-medium hover:bg-white/15">{{ __('public_erp.btn_cash') }}</button>
                                         </div>
                                         <button
                                             class="w-full py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5">
                                             <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                                            <span>Bayar &amp; Cetak Struk</span>
+                                            <span>{{ __('public_erp.btn_pay_print_receipt') }}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -477,7 +475,7 @@
                         <span>Friction di Meja Kasir</span>
                     </div>
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Apakah Mesin Kasir Anda Saat Ini Membantu Bisnis, atau Justru Menambah Beban Rekonsiliasi?
+                        {{ __('public_erp.pos_pain_kicker') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-3 font-normal">
                         Aplikasi kasir yang terisolasi dari inventori dan pembukuan hanya menyelesaikan transaksi saat itu
@@ -509,8 +507,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="package-minus" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Stok Fisik Selisih &amp; Telat
-                            Reorder</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_pain_reorder_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Barang laku keras di kasir, tetapi orang gudang tidak tahu stok sudah menipis. Saat pelanggan
                             berikutnya ingin membeli, barang ternyata kosong. Penjualan hilang seketika karena sistem kasir
@@ -525,7 +522,7 @@
                             class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-900/50 flex items-center justify-center text-purple-600 dark:text-purple-400">
                             <i data-lucide="shield-alert" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Uang Kas Kasir Tidak Akurat</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_pain_cash_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Tanpa kontrol shift kasir yang ketat, uang modal awal tercampur dengan hasil penjualan tunai.
                             Owner kesulitan membuktikan apakah selisih kas terjadi karena kelalaian kembalian atau
@@ -543,9 +540,7 @@
                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00C4D8]/15 text-[#0096B4] dark:text-[#00C4D8] text-xs font-bold uppercase tracking-wider mb-3">
                     <span>Fitur Kasir Modern</span>
                 </div>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                    Didesain untuk Efisiensi Kasir &amp; Ketenteraman Owner
-                </h2>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.pos_feature_kicker') }}</h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-3 font-normal">
                     Setiap tombol dan alur transaksi dioptimalkan agar kasir baru dapat mengoperasikan sistem dalam waktu
                     kurang dari 10 menit pelatihan.
@@ -562,9 +557,7 @@
                             class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-[#007AFF] dark:text-[#38BDF8]">
                             <i data-lucide="scan-barcode" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Scan Barcode Cepat &amp; Pencarian Fleksibel
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.pos_feat_scanner_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Cukup tembak barcode dengan scanner USB/Bluetooth kamera atau cari nama barang dengan keyboard.
                             COOCA menampilkan varian produk (ukuran, warna, rasa), catatan pesanan khusus, dan harga
@@ -613,14 +606,14 @@
                     </div>
                 </div>
 
-                {{-- Bento Card 3: Multi-Payment & QRIS Dinamis (Span 4) --}}
+                {{-- Bento Card 3: Multi-Payment & {{ __('public_erp.btn_qris_dynamic') }} (Span 4) --}}
                 <div
                     class="md:col-span-4 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 space-y-4 shadow-sm">
                     <div
                         class="w-11 h-11 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                         <i data-lucide="qr-code" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Multi Pembayaran &amp; QRIS</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_feat_qris_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                         Terima pembayaran tunai, kartu debit/kredit, transfer bank, hingga QRIS dinamis di layar kasir
                         dengan nominal yang terkunci otomatis sehingga mencegah salah input angka oleh pelanggan.
@@ -666,9 +659,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/20 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>Satu Klik di Kasir, Sinkron ke Seluruh Ekosistem</span>
                     </div>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Mengapa COOCA POS Unggul Jauh dari Aplikasi Kasir Biasa?
-                    </h2>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">{{ __('public_erp.pos_advantage_kicker') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3 font-normal">
                         Saat kasir mencetak struk untuk pelanggan, sistem COOCA secara bersamaan mengeksekusi 4 proses
                         backend bisnis tanpa jeda:
@@ -681,7 +672,7 @@
                         <div
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/30 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/40">
                             1</div>
-                        <h3 class="text-base font-bold text-white">Stok Terpotong Otomatis</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.pos_feat_auto_cut_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed font-normal">
                             Kartu stok outlet langsung berkurang. Jika produk menggunakan Resep/BOM (seperti di kafe atau
                             bakery), bahan mentah (biji kopi, susu, butter) otomatis dipotong secara proporsional.
@@ -733,9 +724,7 @@
                 class="p-8 sm:p-10 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 shadow-sm">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div class="lg:col-span-5 space-y-4">
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                            Gunakan Perangkat yang Sudah Anda Miliki
-                        </h2>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.pos_hardware_kicker') }}</h2>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                             Anda tidak perlu terkunci pada mesin POS proprietary mahal bernilai puluhan juta rupiah. COOCA
                             POS fleksibel dan langsung siap digunakan pada perangkat standar yang beredar di pasaran.
@@ -786,8 +775,7 @@
                     class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00C4D8]/15 text-[#0096B4] dark:text-[#00C4D8] text-xs font-bold uppercase tracking-wider mb-2">
                     <span>Pertanyaan Umum</span>
                 </div>
-                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Tanya Jawab
-                    Seputar COOCA POS</h2>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.pos_faq_kicker') }}</h2>
             </div>
 
             <div class="space-y-4">
@@ -865,7 +853,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Jelajahi Semua Modul ERP</span>
+                    <span>{{ __('public_erp.btn_explore_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -878,8 +866,7 @@
                         <i data-lucide="boxes" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Stok Gudang</h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_inventory_wh') }}</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Stok terpusat, mutasi antar cabang, dan
                         kartu stok akurat.</p>
                 </a>
@@ -904,8 +891,7 @@
                         <i data-lucide="users" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        CRM &amp; Pelanggan</h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_crm_customers') }}</h3>
                     <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Database member, poin loyalitas, dan program
                         promosi.</p>
                 </a>
@@ -939,7 +925,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Siap Mempercepat Kasir dan Menghentikan Selisih Stok?
+                        {{ __('public_erp.pos_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300 font-normal">
                         Mulai operasikan POS modern yang terhubung langsung dengan gudang dan buku keuangan Anda hari ini
@@ -948,7 +934,7 @@
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm transition-all shadow-lg shadow-[#007AFF]/25">
-                            Coba Demo Interaktif POS
+                            {{ __('public_erp.btn_demo_pos_interactive') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 transition-all">

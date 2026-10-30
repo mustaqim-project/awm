@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA')
-@section('description', 'Kirim struk kasir digital otomatis, update status pesanan, dan pengingat invoice langsung ke WhatsApp pelanggan tanpa repot simpan nomor.')
-@section('og_title', 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA')
-@section('og_description', 'Kirim struk kasir digital otomatis, update status pesanan, dan pengingat invoice langsung ke WhatsApp pelanggan tanpa repot simpan nomor.')
+@section('title', __('public_omnichannel.wa_seo_title'))
+@section('description', __('public_omnichannel.wa_seo_desc'))
+@section('og_title', __('public_omnichannel.wa_seo_title'))
+@section('og_description', __('public_omnichannel.wa_seo_desc'))
 @section('keywords',
     'software notifikasi whatsapp bisnis, kirim struk kasir via wa, invoice digital whatsapp, notifikasi pesanan wa umkm, reminder tagihan whatsapp')
 
@@ -234,7 +234,7 @@
                                 </span>
                                 <a href="{{ route('public.demo') }}"
                                     class="text-[#00C4D8] hover:text-white font-semibold transition-colors flex items-center gap-1 shrink-0">
-                                    <span>Lihat Format Pesan</span>
+                                    <span>{{ __('public_omnichannel.btn_view_message_format') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
@@ -259,9 +259,7 @@
         <section class="py-16 sm:py-20 bg-[#FAFAFC] dark:bg-[#070A14] border-y border-slate-200/80 dark:border-white/10">
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
-                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">
-                        Tantangan Komunikasi Pelanggan
-                    </h2>
+                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_omnichannel.wa_pain_kicker') }}</h2>
                     <p class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                         Mengapa Kertas Struk & Chat Manual Sering Merugikan Bisnis Anda?
                     </p>
@@ -279,7 +277,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400">
                             <i data-lucide="scroll" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pemborosan Biaya Kertas Struk</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.wa_pain_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Membeli roll kertas printer thermal jutaan rupiah setiap bulan, padahal sebagian besar struk
                             langsung dibuang oleh pelanggan ke tempat sampah toko 10 detik setelah dicetak.
@@ -293,7 +291,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="phone-off" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Salah Ketik Nomor & Chat Lambat</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.wa_pain_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Staf harus menyimpan nomor ke buku telepon ponsel toko, mengetik ulang nomor nota pesanan, dan
                             baru bisa mengirim pesan. Proses manual memakan waktu hingga 3 menit per pelanggan.
@@ -307,7 +305,7 @@
                             class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900/50 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="message-square-off" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pelanggan Mengeluh Status Order</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.wa_pain_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Pelanggan bolak-balik bertanya lewat telepon apakah barangnya sudah selesai diperbaiki atau
                             dikirim. Tanpa notifikasi otomatis, staf Anda lelah melayani pertanyaan status yang berulang.
@@ -341,9 +339,7 @@
                             class="w-11 h-11 rounded-2xl bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                             <i data-lucide="receipt" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Struk Digital Lengkap Seketika
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.wa_feat_receipt_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Begitu kasir menekan tombol selesai di POS, pelanggan menerima link struk digital resmi. Struk
                             menampilkan rincian barang, harga, pajak, metode bayar QRIS, sisa poin reward, serta link Google
@@ -436,9 +432,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/15 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>Alur Komunikasi Otomatis</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Dari Peristiwa Operasional Menjadi Pesan Ramah
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">{{ __('public_omnichannel.wa_flow_kicker') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3">
                         Setiap interaksi bisnis disampaikan ke pelanggan secara instan tanpa membebani kasir Anda.
                     </p>
@@ -451,7 +445,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Kasir Selesaikan Order</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.wa_step_finish_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Kasir menuntaskan transaksi di layar tablet atau komputer toko dan menanyakan nomor WhatsApp
                             pelanggan untuk pengiriman nota transaksi digital.
@@ -477,7 +471,7 @@
                             class="w-8 h-8 rounded-lg bg-blue-500/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-blue-500/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Pesan Tiba di WhatsApp</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.wa_step_arrive_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Pesan notifikasi tiba di smartphone pelanggan dalam 3 detik. Pelanggan dapat menyimpan struk
                             tersebut di histori chat mereka kapan pun dibutuhkan.
@@ -585,7 +579,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#00C4D8] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_omnichannel.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -598,9 +592,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_pos') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Layar kasir cepat dengan tombol pengiriman
                         struk digital via WhatsApp.</p>
                 </a>
@@ -612,9 +604,7 @@
                         <i data-lucide="users" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        CRM & Database Pelanggan
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_crm') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Simpan nomor kontak pelanggan secara
                         terpusat dan aman di cloud.</p>
                 </a>
@@ -626,9 +616,7 @@
                         <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Pesanan
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_orders') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Perbarui status order dan kirimkan
                         notifikasi otomatis ke pembeli.</p>
                 </a>

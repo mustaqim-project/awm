@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QR Code Tidak Valid - COOCA POS</title>
+    <title>{{ __('qr_order.invalid_title') }} - COOCA POS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -54,19 +54,18 @@
             </svg>
         </div>
 
-        <h1 class="text-lg font-bold text-black dark:text-white tracking-tight">QR Meja Tidak Valid</h1>
+        <h1 class="text-lg font-bold text-black dark:text-white tracking-tight">{{ __("qr_order.invalid_heading") }}</h1>
         <p class="text-xs text-black/60 dark:text-white/60 leading-relaxed">
-            {{ $message ?? 'Kode QR meja tidak ditemukan, sudah kedaluwarsa, atau meja sedang dinonaktifkan.' }}
+            {{ $message ?? __('qr_order.invalid_desc') }}
         </p>
 
         <div
             class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/10 text-[11px] text-black/60 dark:text-white/60 leading-relaxed">
-            Silakan panggil staff atau kasir restoran untuk mendapatkan QR Code meja terbaru atau memesan langsung di
-            kasir.
+            {{ __("qr_order.invalid_instruction") }}
         </div>
 
         <div class="pt-2 text-[10px] text-black/35 dark:text-white/40 font-medium tracking-wide">
-            COOCA POS • Self-Ordering System
+            COOCA POS • {{ __("qr_order.self_ordering_system") }}
         </div>
     </div>
 </body>

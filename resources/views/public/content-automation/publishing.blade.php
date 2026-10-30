@@ -236,7 +236,7 @@
                                     <span class="truncate">Koneksi Resmi Token Meta Graph API: Aman</span>
                                 </span>
                                 <a href="{{ route('public.demo') }}"
-                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">Buka Log Dispatch →</a>
+                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">{{ __("public_content.btn_open_dispatch_log") }}</a>
                             </div>
                         </div>
                     </div>
@@ -268,7 +268,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
                             <i data-lucide="clock-alert" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Terlambat Jam Tayang Emas</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __("public_content.pub_pain_late_hours") }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Materi promo makan siang baru terunggah jam 14:00 karena admin kasir sibuk melayani antrean
                             pembeli fisik. Momentum penawaran lewat sia-sia.
@@ -296,7 +296,7 @@
                             class="w-10 h-10 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="alert-octagon" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Akun Diblokir Karena Bot Ilegal</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __("public_content.pub_pain_bot_bans") }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Menggunakan aplikasi pihak ketiga yang tidak resmi (scraping) yang berisiko membuat akun
                             Instagram bisnis Anda diblokir permanen oleh Meta.
@@ -330,9 +330,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="cloud-lightning" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Publikasi Otomatis Berbasis Cloud (Zero Click)
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __("public_content.pub_bento_zero_click") }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Cukup jadwalkan tanggal dan jam tayang sekali saja. Server cloud COOCA mengeksekusi penayangan
                             materi gambar, video reels, dan teks promosi langsung ke media sosial tanpa membutuhkan sentuhan
@@ -408,7 +406,7 @@
                         class="w-11 h-11 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-500">
                         <i data-lucide="shield-check" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">100% API Resmi Meta</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __("public_content.pub_bento_official_api") }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Bekerja sepenuhnya melalui integrasi API resmi yang disetujui Meta, menjaga integritas dan keamanan
                         akun bisnis Anda dalam jangka panjang.
@@ -473,7 +471,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Sukses Tayang di Feed</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.pub_step_live_feed") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Konten langsung tampil di feed Instagram dan Facebook audiens lengkap dengan link produk menuju
                             toko Anda.
@@ -586,7 +584,7 @@
                 </div>
                 <a href="{{ route('public.content.analytics') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lanjut ke Analitik Konten</span>
+                    <span>{{ __("public_content.btn_next_to_analytics") }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -616,8 +614,7 @@
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
                         Analitik Konten
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Ukur efektivitas jangkauan postingan dan
-                        konversi ke pesanan toko.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('public_content.pub_mod_analytics_desc') }}</p>
                 </a>
 
                 <a href="{{ route('public.omnichannel.social-media') }}"
@@ -627,11 +624,8 @@
                         <i data-lucide="share-2" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Koneksi Akun Sosial
-                    </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kelola integrasi akun Instagram dan Facebook
-                        bisnis terpadu.</p>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.pub_mod_social_connect") }}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('public_content.pub_mod_social_desc') }}</p>
                 </a>
 
                 <a href="{{ route('public.content.creation') }}"

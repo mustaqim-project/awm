@@ -13,7 +13,7 @@
 @endphp
 
 @if (!empty($tabs))
-    <nav data-module-tabs="{{ $moduleKey }}" aria-label="Navigasi Tab Modul"
+    <nav data-module-tabs="{{ $moduleKey }}" aria-label="{{ __('common.module_tabs_nav') }}"
         x-data
         x-init="$nextTick(() => {
             const active = $el.querySelector('[data-active-tab=\'true\']');

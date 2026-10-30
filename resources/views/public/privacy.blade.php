@@ -73,19 +73,19 @@
                                     :class="audienceFilter === 'all' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
                                     class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                                    <span>Semua Ketentuan</span>
+                                    <span>{{ __('public_marketing.legal_tab_all') }}</span>
                                 </button>
                                 <button type="button" @click="audienceFilter = 'owner'"
                                     :class="audienceFilter === 'owner' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
                                     class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="store" class="w-3.5 h-3.5"></i>
-                                    <span>Khusus Pemilik Usaha</span>
+                                    <span>{{ __('public_marketing.legal_tab_owner') }}</span>
                                 </button>
                                 <button type="button" @click="audienceFilter = 'customer'"
                                     :class="audienceFilter === 'customer' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
                                     class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
-                                    <span>Khusus Pelanggan Toko</span>
+                                    <span>{{ __('public_marketing.legal_tab_customer') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
                             class="p-6 rounded-[24px] bg-white/85 dark:bg-[#1C1C1E]/85 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-xl shadow-xs space-y-4">
                             <div class="flex items-center gap-2 pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                                 <i data-lucide="list" class="w-4 h-4 text-[#007AFF]"></i>
-                                <h3 class="text-[14px] font-bold text-black dark:text-white">Daftar Isi Kebijakan</h3>
+                                <h3 class="text-[14px] font-bold text-black dark:text-white">{{ __('public_marketing.legal_toc_title_privacy') }}</h3>
                             </div>
 
                             <nav class="space-y-1.5 text-[13px]">
@@ -189,16 +189,16 @@
                                 </a>
                                 <a href="#data-subject-rights"
                                     class="block p-2 rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
-                                    3. Hak Subjek Data &amp; Hapus Data
+                                    {{ __('public_marketing.legal_toc_sec_3') }}
                                 </a>
                                 <a href="#owner-section" x-show="audienceFilter === 'all' || audienceFilter === 'owner'"
                                     class="block p-2 rounded-[10px] text-[#007AFF] dark:text-[#0A84FF] font-semibold hover:bg-[#007AFF]/10 transition-colors">
-                                    4. Bagian Khusus Pemilik Usaha (Owner)
+                                    4. Bagian {{ __('public_marketing.legal_tab_owner') }} (Owner)
                                 </a>
                                 <a href="#customer-section"
                                     x-show="audienceFilter === 'all' || audienceFilter === 'customer'"
                                     class="block p-2 rounded-[10px] text-[#34C759] dark:text-[#30D158] font-semibold hover:bg-[#34C759]/10 transition-colors">
-                                    5. Bagian Khusus Pelanggan (Customer)
+                                    {{ __('public_marketing.legal_toc_sec_5') }}
                                 </a>
                             </nav>
                         </div>
@@ -239,7 +239,7 @@
                                 <h2
                                     class="text-xl sm:text-2xl font-bold text-black dark:text-white flex items-center gap-2 min-w-0 flex-1 leading-snug break-words">
                                     <i data-lucide="briefcase" class="w-5 h-5 text-[#007AFF] shrink-0"></i>
-                                    <span>Ketentuan Khusus Pemilik Usaha (Owner UMKM)</span>
+                                    <span>{{ __('public_marketing.legal_sec_owner_title') }}</span>
                                 </h2>
                                 <span
                                     class="px-2.5 py-1 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] font-mono text-[11px] font-bold shrink-0">Mitra Merchant</span>
@@ -257,7 +257,7 @@
                                 <h2
                                     class="text-xl sm:text-2xl font-bold text-black dark:text-white flex items-center gap-2 min-w-0 flex-1 leading-snug break-words">
                                     <i data-lucide="shopping-bag" class="w-5 h-5 text-[#34C759] shrink-0"></i>
-                                    <span>Ketentuan Khusus Pelanggan Toko (Customer)</span>
+                                    <span>Ketentuan {{ __('public_marketing.legal_tab_customer') }} (Customer)</span>
                                 </h2>
                                 <span
                                     class="px-2.5 py-1 rounded-[8px] bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-mono text-[11px] font-bold shrink-0">Pelanggan Toko</span>

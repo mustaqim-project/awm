@@ -274,4 +274,6 @@ return [
     'srch_preset_cheap' => '< 50k',
     'srch_preset_mid' => '50k - 200k',
     'srch_preset_high' => '> 200k',
+    'remove_filter' => 'Remove filter',
+    'max_price_fallback' => 'Max',
 ];

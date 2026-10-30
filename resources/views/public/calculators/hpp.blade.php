@@ -170,7 +170,7 @@
                 <div
                     class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/[0.06] dark:border-white/[0.08] pb-5 mb-6">
                     <div>
-                        <h2 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">Simulasi Biaya &amp; Penetapan Laba
+                        <h2 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{!! __("public_calculators.hpp_cost_simulation_title") !!}
                         </h2>
                         <p class="text-xs text-[#6E6E73] dark:text-[#86868B]">Pilih apakah Anda ingin menghitung berdasarkan
                             Margin atau Markup.</p>
@@ -339,8 +339,7 @@
             <div
                 class="space-y-6 text-[#6E6E73] dark:text-[#86868B] text-sm leading-relaxed border-t border-black/[0.06] dark:border-white/[0.08] pt-10">
                 <div>
-                    <h3 class="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">Apa itu HPP (Harga Pokok
-                        Penjualan)?</h3>
+                    <h3 class="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">{{ __("public_calculators.hpp_what_is_hpp") }}</h3>
                     <p>
                         Harga Pokok Penjualan (HPP) atau <em>Cost of Goods Sold (COGS)</em> adalah total biaya langsung yang
                         dikeluarkan untuk memproduksi atau membeli barang dagangan hingga siap dijual kepada konsumen.

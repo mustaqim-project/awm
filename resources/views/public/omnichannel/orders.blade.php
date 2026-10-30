@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Manajemen Pesanan Omnichannel & Toko Online | COOCA')
-@section('description', 'Satukan pesanan kasir toko fisik, WhatsApp, dan marketplace dalam satu antrean. Cetak resi pengiriman dan lacak paket tanpa tertukar.')
-@section('og_title', 'Manajemen Pesanan Omnichannel & Toko Online | COOCA')
-@section('og_description', 'Satukan pesanan kasir toko fisik, WhatsApp, dan marketplace dalam satu antrean. Cetak resi pengiriman dan lacak paket tanpa tertukar.')
+@section('title', __('public_omnichannel.orders_seo_title'))
+@section('description', __('public_omnichannel.orders_seo_desc'))
+@section('og_title', __('public_omnichannel.orders_seo_title'))
+@section('og_description', __('public_omnichannel.orders_seo_desc'))
 @section('keywords',
     'software manajemen pesanan omnichannel, aplikasi order fulfillment, sistem proses pesanan toko online fisik, agregasi pesanan marketplace pos, order lifecycle indonesia')
 
@@ -258,7 +258,7 @@
                                 </span>
                                 <a href="{{ route('public.demo') }}"
                                     class="text-[#00C4D8] hover:text-white font-semibold transition-colors flex items-center gap-1 shrink-0">
-                                    <span>Buka Pipeline Penuh</span>
+                                    <span>{{ __('public_omnichannel.btn_open_pipeline') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
@@ -284,7 +284,7 @@
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
                     <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                        Tantangan Pemenuhan Pesanan
+                        {{ __('public_omnichannel.ord_pain_kicker') }}
                     </h2>
                     <p class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
                         Apakah Staf Gudang & Kasir Anda Sering Bingung Membedakan Pesanan Prioritas?
@@ -303,7 +303,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
                             <i data-lucide="hourglass" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Pesanan Terlewat & Batas Waktu Habis
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.ord_pain_1_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Pesanan masuk di WhatsApp terlupakan karena tertumpuk pesan chat baru dari pelanggan lain.
@@ -318,7 +318,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
                             <i data-lucide="package-search" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Salah Kirim Barang & Retur Tinggi
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.ord_pain_2_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Tanpa dokumen nota kemas (picking slip) yang jelas, staf gudang salah memasukkan ukuran baju
@@ -333,7 +333,7 @@
                             class="w-10 h-10 rounded-xl bg-[#007AFF]/10 border border-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="map-pin-off" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Ongkos Kirim Mahal Karena Rute Salah
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.ord_pain_3_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Pelanggan tinggal di Surabaya, tetapi pesanan dikirim dari gudang utama di Jakarta padahal toko
@@ -368,9 +368,7 @@
                             class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 flex items-center justify-center text-[#007AFF]">
                             <i data-lucide="inbox" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Satu Pintu Pesanan untuk Seluruh Penjualan
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.ord_feat_1_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Semua transaksi masuk otomatis ke dalam antrean terpadu: pesanan kasir toko fisik, pesanan
                             take-away WhatsApp, penjualan website toko, hingga order Shopee dan Tokopedia. Staf operasional
@@ -446,7 +444,7 @@
                         class="w-11 h-11 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500">
                         <i data-lucide="gauge" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Pemantauan SLA Pengiriman</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.ord_feat_sla_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Lacak durasi rata-rata dari pesanan diterima hingga diserahkan ke kurir. Jaga reputasi toko tetap
                         memiliki badge penjual terbaik di semua platform.
@@ -471,7 +469,7 @@
                         <span>Siklus Pemenuhan Pesanan Terpadu</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                        Bagaimana Pesanan Diproses Cepat di COOCA
+                        {{ __('public_omnichannel.ord_flow_kicker') }}
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-base mt-3">
                         Setiap langkah pemrosesan terkoordinasi antara tim kasir, gudang, dan kurir logistik.
@@ -485,7 +483,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Pesanan Terverifikasi</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.ord_step_verified_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Pesanan masuk dari channel manapun dan status pembayaran tervalidasi lunas. Stok fisik otomatis
                             dialokasikan sehingga tidak bisa dijual ganda.
@@ -511,7 +509,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Penyerahan ke Kurir</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.ord_step_courier_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Kurir ekspedisi mengambil paket. Status pesanan langsung terupdate menjadi 'Dalam Perjalanan'
                             dan nomor resi terkirim ke WhatsApp pelanggan.
@@ -524,7 +522,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Pesanan Selesai</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.ord_step_done_title') }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Pelanggan menerima barang dengan puas. Transaksi dibukukan tuntas ke laporan penjualan dan
                             histori CRM pelanggan bertambah secara otomatis.
@@ -622,7 +620,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_omnichannel.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -649,9 +647,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_omnichannel.mod_pos') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kasir cepat yang menyatu dengan data pesanan
                         ambil di toko.</p>
                 </a>
@@ -664,7 +660,7 @@
                     </div>
                     <h3
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Stok Gudang Multi-Cabang
+                        {{ __('public_omnichannel.mod_inventory_multibranch') }}
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Alokasi stok otomatis saat pesanan masuk
                         agar tidak bentrok.</p>
@@ -678,7 +674,7 @@
                     </div>
                     <h3
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Notifikasi Status WhatsApp
+                        {{ __('public_omnichannel.mod_whatsapp') }}
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kirim nomor resi pengiriman dan status order
                         langsung ke chat pembeli.</p>
@@ -700,7 +696,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Percepat Pemrosesan Pesanan Toko Anda Hari Ini
+                        {{ __('public_omnichannel.ord_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Kendalikan seluruh order fisik dan online dalam satu pipeline rapi dan hilangkan risiko salah kirim
@@ -709,7 +705,7 @@
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
-                            Coba Demo Manajemen Pesanan
+                            {{ __('public_omnichannel.btn_orders_demo') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all">

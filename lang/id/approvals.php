@@ -105,4 +105,23 @@ return [
     'role_admin' => 'Admin',
     'role_owner' => 'Owner / Pemilik Toko',
     'close_modal' => 'Tutup modal',
+
+    // Stepper component specific
+    'stepper_title'                  => 'Tata Kelola Otorisasi Bertingkat (MAR)',
+    'stepper_subtitle'               => 'Dokumen memerlukan persetujuan berjenjang sebelum dapat dicairkan atau dikonfirmasi.',
+    'status_fully_approved_badge'    => 'Disetujui Sepenuhnya (Siap Eksekusi)',
+    'status_rejected_badge'          => 'Ditolak oleh Penyetuju',
+    'waiting_level_badge'            => 'Menunggu Persetujuan Level :level dari :total',
+    'maker_draft_badge'              => 'Maker (Draf)',
+    'maker_staff_default'            => 'Staf Pembuat',
+    'btn_approve_document'           => 'Setujui Dokumen',
+    'btn_reject_action'              => 'Tolak Dokumen',
+    'modal_confirm_approve_heading'  => 'Konfirmasi Persetujuan',
+    'modal_confirm_reject_heading'   => 'Konfirmasi Penolakan',
+    'approve_notice_proceed'         => 'Dengan menyetujui, dokumen akan diteruskan ke tingkat verifikasi berikutnya atau dieksekusi resmi.',
+    'reject_notice_warning'          => 'Penolakan akan menghentikan transaksi dan mengembalikan status ke pembuat draf.',
+    'reject_reason_placeholder_step' => 'Jelaskan alasan dokumen ditolak agar staf pembuat dapat melakukan revisi...',
+    'ready_execution'                => 'Siap Dieksekusi',
+    'locked_status'                  => 'Terkunci',
+    'eligible_authority_notice'      => 'Anda memiliki wewenang untuk mengambil tindakan atas dokumen ini pada <strong>Level :level</strong>.',
 ];

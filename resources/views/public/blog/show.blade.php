@@ -610,20 +610,20 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             @if ($post->topic_cluster === 'pajak' || str_contains($post->slug, 'pajak') || str_contains($post->slug, 'pph'))
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>PP No. 55 Tahun 2022:</strong> Penyesuaian Pengaturan di Bidang Pajak Penghasilan (PPh Final UMKM 0,5% & Batas Bebas Pajak Omzet s.d. Rp500 Juta)   <a href="https://peraturan.bpk.go.id/Details/232490/pp-no-55-tahun-2022" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Dokumen Resmi BPK RI</a></span>
+                                <span><strong>PP No. 55 Tahun 2022:</strong> Penyesuaian Pengaturan di Bidang Pajak Penghasilan (PPh Final UMKM 0,5% & Batas Bebas Pajak Omzet s.d. Rp500 Juta)   <a href="https://peraturan.bpk.go.id/Details/232490/pp-no-55-tahun-2022" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">{{ __('public_blog.doc_official_bpk') }}</a></span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Direktorat Jenderal Pajak (DJP):</strong> Tata Cara Penyetoran & Pelaporan SPT Tahunan PPh Final UMKM   <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi DJP (pajak.go.id)</a></span>
+                                <span><strong>Direktorat Jenderal Pajak (DJP):</strong> Tata Cara Penyetoran & Pelaporan SPT Tahunan PPh Final UMKM   <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">{{ __('public_blog.portal_official_djp') }}</a></span>
                             </li>
                             @else
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Online Single Submission (OSS RBA):</strong> Penerbitan Nomor Induk Berusaha (NIB) Resmi Berbasis Risiko   <a href="https://oss.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi OSS BKPM (oss.go.id)</a></span>
+                                <span><strong>Online Single Submission (OSS RBA):</strong> Penerbitan Nomor Induk Berusaha (NIB) Resmi Berbasis Risiko   <a href="https://oss.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">{{ __('public_blog.portal_official_oss') }}</a></span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>UU No. 6 Tahun 2023:</strong> Kemudahan, Perlindungan, dan Pemberdayaan Koperasi dan Usaha Mikro, Kecil, dan Menengah   <a href="https://peraturan.bpk.go.id/Details/246419/uu-no-6-tahun-2023" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Database Peraturan BPK RI</a></span>
+                                <span><strong>UU No. 6 Tahun 2023:</strong> Kemudahan, Perlindungan, dan Pemberdayaan Koperasi dan Usaha Mikro, Kecil, dan Menengah   <a href="https://peraturan.bpk.go.id/Details/246419/uu-no-6-tahun-2023" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">{{ __('public_blog.db_regulation_bpk') }}</a></span>
                             </li>
                             @endif
                         </ul>

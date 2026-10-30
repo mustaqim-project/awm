@@ -271,6 +271,7 @@ return [
         'business_name_label' => 'Nama Bisnis / Usaha',
         'business_name_placeholder' => 'Contoh: Kopi Senja Mandiri',
         'old_email_label' => 'Email Akun Terdaftar',
+        'old_email_placeholder' => 'email.terdaftar@gmail.com',
         'old_phone_label' => 'Nomor WhatsApp Lama (Opsional)',
         'old_phone_placeholder' => '081234567890 (jika ingat)',
         'section_3_title' => '3. Kontak Baru Pengganti (Wajib Aktif)',

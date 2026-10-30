@@ -193,8 +193,7 @@
                         <div class="font-bold text-[15px] tracking-tight leading-none text-black dark:text-white">COOCA
                         </div>
                         <span
-                            class="text-[10.5px] uppercase tracking-wider text-[#007AFF] font-bold block mt-0.5">Portal
-                            Pelanggan</span>
+                            class="text-[10.5px] uppercase tracking-wider text-[#007AFF] font-bold block mt-0.5">{{ __('storefront.customer_portal.badge') }}</span>
                     </div>
                 </a>
             </div>
@@ -205,19 +204,19 @@
                     class="hidden md:flex items-center gap-1 bg-black/[0.03] dark:bg-white/[0.05] p-1 rounded-full border border-black/[0.04] dark:border-white/[0.06]">
                     <a href="{{ route('customer.dashboard') }}"
                         class="px-4 py-1.5 rounded-full text-[13px] font-semibold transition tracking-tight {{ request()->routeIs('customer.dashboard') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white' }}">
-                        Dashboard
+                        {{ __('storefront.customer_portal.dashboard') }}
                     </a>
                     <a href="{{ route('customer.orders') }}"
                         class="px-4 py-1.5 rounded-full text-[13px] font-semibold transition tracking-tight {{ request()->routeIs('customer.orders*') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white' }}">
-                        Riwayat Belanja
+                        {{ __('storefront.customer_portal.shopping_history') }}
                     </a>
                     <a href="{{ route('customer.cart') }}"
                         class="px-4 py-1.5 rounded-full text-[13px] font-semibold transition tracking-tight {{ request()->routeIs('customer.cart') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white' }}">
-                        Keranjang
+                        {{ __('storefront.customer_portal.cart') }}
                     </a>
                     <a href="{{ route('customer.profile') }}"
                         class="px-4 py-1.5 rounded-full text-[13px] font-semibold transition tracking-tight {{ request()->routeIs('customer.profile') ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white' }}">
-                        Profil
+                        {{ __('storefront.customer_portal.profile') }}
                     </a>
                 </nav>
             @endauth
@@ -228,7 +227,7 @@
                 <button type="button"
                     @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')"
                     class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 flex items-center justify-center transition active:scale-95"
-                    aria-label="Toggle mode gelap">
+                    aria-label="{{ __('common.dark_mode_toggle') }}">
                     <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
                 </button>
@@ -269,31 +268,31 @@
                             <a href="{{ route('customer.dashboard') }}"
                                 class="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-medium text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 transition">
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                                <span>Dashboard Akun</span>
+                                <span>{{ __('storefront.customer_portal.account_dashboard') }}</span>
                             </a>
                             <a href="{{ route('customer.orders') }}"
                                 class="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-medium text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 transition">
                                 <i data-lucide="package" class="w-4 h-4"></i>
-                                <span>Riwayat Belanja</span>
+                                <span>{{ __('storefront.customer_portal.shopping_history') }}</span>
                             </a>
                             <a href="{{ route('customer.cart') }}"
                                 class="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-medium text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 transition">
                                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                                <span>Keranjang Belanja</span>
+                                <span>{{ __('storefront.customer_portal.cart') }}</span>
                             </a>
                             <a href="{{ route('customer.profile') }}"
                                 class="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-medium text-black/75 dark:text-white/75 hover:bg-black/5 dark:hover:bg-white/5 transition">
                                 <i data-lucide="user" class="w-4 h-4"></i>
-                                <span>Pengaturan Profil</span>
+                                <span>{{ __('storefront.customer_portal.profile_settings') }}</span>
                             </a>
 
                             <div class="pt-1 border-t border-black/5 dark:border-white/5">
                                 <form action="{{ route('customer.logout') }}" method="POST">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition">
+                                        class="w-full flex items-center gap-2 px-3 py-2 rounded-[12px] text-[12.5px] font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition cursor-pointer">
                                         <i data-lucide="log-out" class="w-4 h-4"></i>
-                                        <span>Keluar Akun</span>
+                                        <span>{{ __('storefront.customer_portal.logout') }}</span>
                                     </button>
                                 </form>
                             </div>
@@ -303,7 +302,7 @@
                     <a href="{{ route('customer.login') }}"
                         class="h-9 px-4 rounded-full bg-[#007AFF] text-white text-[13px] font-semibold flex items-center gap-1.5 shadow-sm hover:opacity-90 active:scale-95 transition">
                         <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
-                        <span>Masuk</span>
+                        <span>{{ __('storefront.customer_portal.login') }}</span>
                     </a>
                 @endauth
             </div>
@@ -339,27 +338,27 @@
     {{-- Mobile Bottom Tab Bar (iOS 18 Style) --}}
     @auth('customer')
         <nav class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white/85 dark:bg-[#161617]/85 backdrop-blur-xl border-t border-black/5 dark:border-white/10 px-2 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]"
-            aria-label="Navigasi Pelanggan">
+            aria-label="{{ __('storefront.customer_portal.nav_aria') }}">
             <div class="grid grid-cols-4 gap-1">
                 <a href="{{ route('customer.dashboard') }}"
                     class="text-center text-[10.5px] font-medium tracking-tight py-1 {{ request()->routeIs('customer.dashboard') ? 'text-[#007AFF] font-bold' : 'text-black/55 dark:text-white/55' }}">
                     <i data-lucide="layout-dashboard" class="w-4 h-4 mx-auto mb-0.5"></i>
-                    <span>Dashboard</span>
+                    <span>{{ __('storefront.customer_portal.dashboard') }}</span>
                 </a>
                 <a href="{{ route('customer.orders') }}"
                     class="text-center text-[10.5px] font-medium tracking-tight py-1 {{ request()->routeIs('customer.orders*') ? 'text-[#007AFF] font-bold' : 'text-black/55 dark:text-white/55' }}">
                     <i data-lucide="package" class="w-4 h-4 mx-auto mb-0.5"></i>
-                    <span>Pesanan</span>
+                    <span>{{ __('storefront.customer_portal.orders') }}</span>
                 </a>
                 <a href="{{ route('customer.cart') }}"
                     class="text-center text-[10.5px] font-medium tracking-tight py-1 {{ request()->routeIs('customer.cart') ? 'text-[#007AFF] font-bold' : 'text-black/55 dark:text-white/55' }}">
                     <i data-lucide="shopping-bag" class="w-4 h-4 mx-auto mb-0.5"></i>
-                    <span>Keranjang</span>
+                    <span>{{ __('storefront.customer_portal.cart') }}</span>
                 </a>
                 <a href="{{ route('customer.profile') }}"
                     class="text-center text-[10.5px] font-medium tracking-tight py-1 {{ request()->routeIs('customer.profile') ? 'text-[#007AFF] font-bold' : 'text-black/55 dark:text-white/55' }}">
                     <i data-lucide="user" class="w-4 h-4 mx-auto mb-0.5"></i>
-                    <span>Profil</span>
+                    <span>{{ __('storefront.customer_portal.profile') }}</span>
                 </a>
             </div>
         </nav>
@@ -369,8 +368,8 @@
     <footer
         class="border-t border-black/5 dark:border-white/5 py-6 text-center text-[12px] text-black/45 dark:text-white/45">
         <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p>&copy; {{ date('Y') }} Cooca. Hak cipta dilindungi undang-undang.</p>
-            <p>Platform Operasi Bisnis Terpadu UMKM Indonesia</p>
+            <p>&copy; {{ date('Y') }} Cooca. {{ __('common.all_rights_reserved') }}</p>
+            <p>{{ __('common.cooca_tagline') }}</p>
         </div>
     </footer>
 

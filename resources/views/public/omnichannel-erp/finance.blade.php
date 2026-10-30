@@ -341,7 +341,7 @@
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
                                     <button
-                                        class="px-2 py-1 rounded bg-white/10 text-slate-300 text-[10px] hover:bg-white/20 transition-colors">Tinjau Struk</button>
+                                        class="px-2 py-1 rounded bg-white/10 text-slate-300 text-[10px] hover:bg-white/20 transition-colors">{{ __('public_erp.btn_review_receipt') }}</button>
                                     <button
                                         class="px-2.5 py-1 rounded bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-[10px] transition-colors">Setujui</button>
                                 </div>
@@ -391,7 +391,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="receipt-text" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Bocor Halus di Kas Kecil Cabang</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.fin_pain_petty_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Pengeluaran operasional kecil-kecil (beli es batu, gas, ongkos kirim) tidak tercatat terpusat.
                             Uang kas laci kasir habis tanpa pertanggungjawaban nota fisik yang jelas.
@@ -405,7 +405,7 @@
                             class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900/50 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="calendar-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Jadwal Bayar Supplier Bentrok</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.fin_pain_vendor_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Tiga tagihan bahan baku utama jatuh tempo di tanggal yang sama dengan waktu gajian karyawan.
                             Akibat tidak ada kalender arus kas, pemilik bisnis terpaksa mencari pinjaman darurat.
@@ -418,8 +418,7 @@
         {{-- 3. CORE FINANCE CAPABILITIES: Bento Apple HIG --}}
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">Fitur
-                    Manajemen Kas & Treasury</h2>
+                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_erp.fin_feature_kicker') }}</h2>
                 <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     Alat Pengendalian Finansial yang Presisi untuk Owner
                 </p>
@@ -438,9 +437,7 @@
                             class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="landmark" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Konsolidasi Seluruh Rekening Bank & Kas Tunai
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.fin_feat_consolidation_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Lihat posisi uang kas perusahaan dalam satu tampilan tunggal. Kelola rekening penampungan
                             pembayaran QRIS, rekening giro operasional, rekening payroll staf, hingga brankas kas fisik di
@@ -489,7 +486,7 @@
                         class="w-11 h-11 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                         <i data-lucide="calendar-check" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jadwal Pembayaran Supplier (AP)</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.fin_feat_ap_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Catat termin pembayaran tempo (TOP 14/30/60 hari) untuk setiap faktur supplier. Dapatkan notifikasi
                         sebelum jatuh tempo agar tidak terkena penalti dan menjaga hubungan baik dengan vendor.
@@ -503,7 +500,7 @@
                         class="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-purple-600 dark:text-purple-400">
                         <i data-lucide="send" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Penagihan Piutang Cepat (AR)</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.fin_feat_ar_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                         Pantau umur piutang (Aging AR Report). Kirim pengingat invoice langsung ke WhatsApp atau email klien
                         dalam satu klik disertai link pembayaran untuk mempercepat pengembalian kas perusahaan.
@@ -535,9 +532,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/15 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>Arus Keuangan Terhubung</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Dari Transaksi Penjualan Hingga Saldo Kas Akhir
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">{{ __('public_erp.fin_flow_kicker') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3">
                         Modul Finance bekerja berdampingan dengan Kasir POS, Gudang, dan Akuntansi untuk menjaga setiap
                         rupiah uang perusahaan tetap terpantau.
@@ -551,7 +546,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Kasir Terima Bayar</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.fin_step_pos_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Penjualan via POS kasir atau marketplace masuk. Pembayaran tunai masuk ke Kas Laci Cabang,
                             sedangkan pembayaran QRIS atau transfer masuk ke akun Bank Penampungan.
@@ -590,7 +585,7 @@
                             class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-xs border border-purple-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Otomasi ke Akuntansi</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.fin_step_acc_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Setiap mutasi kas masuk dan keluar secara simultan membentuk jurnal akuntansi dan memperbarui
                             Laporan Arus Kas (Cash Flow Statement) perusahaan.
@@ -687,7 +682,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#00C4D8] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Semua Modul ERP</span>
+                    <span>{{ __('public_erp.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -714,9 +709,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_pos_label') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Penerimaan kas kasir yang langsung tercatat
                         ke buku kas harian.</p>
                 </a>
@@ -728,9 +721,7 @@
                         <i data-lucide="boxes" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Stok & PO
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_inventory_po') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sinkronisasi faktur pembelian barang gudang
                         dengan hutang dagang (AP).</p>
                 </a>
@@ -765,7 +756,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Amankan Arus Kas dan Likuiditas Bisnis Anda Sekarang
+                        {{ __('public_erp.fin_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Dapatkan kejelasan posisi kas setiap hari, hentikan piutang macet, dan kelola keuangan bisnis dengan
@@ -778,7 +769,7 @@
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm backdrop-blur-sm transition-all">
-                            Konsultasi Finansial Bisnis
+                            {{ __('public_erp.btn_consult_financial') }}
                         </a>
                     </div>
                 </div>

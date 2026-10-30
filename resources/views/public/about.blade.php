@@ -1,11 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Tentang COOCA: Visi Business Operating System untuk UMKM Indonesia')
-@section('description', 'Kisah di balik COOCA: Dibangun untuk menyelesaikan masalah fragmentasi aplikasi bisnis,
-    menyatukan kasir, stok, keuangan, dan otomasi dalam satu ekosistem yang terhubung.')
-@section('og_title', 'Tentang COOCA: Visi Business Operating System untuk UMKM Indonesia')
-@section('og_description', 'Mengapa COOCA dibangun: menyatukan operasional, penjualan, stok, dan pembukuan bisnis dalam
-    satu sistem terpadu tanpa fragmentasi data.')
+@section('title', __('public_marketing.about_seo_title'))
+@section('description', __('public_marketing.about_seo_desc'))
+@section('og_title', __('public_marketing.about_seo_title'))
+@section('og_description', __('public_marketing.about_seo_desc'))
 @section('canonical', route('public.about'))
 @section('og_type', 'website')
 
@@ -52,8 +50,7 @@
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                            Mengakhiri Fragmentasi Aplikasi untuk <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Pemilik Usaha Indonesia</span>
+                            {{ __('public_marketing.about_hero_title_lead') }} <span class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_marketing.about_hero_title_highlight') }}</span>
                         </h1>
 
                         {{-- Subtitle Paragraphs --}}
@@ -70,7 +67,7 @@
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Mulai Coba COOCA Gratis</span>
+                                <span>{{ __('public_marketing.btn_start_free_about') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                             </a>
                             <a href="{{ route('public.bos.overview') }}"
@@ -190,7 +187,7 @@
                     </span>
                     <h2
                         class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.2] text-balance break-words">
-                        Empat Fondasi Utama di Setiap Baris Kode COOCA
+                        {{ __('public_marketing.about_foundations_title') }}
                     </h2>
                 </div>
 
@@ -249,9 +246,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
                             <i data-lucide="heart-handshake" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">
-                            4. Harga Jujur Tanpa Jebakan Fitur
-                            Terkunci</h3>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.about_fnd_4_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Kami percaya pada transparansi harga. Fitur operasional esensial tersedia dapat diakses sejak
                             awal agar usaha mikro dapat langsung beroperasi secara profesional tanpa dibebani biaya
@@ -270,7 +265,7 @@
                     </span>
                     <h2
                         class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Dirancang untuk Bisnis Mandiri yang Siap Naik Kelas
+                        {{ __('public_marketing.about_audience_title') }}
                     </h2>
                 </div>
 
@@ -305,7 +300,7 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Usaha Laundry</h4>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_laundry') }}</h4>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Laundry kiloan
                             dan dry
                             cleaning yang memerlukan timbangan desimal akurat, nomor rak baju, dan notifikasi WA cucian siap
@@ -324,7 +319,7 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Bisnis Jasa & Servis</h4>
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_services') }}</h4>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Salon, servis AC
                             panggilan,
                             studio foto, dan konsultan yang butuh booking kalender reservasi serta invoice termin DP
@@ -351,7 +346,7 @@
                     </div>
                     <h3
                         class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
-                        Bersiap Mengambil Kendali Penuh Atas Bisnis Anda?
+                        {{ __('public_marketing.about_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm text-slate-300 leading-relaxed text-pretty">
                         Tinggalkan kerumitan spreadsheet dan nikmati kejelasan finansial bisnis Anda dengan ekosistem COOCA
@@ -365,7 +360,7 @@
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_marketing.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

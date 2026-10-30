@@ -782,4 +782,18 @@ return [
     'pos_transactions' => 'POS Cashier Transactions',
     'storage_used_label' => 'Used',
     'storage_remaining_label' => 'Remaining Storage',
+
+    // Reusable Quota & Lock Modal
+    'quota_modal_title'          => 'Quota Limit Reached',
+    'quota_modal_desc'           => 'The free quota for this feature has been reached for this month.',
+    'quota_free_tier_badge'      => 'Free Solo Plan',
+    'quota_status_usage'         => 'Usage Status:',
+    'quota_unit_default'         => 'Records',
+    'quota_auto_reset_prefix'    => 'Auto reset on:',
+    'quota_data_safe_guarantee'  => 'Your Data is 100% Safe:',
+    'quota_data_safe_desc'       => 'All records previously logged remain safely stored and will never be deleted.',
+    'quota_unlock_unlimited'     => 'Unlock Unlimited',
+    'quota_postpone_reset'       => 'Not Now (Wait for Next Month\'s Reset)',
+    'unlimited_quota_manage'     => 'Cooca (∞ Unlimited) - Manage Quota',
+    'upgrade_to_cooca'           => 'Free Plan (Solo) - Upgrade to Cooca',
 ];

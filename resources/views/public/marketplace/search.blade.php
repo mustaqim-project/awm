@@ -510,26 +510,28 @@
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#38BDF8] border border-[#007AFF]/20">
                                         <span>{{ $categories[$category]['label'] }}</span>
                                         <a href="{{ route('marketplace.search', request()->except(['kategori', 'page'])) }}"
-                                            class="hover:opacity-75">
+                                            class="hover:opacity-75" aria-label="{{ __('public_marketplace.remove_filter') }}">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                         </a>
                                     </span>
                                 @endif
 
                                 @if ($minPrice || $maxPrice)
+                                    @php $clearPriceUrl = route('marketplace.search', request()->except(['min_harga', 'max_harga', 'harga', 'page'])); @endphp
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#38BDF8] border border-[#007AFF]/20">
                                         <span>Rp {{ $minPrice ? number_format($minPrice, 0, ',', '.') : '0' }} -
-                                            {{ $maxPrice ? number_format($maxPrice, 0, ',', '.') : 'Maks' }}</span>
-                                        <a href="{{ route('marketplace.search', request()->except(['min_harga', 'max_harga', 'harga', 'page'])) }}"
-                                            class="hover:opacity-75">
+                                            {{ $maxPrice ? number_format($maxPrice, 0, ',', '.') : __('public_marketplace.max_price_fallback') }}</span>
+                                        <a href="{{ $clearPriceUrl }}"
+                                            class="hover:opacity-75" aria-label="{{ __('public_marketplace.remove_filter') }}">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                         </a>
                                     </span>
                                 @elseif ($priceRange && isset($pricePresetOptions[$priceRange]))
+                                    @php $clearPresetUrl = route('marketplace.search', request()->except(['harga', 'min_harga', 'max_harga', 'page'])); @endphp
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#38BDF8] border border-[#007AFF]/20">
                                         <span>{{ __('public_marketplace.srch_active_price_prefix', ['range' => $pricePresetOptions[$priceRange]]) }}</span>
-                                        <a href="{{ route('marketplace.search', request()->except(['harga', 'min_harga', 'max_harga', 'page'])) }}"
-                                            class="hover:opacity-75">
+                                        <a href="{{ $clearPresetUrl }}"
+                                            class="hover:opacity-75" aria-label="{{ __('public_marketplace.remove_filter') }}">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                         </a>
                                     </span>

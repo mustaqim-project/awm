@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Bisnis Jasa & Servis: Booking & Invoice | COOCA')
-@section('description', 'Aplikasi bisnis jasa, salon & servis: booking janji temu, penugasan teknisi, invoice DP & pelunasan bertahap, serta pengingat WhatsApp anti no-show.')
-@section('og_title', 'Aplikasi Bisnis Jasa & Servis: Booking & Invoice | COOCA')
-@section('og_description', 'Aplikasi bisnis jasa, salon & servis: booking janji temu, penugasan teknisi, invoice DP & pelunasan bertahap, serta pengingat WhatsApp anti no-show.')
+@section('title', __('public_solutions.srv_seo_title'))
+@section('description', __('public_solutions.srv_seo_desc'))
+@section('og_title', __('public_solutions.srv_seo_title'))
+@section('og_description', __('public_solutions.srv_seo_desc'))
 @section('canonical', route('public.solutions.services'))
 @section('og_type', 'product')
 @section('keywords', 'software bisnis jasa, aplikasi manajemen booking servis, sistem invoicing jasa, software barbershop salon, aplikasi servis ac panggilan, jadwal teknisi lapangan, komisi terapis staf')
@@ -142,7 +142,7 @@
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true"></i>
-                                <span>Tanya Solusi Jasa</span>
+                                <span>{{ __('public_solutions.btn_ask_services') }}</span>
                             </a>
                         </div>
 
@@ -291,7 +291,7 @@
                         Tantangan Bisnis Jasa & Servis
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Kendala yang Menghambat Efisiensi dan Kepuasan Klien Layanan Anda
+                        {{ __('public_solutions.srv_pain_kicker') }}
                     </h2>
                 </div>
 
@@ -325,7 +325,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             03</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Distribusi Kerja & Komisi Tidak Rata
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.srv_pain_comm_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Owner tidak memiliki visibilitas kapasitas teknisi/terapis yang sedang sibuk atau luang, serta
@@ -342,7 +342,7 @@
                         Kapabilitas Khusus Bisnis Jasa
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug text-balance break-words">
-                        Fitur Operasional yang Disesuaikan untuk Layanan Servis
+                        {{ __('public_solutions.srv_feat_kicker') }}
                     </h2>
                 </div>
 
@@ -367,7 +367,7 @@
                             class="w-10 h-10 rounded-[12px] bg-blue-500/10 text-[#007AFF] dark:text-[#00C4D8] flex items-center justify-center">
                             <i data-lucide="user-check" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Penugasan Staf & Teknisi Lapangan
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.srv_feat_assign_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Alokasikan order kerja ke teknisi, terapis, fotografer, atau konsultan yang sedang luang. Pantau
@@ -423,7 +423,7 @@
                             class="w-10 h-10 rounded-[12px] bg-rose-500/10 text-rose-500 flex items-center justify-center">
                             <i data-lucide="percent" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Komisi & Bagi Hasil Staf Transparan
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.srv_feat_comm_share_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Sistem menghitung persentase komisi bagi hasil terapis atau teknisi secara otomatis untuk setiap
@@ -458,7 +458,7 @@
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-violet-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Penugasan Staf</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.srv_step_assign_title') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Teknisi atau staf menerima surat tugas digital
                             dengan rincian kebutuhan.</p>
                     </div>
@@ -482,8 +482,7 @@
                 <div class="text-center space-y-2">
                     <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] dark:text-[#00C4D8] block">Tanya
                         Jawab</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">Pertanyaan Umum Seputar COOCA
-                        Bisnis Jasa</h2>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_solutions.srv_faq_kicker') }}</h2>
                 </div>
 
                 <div class="space-y-3.5">
@@ -557,7 +556,7 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jelajahi Solusi Industri & Modul Terkait</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.crm') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
@@ -575,17 +574,17 @@
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-salon') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Kasir Salon</h4>
+                            {{ __('public_solutions.cross_title_salon') }}</h4>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-barbershop') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Kasir Barbershop</h4>
+                            {{ __('public_solutions.cross_title_barber') }}</h4>
                     </a>
                 </div>
             </section>
@@ -607,7 +606,7 @@
                         <span>Tingkatkan Profesionalitas dan Ketepatan Waktu Layanan Anda</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
-                        Kelola Reservasi dan Tim Lapangan Anda dari Satu Sistem
+                        {{ __('public_solutions.srv_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA hari ini dan nikmati kemudahan menjadwalkan booking klien, menerbitkan invoice
@@ -616,12 +615,12 @@
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Coba Software Jasa Gratis</span>
+                            <span>{{ __('public_solutions.btn_try_services_free') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_solutions.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

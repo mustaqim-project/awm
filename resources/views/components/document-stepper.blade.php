@@ -23,10 +23,10 @@
                 </div>
                 <div>
                     <h4 class="text-sm font-bold text-black dark:text-white tracking-tight">
-                        Tata Kelola Otorisasi Bertingkat (MAR)
+                        {{ __('approvals.stepper_title') }}
                     </h4>
                     <p class="text-xs text-black/55 dark:text-white/55">
-                        Dokumen memerlukan persetujuan berjenjang sebelum dapat dicairkan atau dikonfirmasi.
+                        {{ __('approvals.stepper_subtitle') }}
                     </p>
                 </div>
             </div>
@@ -36,17 +36,17 @@
                 @if ($status === 'approved')
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#34C759]/15 text-[#34C759] border border-[#34C759]/25">
                         <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                        <span>Disetujui Sepenuhnya (Siap Eksekusi)</span>
+                        <span>{{ __('approvals.status_fully_approved_badge') }}</span>
                     </span>
                 @elseif ($status === 'rejected')
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/25">
                         <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
-                        <span>Ditolak oleh Penyetuju</span>
+                        <span>{{ __('approvals.status_rejected_badge') }}</span>
                     </span>
                 @else
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#FF9500]/15 text-[#FF9500] border border-[#FF9500]/25">
                         <i data-lucide="clock" class="w-3.5 h-3.5 animate-pulse"></i>
-                        <span>Menunggu Persetujuan Level {{ $currentLevel }} dari {{ $totalLevels }}</span>
+                        <span>{{ __('approvals.waiting_level_badge', ['level' => $currentLevel, 'total' => $totalLevels]) }}</span>
                     </span>
                 @endif
             </div>
@@ -62,9 +62,9 @@
                         <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
                     </div>
                     <div>
-                        <div class="text-[11px] uppercase tracking-wider font-extrabold text-[#34C759]">Maker (Draf)</div>
+                        <div class="text-[11px] uppercase tracking-wider font-extrabold text-[#34C759]">{{ __('approvals.maker_draft_badge') }}</div>
                         <div class="text-xs font-semibold text-black dark:text-white truncate max-w-[120px]">
-                            {{ $request->requester->name ?? 'Staf Pembuat' }}
+                            {{ $request->requester->name ?? __('approvals.maker_staff_default') }}
                         </div>
                     </div>
                 </div>
@@ -97,14 +97,18 @@
                                 <span class="text-xs font-bold">{{ $lvl }}</span>
                             </div>
                         @endif
-
-                        <div>
-                            <div class="text-[11px] uppercase tracking-wider font-extrabold {{ $isRejectedHere ? 'text-[#FF3B30]' : ($isPassed ? 'text-[#34C759]' : ($isCurrent ? 'text-[#FF9500]' : 'text-black/40 dark:text-white/40')) }}">
-                                Approver L{{ $lvl }}
+                        <div class="min-w-0">
+                            <div class="text-[10.5px] uppercase tracking-wider font-bold text-black/40 dark:text-white/40">
+                                Level {{ $lvl }}
                             </div>
-                            <div class="text-xs font-semibold text-black dark:text-white capitalize">
-                                {{ $log?->approver?->name ?? ucfirst($roleName) }}
+                            <div class="text-xs font-semibold text-black dark:text-white truncate max-w-[120px]">
+                                {{ $roleName }}
                             </div>
+                            @if ($log && $log->approver)
+                                <div class="text-[10px] text-black/50 dark:text-white/50 truncate max-w-[120px]">
+                                    by {{ $log->approver->name }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endfor
@@ -119,7 +123,7 @@
                             Releaser
                         </div>
                         <div class="text-xs font-semibold text-black dark:text-white">
-                            {{ $status === 'approved' ? 'Siap Dieksekusi' : 'Terkunci' }}
+                            {{ $status === 'approved' ? __('approvals.ready_execution') : __('approvals.locked_status') }}
                         </div>
                     </div>
                 </div>
@@ -132,7 +136,7 @@
             <div class="mt-4 p-3.5 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] text-xs flex items-start gap-2.5">
                 <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
                 <div>
-                    <span class="font-bold">Alasan Penolakan:</span>
+                    <span class="font-bold">{{ __('approvals.rejection_reason_prefix') }}</span>
                     <p class="mt-0.5 opacity-90">{{ $request->rejection_reason }}</p>
                 </div>
             </div>
@@ -143,22 +147,22 @@
             <div class="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/[0.06] flex flex-wrap items-center justify-between gap-3 bg-black/[0.02] dark:bg-white/[0.02] p-4 rounded-[18px]">
                 <div class="text-xs text-black/75 dark:text-white/75 font-medium flex items-center gap-2">
                     <i data-lucide="user-check" class="w-4 h-4 text-[#007AFF]"></i>
-                    <span>Anda memiliki wewenang untuk mengambil tindakan atas dokumen ini pada <strong>Level {{ $currentLevel }}</strong>.</span>
+                    <span>{!! __('approvals.eligible_authority_notice', ['level' => $currentLevel]) !!}</span>
                 </div>
                 <div class="flex items-center gap-2.5">
                     <button
                         type="button"
                         @click="showRejectModal = true"
-                        class="min-h-[42px] px-4 py-2 rounded-[14px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-95 flex items-center gap-1.5">
+                        class="min-h-[42px] px-4 py-2 rounded-[14px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="x-circle" class="w-4 h-4"></i>
-                        <span>Tolak Dokumen</span>
+                        <span>{{ __('approvals.btn_reject_document') }}</span>
                     </button>
                     <button
                         type="button"
                         @click="showApproveModal = true"
-                        class="min-h-[42px] px-5 py-2 rounded-[14px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-md shadow-[#34C759]/20 transition-all active:scale-95 flex items-center gap-1.5">
+                        class="min-h-[42px] px-5 py-2 rounded-[14px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-md shadow-[#34C759]/20 transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                        <span>Setujui (Level {{ $currentLevel }})</span>
+                        <span>{{ __('approvals.btn_approve_level', ['level' => $currentLevel]) }}</span>
                     </button>
                 </div>
             </div>
@@ -177,34 +181,34 @@
                             <i data-lucide="check-circle-2" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-black dark:text-white">Konfirmasi Persetujuan</h3>
-                            <p class="text-xs text-black/55 dark:text-white/55">Persetujuan Otorisasi Level {{ $currentLevel }}</p>
+                            <h3 class="text-base font-bold text-black dark:text-white">{{ __('approvals.modal_confirm_approve_heading') }}</h3>
+                            <p class="text-xs text-black/55 dark:text-white/55">{{ __('approvals.waiting_level', ['current' => $currentLevel, 'total' => $totalLevels]) }}</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('approvals.approve', $request->id) }}" class="space-y-4">
                         @csrf
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                Catatan Persetujuan (Opsional):
+                                {{ __('approvals.notes_optional_label') }}:
                             </label>
                             <textarea
                                 name="notes"
                                 rows="2"
                                 x-model="approveNotes"
-                                placeholder="Contoh: Anggaran telah divalidasi sesuai pagu bulanan."
+                                placeholder="{{ __('approvals.notes_approve_placeholder') }}"
                                 class="w-full px-3.5 py-2.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white outline-none resize-none focus:border-[#34C759]"></textarea>
                         </div>
                         <div class="flex items-center justify-end gap-2.5 pt-2">
                             <button
                                 type="button"
                                 @click="showApproveModal = false"
-                                class="min-h-[40px] px-4 py-2 rounded-[14px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5">
-                                Batal
+                                class="min-h-[40px] px-4 py-2 rounded-[14px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+                                {{ __('common.cancel') }}
                             </button>
                             <button
                                 type="submit"
-                                class="min-h-[40px] px-5 py-2 rounded-[14px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-xs font-semibold shadow-md">
-                                Ya, Setujui Dokumen
+                                class="min-h-[40px] px-5 py-2 rounded-[14px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-xs font-semibold shadow-md cursor-pointer">
+                                {{ __('approvals.btn_approve_document') }}
                             </button>
                         </div>
                     </form>
@@ -225,36 +229,36 @@
                             <i data-lucide="alert-triangle" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-black dark:text-white">Tolak Dokumen</h3>
-                            <p class="text-xs text-black/55 dark:text-white/55">Penolakan wajib menyertakan alasan tertulis</p>
+                            <h3 class="text-base font-bold text-black dark:text-white">{{ __('approvals.modal_reject_title') }}</h3>
+                            <p class="text-xs text-black/55 dark:text-white/55">{{ __('approvals.reject_warning_desc') }}</p>
                         </div>
                     </div>
                     <form method="POST" action="{{ route('approvals.reject', $request->id) }}" class="space-y-4">
                         @csrf
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                                Alasan Penolakan <span class="text-[#FF3B30]">*</span>
+                                {{ __('approvals.reason_required_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <textarea
                                 name="reason"
                                 rows="3"
                                 required
                                 x-model="rejectReason"
-                                placeholder="Jelaskan alasan dokumen ditolak agar staf pembuat dapat melakukan revisi..."
+                                placeholder="{{ __('approvals.reject_reason_placeholder_step') }}"
                                 class="w-full px-3.5 py-2.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white outline-none resize-none focus:border-[#FF3B30]"></textarea>
                         </div>
                         <div class="flex items-center justify-end gap-2.5 pt-2">
                             <button
                                 type="button"
                                 @click="showRejectModal = false"
-                                class="min-h-[40px] px-4 py-2 rounded-[14px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5">
-                                Batal
+                                class="min-h-[40px] px-4 py-2 rounded-[14px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+                                {{ __('common.cancel') }}
                             </button>
                             <button
                                 type="submit"
                                 :disabled="!rejectReason.trim()"
-                                class="min-h-[40px] px-5 py-2 rounded-[14px] bg-[#FF3B30] hover:bg-[#E0352B] disabled:opacity-50 text-white text-xs font-semibold shadow-md">
-                                Tolak Dokumen
+                                class="min-h-[40px] px-5 py-2 rounded-[14px] bg-[#FF3B30] hover:bg-[#E0352B] disabled:opacity-50 text-white text-xs font-semibold shadow-md cursor-pointer">
+                                {{ __('approvals.btn_reject_document') }}
                             </button>
                         </div>
                     </form>

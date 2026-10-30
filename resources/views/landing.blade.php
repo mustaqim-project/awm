@@ -935,87 +935,112 @@
         <!-- â•â•â• 4. SPLIT SECTION: CONTENT AUTOMATION & MARKETPLACE â•â•â• -->
         <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
         <section
-            class="bg-[#F8FAFC] dark:bg-[#070B18] py-20 lg:py-24 border-b border-slate-100 dark:border-white/5 transition-colors">
+            class="bg-[#F8FAFC] dark:bg-[#070B18] py-16 sm:py-20 lg:py-24 border-b border-slate-100 dark:border-white/5 transition-colors">
             <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
 
-                    <!-- â•â•â•â• LEFT CARD: CONTENT AUTOMATION â•â•â•â• -->
+                    <!-- ════ LEFT CARD: CONTENT AUTOMATION ════ -->
                     <div
-                        class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
-                        <div>
-                            <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                {{ __('public_home.split_content_kicker') }}
-                            </span>
-                            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                                {{ __('public_home.split_content_title') }}
-                            </h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                {{ __('public_home.split_content_desc') }}
-                            </p>
-                        </div>
+                        class="p-6 sm:p-8 rounded-[28px] bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                        <div class="space-y-4 sm:space-y-5">
+                            <div>
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 text-[#007AFF] dark:text-[#38bdf8] text-[11px] font-bold uppercase tracking-wider mb-2.5 border border-blue-100/70 dark:border-blue-900/40">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] dark:bg-[#38bdf8]"></span>
+                                    {{ __('public_home.split_content_kicker') }}
+                                </span>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                                    {{ __('public_home.split_content_title') }}
+                                </h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                                    {{ __('public_home.split_content_desc') }}
+                                </p>
+                            </div>
 
-                        <div>
-                            <a href="{{ route('public.content.creation') }}"
-                                class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>{{ __('public_home.split_content_btn') }}</span>
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                            <div>
+                                <a href="{{ route('public.content.creation') }}"
+                                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow-[0_4px_14px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all min-h-[40px] touch-action-manipulation group">
+                                    <span>{{ __('public_home.split_content_btn') }}</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Visual UI Mockup (Composer + Scheduled Posts) -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-6 mt-6 border-t border-slate-100 dark:border-white/5">
                             <!-- Post Preview with Coffee/Pastry -->
                             <div
-                                class="rounded-2xl border border-slate-100 dark:border-white/10 overflow-hidden bg-slate-50 dark:bg-slate-900/60 p-3">
-                                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80"
-                                    alt="Post Preview" class="w-full h-32 object-cover rounded-xl mb-2.5">
-                                <div class="flex items-center gap-2 mb-1.5">
-                                    <div
-                                        class="w-5 h-5 rounded-md bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shrink-0 shadow-xs">
-                                        <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <rect x="2" y="2" width="20" height="20" rx="5"
-                                                ry="5">
-                                            </rect>
-                                            <circle cx="12" cy="12" r="3.5"></circle>
-                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"
-                                                stroke-width="2.5"></line>
-                                        </svg>
+                                class="rounded-2xl border border-slate-200/70 dark:border-white/10 overflow-hidden bg-slate-50/80 dark:bg-slate-900/60 p-3 flex flex-col justify-between">
+                                <div>
+                                    <div class="relative rounded-xl overflow-hidden mb-2.5">
+                                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80"
+                                            alt="Post Preview" class="w-full h-32 object-cover">
+                                        <div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-white text-[10px] font-medium flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                            <span>{{ __('public_home.split_content_status_ready') }}</span>
+                                        </div>
                                     </div>
-                                    <span
-                                        class="text-[11.5px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">{{ __('public_home.split_content_mock_title') }}</span>
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <div
+                                            class="w-5 h-5 rounded-md bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shrink-0 shadow-xs">
+                                            <svg class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                <circle cx="12" cy="12" r="3.5"></circle>
+                                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"></line>
+                                            </svg>
+                                        </div>
+                                        <span
+                                            class="text-[12px] font-bold text-slate-800 dark:text-slate-200 truncate">{{ __('public_home.split_content_mock_title') }}</span>
+                                    </div>
+                                    <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                                        {{ __('public_home.split_content_mock_desc') }}
+                                    </p>
+                                    <div class="flex items-center justify-between text-[10.5px] text-slate-500 dark:text-slate-400 mt-2.5 pt-2 border-t border-slate-200/50 dark:border-white/5">
+                                        <span class="flex items-center gap-1 font-medium text-slate-600 dark:text-slate-300">
+                                            <i data-lucide="clock" class="w-3 h-3 text-[#007AFF]"></i>
+                                            <span>{{ __('public_home.split_content_time_today') }}</span>
+                                        </span>
+                                        <span class="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                            <span>{{ __('public_home.split_content_status_queued') }}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <p class="text-[10.5px] sm:text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
-                                    {{ __('public_home.split_content_mock_desc') }}
-                                </p>
                             </div>
 
                             <!-- Scheduled Channels List -->
                             <div
-                                class="rounded-2xl border border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-slate-900/60 p-3 flex flex-col justify-between">
-                                <div
-                                    class="text-[10.5px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-                                    {{ __('public_home.split_content_schedule_label') }}</div>
-                                <div class="space-y-2">
+                                class="rounded-2xl border border-slate-200/70 dark:border-white/10 bg-slate-50/80 dark:bg-slate-900/60 p-3 flex flex-col justify-between">
+                                <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-slate-200/50 dark:border-white/5">
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800 text-[11px] sm:text-xs">
+                                        class="text-[10.5px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        {{ __('public_home.split_content_schedule_label') }}
+                                    </div>
+                                    <div class="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        <span>{{ __('public_home.split_content_status_autosync') }}</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-white/5 text-[11px] shadow-xs">
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="w-4 h-4 rounded-[4px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shrink-0 shadow-xs">
                                                 <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2.5">
-                                                    <rect x="2" y="2" width="20" height="20" rx="5">
-                                                    </rect>
+                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                                     <circle cx="12" cy="12" r="3.5"></circle>
                                                 </svg>
                                             </span>
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">Instagram</span>
+                                            <span class="font-semibold text-slate-700 dark:text-slate-200">Instagram</span>
                                         </div>
-                                        <span class="font-mono text-slate-500 font-semibold">12:00</span>
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700/60 font-semibold text-slate-700 dark:text-slate-300 text-[11px] tracking-tight">12:00</span>
                                     </div>
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800 text-[11px] sm:text-xs">
+                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-white/5 text-[11px] shadow-xs">
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="w-4 h-4 rounded-[4px] bg-[#1877F2] flex items-center justify-center text-white shrink-0 shadow-xs">
@@ -1024,26 +1049,26 @@
                                                         d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                                                 </svg>
                                             </span>
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">Facebook</span>
+                                            <span class="font-semibold text-slate-700 dark:text-slate-200">Facebook</span>
                                         </div>
-                                        <span class="font-mono text-slate-500 font-semibold">15:00</span>
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700/60 font-semibold text-slate-700 dark:text-slate-300 text-[11px] tracking-tight">15:00</span>
                                     </div>
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800 text-[11px] sm:text-xs">
+                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-white/5 text-[11px] shadow-xs">
                                         <div class="flex items-center gap-2">
                                             <span
-                                                class="w-4 h-4 rounded-[4px] bg-black flex items-center justify-center text-white shrink-0 shadow-xs">
+                                                class="w-4 h-4 rounded-[4px] bg-black dark:bg-white dark:text-black flex items-center justify-center text-white shrink-0 shadow-xs">
                                                 <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
                                                     <path
                                                         d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.93-4.49V8.6a8.18 8.18 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.93-.03z" />
                                                 </svg>
                                             </span>
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">TikTok</span>
+                                            <span class="font-semibold text-slate-700 dark:text-slate-200">TikTok</span>
                                         </div>
-                                        <span class="font-mono text-slate-500 font-semibold">19:00</span>
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700/60 font-semibold text-slate-700 dark:text-slate-300 text-[11px] tracking-tight">19:00</span>
                                     </div>
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800 text-[11px] sm:text-xs">
+                                        class="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-white/5 text-[11px] shadow-xs">
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="w-4 h-4 rounded-[4px] bg-slate-900 dark:bg-slate-700 flex items-center justify-center text-white shrink-0 shadow-xs">
@@ -1052,40 +1077,44 @@
                                                         d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.0592 71.3093C80.8988 62.4521 90.0768 59.8804 97.222 59.8804C108.685 59.8804 117.845 66.868 119.539 80.0827C114.733 79.5298 109.689 79.3149 104.423 79.4357C76.8532 80.0682 60.1009 94.6192 60.6276 114.947C61.1274 134.249 76.5414 147.256 95.8087 147.256C112.527 147.256 122.951 138.891 127.818 126.049C133.513 135.539 141.874 140.897 153.861 140.897C168.423 140.897 178.688 129.845 178.688 110.822C178.688 77.0864 153.255 46.7583 103.784 46.7583C61.4287 46.7583 31.7828 75.3129 31.7828 116.634C31.7828 157.069 60.2783 186.256 103.047 186.256C121.758 186.256 137.957 180.378 149.336 169.311L138.647 157.859C129.742 166.52 117.579 171.12 103.047 171.12C70.6205 171.12 47.0116 148.145 47.0116 116.634C47.0116 83.9877 70.1878 61.8944 103.784 61.8944C143.082 61.8944 163.552 86.8778 163.552 110.822C163.552 121.849 157.947 127.807 149.605 127.807C142.062 127.807 136.702 122.569 134.195 112.518C139.734 104.305 142.115 94.7578 141.537 88.9883ZM103.957 132.183C88.4279 132.183 75.8776 123.633 75.5256 110.027C75.1432 95.2476 87.2796 93.3087 104.225 93.3087C109.07 93.3087 113.673 93.6309 117.917 94.2755C115.656 118.91 106.671 132.183 103.957 132.183Z" />
                                                 </svg>
                                             </span>
-                                            <span class="font-bold text-slate-700 dark:text-slate-200">Threads</span>
+                                            <span class="font-semibold text-slate-700 dark:text-slate-200">Threads</span>
                                         </div>
-                                        <span class="font-mono text-slate-500 font-semibold">21:00</span>
+                                        <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700/60 font-semibold text-slate-700 dark:text-slate-300 text-[11px] tracking-tight">21:00</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- â•â•â•â• RIGHT CARD: MARKETPLACE â•â•â•â• -->
+                    <!-- ════ RIGHT CARD: MARKETPLACE ════ -->
                     <div
-                        class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm space-y-6">
-                        <div>
-                            <span class="text-xs font-bold text-[#00C2FF] uppercase tracking-wider block mb-1">
-                                {{ __('public_home.split_marketplace_kicker') }}
-                            </span>
-                            <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                                {{ __('public_home.split_marketplace_title') }}
-                            </h3>
-                            <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
-                                {{ __('public_home.split_marketplace_desc') }}
-                            </p>
-                        </div>
+                        class="p-6 sm:p-8 rounded-[28px] bg-white dark:bg-[#101726] border border-slate-200/80 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+                        <div class="space-y-4 sm:space-y-5">
+                            <div>
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 dark:bg-cyan-950/40 text-[#0284c7] dark:text-[#38bdf8] text-[11px] font-bold uppercase tracking-wider mb-2.5 border border-cyan-100/70 dark:border-cyan-900/40">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#0284c7] dark:bg-[#38bdf8]"></span>
+                                    {{ __('public_home.split_marketplace_kicker') }}
+                                </span>
+                                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                                    {{ __('public_home.split_marketplace_title') }}
+                                </h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                                    {{ __('public_home.split_marketplace_desc') }}
+                                </p>
+                            </div>
 
-                        <div>
-                            <a href="{{ route('marketplace.index') }}"
-                                class="inline-flex items-center gap-2 px-5 py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all min-h-[44px] touch-action-manipulation">
-                                <span>{{ __('public_home.split_marketplace_btn') }}</span>
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                            <div>
+                                <a href="{{ route('marketplace.index') }}"
+                                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow-[0_4px_14px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all min-h-[40px] touch-action-manipulation group">
+                                    <span>{{ __('public_home.split_marketplace_btn') }}</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Interactive Marketplace Search & Discovery -->
-                        <div class="space-y-3 pt-2">
+                        <div class="space-y-3.5 pt-6 mt-6 border-t border-slate-100 dark:border-white/5">
                             <!-- Search & Filter Bar with Autocomplete -->
                             <div x-data="{
                                 query: '',
@@ -1115,21 +1144,23 @@
                             }" @click.outside="open = false" class="relative">
                                 <form action="{{ route('marketplace.search') }}" method="GET" class="relative">
                                     <div
-                                        class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-white/10 text-xs focus-within:border-[#00C2FF] focus-within:ring-2 focus-within:ring-[#00C2FF]/20 transition-all">
-                                        <i data-lucide="search" class="w-4 h-4 text-slate-400 ml-2 shrink-0"></i>
+                                        class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-50/90 dark:bg-slate-900/70 border border-slate-200/80 dark:border-white/10 text-xs focus-within:border-[#007AFF] focus-within:ring-2 focus-within:ring-[#007AFF]/20 transition-all">
+                                        <i data-lucide="search" class="w-4 h-4 text-slate-400 ml-2.5 shrink-0"></i>
                                         <input type="text" name="q" x-model="query"
                                             @input.debounce.300ms="searchProducts()"
                                             placeholder="{{ __('public_home.split_marketplace_search_placeholder') }}" autocomplete="off"
-                                            class="w-full bg-transparent border-0 text-[16px] sm:text-xs text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-0 p-1">
-                                        <button type="submit"
-                                            class="shrink-0 px-4 py-2.5 rounded-xl bg-[#00C2FF] hover:bg-[#00B4D8] text-slate-950 font-bold text-xs shadow-sm hover:scale-105 active:scale-95 transition-all min-h-[44px] touch-action-manipulation">
-                                            {{ __('public_home.split_marketplace_search_submit') }}
-                                        </button>
+                                            class="w-full bg-transparent border-0 text-[13px] sm:text-xs text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-0 py-1.5 px-1">
+                                        
                                         <div
-                                            class="hidden sm:flex items-center gap-1 text-[10px] text-slate-500 bg-white dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-100 dark:border-white/5 shrink-0">
-                                            <i data-lucide="map-pin" class="w-3 h-3 text-rose-500"></i>
+                                            class="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200/60 dark:border-white/5 shrink-0">
+                                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-rose-500 shrink-0"></i>
                                             <span>{{ __('public_home.split_marketplace_all_cities') }}</span>
                                         </div>
+
+                                        <button type="submit"
+                                            class="shrink-0 px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-semibold text-xs shadow-xs hover:shadow-sm active:scale-95 transition-all inline-flex items-center min-h-[36px] touch-action-manipulation">
+                                            <span>{{ __('public_home.split_marketplace_search_submit') }}</span>
+                                        </button>
                                     </div>
                                 </form>
 
@@ -1149,12 +1180,12 @@
                                                     :alt="item.name"
                                                     class="w-9 h-9 rounded-lg object-cover bg-slate-100 dark:bg-slate-800 shrink-0">
                                                 <div class="min-w-0 flex-1">
-                                                    <div class="text-xs font-semibold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]"
+                                                    <div class="text-xs font-semibold text-slate-800 dark:text-white truncate group-hover:text-[#007AFF]"
                                                         x-text="item.name"></div>
                                                     <div class="flex items-center gap-2 text-[10px] text-slate-500">
                                                         <span x-text="item.category"></span>
                                                         <span>•</span>
-                                                        <span class="font-medium text-[#00C2FF]"
+                                                        <span class="font-medium text-[#007AFF]"
                                                             x-text="item.formatted_price"></span>
                                                     </div>
                                                 </div>
@@ -1164,31 +1195,31 @@
                                         </template>
                                     </div>
                                     <a :href="'{{ route('marketplace.search') }}?q=' + encodeURIComponent(query)"
-                                        class="block p-2 text-center text-[11px] font-bold text-[#00C2FF] hover:bg-[#00C2FF]/10 transition-colors">
+                                        class="block p-2 text-center text-[11px] font-bold text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors">
                                         {{ __('public_home.split_marketplace_view_all_prefix') }} "<span x-text="query"></span>" &rarr;
                                     </a>
                                 </div>
                             </div>
 
                             <!-- Category Filter Chips -->
-                            <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs -mx-1 px-1">
+                            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs -mx-1 px-1 scrollbar-none">
                                 <a href="{{ route('marketplace.search') }}"
-                                    class="px-3.5 py-2 rounded-full bg-[#00C2FF] text-white font-bold shrink-0 hover:bg-[#00B4D8] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_all') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-semibold text-[11.5px] shrink-0 shadow-xs hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_all') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'fnb']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_fnb') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_fnb') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'retail']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_retail') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_retail') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'service']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_workshop') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_workshop') }}</a>
                                 <a href="{{ route('marketplace.search', ['kategori' => 'service']) }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_laundry') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_laundry') }}</a>
                                 <a href="{{ route('marketplace.search') }}"
-                                    class="px-3.5 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium shrink-0 hover:bg-[#00C2FF]/20 hover:text-[#00C2FF] transition-colors min-h-[36px] flex items-center touch-action-manipulation">{{ __('public_home.category_other') }}</a>
+                                    class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_other') }}</a>
                             </div>
 
                             <!-- Mini Product Showcase or Honest Merchant Invitation (Prompt 3 Compliant) -->
                             @if (isset($previewProducts) && $previewProducts->count() >= 3)
-                                <div class="grid grid-cols-3 gap-2.5">
+                                <div class="grid grid-cols-3 gap-2 sm:gap-2.5">
                                     @foreach ($previewProducts->take(3) as $product)
                                         @php
                                             $productUrl = url(
@@ -1197,27 +1228,41 @@
                                                     '/produk/' .
                                                     ($product->slug ?: $product->id),
                                             );
-                                            $productImage = $product->image_url ?: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" fill="%23f1f5f9"><rect width="400" height="300" fill="%23f1f5f9"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14" fill="%2394a3b8">Etalase Toko</text></svg>';
                                         @endphp
                                         <a href="{{ $productUrl }}"
-                                            class="p-2 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/10 text-left hover:border-[#00C2FF]/40 hover:shadow-sm transition-all group block">
-                                            <img src="{{ $productImage }}" alt="{{ $product->name }}"
-                                                class="w-full h-16 object-cover rounded-lg mb-1.5 group-hover:scale-[1.02] transition-transform">
-                                            <div
-                                                class="text-[11px] sm:text-xs font-bold text-slate-800 dark:text-white truncate group-hover:text-[#00C2FF]">
-                                                {{ $product->name }}
+                                            class="p-2 sm:p-2.5 rounded-2xl bg-slate-50/90 dark:bg-slate-900/60 border border-slate-200/70 dark:border-white/10 text-left hover:border-[#007AFF]/50 hover:bg-white dark:hover:bg-slate-800/80 hover:shadow-md transition-all group flex flex-col justify-between">
+                                            <div>
+                                                <div class="relative w-full h-18 sm:h-20 rounded-xl mb-2 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                                                    @if ($product->image_url)
+                                                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
+                                                            loading="lazy"
+                                                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';"
+                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                                    @else
+                                                        <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200/70 dark:from-slate-800 dark:to-slate-700/60 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 group-hover:scale-105 transition-transform duration-300">
+                                                            <i data-lucide="package" class="w-5 h-5 mb-0.5 opacity-60"></i>
+                                                            <span class="text-[9px] font-medium tracking-tight">Katalog UMKM</span>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div
+                                                    class="text-[11.5px] font-bold text-slate-800 dark:text-white truncate group-hover:text-[#007AFF] transition-colors"
+                                                    title="{{ $product->name }}">
+                                                    {{ $product->name }}
+                                                </div>
+                                                <div
+                                                    class="text-[10px] text-slate-400 dark:text-slate-500 truncate mt-0.5">
+                                                    {{ $product->category?->name ?? 'Produk' }}
+                                                </div>
                                             </div>
                                             <div
-                                                class="text-[10px] sm:text-[11px] text-slate-400 truncate">
-                                                {{ $product->category?->name ?? 'Produk' }}
-                                            </div>
-                                            <div
-                                                class="flex items-center justify-between text-[10px] sm:text-[11px] mt-1 font-semibold text-slate-600 dark:text-slate-300">
-                                                <span class="flex items-center gap-0.5 text-[#00C2FF]">
+                                                class="flex items-center justify-between text-[11px] mt-2 pt-1.5 border-t border-slate-200/50 dark:border-white/5 gap-1">
+                                                <span class="font-bold text-[#007AFF] dark:text-[#38bdf8] truncate">
                                                     Rp {{ number_format((float) $product->selling_price, 0, ',', '.') }}
                                                 </span>
                                                 <span
-                                                    class="truncate max-w-[45px] text-right">{{ $product->business?->storeSetting?->city ?? 'Lokal' }}</span>
+                                                    class="text-[9px] text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200/60 dark:border-white/5 truncate shrink-0 max-w-[55px]"
+                                                    title="{{ $product->business?->storeSetting?->city ?? 'Lokal' }}">{{ $product->business?->storeSetting?->city ?? 'Lokal' }}</span>
                                             </div>
                                         </a>
                                     @endforeach
@@ -1225,7 +1270,7 @@
                             @else
                                 <!-- Honest Empty State (No Dummy/Fake Products) -->
                                 <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/70 dark:border-white/10 text-center space-y-2.5">
-                                    <div class="w-9 h-9 rounded-full bg-[#00C2FF]/10 text-[#00C2FF] flex items-center justify-center mx-auto">
+                                    <div class="w-9 h-9 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto">
                                         <i data-lucide="store" class="w-4 h-4"></i>
                                     </div>
                                     <div class="space-y-0.5">
@@ -1237,9 +1282,9 @@
                                         </p>
                                     </div>
                                     <a href="{{ route('register') }}"
-                                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-[11px] sm:text-xs font-semibold shadow-sm transition">
+                                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#0062D2] hover:from-[#0071E3] hover:to-[#0055BA] text-white text-[11px] sm:text-xs font-semibold shadow-xs transition">
                                         <span>{{ __('public_home.split_marketplace_empty_btn') }}</span>
-                                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                     </a>
                                 </div>
                             @endif

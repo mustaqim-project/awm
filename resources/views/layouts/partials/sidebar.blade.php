@@ -224,7 +224,7 @@
             </div>
         </a>
         {{-- Mobile Drawer Close Button --}}
-        <button @click="sidebarOpen = false" type="button" aria-label="Tutup Menu"
+        <button @click="sidebarOpen = false" type="button" aria-label="{{ __('navigation.close_menu') }}"
             class="lg:hidden text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white p-1.5 rounded-[8px] hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 transition-all cursor-pointer">
             <i data-lucide="x" class="w-4 h-4"></i>
         </button>
@@ -234,16 +234,16 @@
     @if ($activeBiz)
         <div class="sidebar-tenant-wrapper px-3 py-2 border-b border-black/5 dark:border-white/10 shrink-0">
             <div class="relative group"
-                :title="sidebarCollapsed ? @js($activeBiz->name . ' (Klik untuk Ganti Bisnis)') : ''">
+                :title="sidebarCollapsed ? @js($activeBiz->name . ' (' . __('navigation.switch_business') . ')') : ''">
                 <a href="{{ route('businesses.select') }}" id="tour-switch-business"
-                    aria-label="Ganti Bisnis: {{ $activeBiz->name }}"
+                    aria-label="{{ __('navigation.switch_business') }}: {{ $activeBiz->name }}"
                     class="sidebar-tenant-card group/card p-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center justify-between transition-all hover:border-[#007AFF]/40 hover:bg-[#007AFF]/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">
                     <div class="sidebar-tenant-inner flex items-center gap-2.5 overflow-hidden">
                         @if ($activeBiz->logo_url)
                             <div
                                 class="sidebar-tenant-icon w-7 h-7 rounded-[7px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 flex items-center justify-center shrink-0 overflow-hidden p-0.5">
                                 <img src="{{ $activeBiz->logo_url }}" alt="{{ $activeBiz->name }}"
-                                    class="w-full h-full object-contain">
+                                     class="w-full h-full object-contain">
                             </div>
                         @else
                             <div
@@ -254,7 +254,7 @@
                         <div class="overflow-hidden" x-show="!sidebarCollapsed" x-transition.opacity>
                             <div
                                 class="text-[10px] text-black/40 dark:text-white/40 font-medium uppercase tracking-wider">
-                                Bisnis Aktif</div>
+                                {{ __('navigation.active_business') }}</div>
                             <div class="text-[12px] font-semibold text-black dark:text-white truncate">
                                 {{ $activeBiz->name }}</div>
                         </div>
@@ -266,15 +266,14 @@
                 </a>
                 <template x-if="sidebarCollapsed">
                     <a href="{{ route('businesses.select') }}" class="absolute inset-0 z-10"
-                        title="Ganti Bisnis: {{ $activeBiz->name }}"></a>
+                        title="{{ __('navigation.switch_business') }}: {{ $activeBiz->name }}"></a>
                 </template>
             </div>
         </div>
     @endif
 
-    {{-- 3. Navigation Links (Clean macOS Sidebar Architecture - No Card Boxes) --}}
-        {{-- 3. Navigation Links (Clean macOS Sidebar Architecture - 9 Standard Domain Clusters) --}}
-    <nav aria-label="Navigasi utama"
+    {{-- 3. Navigation Links (Clean macOS Sidebar Architecture - 9 Standard Domain Clusters) --}}
+    <nav aria-label="{{ __('navigation.main_navigation') }}"
         class="sidebar-nav flex-1 overflow-y-auto px-2.5 py-3 space-y-3 min-h-0 overscroll-contain text-xs"
         x-data="{
             salesOpen: {{ ($isB2bSalesRoute || $isSalesRoute) ? 'true' : 'false' }},
@@ -2058,12 +2057,12 @@
             <!-- Collapsed Sidebar: Compact Squircle Action -->
             <div x-show="sidebarCollapsed" class="sidebar-plan-collapsed flex justify-center py-1">
                 @if ($isCorePlan)
-                    <a href="{{ route('billing.limits') }}" title="Cooca (∞ Unlimited) - Kelola Kuota"
+                    <a href="{{ route('billing.limits') }}" title="{{ __('billing.unlimited_quota_manage') }}"
                         class="w-10 h-10 rounded-[10px] bg-[#34C759]/12 border border-[#34C759]/30 text-[#34C759] dark:text-[#30D158] flex items-center justify-center hover:bg-[#34C759]/20 active:scale-95 transition-all shadow-2xs">
                         <i data-lucide="shield-check" class="w-5 h-5"></i>
                     </a>
                 @else
-                    <a href="{{ route('billing.patungan') }}" title="Paket Free (Solo) - Tingkatkan ke Cooca"
+                    <a href="{{ route('billing.patungan') }}" title="{{ __('billing.upgrade_to_cooca') }}"
                         class="w-10 h-10 rounded-[10px] bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center hover:opacity-90 active:scale-95 transition-all shadow-[0_2px_8px_rgba(0,122,255,0.3)]">
                         <i data-lucide="sparkles" class="w-5 h-5"></i>
                     </a>

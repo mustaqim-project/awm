@@ -256,7 +256,7 @@
                             <div class="pt-2">
                                 <a href="{{ route('register') }}"
                                     class="w-full glow-btn py-3.5 rounded-[14px] text-white font-semibold text-xs flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
-                                    <span>Buka Akun Kasir Otomatis</span>
+                                    <span>{{ __("public_calculators.btn_open_automated_pos") }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             </div>

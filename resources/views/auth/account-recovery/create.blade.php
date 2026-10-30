@@ -166,7 +166,7 @@
                                 </label>
                                 <input type="email" name="old_email" id="old_email" required
                                     value="{{ old('old_email', $prefill['old_email']) }}"
-                                    placeholder="email.terdaftar@gmail.com"
+                                    placeholder="{{ __('auth.recovery.old_email_placeholder') }}"
                                     class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border @error('old_email') border-[#FF3B30] ring-4 ring-[#FF3B30]/15 @else border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 @enderror rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm outline-none">
                                 @error('old_email')
                                     <span

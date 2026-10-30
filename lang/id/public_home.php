@@ -92,6 +92,10 @@ return [
     'split_content_desc' => 'Buat dan kelola konten promosi bisnis tanpa repot pindah aplikasi. Rencanakan, buat, jadwalkan, tayangkan, dan pantau performa promosi dalam satu alur kerja terhubung.',
     'split_content_btn' => 'Pelajari Content Automation',
     'split_content_schedule_label' => 'Jadwal Posting',
+    'split_content_status_ready' => 'Siap',
+    'split_content_status_autosync' => 'Auto-Sync',
+    'split_content_status_queued' => 'Terjadwal',
+    'split_content_time_today' => 'Hari ini, 12:00',
     'split_content_mock_title' => 'Kopi Susu Aren Spesial',
     'split_content_mock_desc' => 'Awali pagi harimu dengan sensasi creamy gula aren murni. Promo buy 1 get 1 hari ini!',
 

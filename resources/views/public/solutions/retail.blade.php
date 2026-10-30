@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Kasir Toko & Minimarket: Barcode & Stok | COOCA')
-@section('description', 'Aplikasi kasir retail & minimarket: scan barcode cepat, konversi satuan dus ke pcs, harga grosir bertingkat, dan kontrol ribuan SKU antar cabang.')
-@section('og_title', 'Aplikasi Kasir Toko & Minimarket: Barcode & Stok | COOCA')
-@section('og_description', 'Aplikasi kasir retail & minimarket: scan barcode cepat, konversi satuan dus ke pcs, harga grosir bertingkat, dan kontrol ribuan SKU antar cabang.')
+@section('title', __('public_solutions.ret_seo_title'))
+@section('description', __('public_solutions.ret_seo_desc'))
+@section('og_title', __('public_solutions.ret_seo_title'))
+@section('og_description', __('public_solutions.ret_seo_desc'))
 @section('canonical', route('public.solutions.retail'))
 @section('og_type', 'product')
 @section('keywords',
@@ -299,8 +299,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             01</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Stok Selisih Misterius & Tak Terlacak
-                        </h3>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_pain_mysterious_diff') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Barang di rak sering hilang atau tidak sinkron dengan catatan kasir karena tidak adanya kartu
                             stok digital yang mencatat mutasi masuk, keluar, dan retur barang.
@@ -325,8 +324,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             03</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Kasbon Pelanggan Macet & Buku Hilang
-                        </h3>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_pain_bad_debt') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Mencatat hutang belanja pelanggan langganan di buku kertas rentan robek, hilang, atau nominalnya
                             diperdebatkan saat ditagih, sehingga modal kerja toko tergerus.
@@ -342,7 +340,7 @@
                         Kapabilitas Khusus Retail
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                        Fitur Kasir & Inventaris Cepat untuk Retail Modern
+                        {{ __('public_solutions.ret_feat_kicker_alt') }}
                     </h2>
                 </div>
 
@@ -366,7 +364,7 @@
                             class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
                             <i data-lucide="boxes" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Konversi Multi-Satuan Otomatis</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_multi_uom') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Beli 1 karton (isi 24 botol) dari supplier. Jual per karton, per slop (isi 6), atau eceran per
                             botol. Stok dan nilai HPP terhitung proporsional secara otomatis.
@@ -379,7 +377,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
                             <i data-lucide="tag" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Tingkat Harga Grosir Fleksibel</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_wholesale_price') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Atur harga bertingkat: beli 1 pcs Rp 15.000, beli 3 pcs Rp 14.000, dan beli 1 lusin Rp 13.000.
                             Kasir tidak perlu menghafal diskon karena sistem otomatis mendeteksi kuantitas.
@@ -392,7 +390,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center">
                             <i data-lucide="refresh-cw" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Stok Opname Tanpa Tutup Toko</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_stock_opname') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Lakukan cycle counting berkala per rak atau per kategori saat jam sepi. Kasir tetap bisa
                             melayani transaksi belanja tanpa perlu menutup gerai toko seharian.
@@ -405,7 +403,7 @@
                             class="w-10 h-10 rounded-[12px] bg-rose-500/10 text-rose-500 flex items-center justify-center">
                             <i data-lucide="bell" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Peringatan Reorder Point Cerdas</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_smart_reorder') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Hindari rak kosong untuk produk fast-moving. Sistem memberi sinyal peringatan dini saat
                             persediaan mendekati batas minimum dan membuat draft PO pembelian ke supplier.
@@ -439,7 +437,7 @@
                         Alur Kerja Retail
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-white mt-1">
-                        Siklus Penjualan, Stok, dan Restock Terintegrasi Otomatis
+                        {{ __('public_solutions.ret_flow_kicker_alt') }}
                     </h2>
                 </div>
 
@@ -452,13 +450,13 @@
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Transaksi Kasir Cepat</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_fast_pos') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed">Kasir scan barcode, kupon loyalty member
                             terpasang, nota digital tercetak.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">Kartu Stok Perpetual</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_perpetual_card') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed">Stok fisik berkurang secara live dan HPP
                             penjualan tercatat ke jurnal akuntansi.</p>
                     </div>
@@ -553,35 +551,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jelajahi Solusi Industri & Modul Terkait</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Stok</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Manajemen Gudang & SKU</h4>
+                            {{ __('public_solutions.cross_title_wh_sku') }}</h4>
                     </a>
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Kasir</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Point of Sale Cepat</h4>
+                            {{ __('public_solutions.cross_title_pos_speed') }}</h4>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-warung') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Kasir Warung</h4>
+                            {{ __('public_solutions.cross_title_warung') }}</h4>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-kios') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Kasir Konter HP</h4>
+                            {{ __('public_solutions.cross_title_konter') }}</h4>
                     </a>
                 </div>
             </section>
@@ -603,7 +601,7 @@
                         <span>Tersedia untuk Komputer Kasir, Laptop, Tablet, & HP Android</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                        Modernisasi Toko Retail Anda dengan Sistem Kasir Terintegrasi
+                        {{ __('public_solutions.ret_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
                         Rasakan kemudahan transaksi scan barcode secepat kilat, akurasi stok otomatis, dan pembukuan toko
@@ -613,12 +611,12 @@
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Coba Retail POS Sekarang</span>
+                            <span>{{ __('public_solutions.btn_try_retail_now') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Berlangganan</span>
+                            <span>{{ __('public_solutions.btn_view_pricing_plans') }}</span>
                         </a>
                     </div>
                 </div>

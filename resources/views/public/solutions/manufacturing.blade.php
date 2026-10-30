@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Manufaktur UMKM: BOM, SPK & Hitung HPP | COOCA')
-@section('description', 'Aplikasi manufaktur UMKM: formula BOM bahan baku, perintah kerja produksi (SPK), kalkulasi HPP produk jadi, dan kontrol sisa stok bahan akurat.')
-@section('og_title', 'Aplikasi Manufaktur UMKM: BOM, SPK & Hitung HPP | COOCA')
-@section('og_description', 'Aplikasi manufaktur UMKM: formula BOM bahan baku, perintah kerja produksi (SPK), kalkulasi HPP produk jadi, dan kontrol sisa stok bahan akurat.')
+@section('title', __('public_solutions.mfg_seo_title'))
+@section('description', __('public_solutions.mfg_seo_desc'))
+@section('og_title', __('public_solutions.mfg_seo_title'))
+@section('og_description', __('public_solutions.mfg_seo_desc'))
 @section('canonical', route('public.solutions.manufacturing'))
 @section('og_type', 'product')
 @section('keywords', 'software manufaktur umkm, aplikasi produksi pabrik, sistem kontrol bom hpp, software konveksi garmen, aplikasi pabrik makanan, software hpp manufaktur, work order produksi')
@@ -286,7 +286,7 @@
                         Tantangan Produksi UMKM
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Titik Rawan Kerugian pada Proses Manufaktur & Fabrikasi
+                        {{ __('public_solutions.mfg_pain_kicker_alt') }}
                     </h2>
                 </div>
 
@@ -309,8 +309,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             02</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Bahan Mentah Habis di Tengah Jalan
-                        </h3>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.mfg_pain_out_of_raw') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Produksi terhenti berhari-hari karena persediaan benang, resleting, atau bahan baku utama di
                             gudang ternyata sudah habis tanpa peringatan sistem sejak awal.
@@ -339,7 +338,7 @@
                         Kapabilitas Khusus Manufaktur
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug text-balance break-words">
-                        Fitur Lengkap untuk Mengendalikan Lini Produksi
+                        {{ __('public_solutions.mfg_feat_kicker_alt') }}
                     </h2>
                 </div>
 
@@ -405,8 +404,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center">
                             <i data-lucide="barcode" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Lacak Nomor Batch & Tanggal Expired
-                        </h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.mfg_feat_batch_exp') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Beri nomor lot/batch pada setiap hasil cetakan produksi. Memudahkan penelusuran jika terjadi
                             komplain konsumen dan siap memenuhi standar sertifikasi BPOM/Halal/SNI.
@@ -419,8 +417,7 @@
                             class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
                             <i data-lucide="package-check" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Otomatisasi Stok Produk Jadi (FG)
-                        </h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.mfg_feat_fg_stock') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Saat Work Order dinyatakan selesai, produk jadi otomatis masuk ke inventaris Finished Goods yang
                             langsung dapat dijual lewat POS Kasir atau Marketplace online.
@@ -554,14 +551,14 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jelajahi Solusi Industri & Modul Terkait</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Stok</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Gudang Bahan Mentah</h4>
+                            {{ __('public_solutions.cross_title_raw_materials') }}</h4>
                     </a>
                     <a href="{{ route('public.erp.accounting') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
@@ -572,17 +569,17 @@
                     </a>
                     <a href="{{ route('public.solutions.retail') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Solusi Industri</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
                             Retail & Toko</h4>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-irt') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Usaha Mikro</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Aplikasi Usaha Rumahan / IRT</h4>
+                            {{ __('public_solutions.cross_title_irt') }}</h4>
                     </a>
                 </div>
             </section>
@@ -604,7 +601,7 @@
                         <span>Tingkatkan Efisiensi Produksi & Margin Laba Pabrik Anda</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
-                        Kendalikan Biaya Produksi Anda dengan Sistem Terpadu
+                        {{ __('public_solutions.mfg_bottom_cta_alt') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA hari ini dan bangun formula Bill of Materials, pantau perintah kerja produksi,
@@ -613,12 +610,12 @@
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Coba Manufaktur Gratis</span>
+                            <span>{{ __('public_solutions.btn_try_mfg_free_alt') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_solutions.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

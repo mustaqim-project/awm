@@ -205,7 +205,7 @@
         
         <!-- Left: Brand Logo, Platform Name & Subtitle (Exact Match) -->
         <div class="flex items-center gap-3.5 shrink-0">
-            <a href="{{ route('dashboard') }}" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition" title="Kembali ke Dashboard Utama">
+            <a href="{{ route('dashboard') }}" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition" title="{{ __('ai.navigation.back_to_dashboard') }}">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
             </a>
 
@@ -286,7 +286,7 @@
             </div>
 
             <!-- Notification Bell -->
-            <a href="{{ route('cooca-ai.actions') }}" class="relative w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition" title="Persetujuan Aksi">
+            <a href="{{ route('cooca-ai.actions') }}" class="relative w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition" title="{{ __('ai.navigation.action_approval') }}">
                 <i data-lucide="bell" class="w-4 h-4"></i>
                 <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white font-bold text-[9px] flex items-center justify-center">3</span>
             </a>
@@ -329,7 +329,7 @@
                 @keydown.esc.window="themeDropdownOpen = false">
                 <button type="button" @click="themeDropdownOpen = !themeDropdownOpen"
                     :aria-expanded="themeDropdownOpen ? 'true' : 'false'" aria-haspopup="menu"
-                    title="Ganti Tema (Light / Dark / System)"
+                    title="{{ __('common.theme_change_tooltip') }}"
                     class="h-8 w-8 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-900/80 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center shrink-0 active:scale-[0.97] cursor-pointer">
                     <span x-show="theme === 'light'">
                         <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
@@ -351,7 +351,7 @@
                         :class="theme === 'light' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5'">
                         <div class="flex items-center gap-2">
                             <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-500"></i>
-                            <span>Terang (Light)</span>
+                            <span>{{ __('common.theme_light') }}</span>
                         </div>
                         <span x-show="theme === 'light'" class="ml-auto"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     </button>
@@ -360,7 +360,7 @@
                         :class="theme === 'dark' ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5'">
                         <div class="flex items-center gap-2">
                             <i data-lucide="moon" class="w-3.5 h-3.5 text-indigo-400"></i>
-                            <span>Gelap (Dark)</span>
+                            <span>{{ __('common.theme_dark') }}</span>
                         </div>
                         <span x-show="theme === 'dark'" class="ml-auto"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     </button>
@@ -369,7 +369,7 @@
                         :class="theme === 'system' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold' : 'text-slate-700 dark:text-slate-300 hover:bg-black/5 dark:hover:bg-white/5'">
                         <div class="flex items-center gap-2">
                             <i data-lucide="monitor" class="w-3.5 h-3.5 text-blue-500"></i>
-                            <span>Sistem (Auto)</span>
+                            <span>{{ __('common.theme_system') }}</span>
                         </div>
                         <span x-show="theme === 'system'" class="ml-auto"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     </button>
@@ -401,7 +401,7 @@
             <!-- 1. AI Office (Active Pill) -->
             <a href="{{ route('cooca-ai.index') }}"
                class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs transition {{ request()->routeIs('cooca-ai.index') || request()->routeIs('cooca-ai.office.*') ? 'bg-cyan-50 dark:bg-[#1e3557] text-cyan-600 dark:text-cyan-300 ring-2 ring-cyan-500/50 shadow-md shadow-cyan-500/10' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5' }}"
-               title="AI Office Headquarters">
+               title="{{ __('ai.navigation.office_hq') }}">
                 <i data-lucide="building-2" class="w-5 h-5"></i>
                 <span class="text-[9px] font-semibold">Office</span>
             </a>
@@ -409,7 +409,7 @@
             <!-- 2. Chat / Tanya AI -->
             <button type="button" @click="window.dispatchEvent(new CustomEvent('open-ai-consultation'))"
                     class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition cursor-pointer"
-                    title="Chat / Tanya AI">
+                    title="{{ __('ai.navigation.chat_ask') }}">
                 <i data-lucide="message-square" class="w-5 h-5"></i>
                 <span class="text-[9px] font-semibold">Chat</span>
             </button>
@@ -417,7 +417,7 @@
             <!-- 3. Actions Center with Notification Badge -->
             <a href="{{ route('cooca-ai.actions') }}"
                class="relative w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs transition {{ request()->routeIs('cooca-ai.actions*') ? 'bg-cyan-50 dark:bg-[#1e3557] text-cyan-600 dark:text-cyan-300 ring-2 ring-cyan-500/50' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5' }}"
-               title="Action Center">
+               title="{{ __('ai.navigation.action_center') }}">
                 <i data-lucide="check-square" class="w-5 h-5"></i>
                 <span class="text-[9px] font-semibold">Actions</span>
                 <span class="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-rose-500 text-white font-bold text-[8px] flex items-center justify-center">3</span>
@@ -426,7 +426,7 @@
             <!-- 4. Work History -->
             <a href="{{ route('cooca-ai.history') }}"
                class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs transition {{ request()->routeIs('cooca-ai.history*') ? 'bg-cyan-50 dark:bg-[#1e3557] text-cyan-600 dark:text-cyan-300 ring-2 ring-cyan-500/50' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5' }}"
-               title="Riwayat Pekerjaan">
+               title="{{ __('ai.navigation.session_history') }}">
                 <i data-lucide="history" class="w-5 h-5"></i>
                 <span class="text-[9px] font-semibold">History</span>
             </a>
@@ -434,9 +434,9 @@
             <!-- 5. Settings / Providers -->
             <a href="{{ route('cooca-ai.providers') }}"
                class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs transition {{ request()->routeIs('cooca-ai.providers*') ? 'bg-cyan-50 dark:bg-[#1e3557] text-cyan-600 dark:text-cyan-300 ring-2 ring-cyan-500/50' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5' }}"
-               title="Pengaturan Provider AI">
+               title="{{ __('ai.navigation.settings') }}">
                 <i data-lucide="settings" class="w-5 h-5"></i>
-                <span class="text-[9px] font-semibold">Settings</span>
+                <span class="text-[9px] font-semibold">{{ __('ai.navigation.settings') }}</span>
             </a>
 
             <!-- Spacer -->
@@ -445,10 +445,10 @@
             <!-- Exit back to POS / App -->
             @if(\App\Support\Context::hasPermission('pos.terminal'))
             <a href="{{ route('pos.terminal') }}"
-               class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/20 transition"
-               title="Buka Kasir POS Terminal">
+               class="w-12 h-12 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-xs text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/20 transition cursor-pointer"
+               title="{{ __('ai.navigation.pos_terminal_tooltip') }}">
                 <i data-lucide="layout-grid" class="w-5 h-5"></i>
-                <span class="text-[8px] font-semibold">POS</span>
+                <span class="text-[8px] font-semibold">{{ __('ai.navigation.pos') }}</span>
             </a>
             @endif
         </aside>

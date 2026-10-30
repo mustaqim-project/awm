@@ -1,8 +1,8 @@
 @php
     $status = (int) ($exception?->getStatusCode() ?? 500);
     $content = match ($status) {
-        503 => ['title' => 'Sistem sedang dipelihara', 'message' => 'Layanan sedang diperbarui. Silakan coba lagi dalam beberapa saat.', 'homeLabel' => 'Muat Ulang'],
-        default => ['title' => 'Terjadi kesalahan sistem', 'message' => 'Sistem mengalami kendala saat memproses permintaan. Tim teknis telah menerima log ini.', 'homeLabel' => 'Ke Beranda'],
+        503 => ['title' => __('errors.503_title'), 'message' => __('errors.503_message'), 'homeLabel' => __('errors.btn_reload')],
+        default => ['title' => __('errors.500_title'), 'message' => __('errors.500_message'), 'homeLabel' => __('errors.btn_home')],
     };
     $homeUrl = $status === 503 ? url()->current() : (Route::has('dashboard') ? route('dashboard') : url('/'));
     $reference = substr(sha1(request()->method().'|'.request()->path().'|'.now()->timestamp), 0, 10);

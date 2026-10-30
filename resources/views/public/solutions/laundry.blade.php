@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Aplikasi Kasir Laundry: Timbangan & Nota WA | COOCA')
-@section('description', 'Aplikasi kasir laundry kiloan & satuan: timbangan desimal, nomor rak, status cuci berjenjang, dan notifikasi WhatsApp otomatis saat cucian selesai.')
-@section('og_title', 'Aplikasi Kasir Laundry: Timbangan & Nota WA | COOCA')
-@section('og_description', 'Aplikasi kasir laundry kiloan & satuan: timbangan desimal, nomor rak, status cuci berjenjang, dan notifikasi WhatsApp otomatis saat cucian selesai.')
+@section('title', __('public_solutions.lnd_seo_title'))
+@section('description', __('public_solutions.lnd_seo_desc'))
+@section('og_title', __('public_solutions.lnd_seo_title'))
+@section('og_description', __('public_solutions.lnd_seo_desc'))
 @section('canonical', route('public.solutions.laundry'))
 @section('og_type', 'product')
 @section('keywords', 'software laundry kiloan, aplikasi kasir laundry, sistem manajemen laundry, software dry cleaning satuan, aplikasi laundry sepatu helm, cetak nota laundry bluetooth, notifikasi wa laundry')
@@ -296,7 +296,7 @@
                         Tantangan Operasional Laundry
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 leading-snug text-balance break-words">
-                        Kendala Khas Usaha Laundry yang Sering Merusak Reputasi
+                        {{ __('public_solutions.lnd_pain_kicker') }}
                     </h2>
                 </div>
 
@@ -306,7 +306,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             01</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Pakaian Pelanggan Tertukar atau Hilang
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.lnd_pain_swap_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Baju menumpuk tanpa sistem tagging nomor rak yang jelas, membuat kasir kebingungan mencari paket
@@ -319,8 +319,7 @@
                         <div
                             class="w-8 h-8 rounded-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center font-mono">
                             02</div>
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">Pelanggan Bolak-Balik Tanya Status
-                            Cuci</h3>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_solutions.lnd_pain_ask_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             WhatsApp admin dibanjiri chat "Apakah cucian saya sudah selesai?", menyita waktu staf yang
                             seharusnya fokus menyetrika dan membungkus pakaian.
@@ -349,7 +348,7 @@
                         Kapabilitas Khusus Laundry
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug text-balance break-words">
-                        Fitur Spesifik untuk Laundry Kiloan & Dry Cleaning Satuan
+                        {{ __('public_solutions.lnd_feat_kicker') }}
                     </h2>
                 </div>
 
@@ -400,7 +399,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-500 flex items-center justify-center">
                             <i data-lucide="sparkles" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Layanan Satuan & Dry Cleaning</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.lnd_feat_dryclean_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Formulir pencatatan khusus untuk jas, gaun pesta, karpet, helm, sepatu, boneka, dan bed cover
                             lengkap dengan catatan kondisi fisik awal barang sebelum dicuci.
@@ -427,7 +426,7 @@
                             class="w-10 h-10 rounded-[12px] bg-rose-500/10 text-rose-500 flex items-center justify-center">
                             <i data-lucide="flask-conical" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Kontrol Stok Bahan Kimia Cuci</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.lnd_feat_chem_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Pantau konsumsi deterjen cair, softener, dan pelicin pakaian. Dapatkan estimasi biaya
                             operasional kimia per kilogram pakaian untuk menjaga margin laba.
@@ -448,7 +447,7 @@
                         Alur Ekosistem Laundry
                     </span>
                     <h2 class="text-xl sm:text-2xl font-bold text-white mt-1 leading-snug text-balance break-words">
-                        Dari Penimbangan, Proses Cuci, Hingga Penjemputan Baju
+                        {{ __('public_solutions.lnd_flow_kicker') }}
                     </h2>
                 </div>
 
@@ -461,13 +460,13 @@
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-cyan-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Proses Cuci & Kering</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.lnd_step_wash_dry') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Operator mengupdate status tahapan mesin secara
                             realtime.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">Setrika & Masuk Rak</h4>
+                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.lnd_step_iron_shelf') }}</h4>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Pakaian diplastik rapi dan diletakkan di nomor
                             slot rak tujuan.</p>
                     </div>
@@ -562,14 +561,14 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Jelajahi Solusi Industri & Modul Terkait</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Kasir</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            POS & Kasir Cepat</h4>
+                            {{ __('public_solutions.cross_title_pos_fast') }}</h4>
                     </a>
                     <a href="{{ route('public.omnichannel.whatsapp') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
@@ -580,14 +579,14 @@
                     </a>
                     <a href="{{ route('public.solutions.services') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Solusi Industri</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Bisnis Jasa & Servis</h4>
+                            {{ __('public_solutions.cross_title_services') }}</h4>
                     </a>
                     <a href="{{ route('public.solutions.retail') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
-                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Solusi Industri</span>
+                        <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
                         <h4
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
                             Retail & Swalayan</h4>
@@ -612,7 +611,7 @@
                         <span>Tingkatkan Kepercayaan Pelanggan Usaha Laundry Anda</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
-                        Mulai Kelola Laundry Lebih Rapi, Cepat, dan Bebas Drama
+                        {{ __('public_solutions.lnd_bottom_cta_alt') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA sekarang. Nikmati kemudahan input timbangan digital, penomoran rak baju, dan
@@ -621,12 +620,12 @@
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Coba Software Laundry Gratis</span>
+                            <span>{{ __('public_solutions.btn_try_laundry_free') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_solutions.btn_view_pricing') }}</span>
                         </a>
                     </div>
                 </div>

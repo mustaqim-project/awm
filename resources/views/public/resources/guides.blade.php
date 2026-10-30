@@ -116,7 +116,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <a href="{{ route('template.index') }}"
                             class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all min-h-[48px]">
                             <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                            <span>Unduh Template Excel</span>
+                            <span>{{ __('public_resources.guide_btn_download_excel') }}</span>
                         </a>
                     </div>
 
@@ -212,7 +212,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="pt-1 flex items-center justify-between text-xs">
                             <span class="text-slate-400">Printer: Bluetooth 58mm &bull; 80mm Auto-Cutter</span>
                             <button @click="openSopModal('shift')" class="font-bold text-[#00C4D8] hover:underline">
-                                Lihat SOP Kasir &rarr;
+                                {{ __('public_resources.guide_link_view_sop') }} &rarr;
                             </button>
                         </div>
                     </div>
@@ -233,7 +233,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     PILIHAN MODUL PANDUAN
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Dokumentasi Lengkap Sesuai Tahapan Kebutuhan
+                    {{ __('public_resources.guide_stages_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     Pilih panduan konfigurasi yang ingin Anda pelajari atau bagikan kepada staf operasional gerai.
@@ -283,7 +283,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-9 h-9 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center font-mono">
                             01
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Profil &amp; Identitas Usaha</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_stage_profile_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Lengkapi nama gerai, alamat toko, dan nomor WhatsApp resmi. Informasi ini akan otomatis tercetak di header struk kasir Anda.
                         </p>
@@ -315,7 +315,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-9 h-9 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center font-mono">
                             03
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Hubungkan Printer Struk</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_stage_printer_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Nyalakan printer Bluetooth atau pasang kabel USB ke tablet/laptop kasir Anda. Lakukan tes cetak untuk memastikan kertas keluar rapi.
                         </p>
@@ -331,7 +331,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center font-mono">
                             04
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Buka Shift &amp; Transaksi</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_stage_shift_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Ketik nominal uang kembalian modal awal di laci (float kas). Kasir langsung siap melayani antrean belanja pembeli pertama Anda.
                         </p>
@@ -390,7 +390,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <span class="text-xs font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 px-2.5 py-1 rounded-[8px]">
                             SOP Kasir #1
                         </span>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Alur Tutup Shift (Blind Cash Count)</h3>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_card_blind_count_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Mencegah kecurangan atau manipulasi uang setoran. Kasir tidak diperlihatkan total angka penjualan sistem sebelum menghitung uang fisik di laci:
                         </p>
@@ -403,7 +403,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <button @click="openSopModal('shift')" class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1.5">
                             <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                            <span>Buka Template Checklist Tutup Shift</span>
+                            <span>{{ __('public_resources.guide_btn_open_checklist') }}</span>
                         </button>
                     </div>
                 </div>
@@ -427,7 +427,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <button @click="openSopModal('waste')" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1.5">
                             <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                            <span>Buka Template Formulir Bahan Rusak</span>
+                            <span>{{ __('public_resources.guide_btn_open_waste_form') }}</span>
                         </button>
                     </div>
                 </div>
@@ -485,7 +485,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </p>
                     </div>
                     <a href="{{ route('public.resources.faq') }}" class="h-11 px-4 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>Buka Halaman FAQ</span>
+                        <span>{{ __('public_resources.guide_btn_open_faq') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -505,7 +505,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     OPERASIONAL TERTIB &amp; PROFESIONAL
                 </div>
                 <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-                    Siap Menerapkan Sistem Operasional yang Rapi?
+                    {{ __('public_resources.guide_cta_ready_title') }}
                 </h3>
                 <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                     Terapkan SOP bisnis profesional tanpa proses rumit. Mulai uji coba gratis sekarang dan rasakan kemudahan mengontrol gerai secara terpusat.
@@ -515,13 +515,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
                 <a href="{{ route('register') }}"
                     class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 active:scale-[0.98] transition-all shadow-sm">
-                    <span>Mulai Uji Coba Gratis</span>
+                    <span>{{ __('public_resources.guide_btn_start_trial') }}</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
                 <a href="{{ route('public.demo') }}"
                     class="h-12 px-7 rounded-[14px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-slate-200/70 dark:hover:bg-[#38383A] text-slate-900 dark:text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
                     <i data-lucide="play" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
-                    <span>Lihat Demonstrasi Kasir</span>
+                    <span>{{ __('public_resources.guide_btn_view_demo') }}</span>
                 </a>
             </div>
         </div>
@@ -545,7 +545,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <div>
                         <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">DOKUMENTASI STANDAR OPERASIONAL</div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white" id="modal-sop-title">
-                            Lembar Petunjuk SOP Kasir
+                            {{ __('public_resources.guide_modal_sop_title') }}
                         </h3>
                     </div>
                     <button @click="closeSopModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#2C2C2E] text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center">
@@ -602,9 +602,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                 <!-- Modal Actions -->
                 <div class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                     <span class="text-xs text-slate-500 dark:text-slate-400">Dapat dicetak sebagai panduan kerja staf</span>
-                    <button @click="closeSopModal()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">
-                        Tutup
-                    </button>
+                    <button @click="closeSopModal()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __(\'common.close\') }}</button>
                 </div>
 
             </div>

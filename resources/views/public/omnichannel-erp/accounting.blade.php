@@ -344,7 +344,7 @@
                                     <span class="truncate">Bagan Akun: Template SAK EMKM Standar</span>
                                 </span>
                                 <a href="{{ route('public.demo') }}"
-                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">Buku Besar Detail →</a>
+                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">{{ __('public_erp.btn_general_ledger_detail') }} &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -356,9 +356,7 @@
         <section class="py-16 sm:py-20 bg-[#FAFAFC] dark:bg-[#070A14] border-y border-slate-200/80 dark:border-white/10">
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
-                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">
-                        Tantangan Akuntansi Bisnis
-                    </h2>
+                    <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_erp.acc_pain_kicker') }}</h2>
                     <p class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                         Apakah Anda Masih Menunggu Tanggal 20 Bulan Depan Hanya untuk Mengetahui Laba Bisnis?
                     </p>
@@ -376,7 +374,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400">
                             <i data-lucide="file-x" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Laporan Keuangan Selalu Terlambat
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.acc_pain_1_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Akuntan harus menunggu tumpukan nota dari cabang dikumpulkan secara fisik, lalu mengetik ulang
@@ -392,7 +390,7 @@
                             class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900/50 flex items-center justify-center text-amber-600 dark:text-amber-400">
                             <i data-lucide="file-diff" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Data Penjualan & Kas Tidak Klop</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.acc_pain_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Total omzet di aplikasi kasir sering tidak sama dengan angka yang dicatat bagian akunting karena
                             ada retur, diskon voucher, atau biaya komisi payment gateway yang tidak terkoordinasi.
@@ -406,7 +404,7 @@
                             class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900/50 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="shield-question" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Kesulitan Syarat Audit & Pajak</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_erp.acc_pain_3_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Saat mengajukan kredit ke perbankan atau menyusun SPT Tahunan Badan, Anda panik karena tidak
                             memiliki Neraca Saldo dan Buku Besar yang rapi dan dapat dipertanggungjawabkan.
@@ -441,9 +439,7 @@
                             class="w-11 h-11 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="zap" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Penjurnalan Otomatis dari Setiap Transaksi
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.acc_feat_journal_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Setiap transaksi kasir, pelunasan invoice, pembelian bahan baku ke supplier, penyesuaian stok
                             opname, hingga penggajian karyawan langsung membentuk entri jurnal debit-kredit secara otomatis.
@@ -469,9 +465,7 @@
                             class="w-11 h-11 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="folder-tree" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Bagan Akun (COA) Standar SAK EMKM
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_erp.acc_feat_coa_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Tersedia bagan akun standar Indonesia siap pakai untuk Aset, Kewajiban, Ekuitas, Pendapatan, dan
                             Beban. Anda dapat menambahkan sub-akun spesifik per divisi atau outlet dengan hierarki tak
@@ -539,9 +533,7 @@
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/15 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
                         <span>Laporan Standar Keuangan Lengkap</span>
                     </div>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Laporan Keuangan Siap Pajak & Audit Tanpa Stres
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">{{ __('public_erp.acc_reports_title') }}</h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3">
                         Semua laporan dapat difilter per periode, dikonsolidasikan per entitas anak usaha, dan diekspor ke
                         PDF/Excel dalam hitungan detik.
@@ -555,7 +547,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Laporan Laba Rugi</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.acc_rep_pl_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Lihat pendapatan bersih, HPP aktual, biaya operasional, dan margin laba bersih. Dukungan
                             perbandingan antar bulan untuk melihat tren performa bisnis.
@@ -568,7 +560,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             2
                         </div>
-                        <h3 class="text-base font-bold text-white">Laporan Neraca (Balance Sheet)</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.acc_rep_bs_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Keseimbangan total aset lancar dan aset tetap terhadap kewajiban hutang dagang serta ekuitas
                             modal pemilik secara akurat setiap akhir periode.
@@ -581,7 +573,7 @@
                             class="w-8 h-8 rounded-lg bg-blue-500/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-blue-500/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Laporan Arus Kas</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.acc_rep_cf_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Pemetaan arus kas masuk dan keluar yang dibagi menurut aktivitas operasional, aktivitas
                             investasi, dan aktivitas pendanaan bisnis.
@@ -594,7 +586,7 @@
                             class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs border border-amber-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Neraca Saldo & Buku Besar</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_erp.acc_rep_tb_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Daftar saldo debit-kredit seluruh akun buku besar untuk memudahkan verifikasi audit internal
                             sebelum proses tutup buku akhir tahun.
@@ -690,7 +682,7 @@
                 </div>
                 <a href="{{ route('public.erp.erp') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#00C4D8] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lihat Seluruh Modul ERP</span>
+                    <span>{{ __('public_erp.btn_view_all_erp') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -717,9 +709,7 @@
                         <i data-lucide="monitor" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Point of Sale (POS)
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_pos_label') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Transaksi kasir yang langsung menjurnal
                         pendapatan dan kas masuk.</p>
                 </a>
@@ -731,9 +721,7 @@
                         <i data-lucide="boxes" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Stok Gudang & HPP
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __('public_erp.mod_inventory_cogs') }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Perhitungan HPP Moving Average yang langsung
                         masuk ke laporan Laba Rugi.</p>
                 </a>
@@ -781,7 +769,7 @@
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm backdrop-blur-sm transition-all">
-                            Pelajari Paket Harga
+                            {{ __('public_erp.btn_learn_pricing') }}
                         </a>
                     </div>
                 </div>

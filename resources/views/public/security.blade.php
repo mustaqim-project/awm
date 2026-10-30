@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Keamanan Sistem & Perlindungan Data Usaha | COOCA')
-@section('description', 'Komitmen keamanan COOCA untuk melindungi operasional bisnis UMKM Indonesia: isolasi data multi-tenant, enkripsi AES-256, audit log aktivitas, dan kepatuhan UU PDP No. 27/2022.')
-@section('og_title', 'Keamanan Sistem & Perlindungan Data | COOCA')
-@section('og_description', 'Pelajari bagaimana COOCA mengamankan data transaksi kasir, keuangan, dan data pelanggan UMKM dengan arsitektur multi-tenant berstandar enterprise.')
+@section('title', __('public_marketing.sec_seo_title'))
+@section('description', __('public_marketing.sec_seo_desc'))
+@section('og_title', __('public_marketing.sec_seo_title'))
+@section('og_description', __('public_marketing.sec_seo_desc'))
 @section('canonical', url('/security'))
 
 @push('seo')
@@ -45,7 +45,7 @@
                     </div>
 
                     <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
-                        Data Usaha Anda Adalah Milik Anda 100%. Kami Menjaganya Tanpa Kompromi.
+                        {{ __('public_marketing.sec_hero_title') }}
                     </h1>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
@@ -94,7 +94,7 @@
                 ARSITEKTUR &amp; PERLINDUNGAN
             </span>
             <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                5 Pilar Keamanan yang Aktif Berjalan di Setiap Transaksi
+                {{ __('public_marketing.sec_pillars_title') }}
             </h2>
             <p class="text-sm text-slate-600 dark:text-slate-400">
                 Setiap baris kode di COOCA diuji untuk memastikan data usaha Anda terlindungi dari kebocoran, modifikasi tanpa izin, maupun akses lintas toko.
@@ -109,7 +109,7 @@
                         <i data-lucide="layers" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-                        1. Isolasi Data Multi-Tenant yang Ketat
+                        {{ __('public_marketing.sec_pillar_1_title') }}
                     </h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Setiap kueri database pada sistem COOCA secara otomatis dibatasi pada <code>business_id</code> pemilik usaha. Data penjualan, produk, dan laporan keuangan toko Anda terisolasi secara komputasional dan mustahil diakses atau diintip oleh pemilik usaha lain.
@@ -147,7 +147,7 @@
                         <i data-lucide="activity" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">
-                        3. Rekam Jejak Audit Log Lengkap
+                        {{ __('public_marketing.sec_pillar_3_title') }}
                     </h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Aktivitas operasional penting seperti pembatalan transaksi kasir (void), perubahan harga produk, pergantian stok, hingga perubahan hak akses staf tercatat dalam modul <code>AuditLog</code> dengan stempel waktu, identitas pengguna, dan alamat IP.
@@ -234,7 +234,7 @@
                 <div class="space-y-2">
                     <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
-                        <span>Apa yang Kami Jamin:</span>
+                        <span>{{ __('public_marketing.sec_guarantee_title') }}</span>
                     </h4>
                     <p>
                         Kami tidak pernah dan tidak akan pernah menjual atau menyewakan data operasional, nomor kontak pelanggan, riwayat belanja, atau omzet bisnis Anda kepada pihak pengiklan mana pun. Seluruh data transaksi adalah hak milik eksklusif pemilik usaha yang bersangkutan.
@@ -255,7 +255,7 @@
                 <span class="text-xs text-slate-500">Pertanyaan seputar keamanan data? Hubungi tim privasi kami.</span>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('public.privacy') }}" class="text-xs font-semibold text-[#007AFF] hover:underline">
-                        Baca Kebijakan Privasi Lengkap &rarr;
+                        {{ __('public_marketing.btn_read_privacy_arrow') }} &rarr;
                     </a>
                     <a href="{{ route('contact') }}" class="px-4 py-2 rounded-xl bg-[#007AFF] text-white text-xs font-bold hover:bg-[#0066DF] transition">
                         Hubungi Tim Teknis

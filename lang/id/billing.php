@@ -800,4 +800,18 @@ return [
     'pos_transactions' => 'Transaksi Kasir POS',
     'storage_used_label' => 'Terpakai',
     'storage_remaining_label' => 'Sisa Kapasitas',
+
+    // Reusable Quota & Lock Modal
+    'quota_modal_title'          => 'Batas Kuota Tercapai',
+    'quota_modal_desc'           => 'Kuota gratis untuk fitur ini telah habis bulan ini.',
+    'quota_free_tier_badge'      => 'Paket Free Solo',
+    'quota_status_usage'         => 'Status Pemakaian:',
+    'quota_unit_default'         => 'Data',
+    'quota_auto_reset_prefix'    => 'Reset otomatis pada:',
+    'quota_data_safe_guarantee'  => 'Data Anda 100% Aman:',
+    'quota_data_safe_desc'       => 'Seluruh data yang sudah Anda catat sebelumnya tetap tersimpan rapi dan tidak akan pernah dihapus.',
+    'quota_unlock_unlimited'     => 'Buka Tanpa Batas',
+    'quota_postpone_reset'       => 'Nanti Saja (Tunggu Reset Bulan Depan)',
+    'unlimited_quota_manage'     => 'Cooca (∞ Unlimited) - Kelola Kuota',
+    'upgrade_to_cooca'           => 'Paket Free (Solo) - Tingkatkan ke Cooca',
 ];

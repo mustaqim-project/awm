@@ -271,6 +271,7 @@ return [
         'business_name_label' => 'Business / Store Name',
         'business_name_placeholder' => 'Example: Sunset Coffee',
         'old_email_label' => 'Registered Account Email',
+        'old_email_placeholder' => 'registered.email@gmail.com',
         'old_phone_label' => 'Old WhatsApp Number (Optional)',
         'old_phone_placeholder' => '081234567890 (if remembered)',
         'section_3_title' => '3. Replacement Contact (Must Be Active)',

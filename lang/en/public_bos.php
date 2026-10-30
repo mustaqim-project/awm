@@ -184,4 +184,30 @@ return [
     'why_unified_system' => 'Unified System Free of Data Duplication',
     'why_account_one' => '1 Single Account for All Store Operations',
     'why_easy_migration' => 'Easy & Guided Data Migration',
+
+    // New additions
+    'how_seo_desc' => 'Learn how COOCA automates data flow: from POS checkout directly deducting recipe raw materials and logging real-time P&L.',
+    'how_back_to_overview' => 'Back to BOS Overview',
+    'btn_register_free_now' => 'Register Free Now',
+    'how_examples_title' => 'See Real-World Examples in Two Business Types',
+    'how_explore_components' => 'Explore Connected System Components',
+    'how_cta_bottom_title' => 'Experience COOCA Seamless Workflows in Your Store',
+
+    'overview_seo_title' => 'Business Operating System for Operational Control | COOCA',
+    'overview_seo_desc' => 'COOCA is an integrated Business Operating System: POS cashier, bookkeeping, inventory, and online orders synchronized automatically.',
+
+    'why_seo_title' => 'Why Choose COOCA: Integrated vs Disconnected Systems | COOCA',
+    'why_seo_desc' => 'Stop paying for fragmented apps and scattered spreadsheets. COOCA unifies POS, recipe inventory, accounting, and WhatsApp CRM.',
+    'why_view_costs' => 'View Cost Breakdown',
+    'why_register_now' => 'Register COOCA Now',
+    'why_consult_support' => 'Consult with Support Team',
+    'why_impact_title' => '4 Costly Downsides of Using Disconnected Systems in Your Business',
+    'why_impact_1_title' => '1. Capital Leakage from Stock & Cash Discrepancies',
+    'why_impact_2_title' => '2. Delayed Financial Reports and Visibility',
+    'why_impact_3_title' => '3. Employees Overwhelmed by Multiple Logins',
+    'why_impact_4_title' => '4. Struggling to Expand Branches with Confidence',
+    'why_vs_conventional' => 'COOCA vs Combination of Conventional Apps',
+    'why_faq_title' => 'Frequently Asked Questions on Switching to COOCA',
+    'why_explore_ecosystem' => 'Explore Other Parts of the COOCA Ecosystem',
+    'why_cta_time_to_unify' => 'It Is Time to Unify Your Business Operations',
 ];

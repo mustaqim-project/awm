@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kelola Multi-Akun Media Sosial Bisnis Toko | COOCA')
-@section('description', 'Kelola akun Instagram, Facebook, dan TikTok dari satu dasbor: jadwal tayang otomatis dan hubungkan langsung dengan katalog produk toko.')
-@section('og_title', 'Kelola Multi-Akun Media Sosial Bisnis Toko | COOCA')
-@section('og_description', 'Kelola akun Instagram, Facebook, dan TikTok dari satu dasbor: jadwal tayang otomatis dan hubungkan langsung dengan katalog produk toko.')
+@section('title', __('public_omnichannel.social_seo_title'))
+@section('description', __('public_omnichannel.social_seo_desc'))
+@section('og_title', __('public_omnichannel.social_seo_title'))
+@section('og_description', __('public_omnichannel.social_seo_desc'))
 @section('keywords',
     'software manajemen media sosial, aplikasi jadwal posting medsos, kelola multi akun instagram tiktok, social media scheduler bisnis, konten terintegrasi pos')
 
@@ -286,7 +286,7 @@
                             class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900/50 flex items-center justify-center text-rose-600 dark:text-rose-400">
                             <i data-lucide="key-round" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Risiko Berbagi Password Akun</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.soc_pain_1_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Memberikan login Instagram atau TikTok resmi ke staf admin lepas (freelancer). Risiko akun
                             terkunci karena verifikasi OTP atau terbawa saat staf berhenti kerja.
@@ -314,7 +314,7 @@
                             class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-900/50 flex items-center justify-center text-[#007AFF] dark:text-[#00C4D8]">
                             <i data-lucide="unlink" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Konten Tidak Nyambung dengan Stok
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_omnichannel.soc_pain_2_title') }}
                         </h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Admin mempromosikan produk tertentu hingga viral, namun ternyata stok di gudang outlet sudah
@@ -328,9 +328,7 @@
         {{-- 3. CORE SOCIAL MEDIA CAPABILITIES: Bento Apple HIG --}}
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20 bg-white dark:bg-[#0B132B]">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">
-                    Fitur Media Sosial COOCA
-                </h2>
+                <h2 class="text-xs uppercase tracking-widest text-[#007AFF] dark:text-[#00C4D8] font-bold mb-3">{{ __('public_omnichannel.soc_feature_kicker') }}</h2>
                 <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     Publikasi Konsisten yang Terhubung dengan Operasional Toko
                 </p>
@@ -377,9 +375,7 @@
                             class="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-purple-600 dark:text-purple-400">
                             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                            Tautkan Produk & Stok Toko
-                        </h3>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{{ __('public_omnichannel.soc_feat_link_title') }}</h3>
                         <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             Saat membuat postingan, pilih produk langsung dari modul Inventori COOCA. Sistem menyertakan
                             harga terkini, ketersediaan stok cabang, dan tautan belanja yang siap diklik audiens.
@@ -447,7 +443,7 @@
                         <span>Siklus Pemasaran Hingga Transaksi</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Menghubungkan Media Sosial dengan Kasir & Gudang
+                        {{ __('public_omnichannel.soc_flow_kicker') }}
                     </h2>
                     <p class="text-slate-300 text-sm sm:text-base mt-3">
                         Bagaimana konten digital Anda berinteraksi dengan seluruh ekosistem bisnis COOCA.
@@ -461,7 +457,7 @@
                             class="w-8 h-8 rounded-lg bg-[#007AFF]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#007AFF]/30">
                             1
                         </div>
-                        <h3 class="text-base font-bold text-white">Pilih Produk Siap Jual</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.soc_step_pick_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Pilih produk unggulan yang stok fisiknya masih banyak di gudang cabang untuk dijadikan materi
                             promosi konten media sosial minggu ini.
@@ -474,7 +470,7 @@
                             class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-xs border border-purple-500/30">
                             2
                         </div>
-                        <h3 class="text-base font-bold text-white">Jadwal Publikasi Otomatis</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.soc_step_schedule_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Atur jadwal tayang di jam santai audiens (misal 12:00 atau 19:30). Sistem otomatis mengunggah
                             materi ke Instagram dan Facebook tanpa campur tangan staf.
@@ -487,7 +483,7 @@
                             class="w-8 h-8 rounded-lg bg-blue-500/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-blue-500/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Pesanan Masuk Terpusat</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.soc_step_order_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Audiens mengklik link produk di bio/postingan untuk memesan atau datang ke toko fisik. Transaksi
                             langsung masuk ke modul Order terpadu.
@@ -500,7 +496,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Stok Terpotong & Laporan Rapi</h3>
+                        <h3 class="text-base font-bold text-white">{{ __('public_omnichannel.soc_step_report_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             Stok gudang cabang berkurang, omzet tercatat di modul Finance, dan laporan menunjukkan berapa
                             rupiah keuntungan yang dihasilkan dari postingan tersebut.
@@ -651,7 +647,7 @@
                     </div>
                     <h3
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Katalog & Stok Toko
+                        {{ __('public_omnichannel.mod_catalog_stock') }}
                     </h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sumber produk resmi dan harga terkini untuk
                         materi promosi.</p>
@@ -673,7 +669,7 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-                        Mulai Publikasikan Konten Bisnis yang Menghasilkan Penjualan
+                        {{ __('public_omnichannel.soc_bottom_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
                         Satukan akun media sosial Anda dengan sistem operasional toko dan rasakan kemudahan membangun

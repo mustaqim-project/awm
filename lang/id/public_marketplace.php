@@ -274,4 +274,6 @@ return [
     'srch_preset_cheap' => '< 50rb',
     'srch_preset_mid' => '50rb - 200rb',
     'srch_preset_high' => '> 200rb',
+    'remove_filter' => 'Hapus filter',
+    'max_price_fallback' => 'Maks',
 ];

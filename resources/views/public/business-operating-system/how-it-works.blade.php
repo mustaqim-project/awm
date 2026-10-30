@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
 @section('title', 'Cara Kerja Business Operating System Terintegrasi | COOCA')
-@section('description', 'Pelajari alur data otomatis COOCA: dari transaksi kasir dan pesanan online, pemotongan stok bahan baku, pembukuan jurnal otomatis, hingga analitik owner.')
+@section('description', __('public_bos.how_seo_desc'))
 @section('keywords', 'cara kerja sistem bisnis terintegrasi, alur operasional bisnis umkm, otomasi pembukuan toko, workflow kasir ke akuntansi, cara kerja cooca')
 
 @section('og_title', 'Cara Kerja Business Operating System Terintegrasi | COOCA')
-@section('og_description', 'Pelajari alur data otomatis COOCA: dari transaksi kasir dan pesanan online, pemotongan stok bahan baku, pembukuan jurnal otomatis, hingga analitik owner.')
+@section('og_description', __('public_bos.how_seo_desc'))
 
 @push('seo')
     <script type="application/ld+json">
@@ -285,7 +285,7 @@
                                 1</span>
                             <span class="text-xs font-semibold text-neutral-500 shrink-0">Frontline Sales</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Penangkapan Transaksi di Titik Penjualan</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __("public_bos.how_step_1_title") }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Saat pelanggan memesan di kasir toko fisik, memilih menu lewat QR order di meja, atau melakukan
                             checkout di katalog online toko Anda, COOCA langsung mengunci pesanan tersebut ke dalam antrean
@@ -316,7 +316,7 @@
                                 2</span>
                             <span class="text-xs font-semibold text-neutral-500 shrink-0">Inventory & BOM</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Pemotongan Bahan & Alokasi Stok Gudang</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{!! __("public_bos.how_step_2_title") !!}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Sistem mengecek resep atau Bill of Materials (BOM) produk. Bila yang terjual adalah
                             makanan/minuman, takaran bahan mentah (kopi, susu, cup, kemasan) dipotong otomatis dari
@@ -347,7 +347,7 @@
                                 3</span>
                             <span class="text-xs font-semibold text-neutral-500 shrink-0">Ledger Posting</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Penerbitan Jurnal Akuntansi Otomatis</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{{ __("public_bos.how_step_3_title") }}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Tidak perlu mengumpulkan bon kertas dan mengetik jurnal di akhir bulan. COOCA membuat ayat
                             jurnal ganda (double-entry bookkeeping) otomatis untuk pendapatan, kas/bank, potongan harga, dan
@@ -378,7 +378,7 @@
                                 4</span>
                             <span class="text-xs font-semibold text-neutral-500 shrink-0">Executive Insight</span>
                         </div>
-                        <h3 class="text-xl font-bold leading-snug text-balance break-words">Penyajian Laporan & Notifikasi Pemilik</h3>
+                        <h3 class="text-xl font-bold leading-snug text-balance break-words">{!! __("public_bos.how_step_4_title") !!}</h3>
                         <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                             Pemilik bisnis membuka dashboard di ponsel dan langsung melihat metrik bisnis terbaru: grafik
                             omzet harian, sisa kas fisik di kasir tiap outlet, produk paling menguntungkan, dan peringatan
@@ -410,9 +410,7 @@
             <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <div class="max-w-2xl space-y-3">
                     <span class="text-xs font-bold uppercase tracking-wider text-[#FF9500]">Simulasi Konkret</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">
-                        Lihat Contoh Nyata di Dua Jenis Bisnis
-                    </h2>
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.how_examples_title") }}</h2>
                     <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed text-pretty">
                         Bagaimana satu sistem yang sama menyelesaikan kebutuhan operasional bisnis kuliner (F&B) maupun toko
                         retail fisik.
@@ -603,11 +601,11 @@
                         <span
                             class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Pelajari
                             Lebih Lanjut</span>
-                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">Eksplorasi Komponen Sistem Terhubung</h3>
+                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-balance break-words">{{ __("public_bos.how_explore_components") }}</h3>
                     </div>
                     <a href="{{ route('public.bos.overview') }}"
                         class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline shrink-0">
-                        <span>Kembali ke Overview BOS</span>
+                        <span>{{ __("public_bos.how_back_to_overview") }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -677,9 +675,7 @@
                     <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 space-y-3">
                             <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">Siap Mencoba?</span>
-                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.2] text-balance break-words">
-                                Buktikan Kemudahan Alur Kerja COOCA pada Toko Anda
-                            </h2>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-[1.2] text-balance break-words">{{ __("public_bos.how_cta_bottom_title") }}</h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed text-pretty">
                                 Daftarkan toko Anda dalam 2 menit. Mulai gunakan kasir, pantau bahan baku, dan rasakan
                                 nikmatnya pembukuan otomatis tanpa input ganda.
@@ -689,7 +685,7 @@
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
                             <a href="{{ route('register') }}"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[48px]">
-                                <span>Daftar Gratis Sekarang</span>
+                                <span>{{ __("public_bos.btn_register_free_now") }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ route('public.demo') }}"

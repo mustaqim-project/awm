@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Business Operating System untuk Kendali Operasional Bisnis | COOCA')
-@section('description', 'COOCA adalah Business Operating System terpadu untuk UMKM Indonesia. Hubungkan kasir, gudang, keuangan, channel penjualan, dan otomasi dalam satu platform.')
+@section('title', __('public_bos.overview_seo_title'))
+@section('description', __('public_bos.overview_seo_desc'))
 @section('keywords', 'business operating system, sistem operasional bisnis, software manajemen bisnis terpadu, erp umkm indonesia, platform bisnis terintegrasi')
 
-@section('og_title', 'Business Operating System untuk Kendali Operasional Bisnis | COOCA')
-@section('og_description', 'BOS terpadu untuk UMKM Indonesia. Hubungkan kasir POS, stok gudang, pembukuan riil, pesanan online, dan otomasi dalam satu sistem.')
+@section('og_title', __('public_bos.overview_seo_title'))
+@section('og_description', __('public_bos.overview_seo_desc'))
 
 @push('seo')
     <script type="application/ld+json">

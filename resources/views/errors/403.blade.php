@@ -1,8 +1,8 @@
 @php
     $status = 403;
-    $title = 'Akses Ditolak';
-    $message = 'Anda tidak memiliki izin atau otorisasi untuk mengakses halaman atau tindakan ini.';
-    $homeLabel = Route::has('dashboard') ? 'Ke Dashboard' : 'Ke Beranda';
+    $title = __('errors.403_title');
+    $message = __('errors.403_message');
+    $homeLabel = Route::has('dashboard') ? __('errors.btn_dashboard') : __('errors.btn_home');
     $homeUrl = Route::has('dashboard') ? route('dashboard') : route('landing');
     $reference = substr(sha1(request()->method().'|'.request()->path().'|'.now()->timestamp), 0, 10);
 @endphp

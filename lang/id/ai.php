@@ -28,6 +28,11 @@ return [
         'daily_eval' => 'Evaluasi Harian',
         'review_proposals' => 'Tinjau Proposal',
         'ai_studio' => 'AI Studio',
+        'chat_ask' => 'Chat / Tanya AI',
+        'action_approval' => 'Persetujuan Aksi',
+        'office_hq' => 'AI Office Headquarters',
+        'pos' => 'POS Kasir',
+        'pos_terminal_tooltip' => 'Buka Kasir POS Terminal',
     ],
 
     'pos' => [

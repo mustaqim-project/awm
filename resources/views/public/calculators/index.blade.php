@@ -230,9 +230,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </div>
 
                         <div>
-                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">
-                                Kalkulator HPP &amp; Harga Jual
-                            </h3>
+                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">{!! __("public_calculators.hub_card_hpp_title") !!}</h3>
                             <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-1.5">
                                 Hitung biaya bahan baku, upah kerja, dan biaya operasional per porsi produk agar harga jual tidak nombok.
                             </p>
@@ -289,9 +287,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                                Margin Harga Jual
-                            </h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{{ __("public_calculators.hub_card_margin_title") }}</h3>
                             <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-1">
                                 Pahami perbedaan markup dan margin agar persentase keuntungan tidak keliru dihitung.
                             </p>
@@ -318,9 +314,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </div>
 
                         <div>
-                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">
-                                Kalkulator Laba Bersih Usaha
-                            </h3>
+                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">{{ __("public_calculators.hub_card_net_profit_title") }}</h3>
                             <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-1.5">
                                 Simulasikan total omzet dikurangi seluruh beban operasional (gaji, sewa tempat, listrik, bahan) untuk mengetahui uang bersih yang benar-benar bisa dibawa pulang.
                             </p>
@@ -350,9 +344,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">
-                                Gaji Karyawan
-                            </h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">{{ __("public_calculators.hub_card_employee_salary_title") }}</h3>
                             <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-1">
                                 Perhitungan upah harian, bulanan, lembur, dan bonus karyawan dengan transparan.
                             </p>

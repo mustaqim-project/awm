@@ -691,14 +691,14 @@
             line-height: 1.8;
         }
 
-        body>nav[aria-label="Navigasi halaman"] {
+        body>nav[aria-label="{{ __('storefront.aria_page_nav') }}"] {
             background-color: var(--sf-header) !important;
             border-color: var(--sf-border) !important;
             border-radius: 20px;
             box-shadow: 0 8px 32px -12px rgba(0, 0, 0, .22);
         }
 
-        body>nav[aria-label="Navigasi halaman"]>div> :is(a, button) {
+        body>nav[aria-label="{{ __('storefront.aria_page_nav') }}"]>div> :is(a, button) {
             min-height: 48px;
             min-width: 0;
             gap: 3px;
@@ -832,7 +832,7 @@
                 padding-inline: 14px;
             }
 
-            body>nav[aria-label="Navigasi halaman"] {
+            body>nav[aria-label="{{ __('storefront.aria_page_nav') }}"] {
                 bottom: 10px;
                 inset-inline: 10px;
             }
@@ -1008,7 +1008,7 @@
         }
 
         body .storefront-sheet button:has(> :is(svg, i)[data-lucide="x"]),
-            body .storefront-sheet button[aria-label="Tutup dialog"] {
+            body .storefront-sheet button[aria-label="{{ __('storefront.aria_close_dialog') }}"] {
                 width: 44px;
                 height: 44px;
                 flex-shrink: 0;
@@ -1036,7 +1036,7 @@
             }
 
             @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-                body > header, body > nav[aria-label="Navigasi halaman"] {
+                body > header, body > nav[aria-label="{{ __('storefront.aria_page_nav') }}"] {
                     background-color: var(--sf-surface) !important;
                 }
             }
@@ -1092,7 +1092,7 @@
 
                 body .storefront-header-actions > .relative > button > .hidden,
                 body .storefront-header-actions > .relative > button > [data-lucide="chevron-down"],
-                body .storefront-header-actions > a[title="Masuk / Daftar Akun"] > span,
+                body .storefront-header-actions > a[title="{{ __('storefront.title_login_register') }}"] > span,
                 body .storefront-header-actions > :is(a, button)[title="Reservasi"],
                     body .storefront-header-actions > :is(a, button)[title="Pesan PO"],
                         body .storefront-header-actions > :is(a, button)[title="Pesan Pre-Order"],
@@ -1198,7 +1198,7 @@
                                         border-radius: 22px;
                                     }
 
-                                    body > nav[aria-label="Navigasi halaman"] {
+                                    body > nav[aria-label="{{ __('storefront.aria_page_nav') }}"] {
                                         bottom: max(12px, env(safe-area-inset-bottom, 12px));
                                         inset-inline: 12px;
                                         border-radius: 24px;
@@ -1209,18 +1209,18 @@
                                         backdrop-filter: blur(24px) saturate(160%);
                                     }
 
-                                    body > nav[aria-label="Navigasi halaman"] > div {
+                                    body > nav[aria-label="{{ __('storefront.aria_page_nav') }}"] > div {
                                         align-items: flex-end; gap: 4px; max-width: 540px;
                                     }
 
-                                    body > nav[aria-label="Navigasi halaman"] > div > :is(a, button):not([class*="-mt-"]) {
+                                    body > nav[aria-label="{{ __('storefront.aria_page_nav') }}"] > div > :is(a, button):not([class*="-mt-"]) {
                                         min-height: 46px;
                                         border-radius: 14px;
                                         gap: 3px;
                                         padding-block: 4px;
                                     }
 
-                                    body > nav[aria-label="Navigasi halaman"] > div > :is(a, button) > span {
+                                    body > nav[aria-label="{{ __('storefront.aria_page_nav') }}"] > div > :is(a, button) > span {
                                         font-size: 10px; line-height: 1.25;
                                     }
 
@@ -2593,7 +2593,7 @@
                                 window.location.href = data.redirect_url;
                                 return;
                             }
-                            this.checkoutError = data.message || 'Terjadi kesalahan saat memproses pesanan.';
+                            this.checkoutError = data.message || '{{ __('storefront.err_process_order') }}';
                         }
                     } catch (e) {
                         this.checkoutError = 'Koneksi bermasalah. Silakan periksa jaringan Anda.';
@@ -3357,7 +3357,7 @@
     {{-- TOP STICKY BANNER: GROUP ORDER (Pesan Bareng ShopeeFood / GrabFood)      --}}
     {{-- ========================================================================= --}}
     <template x-if="groupOrder.active && groupOrder.data">
-        <aside aria-label="Status Pesan Bareng"
+        <aside aria-label="{{ __('storefront.aria_group_order_status') }}"
             class="sticky top-0 z-[60] w-full bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border-b border-black/10 dark:border-white/10 shadow-md py-2.5 px-3.5 sm:px-6 transition-all duration-200">
             <div class="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div class="flex items-center gap-2.5 flex-wrap">
@@ -3413,7 +3413,7 @@
                     <template x-if="groupOrder.splitBill && groupOrder.splitBill.length > 0">
                         <button type="button" @click="groupOrder.isSplitBillOpen = true"
                             class="px-3 py-1.5 rounded-[12px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] dark:text-[#AF52DE] text-[11.5px] font-bold transition flex items-center gap-1 cursor-pointer active:scale-95 border border-[#5856D6]/20 shadow-2xs"
-                            title="Lihat Rincian Patungan (Split Bill)">
+                            title="{{ __('storefront.title_split_bill') }}">
                             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                             <span>Rincian Patungan</span>
                         </button>
@@ -3477,7 +3477,7 @@
                 </div>
                 <button type="button" @click="bannerDismissed = true"
                     class="relative z-10 w-5 h-5 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition active:scale-95 shrink-0 cursor-pointer ml-2"
-                    title="Tutup pengumuman">
+                    title="{{ __('storefront.title_close_announcement') }}">
                     <i data-lucide="x" class="w-3 h-3"></i>
                 </button>
             </div>
@@ -3530,8 +3530,7 @@
                 @endif
                 @if ($sectionVisibility['about'] && $hasAbout)
                     <a href="#tentang"
-                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">Tentang
-                        Kami</a>
+                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.about') }}</a>
                 @endif
                 @if ($sectionVisibility['gallery'] && !empty($landingPage->gallery_images))
                     <a href="#galeri"
@@ -3544,8 +3543,7 @@
                 @endif
                 @if ($sectionVisibility['contact'] && $hasContact)
                     <a href="#lokasi"
-                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">Lokasi
-                        &amp; Kontak</a>
+                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.contact_location') }}</a>
                 @endif
             </nav>
 
@@ -3605,7 +3603,7 @@
                             <a href="{{ route('customer.orders') }}"
                                 class="flex items-center gap-2.5 px-3 py-2 rounded-[12px] text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition font-medium">
                                 <i data-lucide="shopping-bag" class="w-4 h-4 text-[#34C759]"></i>
-                                <span>Riwayat Belanja</span>
+                                <span>{{ __('storefront.btn_shopping_history') }}</span>
                             </a>
                             <a href="{{ route('customer.cart') }}"
                                 class="flex items-center gap-2.5 px-3 py-2 rounded-[12px] text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition font-medium">
@@ -3615,7 +3613,7 @@
                             <a href="{{ route('customer.profile') }}"
                                 class="flex items-center gap-2.5 px-3 py-2 rounded-[12px] text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition font-medium">
                                 <i data-lucide="user" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                                <span>Profil &amp; Alamat</span>
+                                <span>{{ __('storefront.btn_profile_address') }}</span>
                             </a>
                             <div class="border-t border-black/5 dark:border-white/10 my-1 pt-1">
                                 <form method="POST" action="{{ route('customer.logout') }}">
@@ -3623,7 +3621,7 @@
                                     <button type="submit"
                                         class="w-full flex items-center gap-2.5 px-3 py-2 rounded-[12px] text-[#FF3B30] hover:bg-[#FF3B30]/10 transition font-medium text-left">
                                         <i data-lucide="log-out" class="w-4 h-4"></i>
-                                        <span>Keluar</span>
+                                        <span>{{ __('common.logout') }}</span>
                                     </button>
                                 </form>
                             </div>
@@ -3632,7 +3630,7 @@
                 @else
                     <a href="{{ route('customer.login', ['store' => $business->slug]) }}"
                         class="h-9 px-3 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/80 dark:text-white/80 text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-95 border border-black/5 dark:border-white/10"
-                        title="Masuk / Daftar Akun">
+                        title="{{ __('storefront.title_login_register') }}">
                         <i data-lucide="user" class="w-4 h-4"></i>
                         <span class="hidden sm:inline">Masuk</span>
                     </a>
@@ -3741,11 +3739,11 @@
                         <a href="{{ route('customer.dashboard') }}"
                             class="py-1.5 rounded-[10px] bg-white dark:bg-black/30 border border-black/5 dark:border-white/10 text-black/80 dark:text-white/80 font-medium">Dashboard</a>
                         <a href="{{ route('customer.orders') }}"
-                            class="py-1.5 rounded-[10px] bg-white dark:bg-black/30 border border-black/5 dark:border-white/10 text-black/80 dark:text-white/80 font-medium">Pesanan</a>
+                            class="py-1.5 rounded-[10px] bg-white dark:bg-black/30 border border-black/5 dark:border-white/10 text-black/80 dark:text-white/80 font-medium">{{ __('storefront.my_orders') }}</a>
                         <form method="POST" action="{{ route('customer.logout') }}" class="inline">
                             @csrf
                             <button type="submit"
-                                class="w-full py-1.5 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] font-semibold">Keluar</button>
+                                class="w-full py-1.5 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] font-semibold">{{ __('common.logout') }}</button>
                         </form>
                     </div>
                 </div>
@@ -3775,7 +3773,7 @@
             @endif
             @if ($sectionVisibility['about'] && $hasAbout)
                 <a href="#tentang" @click="mobileMenuOpen = false"
-                    class="block py-2 text-black/80 dark:text-white/80">Tentang Kami</a>
+                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.about') }}</a>
             @endif
             @if ($sectionVisibility['gallery'] && !empty($landingPage->gallery_images))
                 <a href="#galeri" @click="mobileMenuOpen = false"
@@ -3787,7 +3785,7 @@
             @endif
             @if ($sectionVisibility['contact'] && $hasContact)
                 <a href="#lokasi" @click="mobileMenuOpen = false"
-                    class="block py-2 text-black/80 dark:text-white/80">Lokasi &amp; Kontak</a>
+                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.contact_location') }}</a>
             @endif
             {{-- Mobile Theme Switcher --}}
             <div class="pt-3 pb-1 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
@@ -4020,7 +4018,7 @@
                 <div class="flex items-center justify-between gap-3">
                     {{-- Scrollable Segmented Control Pill Container --}}
                     <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 px-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[16px] border border-black/5 dark:border-white/10 max-w-full"
-                        role="tablist" aria-label="Kategori Etalase">
+                        role="tablist" aria-label="{{ __('storefront.aria_showcase_cat') }}">
                         @foreach ($storefrontTabs as $tab)
                             <button type="button" role="tab"
                                 :aria-selected="activeMainTab === '{{ $tab['id'] }}' ? 'true' : 'false'"
@@ -4110,7 +4108,7 @@
                                     <i data-lucide="search"
                                         class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
                                     <input type="search" x-model="serviceSearch" @input="filterServices()"
-                                        placeholder="Cari layanan..."
+                                        placeholder="{{ __('storefront.ph_search_service') }}"
                                         class="w-full h-8 sm:h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 pl-8 pr-7 text-[16px] sm:text-[12.5px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition">
                                     <button type="button" x-show="serviceSearch" @click="clearServiceFilter()"
                                         class="absolute right-2.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white cursor-pointer">
@@ -4122,17 +4120,17 @@
                                 <button type="button" @click="openAllServicesModal()"
                                     class="h-8 sm:h-9 px-3.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.14] text-black/80 dark:text-white/80 text-[12px] font-semibold flex items-center gap-1.5 transition active:scale-95 border border-black/5 dark:border-white/10 cursor-pointer whitespace-nowrap">
                                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                                    <span>Lihat Semua ({{ $services->count() }})</span>
+                                    <span>{{ __('storefront.btn_see_all') }} ({{ $services->count() }})</span>
                                 </button>
 
                                 @if ($services->count() > 1)
                                     <div x-show="!serviceSearch && serviceCategory === 'all'"
                                         class="hidden sm:flex items-center gap-1.5">
-                                        <button type="button" @click="prev()" aria-label="Layanan Sebelumnya"
+                                        <button type="button" @click="prev()" aria-label="{{ __('storefront.aria_prev_service') }}"
                                             class="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] active:scale-95 text-black/70 dark:text-white/70 flex items-center justify-center transition cursor-pointer">
                                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                                         </button>
-                                        <button type="button" @click="next()" aria-label="Layanan Berikutnya"
+                                        <button type="button" @click="next()" aria-label="{{ __('storefront.aria_next_service') }}"
                                             class="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] active:scale-95 text-black/70 dark:text-white/70 flex items-center justify-center transition cursor-pointer">
                                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                                         </button>
@@ -4148,7 +4146,7 @@
                                     class="px-3.5 py-1.5 rounded-full text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                                     :class="serviceCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                         'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'">
-                                    Semua ({{ $services->count() }})
+                                    {{ __('storefront.all') }} ({{ $services->count() }})
                                 </button>
                                 @foreach ($serviceCategories as $sCat)
                                     @php
@@ -4219,7 +4217,7 @@
                                 <button type="button" @click="clearServiceFilter()"
                                     class="mt-2.5 inline-flex items-center gap-1.5 text-[12px] text-brand-primary font-semibold hover:underline cursor-pointer">
                                     <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                                    <span>Reset Filter</span>
+                                    <span>{{ __('storefront.btn_reset_filter') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -4495,7 +4493,7 @@
                                 <div class="flex items-center gap-3">
                                     <h3
                                         class="font-bold text-[18px] sm:text-[20px] text-black dark:text-white tracking-[-0.015em] leading-snug">
-                                        Katalog Produk</h3>
+                                        {{ __('storefront.catalog') }}</h3>
                                     @if ($storeSetting?->allow_request_order)
                                         <button type="button" @click="requestOrderModalOpen = true"
                                             class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 hover:bg-brand-200 text-brand-primary text-[11.5px] font-semibold transition border border-brand-primary/20 shadow-xs">
@@ -4520,7 +4518,7 @@
                                     <i data-lucide="search"
                                         class="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
                                     <input type="search" x-model="productSearch" @input="filterProducts()"
-                                        placeholder="Cari nama produk..."
+                                        placeholder="{{ __('storefront.ph_search_product') }}"
                                         class="w-full h-8 sm:h-9 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 pl-8 pr-7 text-[16px] sm:text-[12.5px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition">
                                     <button type="button" x-show="productSearch"
                                         @click="productSearch = ''; filterProducts()"
@@ -4533,17 +4531,17 @@
                                 <button type="button" @click="openAllProductsModal()"
                                     class="h-8 sm:h-9 px-3.5 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.14] text-black/80 dark:text-white/80 text-[12px] font-semibold flex items-center gap-1.5 transition active:scale-95 border border-black/5 dark:border-white/10 cursor-pointer whitespace-nowrap">
                                     <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                                    <span>Lihat Semua ({{ $posProducts->count() }})</span>
+                                    <span>{{ __('storefront.btn_see_all') }} ({{ $posProducts->count() }})</span>
                                 </button>
 
                                 @if ($posProducts->count() > 1)
                                     <div x-show="!productSearch && productCategory === 'all'"
                                         class="hidden sm:flex items-center gap-1.5">
-                                        <button type="button" @click="prev()" aria-label="Produk Sebelumnya"
+                                        <button type="button" @click="prev()" aria-label="{{ __('storefront.aria_prev_product') }}"
                                             class="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] active:scale-95 text-black/70 dark:text-white/70 flex items-center justify-center transition cursor-pointer">
                                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                                         </button>
-                                        <button type="button" @click="next()" aria-label="Produk Berikutnya"
+                                        <button type="button" @click="next()" aria-label="{{ __('storefront.aria_next_product') }}"
                                             class="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] active:scale-95 text-black/70 dark:text-white/70 flex items-center justify-center transition cursor-pointer">
                                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                                         </button>
@@ -4559,7 +4557,7 @@
                                     class="px-3.5 py-1.5 rounded-full text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                                     :class="productCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                         'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'">
-                                    Semua ({{ $posProducts->count() }})
+                                    {{ __('storefront.all') }} ({{ $posProducts->count() }})
                                 </button>
                                 @foreach ($productCategories as $category)
                                     @php
@@ -4656,7 +4654,7 @@
                                 <button type="button" @click="clearProductFilter()"
                                     class="mt-2.5 inline-flex items-center gap-1.5 text-[12px] text-brand-primary font-semibold hover:underline cursor-pointer">
                                     <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                                    <span>Reset Filter</span>
+                                    <span>{{ __('storefront.btn_reset_filter') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -5053,7 +5051,7 @@
                     <button type="button" @click="openAllGallery()"
                         class="h-11 px-6 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white font-semibold text-[13px] sm:text-[13.5px] tracking-tight border border-black/5 dark:border-white/10 shadow-sm active:scale-[0.98] transition flex items-center gap-2.5">
                         <i data-lucide="layout-grid" class="w-4 h-4 text-brand-primary"></i>
-                        <span>Lihat Semua Galeri ({{ $totalGalleryCount }} Foto)</span>
+                        <span>{{ __('storefront.btn_see_all_gallery') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-50"></i>
                     </button>
                 </div>
@@ -5077,7 +5075,7 @@
                         &amp; Dedikasi</span>
                     <h2
                         class="text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight lg:tracking-[-0.025em] leading-[1.2] text-black dark:text-white">
-                        Tentang {{ $business->name }}</h2>
+                        {{ __('storefront.about') }} {{ $business->name }}</h2>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
@@ -5198,7 +5196,7 @@
                                                 <span
                                                     class="inline-flex items-center gap-1.5 font-medium text-[12px] sm:text-[12.5px] text-[#FF3B30]">
                                                     <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                                                    <span>Tutup</span>
+                                                    <span>{{ __('common.close') }}</span>
                                                 </span>
                                             @endif
                                         </div>
@@ -5353,8 +5351,7 @@
                         class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 block mb-1">Alamat
                         &amp; Akses</span>
                     <h2
-                        class="text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight lg:tracking-[-0.025em] leading-[1.2] text-black dark:text-white">
-                        Lokasi &amp; Kontak</h2>
+                        class="text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight lg:tracking-[-0.025em] leading-[1.2] text-black dark:text-white">{{ __('storefront.contact_location') }}</h2>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
@@ -5370,7 +5367,7 @@
                                     <div>
                                         <h3
                                             class="font-semibold text-[14.5px] sm:text-[15px] text-black dark:text-white tracking-tight leading-snug">
-                                            Alamat Resmi</h3>
+                                            {{ __('storefront.heading_official_address') }}</h3>
                                         <p
                                             class="text-[13px] sm:text-[13.5px] text-black/65 dark:text-white/65 mt-1 leading-relaxed font-normal">
                                             {{ $landingPage->custom_address ?: $business->address }}
@@ -5388,7 +5385,7 @@
                                     <div>
                                         <h3
                                             class="font-semibold text-[14.5px] sm:text-[15px] text-black dark:text-white tracking-tight leading-snug">
-                                            Telepon / WhatsApp</h3>
+                                            {{ __('storefront.heading_phone_wa') }}</h3>
                                         <p
                                             class="text-[13.5px] sm:text-[14px] font-medium text-black/80 dark:text-white/80 mt-1 tabular-nums tracking-tight">
                                             {{ $landingPage->whatsapp_number ?: ($business->phone ?: '-') }}
@@ -5406,7 +5403,7 @@
                                     <div>
                                         <h3
                                             class="font-semibold text-[14.5px] sm:text-[15px] text-black dark:text-white tracking-tight leading-snug">
-                                            Email Bisnis</h3>
+                                            {{ __('storefront.heading_business_email') }}</h3>
                                         <a href="mailto:{{ $landingPage->custom_email ?: $business->email }}"
                                             class="text-[13px] sm:text-[13.5px] text-brand-primary mt-1 block hover:underline tracking-tight font-medium">
                                             {{ $landingPage->custom_email ?: $business->email }}
@@ -5495,7 +5492,7 @@
                 </h2>
                 <button type="button" @click="activeModal = null"
                     class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition cursor-pointer shrink-0"
-                    aria-label="Tutup dialog">
+                    aria-label="{{ __('storefront.aria_close_dialog') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -5558,7 +5555,7 @@
                         <div x-show="activeModal === 'product' && groupOrder.active && !groupOrder.data?.is_locked && !groupOrder.data?.is_checked_out && Number(activeItem?.price || 0) > 0"
                             class="pt-1">
                             <input type="text" x-model="groupOrder.itemNotes"
-                                placeholder="Catatan untuk Anda (cth: Budi - Pedas sedang, sambal pisah)"
+                                placeholder="{{ __('storefront.ph_order_notes') }}"
                                 class="w-full h-9 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-brand-primary">
                         </div>
 
@@ -5723,21 +5720,21 @@
                             :class="activeModal === 'all-products' ?
                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                            Produk ({{ $posProducts->count() }})
+                            {{ __('storefront.products') }} ({{ $posProducts->count() }})
                         </button>
                         <button type="button" @click="openAllServicesModal()"
                             class="px-3 py-1 rounded-full transition cursor-pointer"
                             :class="activeModal === 'all-services' ?
                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                            Layanan ({{ $services->count() }})
+                            {{ __('storefront.services') }} ({{ $services->count() }})
                         </button>
                     </div>
 
                     <button type="button" @click="activeModal = null"
                         class="h-9 px-3 sm:px-4 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 flex items-center gap-1.5 transition text-[12px] sm:text-[13px] font-semibold active:scale-95 cursor-pointer"
-                        aria-label="Tutup katalog">
-                        <span class="hidden sm:inline">Tutup</span>
+                        aria-label="{{ __('storefront.aria_close_catalog') }}">
+                        <span class="hidden sm:inline">{{ __('common.close') }}</span>
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -5753,12 +5750,12 @@
                             class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 dark:text-white/40"></i>
                         <template x-if="activeModal === 'all-products'">
                             <input type="search" x-model="productSearch" @input="filterProducts()"
-                                placeholder="Cari nama atau kategori produk..."
+                                placeholder="{{ __('storefront.ph_search_prod_or_cat') }}"
                                 class="w-full h-9 sm:h-10 rounded-full bg-white dark:bg-white/[0.08] border border-black/10 dark:border-white/15 pl-10 pr-9 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition shadow-xs">
                         </template>
                         <template x-if="activeModal === 'all-services'">
                             <input type="search" x-model="serviceSearch" @input="filterServices()"
-                                placeholder="Cari nama atau kategori layanan..."
+                                placeholder="{{ __('storefront.ph_search_srv_or_cat') }}"
                                 class="w-full h-9 sm:h-10 rounded-full bg-white dark:bg-white/[0.08] border border-black/10 dark:border-white/15 pl-10 pr-9 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 transition shadow-xs">
                         </template>
                         <button type="button"
@@ -5769,13 +5766,13 @@
                         </button>
                     </div>
 
-                    {{-- Reset Filter Button --}}
+                    {{-- {{ __('storefront.btn_reset_filter') }} Button --}}
                     <button type="button"
                         x-show="(activeModal === 'all-products' && (productSearch || productCategory !== 'all')) || (activeModal === 'all-services' && (serviceSearch || serviceCategory !== 'all'))"
                         @click="activeModal === 'all-products' ? clearProductFilter() : clearServiceFilter()"
                         class="h-9 sm:h-10 px-3.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 text-[11.5px] sm:text-[12px] font-semibold flex items-center justify-center gap-1.5 transition active:scale-95 whitespace-nowrap cursor-pointer">
                         <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                        <span>Reset Filter</span>
+                        <span>{{ __('storefront.btn_reset_filter') }}</span>
                     </button>
                 </div>
 
@@ -5786,7 +5783,7 @@
                             class="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11.5px] sm:text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                             :class="productCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                 'bg-white dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.12] border border-black/5 dark:border-white/10'">
-                            Semua ({{ $posProducts->count() }})
+                            {{ __('storefront.all') }} ({{ $posProducts->count() }})
                         </button>
                         @foreach ($productCategories as $cat)
                             @php
@@ -5812,7 +5809,7 @@
                             class="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11.5px] sm:text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                             :class="serviceCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                 'bg-white dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.12] border border-black/5 dark:border-white/10'">
-                            Semua ({{ $services->count() }})
+                            {{ __('storefront.all') }} ({{ $services->count() }})
                         </button>
                         @foreach ($serviceCategories as $sCat)
                             @php
@@ -5912,7 +5909,7 @@
                         <button type="button" @click="clearProductFilter()"
                             class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 text-brand-primary text-[12px] font-semibold transition cursor-pointer">
                             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                            <span>Reset Pencarian & Filter</span>
+                            <span>{{ __('storefront.btn_reset_search_filter') }}</span>
                         </button>
                     </div>
                 </div>
@@ -5993,7 +5990,7 @@
                         <button type="button" @click="clearServiceFilter()"
                             class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 text-brand-primary text-[12px] font-semibold transition cursor-pointer">
                             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                            <span>Reset Pencarian & Filter</span>
+                            <span>{{ __('storefront.btn_reset_search_filter') }}</span>
                         </button>
                     </div>
                 </div>
@@ -6025,11 +6022,11 @@
                 <button type="button" @click="openAllGallery()"
                     class="h-8 px-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-[12px] font-semibold flex items-center gap-1.5 backdrop-blur-md transition tracking-tight">
                     <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                    <span class="hidden sm:inline">Lihat Semua Grid</span>
+                    <span class="hidden sm:inline">{{ __('storefront.btn_see_all_grid') }}</span>
                 </button>
                 <button type="button" @click="activeModal = null"
                     class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur-md transition"
-                    aria-label="Tutup foto">
+                    aria-label="{{ __('storefront.aria_close_photo') }}">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -6086,7 +6083,7 @@
     {{-- MOBILE FLOATING ISLAND NAVBAR (iOS 18 Island Pill Architecture)           --}}
     {{-- ========================================================================= --}}
     <nav class="md:hidden fixed bottom-3 inset-x-3 sm:inset-x-6 z-50 rounded-[24px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] px-2.5 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.45)] pb-[calc(0.4rem+env(safe-area-inset-bottom))]"
-        aria-label="Navigasi halaman">
+        aria-label="{{ __('storefront.aria_page_nav') }}">
         <div class="grid {{ $bottomNavGridClass }} gap-1 items-end max-w-md mx-auto">
             @foreach ($bottomNavButtons as $btn)
                 @if ($btn['type'] === 'link')
@@ -6236,25 +6233,22 @@
                                 {{ $landingPage->footer_navigation_title ?: 'Navigasi' }}</h3>
                             <nav class="space-y-2.5 text-[13px] font-normal tracking-tight">
                                 @if ($sectionVisibility['hero'] && $hasHero)
-                                    <a href="#hero" class="block hover:text-brand-primary transition">Beranda</a>
+                                    <a href="#hero" class="block hover:text-brand-primary transition">{{ __('storefront.home') }}</a>
                                 @endif
                                 @if ($sectionVisibility['about'] && $hasAbout)
-                                    <a href="#tentang" class="block hover:text-brand-primary transition">Tentang
-                                        Kami</a>
+                                    <a href="#tentang" class="block hover:text-brand-primary transition">{{ __('storefront.about') }}</a>
                                 @endif
                                 @if (
                                     ($sectionVisibility['services'] && $services->isNotEmpty()) ||
                                         ($sectionVisibility['products'] && $landingPage->show_pos_products && $posProducts->isNotEmpty()))
-                                    <a href="#layanan" class="block hover:text-brand-primary transition">Menu &amp;
-                                        Layanan</a>
+                                    <a href="#layanan" class="block hover:text-brand-primary transition">{{ __('storefront.btn_menu_and_services') }}</a>
                                 @endif
                                 @if ($sectionVisibility['gallery'] && !empty($landingPage->gallery_images))
                                     <a href="#galeri" class="block hover:text-brand-primary transition">Galeri
                                         Foto</a>
                                 @endif
                                 @if ($sectionVisibility['contact'] && $hasContact)
-                                    <a href="#lokasi" class="block hover:text-brand-primary transition">Kontak &amp;
-                                        Lokasi</a>
+                                    <a href="#lokasi" class="block hover:text-brand-primary transition">{{ __('storefront.btn_contact_location') }}</a>
                                 @endif
                             </nav>
                         </div>
@@ -6468,7 +6462,7 @@
 
                                 <div class="pt-1">
                                     <input type="text" x-model="item.notes" @input="saveCart()"
-                                        placeholder="Nama pemesan / catatan (cth: Budi - Lt. 4)"
+                                        placeholder="{{ __('storefront.ph_customer_note') }}"
                                         class="w-full h-7 px-2 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[11px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-brand-primary transition">
                                 </div>
 
@@ -6484,7 +6478,7 @@
                                             class="w-7 h-7 flex items-center justify-center rounded-full bg-black/10 dark:bg-white/10 text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-bold text-[14px] active:scale-90 transition cursor-pointer">&plus;</button>
                                     </div>
                                     <button type="button" @click="removeFromCart(item.id)"
-                                        class="text-black/40 hover:text-[#FF3B30] text-[12px] font-medium transition cursor-pointer">Hapus</button>
+                                        class="text-black/40 hover:text-[#FF3B30] text-[12px] font-medium transition cursor-pointer">{{ __('common.delete') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -6545,7 +6539,7 @@
                         <i data-lucide="lock" class="w-4 h-4"></i>
                     </div>
                     <div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">Checkout Pesanan
+                        <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.heading_checkout_order') }}
                         </h3>
                         <span class="text-[11.5px] text-black/50 dark:text-white/50">{{ $business->name }}</span>
                     </div>
@@ -6577,7 +6571,7 @@
                             <a :href="customerLoginUrl"
                                 class="px-3.5 py-2 bg-brand-primary text-white rounded-xl text-[12px] font-bold hover:opacity-90 transition active:scale-95 flex items-center gap-1.5 shadow-sm">
                                 <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
-                                <span>Masuk Akun / Demo</span>
+                                <span>{{ __('storefront.btn_login_or_demo') }}</span>
                             </a>
                             <a href="{{ route('customer.auth.google') }}?redirect={{ urlencode(url()->current()) }}"
                                 class="px-3 py-2 bg-white dark:bg-black/40 border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl text-[12px] font-bold hover:border-brand-primary transition active:scale-95 flex items-center gap-1.5 shadow-2xs">
@@ -6606,7 +6600,7 @@
                     </div>
                     @if (!auth('customer')->user()->isPhoneVerified())
                         <a href="{{ route('customer.otp') }}"
-                            class="text-[#FF9500] font-semibold hover:underline">Verifikasi OTP &rarr;</a>
+                            class="text-[#FF9500] font-semibold hover:underline">{{ __('storefront.btn_verify_otp') }} &rarr;</a>
                     @else
                         <span class="text-[#34C759] font-semibold text-[11.5px] inline-flex items-center gap-1"><i
                                 data-lucide="check" class="w-3.5 h-3.5"></i> Terverifikasi</span>
@@ -6776,7 +6770,7 @@
                                     class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Alamat
                                     Pengiriman Lengkap <span class="text-red-500">*</span></label>
                                 <textarea x-model="checkoutForm.shipping_address" rows="2"
-                                    placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan, patokan..."
+                                    placeholder="{{ __('storefront.ph_full_address') }}"
                                     class="w-full p-3 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary resize-none"></textarea>
                             </div>
 
@@ -6868,7 +6862,7 @@
                                 class="p-3 rounded-[14px] bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-[12px] flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2">
                                     <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                                    <span>Belum ada kurir aktif untuk rute ini atau hubungi toko.</span>
+                                    <span>{{ __('storefront.empty_couriers') }}</span>
                                 </div>
                                 <button type="button" @click="fetchShippingQuote()"
                                     class="text-[11px] font-bold underline cursor-pointer">Coba Lagi</button>
@@ -6880,12 +6874,10 @@
                     <div
                         class="pt-4 border-t border-black/5 dark:border-white/10 flex items-center justify-between gap-3">
                         <button type="button" @click="checkoutModalOpen = false"
-                            class="h-11 px-5 rounded-[14px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 font-semibold text-[13px] transition cursor-pointer">
-                            Batal
-                        </button>
+                            class="h-11 px-5 rounded-[14px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 font-semibold text-[13px] transition cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="button" @click="goToCheckoutStep({{ $hasBatchFeature ? 2 : 3 }})"
                             class="h-11 px-6 rounded-[14px] bg-brand-primary hover:opacity-90 text-white font-bold text-[13px] transition flex items-center gap-2 shadow-xs cursor-pointer">
-                            <span>{{ $hasBatchFeature ? 'Lanjut ke Jadwal PO' : 'Lanjut ke Pembayaran' }}</span>
+                            <span>{{ $hasBatchFeature ? 'Lanjut ke Jadwal PO' : '{{ __('storefront.btn_proceed_to_payment') }}' }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -7051,11 +7043,11 @@
                             <button type="button" @click="goToCheckoutStep(1)"
                                 class="h-11 px-5 rounded-[14px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 font-semibold text-[13px] transition flex items-center gap-2 cursor-pointer">
                                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                                <span>Kembali</span>
+                                <span>{{ __('common.back') }}</span>
                             </button>
                             <button type="button" @click="goToCheckoutStep(3)"
                                 class="h-11 px-6 rounded-[14px] bg-brand-primary hover:opacity-90 text-white font-bold text-[13px] transition flex items-center gap-2 shadow-xs cursor-pointer">
-                                <span>Lanjut ke Pembayaran</span>
+                                <span>{{ __('storefront.btn_proceed_to_payment') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                         </div>
@@ -7101,7 +7093,7 @@
                                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
                                             <i data-lucide="qr-code" class="w-3.5 h-3.5 text-brand-primary"></i>
-                                            <span>QRIS &amp; Virtual Account</span>
+                                            <span>{{ __('storefront.btn_qris_and_va') }}</span>
                                             <span
                                                 class="px-1.5 py-0.2 rounded-full text-[9.5px] font-extrabold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Instan</span>
                                         </button>
@@ -7192,8 +7184,7 @@
                                                     <span
                                                         class="text-[12.5px] leading-tight">{{ $va['name'] }}</span>
                                                     <span
-                                                        class="text-[10px] text-black/45 dark:text-white/45 mt-1">Otomatis
-                                                        Lunas</span>
+                                                        class="text-[10px] text-black/45 dark:text-white/45 mt-1">{{ __('storefront.btn_auto_paid') }}</span>
                                                 </button>
                                             @endforeach
                                         </div>
@@ -7277,12 +7268,10 @@
                                         (<span x-text="groupOrder.data?.total_quantity || 0"></span> item)</span>
                                     <button x-show="!isGroupOrderCheckout" type="button"
                                         @click="checkoutModalOpen = false; cartDrawerOpen = true"
-                                        class="text-brand-primary lowercase font-normal hover:underline cursor-pointer text-[11.5px]">Ubah
-                                        di keranjang</button>
+                                        class="text-brand-primary lowercase font-normal hover:underline cursor-pointer text-[11.5px]">{{ __('storefront.btn_change_in_cart') }}</button>
                                     <button x-show="isGroupOrderCheckout" type="button"
                                         @click="checkoutModalOpen = false; groupOrder.isDrawerOpen = true"
-                                        class="text-brand-primary lowercase font-normal hover:underline cursor-pointer text-[11.5px]">Ubah
-                                        di keranjang bersama</button>
+                                        class="text-brand-primary lowercase font-normal hover:underline cursor-pointer text-[11.5px]">{{ __('storefront.btn_change_in_group_cart') }}</button>
                                 </div>
                                 <div
                                     class="max-h-48 overflow-y-auto space-y-1.5 p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 divide-y divide-black/5 dark:divide-white/5">
@@ -7400,7 +7389,7 @@
                                             <path fill="currentColor"
                                                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                                         </svg>
-                                        <span>Masuk dengan Google untuk Melanjutkan</span>
+                                        <span>{{ __('storefront.btn_google_continue') }}</span>
                                     </a>
                                     <p class="text-[11.5px] text-center text-black/50 dark:text-white/50">
                                         Wajib login dengan akun Google agar pesanan batch kantor Anda tercatat dan siap
@@ -7410,7 +7399,7 @@
                                     <button type="submit" :disabled="isCheckingOut"
                                         class="w-full h-12 rounded-[16px] bg-brand-primary hover:opacity-90 active:scale-[0.98] disabled:opacity-50 text-white font-bold text-[14px] transition flex items-center justify-center gap-2 shadow-sm cursor-pointer">
                                         <span x-show="!isCheckingOut"
-                                            x-text="isGroupOrderCheckout ? 'Konfirmasi Checkout Pesanan Bersama' : 'Konfirmasi Pesanan Pre-Order'"></span>
+                                            x-text="isGroupOrderCheckout ? 'Konfirmasi {{ __('storefront.heading_checkout_order') }} Bersama' : 'Konfirmasi Pesanan Pre-Order'"></span>
                                         <span x-show="isCheckingOut">Memproses...</span>
                                         <i x-show="!isCheckingOut" data-lucide="arrow-right" class="w-4 h-4"></i>
                                     </button>
@@ -7424,7 +7413,7 @@
                         <button type="button" @click="goToCheckoutStep({{ $hasBatchFeature ? 2 : 1 }})"
                             class="h-10 px-4 rounded-[12px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 font-semibold text-[12.5px] transition flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                            <span>Kembali ke {{ $hasBatchFeature ? 'Jadwal PO' : 'Data Pengiriman' }}</span>
+                            <span>{{ __('storefront.btn_back_to') }} {{ $hasBatchFeature ? __('storefront.heading_b2b_po_schedule') : __('storefront.shipping_data') }}</span>
                         </button>
                     </div>
                 </div>
@@ -7536,7 +7525,7 @@
                                         'border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70'"
                                     class="p-3 rounded-[14px] border text-left text-[12.5px] transition flex items-center gap-2 cursor-pointer">
                                     <i data-lucide="truck" class="w-4 h-4 shrink-0"></i>
-                                    <span>Kirim ke Alamat</span>
+                                    <span>{{ __('storefront.btn_ship_to_address') }}</span>
                                 </button>
                             </div>
                         @elseif ($storeSetting?->allow_delivery ?? true)
@@ -7557,7 +7546,7 @@
                                 class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Alamat
                                 Tujuan Pengiriman</label>
                             <textarea x-model="requestOrderForm.shipping_address" rows="2"
-                                placeholder="Nama jalan, nomor gedung/rumah, kelurahan..."
+                                placeholder="{{ __('storefront.ph_street_address') }}"
                                 class="w-full p-3 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary resize-none"></textarea>
                         </div>
                     </div>
@@ -7680,11 +7669,11 @@
                         <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
                         <span class="text-black/70 dark:text-white/70">Akun Terdaftar: <strong
                                 class="text-black dark:text-white">{{ auth('customer')->user()->name }}</strong>
-                            ({{ auth('customer')->user()->phone ?? 'Belum ada No. WA' }})</span>
+                            ({{ auth('customer')->user()->phone ?? '{{ __('storefront.no_wa_number') }}' }})</span>
                     </div>
                     @if (!auth('customer')->user()->isPhoneVerified())
                         <a href="{{ route('customer.otp') }}"
-                            class="text-[#FF9500] font-semibold hover:underline">Verifikasi OTP &rarr;</a>
+                            class="text-[#FF9500] font-semibold hover:underline">{{ __('storefront.btn_verify_otp') }} &rarr;</a>
                     @else
                         <span class="text-[#34C759] font-semibold text-[11.5px] inline-flex items-center gap-1"><i
                                 data-lucide="check" class="w-3.5 h-3.5"></i> Akun Terverifikasi</span>
@@ -7768,7 +7757,7 @@
                                 class="w-5 h-5 rounded-full bg-[#5856D6] text-white text-[11px] font-bold flex items-center justify-center">2</span>
                             <h4
                                 class="text-[13px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70">
-                                Daftar Produk &amp; Volume PO</h4>
+                                {{ __('storefront.heading_b2b_po_items') }}</h4>
                         </div>
                         <span class="text-[12px] text-black/50 dark:text-white/50 tabular-nums">
                             Total Item: <strong class="text-black dark:text-white font-bold"
@@ -7787,7 +7776,7 @@
                                         x-show="customerPoForm.items.length > 1"
                                         class="text-red-500 hover:text-red-600 text-[11px] font-semibold flex items-center gap-1 cursor-pointer">
                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                        <span>Hapus</span>
+                                        <span>{{ __('common.delete') }}</span>
                                     </button>
                                 </div>
 
@@ -7852,7 +7841,7 @@
                     <button type="button" @click="addPoItem()"
                         class="w-full py-2.5 rounded-[14px] border border-dashed border-[#5856D6]/40 text-[#5856D6] dark:text-[#AF52DE] hover:bg-[#5856D6]/5 font-semibold text-[12.5px] transition flex items-center justify-center gap-1.5 cursor-pointer">
                         <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                        <span>Tambah Baris Produk PO</span>
+                        <span>{{ __('storefront.btn_add_po_row') }}</span>
                     </button>
                 </div>
 
@@ -7865,7 +7854,7 @@
                                 class="w-5 h-5 rounded-full bg-[#5856D6] text-white text-[11px] font-bold flex items-center justify-center">3</span>
                             <h4
                                 class="text-[13px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70">
-                                Jadwal Kirim Bertahap (Multi-Drop)</h4>
+                                {{ __('storefront.heading_b2b_po_schedule') }}</h4>
                         </div>
                         <span class="text-[11.5px] px-2 py-0.5 rounded-full"
                             :class="poTotalBatchQty === poTotalItemQty ? 'bg-[#34C759]/15 text-[#34C759] font-bold' :
@@ -7933,7 +7922,7 @@
                                         Alamat Tujuan Batch Ini (Kosongkan bila sama dengan alamat utama)
                                     </label>
                                     <input type="text" x-model="b.shipping_address"
-                                        placeholder="Alamat drop point / gudang cabang..."
+                                        placeholder="{{ __('storefront.ph_drop_point_address') }}"
                                         class="w-full h-10 px-3 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]">
                                 </div>
                             </div>
@@ -7943,7 +7932,7 @@
                     <button type="button" @click="addPoBatch()"
                         class="w-full py-2.5 rounded-[14px] border border-dashed border-[#5856D6]/40 text-[#5856D6] dark:text-[#AF52DE] hover:bg-[#5856D6]/5 font-semibold text-[12.5px] transition flex items-center justify-center gap-1.5 cursor-pointer">
                         <i data-lucide="calendar-plus" class="w-4 h-4"></i>
-                        <span>+ Tambah Jadwal Pengiriman (Batch Berikutnya)</span>
+                        <span>{{ __('storefront.btn_add_shipping_schedule') }}</span>
                     </button>
                 </div>
 
@@ -7954,7 +7943,7 @@
                         <span
                             class="w-5 h-5 rounded-full bg-[#5856D6] text-white text-[11px] font-bold flex items-center justify-center">4</span>
                         <h4 class="text-[13px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70">
-                            Alamat Utama &amp; Rekomendasi Pembayaran</h4>
+                            {{ __('storefront.heading_b2b_po_address_payment') }}</h4>
                     </div>
 
                     <div>
@@ -7962,7 +7951,7 @@
                             Alamat Utama / Kantor Pembeli
                         </label>
                         <textarea x-model="customerPoForm.shipping_address" rows="2"
-                            placeholder="Alamat kantor pusat, jalan, nomor gedung, kota..."
+                            placeholder="{{ __('storefront.ph_headquarters_address') }}"
                             class="w-full p-3 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6] resize-none"></textarea>
                     </div>
 
@@ -7986,7 +7975,7 @@
                                 Catatan / Syarat Khusus PO
                             </label>
                             <input type="text" x-model="customerPoForm.notes"
-                                placeholder="Termin pembayaran, syarat faktur pajak, dll."
+                                placeholder="{{ __('storefront.ph_b2b_terms') }}"
                                 class="w-full h-11 px-3.5 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]">
                         </div>
                     </div>
@@ -8090,7 +8079,7 @@
                             </div>
                             @if (!auth('customer')->user()->isPhoneVerified())
                                 <a href="{{ route('customer.otp') }}"
-                                    class="text-[#FF9500] font-semibold hover:underline">Verifikasi OTP &rarr;</a>
+                                    class="text-[#FF9500] font-semibold hover:underline">{{ __('storefront.btn_verify_otp') }} &rarr;</a>
                             @else
                                 <span class="text-[#34C759] font-semibold text-[11.5px] inline-flex items-center gap-1"><i
                                         data-lucide="check" class="w-3.5 h-3.5"></i> Terverifikasi</span>
@@ -8344,7 +8333,7 @@
                         Alamat Pengiriman Kantor / Drop Point
                     </label>
                     <textarea x-model="groupOrder.createForm.delivery_address" rows="2"
-                        placeholder="Nama gedung, lantai, ruangan, atau patokan serah terima pesanan..."
+                        placeholder="{{ __('storefront.ph_delivery_point') }}"
                         class="w-full p-3 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary resize-none"></textarea>
                 </div>
 
@@ -8353,7 +8342,7 @@
                         Catatan Khusus Pengiriman (Opsional)
                     </label>
                     <input type="text" x-model="groupOrder.createForm.delivery_notes"
-                        placeholder="Contoh: Titip di lobby satpam / telepon saat tiba"
+                        placeholder="{{ __('storefront.ph_delivery_instructions') }}"
                         class="w-full h-11 px-3.5 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
                 </div>
 
@@ -8525,7 +8514,7 @@
                                                         </div>
                                                         <button type="button" @click="removeGroupOrderItem(it.id)"
                                                             class="w-7 h-7 flex items-center justify-center text-red-500 hover:text-red-600 active:scale-90 transition cursor-pointer"
-                                                            title="Hapus menu ini">
+                                                            title="{{ __('storefront.title_delete_item') }}">
                                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                                         </button>
                                                     </div>
@@ -8555,7 +8544,7 @@
                             <button type="button" @click="shareGroupOrderWa()"
                                 class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#25D366] text-white text-[12px] font-bold shadow-xs cursor-pointer active:scale-95 transition">
                                 <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
-                                <span>Bagikan Link ke WhatsApp</span>
+                                <span>{{ __('storefront.btn_share_link_wa') }}</span>
                             </button>
                         </div>
                     </template>
@@ -8579,7 +8568,7 @@
                                 <button type="button" @click="groupOrder.isSplitBillOpen = true"
                                     x-show="groupOrder.splitBill && groupOrder.splitBill.length > 0"
                                     class="px-2 py-0.5 rounded-full bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] dark:text-[#AF52DE] text-[10.5px] font-bold transition flex items-center gap-1 cursor-pointer"
-                                    title="Lihat Rincian Patungan Masing-Masing">
+                                    title="{{ __('storefront.title_view_each_split') }}">
                                     <i data-lucide="receipt" class="w-3 h-3"></i>
                                     <span>Rincian Patungan</span>
                                 </button>
@@ -8620,7 +8609,7 @@
                                     <a :href="groupOrder.orderTrackingUrl || '#'"
                                         class="h-11 rounded-[14px] bg-brand-primary hover:opacity-90 text-white text-[12.5px] font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                         <i data-lucide="truck" class="w-3.5 h-3.5"></i>
-                                        <span>Lacak Pesanan</span>
+                                        <span>{{ __('storefront.tracking') }}</span>
                                     </a>
                                 </div>
                             </template>
@@ -8642,7 +8631,7 @@
                                 <button type="button" @click="groupOrder.isSplitBillOpen = true"
                                     class="w-full h-11 rounded-[14px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-[12.5px] font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                     <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-                                    <span>Lihat Rincian Patungan (Split Bill)</span>
+                                    <span>{{ __('storefront.title_split_bill') }}</span>
                                 </button>
                             </template>
                         </div>
@@ -8765,13 +8754,13 @@
                 <button type="button" @click="copySplitBillText()"
                     class="w-full h-12 rounded-[16px] bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-[13.5px] transition flex items-center justify-center gap-2 shadow-xs cursor-pointer active:scale-98">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>Salin Rincian Patungan ke WhatsApp</span>
+                    <span>{{ __('storefront.btn_copy_split_wa') }}</span>
                 </button>
                 <template x-if="groupOrder.orderTrackingUrl">
                     <a :href="groupOrder.orderTrackingUrl"
                         class="w-full h-11 rounded-[16px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black dark:text-white font-bold text-[13px] transition flex items-center justify-center gap-2 cursor-pointer">
                         <i data-lucide="truck" class="w-4 h-4 text-brand-primary"></i>
-                        <span>Buka Halaman Lacak Pesanan (Tracking)</span>
+                        <span>{{ __('storefront.btn_open_tracking_page') }}</span>
                     </a>
                 </template>
             </div>

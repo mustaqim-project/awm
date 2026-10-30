@@ -273,7 +273,7 @@
                                 </p>
                                 <a href="{{ route('register') }}"
                                     class="w-full glow-btn py-3.5 rounded-[14px] text-white font-semibold text-xs flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
-                                    <span>Mulai Sekarang - 100% Gratis</span>
+                                    <span>{{ __("public_calculators.btn_start_now_100_free") }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             </div>

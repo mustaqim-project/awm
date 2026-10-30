@@ -246,7 +246,7 @@
                                     <span class="truncate">Notifikasi pengingat tayang aktif untuk staf</span>
                                 </span>
                                 <a href="{{ route('public.content.publishing') }}"
-                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">Buka Antrean Tayang →</a>
+                                    class="text-[#00C4D8] hover:underline font-medium shrink-0">{{ __("public_content.btn_open_dispatch_queue") }}</a>
                             </div>
 
                         </div>
@@ -412,7 +412,7 @@
                         class="w-11 h-11 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500">
                         <i data-lucide="tag" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Label Status Warna</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __("public_content.cal_bento_color_status") }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         Identifikasi draf yang butuh review, konten yang sudah disetujui, dan materi yang telah sukses
                         tayang dengan kode warna intuitif.
@@ -477,7 +477,7 @@
                             class="w-8 h-8 rounded-lg bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center font-bold text-xs border border-[#00C4D8]/30">
                             3
                         </div>
-                        <h3 class="text-base font-bold text-white">Verifikasi Bersama Owner</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.cal_step_owner_verify") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Owner meninjau kalender secara menyeluruh dan memastikan seluruh promosi selaras dengan kesiapan
                             stok fisik cabang toko.
@@ -490,7 +490,7 @@
                             class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                             4
                         </div>
-                        <h3 class="text-base font-bold text-white">Otomasi ke Publishing</h3>
+                        <h3 class="text-base font-bold text-white">{{ __("public_content.cal_step_auto_publish") }}</h3>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Konten yang telah disetujui otomatis masuk ke modul Publishing untuk diterbitkan sesuai jadwal
                             tanpa perlu pengunggahan manual.
@@ -587,7 +587,7 @@
                 </div>
                 <a href="{{ route('public.content.publishing') }}"
                     class="text-xs sm:text-sm font-semibold text-[#007AFF] hover:underline mt-2 sm:mt-0 flex items-center gap-1">
-                    <span>Lanjut ke Modul Publikasi</span>
+                    <span>{{ __("public_content.btn_next_to_publishing") }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -600,9 +600,7 @@
                         <i data-lucide="sparkles" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Pembuatan Konten Produk
-                    </h3>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.cal_mod_product_content") }}</h3>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Buat materi promosi menarik langsung dari
                         katalog stok kasir.</p>
                 </a>
@@ -631,8 +629,7 @@
                         class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
                         Analitik Konten
                     </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Evaluasi performa postingan dan konversi
-                        penjualan toko.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('public_content.cal_mod_analytics_desc') }}</p>
                 </a>
 
                 <a href="{{ route('public.omnichannel.social-media') }}"
@@ -642,11 +639,8 @@
                         <i data-lucide="share-2" class="w-5 h-5"></i>
                     </div>
                     <h3
-                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">
-                        Manajemen Akun Medsos
-                    </h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Kelola koneksi akun media sosial bisnis
-                        secara terpusat.</p>
+                        class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors">{{ __("public_content.anl_mod_social_accounts") }}</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ __('public_content.cal_mod_social_desc') }}</p>
                 </a>
             </div>
         </section>

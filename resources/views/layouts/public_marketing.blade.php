@@ -1000,11 +1000,10 @@
 
                                     <div class="relative z-10">
                                         <span
-                                            class="text-[11px] font-bold uppercase tracking-wider text-[#FF9500] block mb-1">UMKM
-                                            Architecture</span>
+                                            class="text-[11px] font-bold uppercase tracking-wider text-[#FF9500] block mb-1">{{ __('public_marketing.badge_umkm_architecture') }}</span>
                                         <div
                                             class="text-xl sm:text-2xl font-black text-white tracking-tighter leading-tight font-sans">
-                                            Sistem Khusus Sesuai SOP Industri Anda
+                                            {{ __('public_marketing.banner_demo_headline') }}
                                         </div>
                                     </div>
                                 </a>
@@ -1394,13 +1393,13 @@
                             <div class="min-w-0">
                                 <span
                                     class="text-xs font-bold text-white tracking-tight truncate block">{{ auth('web')->user()->name }}</span>
-                                <span class="text-[10px] text-slate-400 block">Akun Bisnis Aktif</span>
+                                <span class="text-[10px] text-slate-400 block">{{ __('public_marketing.active_business_account') }}</span>
                             </div>
                         </div>
                         <a href="{{ route('dashboard') }}" @click="mobileMenu = false"
                             class="shrink-0 px-3.5 py-2 rounded-[12px] bg-[#00C2FF] hover:bg-[#00B0E8] text-slate-950 font-bold text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1.5">
                             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
-                            <span>Ke Dashboard</span>
+                            <span>{{ __('public_marketing.to_dashboard') }}</span>
                         </a>
                     </div>
                 @else
@@ -2460,7 +2459,7 @@
                         <div class="col-span-1 flex flex-col items-center justify-center relative -mt-5 sm:-mt-6">
                             <a href="{{ route('solusi.show', 'kasir-warung') }}"
                                 class="w-12 h-12 sm:w-13 sm:h-13 rounded-[20px] sm:rounded-[22px] bg-gradient-to-tr from-[#007AFF] via-[#0A84FF] to-[#5856D6] text-white flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,255,0.45)] ring-4 ring-[#060913] active:scale-90 active:shadow-inner transition-all duration-200 group"
-                                title="Solusi Bisnis & POS Kasir">
+                                title="{{ __('public_marketing.solutions_and_pos_tooltip') }}">
                                 <i data-lucide="store"
                                     class="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform group-hover:scale-110 group-active:scale-90 stroke-[2.2]"></i>
                             </a>

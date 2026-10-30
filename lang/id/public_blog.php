@@ -106,4 +106,8 @@ return [
     'related_view_all' => 'Semua',
     'related_read' => 'Baca',
     'default_tag' => 'UMKM',
+    'doc_official_bpk' => 'Dokumen Resmi BPK RI',
+    'portal_official_djp' => 'Portal Resmi DJP (pajak.go.id)',
+    'portal_official_oss' => 'Portal Resmi OSS BKPM (oss.go.id)',
+    'db_regulation_bpk' => 'Database Peraturan BPK RI',
 ];

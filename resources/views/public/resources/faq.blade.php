@@ -15,7 +15,7 @@
   "mainEntity": [
     {
       "@@type": "Question",
-      "name": "Apakah modul operasional esensial COOCA benar-benar gratis?",
+      "name": "{{ __('public_resources.faq_q1_title') }}",
       "acceptedAnswer": {
         "@@type": "Answer",
         "text": "Ya. COOCA menyediakan modul esensial tanpa biaya bulanan yang mencakup Kasir POS, Manajemen Produk dasar, dan Laporan Rekap Penjualan Harian untuk membantu UMKM Indonesia memulai digitalisasi tanpa beban modal di awal."
@@ -283,7 +283,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     PENCARIAN CEPAT
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Cari Jawaban Seputar Operasional Usaha Anda
+                    {{ __('public_resources.faq_search_section_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     Ketik kata kunci pertanyaan Anda atau pilih kategori topik di bawah ini.
@@ -299,7 +299,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     type="text" 
                     x-model="searchQuery"
                     @input="refreshIcons()"
-                    placeholder="Contoh: printer bluetooth, offline, gratis, excel..." 
+                    placeholder="{{ __('public_resources.faq_search_input_ph') }}" 
                     class="w-full pl-11 pr-10 py-3.5 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] focus:border-transparent text-[16px] sm:text-[14px] transition-all shadow-sm"
                 />
                 <button x-show="searchQuery.trim().length > 0" @click="searchQuery = ''; refreshIcons()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
@@ -313,13 +313,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     @click="activeCategory = 'all'; refreshIcons();" 
                     :class="activeCategory === 'all' ? 'bg-[#007AFF] text-white font-bold' : 'bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 border border-black/[0.06] dark:border-white/[0.08] hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all shadow-sm">
-                    Semua Pertanyaan
+                    {{ __('public_resources.faq_cat_all_questions') }}
                 </button>
                 <button 
                     @click="activeCategory = 'pricing'; refreshIcons();" 
                     :class="activeCategory === 'pricing' ? 'bg-[#007AFF] text-white font-bold' : 'bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 border border-black/[0.06] dark:border-white/[0.08] hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all shadow-sm">
-                    Biaya &amp; Lisensi
+                    {{ __('public_resources.faq_cat_pricing_license') }}
                 </button>
                 <button 
                     @click="activeCategory = 'hardware'; refreshIcons();" 
@@ -337,13 +337,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     @click="activeCategory = 'pos'; refreshIcons();" 
                     :class="activeCategory === 'pos' ? 'bg-[#007AFF] text-white font-bold' : 'bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 border border-black/[0.06] dark:border-white/[0.08] hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all shadow-sm">
-                    Kasir &amp; Mode Offline
+                    {{ __('public_resources.faq_cat_pos_offline') }}
                 </button>
                 <button 
                     @click="activeCategory = 'inventory'; refreshIcons();" 
                     :class="activeCategory === 'inventory' ? 'bg-[#007AFF] text-white font-bold' : 'bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 border border-black/[0.06] dark:border-white/[0.08] hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all shadow-sm">
-                    Stok &amp; Resep BOM
+                    {{ __('public_resources.faq_cat_stock_bom') }}
                 </button>
                 <button 
                     @click="activeCategory = 'migration'; refreshIcons();" 
@@ -360,12 +360,12 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
         <div class="max-w-3xl mx-auto space-y-3 pt-4">
             
             <!-- Item 1: Pricing -->
-            <div x-show="matches('pricing', 'Apakah modul operasional esensial COOCA benar-benar gratis?', 'COOCA menyediakan modul esensial tanpa biaya bulanan tersembunyi yang mencakup modul Kasir (POS), Manajemen Produk dasar, dan Laporan Rekap Penjualan Harian.')"
+            <div x-show="matches('pricing', '{{ __('public_resources.faq_q1_title') }}', 'COOCA menyediakan modul esensial tanpa biaya bulanan tersembunyi yang mencakup modul Kasir (POS), Manajemen Produk dasar, dan Laporan Rekap Penjualan Harian.')"
                  class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm transition-all">
                 <button @click="toggleFaq(1)" class="w-full flex items-center justify-between gap-4 text-left font-bold text-base text-slate-900 dark:text-white">
                     <span class="flex items-center gap-3">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] shrink-0"></span>
-                        Apakah modul operasional esensial COOCA benar-benar gratis?
+                        {{ __('public_resources.faq_q1_title') }}
                     </span>
                     <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform duration-200 shrink-0" :class="openFaq === 1 ? 'rotate-180' : ''"></i>
                 </button>
@@ -504,7 +504,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     Tidak ada pertanyaan yang sesuai dengan kata kunci pencarian Anda. Silakan reset filter atau tanyakan langsung pada tim kami.
                 </p>
                 <button @click="resetSearch()" class="h-10 px-5 rounded-[12px] bg-[#007AFF] text-white text-xs font-semibold">
-                    Tampilkan Semua Pertanyaan
+                    Tampilkan {{ __('public_resources.faq_cat_all_questions') }}
                 </button>
             </div>
 
@@ -521,7 +521,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     PUSAT BANTUAN KHUSUS
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Pertanyaan Anda Belum Terjawab di Sini?
+                    {{ __('public_resources.faq_unanswered_title') }}
                 </h2>
                 <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     Tim spesialis dukungan COOCA siap membantu menjawab kendala teknis dan mendampingi digitalisasi gerai Anda.
@@ -553,13 +553,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center">
                             <i data-lucide="book-open" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Panduan &amp; SOP Kasir</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.faq_card_sop_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Pelajari petunjuk teknis langkah demi langkah mulai dari pairing printer Bluetooth hingga penutupan shift kasir.
                         </p>
                     </div>
                     <a href="{{ route('public.resources.guides') }}" class="h-11 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>Buka Panduan SOP</span>
+                        <span>{{ __('public_resources.faq_card_sop_btn') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -570,13 +570,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                             <i data-lucide="play" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Demonstrasi Kasir</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.faq_card_demo_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                             Uji coba antarmuka kasir POS langsung di peramban Anda tanpa perlu mendaftar akun terlebih dahulu.
                         </p>
                     </div>
                     <a href="{{ route('public.demo') }}" class="h-11 px-4 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>Coba Demo Kasir</span>
+                        <span>{{ __('public_resources.faq_card_demo_btn') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -595,7 +595,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     DIGITALISASI MUDAH
                 </div>
                 <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-                    Mulai Digitalisasi Usaha Anda Hari Ini
+                    {{ __('public_resources.faq_bottom_cta_title') }}
                 </h3>
                 <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                     Daftar sekarang dan nikmati modul kasir esensial gratis tanpa batasan waktu. Kelola transaksi, stok barang, dan rekap keuangan dalam satu sentuhan.
@@ -605,13 +605,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
                 <a href="{{ route('register') }}"
                     class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 active:scale-[0.98] transition-all shadow-sm">
-                    <span>Buat Akun Bisnis Gratis</span>
+                    <span>{{ __('public_resources.faq_btn_create_account') }}</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
                 <a href="{{ route('public.resources.case-studies') }}"
                     class="h-12 px-7 rounded-[14px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-slate-200/70 dark:hover:bg-[#38383A] text-slate-900 dark:text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
                     <i data-lucide="award" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
-                    <span>Baca Kisah Sukses UMKM</span>
+                    <span>{{ __('public_resources.faq_btn_read_stories') }}</span>
                 </a>
             </div>
         </div>

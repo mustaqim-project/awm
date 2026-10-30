@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Pusat Bantuan & Panduan Resmi COOCA: Solusi Cepat untuk Bisnis Anda')
-@section('description', 'Pusat bantuan, panduan operasional kasir, printer Bluetooth, manajemen stok, dan kontak technical support resmi COOCA Indonesia.')
-@section('og_title', 'Pusat Bantuan & Panduan Resmi COOCA: Solusi Cepat untuk Bisnis Anda')
-@section('og_description', 'Temukan solusi cepat untuk operasional kasir, inventaris, koneksi printer thermal, dan pembukuan toko Anda.')
+@section('title', __('public_marketing.support_seo_title'))
+@section('description', __('public_marketing.support_seo_desc'))
+@section('og_title', __('public_marketing.support_seo_title'))
+@section('og_description', __('public_marketing.support_seo_desc'))
 @section('canonical', route('public.support'))
 @section('og_type', 'website')
 
@@ -86,7 +86,7 @@
                                 target="_blank" rel="noopener"
                                 class="h-12 px-6 rounded-[14px] bg-[#34C759] hover:bg-[#2DB04D] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
-                                <span>Chat WhatsApp Bantuan</span>
+                                <span>{{ __('public_marketing.btn_chat_wa_support') }}</span>
                             </a>
                             <a href="{{ route('public.demo') }}"
                                 class="h-12 px-6 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition active:scale-[0.98] backdrop-blur-sm min-h-[48px]">
@@ -208,7 +208,7 @@
                         Topik Panduan
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.2] text-balance break-words">
-                        Cari Solusi Berdasarkan Modul Sistem
+                        {{ __('public_marketing.support_modules_title') }}
                     </h2>
                 </div>
 
@@ -219,7 +219,7 @@
                             class="w-10 h-10 rounded-[12px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center shrink-0">
                             <i data-lucide="shopping-cart" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">Kasir POS & Transaksi</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.support_mod_pos') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Panduan proses order, pembayaran tunai/QRIS, pembatalan pesanan (void), split bill meja, dan
                             penerbitan nota belanja.
@@ -232,7 +232,7 @@
                             class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                             <i data-lucide="boxes" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">Inventaris & Stok Opname</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.support_mod_inv') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Cara import produk massal via Excel, atur satuan bertingkat (dus ke pcs), atur resep bahan baku
                             (BOM), dan transfer antar cabang.
@@ -258,7 +258,7 @@
                             class="w-10 h-10 rounded-[12px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
                             <i data-lucide="message-circle" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">WhatsApp & Notifikasi Otomatis</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.support_mod_wa') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Konfigurasi pengiriman nota WhatsApp, pesan pengingat booking janji temu, dan notifikasi cucian
                             laundry siap jemput.
@@ -271,7 +271,7 @@
                             class="w-10 h-10 rounded-[12px] bg-rose-500/10 text-rose-600 flex items-center justify-center shrink-0">
                             <i data-lucide="file-text" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">Laporan Keuangan & Kasir</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.support_mod_reports') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Cara membaca laporan laba rugi, rekap selisih uang laci saat tutup shift, pembagian komisi
                             montir/terapis, dan ekspor PDF.
@@ -284,7 +284,7 @@
                             class="w-10 h-10 rounded-[12px] bg-indigo-500/10 text-indigo-600 flex items-center justify-center shrink-0">
                             <i data-lucide="shield-check" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">Akun, Staf & Cabang Baru</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white leading-snug text-balance break-words">{{ __('public_marketing.support_mod_branch') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">
                             Menambah staf kasir dengan pembatasan hak akses, reset kata sandi, dan panduan menambahkan
                             cabang outlet bisnis baru.
@@ -298,8 +298,7 @@
                 <div class="text-center space-y-2">
                     <span class="text-xs uppercase tracking-wider font-bold text-[#007AFF] dark:text-[#00C4D8] block">Tanya
                         Jawab Bantuan</span>
-                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-[1.2] text-balance break-words">Pertanyaan Sering Diajukan
-                        Seputar Bantuan</h2>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-[1.2] text-balance break-words">{{ __('public_marketing.support_faq_title') }}</h2>
                 </div>
 
                 <div class="space-y-3.5">
@@ -371,7 +370,7 @@
                         <span>Kami Siap Membantu Perkembangan Usaha Anda</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
-                        Butuh Bantuan Langsung? Hubungi Kami Sekarang
+                        {{ __('public_marketing.support_bottom_cta_title') }}
                     </h3>
                     <p class="text-sm text-slate-300 leading-relaxed text-pretty">
                         Jangan ragu berkonsultasi mengenai kebutuhan sistem untuk kafe, toko, bengkel, atau pabrik Anda
@@ -386,7 +385,7 @@
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all backdrop-blur-sm">
-                            <span>Lihat Paket Berlangganan</span>
+                            <span>{{ __('public_marketing.btn_view_pricing_plans') }}</span>
                         </a>
                     </div>
                 </div>

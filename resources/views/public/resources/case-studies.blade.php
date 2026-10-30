@@ -97,9 +97,7 @@
 
                             <h1
                                 class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                                Contoh Skenario: Bagaimana UMKM Menutup Kebocoran Kasir &amp; <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Naik
-                                    Kelas</span>
+                                {{ __('public_resources.cs_hero_title_prefix') }} <span class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_resources.cs_hero_title_highlight') }}</span>
                             </h1>
                         </div>
 
@@ -115,13 +113,13 @@
                             class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 pt-2 w-full sm:w-auto">
                             <a href="#katalog-studi-kasus"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all duration-200 min-h-[48px]">
-                                <span>Pilih Kategori Usaha</span>
+                                <span>{{ __('public_resources.cs_btn_select_category') }}</span>
                                 <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all min-h-[48px]">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Coba COOCA Gratis</span>
+                                <span>{{ __('public_resources.cs_btn_try_free') }}</span>
                             </a>
                         </div>
 
@@ -231,7 +229,7 @@
                     </div>
                     <h2
                         class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                        Pilih Sektor Bisnis yang Relevan dengan Usaha Anda
+                        {{ __('public_resources.cs_select_sector_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                         Setiap industri memiliki tantangan operasional yang berbeda. Telusuri contoh skenario solusi dan alur kerja di lapangan.
@@ -245,7 +243,7 @@
                         :class="activeFilter === 'all' ? 'bg-[#007AFF] text-white font-bold' :
                             'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'"
                         class="px-3.5 py-2 rounded-[10px] text-xs transition-all">
-                        Semua Industri
+                        {{ __('public_resources.cs_filter_all_industries') }}
                     </button>
                     <button @click="activeFilter = 'fnb'; refreshIcons();"
                         :class="activeFilter === 'fnb' ? 'bg-[#007AFF] text-white font-bold' :
@@ -340,7 +338,7 @@
                             @endif
                             <button @click="openDetail({{ $case['id'] }})"
                                 class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                                <span>Baca Kisah Lengkap</span>
+                                <span>{{ __('public_resources.cs_btn_read_full_story') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </button>
                         </div>
@@ -367,7 +365,7 @@
                     </div>
                     <h2
                         class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                        Operasional Sebelum vs Sesudah Menggunakan COOCA
+                        {{ __('public_resources.cs_before_after_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                         Perubahan langsung yang dirasakan oleh pemilik usaha dan staf kasir setelah menggunakan sistem yang
@@ -436,7 +434,7 @@
                     TANYA JAWAB IMPLEMENTASI
                 </div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
-                    Pertanyaan Seputar Penerapan COOCA di Lapangan
+                    {{ __('public_resources.cs_faq_field_title') }}
                 </h2>
             </div>
 
@@ -506,7 +504,7 @@
                     </div>
                     <h3
                         class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-                        Siap Menjadikan Usaha Anda Kisah Sukses Berikutnya?
+                        {{ __('public_resources.cs_cta_box_title') }}
                     </h3>
                     <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
                         Tinggalkan pencatatan manual yang menguras tenaga dan waktu istirahat Anda. Uji coba COOCA sekarang
@@ -517,13 +515,13 @@
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
                     <a href="{{ route('register') }}"
                         class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 active:scale-[0.98] transition-all shadow-sm">
-                        <span>Mulai Uji Coba Gratis</span>
+                        <span>{{ __('public_resources.cs_btn_start_free_trial') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                     <a href="{{ route('public.demo') }}"
                         class="h-12 px-7 rounded-[14px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-slate-200/70 dark:hover:bg-[#38383A] text-slate-900 dark:text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
                         <i data-lucide="play" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
-                        <span>Lihat Demonstrasi Kasir</span>
+                        <span>{{ __('public_resources.cs_btn_view_demo') }}</span>
                     </a>
                 </div>
             </div>
@@ -616,12 +614,9 @@
                         class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                         <a href="{{ route('register') }}"
                             class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">
-                            Mulai Terapkan di Usaha Anda &rarr;
+                            {{ __('public_resources.cs_modal_apply_now') }} &rarr;
                         </a>
-                        <button @click="closeDetail()"
-                            class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">
-                            Tutup
-                        </button>
+                        <button @click="closeDetail()" class="h-10 px-5 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold">{{ __(\'common.close\') }}</button>
                     </div>
 
                 </div>

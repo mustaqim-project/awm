@@ -106,4 +106,8 @@ return [
     'related_view_all' => 'All',
     'related_read' => 'Read',
     'default_tag' => 'MSME',
+    'doc_official_bpk' => 'Official BPK RI Document',
+    'portal_official_djp' => 'Official DJP Portal (pajak.go.id)',
+    'portal_official_oss' => 'Official OSS BKPM Portal (oss.go.id)',
+    'db_regulation_bpk' => 'BPK RI Regulations Database',
 ];

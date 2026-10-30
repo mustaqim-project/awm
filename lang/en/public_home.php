@@ -92,6 +92,10 @@ return [
     'split_content_desc' => 'Create and manage promotional content without switching apps. Plan, create, schedule, publish, and track campaign performance in one unified workflow.',
     'split_content_btn' => 'Learn Content Automation',
     'split_content_schedule_label' => 'Posting Schedule',
+    'split_content_status_ready' => 'Ready',
+    'split_content_status_autosync' => 'Auto-Sync',
+    'split_content_status_queued' => 'Scheduled',
+    'split_content_time_today' => 'Today, 12:00',
     'split_content_mock_title' => 'Special Palm Sugar Latte',
     'split_content_mock_desc' => 'Start your morning with creamy authentic palm sugar. Buy 1 get 1 free today!',
 
