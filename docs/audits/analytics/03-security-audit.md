@@ -1,4 +1,4 @@
-# Security Audit — Modul Analytics
+# Security Audit   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -30,11 +30,11 @@
 
 ## 3. Peta OWASP Top 10:2025 & Temuan Keamanan
 
-### A01:2021 — Broken Access Control
+### A01:2021   Broken Access Control
 - **Audit RBAC:** Endpoint dilindungi permission `reports.view`. Pengguna tanpa izin ini (misal kasir tanpa izin laporan) ditolak dengan respon HTTP `403 Forbidden`.
 - **Temuan F-ANA-001:** Deklarasi middleware permission dipindahkan ke controller (`HasMiddleware`) untuk menjamin proteksi Controller-Level RBAC yang permanen.
 
-### A03:2021 — Injection (SQL & XSS)
+### A03:2021   Injection (SQL & XSS)
 - **SQL Injection:**
   - Kueri `selectRaw` pada controller menggunakan ekspresi agregasi statis tanpa variabel input pengguna:
     `COALESCE(SUM(total_amount), 0) as revenue`
@@ -45,7 +45,7 @@
   - View Blade `resources/views/app/analytics/index.blade.php` tidak menggunakan unescaped syntax `{!! !!}` maupun direktif Alpine `x-html`.
   - Passing data dari PHP ke JavaScript Chart.js menggunakan facade resmi `Js::from()`, yang otomatis mengamankan karakter kontrol dan tanda kutip dari potensi payload XSS.
 
-### A04:2021 — Insecure Design (Handling Input Tidak Valid)
+### A04:2021   Insecure Design (Handling Input Tidak Valid)
 - **Temuan F-ANA-002 (High):**
   - **Lokasi:** `AnalyticsWebController.php:261-272`
   - **Kerentanan:** Input parameter `from` dan `to` langsung dimasukkan ke `Carbon::parse($fromInput)` tanpa blok penanganan eksepsi.

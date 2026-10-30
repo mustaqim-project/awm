@@ -1,8 +1,8 @@
 # Audit & Rencana Arsitektur: COOCA AI Digital Company
 ## AI Workforce, Executive Hierarchy, Departments, Human Approval Gate, & AI Office
 
-> **Dokumen Audit & Rencana Rekayasa Sistem (PHASE 0 — AUDIT)**  
-> **Target:** Platform SaaS ERP COOCA — Lapisan AI Digital Workforce Multi-Tenant  
+> **Dokumen Audit & Rencana Rekayasa Sistem (PHASE 0   AUDIT)**  
+> **Target:** Platform SaaS ERP COOCA   Lapisan AI Digital Workforce Multi-Tenant  
 > **Status:** PROPOSED & READY FOR APPROVAL (Interactive Confirmation Gate)  
 > **Standar Kepatuhan:** `docs/agent.md` & `cooca-agent-directive` (Bento Apple HIG, Zero-Emoji, Tenant Isolation, Fraud Guard, Immutable Audit)
 
@@ -210,31 +210,31 @@ COOCA AI Digital Company adalah lapisan kecerdasan buatan (*AI Workforce*) tingk
 
 ## 6. Rencana Implementasi Bertahap (Phase 1 s/d Phase 8)
 
-1. **Phase 1 — AI Foundation**:
+1. **Phase 1   AI Foundation**:
    - Provider Abstraction (`AiProviderInterface`, `OpenAiProvider`, `GeminiProvider`, `AnthropicProvider`, `OpenRouterProvider`, `RuleBasedFallbackProvider`).
    - Credential Management & Encryption Service.
    - Migrations: `ai_provider_configs`, `ai_tasks`, `ai_action_proposals`, `ai_work_histories`.
    - Tool Engine Core: `AiToolRegistry`, `BaseAiTool`, `ToolResult`.
-2. **Phase 2 — Organization & Roles**:
+2. **Phase 2   Organization & Roles**:
    - Enums / Value Objects: `ExecutiveRole`, `Department`, `AgentRole`, `RiskLevel`, `TaskStatus`.
-3. **Phase 3 — Orchestrator**:
+3. **Phase 3   Orchestrator**:
    - `AiOrchestrator`: Parsing intent, hierarki CEO -> COO, pembagian tugas ke department.
    - `AiContextBuilder`: Tenant-scoped data extractor (efisien & ringkas).
    - `AiModelRouter`: Pemilihan model sesuai bobot analisis (fast vs reasoning).
-4. **Phase 4 — Core Agents & Tools**:
+4. **Phase 4   Core Agents & Tools**:
    - Business Agent, Sales Agent, Inventory Agent, Finance Agent + tool handlers.
-5. **Phase 5 — Action System & Guardrails**:
+5. **Phase 5   Action System & Guardrails**:
    - Action Proposal Maker-Checker workflow.
    - Action Revalidation Protocol & Idempotency Lock.
    - Execution & Verification Pipeline via existing domain services.
-6. **Phase 6 — Remaining Agents**:
+6. **Phase 6   Remaining Agents**:
    - Customer, Marketing, Content, Social Media, Marketplace, Purchasing, HR, Reporting Agent.
-7. **Phase 7 — AI Office UI (Apple HIG Bento)**:
+7. **Phase 7   AI Office UI (Apple HIG Bento)**:
    - Command Center `/ai` & `/ai/office`: Visual hirarki CEO, COO, Department Wings, dan status riil meja kerja 12 agent.
    - Action Center `/ai/actions`: Antarmuka persetujuan proposal (Full-size modal review Apple HIG).
    - AI Activity Feed & AI Chat interaktif terintegrasi dengan Orchestrator.
    - Integrasi Pengaturan BYOAI di `/settings` (Tab AI Providers) dengan masking aman dan tombol Test Connection.
-8. **Phase 8 — Background Automation & Scheduler**:
+8. **Phase 8   Background Automation & Scheduler**:
    - Artisan Command `cooca:ai-daily-business-check` (dapat dijadwalkan via `routes/console.php`).
    - Job asinkron pemrosesan task dan eksekusi aksi yang telah disetujui.
    - Automated Test Suite lengkap (Unit, Feature, Tenant Isolation, Approval Bypass Prevention).

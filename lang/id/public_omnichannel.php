@@ -50,7 +50,7 @@ return [
     'wa_faq_2_q' => 'Apakah staf toko harus menyimpan nomor telepon pelanggan ke kontak HP mereka?',
     'wa_faq_2_a' => 'Sama sekali tidak. Pengiriman notifikasi dilakukan langsung melalui sistem COOCA menggunakan nomor resmi bisnis Anda. Nomor kontak pelanggan tersimpan aman di database perusahaan.',
     'wa_faq_3_q' => 'Apakah pesan WhatsApp ini aman dari pemblokiran (banned)?',
-    'wa_faq_3_a' => 'COOCA mengutamakan komunikasi transaksional nyata yang memang diharapkan oleh pelanggan—seperti konfirmasi struk pembelian, status cucian selesai, atau nota servis kendaraan. Kami tidak memfasilitasi pesan spam massal tanpa izin sehingga reputasi nomor bisnis Anda tetap terjaga.',
+    'wa_faq_3_a' => 'COOCA mengutamakan komunikasi transaksional nyata yang memang diharapkan oleh pelanggan seperti konfirmasi struk pembelian, status cucian selesai, atau nota servis kendaraan. Kami tidak memfasilitasi pesan spam massal tanpa izin sehingga reputasi nomor bisnis Anda tetap terjaga.',
 
     // ==========================================
     // 2. Marketplace Sync (marketplace.blade.php)

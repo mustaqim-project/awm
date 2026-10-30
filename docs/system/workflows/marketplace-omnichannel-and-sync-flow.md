@@ -296,7 +296,7 @@ Integrasi marketplace wajib beradaptasi secara kontekstual (*Context-Aware UI*) 
 ### B. Skema Fraud Internal & Penyelewengan Operasional (Internal Fraud Schemes)
 1. **Skema Predatory Underpricing (Manipulasi Harga Bawah Modal oleh Rogue Staff):**
    - Staf toko yang memiliki akses ke dashboard dapat mengubah `price_multiplier` produk mahal menjadi `0.10` atau menetapkan `channel_price` Rp 1.000, lalu membeli produk tersebut di Shopee/TikTok secara pribadi sebelum pemilik toko menyadarinya.
-   - **Mitigasi Wajib:** Sistem wajib menerapkan **Anti-Margin Bleed Guard** — jika harga saluran yang dimasukkan berada di bawah HPP (`base_cost`), sistem menampilkan peringatan merah mencolok dan mewajibkan konfirmasi khusus.
+   - **Mitigasi Wajib:** Sistem wajib menerapkan **Anti-Margin Bleed Guard**   jika harga saluran yang dimasukkan berada di bawah HPP (`base_cost`), sistem menampilkan peringatan merah mencolok dan mewajibkan konfirmasi khusus.
 2. **Skema Phantom Stock & Penimbunan Inventori Offline:**
    - Staf toko dapat menaikkan `stock_buffer` secara sepihak (misal: menyisihkan 50 unit) sehingga produk tampak habis di toko online Shopee/TikTok, lalu menjual produk fisik tersebut secara ilegal secara offline tanpa tercatat di POS.
    - **Mitigasi Wajib:** Setiap perubahan `stock_buffer` dan `custom_stock` wajib mencatat jejak audit immutable lengkap dengan `user_id` eksekutor.

@@ -20,7 +20,7 @@ reading_time: "5 menit"
 
 <h2>Cara Menghitung PPh Final Secara Sederhana</h2>
 <ol>
-<li><strong>Hitung total omzet bruto bulanan</strong> — seluruh pendapatan usaha sebelum dikurangi biaya apa pun.</li>
+<li><strong>Hitung total omzet bruto bulanan</strong>   seluruh pendapatan usaha sebelum dikurangi biaya apa pun.</li>
 <li><strong>Kalikan dengan tarif PPh Final yang berlaku</strong> sesuai ketentuan yang aktif saat itu.</li>
 <li><strong>Bayarkan pajak terutang</strong> melalui kanal pembayaran pajak resmi sebelum batas waktu yang ditentukan setiap bulannya.</li>
 </ol>

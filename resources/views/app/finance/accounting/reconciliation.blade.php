@@ -174,7 +174,7 @@
                                                         </form>
                                                     @endif
                                                 @else
-                                                    <span class="text-xs text-black/30 dark:text-white/30">—</span>
+                                                    <span class="text-xs text-black/30 dark:text-white/30"> </span>
                                                 @endif
                                             </div>
                                         </td>

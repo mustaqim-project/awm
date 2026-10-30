@@ -708,7 +708,7 @@ return [
     'period_label' => 'Periode:',
     'branch_label' => 'Cabang:',
     'all_branches' => 'Semua Cabang',
-    'section_where_money_lives_desc' => 'Posisi seluruh dana bisnis Anda — kas internal COOCA, escrow Cooca Pay, dan saldo akun eksternal periode :period',
+    'section_where_money_lives_desc' => 'Posisi seluruh dana bisnis Anda   kas internal COOCA, escrow Cooca Pay, dan saldo akun eksternal periode :period',
     'kpi_total_business_liquidity' => 'Total Likuiditas Bisnis',
     'discrepancies_detected' => ':count selisih terdeteksi (:amount)',
     'all_balances_balanced' => 'Seluruh saldo seimbang',

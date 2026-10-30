@@ -21,9 +21,9 @@ COOCA AI Suite dirancang sebagai **Digital Workforce & Predictive Intelligence E
 
 2. **Autonomous Digital Company & AI Workforce (`/cooca-ai`):**
    - **3 Lingkungan Kerja Digital (Distinct Offices):**
-     - *Office 01 — Executive Office (`/cooca-ai/office/executive`):* CEO & CFO (Kesehatan finansial, rasio opex, break-even, risiko).
-     - *Office 02 — Operations Office (`/cooca-ai/office/operations`):* COO, Inventory, Purchasing, Marketplace (Stok kritis, PO vendor, SLA logistik).
-     - *Office 03 — Growth Office (`/cooca-ai/office/growth`):* CMO, Sales Director, Customer Care, Content, HR (Akuisisi pelanggan, kampanye promosi, presensi).
+     - *Office 01   Executive Office (`/cooca-ai/office/executive`):* CEO & CFO (Kesehatan finansial, rasio opex, break-even, risiko).
+     - *Office 02   Operations Office (`/cooca-ai/office/operations`):* COO, Inventory, Purchasing, Marketplace (Stok kritis, PO vendor, SLA logistik).
+     - *Office 03   Growth Office (`/cooca-ai/office/growth`):* CMO, Sales Director, Customer Care, Content, HR (Akuisisi pelanggan, kampanye promosi, presensi).
    - **Sistem Maker-Checker Berjenjang:** AI Agent hanya berhak menyusun *Action Proposal*. Eksekusi riil ke database (PO, Invoice, Campaign) wajib disahkan secara eksplisit oleh pemilik usaha (*Human-in-the-Loop*).
    - **BYOAI (Bring Your Own AI):** Arsitektur multi-provider tanpa biaya top-up token tambahan (OpenAI, Google Gemini, Anthropic Claude, OpenRouter). Kunci API tersimpan dengan enkripsi simetris di level basis data.
 

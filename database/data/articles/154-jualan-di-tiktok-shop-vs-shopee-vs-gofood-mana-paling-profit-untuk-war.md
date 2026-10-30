@@ -37,7 +37,7 @@ reading_time: "5 menit"
 <li>Produk dengan nilai visual menarik dan cerita di baliknya lebih berpotensi berkembang lewat TikTok Shop.</li>
 </ul>
 
-<blockquote>Tidak ada platform yang mutlak "paling profit" — kecocokan platform sangat tergantung pada jenis produk dan kesiapan pelaku usaha mengelola masing-masing kanal.</blockquote>
+<blockquote>Tidak ada platform yang mutlak "paling profit"   kecocokan platform sangat tergantung pada jenis produk dan kesiapan pelaku usaha mengelola masing-masing kanal.</blockquote>
 
 <h2>Pentingnya Menghitung Margin di Setiap Platform</h2>
 <p>Setiap platform memiliki skema biaya (komisi, biaya layanan, atau biaya promosi) yang berbeda. Pastikan harga jual di masing-masing kanal sudah memperhitungkan biaya ini agar margin keuntungan tetap terjaga.</p>

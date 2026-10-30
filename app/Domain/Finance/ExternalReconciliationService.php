@@ -116,7 +116,7 @@ final class ExternalReconciliationService
      * Build the comprehensive liquidity snapshot for the merchant dashboard.
      *
      * Returns a structure showing where all the money is:
-     * 1. Cash Accounts (Kas, Bank, E-Wallet) — from COOCA ledger
+     * 1. Cash Accounts (Kas, Bank, E-Wallet)   from COOCA ledger
      * 2. Cooca Pay Escrow (unsettled gateway funds)
      * 3. External Channel Balances (EDC, e-wallet, marketplace)
      * 4. Total Liquidity

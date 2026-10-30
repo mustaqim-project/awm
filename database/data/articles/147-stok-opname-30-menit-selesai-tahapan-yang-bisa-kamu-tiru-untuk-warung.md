@@ -25,7 +25,7 @@ reading_time: "5 menit"
 <h2>Tahapan Stok Opname Cepat</h2>
 <ol>
 <li><strong>Siapkan daftar produk terstruktur</strong> berdasarkan kategori atau lokasi penyimpanan sebelum mulai menghitung.</li>
-<li><strong>Bagi tugas jika ada lebih dari satu orang</strong> — misalnya satu orang menghitung fisik, satu orang mencatat hasilnya.</li>
+<li><strong>Bagi tugas jika ada lebih dari satu orang</strong>   misalnya satu orang menghitung fisik, satu orang mencatat hasilnya.</li>
 <li><strong>Gunakan sistem digital untuk mencocokkan otomatis</strong> antara hasil hitung fisik dengan catatan stok yang tercatat di sistem.</li>
 <li><strong>Fokus pada produk dengan nilai atau volume tinggi terlebih dahulu</strong>, baru kemudian produk dengan nilai kecil.</li>
 <li><strong>Catat selisih yang ditemukan</strong> beserta kemungkinan penyebabnya untuk evaluasi lebih lanjut.</li>

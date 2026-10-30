@@ -9,7 +9,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    // Common
+    // Common Navigation, Actions & Disclaimers
     'calc_breadcrumb_home' => 'Home',
     'calc_breadcrumb_hub' => 'SMB Business Calculators',
     'calc_currency_symbol' => 'Rp',
@@ -19,33 +19,67 @@ return [
     'calc_action_print' => 'Print / Save PDF',
     'calc_copied_success' => 'Summary successfully copied to clipboard!',
     'calc_disclaimer' => 'This calculator serves as an estimation tool. Actual figures may vary depending on material price fluctuations and real operating expenses.',
+    'calc_cta_erp_badge' => 'FULL AUTOMATION',
     'calc_cta_erp_title' => 'Want Automatic Calculations Connected to POS & Inventory?',
     'calc_cta_erp_desc' => 'With COOCA, you no longer need manual math. Every POS transaction automatically deducts material stock and records real-time COGS and gross profits.',
-    'calc_cta_erp_button' => 'Try COOCA for Free',
+    'calc_cta_erp_button' => 'Start Free Account Now',
 
     // Index / Hub
+    'hub_seo_title' => '8 Free Online SMB Business Calculators | COOCA',
+    'hub_seo_desc' => 'Free business calculation tools for SMBs: COGS calculator, break-even point (BEP), selling price margin, net profit, employee payroll, and final income tax.',
     'hub_kicker' => 'SMB Financial Decision Tools',
     'hub_title' => 'Precision Financial & COGS Calculators',
     'hub_subtitle' => 'Make confident pricing and capital decisions. Calculate ingredient costs per serving, determine break-even points (BEP), and project true net profits instantly without registration.',
     'hub_badge_free' => '100% Free, No Sign-up Required',
     'hub_badge_privacy' => 'Data Stored Locally in Your Browser',
     'hub_badge_standard' => 'Indonesian SAK EMKM Accounting Standard',
+    'hub_btn_choose' => 'Choose Tool',
+    'hub_btn_cogs' => 'Calculate Culinary COGS',
+    'hub_sim_title' => 'Instant COGS & Profit Simulation',
+    'hub_sim_badge' => 'Live Simulator',
+    'hub_sim_cost' => 'Base Material Cost (IDR)',
+    'hub_sim_margin' => 'Target Profit Margin',
+    'hub_sim_rec_price' => 'Recommended Selling Price:',
+    'hub_sim_safe_tag' => 'Loss Protected',
+    'hub_sim_est_profit' => 'Estimated Profit per Serving:',
+    'hub_sim_btn_full' => 'Open Full COGS Calculator with Recipe Ingredients',
+    'hub_catalog_overline' => 'CALCULATION SUITE',
+    'hub_catalog_title' => 'Choose the Right Tool for Your Business Needs',
+    'hub_catalog_subtitle' => 'Designed with clear guidance and practical terminology tailored for business owners.',
 
-    // 1. HPP
+    // 1. HPP & Selling Price
+    'hpp_seo_title' => 'Free Online COGS & Selling Price Calculator | COOCA',
+    'hpp_seo_desc' => 'Free 3-pillar COGS online calculator. Calculate direct material costs, labor expenses, operational overhead, and target profit margin instantly.',
     'hpp_kicker' => '3-Pillar SAK EMKM Standard Costing',
     'hpp_title' => 'COGS & Production Cost Calculator',
     'hpp_subtitle' => 'Uncover true production costs per serving, bottle, or item. Avoid underpricing that silently drains your capital and hurts business sustainability.',
+    'hpp_check_1' => 'Calculate Direct Ingredients',
+    'hpp_check_2' => 'Allocate Staff Labor Costs',
+    'hpp_check_3' => 'Account for Electricity, Gas & Packaging',
+    'hpp_formula_title' => 'Costing Safety Formula',
+    'hpp_formula_mat' => '1. Raw Materials & Containers',
+    'hpp_formula_lab' => '2. Labor & Kitchen Wages',
+    'hpp_formula_ovh' => '3. Electricity, Gas, Water & Consumables',
+    'hpp_formula_result' => '= True COGS Base Cost',
+    'hpp_mode_margin' => 'Target Margin (%)',
+    'hpp_mode_markup' => 'Target Markup (%)',
     'hpp_label_raw_materials' => 'Direct Raw Material Costs',
     'hpp_label_labor' => 'Direct Labor Expenses',
-    'hpp_label_overhead' => 'Operational Overhead (Electricity, Gas, Packaging)',
+    'hpp_label_overhead' => 'Operational Overhead Expenses',
     'hpp_label_target_qty' => 'Batch Output Volume (Units/Portions)',
     'hpp_result_unit_cogs' => 'True Unit COGS',
     'hpp_result_total_batch' => 'Total Batch Production Cost',
+    'hpp_result_selling_price' => 'Recommended Selling Price',
+    'hpp_result_gross_profit' => 'Gross Profit per Unit',
 
     // 2. BEP (Break Even Point)
+    'bep_seo_title' => 'Free Online Break-Even Point (BEP) Calculator | COOCA',
+    'bep_seo_desc' => 'Free online BEP calculator for SMBs. Find out how many units or total sales revenue you must generate each month to break even without taking losses.',
     'bep_kicker' => 'Operational Break-Even Analysis',
     'bep_title' => 'BEP (Break-Even Point) Calculator',
     'bep_subtitle' => 'Calculate exactly how many units you must sell each month to cover rent, payroll, utilities, and keep the business operating without taking a loss.',
+    'bep_check_1' => 'Calculate Unit & Revenue Targets',
+    'bep_check_2' => 'Separate Fixed vs Variable Expenses',
     'bep_label_fixed_costs' => 'Monthly Fixed Costs (Rent, Base Salaries, Utilities)',
     'bep_label_price_per_unit' => 'Selling Price per Unit/Serving',
     'bep_label_variable_cost_per_unit' => 'Variable Cost per Unit (Raw Materials, Packaging)',
@@ -53,9 +87,13 @@ return [
     'bep_result_revenue' => 'Break-Even Revenue Target (IDR)',
 
     // 3. Selling Price & Margin
+    'price_seo_title' => 'Online Selling Price & Profit Margin Calculator | COOCA',
+    'price_seo_desc' => 'Calculate the ideal selling price for your shop based on profit margin or markup. Protect margins against delivery app commission cuts.',
     'price_kicker' => 'Profitable Price Setting',
     'price_title' => 'Selling Price & Profit Margin Calculator',
     'price_subtitle' => 'Determine your optimal retail price based on profit margin targets or cost markup. Protect your business margins against online marketplace commissions.',
+    'price_check_1' => 'Simulate Margin vs Markup Differences',
+    'price_check_2' => 'Marketplace & Delivery Commission Deductions',
     'price_label_cost' => 'Unit Base Cost (COGS)',
     'price_label_method' => 'Pricing Methodology',
     'price_method_margin' => 'Based on Target Profit Margin (%)',
@@ -65,9 +103,13 @@ return [
     'price_result_gross_profit' => 'Gross Profit per Unit',
 
     // 4. Net Profit
+    'profit_seo_title' => 'True Business Net Profit & Cash Flow Calculator | COOCA',
+    'profit_seo_desc' => 'True net profit calculator for SMBs. Deduct gross revenue against COGS, operating overheads, and taxes with absolute accuracy.',
     'profit_kicker' => 'Net Profit Simulation',
     'profit_title' => 'True SMB Net Profit Calculator',
     'profit_subtitle' => 'Separate gross revenue from the money that actually stays in your bank account after deducting all operational overheads.',
+    'profit_check_1' => 'True Net Profit After Operating Overheads',
+    'profit_check_2' => 'Estimated Net Profit Margin (%)',
     'profit_label_revenue' => 'Total Gross Monthly Revenue',
     'profit_label_cogs' => 'Total Cost of Goods Sold (COGS)',
     'profit_label_opex' => 'Monthly Operating & Administrative Expenses',
@@ -76,9 +118,13 @@ return [
     'profit_result_margin' => 'Net Profit Margin (%)',
 
     // 5. Employee Payroll & BPJS
+    'payroll_seo_title' => 'Employee Payroll & BPJS Expense Calculator | COOCA',
+    'payroll_seo_desc' => 'Calculate employee take-home pay, overtime wages, and employer BPJS health and social security contributions for SMBs.',
     'payroll_kicker' => 'Compensation & Employee Benefits Costing',
     'payroll_title' => 'Employee Payroll & BPJS Expense Calculator',
     'payroll_subtitle' => 'Calculate employee take-home pay and total employer labor expenses transparently in accordance with Indonesian manpower regulations.',
+    'payroll_check_1' => 'Employee Take-Home Pay Estimation',
+    'payroll_check_2' => 'BPJS Ketenagakerjaan & Health Contribution Split',
     'payroll_label_basic' => 'Monthly Base Salary',
     'payroll_label_allowance' => 'Fixed Allowances (Meal, Transport)',
     'payroll_label_overtime' => 'Overtime & Performance Incentives',
@@ -88,9 +134,13 @@ return [
     'payroll_result_company_cost' => 'Total Employer Labor Cost',
 
     // 6. PPh Final 0.5%
+    'tax_seo_title' => 'SMB Final Income Tax (PPh Final 0.5%) Calculator | COOCA',
+    'tax_seo_desc' => 'Calculate monthly 0.5% Indonesian SMB final tax under PP 55/2022. Includes Rp500 million tax-free threshold for individual taxpayers.',
     'tax_kicker' => 'Indonesian SMB Tax Law (PP 55 / UU HPP)',
     'tax_title' => 'SMB Final Income Tax Calculator (PPh Final 0.5%)',
     'tax_subtitle' => 'Calculate monthly 0.5% final income tax liability, taking into account the Rp500 million tax-free threshold for individual taxpayers.',
+    'tax_check_1' => 'Tax-Free up to Rp 500 Million for Individuals',
+    'tax_check_2' => 'Automatic Calculation Based on PP 55 / UU HPP',
     'tax_label_taxpayer_type' => 'Taxpayer Category',
     'tax_type_individual' => 'Individual Entrepreneur (Exempt up to Rp500M Annual Gross Revenue)',
     'tax_type_corporate' => 'Corporate Entity / CV / PT (Flat 0.5% on Gross Revenue)',
@@ -99,9 +149,13 @@ return [
     'tax_result_tax_payable' => 'Current Month Tax Due',
 
     // 7. Daily Revenue Target
+    'rev_seo_title' => 'Daily & Weekly Store Sales Target Calculator | COOCA',
+    'rev_seo_desc' => 'Break down monthly profit targets into daily store milestones. Determine required receipt counts and daily minimum sales volumes.',
     'rev_kicker' => 'Cash Flow Planning',
     'rev_title' => 'Daily & Weekly Sales Target Calculator',
     'rev_subtitle' => 'Break down monthly profit targets and operational overhead into actionable daily sales quotas for your store staff and cashiers.',
+    'rev_check_1' => 'Break Profit Targets into Daily Quotas',
+    'rev_check_2' => 'Project Daily Cashier Receipt and Basket Counts',
     'rev_label_target_monthly_net' => 'Target Monthly Net Profit',
     'rev_label_monthly_fixed_costs' => 'Estimated Monthly Fixed Expenses',
     'rev_label_gross_margin_pct' => 'Average Product Gross Margin (%)',
@@ -109,13 +163,17 @@ return [
     'rev_result_daily_target' => 'Daily Sales Target',
 
     // 8. Business Simulation What-If
+    'sim_seo_title' => 'What-If Business Sensitivity Simulator | COOCA',
+    'sim_seo_desc' => 'Simulate the impact of raw material price hikes, promotional discounts, or transaction shifts on your true business profit.',
     'sim_kicker' => 'Scenario Planning',
     'sim_title' => 'What-If Business Scenario Calculator',
     'sim_subtitle' => 'Simulate the impact of raw material price hikes, promotional discounts, or opening new branches on cash flow and net profitability before taking risks.',
+    'sim_check_1' => 'Simulate Material Price Hikes & Inflation',
+    'sim_check_2' => 'Test Promo Discounts Impact on Gross Margins',
     'sim_label_baseline_rev' => 'Current Baseline Revenue',
     'sim_label_price_change' => 'Planned Price Adjustment (%)',
     'sim_label_cost_change' => 'Projected Cost Increase (%)',
     'sim_label_volume_change' => 'Projected Volume Shift (%)',
     'sim_result_impact_profit' => 'Net Impact on Business Profit',
+    'what_if_edu_desc' => 'What-If sensitivity simulation helps you calculate the precise impact of price and cost adjustments before applying them in real life.',
 ];
-

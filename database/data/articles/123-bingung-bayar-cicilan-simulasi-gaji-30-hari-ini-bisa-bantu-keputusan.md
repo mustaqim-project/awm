@@ -21,7 +21,7 @@ reading_time: "5 menit"
 <h2>Cara Melakukan Simulasi Sederhana</h2>
 <ol>
 <li><strong>Catat pendapatan harian riil</strong> selama minimal satu bulan terakhir sebagai data dasar.</li>
-<li><strong>Kurangi dengan biaya operasional harian</strong> — bahan baku, tenaga kerja, listrik, dan biaya lain yang rutin keluar.</li>
+<li><strong>Kurangi dengan biaya operasional harian</strong>   bahan baku, tenaga kerja, listrik, dan biaya lain yang rutin keluar.</li>
 <li><strong>Hitung sisa arus kas bersih harian</strong> dari hasil pengurangan tersebut.</li>
 <li><strong>Bagi cicilan bulanan menjadi porsi harian</strong> untuk melihat apakah sisa arus kas harian cukup menutupnya secara konsisten.</li>
 <li><strong>Identifikasi hari-hari dengan arus kas rendah</strong> untuk melihat apakah usaha tetap mampu membayar kewajiban di hari-hari tersebut.</li>
@@ -30,7 +30,7 @@ reading_time: "5 menit"
 <h2>Contoh Ilustrasi Sederhana</h2>
 <p>Jika rata-rata sisa arus kas bersih harian usaha adalah Rp 150.000 dan cicilan bulanan yang diajukan setara Rp 100.000 per hari, artinya masih ada ruang aman sekitar Rp 50.000 per hari sebagai buffer. Namun jika di hari-hari sepi sisa arus kas turun di bawah nilai cicilan harian, ini tanda bahwa jumlah pinjaman perlu dipertimbangkan ulang.</p>
 
-<blockquote>Jangan hanya menghitung rata-rata bulanan — hari-hari sepi yang berulang setiap minggu bisa jadi titik kritis pembayaran cicilan.</blockquote>
+<blockquote>Jangan hanya menghitung rata-rata bulanan   hari-hari sepi yang berulang setiap minggu bisa jadi titik kritis pembayaran cicilan.</blockquote>
 
 <h2>Manfaat Melakukan Simulasi Sebelum Mengambil Keputusan</h2>
 <ul>

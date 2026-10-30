@@ -345,7 +345,7 @@ Setiap pengembang dan asisten AI wajib menerapkan proteksi bawaan (*built-in gua
 - **No-Sale Drawer Pop (Buka Laci Kas Manual)**:
   - *Proteksi*: Event `open_cash_drawer` tanpa transaksi wajib mencatat alasan (`reason_text`), rate limiting (`throttle:3,1`), dan counter di dashboard supervisor.
 - **Shift End Cash Tampering (Manipulasi Tutup Kasir)**:
-  - *Proteksi*: **Wajib Blind Cash Count (Tutup Kasir Buta)** — Kasir menginput uang fisik riil tanpa melihat angka ekspektasi sistem terlebih dahulu. Sistem otomatis menghitung selisih kas (*over/short*), mengunci shift, mencatat jurnal selisih kas, dan mengirim laporan tutup shift ke WhatsApp Owner.
+  - *Proteksi*: **Wajib Blind Cash Count (Tutup Kasir Buta)**   Kasir menginput uang fisik riil tanpa melihat angka ekspektasi sistem terlebih dahulu. Sistem otomatis menghitung selisih kas (*over/short*), mengunci shift, mencatat jurnal selisih kas, dan mengirim laporan tutup shift ke WhatsApp Owner.
 
 #### B. Skema Fraud Gudang & Pengadaan (Inventory & Procurement Fraud)
 - **Phantom Stock Write-off (Penyesuaian Stok Minus Fiktif)**: Menghapus stok dengan dalih barang rusak/hilang untuk menutupi pencurian.
@@ -361,9 +361,9 @@ Setiap pengembang dan asisten AI wajib menerapkan proteksi bawaan (*built-in gua
 - **Accounts Receivable Skimming / Lapping (Penggelapan Setoran Piutang)**:
   - *Proteksi*: Pelunasan piutang **otomatis menerbitkan kuitansi/nota lunas via WhatsApp & Email ke pelanggan**, membukukan kas/bank instan, dan auto-reminder piutang berjalan langsung ke nomor pelanggan.
 - **Backdating / Future-dating (Manipulasi Tanggal Transaksi)**:
-  - *Proteksi*: **Accounting Period Lock (Kunci Buku)** — transaksi tidak dapat diinput/diedit pada periode yang telah dikunci. Sistem memisahkan `transaction_date` (bisnis) dan `created_at` (server timestamp).
+  - *Proteksi*: **Accounting Period Lock (Kunci Buku)**   transaksi tidak dapat diinput/diedit pada periode yang telah dikunci. Sistem memisahkan `transaction_date` (bisnis) dan `created_at` (server timestamp).
 - **Silent Journal Modification**:
-  - *Proteksi*: **Double-Entry Immutability** — jurnal terposting dilarang dihapus/diedit; perbaikan wajib menggunakan Jurnal Pembalik (*Adjustment Entry*).
+  - *Proteksi*: **Double-Entry Immutability**   jurnal terposting dilarang dihapus/diedit; perbaikan wajib menggunakan Jurnal Pembalik (*Adjustment Entry*).
 
 #### D. Standar Kontrol Internal & Audit Trail Immutable
 - Seluruh mutasi data berisiko (Void, Refund, Stock Adj, Manual Discount, Kas Keluar, Role Change) wajib tersimpan di tabel `audit_logs` dengan format: `user_id`, `business_id`, `branch_id`, `action`, `module`, IP address, User Agent, snapshot JSON `payload_before` & `payload_after`, serta `reason_notes`.

@@ -21,10 +21,10 @@ reading_time: "5 menit"
 <h2>SOP Sederhana Mengelola Pinjaman Karyawan</h2>
 <ol>
 <li><strong>Tetapkan batas maksimal bon</strong> yang bisa diajukan karyawan, misalnya tidak lebih dari persentase tertentu dari gaji bulanan.</li>
-<li><strong>Catat setiap pengajuan bon secara tertulis</strong> — nama karyawan, tanggal, jumlah, dan alasan singkat jika diperlukan.</li>
-<li><strong>Sepakati skema pembayaran</strong> — dipotong langsung dari gaji, dicicil beberapa periode, atau sesuai kesepakatan lain.</li>
+<li><strong>Catat setiap pengajuan bon secara tertulis</strong>   nama karyawan, tanggal, jumlah, dan alasan singkat jika diperlukan.</li>
+<li><strong>Sepakati skema pembayaran</strong>   dipotong langsung dari gaji, dicicil beberapa periode, atau sesuai kesepakatan lain.</li>
 <li><strong>Informasikan sisa bon setiap periode gaji</strong> agar karyawan selalu tahu posisi pinjamannya.</li>
-<li><strong>Evaluasi berkala</strong> — jika ada karyawan yang terlalu sering mengajukan bon, ini bisa jadi sinyal untuk diskusi lebih lanjut soal kondisi keuangannya.</li>
+<li><strong>Evaluasi berkala</strong>   jika ada karyawan yang terlalu sering mengajukan bon, ini bisa jadi sinyal untuk diskusi lebih lanjut soal kondisi keuangannya.</li>
 </ol>
 
 <h2>Manfaat SOP Ini bagi Owner</h2>

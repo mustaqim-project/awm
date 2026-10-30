@@ -1,4 +1,4 @@
-# COOCA POS — Local Hardware Bridge & Printer Agent
+# COOCA POS   Local Hardware Bridge & Printer Agent
 
 Lightweight background bridge agent enabling web-based POS terminals in modern browsers to interact with local hardware:
 - **Thermal Receipt Printers (ESC/POS)**: USB Character Devices, Windows Spooler Drivers, Bluetooth SPP, Serial COM, Network TCP 9100.

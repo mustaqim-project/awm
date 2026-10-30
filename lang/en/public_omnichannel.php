@@ -50,7 +50,7 @@ return [
     'wa_faq_2_q' => 'Do retail store employees need to save customer phone numbers to their personal devices?',
     'wa_faq_2_a' => 'Not at all. Notifications are routed directly through COOCA\'s business channel. Customer contact records are stored securely within your business database, preventing data leaks to personal employee handsets.',
     'wa_faq_3_q' => 'Is this WhatsApp messaging service protected from bans?',
-    'wa_faq_3_a' => 'COOCA focuses exclusively on legitimate transactional messages that customers actively anticipate—such as purchase receipts, laundry completion notices, or vehicle repair work orders. We do not facilitate bulk unsolicited spam, safeguarding your business number\'s health score.',
+    'wa_faq_3_a' => 'COOCA focuses exclusively on legitimate transactional messages that customers actively anticipate such as purchase receipts, laundry completion notices, or vehicle repair work orders. We do not facilitate bulk unsolicited spam, safeguarding your business number\'s health score.',
 
     // ==========================================
     // 2. Marketplace Sync (marketplace.blade.php)
@@ -78,7 +78,7 @@ return [
     'soc_reassurance_no_pwd_share' => 'Secure Without Password Sharing',
     'soc_feat_1' => 'Generate instant digital invoices and payment links right from chat',
     'soc_feat_2' => 'Support instant QRIS and bank virtual account payments',
-    'soc_feat_3' => 'Automated payment verification—no need to request screenshot transfer receipts',
+    'soc_feat_3' => 'Automated payment verification no need to request screenshot transfer receipts',
     'soc_feat_4' => 'Real-time inventory reserve locks as soon as the customer checks out',
 
     // ==========================================

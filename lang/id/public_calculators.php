@@ -9,7 +9,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    // Common
+    // Common Navigation, Actions & Disclaimers
     'calc_breadcrumb_home' => 'Beranda',
     'calc_breadcrumb_hub' => 'Alat Hitung Bisnis UMKM',
     'calc_currency_symbol' => 'Rp',
@@ -19,33 +19,67 @@ return [
     'calc_action_print' => 'Cetak / Unduh PDF',
     'calc_copied_success' => 'Ringkasan berhasil disalin ke clipboard!',
     'calc_disclaimer' => 'Kalkulator ini merupakan alat simulasi perkiraan. Nilai akhir aktual dapat bervariasi bergantung pada fluktuasi harga bahan dan beban operasional riil usaha Anda.',
+    'calc_cta_erp_badge' => 'OTOMATISASI PENUH',
     'calc_cta_erp_title' => 'Ingin Perhitungan Otomatis Terhubung Kasir & Stok?',
     'calc_cta_erp_desc' => 'Di COOCA, Anda tidak perlu menghitung manual lagi. Setiap penjualan kasir otomatis memotong stok bahan dan mencatat HPP serta laba kotor secara real-time.',
-    'calc_cta_erp_button' => 'Coba COOCA Gratis',
+    'calc_cta_erp_button' => 'Daftar Akun Gratis Sekarang',
 
     // Index / Hub
+    'hub_seo_title' => 'Koleksi 8 Kalkulator Bisnis UMKM Online Gratis | COOCA',
+    'hub_seo_desc' => 'Koleksi kalkulator bisnis gratis untuk UMKM: kalkulator HPP, BEP titik impas, margin harga jual, laba bersih, gaji karyawan, dan PPh Final 0.5%.',
     'hub_kicker' => 'Alat Bantu Keputusan Finansial UMKM',
     'hub_title' => 'Kalkulator Finansial & HPP Presisi',
     'hub_subtitle' => 'Ambil keputusan harga jual dan kelola modal dengan pasti. Hitung biaya bahan baku per porsi, tentukan titik impas (BEP), dan simulasikan laba bersih riil secara instan tanpa perlu registrasi.',
     'hub_badge_free' => '100% Gratis Tanpa Daftar',
     'hub_badge_privacy' => 'Data Aman di Peramban Anda',
     'hub_badge_standard' => 'Standar SAK EMKM Indonesia',
+    'hub_btn_choose' => 'Pilih Alat Hitung',
+    'hub_btn_cogs' => 'Hitung HPP Kuliner',
+    'hub_sim_title' => 'Simulasi Instan HPP & Laba',
+    'hub_sim_badge' => 'Simulator Langsung',
+    'hub_sim_cost' => 'Modal Bahan Pokok (Rp)',
+    'hub_sim_margin' => 'Target Margin Laba',
+    'hub_sim_rec_price' => 'Harga Jual Rekomendasi:',
+    'hub_sim_safe_tag' => 'Aman Dari Rugi',
+    'hub_sim_est_profit' => 'Estimasi Laba per Porsi:',
+    'hub_sim_btn_full' => 'Buka Kalkulator HPP Lengkap dengan Takaran Bahan',
+    'hub_catalog_overline' => 'KATALOG PERHITUNGAN',
+    'hub_catalog_title' => 'Pilih Alat Hitung Sesuai Kebutuhan Anda',
+    'hub_catalog_subtitle' => 'Didesain dengan petunjuk yang jelas dan bahasa Indonesia yang mudah dipahami pemilik usaha.',
 
-    // 1. HPP
+    // 1. HPP & Harga Jual
+    'hpp_seo_title' => 'Kalkulator HPP & Harga Jual Online Gratis | COOCA',
+    'hpp_seo_desc' => 'Kalkulator HPP 3-Pilar online gratis. Hitung biaya bahan baku, upah tenaga kerja, biaya overhead, dan target margin keuntungan secara instan.',
     'hpp_kicker' => 'Metode 3-Pilar Akuntansi Standar SAK EMKM',
     'hpp_title' => 'Kalkulator HPP & Biaya Produksi',
     'hpp_subtitle' => 'Ketahui modal pokok riil per porsi makanan, minuman, atau produk jualan Anda. Hindari jebakan harga jual murah yang ternyata membuat usaha tekor dan merugi tanpa disadari.',
+    'hpp_check_1' => 'Hitung Bahan Pokok',
+    'hpp_check_2' => 'Alokasi Upah Karyawan',
+    'hpp_check_3' => 'Beban Listrik, Gas & Wadah',
+    'hpp_formula_title' => 'Rumus Aman Harga Pokok',
+    'hpp_formula_mat' => '1. Bahan Mentah & Wadah',
+    'hpp_formula_lab' => '2. Upah Masak / Produksi',
+    'hpp_formula_ovh' => '3. Listrik, Gas, Air, Plastik',
+    'hpp_formula_result' => '= Modal Murni (HPP)',
+    'hpp_mode_margin' => 'Target Margin (%)',
+    'hpp_mode_markup' => 'Target Markup (%)',
     'hpp_label_raw_materials' => 'Biaya Bahan Baku Langsung',
     'hpp_label_labor' => 'Upah Tenaga Kerja Langsung',
-    'hpp_label_overhead' => 'Biaya Overhead Operasional (Listrik, Gas, Kemasan)',
+    'hpp_label_overhead' => 'Biaya Overhead Operasional',
     'hpp_label_target_qty' => 'Jumlah Porsi / Unit yang Dihasilkan',
     'hpp_result_unit_cogs' => 'HPP Riil per Unit / Porsi',
     'hpp_result_total_batch' => 'Total Biaya Produksi per Batch',
+    'hpp_result_selling_price' => 'Rekomendasi Harga Jual',
+    'hpp_result_gross_profit' => 'Laba Kotor per Unit',
 
     // 2. BEP (Titik Impas)
+    'bep_seo_title' => 'Kalkulator BEP (Break Even Point) Online Gratis | COOCA',
+    'bep_seo_desc' => 'Kalkulator BEP (Titik Impas) online gratis untuk UMKM. Hitung berapa unit produk atau nominal rupiah omzet yang harus dicapai agar bisnis tidak merugi.',
     'bep_kicker' => 'Analisis Titik Impas Operasional',
     'bep_title' => 'Kalkulator BEP (Break Even Point)',
     'bep_subtitle' => 'Hitung berapa banyak porsi atau barang yang wajib terjual dalam sebulan agar seluruh biaya sewa tempat, gaji karyawan, dan operasional tertutupi secara impas.',
+    'bep_check_1' => 'Hitung Target Unit & Rupiah',
+    'bep_check_2' => 'Pisahkan Biaya Tetap & Variabel',
     'bep_label_fixed_costs' => 'Total Biaya Tetap per Bulan (Sewa, Gaji Pokok, Wifi)',
     'bep_label_price_per_unit' => 'Harga Jual per Porsi / Unit',
     'bep_label_variable_cost_per_unit' => 'Biaya Variabel per Porsi (Bahan Baku, Kemasan)',
@@ -53,9 +87,13 @@ return [
     'bep_result_revenue' => 'Target Omzet Impas (Rupiah)',
 
     // 3. Harga Jual & Margin
+    'price_seo_title' => 'Kalkulator Harga Jual & Margin Keuntungan Online | COOCA',
+    'price_seo_desc' => 'Hitung harga jual ideal toko Anda berdasarkan margin atau markup. Lindungi profit bisnis dari potongan komisi aplikasi online.',
     'price_kicker' => 'Penetapan Harga Jual Menguntungkan',
     'price_title' => 'Kalkulator Harga Jual & Margin Laba',
     'price_subtitle' => 'Tentukan harga jual yang ideal berdasarkan target margin keuntungan atau markup modal. Lindungi margin usaha dari potongan komisi aplikasi online.',
+    'price_check_1' => 'Simulasi Margin vs Markup',
+    'price_check_2' => 'Perhitungan Komisi Marketplace',
     'price_label_cost' => 'Modal Pokok (HPP) per Unit',
     'price_label_method' => 'Metode Penentuan Harga',
     'price_method_margin' => 'Berdasarkan Target Margin (%)',
@@ -65,9 +103,13 @@ return [
     'price_result_gross_profit' => 'Laba Kotor per Unit',
 
     // 4. Laba Bersih
+    'profit_seo_title' => 'Kalkulator Laba Bersih & Arus Kas Usaha Online | COOCA',
+    'profit_seo_desc' => 'Kalkulator laba bersih riil bisnis UMKM. Kurangkan omzet kotor dengan HPP, biaya operasional, dan pajak secara akurat.',
     'profit_kicker' => 'Simulasi Laba Bersih Usaha',
     'profit_title' => 'Kalkulator Laba Bersih Riil UMKM',
     'profit_subtitle' => 'Pisahkan antara omzet kotor dan uang yang benar-benar menjadi keuntungan bersih bisnis Anda setelah dikurangi seluruh pengeluaran operasional.',
+    'profit_check_1' => 'Laba Bersih Riil Setelah Beban Operasional',
+    'profit_check_2' => 'Estimasi Net Profit Margin (%)',
     'profit_label_revenue' => 'Total Pendapatan / Omzet Kotor Bulanan',
     'profit_label_cogs' => 'Total Beban Pokok Penjualan (HPP)',
     'profit_label_opex' => 'Beban Operasional & Administrasi Bulanan',
@@ -76,9 +118,13 @@ return [
     'profit_result_margin' => 'Net Profit Margin (%)',
 
     // 5. Gaji Karyawan & Payroll
+    'payroll_seo_title' => 'Kalkulator Gaji Karyawan & Beban BPJS Online | COOCA',
+    'payroll_seo_desc' => 'Kalkulator gaji karyawan, upah lembur, dan iuran BPJS Ketenagakerjaan serta Kesehatan untuk usaha UMKM.',
     'payroll_kicker' => 'Perhitungan Upah & Tunjangan Karyawan',
     'payroll_title' => 'Kalkulator Gaji Karyawan & Beban BPJS',
     'payroll_subtitle' => 'Kalkulasikan estimasi take-home pay karyawan dan total biaya tenaga kerja yang wajib ditanggung pemilik bisnis secara transparan sesuai ketentuan ketenagakerjaan.',
+    'payroll_check_1' => 'Estimasi Take-Home Pay Karyawan',
+    'payroll_check_2' => 'Beban Iuran BPJS Ketenagakerjaan & Kesehatan',
     'payroll_label_basic' => 'Gaji Pokok Bulanan',
     'payroll_label_allowance' => 'Tunjangan Tetap (Makan, Transport)',
     'payroll_label_overtime' => 'Lembur & Insentif Prestasi',
@@ -88,9 +134,13 @@ return [
     'payroll_result_company_cost' => 'Total Beban Pengeluaran Usaha (Employer Cost)',
 
     // 6. PPh Final 0.5%
+    'tax_seo_title' => 'Kalkulator Pajak UMKM PPh Final 0.5% (PP 55/2022) | COOCA',
+    'tax_seo_desc' => 'Hitung setor PPh Final 0.5% UMKM bulanan sesuai PP 55/2022. Lengkap dengan batasan bebas pajak Rp500 juta untuk wajib pajak orang pribadi.',
     'tax_kicker' => 'Perpajakan PP 55 / UU HPP untuk UMKM',
     'tax_title' => 'Kalkulator Pajak UMKM (PPh Final 0.5%)',
     'tax_subtitle' => 'Hitung kewajiban setor PPh Final 0.5% per bulan dengan memperhitungkan batasan omzet tidak kena pajak Rp500 juta per tahun bagi Wajib Pajak Orang Pribadi.',
+    'tax_check_1' => 'Bebas Pajak s.d. Rp 500 Juta untuk Orang Pribadi',
+    'tax_check_2' => 'Perhitungan Otomatis Sesuai PP 55 / UU HPP',
     'tax_label_taxpayer_type' => 'Status Wajib Pajak',
     'tax_type_individual' => 'Orang Pribadi (Bebas Pajak s.d. Rp500 Juta Omzet Kumulatif)',
     'tax_type_corporate' => 'Badan Usaha / CV / PT (Langsung 0.5% dari Omzet)',
@@ -99,9 +149,13 @@ return [
     'tax_result_tax_payable' => 'PPh Final Terutang Bulan Ini',
 
     // 7. Omzet Harian & Target Penjualan
+    'rev_seo_title' => 'Kalkulator Target Omzet Harian & Mingguan Toko | COOCA',
+    'rev_seo_desc' => 'Bagi target profit bulanan menjadi target harian konkret. Ketahui berapa struk kasir dan omzet minimal toko setiap hari.',
     'rev_kicker' => 'Perencanaan Arus Kas Harian',
     'rev_title' => 'Kalkulator Target Omzet Harian & Mingguan',
     'rev_subtitle' => 'Bagi target laba dan biaya operasional bulanan Anda menjadi target omzet harian yang realistis untuk dicapai oleh kasir dan tim toko Anda.',
+    'rev_check_1' => 'Pecah Target Laba Menjadi Kuota Harian',
+    'rev_check_2' => 'Hitung Estimasi Jumlah Struk & Keranjang Kasir',
     'rev_label_target_monthly_net' => 'Target Laba Bersih yang Ingin Dicapai per Bulan',
     'rev_label_monthly_fixed_costs' => 'Estimasi Biaya Operasional Tetap Bulanan',
     'rev_label_gross_margin_pct' => 'Rata-rata Margin Laba Kotor Produk (%)',
@@ -109,13 +163,17 @@ return [
     'rev_result_daily_target' => 'Target Omzet Penjualan per Hari',
 
     // 8. Simulasi Bisnis What-If
+    'sim_seo_title' => 'Kalkulator Simulasi Bisnis What-If Sensitivitas | COOCA',
+    'sim_seo_desc' => 'Uji skenario kenaikan harga bahan baku, diskon promo, atau perubahan volume penjualan terhadap laba bersih usaha Anda.',
     'sim_kicker' => 'Eksplorasi Skenario Bisnis Lanjutan',
     'sim_title' => 'Kalkulator Simulasi Bisnis What-If',
     'sim_subtitle' => 'Uji dampak kenaikan harga bahan baku, diskon promo, atau pembukaan cabang baru terhadap arus kas dan profitabilitas sebelum Anda mengambil keputusan berisiko.',
+    'sim_check_1' => 'Simulasi Kenaikan Bahan Mentah & Inflasi',
+    'sim_check_2' => 'Uji Dampak Diskon Promo terhadap Margin Laba',
     'sim_label_baseline_rev' => 'Omzet Saat Ini',
     'sim_label_price_change' => 'Rencana Perubahan Harga (%)',
     'sim_label_cost_change' => 'Estimasi Kenaikan Harga Bahan (%)',
     'sim_label_volume_change' => 'Estimasi Perubahan Jumlah Transaksi (%)',
     'sim_result_impact_profit' => 'Dampak Bersih terhadap Laba Usaha',
+    'what_if_edu_desc' => 'Simulasi sensitivitas What-If membantu Anda menghitung dampak perubahan harga dan biaya secara presisi sebelum menerapkannya di bisnis nyata.',
 ];
-

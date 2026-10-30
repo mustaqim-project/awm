@@ -1,5 +1,5 @@
 /**
- * COOCA POS — Lightweight Local Hardware Bridge & ESC/POS Agent
+ * COOCA POS   Lightweight Local Hardware Bridge & ESC/POS Agent
  * 
  * Runs on Cashier Terminal (Windows, macOS, Linux, Android Box)
  * Default Port: 9898

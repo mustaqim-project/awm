@@ -145,7 +145,7 @@ class SubscriptionPromo extends Model
     }
 
     /**
-     * Human-readable discount badge — e.g. "30%" or "Rp 50.000".
+     * Human-readable discount badge   e.g. "30%" or "Rp 50.000".
      */
     public function getFormattedDiscountAttribute(): string
     {

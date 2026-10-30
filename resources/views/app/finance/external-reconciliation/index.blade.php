@@ -51,7 +51,7 @@
     </div>
 
     {{-- ========================================================== --}}
-    {{-- SECTION 1: WHERE THE MONEY LIVES — BENTO DASHBOARD         --}}
+    {{-- SECTION 1: WHERE THE MONEY LIVES   BENTO DASHBOARD         --}}
     {{-- ========================================================== --}}
     <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm overflow-hidden">
         <div class="px-5 sm:px-6 py-4 border-b border-black/5 dark:border-white/10 bg-gradient-to-r from-[#007AFF]/5 to-[#5856D6]/5 dark:from-[#007AFF]/10 dark:to-[#5856D6]/10">

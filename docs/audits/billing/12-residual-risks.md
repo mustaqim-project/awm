@@ -1,4 +1,4 @@
-# Residual Risks & Operational Notes — Modul Billing & Subscription
+# Residual Risks & Operational Notes   Modul Billing & Subscription
 > Modul: Billing & Subscription | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Status: Final
 
 ---

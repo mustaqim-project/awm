@@ -1,4 +1,4 @@
-# Executive Summary — Modul Billing & Subscription
+# Executive Summary   Modul Billing & Subscription
 > Modul: Billing & Subscription | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -38,15 +38,15 @@ Hasil audit komprehensif berbasis bukti kode nyata (*code-first*) mendapati modu
 
 ## 4. Tiga Risiko Terbesar yang Telah Dimitigasi
 
-1. **R1 (Critical) — Bypass Otorisasi Tanpa Controller-Level Middleware:**
+1. **R1 (Critical)   Bypass Otorisasi Tanpa Controller-Level Middleware:**
    - *Dampak:* Bila route-level middleware terlewati karena modifikasi rute di masa depan, controller billing rentan diakses oleh pengguna tanpa izin.
    - *Mitigasi:* Mengimplementasikan `HasMiddleware` pada `BillingAndLimitWebController` dan `SubscriptionCheckoutWebController` dengan deklarasi `require.permission:billing.view` dan `require.permission:billing.manage`.
 
-2. **R2 (High) — Ketiadaan Audit Trail Finansial & Manipulasi File Storage:**
+2. **R2 (High)   Ketiadaan Audit Trail Finansial & Manipulasi File Storage:**
    - *Dampak:* Tindakan penghapusan file storage atau kalkulasi ulang kuota tidak meninggalkan jejak forensik jika terjadi sengketa pemakaian kuota disk.
    - *Mitigasi:* Mengintegrasikan pencatatan otomatis ke `AuditLog::create` dengan level risiko terkalibrasi (`RISK_MEDIUM` dan `RISK_LOW`).
 
-3. **R3 (High) — Beban Kognitif & Kebingungan Industri Non-F&B pada Tampilan Kuota:**
+3. **R3 (High)   Beban Kognitif & Kebingungan Industri Non-F&B pada Tampilan Kuota:**
    - *Dampak:* Pemilik toko kelontong atau salon merasa bingung saat melihat kuota meja kasir restoran pada dasbor billing.
    - *Mitigasi:* Menerapkan filter context-aware `$business->hasDineInFeature()` pada seluruh matriks dan progress bar kuota meja kasir.
 

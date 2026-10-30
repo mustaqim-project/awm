@@ -153,7 +153,7 @@
 class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors">
 
     {{-- ═══════════════════════════════════════════════════════════════════════
-         1. HERO SECTION — Ringkas di Mobile, Penuh di Desktop
+         1. HERO SECTION   Ringkas di Mobile, Penuh di Desktop
     ═══════════════════════════════════════════════════════════════════════ --}}
     <section class="relative bg-[#060B1E] text-white pt-10 sm:pt-14 lg:pt-20 pb-10 sm:pb-14 lg:pb-16 border-b border-white/[0.08] overflow-hidden">
         {{-- Subtle Glow --}}
@@ -187,7 +187,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                         Pelajari cara menghitung modal pokok (HPP), titik impas (BEP), tips mengelola arus kas harian, dan tutorial kasir tanpa rumus yang rumit.
                     </p>
 
-                    {{-- Trust Commitments — teks diperbesar ke minimum 12px --}}
+                    {{-- Trust Commitments   teks diperbesar ke minimum 12px --}}
                     <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-1 text-left w-full">
                         <div class="p-3 sm:p-3.5 rounded-[14px] sm:rounded-[16px] bg-white/[0.04] border border-white/[0.08]">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5 sm:gap-2">
@@ -214,7 +214,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                         </div>
                     </div>
 
-                    {{-- CTA Buttons — min-height 48px, full-width on mobile --}}
+                    {{-- CTA Buttons   min-height 48px, full-width on mobile --}}
                     <div class="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3 w-full sm:w-auto">
                         <a href="#katalog-artikel"
                             class="blog-touch-target blog-focus h-12 px-7 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-sm min-h-[48px]">
@@ -229,7 +229,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                     </div>
                 </div>
 
-                {{-- KANAN: Knowledge Base Preview — HIDDEN on mobile to reduce scroll --}}
+                {{-- KANAN: Knowledge Base Preview   HIDDEN on mobile to reduce scroll --}}
                 <div class="hidden lg:block lg:col-span-7">
                     <div class="rounded-[24px] bg-white/[0.04] backdrop-blur-md p-6 sm:p-7 border border-white/[0.08] space-y-4">
                         <div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
@@ -323,7 +323,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
     </section>
 
     {{-- ═══════════════════════════════════════════════════════════════════════
-         2. BLOG CATALOG & SEARCH — Touch-Optimized
+         2. BLOG CATALOG & SEARCH   Touch-Optimized
     ═══════════════════════════════════════════════════════════════════════ --}}
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-10 lg:space-y-12">
 
@@ -331,7 +331,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
         <section id="katalog-artikel" class="space-y-5 sm:space-y-6 scroll-mt-20">
             <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 pb-5 sm:pb-6 border-b border-black/[0.06] dark:border-white/[0.08]">
                 
-                {{-- Segmented Control Tabs — Touch-friendly 44px height, scroll-snap --}}
+                {{-- Segmented Control Tabs   Touch-friendly 44px height, scroll-snap --}}
                 <div class="blog-tabs-scroll flex items-center gap-1.5 p-1 rounded-[16px] bg-slate-200/60 dark:bg-[#1C1C1E] border border-black/[0.04] dark:border-white/[0.08] overflow-x-auto text-xs">
                     <a href="{{ route('blog.index') }}"
                         class="blog-touch-target blog-focus min-h-[44px] min-w-[44px] px-4 rounded-[12px] transition-all font-semibold whitespace-nowrap flex items-center {{ empty($currentCluster) ? 'bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
@@ -347,7 +347,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                     </a>
                 </div>
 
-                {{-- Search Form — input already 16px (anti-zoom iOS) --}}
+                {{-- Search Form   input already 16px (anti-zoom iOS) --}}
                 <form action="{{ route('blog.index') }}" method="GET" class="w-full md:w-80">
                     @if ($currentCluster)
                         <input type="hidden" name="cluster" value="{{ $currentCluster }}">
@@ -364,7 +364,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                 </form>
             </div>
 
-            {{-- Category Pills Bar — 44px touch targets with scroll gradient hint --}}
+            {{-- Category Pills Bar   44px touch targets with scroll gradient hint --}}
             @if (isset($categories) && $categories->isNotEmpty())
                 <div class="blog-pills-wrap">
                     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar blog-tabs-scroll pr-8">
@@ -439,7 +439,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                 </div>
             @endif
 
-            {{-- Post Grid — Cards as full tap targets --}}
+            {{-- Post Grid   Cards as full tap targets --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 @forelse($posts as $post)
                     @if (!$featuredPost || $post->id !== $featuredPost->id)
@@ -501,7 +501,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                 @endforelse
             </div>
 
-            {{-- Pagination — Touch-friendly override --}}
+            {{-- Pagination   Touch-friendly override --}}
             <div class="flex justify-center pt-4 sm:pt-6 blog-pagination">
                 {{ $posts->links() }}
             </div>
@@ -511,7 +511,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
 
     {{-- ═══════════════════════════════════════════════════════════════════════
          3. MOBILE BOTTOM NAVIGATION BAR
-         Bottom bar (56px) with 4 key destinations — visible only on mobile
+         Bottom bar (56px) with 4 key destinations   visible only on mobile
     ═══════════════════════════════════════════════════════════════════════ --}}
     <nav class="blog-bottom-bar md:hidden" aria-label="Navigasi blog">
         <a href="{{ route('landing') }}" class="blog-touch-target">

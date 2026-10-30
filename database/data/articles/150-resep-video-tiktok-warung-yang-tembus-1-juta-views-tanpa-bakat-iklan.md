@@ -39,7 +39,7 @@ reading_time: "5 menit"
 <blockquote>Konten yang terasa nyata dan tidak dipaksakan sering kali lebih efektif menarik perhatian dibanding video promosi yang terlalu formal.</blockquote>
 
 <h2>Konsistensi Lebih Penting dari Kesempurnaan</h2>
-<p>Satu video viral memang bisa memberi dorongan besar, tapi konsistensi mengunggah konten secara rutin — meski sederhana — lebih berdampak jangka panjang terhadap pertumbuhan pengikut dan calon pelanggan.</p>
+<p>Satu video viral memang bisa memberi dorongan besar, tapi konsistensi mengunggah konten secara rutin   meski sederhana   lebih berdampak jangka panjang terhadap pertumbuhan pengikut dan calon pelanggan.</p>
 
 <h2>Cara Mengukur Efektivitas Konten</h2>
 <p>Selain jumlah views, perhatikan juga interaksi seperti komentar dan pesan masuk yang mengarah ke pertanyaan produk atau niat membeli. Ini indikator yang lebih relevan dibanding sekadar angka penonton.</p>

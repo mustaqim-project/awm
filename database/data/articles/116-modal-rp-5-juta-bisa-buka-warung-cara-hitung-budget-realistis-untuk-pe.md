@@ -20,10 +20,10 @@ reading_time: "5 menit"
 
 <h2>Contoh Alokasi Modal Rp 5 Juta untuk Warung Kecil</h2>
 <ul>
-<li><strong>Peralatan dasar (30-35%)</strong> — etalase sederhana, meja, kursi, peralatan masak dasar.</li>
-<li><strong>Stok barang dagangan awal (40-45%)</strong> — prioritaskan produk dengan perputaran cepat.</li>
-<li><strong>Biaya operasional bulan pertama (10-15%)</strong> — listrik, gas, kemasan.</li>
-<li><strong>Dana cadangan (10%)</strong> — untuk kebutuhan tak terduga di masa awal usaha.</li>
+<li><strong>Peralatan dasar (30-35%)</strong>   etalase sederhana, meja, kursi, peralatan masak dasar.</li>
+<li><strong>Stok barang dagangan awal (40-45%)</strong>   prioritaskan produk dengan perputaran cepat.</li>
+<li><strong>Biaya operasional bulan pertama (10-15%)</strong>   listrik, gas, kemasan.</li>
+<li><strong>Dana cadangan (10%)</strong>   untuk kebutuhan tak terduga di masa awal usaha.</li>
 </ul>
 
 <h2>Cara Menghitung Titik Impas Sejak Awal</h2>

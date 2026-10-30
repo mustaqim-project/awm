@@ -25,7 +25,7 @@ return [
     'create_faq_1_q' => 'How does this studio streamline product marketing creation for my store?',
     'create_faq_1_a' => 'Simply select an item from your Inventory & POS catalog. The system automatically pulls the item name, price, key ingredients or attributes, and existing photos, generating copy options ready for quick refinement and scheduling.',
     'create_faq_2_q' => 'Can promotional copy be customized to match our exact brand voice?',
-    'create_faq_2_a' => 'Yes. You can configure your distinct Brand Voice—such as warm and casual for a youth coffee shop, or authoritative and refined for a wellness clinic or automotive center.',
+    'create_faq_2_a' => 'Yes. You can configure your distinct Brand Voice such as warm and casual for a youth coffee shop, or authoritative and refined for a wellness clinic or automotive center.',
     'create_faq_3_q' => 'Can content staff or assistants publish directly without owner sign-off?',
     'create_faq_3_a' => 'Not if you enable approval gates. Staff can only move creative drafts into \'Pending Review\'. Posts enter the live publishing queue only after you or an authorized manager approve them.',
 

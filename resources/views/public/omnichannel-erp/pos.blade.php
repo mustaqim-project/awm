@@ -655,38 +655,6 @@
                     </p>
                 </div>
 
-                {{-- Bento Card 6: AI Cashier Assistant (Span 6) --}}
-                <div
-                    class="md:col-span-6 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 space-y-4 shadow-sm">
-                    <div
-                        class="w-11 h-11 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center text-purple-600 dark:text-purple-400">
-                        <i data-lucide="bot" class="w-5 h-5"></i>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_feature_ai_title') }}</h3>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">AI Assist</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                        {{ __('public_erp.pos_feature_ai_desc') }}
-                    </p>
-                </div>
-
-                {{-- Bento Card 7: Kitchen Prep Sheet (Span 6) --}}
-                <div
-                    class="md:col-span-6 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/50 border border-slate-200/80 dark:border-white/10 space-y-4 shadow-sm">
-                    <div
-                        class="w-11 h-11 rounded-2xl bg-orange-100 dark:bg-orange-950 flex items-center justify-center text-orange-600 dark:text-orange-400">
-                        <i data-lucide="utensils" class="w-5 h-5"></i>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.pos_feature_prep_title') }}</h3>
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300">Kitchen</span>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                        {{ __('public_erp.pos_feature_prep_desc') }}
-                    </p>
-                </div>
-
             </div>
         </section>
 

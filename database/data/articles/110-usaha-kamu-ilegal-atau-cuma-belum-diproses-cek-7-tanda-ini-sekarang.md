@@ -37,7 +37,7 @@ reading_time: "5 menit"
 <h3>7. Belum Ada Dokumen Pendukung untuk Kerja Sama Bisnis</h3>
 <p>Kesulitan menyediakan dokumen usaha saat diminta calon mitra atau bank adalah tanda kuat bahwa legalitas usaha masih perlu dirapikan.</p>
 
-<blockquote>Legalitas usaha bukan status sekali jadi — ia berkembang seiring usaha bertumbuh, dan perlu dicek ulang secara berkala.</blockquote>
+<blockquote>Legalitas usaha bukan status sekali jadi   ia berkembang seiring usaha bertumbuh, dan perlu dicek ulang secara berkala.</blockquote>
 
 <h2>Langkah Setelah Mengetahui Celahnya</h2>
 <p>Buat daftar prioritas dari tanda-tanda di atas yang paling relevan dengan kondisi usahamu, lalu selesaikan satu per satu, dimulai dari yang paling berisiko seperti ketiadaan NIB atau izin edar produk.</p>

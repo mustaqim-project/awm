@@ -32,10 +32,10 @@ Seluruh perubahan kode pada audit ini berfokus pada penguatan layer Controller, 
 ## 2. Checklist Pengujian Pasca-Rilis (*Smoke Testing*)
 
 Lakukan pengujian cepat pada lingkungan staging/produksi menggunakan akun Owner:
-- [ ] Buka halaman [Buku Kas & Bank](/finance/cash-bank) — pastikan saldo ter-render dengan benar.
-- [ ] Buka halaman [Bagan Akun (COA)](/finance/chart-of-accounts) — klik tombol **Export Bagan Akun**, periksa file CSV hasil unduhan dan pastikan karakter formula aman ter-quote.
-- [ ] Buat satu catatan pengeluaran kas kecil uji coba di [Beban Operasional](/finance/expenses) — pastikan saldo akun kas terpotong dan entri audit log terbit di tabel `audit_logs`.
-- [ ] Uji coba akses menggunakan akun staf kasir — pastikan menu akuntansi dibatasi dan dialihkan dengan aman.
+- [ ] Buka halaman [Buku Kas & Bank](/finance/cash-bank)   pastikan saldo ter-render dengan benar.
+- [ ] Buka halaman [Bagan Akun (COA)](/finance/chart-of-accounts)   klik tombol **Export Bagan Akun**, periksa file CSV hasil unduhan dan pastikan karakter formula aman ter-quote.
+- [ ] Buat satu catatan pengeluaran kas kecil uji coba di [Beban Operasional](/finance/expenses)   pastikan saldo akun kas terpotong dan entri audit log terbit di tabel `audit_logs`.
+- [ ] Uji coba akses menggunakan akun staf kasir   pastikan menu akuntansi dibatasi dan dialihkan dengan aman.
 
 ---
 

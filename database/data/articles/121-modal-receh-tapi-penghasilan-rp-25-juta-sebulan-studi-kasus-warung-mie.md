@@ -16,7 +16,7 @@ reading_time: "5 menit"
 <p>Tidak sedikit usaha kuliner rumahan yang bermula dari modal terbatas namun berkembang pesat berkat strategi operasional yang konsisten. Salah satu gambaran umum yang sering muncul adalah usaha warung makan khas daerah seperti mie Aceh.</p>
 
 <h2>Awal Mula: Modal Kecil, Fokus Besar</h2>
-<p>Banyak usaha semacam ini dimulai dengan modal terbatas — cukup untuk membeli bahan baku dan peralatan masak sederhana. Kuncinya bukan pada besarnya modal awal, melainkan fokus pada satu menu andalan yang benar-benar dikuasai kualitas rasanya.</p>
+<p>Banyak usaha semacam ini dimulai dengan modal terbatas   cukup untuk membeli bahan baku dan peralatan masak sederhana. Kuncinya bukan pada besarnya modal awal, melainkan fokus pada satu menu andalan yang benar-benar dikuasai kualitas rasanya.</p>
 
 <h2>Strategi yang Membuat Usaha Bertumbuh</h2>
 <h3>1. Konsistensi Rasa dan Porsi</h3>

@@ -253,7 +253,7 @@ Rencana implementasi ini dirancang secara sistematis untuk mengatasi seluruh tem
 
 ### FASE 8: Internasionalisasi (i18n & l10n) Full-Stack Dwibahasa (Frontend & Backend) serta Ergonomi Boomer `[P3 - Sedang]`
 
-**Tujuan Utama:** Memastikan seluruh ekosistem 7 modul view dan backend pendukungnya mengadopsi sistem dwibahasa (ID/EN) secara menyeluruh—mencakup seluruh antarmuka Blade, notifikasi Alpine/Toast, **serta seluruh respon backend (Flash Alerts, Pesan JSON API, Pesan Validasi FormRequest, dan Pesan Exception Domain)**, sekaligus menegakkan standar aksesibilitas bagi pengguna usia 40–65 tahun.
+**Tujuan Utama:** Memastikan seluruh ekosistem 7 modul view dan backend pendukungnya mengadopsi sistem dwibahasa (ID/EN) secara menyeluruh mencakup seluruh antarmuka Blade, notifikasi Alpine/Toast, **serta seluruh respon backend (Flash Alerts, Pesan JSON API, Pesan Validasi FormRequest, dan Pesan Exception Domain)**, sekaligus menegakkan standar aksesibilitas bagi pengguna usia 40–65 tahun.
 
 #### 8.1 Cakupan Arsitektur Multi-Bahasa Backend (Server-Side Localization):
 1. **Pesan Flash Session & Redirect Controller:**

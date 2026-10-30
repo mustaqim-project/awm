@@ -20,10 +20,10 @@ reading_time: "5 menit"
 
 <h2>Komponen yang Perlu Dihitung</h2>
 <ul>
-<li><strong>Bahan baku langsung</strong> — nasi, telur, bumbu, minyak, dan bahan pelengkap lain per porsi.</li>
-<li><strong>Biaya gas atau listrik untuk memasak</strong> — dihitung secara proporsional per porsi berdasarkan estimasi pemakaian.</li>
-<li><strong>Kemasan (jika dijual take away)</strong> — kotak atau plastik kemasan per porsi.</li>
-<li><strong>Biaya tenaga kerja langsung (opsional)</strong> — jika ingin dimasukkan sebagai bagian dari HPP, bukan hanya biaya operasional umum.</li>
+<li><strong>Bahan baku langsung</strong>   nasi, telur, bumbu, minyak, dan bahan pelengkap lain per porsi.</li>
+<li><strong>Biaya gas atau listrik untuk memasak</strong>   dihitung secara proporsional per porsi berdasarkan estimasi pemakaian.</li>
+<li><strong>Kemasan (jika dijual take away)</strong>   kotak atau plastik kemasan per porsi.</li>
+<li><strong>Biaya tenaga kerja langsung (opsional)</strong>   jika ingin dimasukkan sebagai bagian dari HPP, bukan hanya biaya operasional umum.</li>
 </ul>
 
 <h2>Cara Menghitung dalam 5 Menit</h2>

@@ -33,7 +33,7 @@ reading_time: "5 menit"
 <h3>Plafon Tanpa Agunan Ada Batasnya</h3>
 <p>Kemudahan tanpa agunan tambahan biasanya berlaku untuk plafon di bawah batas tertentu. Di atas batas tersebut, bank penyalur bisa meminta jaminan tambahan sesuai kebijakan masing-masing.</p>
 
-<blockquote>Ketentuan plafon dan bunga KUR bisa berubah tiap tahun — selalu cek informasi resmi dari bank penyalur atau Kementerian Koordinator Bidang Perekonomian sebelum mengajukan.</blockquote>
+<blockquote>Ketentuan plafon dan bunga KUR bisa berubah tiap tahun   selalu cek informasi resmi dari bank penyalur atau Kementerian Koordinator Bidang Perekonomian sebelum mengajukan.</blockquote>
 
 <h2>Cara Mempersiapkan Diri Sebelum Mengajukan</h2>
 <ol>

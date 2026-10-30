@@ -75,5 +75,5 @@ Sebagai pemilik bisnis, Anda dapat mengakses seluruh fitur keuangan melalui taut
 
 ## 4. Panduan Terkait
 
-- [Panduan Troubleshooting Keuangan](troubleshooting.md) — Solusi atas kendala rekonsiliasi bank, selisih jurnal, dan impor saldo awal.
-- [FAQ Modul Keuangan & Akuntansi](faq.md) — Tanya jawab seputar standar SAK EMKM, izin staf, dan keamanan formula Excel.
+- [Panduan Troubleshooting Keuangan](troubleshooting.md)   Solusi atas kendala rekonsiliasi bank, selisih jurnal, dan impor saldo awal.
+- [FAQ Modul Keuangan & Akuntansi](faq.md)   Tanya jawab seputar standar SAK EMKM, izin staf, dan keamanan formula Excel.

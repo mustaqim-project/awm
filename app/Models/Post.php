@@ -117,7 +117,7 @@ class Post extends Model
         if ($lastSpace !== false && $lastSpace > 35) {
             $sub = mb_substr($sub, 0, $lastSpace);
         }
-        return rtrim(trim($sub), ",;:-|–— ");
+        return rtrim(trim($sub), ",;:-|–  ");
     }
 
     /**

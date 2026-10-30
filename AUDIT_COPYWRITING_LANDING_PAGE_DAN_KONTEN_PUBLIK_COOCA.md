@@ -1,4 +1,4 @@
-# LAPORAN DEEP AUDIT — LANDING PAGE COPYWRITING & CONTENT QUALITY COOCA
+# LAPORAN DEEP AUDIT   LANDING PAGE COPYWRITING & CONTENT QUALITY COOCA
 
 > **Standar & Metodologi:** Berdasarkan skill `landing-page-copywriting-analyst` (`/landing-page-copywriting-analyst`)  
 > **Prinsip Utama:** *Write to communicate value, not to impress with words.*  
@@ -96,7 +96,7 @@ Namun demikian, audit menemukan **6 area kelemahan substansial** yang perlu sege
 | Lokasi File & Baris | Existing Copy | Recommended Copy | Alasan Pemilihan Copy Baru |
 |---|---|---|---|
 | `layouts/public_marketing.blade.php#L2248-L2253` | `<p class="font-bold text-slate-200">Aplikasi Kasir POS & Software ERP UMKM</p><p class="text-slate-400">Satu ekosistem untuk mengelola, menghubungkan, menghasilkan, dan mengembangkan bisnis Anda.</p>` | `<p class="font-bold text-slate-200 tracking-tight">Move Faster, Decide Better.</p><p class="text-slate-400">Sistem Operasi Bisnis (BOS) & Omnichannel ERP yang membantu pemilik UMKM mengendalikan kasir, stok, dan arus kas dalam satu layar.</p>` | Menegakkan tagline brand resmi yang selama ini hilang, sekaligus mendefinisikan kategori produk COOCA secara tegas dan bernilai bagi UMKM. |
-| `landing.blade.php#L198-L201` | `Cukup dari HP atau tablet. Catat transaksi kasir, cetak struk thermal, potong stok otomatis, dan pantau laba harian tanpa spreadsheet rumit.` | `Cukup dari HP atau tablet. Catat transaksi kasir, potong stok otomatis, pantau laba harian, dan kelola operasional dengan bantuan Asisten AI—tanpa spreadsheet terpisah.` | Menyelipkan pilar pembeda utama COOCA (**Asisten AI**) yang sebelumnya absen di homepage, memberi alasan kuat bagi UMKM untuk beralih dari aplikasi kasir lama. |
+| `landing.blade.php#L198-L201` | `Cukup dari HP atau tablet. Catat transaksi kasir, cetak struk thermal, potong stok otomatis, dan pantau laba harian tanpa spreadsheet rumit.` | `Cukup dari HP atau tablet. Catat transaksi kasir, potong stok otomatis, pantau laba harian, dan kelola operasional dengan bantuan Asisten AI tanpa spreadsheet terpisah.` | Menyelipkan pilar pembeda utama COOCA (**Asisten AI**) yang sebelumnya absen di homepage, memberi alasan kuat bagi UMKM untuk beralih dari aplikasi kasir lama. |
 | `overview.blade.php#L143-L144` | `Bukan sekadar kasir atau software pembukuan terpisah. COOCA adalah sistem operasional terpadu yang menghubungkan kasir POS, persediaan gudang, arus kas, pesanan pelanggan, hingga laporan pemilik dalam satu database otomatis seketika.` | `COOCA menyatukan kasir POS, persediaan gudang, arus kas, pesanan WhatsApp, hingga laporan laba pemilik dalam satu sistem yang saling sinkron otomatis setiap detik.` | Menghapus pola AI slop *"Bukan sekadar..."*. Mengawali langsung dengan subjek dan tindakan nyata sistem. |
 | `overview.blade.php#L495` | `Executive Control & AI Insights` | `Kendali Pemilik Usaha & Rekomendasi AI` | Mengganti jargon korporat asing *"Executive Control"* menjadi istilah lokal yang akrab bagi pemilik usaha mandiri. |
 | `how-it-works.blade.php#L80` | `End-to-End Business Flow` | `Alur Operasional Toko Otomatis` | Mengeliminasi jargon bahasa Inggris yang tidak ramah UMKM non-teknis. |
@@ -156,23 +156,23 @@ Untuk mencegah kebingungan pengguna, gunakan hierarki penyebutan berikut di selu
 
 ## F. Prioritas Perbaikan (Action Plan)
 
-### P0 — Harus Segera Diperbaiki (Critical)
+### P0   Harus Segera Diperbaiki (Critical)
 * [ ] Pasang tagline brand *"Move Faster, Decide Better"* pada header dan footer layout master `layouts/public_marketing.blade.php`.
 * [ ] Ganti kata sensasional *"biaya perantara yang mencekik"* di `marketplace/products.blade.php`.
 * [ ] Ganti teks tombol ambigu *"Coba Alur Nyata Sekarang"* di `how-it-works.blade.php`.
 
-### P1 — Berdampak Besar pada Konversi & Brand Authority (High)
+### P1   Berdampak Besar pada Konversi & Brand Authority (High)
 * [ ] Tambahkan proposisi keunggulan **Asisten AI** pada hero subheadline `landing.blade.php`.
 * [ ] Hapus struktur kalimat negasi AI *"Bukan sekadar..."* di `overview.blade.php` dan 21 artikel blog.
 * [ ] Seragamkan sapaan *"kamu"* menjadi *"Anda"* pada 13 artikel blog.
 * [ ] Berikan konteks pembanding pada klaim *"Hemat Biaya s/d 75% Tiap Bulan"* di `why-cooca.blade.php`.
 
-### P2 — Optimalisasi Kualitas Konten & Bahasa (Medium)
+### P2   Optimalisasi Kualitas Konten & Bahasa (Medium)
 * [ ] Terjemahkan kicker/overline berbahasa Inggris di halaman BOS, Content Studio, dan WhatsApp.
 * [ ] Ganti kata sifat absolut (*"sempurna"*, *"selalu sempurna"*) dengan terminologi operasional yang realistis.
 * [ ] Ganti istilah korporat kaku (*"Executive Control"*, *"Transformasi Operasional"*) dengan bahasa UMKM yang bersahaja.
 
-### P3 — Penyempurnaan Editorial Minor (Low)
+### P3   Penyempurnaan Editorial Minor (Low)
 * [ ] Variasikan pengulangan kata *"terbaik"* pada FAQ analitik konten.
 * [ ] Bersihkan duplikasi komentar Blade di file `discovery/index.blade.php`.
 

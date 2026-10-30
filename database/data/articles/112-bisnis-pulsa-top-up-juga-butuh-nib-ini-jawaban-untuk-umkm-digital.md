@@ -16,7 +16,7 @@ reading_time: "5 menit"
 <p>Usaha jualan pulsa, paket data, atau top-up saldo digital kerap dianggap terlalu kecil untuk membutuhkan izin resmi. Padahal, sifatnya sebagai kegiatan usaha tetap membuatnya masuk dalam cakupan kewajiban legalitas dasar.</p>
 
 <h2>Apakah Usaha Digital Kecil Wajib NIB?</h2>
-<p>Pada dasarnya, setiap kegiatan usaha yang dilakukan secara terus-menerus dengan tujuan memperoleh keuntungan — termasuk jualan pulsa, top-up game, atau reseller produk digital — termasuk kategori kegiatan usaha yang bisa didaftarkan NIB-nya melalui OSS, sesuai skala dan jenis kegiatan yang dijalankan.</p>
+<p>Pada dasarnya, setiap kegiatan usaha yang dilakukan secara terus-menerus dengan tujuan memperoleh keuntungan   termasuk jualan pulsa, top-up game, atau reseller produk digital   termasuk kategori kegiatan usaha yang bisa didaftarkan NIB-nya melalui OSS, sesuai skala dan jenis kegiatan yang dijalankan.</p>
 
 <h2>Kenapa Tetap Disarankan Mengurus NIB Meski Usaha Kecil</h2>
 <ul>
@@ -28,7 +28,7 @@ reading_time: "5 menit"
 <h2>Kode KBLI untuk Usaha Digital Sejenis Ini</h2>
 <p>Usaha jualan pulsa dan produk digital umumnya masuk kategori perdagangan eceran khusus melalui media tertentu. Pastikan memilih kode KBLI yang sesuai dengan kegiatan spesifik, misalnya perdagangan eceran produk digital/telekomunikasi, bukan kode perdagangan umum yang terlalu luas.</p>
 
-<blockquote>Skala kecil bukan alasan untuk melewatkan legalitas — justru NIB mempermudah usaha kecil untuk naik level ke kerja sama yang lebih besar.</blockquote>
+<blockquote>Skala kecil bukan alasan untuk melewatkan legalitas   justru NIB mempermudah usaha kecil untuk naik level ke kerja sama yang lebih besar.</blockquote>
 
 <h2>Langkah Praktis Mendaftar</h2>
 <ol>

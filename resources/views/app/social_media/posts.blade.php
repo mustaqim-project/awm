@@ -1993,7 +1993,7 @@
                         });
                         const data = await res.json();
                         this.pmSuccess = data.success;
-                        this.pmMessage = data.success ? (data.message + ' — ' + (data.scheduled_at || '')) : (data.message || data.error || @js(__('social_media.error_occurred')));
+                        this.pmMessage = data.success ? (data.message + '   ' + (data.scheduled_at || '')) : (data.message || data.error || @js(__('social_media.error_occurred')));
                         if (data.success) {
                             this.pmPost.scheduled_at_label = data.scheduled_at;
                             this.pmPost.status = 'scheduled';

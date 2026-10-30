@@ -38,7 +38,7 @@ reading_time: "5 menit"
 <h3>4. Delegasi Kepercayaan kepada Tim</h3>
 <p>Seiring pertumbuhan, pemilik usaha mulai mendelegasikan tanggung jawab operasional kepada kepala cabang atau manajer terpercaya, memungkinkan fokus pada strategi pengembangan bisnis secara keseluruhan.</p>
 
-<blockquote>Pertumbuhan dari skala kecil ke besar jarang terjadi dalam semalam — biasanya merupakan hasil dari serangkaian keputusan sistematis yang dilakukan secara konsisten selama bertahun-tahun.</blockquote>
+<blockquote>Pertumbuhan dari skala kecil ke besar jarang terjadi dalam semalam   biasanya merupakan hasil dari serangkaian keputusan sistematis yang dilakukan secara konsisten selama bertahun-tahun.</blockquote>
 
 <h2>Pelajaran yang Bisa Diambil Pelaku UMKM Lain</h2>
 <ul>

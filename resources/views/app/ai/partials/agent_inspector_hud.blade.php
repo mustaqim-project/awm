@@ -1,5 +1,5 @@
 {{--
-    COOCA AI — Unified Interactive Inspector HUD (Agent & Room Details)
+    COOCA AI   Unified Interactive Inspector HUD (Agent & Room Details)
     Positioned over 3D WebGL Canvas & 2D Blueprint with Fullscreen Support
 --}}
 <div

@@ -17,7 +17,7 @@ reading_time: "5 menit"
 
 <h2>Ciri Pinjaman Online yang Legal</h2>
 <ul>
-<li>Terdaftar dan diawasi oleh Otoritas Jasa Keuangan (OJK) — bisa dicek langsung di situs resmi OJK.</li>
+<li>Terdaftar dan diawasi oleh Otoritas Jasa Keuangan (OJK)   bisa dicek langsung di situs resmi OJK.</li>
 <li>Mencantumkan bunga dan biaya secara transparan sebelum pencairan dana.</li>
 <li>Memiliki mekanisme penagihan yang wajar dan sesuai etika, tanpa ancaman atau intimidasi.</li>
 <li>Memiliki kanal pengaduan resmi yang bisa dihubungi jika terjadi masalah.</li>

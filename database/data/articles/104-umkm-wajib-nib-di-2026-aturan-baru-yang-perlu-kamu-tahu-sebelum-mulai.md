@@ -16,7 +16,7 @@ reading_time: "5 menit"
 <p>Regulasi mengenai perizinan berusaha di Indonesia terus disesuaikan dari waktu ke waktu melalui sistem OSS Risk Based Approach (RBA). Bagi pelaku UMKM yang baru mau mulai usaha, memahami arah kebijakan ini penting agar tidak tertinggal informasi.</p>
 
 <h2>Semangat di Balik Kebijakan OSS RBA</h2>
-<p>Pendekatan berbasis risiko (risk based approach) membagi usaha berdasarkan tingkat risikonya — rendah, menengah rendah, menengah tinggi, dan tinggi. Usaha berisiko rendah seperti kebanyakan UMKM cukup memerlukan NIB sebagai legalitas dasar, tanpa harus melalui proses izin berlapis yang rumit.</p>
+<p>Pendekatan berbasis risiko (risk based approach) membagi usaha berdasarkan tingkat risikonya   rendah, menengah rendah, menengah tinggi, dan tinggi. Usaha berisiko rendah seperti kebanyakan UMKM cukup memerlukan NIB sebagai legalitas dasar, tanpa harus melalui proses izin berlapis yang rumit.</p>
 
 <h2>Yang Perlu Diperhatikan Pelaku UMKM</h2>
 <ul>

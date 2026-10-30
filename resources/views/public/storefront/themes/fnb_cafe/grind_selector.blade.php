@@ -3,7 +3,7 @@
     PRD-21 §3.1.C.2: Grind Size Selector Stepper
     Options: Biji Utuh, Kasar (Cold Brew), Sedang (V60), Halus (Espresso)
     Used in Product Detail Page (PDP) for coffee products.
-    All icons use Lucide — no emoji.
+    All icons use Lucide   no emoji.
 --}}
 
 <div x-data="{ selectedGrind: 'whole' }" class="space-y-3">

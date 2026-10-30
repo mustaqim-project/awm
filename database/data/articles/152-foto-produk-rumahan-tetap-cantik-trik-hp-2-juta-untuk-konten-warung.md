@@ -27,9 +27,9 @@ reading_time: "5 menit"
 
 <h2>Teknik Sudut Pengambilan Gambar</h2>
 <ul>
-<li><strong>Sudut atas (flat lay)</strong> — cocok untuk produk makanan yang disajikan di piring atau kemasan datar.</li>
-<li><strong>Sudut sejajar mata (eye level)</strong> — memberi kesan produk terlihat "nyata" seperti dilihat langsung.</li>
-<li><strong>Sudut close-up</strong> — menonjolkan detail tekstur produk, terutama untuk makanan.</li>
+<li><strong>Sudut atas (flat lay)</strong>   cocok untuk produk makanan yang disajikan di piring atau kemasan datar.</li>
+<li><strong>Sudut sejajar mata (eye level)</strong>   memberi kesan produk terlihat "nyata" seperti dilihat langsung.</li>
+<li><strong>Sudut close-up</strong>   menonjolkan detail tekstur produk, terutama untuk makanan.</li>
 </ul>
 
 <h2>Manfaatkan Fitur Kamera HP dengan Optimal</h2>
@@ -39,7 +39,7 @@ reading_time: "5 menit"
 <li>Hindari zoom digital berlebihan karena bisa menurunkan kualitas gambar; lebih baik mendekat secara fisik.</li>
 </ul>
 
-<blockquote>Konsistensi gaya foto — pencahayaan, sudut, dan latar — sering kali lebih penting untuk membangun kesan profesional dibanding kecanggihan kamera itu sendiri.</blockquote>
+<blockquote>Konsistensi gaya foto   pencahayaan, sudut, dan latar   sering kali lebih penting untuk membangun kesan profesional dibanding kecanggihan kamera itu sendiri.</blockquote>
 
 <h2>Edit Sederhana Tanpa Aplikasi Rumit</h2>
 <p>Aplikasi edit foto gratis yang banyak tersedia bisa membantu menyesuaikan kecerahan, kontras, dan ketajaman foto secara sederhana tanpa perlu keahlian desain khusus.</p>

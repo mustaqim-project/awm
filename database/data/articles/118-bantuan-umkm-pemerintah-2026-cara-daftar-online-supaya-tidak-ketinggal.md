@@ -25,8 +25,8 @@ reading_time: "5 menit"
 <h2>Langkah Umum Mendaftar Program Bantuan UMKM</h2>
 <ol>
 <li><strong>Pastikan data usaha sudah terdaftar</strong> di OSS (NIB) dan idealnya juga di sistem pendataan Kemenkop UKM setempat.</li>
-<li><strong>Pantau kanal resmi</strong> — website kementerian terkait, dinas koperasi dan UKM daerah, atau media sosial resmi pemerintah setempat.</li>
-<li><strong>Siapkan dokumen dasar</strong> — KTP, NIB, dan bukti kegiatan usaha seperti foto tempat usaha atau produk.</li>
+<li><strong>Pantau kanal resmi</strong>   website kementerian terkait, dinas koperasi dan UKM daerah, atau media sosial resmi pemerintah setempat.</li>
+<li><strong>Siapkan dokumen dasar</strong>   KTP, NIB, dan bukti kegiatan usaha seperti foto tempat usaha atau produk.</li>
 <li><strong>Daftar melalui kanal resmi</strong> yang diumumkan, hindari tautan tidak resmi yang mengatasnamakan program bantuan.</li>
 <li><strong>Pantau status pengajuan</strong> secara berkala melalui kanal yang sama.</li>
 </ol>

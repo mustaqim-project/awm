@@ -17,16 +17,16 @@ reading_time: "5 menit"
 
 <h2>Asumsi Dasar untuk Café dengan 15 Meja</h2>
 <ul>
-<li><strong>Biaya tetap bulanan</strong> — sewa tempat, gaji karyawan tetap, listrik dasar, dan internet: misalnya total Rp25.000.000 per bulan.</li>
-<li><strong>Harga jual rata-rata per transaksi</strong> — misalnya Rp35.000 per pelanggan (termasuk makanan dan minuman).</li>
-<li><strong>Biaya variabel rata-rata per transaksi</strong> — misalnya Rp15.000 (bahan baku dan kemasan jika ada).</li>
+<li><strong>Biaya tetap bulanan</strong>   sewa tempat, gaji karyawan tetap, listrik dasar, dan internet: misalnya total Rp25.000.000 per bulan.</li>
+<li><strong>Harga jual rata-rata per transaksi</strong>   misalnya Rp35.000 per pelanggan (termasuk makanan dan minuman).</li>
+<li><strong>Biaya variabel rata-rata per transaksi</strong>   misalnya Rp15.000 (bahan baku dan kemasan jika ada).</li>
 </ul>
 
 <h2>Langkah Perhitungan BEP</h2>
 <ol>
-<li><strong>Hitung margin kontribusi per transaksi</strong> — Rp35.000 – Rp15.000 = Rp20.000.</li>
-<li><strong>Hitung BEP dalam jumlah transaksi</strong> — Rp25.000.000 ÷ Rp20.000 = 1.250 transaksi per bulan.</li>
-<li><strong>Konversi ke transaksi harian</strong> — 1.250 ÷ 30 hari = sekitar 42 transaksi per hari.</li>
+<li><strong>Hitung margin kontribusi per transaksi</strong>   Rp35.000 – Rp15.000 = Rp20.000.</li>
+<li><strong>Hitung BEP dalam jumlah transaksi</strong>   Rp25.000.000 ÷ Rp20.000 = 1.250 transaksi per bulan.</li>
+<li><strong>Konversi ke transaksi harian</strong>   1.250 ÷ 30 hari = sekitar 42 transaksi per hari.</li>
 </ol>
 
 <h2>Menerjemahkan ke Kapasitas 15 Meja</h2>

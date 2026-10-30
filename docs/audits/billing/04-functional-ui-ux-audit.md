@@ -1,4 +1,4 @@
-# Functional & UI/UX Audit — Modul Billing & Subscription
+# Functional & UI/UX Audit   Modul Billing & Subscription
 > Modul: Billing & Subscription | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Status: Final
 
 ---

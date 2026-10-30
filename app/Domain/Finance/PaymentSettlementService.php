@@ -270,7 +270,7 @@ final class PaymentSettlementService
 
         foreach ($dueSettlements as $settlement) {
             try {
-                // Auto-payouts are just submitted — they still need Admin approval
+                // Auto-payouts are just submitted   they still need Admin approval
                 // Mark them as ready-for-admin-review by keeping status pending
                 Log::info("Auto-payout settlement #{$settlement->settlement_number} is due and awaiting admin approval.");
                 $processedCount++;

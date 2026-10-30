@@ -69,7 +69,7 @@ return array (
   'realtime_synced' => 'Tersinkronisasi Real-Time',
   'copyright_footer' => 'Business Operating System.',
   'detail' => 'Rincian',
-  'network_offline_notice' => 'Mode Offline — Periksa koneksi internet Anda',
+  'network_offline_notice' => 'Mode Offline   Periksa koneksi internet Anda',
   'network_online_restored' => 'Koneksi internet terhubung kembali',
   'enterprise_quality' => 'Kualitas & Keamanan Korporat',
   'cooca_roadmap' => 'Roadmap Cooca',

@@ -23,7 +23,7 @@ reading_time: "5 menit"
 
 <h2>Langkah Dasar Menghitung PPh 21</h2>
 <ol>
-<li><strong>Hitung penghasilan bruto bulanan karyawan</strong> — gaji pokok ditambah tunjangan jika ada.</li>
+<li><strong>Hitung penghasilan bruto bulanan karyawan</strong>   gaji pokok ditambah tunjangan jika ada.</li>
 <li><strong>Kurangi dengan biaya jabatan dan iuran yang diperbolehkan</strong> sesuai ketentuan yang berlaku.</li>
 <li><strong>Bandingkan dengan PTKP</strong> untuk menentukan penghasilan kena pajak.</li>
 <li><strong>Terapkan tarif progresif</strong> sesuai ketentuan yang berlaku untuk mendapatkan jumlah PPh 21 yang harus dipotong.</li>

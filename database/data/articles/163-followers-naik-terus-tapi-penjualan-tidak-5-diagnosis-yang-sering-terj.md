@@ -30,7 +30,7 @@ reading_time: "5 menit"
 <h2>5. Kurangnya Kepercayaan karena Minim Bukti Sosial</h2>
 <p>Followers yang banyak tapi tanpa disertai ulasan, testimoni, atau bukti transaksi nyata bisa membuat calon pembeli ragu terhadap kredibilitas usaha.</p>
 
-<blockquote>Followers adalah metrik jangkauan, sementara penjualan adalah metrik konversi — keduanya membutuhkan strategi yang berbeda untuk dioptimalkan.</blockquote>
+<blockquote>Followers adalah metrik jangkauan, sementara penjualan adalah metrik konversi   keduanya membutuhkan strategi yang berbeda untuk dioptimalkan.</blockquote>
 
 <h2>Cara Mendiagnosis Masalah di Usahamu</h2>
 <ol>

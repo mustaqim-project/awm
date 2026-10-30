@@ -27,7 +27,7 @@ reading_time: "5 menit"
 <li><strong>Hitung fisik barang</strong> per kategori secara berurutan, jangan acak agar tidak ada yang terlewat atau terhitung dua kali.</li>
 <li><strong>Catat hasil hitungan</strong> di samping catatan sistem untuk setiap produk.</li>
 <li><strong>Identifikasi selisih</strong> antara hasil hitungan fisik dengan catatan sistem.</li>
-<li><strong>Catat kemungkinan penyebab selisih</strong> — misalnya barang rusak yang belum dicatat, kesalahan input, atau memang ada kehilangan.</li>
+<li><strong>Catat kemungkinan penyebab selisih</strong>   misalnya barang rusak yang belum dicatat, kesalahan input, atau memang ada kehilangan.</li>
 </ol>
 
 <h2>Cara Menyikapi Selisih yang Ditemukan</h2>
@@ -37,7 +37,7 @@ reading_time: "5 menit"
 <li>Hindari langsung menuduh karyawan tertentu tanpa investigasi lebih lanjut yang jelas.</li>
 </ul>
 
-<blockquote>Selisih dalam stok opname adalah hal yang wajar terjadi — yang penting adalah bagaimana meresponsnya secara sistematis, bukan reaktif.</blockquote>
+<blockquote>Selisih dalam stok opname adalah hal yang wajar terjadi   yang penting adalah bagaimana meresponsnya secara sistematis, bukan reaktif.</blockquote>
 
 <h2>Tips agar Stok Opname Lebih Cepat ke Depannya</h2>
 <ul>

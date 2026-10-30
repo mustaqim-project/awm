@@ -17,9 +17,9 @@ reading_time: "5 menit"
 
 <h2>Komponen yang Dibutuhkan untuk Menghitung BEP</h2>
 <ul>
-<li><strong>Biaya tetap bulanan</strong> — sewa tempat, gaji karyawan tetap, listrik dasar, dan biaya rutin lain yang tidak berubah signifikan meski penjualan naik-turun.</li>
-<li><strong>Biaya variabel per cangkir</strong> — bahan baku kopi, susu, gula, dan kemasan per cangkir yang terjual.</li>
-<li><strong>Harga jual per cangkir</strong> — harga rata-rata yang ditetapkan untuk produk kopi yang dijual.</li>
+<li><strong>Biaya tetap bulanan</strong>   sewa tempat, gaji karyawan tetap, listrik dasar, dan biaya rutin lain yang tidak berubah signifikan meski penjualan naik-turun.</li>
+<li><strong>Biaya variabel per cangkir</strong>   bahan baku kopi, susu, gula, dan kemasan per cangkir yang terjual.</li>
+<li><strong>Harga jual per cangkir</strong>   harga rata-rata yang ditetapkan untuk produk kopi yang dijual.</li>
 </ul>
 
 <h2>Rumus Menghitung BEP dalam Jumlah Cangkir</h2>

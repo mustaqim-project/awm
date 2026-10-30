@@ -354,7 +354,7 @@ return [
     ],
 
     'lobby' => [
-        'title' => 'Virtual Office Headquarters — Team Workspace Allocation',
+        'title' => 'Virtual Office Headquarters   Team Workspace Allocation',
         'subtitle' => 'All AI Agents operate within a unified virtual headquarters like The Sims. Operational tasks are delegated to functional teams, with executive oversight.',
         'assign_team' => 'Assign AI Team',
         'executive_suite' => 'Executive & Boardroom',
@@ -460,9 +460,9 @@ return [
     ],
 
     'offices' => [
-        'executive_title' => 'COOCA AI — Executive Office',
-        'operations_title' => 'COOCA AI — Operations Office',
-        'growth_title' => 'COOCA AI — Growth Office',
+        'executive_title' => 'COOCA AI   Executive Office',
+        'operations_title' => 'COOCA AI   Operations Office',
+        'growth_title' => 'COOCA AI   Growth Office',
         'digital_company_title' => 'COOCA AI Digital Company',
         'digital_workforce' => 'DIGITAL WORKFORCE',
         'agents_and_depts' => ':agents Agents &bull; :depts Departments',

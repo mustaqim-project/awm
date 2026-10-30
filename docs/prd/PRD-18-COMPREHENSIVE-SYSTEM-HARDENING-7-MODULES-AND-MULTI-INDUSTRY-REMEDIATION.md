@@ -24,7 +24,7 @@
 ## 1. Ringkasan Eksekutif & Latar Belakang Masalah
 
 ### 1.1 Konteks Bisnis
-Platform COOCA merupakan ekosistem SaaS ERP & Omnichannel multi-tenant yang melayani lebih dari 20 sektor industri di Indonesia—mulai dari Kuliner (F&B), Ritel/Apotek, Manufaktur/Garment, Jasa Harian (Bengkel/Salon), Jasa Proyek (Kontraktor/Event Organizer), hingga Distribusi/Agro.
+Platform COOCA merupakan ekosistem SaaS ERP & Omnichannel multi-tenant yang melayani lebih dari 20 sektor industri di Indonesia mulai dari Kuliner (F&B), Ritel/Apotek, Manufaktur/Garment, Jasa Harian (Bengkel/Salon), Jasa Proyek (Kontraktor/Event Organizer), hingga Distribusi/Agro.
 
 Untuk memastikan platform ini dapat digunakan dengan mudah oleh pelaku UMKM dan pemilik bisnis tradisional (rentang usia 40–65 tahun) maupun staf operasional milenial/Gen-Z, lapisan antarmuka pengguna (*presentation layer*) wajib mengedepankan kecepatan respons sub-100ms, tata letak lapang bebas sesak (*XXL Canvas*), navigasi yang persisten tanpa *flicker*, serta proteksi otomatis dari kesalahan manusia (*human error*) dan manipulasi kecurangan internal (*fraud*).
 

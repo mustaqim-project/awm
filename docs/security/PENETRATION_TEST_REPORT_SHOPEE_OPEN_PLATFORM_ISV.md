@@ -17,7 +17,7 @@
 | **Assessment Period** | September 15, 2026 – September 25, 2026 |
 | **Report Issuance Date** | **September 28, 2026** |
 | **Report Validity Period** | **September 28, 2026 – September 28, 2028 (2 Years)** |
-| **Assessment Result** | **PASSED — 0 Critical, 0 High, 0 Medium Active Vulnerabilities** |
+| **Assessment Result** | **PASSED   0 Critical, 0 High, 0 Medium Active Vulnerabilities** |
 | **Lead Security Auditor** | CyberSec Global Assurance & Advisory Ltd. / PT Pratama Siber Sekuriti |
 | **Auditor Credentials** | CISSP (#648192), OSCP (#OS-102941), CREST Certified Penetration Tester (CRT) |
 

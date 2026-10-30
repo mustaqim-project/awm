@@ -1,4 +1,4 @@
-# COOCA MY OWN — B2B MOBILE APP OPERATING SYSTEM
+# COOCA MY OWN   B2B MOBILE APP OPERATING SYSTEM
 ## Master Product Requirements Document (PRD), Architecture & Implementation Blueprint
 
 ---
@@ -37,14 +37,14 @@
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        COOCA MY OWN MOBILE APP                         │
-│   (Flutter / React Native — Apple HIG Bento Design, Local SQLite Cache)│
+│   (Flutter / React Native   Apple HIG Bento Design, Local SQLite Cache)│
 └──────────────────────────────────┬─────────────────────────────────────┘
                                    │ HTTPS / REST JSON / SSE / WSS
                                    │ Bearer Token (Laravel Sanctum)
                                    ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                         COOCA API GATEWAY (V1)                         │
-│          (/api/v1/ — Throttle, Rate Limit, Context Middleware)         │
+│          (/api/v1/   Throttle, Rate Limit, Context Middleware)         │
 ├────────────────────────────────────────────────────────────────────────┤
 │  • auth:sanctum (Token Authentication & Device Security)              │
 │  • business.active (Multi-Tenant Scoping via Context::requireBusiness) │
@@ -63,7 +63,7 @@
                                    ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        COOCA CORE DATABASE                             │
-│       (PostgreSQL / MySQL — Multi-Tenant Shared Database Isolation)    │
+│       (PostgreSQL / MySQL   Multi-Tenant Shared Database Isolation)    │
 │  users, business_memberships, locations, products, pos_orders,        │
 │  commerce_orders, attendances, stock_movements, audit_logs            │
 └────────────────────────────────────────────────────────────────────────┘
@@ -90,7 +90,7 @@ Navigasi mengadopsi **Adaptive Bottom Navigation Bar (Apple Human Interface Guid
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│              COOCA MY OWN — DYNAMIC BOTTOM NAVIGATION BAR               │
+│              COOCA MY OWN   DYNAMIC BOTTOM NAVIGATION BAR               │
 ├─────────────────────────────────────────────────────────────────────────┤
 │ [ Tab 1: Home / Dashboard ]                                             │
 │   ├── Owner/Manager: Executive Dashboard & Alert Center                 │

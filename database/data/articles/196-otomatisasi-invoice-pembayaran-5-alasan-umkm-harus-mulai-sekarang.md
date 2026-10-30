@@ -26,7 +26,7 @@ reading_time: "5 menit"
 <p>Invoice yang otomatis terkirim ke pelanggan begitu pesanan selesai mengurangi jeda waktu yang biasanya terjadi karena keterlambatan proses manual.</p>
 
 <h3>4. Memudahkan Pelacakan Status Pembayaran</h3>
-<p>Sistem otomatis biasanya menyediakan status pembayaran secara real-time — lunas, tertunda, atau jatuh tempo — sehingga owner tidak perlu mengecek satu per satu secara manual.</p>
+<p>Sistem otomatis biasanya menyediakan status pembayaran secara real-time   lunas, tertunda, atau jatuh tempo   sehingga owner tidak perlu mengecek satu per satu secara manual.</p>
 
 <h3>5. Meningkatkan Kesan Profesional di Mata Klien</h3>
 <p>Invoice yang rapi, konsisten, dan terkirim tepat waktu memberi kesan profesional yang bisa memperkuat kepercayaan klien bisnis terhadap usahamu.</p>

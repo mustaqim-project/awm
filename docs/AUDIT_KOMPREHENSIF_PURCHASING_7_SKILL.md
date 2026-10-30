@@ -178,7 +178,7 @@ sequenceDiagram
 ### 3.1 Identitas Produk & Spesifikasi Modul
 - **Nama Modul**: Cooca Core Purchasing & AP Settlement Engine (Penerimaan Barang Fisik, Tagihan Masuk, dan Retur Pembelian).
 - **Target Pengguna**: Pemilik Usaha (Owner), Manajer Gudang (*Warehouse Lead*), Staf Penerimaan (*Receiving Clerk*), dan Staf Akuntansi/Keuangan (*AP Accountant*).
-- **Filosofi Desain**: *Apple Human Interface Guidelines (HIG) Bento UI v2.0* — Bersih, lapang, tipografi terbaca jelas, minim manual input, zero marketing slop, dan aman dari skema fraud internal.
+- **Filosofi Desain**: *Apple Human Interface Guidelines (HIG) Bento UI v2.0*   Bersih, lapang, tipografi terbaca jelas, minim manual input, zero marketing slop, dan aman dari skema fraud internal.
 
 ### 3.2 Kebutuhan Fungsional (Functional Requirements)
 1. **Three-Way Matching Foundation**:

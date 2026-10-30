@@ -1,4 +1,4 @@
-# FAQ (Tanya Jawab) — Modul Analitik Bisnis
+# FAQ (Tanya Jawab)   Modul Analitik Bisnis
 > Breadcrumb: [Panduan Analitik](index.md) › FAQ  
 > Terakhir diverifikasi terhadap route aktual: Commit `38cdcdf` | Tanggal: 2026-10-25
 

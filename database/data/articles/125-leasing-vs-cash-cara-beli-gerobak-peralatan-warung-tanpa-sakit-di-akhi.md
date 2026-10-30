@@ -27,7 +27,7 @@ reading_time: "5 menit"
 <ul>
 <li>Jika modal usaha terbatas dan kebutuhan modal kerja (stok, operasional) lebih mendesak, leasing bisa membantu menjaga arus kas tetap sehat di awal.</li>
 <li>Jika usaha sudah memiliki cadangan dana yang cukup tanpa mengganggu operasional, membeli tunai lebih hemat dalam jangka panjang.</li>
-<li>Pertimbangkan juga umur ekonomis peralatan — untuk peralatan yang cepat usang atau perlu sering diganti, leasing bisa jadi pilihan yang lebih fleksibel.</li>
+<li>Pertimbangkan juga umur ekonomis peralatan   untuk peralatan yang cepat usang atau perlu sering diganti, leasing bisa jadi pilihan yang lebih fleksibel.</li>
 </ul>
 
 <blockquote>Keputusan leasing atau tunai sebaiknya didasarkan pada dampaknya terhadap arus kas operasional, bukan semata dari harga total yang terlihat.</blockquote>

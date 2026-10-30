@@ -708,7 +708,7 @@ return [
     'period_label' => 'Period:',
     'branch_label' => 'Branch:',
     'all_branches' => 'All Branches',
-    'section_where_money_lives_desc' => 'Total position of your business funds — COOCA internal cash, Cooca Pay escrow, and external accounts for :period',
+    'section_where_money_lives_desc' => 'Total position of your business funds   COOCA internal cash, Cooca Pay escrow, and external accounts for :period',
     'kpi_total_business_liquidity' => 'Total Business Liquidity',
     'discrepancies_detected' => ':count discrepancies detected (:amount)',
     'all_balances_balanced' => 'All balances reconciled and balanced',

@@ -25,7 +25,7 @@ return [
     'create_faq_1_q' => 'Bagaimana modul ini membantu saya membuat konten promosi produk toko?',
     'create_faq_1_a' => 'Anda cukup memilih produk dari modul Inventori & POS. Sistem secara otomatis menarik nama barang, harga, keunggulan bahan, dan foto produk, lalu menyusun alternatif teks caption promosi yang siap diedit dan dijadwalkan.',
     'create_faq_2_q' => 'Apakah teks promosi yang dihasilkan bisa disesuaikan dengan gaya bicara brand kami?',
-    'create_faq_2_a' => 'Bisa. Anda dapat mengatur Brand Voice (nada bicara brand)—misalnya kasual dan hangat untuk kafe kopi anak muda, atau profesional dan terpercaya untuk bengkel dan klinik kecantikan.',
+    'create_faq_2_a' => 'Bisa. Anda dapat mengatur Brand Voice (nada bicara brand) misalnya kasual dan hangat untuk kafe kopi anak muda, atau profesional dan terpercaya untuk bengkel dan klinik kecantikan.',
     'create_faq_3_q' => 'Apakah staf atau admin konten bisa langsung menerbitkan postingan tanpa persetujuan saya?',
     'create_faq_3_a' => 'Tidak bisa, jika Anda mengaktifkan alur approval. Staf hanya dapat menyusun draf materi promosi ke status Menunggu Review. Konten hanya akan tayang setelah Anda atau manajer menyetujuinya.',
 

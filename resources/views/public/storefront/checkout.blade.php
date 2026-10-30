@@ -984,8 +984,8 @@
                                     <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 mt-0.5 text-amber-600 dark:text-amber-400"></i>
                                     <div>
                                         <span class="font-bold">Kurir instan (Grab/GoSend) tidak tersedia</span>
-                                        <span x-show="distanceKm !== null && distanceKm > 20"> — jarak pengiriman <strong class="tabular-nums" x-text="distanceKm + ' km'"></strong> melebihi batas maksimal 20 km.</span>
-                                        <span x-show="totalPackageWeight > 10000"> — berat paket <strong class="tabular-nums" x-text="(totalPackageWeight/1000).toFixed(1) + ' kg'"></strong> melebihi batas maksimal 10 kg.</span>
+                                        <span x-show="distanceKm !== null && distanceKm > 20">   jarak pengiriman <strong class="tabular-nums" x-text="distanceKm + ' km'"></strong> melebihi batas maksimal 20 km.</span>
+                                        <span x-show="totalPackageWeight > 10000">   berat paket <strong class="tabular-nums" x-text="(totalPackageWeight/1000).toFixed(1) + ' kg'"></strong> melebihi batas maksimal 10 kg.</span>
                                         <span class="block mt-1 text-amber-700 dark:text-amber-400">Silakan pilih kurir reguler/ekspres yang tersedia di atas.</span>
                                     </div>
                                 </div>

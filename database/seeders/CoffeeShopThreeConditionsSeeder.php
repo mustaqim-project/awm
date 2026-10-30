@@ -242,7 +242,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             );
 
             // ─────────────────────────────────────────────────────────────────
-            // 5. KONDISI 1 — PRODUK STANDALONE (Biji Kopi Arabica A 1 kg)
+            // 5. KONDISI 1   PRODUK STANDALONE (Biji Kopi Arabica A 1 kg)
             // ─────────────────────────────────────────────────────────────────
             $prodStandalone = Product::updateOrCreate(
                 ['business_id' => $business->id, 'code' => 'CFE-BEAN-ARA-1KG'],
@@ -307,7 +307,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             );
 
             // ─────────────────────────────────────────────────────────────────
-            // 6. KONDISI 2 & 3 — MASTER INGREDIENTS (BAHAN BAKU RESEP)
+            // 6. KONDISI 2 & 3   MASTER INGREDIENTS (BAHAN BAKU RESEP)
             // ─────────────────────────────────────────────────────────────────
             // Bahan 1: Biji Kopi Arabica (Satuan dasar: gram, dibeli dalam kg)
             $matKopi = Material::updateOrCreate(
@@ -362,7 +362,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             );
 
             // ─────────────────────────────────────────────────────────────────
-            // 7. KONDISI 2 — PRODUK RACIKAN & RESEP BOM (Iced Latte Single Origin)
+            // 7. KONDISI 2   PRODUK RACIKAN & RESEP BOM (Iced Latte Single Origin)
             // ─────────────────────────────────────────────────────────────────
             $prodLatte = Product::updateOrCreate(
                 ['business_id' => $business->id, 'code' => 'CFE-ICED-LATTE'],
@@ -445,7 +445,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             ]);
 
             // ─────────────────────────────────────────────────────────────────
-            // 8. KONDISI 3 — TRANSAKSI PEMBELIAN BAHAN BAKU FLUKTUATIF (OKTOBER 2026)
+            // 8. KONDISI 3   TRANSAKSI PEMBELIAN BAHAN BAKU FLUKTUATIF (OKTOBER 2026)
             // ─────────────────────────────────────────────────────────────────
             // Pembelian Batch 1: 1 Oktober 2026
             // - Biji Kopi: 10 kg (10.000g) @ Rp 150.000/kg (Rp 150/g) = Rp 1.500.000
@@ -764,7 +764,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             );
 
             // ─────────────────────────────────────────────────────────────────
-            // 10. PEMBELIAN BATCH 2 (10 OKTOBER 2026) — HARGA NAIK KE Rp 160.000/kg
+            // 10. PEMBELIAN BATCH 2 (10 OKTOBER 2026)   HARGA NAIK KE Rp 160.000/kg
             // - Beli 20 kg Biji Kopi Arabica @ Rp 160.000/kg (Rp 160/g) = Rp 3.200.000
             // - Perhitungan Moving Average Kopi:
             //   Stok lama: 9.600g @ Rp 150 = Rp 1.440.000
@@ -987,7 +987,7 @@ final class CoffeeShopThreeConditionsSeeder extends Seeder
             );
 
             // ─────────────────────────────────────────────────────────────────
-            // 12. PEMBELIAN BATCH 3 (20 OKTOBER 2026) — HARGA NAIK KE Rp 170.000/kg
+            // 12. PEMBELIAN BATCH 3 (20 OKTOBER 2026)   HARGA NAIK KE Rp 170.000/kg
             // - Beli 10 kg Biji Kopi Arabica @ Rp 170.000/kg (Rp 170/g) = Rp 1.700.000
             // - Perhitungan Moving Average Kopi Terkini:
             //   Stok lama: 29.100g @ Rp 156,75676 = Rp 4.561.622

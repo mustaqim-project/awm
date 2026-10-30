@@ -1,4 +1,4 @@
-# Production Readiness Checklist — Modul Billing & Subscription
+# Production Readiness Checklist   Modul Billing & Subscription
 > Modul: Billing & Subscription | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Status: Final
 
 ---

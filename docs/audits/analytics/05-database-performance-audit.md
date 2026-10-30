@@ -1,4 +1,4 @@
-# Database, Performance & Integration Audit — Modul Analytics
+# Database, Performance & Integration Audit   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -37,7 +37,7 @@ erDiagram
 
 ## 3. Temuan Kueri Database & Kompatibilitas Multi-Driver
 
-### F-ANA-004 — Inkompatibilitas Fungsi SQL Tanggal/Waktu pada Driver PostgreSQL
+### F-ANA-004   Inkompatibilitas Fungsi SQL Tanggal/Waktu pada Driver PostgreSQL
 - **Severity:** Medium | **Bukti:** `[VERIFIED]` | **Aspek:** Database & Portability
 - **Lokasi:** `app/Http/Controllers/Web/AnalyticsWebController.php:297, 349`
 - **Bukti:**
@@ -66,7 +66,7 @@ erDiagram
 
 ---
 
-### F-ANA-005 — Tidak Adanya Filter `location_id` pada Pesanan Toko Online
+### F-ANA-005   Tidak Adanya Filter `location_id` pada Pesanan Toko Online
 - **Severity:** Medium | **Bukti:** `[VERIFIED]` | **Aspek:** Functional & Multi-Outlet Isolation
 - **Lokasi:** `app/Http/Controllers/Web/AnalyticsWebController.php:159-174`
 - **Masalah:** Tabel `commerce_orders` memiliki foreign key `location_id` (migrasi `2026_09_15_000003_create_commerce_orders_and_items_tables.php:16`). Namun di `AnalyticsWebController::calculateMetrics()`, saat filter cabang aktif, kueri `CommerceOrder` mengabaikan parameter `$locationId`.
@@ -79,7 +79,7 @@ erDiagram
 
 ---
 
-### F-ANA-006 — Bottleneck Correlated Subquery pada `whereHas`
+### F-ANA-006   Bottleneck Correlated Subquery pada `whereHas`
 - **Severity:** Medium | **Bukti:** `[VERIFIED]` | **Aspek:** Performance & Scalability
 - **Lokasi:** `app/Http/Controllers/Web/AnalyticsWebController.php:379-390, 413-422`
 - **Masalah:** Penggunaan `PosOrderItem::whereHas('order', ...)` dan `PosOrderPayment::whereHas('order', ...)` menghasilkan klausa `WHERE EXISTS (SELECT 1 FROM pos_orders WHERE pos_orders.id = pos_order_items.pos_order_id AND ...)`. Pada basis data dengan puluhan ribu item, subquery berkorelasi ini membebani CPU database dan berisiko full table scan.

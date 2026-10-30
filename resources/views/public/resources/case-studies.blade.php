@@ -582,7 +582,7 @@
                                 <blockquote class="p-3.5 rounded-[12px] bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-emerald-500 text-xs italic text-emerald-900 dark:text-emerald-200">
                                     "{{ $case['verified_data']['owner_quote'] }}"
                                     <div class="mt-1 font-semibold not-italic text-emerald-700 dark:text-emerald-400">
-                                        — {{ $case['verified_data']['owner_name'] }}, {{ $case['city'] }}
+                                          {{ $case['verified_data']['owner_name'] }}, {{ $case['city'] }}
                                     </div>
                                 </blockquote>
                             @endif

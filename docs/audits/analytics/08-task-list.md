@@ -1,4 +1,4 @@
-# Task List — Modul Analytics
+# Task List   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -17,7 +17,7 @@
 
 ## Rincian Task Eksekusi
 
-### T-ANA-001 — Controller-Level RBAC Middleware
+### T-ANA-001   Controller-Level RBAC Middleware
 - **Prioritas:** High | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-001`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`, `routes/owner.php`
 - **Langkah:**
@@ -29,7 +29,7 @@
 
 ---
 
-### T-ANA-002 — Pengamanan Parser Tanggal Kustom & Auto-Swap
+### T-ANA-002   Pengamanan Parser Tanggal Kustom & Auto-Swap
 - **Prioritas:** High | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-002`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -41,7 +41,7 @@
 
 ---
 
-### T-ANA-003 — Pengisian Data Laba Tren Hari Ini & Standarisasi Jam 07:00–23:00
+### T-ANA-003   Pengisian Data Laba Tren Hari Ini & Standarisasi Jam 07:00–23:00
 - **Prioritas:** High | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-003`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -53,7 +53,7 @@
 
 ---
 
-### T-ANA-004 — Penanganan Multi-Driver SQL untuk Timestamp
+### T-ANA-004   Penanganan Multi-Driver SQL untuk Timestamp
 - **Prioritas:** Medium | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-004`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -64,7 +64,7 @@
 
 ---
 
-### T-ANA-005 — Filter Cabang pada Pesanan Toko Online
+### T-ANA-005   Filter Cabang pada Pesanan Toko Online
 - **Prioritas:** Medium | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-005`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -74,7 +74,7 @@
 
 ---
 
-### T-ANA-006 — Optimasi Kueri Agregasi via Direct JOIN
+### T-ANA-006   Optimasi Kueri Agregasi via Direct JOIN
 - **Prioritas:** Medium | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-006`
 - **File Terdampak:** `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -84,7 +84,7 @@
 
 ---
 
-### T-ANA-007 — Pembersihan Badge Pill pada Angka Persentase Margin
+### T-ANA-007   Pembersihan Badge Pill pada Angka Persentase Margin
 - **Prioritas:** Low | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-007`
 - **File Terdampak:** `resources/views/app/analytics/index.blade.php`
 - **Langkah:**
@@ -95,7 +95,7 @@
 
 ---
 
-### T-ANA-008 — Perbaikan Ergonomi Sentuh & Scroll Horizontal Mobile 360px
+### T-ANA-008   Perbaikan Ergonomi Sentuh & Scroll Horizontal Mobile 360px
 - **Prioritas:** Low | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-008`
 - **File Terdampak:** `resources/views/app/analytics/index.blade.php`
 - **Langkah:**
@@ -106,7 +106,7 @@
 
 ---
 
-### T-ANA-009 — Pembuatan File Translasi i18n
+### T-ANA-009   Pembuatan File Translasi i18n
 - **Prioritas:** Medium | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-009`
 - **File Terdampak:** `lang/id/analytics.php`, `lang/en/analytics.php`, `resources/views/app/analytics/index.blade.php`, `app/Http/Controllers/Web/AnalyticsWebController.php`
 - **Langkah:**
@@ -117,7 +117,7 @@
 
 ---
 
-### T-ANA-010 — Automated Test Suite Komprehensif
+### T-ANA-010   Automated Test Suite Komprehensif
 - **Prioritas:** High | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-010`
 - **File Terdampak:** `tests/Feature/AnalyticsWebTest.php`
 - **Langkah:**
@@ -131,7 +131,7 @@
 
 ---
 
-### T-ANA-011 — Penambahan Fitur Cetak Laporan Eksekutif (Print)
+### T-ANA-011   Penambahan Fitur Cetak Laporan Eksekutif (Print)
 - **Prioritas:** Low | **Status:** `Verified` | **Temuan Dasar:** `F-ANA-011`
 - **File Terdampak:** `resources/views/app/analytics/index.blade.php`
 - **Langkah:**

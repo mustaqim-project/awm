@@ -232,7 +232,7 @@ final class SeoMetadataService
     public static function cleanTitle(?string $title): string
     {
         if (empty($title)) {
-            $title = SystemSetting::get('seo_meta_title', 'COOCA — Business Operating System & Omnichannel ERP');
+            $title = SystemSetting::get('seo_meta_title', 'COOCA   Business Operating System & Omnichannel ERP');
         }
 
         $title = self::stripMarkdownLinks($title);

@@ -74,5 +74,25 @@ return [
     'services_feat_2' => 'Penagihan invoice uang muka (DP) via QRIS',
     'services_feat_3' => 'Reminder jadwal WhatsApp otomatis ke pelanggan',
     'services_feat_4' => 'Bagi komisi terapis/kapster per jenis treatment',
-];
 
+    // Dynamic Solution Show (show.blade.php)
+    'show_kicker_prefix' => 'Solusi Khusus :badge',
+    'show_tile_devices' => 'Android, Tablet, atau Laptop',
+    'show_tile_thermal' => 'Printer Bluetooth Thermal',
+    'show_tile_profit' => 'Laba bersih & stok otomatis',
+    'show_tile_sync' => 'Sinkron pembukuan finansial',
+    'show_cta_start' => 'Mulai Coba Sekarang',
+    'show_cta_wa' => 'Konsultasi via WhatsApp',
+    'show_reassurance_devices' => 'Android, Tablet & Laptop',
+    'show_reassurance_thermal' => 'Printer Thermal Bluetooth',
+    'show_reassurance_financial' => 'Sinkron Finansial Real-Time',
+    'show_terminal_badge' => 'Terminal: :badge',
+    'show_terminal_subtitle' => 'Kasir POS & Pembukuan Operasional',
+    'show_terminal_ready' => 'Kasir Siap',
+    'show_other_solutions_title' => 'Solusi Industri Lainnya',
+    'show_bottom_badge' => 'Tersedia untuk Android, Tablet, Laptop, & Printer Bluetooth',
+    'show_bottom_title' => 'Mulai Digitalisasi Usaha Anda Hari Ini',
+    'show_bottom_desc' => 'Tidak perlu beli mesin kasir mahal. Cukup gunakan HP Android, tablet, atau laptop yang sudah Anda miliki sekarang untuk mengelola bisnis lebih rapi.',
+    'show_bottom_cta_register' => 'Daftar Akun COOCA',
+    'show_bottom_cta_pricing' => 'Lihat Paket Harga',
+];

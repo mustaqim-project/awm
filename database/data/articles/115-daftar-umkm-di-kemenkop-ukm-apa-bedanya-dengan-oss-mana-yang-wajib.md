@@ -23,8 +23,8 @@ reading_time: "5 menit"
 
 <h2>Perbandingan Singkat</h2>
 <ul>
-<li><strong>OSS/NIB</strong> — wajib, berfungsi sebagai legalitas usaha yang berlaku hukum.</li>
-<li><strong>Pendataan Kemenkop UKM</strong> — melengkapi data untuk akses program pembinaan dan bantuan, sifatnya mendukung, bukan pengganti NIB.</li>
+<li><strong>OSS/NIB</strong>   wajib, berfungsi sebagai legalitas usaha yang berlaku hukum.</li>
+<li><strong>Pendataan Kemenkop UKM</strong>   melengkapi data untuk akses program pembinaan dan bantuan, sifatnya mendukung, bukan pengganti NIB.</li>
 </ul>
 
 <h2>Kenapa Sebaiknya Mengikuti Keduanya</h2>

@@ -49,7 +49,7 @@
                     </h1>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
-                        Dari transaksi struk kasir, data pelanggan, hingga pembukuan laba rugi—arsitektur COOCA dirancang dengan isolasi ketat antar-usaha, enkripsi berlapis, dan kepatuhan penuh terhadap Undang-Undang Perlindungan Data Pribadi (UU PDP No. 27/2022).
+                        Dari transaksi struk kasir, data pelanggan, hingga pembukuan laba rugi arsitektur COOCA dirancang dengan isolasi ketat antar-usaha, enkripsi berlapis, dan kepatuhan penuh terhadap Undang-Undang Perlindungan Data Pribadi (UU PDP No. 27/2022).
                     </p>
 
                     <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs text-slate-300">
@@ -150,7 +150,7 @@
                         3. Rekam Jejak Audit Log Lengkap
                     </h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        Aktivitas operasional penting—seperti pembatalan transaksi kasir (void), perubahan harga produk, pergantian stok, hingga perubahan hak akses staf—tercatat dalam modul <code>AuditLog</code> dengan stempel waktu, identitas pengguna, dan alamat IP.
+                        Aktivitas operasional penting seperti pembatalan transaksi kasir (void), perubahan harga produk, pergantian stok, hingga perubahan hak akses staf tercatat dalam modul <code>AuditLog</code> dengan stempel waktu, identitas pengguna, dan alamat IP.
                     </p>
                 </div>
                 <div class="pt-3 border-t border-black/[0.04] dark:border-white/[0.06] text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
@@ -188,7 +188,7 @@
                         5. Kepatuhan UU Perlindungan Data Pribadi (UU PDP)
                     </h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        COOCA patuh terhadap ketentuan UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi Republik Indonesia. Kami menjamin hak subjek data—mulai dari hak melihat data, memperbarui data, hingga hak meminta penghapusan akun usaha sewaktu-waktu.
+                        COOCA patuh terhadap ketentuan UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi Republik Indonesia. Kami menjamin hak subjek data mulai dari hak melihat data, memperbarui data, hingga hak meminta penghapusan akun usaha sewaktu-waktu.
                     </p>
                 </div>
                 <div class="pt-3 border-t border-black/[0.04] dark:border-white/[0.06] text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">

@@ -468,7 +468,7 @@
                                                     <i data-lucide="check" class="w-3.5 h-3.5" stroke-width="2.5"></i>
                                                 </div>
                                             @else
-                                                <span class="text-black/20 dark:text-white/20 text-[14px]">—</span>
+                                                <span class="text-black/20 dark:text-white/20 text-[14px]"> </span>
                                             @endif
                                         </td>
                                     @endforeach

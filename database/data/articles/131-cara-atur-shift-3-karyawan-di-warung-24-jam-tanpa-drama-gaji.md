@@ -17,9 +17,9 @@ reading_time: "5 menit"
 
 <h2>Pola Dasar Pembagian Shift untuk 3 Karyawan</h2>
 <ul>
-<li><strong>Shift Pagi</strong> (misalnya 06.00–14.00) — biasanya jam paling sibuk untuk sarapan dan belanja harian.</li>
-<li><strong>Shift Siang/Sore</strong> (14.00–22.00) — mencakup jam makan siang hingga malam.</li>
-<li><strong>Shift Malam</strong> (22.00–06.00) — umumnya lebih sepi tapi tetap perlu dijaga untuk warung 24 jam.</li>
+<li><strong>Shift Pagi</strong> (misalnya 06.00–14.00)   biasanya jam paling sibuk untuk sarapan dan belanja harian.</li>
+<li><strong>Shift Siang/Sore</strong> (14.00–22.00)   mencakup jam makan siang hingga malam.</li>
+<li><strong>Shift Malam</strong> (22.00–06.00)   umumnya lebih sepi tapi tetap perlu dijaga untuk warung 24 jam.</li>
 </ul>
 
 <h2>Cara Menyusun Jadwal agar Adil</h2>

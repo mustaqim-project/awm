@@ -30,7 +30,7 @@
 
                 <p class="text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed"
                     style="color: #6B5744;">
-                    {{ $landingPage->subheadline ?: 'Nikmati ritual kopi spesialti dari biji terpilih, roasting presisi, dan penyeduhan penuh cinta. Single Origin hingga House Blend — setiap cangkir punya cerita.' }}
+                    {{ $landingPage->subheadline ?: 'Nikmati ritual kopi spesialti dari biji terpilih, roasting presisi, dan penyeduhan penuh cinta. Single Origin hingga House Blend   setiap cangkir punya cerita.' }}
                 </p>
 
                 {{-- Tasting Notes Pills --}}

@@ -27,9 +27,9 @@ reading_time: "5 menit"
 
 <h2>Manfaat Nyata bagi Operasional Harian</h2>
 <ul>
-<li><strong>Antisipasi lebih awal</strong> — owner bisa segera memesan ulang sebelum stok benar-benar habis di jam sibuk.</li>
-<li><strong>Hemat waktu pengecekan manual</strong> — tidak perlu menghitung stok fisik setiap saat karena sistem sudah memantau secara otomatis.</li>
-<li><strong>Bisa dipantau dari mana saja</strong> — owner tetap mendapat notifikasi meski sedang tidak berada di lokasi usaha.</li>
+<li><strong>Antisipasi lebih awal</strong>   owner bisa segera memesan ulang sebelum stok benar-benar habis di jam sibuk.</li>
+<li><strong>Hemat waktu pengecekan manual</strong>   tidak perlu menghitung stok fisik setiap saat karena sistem sudah memantau secara otomatis.</li>
+<li><strong>Bisa dipantau dari mana saja</strong>   owner tetap mendapat notifikasi meski sedang tidak berada di lokasi usaha.</li>
 </ul>
 
 <blockquote>Notifikasi otomatis mengubah cara kerja dari reaktif (baru sadar setelah kehabisan) menjadi proaktif (mengantisipasi sebelum benar-benar habis).</blockquote>

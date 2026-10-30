@@ -23,7 +23,7 @@ reading_time: "5 menit"
 </ul>
 
 <h2>Apa Itu Single Source of Truth</h2>
-<p>Single source of truth adalah konsep di mana seluruh data operasional — penjualan, stok, dan keuangan — tercatat dalam satu sistem yang sama dan bisa diakses oleh semua pihak yang berkepentingan, sehingga tidak ada lagi versi data yang berbeda-beda.</p>
+<p>Single source of truth adalah konsep di mana seluruh data operasional   penjualan, stok, dan keuangan   tercatat dalam satu sistem yang sama dan bisa diakses oleh semua pihak yang berkepentingan, sehingga tidak ada lagi versi data yang berbeda-beda.</p>
 
 <h2>Cara Menerapkan Konsep Ini di Usaha Kecil</h2>
 <ol>

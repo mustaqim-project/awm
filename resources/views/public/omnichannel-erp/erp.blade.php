@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software ERP UMKM: Kasir, Stok & Pembukuan | COOCA')
-@section('description', 'COOCA Omnichannel ERP menyatukan kasir POS, stok multi-gudang, keuangan, akuntansi, dan CRM dalam satu sistem tanpa biaya mahal.')
+@section('title', __('public_erp.erp_seo_title'))
+@section('description', __('public_erp.erp_seo_desc'))
 @section('keywords', 'software erp umkm, omnichannel erp indonesia, sistem erp toko, software manajemen operasional terintegrasi, erp kasir gudang akuntansi')
 
-@section('og_title', 'Software ERP UMKM: Kasir, Stok & Pembukuan | COOCA')
-@section('og_description', 'COOCA Omnichannel ERP menyatukan kasir POS, persediaan gudang, purchasing, akuntansi riil, dan CRM dalam satu sistem terpadu.')
+@section('og_title', __('public_erp.erp_seo_title'))
+@section('og_description', __('public_erp.erp_seo_desc'))
 
 @push('seo')
     <script type="application/ld+json">
@@ -88,7 +88,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                                 <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                    Unified ERP Architecture &amp; Modular Engine
+                                    {{ __('public_erp.erp_hero_badge') }}
                                 </p>
                             </div>
                         </div>
@@ -97,26 +97,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_erp.erp_hero_title') }}
                 </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Kendalikan rantai pasok, stok barang, kasir toko, pembelian supplier, hingga pembukuan akuntansi dalam satu sistem terintegrasi. Rapi tanpa biaya lisensi ratusan juta rupiah.
+                            {{ __('public_erp.erp_hero_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('register') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Mulai Pakai ERP Gratis</span>
+                                <span>{{ __('public_erp.erp_hero_cta_primary') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.erp.pos') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Lihat Fitur Kasir POS</span>
+                                <span>{{ __('public_erp.erp_hero_cta_secondary') }}</span>
                             </a>
                         </div>
 
@@ -146,7 +146,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">8 Modul Terpadu &amp; Terintegrasi Penuh</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.erp_rating_text') }}</span>
                             </div>
                         </div>
 
@@ -155,15 +155,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Modular On-Demand</span>
+                                <span>{{ __('public_erp.erp_checkpoint_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Standar SAK EMKM</span>
+                                <span>{{ __('public_erp.erp_checkpoint_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Multi-Cabang &amp; Gudang</span>
+                                <span>{{ __('public_erp.erp_checkpoint_3') }}</span>
                             </div>
                         </div>
 
@@ -623,14 +623,12 @@
 
                     <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 space-y-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">Transformasi
-                                Operasional</span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#00C2FF]">{{ __('public_erp.erp_tidy_ops') }}</span>
                             <h2 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
                                 Waktunya Mengelola Bisnis dengan ERP yang Ringan dan Handal
                             </h2>
                             <p class="text-sm sm:text-base text-slate-300 max-w-xl font-normal leading-relaxed">
-                                Mulai gratis tanpa kartu kredit. Aktifkan modul kasir dan persediaan toko Anda hari ini dan
-                                rasakan efisiensi operasional tanpa batas.
+                                {{ __('public_erp.erp_tidy_ops_desc') }}
                             </p>
                         </div>
 

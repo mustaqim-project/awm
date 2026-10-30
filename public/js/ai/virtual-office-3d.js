@@ -1,5 +1,5 @@
 /**
- * COOCA AI — The Sims Interactive 3D Virtual Office Engine
+ * COOCA AI   The Sims Interactive 3D Virtual Office Engine
  * Built with Three.js (r128) & WebGL
  *
  * Architecture:

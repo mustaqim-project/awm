@@ -22,7 +22,7 @@ reading_time: "5 menit"
 <ol>
 <li><strong>Daftar akun</strong> menggunakan data usaha dasar seperti nama usaha dan nomor kontak aktif.</li>
 <li><strong>Pilih jenis usaha</strong> agar sistem bisa menyesuaikan fitur yang relevan, misalnya kuliner, retail, atau jasa.</li>
-<li><strong>Input data awal usaha</strong> — produk, stok, dan harga dasar untuk mulai menggunakan fitur pencatatan.</li>
+<li><strong>Input data awal usaha</strong>   produk, stok, dan harga dasar untuk mulai menggunakan fitur pencatatan.</li>
 <li><strong>Mulai gunakan fitur inti</strong> seperti pencatatan transaksi, pemantauan stok, dan laporan penjualan selama masa coba.</li>
 <li><strong>Evaluasi hasil setelah 14 hari</strong> untuk memutuskan apakah ingin melanjutkan ke paket berlangganan yang sesuai skala usaha.</li>
 </ol>

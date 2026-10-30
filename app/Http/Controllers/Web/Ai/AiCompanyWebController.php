@@ -120,7 +120,7 @@ final class AiCompanyWebController extends Controller
     }
 
     /**
-     * Office 01 — Executive Office.
+     * Office 01   Executive Office.
      * Route: /cooca-ai/office/executive
      */
     public function executiveOffice(Request $request): View
@@ -195,7 +195,7 @@ final class AiCompanyWebController extends Controller
     }
 
     /**
-     * Office 02 — Operations Office.
+     * Office 02   Operations Office.
      * Route: /cooca-ai/office/operations
      */
     public function operationsOffice(Request $request): View
@@ -269,7 +269,7 @@ final class AiCompanyWebController extends Controller
     }
 
     /**
-     * Office 03 — Growth Office.
+     * Office 03   Growth Office.
      * Route: /cooca-ai/office/growth
      */
     public function growthOffice(Request $request): View

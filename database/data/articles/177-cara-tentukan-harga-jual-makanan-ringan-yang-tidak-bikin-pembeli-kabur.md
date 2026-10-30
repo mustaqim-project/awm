@@ -17,10 +17,10 @@ reading_time: "5 menit"
 
 <h2>Faktor yang Perlu Dipertimbangkan Saat Menentukan Harga</h2>
 <ul>
-<li><strong>HPP per kemasan</strong> — termasuk bahan baku, kemasan, dan biaya produksi lainnya.</li>
-<li><strong>Harga pasar untuk produk sejenis</strong> — sebagai acuan agar harga tidak terlalu jauh berbeda dari kompetitor.</li>
-<li><strong>Target segmen pasar</strong> — daya beli pelanggan yang disasar akan memengaruhi kisaran harga yang wajar diterima.</li>
-<li><strong>Ukuran atau berat kemasan</strong> — perbandingan harga per gram bisa membantu menentukan harga yang lebih masuk akal dibanding kompetitor.</li>
+<li><strong>HPP per kemasan</strong>   termasuk bahan baku, kemasan, dan biaya produksi lainnya.</li>
+<li><strong>Harga pasar untuk produk sejenis</strong>   sebagai acuan agar harga tidak terlalu jauh berbeda dari kompetitor.</li>
+<li><strong>Target segmen pasar</strong>   daya beli pelanggan yang disasar akan memengaruhi kisaran harga yang wajar diterima.</li>
+<li><strong>Ukuran atau berat kemasan</strong>   perbandingan harga per gram bisa membantu menentukan harga yang lebih masuk akal dibanding kompetitor.</li>
 </ul>
 
 <h2>Langkah Menentukan Harga Jual yang Tepat</h2>

@@ -28,13 +28,13 @@ reading_time: "5 menit"
 <ul>
 <li>Jika arus kas usaha cukup longgar dan diskon tunai yang ditawarkan cukup besar, pembelian tunai bisa lebih menguntungkan secara total biaya.</li>
 <li>Jika arus kas usaha ketat dan membutuhkan fleksibilitas, pembelian dengan tempo membantu menjaga likuiditas meski harus membayar sedikit lebih mahal.</li>
-<li>Pertimbangkan juga hubungan jangka panjang dengan supplier — pembayaran tempo yang selalu tepat waktu bisa membangun kepercayaan untuk negosiasi yang lebih baik ke depannya.</li>
+<li>Pertimbangkan juga hubungan jangka panjang dengan supplier   pembayaran tempo yang selalu tepat waktu bisa membangun kepercayaan untuk negosiasi yang lebih baik ke depannya.</li>
 </ul>
 
 <blockquote>Keputusan cash atau kredit sebaiknya didasarkan pada kondisi arus kas riil usaha, bukan sekadar mengejar diskon tanpa mempertimbangkan dampaknya pada likuiditas.</blockquote>
 
 <h2>Kombinasi Strategi yang Bisa Dipertimbangkan</h2>
-<p>Beberapa usaha memilih strategi kombinasi — membayar tunai untuk bahan baku dengan diskon besar dan volume kecil, sementara menggunakan tempo untuk pembelian rutin dalam jumlah besar yang membutuhkan modal kerja lebih banyak.</p>
+<p>Beberapa usaha memilih strategi kombinasi   membayar tunai untuk bahan baku dengan diskon besar dan volume kecil, sementara menggunakan tempo untuk pembelian rutin dalam jumlah besar yang membutuhkan modal kerja lebih banyak.</p>
 
 <h2>Kesimpulan</h2>
 <p>Baik pembelian tunai maupun kredit memiliki kelebihan masing-masing tergantung kondisi arus kas usaha. Melakukan simulasi sederhana seperti di atas membantu pemilik usaha membuat keputusan yang lebih terukur, bukan sekadar mengikuti kebiasaan tanpa perhitungan.</p>

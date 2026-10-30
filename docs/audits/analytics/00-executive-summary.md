@@ -1,4 +1,4 @@
-# Executive Summary — Modul Analytics
+# Executive Summary   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -40,15 +40,15 @@ Seluruh anomali di atas telah diperbaiki secara tuntas melalui orkestrasi bundle
 
 ## 4. Tiga Risiko Terbesar yang Telah Dimitigasi
 
-1. **R1 (High) — Kerusakan Grafik Laba & Inkonsistensi Jam Sibuk pada Periode Hari Ini:**
+1. **R1 (High)   Kerusakan Grafik Laba & Inkonsistensi Jam Sibuk pada Periode Hari Ini:**
    - *Dampak:* Pemilik bisnis tidak dapat melihat pergerakan kurva laba kotor per jam hari ini di layar kasir/backoffice, serta jam buka toko (07:00) tidak sinkron dengan grafik heatmap.
    - *Mitigasi:* Mengisi `$profitData` secara utuh pada `buildTrendSeries` dan menyelaraskan rentang waktu 07:00–23:00.
 
-2. **R2 (High) — Potensi Crash 500 Akibat Tanggal Kustom Malformed/Terbalik:**
+2. **R2 (High)   Potensi Crash 500 Akibat Tanggal Kustom Malformed/Terbalik:**
    - *Dampak:* Manipulasi parameter URL `from` dan `to` dengan format non-tanggal memicu unhandled `InvalidFormatException` dari Carbon yang menyebabkan downtime halaman.
    - *Mitigasi:* Membungkus parsing tanggal dalam blok `try/catch` dengan fallback aman ke awal-akhir bulan, serta membalik rentang secara otomatis jika `from > to`.
 
-3. **R3 (Medium) — Pencampuran Omzet Online saat Filter Multi-Cabang Aktif:**
+3. **R3 (Medium)   Pencampuran Omzet Online saat Filter Multi-Cabang Aktif:**
    - *Dampak:* Saat pemilik bisnis mengevaluasi performa cabang spesifik, omzet toko online seluruh cabang tetap ikut terhitung, memberikan gambaran omzet cabang yang tidak akurat.
    - *Mitigasi:* Menambahkan filter `where('location_id', $locationId)` pada kueri `CommerceOrder` di `calculateMetrics()`.
 

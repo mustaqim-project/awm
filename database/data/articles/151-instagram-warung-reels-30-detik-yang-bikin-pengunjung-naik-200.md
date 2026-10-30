@@ -20,8 +20,8 @@ reading_time: "5 menit"
 
 <h2>Elemen Reels 30 Detik yang Menarik Perhatian</h2>
 <ol>
-<li><strong>3 detik pertama harus menarik</strong> — tampilkan visual paling menggugah, seperti proses memasak atau tampilan produk yang menarik.</li>
-<li><strong>Alur cerita singkat dan jelas</strong> — misalnya dari bahan mentah hingga produk jadi dalam beberapa potongan cepat.</li>
+<li><strong>3 detik pertama harus menarik</strong>   tampilkan visual paling menggugah, seperti proses memasak atau tampilan produk yang menarik.</li>
+<li><strong>Alur cerita singkat dan jelas</strong>   misalnya dari bahan mentah hingga produk jadi dalam beberapa potongan cepat.</li>
 <li><strong>Gunakan musik atau audio yang sedang tren</strong> untuk meningkatkan potensi jangkauan algoritma.</li>
 <li><strong>Sertakan call-to-action sederhana</strong> di akhir video, seperti lokasi warung atau jam operasional.</li>
 </ol>

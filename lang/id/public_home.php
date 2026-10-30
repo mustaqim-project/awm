@@ -11,7 +11,7 @@ return [
 
     'hero_kicker' => 'Aplikasi Kasir, Stok & Pembukuan UMKM',
     'hero_title' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem Cepat',
-    'hero_subtitle' => 'Cukup dari HP, tablet, atau laptop. Catat transaksi kasir, potong stok otomatis, pantau laba harian, dan kendalikan operasional toko dengan bantuan Asisten AI—tanpa spreadsheet terpisah.',
+    'hero_subtitle' => 'Cukup dari HP, tablet, atau laptop. Catat transaksi kasir, potong stok otomatis, pantau laba harian, dan kendalikan operasional toko dengan bantuan Asisten AI tanpa spreadsheet terpisah.',
     'hero_cta_primary' => 'Mulai Coba Gratis',
     'hero_cta_secondary' => 'Lihat Cara Kerja Sistem',
     'btn_dashboard' => 'Dashboard',

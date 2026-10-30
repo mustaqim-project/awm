@@ -20,10 +20,10 @@ reading_time: "5 menit"
 
 <h2>Dokumen Dasar Sebelum Bicara Ekspor</h2>
 <ul>
-<li><strong>NIB</strong> — legalitas dasar usaha sebagai eksportir.</li>
-<li><strong>SPP-IRT atau izin edar BPOM</strong> — tergantung skala produksi dan jenis produk.</li>
-<li><strong>Sertifikat Halal</strong> — krusial untuk menembus pasar dengan mayoritas konsumen muslim.</li>
-<li><strong>Hasil uji laboratorium produk</strong> — terutama untuk aspek keamanan pangan dan masa simpan.</li>
+<li><strong>NIB</strong>   legalitas dasar usaha sebagai eksportir.</li>
+<li><strong>SPP-IRT atau izin edar BPOM</strong>   tergantung skala produksi dan jenis produk.</li>
+<li><strong>Sertifikat Halal</strong>   krusial untuk menembus pasar dengan mayoritas konsumen muslim.</li>
+<li><strong>Hasil uji laboratorium produk</strong>   terutama untuk aspek keamanan pangan dan masa simpan.</li>
 </ul>
 
 <h2>Kesalahan yang Sering Terjadi</h2>

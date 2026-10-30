@@ -23,8 +23,8 @@ reading_time: "5 menit"
 
 <h2>Perbedaan Utama Keduanya</h2>
 <ul>
-<li><strong>Pembukuan sederhana</strong> — fokus pada pencatatan transaksi harian, cocok untuk kebutuhan pemantauan arus kas sehari-hari.</li>
-<li><strong>SAK EMKM</strong> — menghasilkan laporan keuangan lengkap (neraca dan laba rugi) yang lebih terstruktur dan bisa digunakan untuk keperluan formal, seperti pengajuan pembiayaan ke bank atau investor.</li>
+<li><strong>Pembukuan sederhana</strong>   fokus pada pencatatan transaksi harian, cocok untuk kebutuhan pemantauan arus kas sehari-hari.</li>
+<li><strong>SAK EMKM</strong>   menghasilkan laporan keuangan lengkap (neraca dan laba rugi) yang lebih terstruktur dan bisa digunakan untuk keperluan formal, seperti pengajuan pembiayaan ke bank atau investor.</li>
 </ul>
 
 <h2>Kapan UMKM Perlu Beralih ke SAK EMKM</h2>

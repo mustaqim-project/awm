@@ -1,5 +1,5 @@
 {{--
-    COOCA AI — Interactive 3D Virtual Office Cockpit & 3-Story Cutaway Building
+    COOCA AI   Interactive 3D Virtual Office Cockpit & 3-Story Cutaway Building
     Aligned with Image 2 Reference & The Sims Living Workforce Simulation
 --}}
 @props([

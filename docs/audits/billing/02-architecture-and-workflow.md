@@ -1,4 +1,4 @@
-# Architecture & Workflow — Modul Billing & Subscription
+# Architecture & Workflow   Modul Billing & Subscription
 > Modul: Billing & Subscription | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Status: Final
 
 ---

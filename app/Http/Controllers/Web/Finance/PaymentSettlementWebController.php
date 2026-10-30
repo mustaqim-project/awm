@@ -95,7 +95,7 @@ final class PaymentSettlementWebController extends Controller implements HasMidd
     }
 
     /**
-     * Process Cooca Pay payout request — prefers verified MerchantPayoutBankAccount, falls back to legacy CashAccount.
+     * Process Cooca Pay payout request   prefers verified MerchantPayoutBankAccount, falls back to legacy CashAccount.
      */
     public function reconcile(Request $request): RedirectResponse|JsonResponse
     {

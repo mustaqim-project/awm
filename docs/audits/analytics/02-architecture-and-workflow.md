@@ -1,4 +1,4 @@
-# Architecture & Workflow — Modul Analytics
+# Architecture & Workflow   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -85,7 +85,7 @@ stateDiagram-v2
 
 ## 4. Temuan Arsitektur & Workflow
 
-### F-ANA-001 — Deklarasi Middleware Permission Masih di Route Level
+### F-ANA-001   Deklarasi Middleware Permission Masih di Route Level
 - **Severity:** Medium | **Bukti:** `[VERIFIED]` | **Aspek:** Architecture & Security
 - **Lokasi:** `app/Http/Controllers/Web/AnalyticsWebController.php:24`, `routes/owner.php:382`
 - **Bukti:**
@@ -101,7 +101,7 @@ stateDiagram-v2
 
 ---
 
-### F-ANA-003 — Kerusakan Grafik Laba & Inkonsistensi Jam Sibuk pada Periode Hari Ini
+### F-ANA-003   Kerusakan Grafik Laba & Inkonsistensi Jam Sibuk pada Periode Hari Ini
 - **Severity:** High | **Bukti:** `[VERIFIED]` | **Aspek:** Workflow & Calculation
 - **Lokasi:** `app/Http/Controllers/Web/AnalyticsWebController.php:294-311`
 - **Bukti:**

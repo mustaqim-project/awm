@@ -39,12 +39,12 @@ reading_time: "5 menit"
 
 <h2>Cara Memilih Prioritas Platform</h2>
 <ul>
-<li>Sesuaikan dengan karakteristik produk — visual menarik cocok untuk platform berbasis konten seperti TikTok dan Instagram.</li>
+<li>Sesuaikan dengan karakteristik produk   visual menarik cocok untuk platform berbasis konten seperti TikTok dan Instagram.</li>
 <li>Pertimbangkan kapasitas usaha untuk konsisten mengelola setiap platform yang dipilih, daripada mencoba semua sekaligus tanpa fokus.</li>
 <li>Evaluasi platform mana yang paling banyak mendatangkan pelanggan nyata, bukan hanya interaksi semata.</li>
 </ul>
 
-<blockquote>Mengikuti tren bukan berarti harus hadir di semua platform sekaligus — fokus pada platform yang paling sesuai dengan karakter produk dan kapasitas usaha jauh lebih efektif.</blockquote>
+<blockquote>Mengikuti tren bukan berarti harus hadir di semua platform sekaligus   fokus pada platform yang paling sesuai dengan karakter produk dan kapasitas usaha jauh lebih efektif.</blockquote>
 
 <h2>Pentingnya Evaluasi Berkala</h2>
 <p>Tren platform bisa berubah cukup cepat. Melakukan evaluasi rutin terhadap performa masing-masing kanal membantu usaha tetap adaptif tanpa harus mengikuti semua tren tanpa arah yang jelas.</p>

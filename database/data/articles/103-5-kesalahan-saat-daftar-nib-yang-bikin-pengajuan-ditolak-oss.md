@@ -28,7 +28,7 @@ reading_time: "5 menit"
 <p>OSS membagi usaha ke dalam skala mikro, kecil, menengah, dan besar berdasarkan modal usaha. Salah input modal usaha bisa membuat kategori risiko usaha berubah, yang berimbas pada dokumen tambahan yang diminta sistem.</p>
 
 <h2>5. Tidak Melengkapi Izin Berbasis Risiko</h2>
-<p>Untuk usaha dengan risiko menengah ke atas, NIB saja belum cukup — masih perlu sertifikat standar atau izin tambahan sesuai hasil penilaian risiko OSS RBA (Risk Based Approach). Banyak pelaku usaha berhenti di tahap NIB dan tidak melanjutkan proses ini.</p>
+<p>Untuk usaha dengan risiko menengah ke atas, NIB saja belum cukup   masih perlu sertifikat standar atau izin tambahan sesuai hasil penilaian risiko OSS RBA (Risk Based Approach). Banyak pelaku usaha berhenti di tahap NIB dan tidak melanjutkan proses ini.</p>
 
 <blockquote>Sebelum submit, cek ulang tiga hal: kode KBLI, kesesuaian alamat usaha, dan kecocokan data KTP-NPWP.</blockquote>
 

@@ -13,7 +13,7 @@ reading_time: "5 menit"
 
 # Cara Buat Konten UGC untuk UMKM dengan Bayaran Rp 50 Ribu per Video
 
-<p>User Generated Content (UGC) — konten yang dibuat oleh orang lain (bukan brand sendiri) tentang produk yang mereka gunakan — semakin populer sebagai strategi promosi karena terasa lebih autentik dibanding iklan formal, dan bisa diproduksi dengan biaya terjangkau.</p>
+<p>User Generated Content (UGC)   konten yang dibuat oleh orang lain (bukan brand sendiri) tentang produk yang mereka gunakan   semakin populer sebagai strategi promosi karena terasa lebih autentik dibanding iklan formal, dan bisa diproduksi dengan biaya terjangkau.</p>
 
 <h2>Kenapa UGC Efektif untuk Usaha Kecil</h2>
 <p>Konten yang dibuat oleh pengguna atau kreator kecil cenderung terasa lebih jujur dan dipercaya calon pembeli dibanding konten promosi yang dibuat langsung oleh brand, karena terlihat seperti pengalaman nyata, bukan iklan.</p>
@@ -27,10 +27,10 @@ reading_time: "5 menit"
 
 <h2>Langkah Kolaborasi dengan Kreator UGC</h2>
 <ol>
-<li><strong>Tentukan brief sederhana</strong> — poin yang ingin ditonjolkan dari produk, tanpa membuat skrip yang terlalu kaku.</li>
+<li><strong>Tentukan brief sederhana</strong>   poin yang ingin ditonjolkan dari produk, tanpa membuat skrip yang terlalu kaku.</li>
 <li><strong>Berikan produk untuk dicoba</strong> secara langsung oleh kreator sebelum membuat konten.</li>
 <li><strong>Minta konten yang natural</strong>, bukan yang terlihat seperti skrip iklan formal.</li>
-<li><strong>Sepakati hak penggunaan konten</strong> — apakah brand boleh menggunakan ulang video tersebut di kanal media sosial usaha.</li>
+<li><strong>Sepakati hak penggunaan konten</strong>   apakah brand boleh menggunakan ulang video tersebut di kanal media sosial usaha.</li>
 </ol>
 
 <h2>Cara Memanfaatkan Konten UGC Setelah Diterima</h2>

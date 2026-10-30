@@ -392,7 +392,7 @@
                                                     <div class="font-semibold text-black dark:text-white">Rp {{ number_format($batch->standard_monthly_price, 0, ',', '.') }}/bln</div>
                                                     <div class="text-[10px] text-black/50 dark:text-white/50">Rp {{ number_format($batch->standard_annual_price ?? 0, 0, ',', '.') }}/thn</div>
                                                 @else
-                                                    <span class="text-black/30 dark:text-white/30">—</span>
+                                                    <span class="text-black/30 dark:text-white/30"> </span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-3 tabular-nums">
@@ -400,7 +400,7 @@
                                                     <div class="font-semibold text-black dark:text-white">Rp {{ number_format($batch->premium_monthly_price, 0, ',', '.') }}/bln</div>
                                                     <div class="text-[10px] text-black/50 dark:text-white/50">Rp {{ number_format($batch->premium_annual_price ?? 0, 0, ',', '.') }}/thn</div>
                                                 @else
-                                                    <span class="text-black/30 dark:text-white/30">—</span>
+                                                    <span class="text-black/30 dark:text-white/30"> </span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-3 tabular-nums">
@@ -408,7 +408,7 @@
                                                     <div class="font-semibold text-black dark:text-white">Rp {{ number_format($batch->prestige_monthly_price, 0, ',', '.') }}/bln</div>
                                                     <div class="text-[10px] text-black/50 dark:text-white/50">Rp {{ number_format($batch->prestige_annual_price ?? 0, 0, ',', '.') }}/thn</div>
                                                 @else
-                                                    <span class="text-black/30 dark:text-white/30">—</span>
+                                                    <span class="text-black/30 dark:text-white/30"> </span>
                                                 @endif
                                             </td>
                                             <td class="py-3 px-3">
@@ -571,7 +571,7 @@
                                         +{{ $sub->annual_increase_percentage }}%
                                     </td>
                                     <td class="py-3 px-4 tabular-nums text-black/70 dark:text-white/70">
-                                        {{ $sub->next_price_increase_at ? $sub->next_price_increase_at->format('d M Y') : '—' }}
+                                        {{ $sub->next_price_increase_at ? $sub->next_price_increase_at->format('d M Y') : ' ' }}
                                     </td>
                                 </tr>
                             @empty
@@ -748,7 +748,7 @@
                                         Rp {{ number_format((float) $log->new_price, 0, ',', '.') }}
                                     </td>
                                     <td class="py-3 px-3 tabular-nums font-bold text-[#007AFF] dark:text-[#0A84FF]">
-                                        {{ $log->increase_percentage > 0 ? '+' . $log->increase_percentage . '%' : '—' }}
+                                        {{ $log->increase_percentage > 0 ? '+' . $log->increase_percentage . '%' : ' ' }}
                                     </td>
                                     <td class="py-3 px-3 capitalize text-black/70 dark:text-white/70">
                                         {{ str_replace('_', ' ', $log->performed_by_type) }}
@@ -1306,7 +1306,7 @@
                         <option value="none">Tidak Ada (Gunakan Fallback Harga Normal)</option>
                         @foreach ($allBatches as $cand)
                             <option value="{{ $cand->id }}">
-                                Batch {{ $cand->batch_number }} — {{ $cand->name }} ({{ $cand->status }})
+                                Batch {{ $cand->batch_number }}   {{ $cand->name }} ({{ $cand->status }})
                             </option>
                         @endforeach
                     </select>

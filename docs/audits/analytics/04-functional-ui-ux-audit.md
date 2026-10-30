@@ -1,4 +1,4 @@
-# Functional, UI/UX & Human Error Audit — Modul Analytics
+# Functional, UI/UX & Human Error Audit   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---
@@ -22,7 +22,7 @@
 
 ## 2. Temuan UI/UX & Kepatuhan Bento Apple HIG
 
-### F-ANA-007 — Anti-Pill-Abuse Violation pada Persentase Margin Produk
+### F-ANA-007   Anti-Pill-Abuse Violation pada Persentase Margin Produk
 - **Severity:** Low | **Bukti:** `[VERIFIED]` | **Aspek:** UI/UX & Design System
 - **Lokasi:** `resources/views/app/analytics/index.blade.php:471-473, 498-500`
 - **Bukti:**
@@ -36,7 +36,7 @@
 
 ---
 
-### F-ANA-008 — Sub-standard Mobile Touch Target & Horizontal Overflow Risk
+### F-ANA-008   Sub-standard Mobile Touch Target & Horizontal Overflow Risk
 - **Severity:** Low | **Bukti:** `[VERIFIED]` | **Aspek:** Responsive UI/UX
 - **Lokasi:** `resources/views/app/analytics/index.blade.php:253-269`
 - **Bukti:**
@@ -49,7 +49,7 @@
 
 ---
 
-### F-ANA-009 — Absennya File Translasi i18n (Zero Hardcoded Text Mandate)
+### F-ANA-009   Absennya File Translasi i18n (Zero Hardcoded Text Mandate)
 - **Severity:** Medium | **Bukti:** `[VERIFIED]` | **Aspek:** Internationalization (i18n)
 - **Lokasi:** `resources/views/app/analytics/index.blade.php:1-565`, `app/Http/Controllers/Web/AnalyticsWebController.php:480-487`
 - **Masalah:** Seluruh teks antarmuka, judul kartu, label grafik, dan tooltip ditulis secara hardcode dalam Bahasa Indonesia tanpa fungsi helper `__('analytics....')`. Pengguna berbahasa Inggris melihat teks Indonesia yang tidak konsisten dengan navigasi aplikasi.

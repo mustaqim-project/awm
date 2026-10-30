@@ -20,10 +20,10 @@ reading_time: "5 menit"
 
 <h2>Elemen Fondasi Digital yang Perlu Dibangun</h2>
 <ul>
-<li><strong>Identitas brand yang konsisten</strong> — logo, warna, dan gaya komunikasi yang sama di semua kanal digital.</li>
-<li><strong>Kehadiran di media sosial yang aktif</strong> — bukan hanya ada akun, tapi juga rutin memposting dan berinteraksi dengan audiens.</li>
-<li><strong>Ulasan dan reputasi online yang baik</strong> — terutama di Google Maps dan platform marketplace tempat produk dijual.</li>
-<li><strong>Materi promosi yang bisa direplikasi</strong> — template konten, foto produk standar, dan panduan komunikasi yang bisa digunakan calon mitra di lokasi baru.</li>
+<li><strong>Identitas brand yang konsisten</strong>   logo, warna, dan gaya komunikasi yang sama di semua kanal digital.</li>
+<li><strong>Kehadiran di media sosial yang aktif</strong>   bukan hanya ada akun, tapi juga rutin memposting dan berinteraksi dengan audiens.</li>
+<li><strong>Ulasan dan reputasi online yang baik</strong>   terutama di Google Maps dan platform marketplace tempat produk dijual.</li>
+<li><strong>Materi promosi yang bisa direplikasi</strong>   template konten, foto produk standar, dan panduan komunikasi yang bisa digunakan calon mitra di lokasi baru.</li>
 </ul>
 
 <h2>Manfaat Fondasi Ini bagi Ekspansi Franchise</h2>

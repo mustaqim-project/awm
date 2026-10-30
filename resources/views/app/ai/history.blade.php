@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('ai.history.title') . ' — COOCA'])
+@extends('layouts.app', ['title' => __('ai.history.title') . '   COOCA'])
 
 @section('content')
 <div class="space-y-6">

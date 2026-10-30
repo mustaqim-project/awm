@@ -25,7 +25,7 @@ reading_time: "5 menit"
 <p>Laba kotor biasanya terlihat lebih besar dan "menggembirakan" dibanding laba bersih, sehingga pemilik usaha bisa merasa usahanya sangat menguntungkan padahal setelah dikurangi biaya operasional, keuntungan riil jauh lebih kecil atau bahkan minus.</p>
 
 <h2>Contoh Ilustrasi Perbedaan Keduanya</h2>
-<p>Misalkan total penjualan bulanan Rp20.000.000 dengan HPP Rp10.000.000, maka laba kotor adalah Rp10.000.000. Namun setelah dikurangi biaya operasional seperti sewa, gaji, dan listrik sebesar Rp8.000.000, laba bersih yang sebenarnya hanya Rp2.000.000 — jauh lebih kecil dari kesan awal saat hanya melihat laba kotor.</p>
+<p>Misalkan total penjualan bulanan Rp20.000.000 dengan HPP Rp10.000.000, maka laba kotor adalah Rp10.000.000. Namun setelah dikurangi biaya operasional seperti sewa, gaji, dan listrik sebesar Rp8.000.000, laba bersih yang sebenarnya hanya Rp2.000.000   jauh lebih kecil dari kesan awal saat hanya melihat laba kotor.</p>
 
 <blockquote>Fokus hanya pada laba kotor bisa membuat pemilik usaha mengambil keputusan ekspansi atau pengeluaran besar yang sebenarnya belum didukung oleh keuntungan riil.</blockquote>
 

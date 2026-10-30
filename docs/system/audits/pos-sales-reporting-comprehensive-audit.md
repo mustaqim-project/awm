@@ -4,7 +4,7 @@
 **Dokumen Rencana Kerja:** [`docs/system/audits/pos-sales-reporting-master-implementation-plan.md`](file:///c:/laragon/www/cooca_core/docs/system/audits/pos-sales-reporting-master-implementation-plan.md)  
 **Target Komponen:** [`app/Http/Controllers/Web/Pos/PosReportWebController.php`](file:///c:/laragon/www/cooca_core/app/Http/Controllers/Web/Pos/PosReportWebController.php), [`app/Domain/Report/SalesReportService.php`](file:///c:/laragon/www/cooca_core/app/Domain/Report/SalesReportService.php), [`app/Exports/PosReportExport.php`](file:///c:/laragon/www/cooca_core/app/Exports/PosReportExport.php), [`resources/views/app/pos/reports.blade.php`](file:///c:/laragon/www/cooca_core/resources/views/app/pos/reports.blade.php), Database Schema Transaksional (`pos_orders`, `pos_order_items`, `pos_order_payments`, `pos_shifts`, `sales_returns`)  
 **Metodologi:** *Code-First Factuality Audit* menggabungkan 8 Skill Utama COOCA secara simultan berbasis basis data dan logika aktual.  
-**Tanggal Audit:** 04 Oktober 2026 | **Status:** `AUDIT COMPLETED — APPROVED FOR MASTER IMPLEMENTATION`
+**Tanggal Audit:** 04 Oktober 2026 | **Status:** `AUDIT COMPLETED   APPROVED FOR MASTER IMPLEMENTATION`
 
 ---
 
@@ -182,15 +182,15 @@ app/
 
 Buku kerja Excel di-generate menggunakan `PhpSpreadsheet` dengan styling palet Apple HIG (`#1C1C1E` dark header, `#007AFF` accent blue, `#34C759` system green, format angka `"Rp "#,##0.00` dan `#0.0%`):
 
-1. **Sheet 1 — 📋 Ringkasan Eksekutif:** Informasi Bisnis, Periode, 6 Bento KPI Cards, Komposisi Barang vs Jasa, Status Rekonsiliasi 3-Arah.
-2. **Sheet 2 — 🧾 Rincian Transaksi:** Nomor Order, Tanggal/Jam, Outlet, Kasir, Pelanggan, Tipe Order, Item Qty, Subtotal, Diskon, Pajak, Service, Grand Total, HPP, Laba Kotor, Margin %, Metode Bayar, Status.
-3. **Sheet 3 — 📦 Performa Produk:** SKU, Barcode, Nama Produk, Kategori, Qty Terjual, Gross Sales, Diskon, Net Sales, HPP, Laba Kotor, Margin %, ASP, Transaksi Count.
-4. **Sheet 4 — 🏷️ Kontribusi Kategori:** Kategori, Subkategori, Qty, Gross, Net, HPP, Laba Kotor, Margin %, Kontribusi Omzet %.
-5. **Sheet 5 — 👤 Kinerja Kasir:** Nama Kasir, Total Order, Qty Item, Gross Sales, Diskon, Retur, Net Sales, AOV, Avg Items, Kas Masuk, Non-Tunai, Void Count, Refund Count.
-6. **Sheet 6 — 💳 Rincian Pembayaran:** Metode Pembayaran, Tx Count, Gross Collected, Fee MDR Gateway, Net Settlement, % Proporsi Kanal Bayar.
-7. **Sheet 7 — 🎁 Analisis Diskon:** Jenis Diskon, Kode Voucher, Qty Transaksi, Gross Sales, Nilai Potongan Diskon, Net Sales, % Efektivitas.
-8. **Sheet 8 — 🔄 Retur, Refund & Void:** No. Retur/Void, Invoice Asal, Tanggal, Outlet, Kasir, Item, Qty, Nominal, Alasan, Supervisor Approver.
-9. **Sheet 9 — ⏱️ Rekonsiliasi Shift:** Shift ID, Kasir, Waktu Buka/Tutup, Modal Awal, Penjualan Tunai, Expected Cash, Actual Cash, Variance Over/Short, Status Pas.
+1. **Sheet 1   📋 Ringkasan Eksekutif:** Informasi Bisnis, Periode, 6 Bento KPI Cards, Komposisi Barang vs Jasa, Status Rekonsiliasi 3-Arah.
+2. **Sheet 2   🧾 Rincian Transaksi:** Nomor Order, Tanggal/Jam, Outlet, Kasir, Pelanggan, Tipe Order, Item Qty, Subtotal, Diskon, Pajak, Service, Grand Total, HPP, Laba Kotor, Margin %, Metode Bayar, Status.
+3. **Sheet 3   📦 Performa Produk:** SKU, Barcode, Nama Produk, Kategori, Qty Terjual, Gross Sales, Diskon, Net Sales, HPP, Laba Kotor, Margin %, ASP, Transaksi Count.
+4. **Sheet 4   🏷️ Kontribusi Kategori:** Kategori, Subkategori, Qty, Gross, Net, HPP, Laba Kotor, Margin %, Kontribusi Omzet %.
+5. **Sheet 5   👤 Kinerja Kasir:** Nama Kasir, Total Order, Qty Item, Gross Sales, Diskon, Retur, Net Sales, AOV, Avg Items, Kas Masuk, Non-Tunai, Void Count, Refund Count.
+6. **Sheet 6   💳 Rincian Pembayaran:** Metode Pembayaran, Tx Count, Gross Collected, Fee MDR Gateway, Net Settlement, % Proporsi Kanal Bayar.
+7. **Sheet 7   🎁 Analisis Diskon:** Jenis Diskon, Kode Voucher, Qty Transaksi, Gross Sales, Nilai Potongan Diskon, Net Sales, % Efektivitas.
+8. **Sheet 8   🔄 Retur, Refund & Void:** No. Retur/Void, Invoice Asal, Tanggal, Outlet, Kasir, Item, Qty, Nominal, Alasan, Supervisor Approver.
+9. **Sheet 9   ⏱️ Rekonsiliasi Shift:** Shift ID, Kasir, Waktu Buka/Tutup, Modal Awal, Penjualan Tunai, Expected Cash, Actual Cash, Variance Over/Short, Status Pas.
 
 ---
 

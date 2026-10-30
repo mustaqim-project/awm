@@ -20,17 +20,17 @@ reading_time: "5 menit"
 
 <h2>Contoh Pembagian Peran Harian</h2>
 <ul>
-<li><strong>Karyawan 1 (Barista)</strong> — fokus pada pembuatan minuman dan menjaga kualitas rasa konsisten.</li>
-<li><strong>Karyawan 2 (Pelayan/Kasir)</strong> — menerima pesanan, mengantar ke meja, dan mengelola transaksi kasir.</li>
-<li><strong>Karyawan 3 (Support/Kebersihan)</strong> — menjaga kebersihan meja, membantu penyajian saat ramai, dan mengelola stok bahan.</li>
+<li><strong>Karyawan 1 (Barista)</strong>   fokus pada pembuatan minuman dan menjaga kualitas rasa konsisten.</li>
+<li><strong>Karyawan 2 (Pelayan/Kasir)</strong>   menerima pesanan, mengantar ke meja, dan mengelola transaksi kasir.</li>
+<li><strong>Karyawan 3 (Support/Kebersihan)</strong>   menjaga kebersihan meja, membantu penyajian saat ramai, dan mengelola stok bahan.</li>
 </ul>
 
 <h2>SOP Harian Sederhana</h2>
 <ol>
-<li><strong>Sebelum Buka</strong> — cek stok bahan baku utama, siapkan peralatan, dan pastikan area pelanggan bersih.</li>
-<li><strong>Jam Operasional</strong> — pembagian tugas sesuai peran, dengan rotasi bantu-membantu saat salah satu area sedang sangat sibuk.</li>
-<li><strong>Jam Istirahat Karyawan</strong> — dijadwalkan bergantian agar operasional tidak pernah kosong dari kasir dan barista.</li>
-<li><strong>Sebelum Tutup</strong> — rekap penjualan harian, cek ulang stok untuk pemesanan berikutnya, dan bersihkan area kerja.</li>
+<li><strong>Sebelum Buka</strong>   cek stok bahan baku utama, siapkan peralatan, dan pastikan area pelanggan bersih.</li>
+<li><strong>Jam Operasional</strong>   pembagian tugas sesuai peran, dengan rotasi bantu-membantu saat salah satu area sedang sangat sibuk.</li>
+<li><strong>Jam Istirahat Karyawan</strong>   dijadwalkan bergantian agar operasional tidak pernah kosong dari kasir dan barista.</li>
+<li><strong>Sebelum Tutup</strong>   rekap penjualan harian, cek ulang stok untuk pemesanan berikutnya, dan bersihkan area kerja.</li>
 </ol>
 
 <h2>Tips Menjaga Operasional Tetap Tenang Saat Ramai</h2>

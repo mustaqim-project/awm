@@ -23,8 +23,8 @@ reading_time: "5 menit"
 
 <h2>Perbandingan dari Sisi Investasi Awal</h2>
 <ul>
-<li><strong>Kopi café</strong> — investasi awal lebih tinggi karena kebutuhan mesin espresso dan peralatan barista lainnya.</li>
-<li><strong>Boba</strong> — investasi awal relatif lebih rendah karena peralatan yang dibutuhkan lebih sederhana.</li>
+<li><strong>Kopi café</strong>   investasi awal lebih tinggi karena kebutuhan mesin espresso dan peralatan barista lainnya.</li>
+<li><strong>Boba</strong>   investasi awal relatif lebih rendah karena peralatan yang dibutuhkan lebih sederhana.</li>
 </ul>
 
 <h2>Perbandingan dari Sisi Margin per Cup</h2>

@@ -11,7 +11,7 @@ return [
 
     'hero_kicker' => 'MSME POS, Inventory & Accounting Software',
     'hero_title' => 'MSME Point of Sale: Fast Checkout, Stock & Accounting in One System',
-    'hero_subtitle' => 'Right from your phone, tablet, or PC. Ring up sales, deduct stock automatically, track daily profit, and control store operations with an AI Assistant—without messy spreadsheets.',
+    'hero_subtitle' => 'Right from your phone, tablet, or PC. Ring up sales, deduct stock automatically, track daily profit, and control store operations with an AI Assistant without messy spreadsheets.',
     'hero_cta_primary' => 'Start Free Trial',
     'hero_cta_secondary' => 'See How It Works',
     'btn_dashboard' => 'Dashboard',

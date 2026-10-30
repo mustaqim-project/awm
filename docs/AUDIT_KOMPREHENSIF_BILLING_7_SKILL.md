@@ -159,7 +159,7 @@ sequenceDiagram
 - **Nama Modul:** Cooca SaaS Billing, Limits & Subscription Engine v2.5
 - **Modul ID:** `app.billing`
 - **Target Pengguna:** Pemilik Usaha UMKM (Owner usia 25–65+ tahun), Staf Finansial, dan Superadmin Platform.
-- **Filosofi Desain:** *Apple Human Interface Guidelines (HIG) Bento UI v2.0* — Bersih, lapang, tipografi terbaca jelas, minim manual input, zero marketing slop, reaktivitas tanpa refresh halaman, dan aman dari skema fraud internal.
+- **Filosofi Desain:** *Apple Human Interface Guidelines (HIG) Bento UI v2.0*   Bersih, lapang, tipografi terbaca jelas, minim manual input, zero marketing slop, reaktivitas tanpa refresh halaman, dan aman dari skema fraud internal.
 
 ### 3.2 Kebutuhan Fungsional (Functional Requirements)
 1. **Tiering & Quota Architecture (4-Tier Model):**

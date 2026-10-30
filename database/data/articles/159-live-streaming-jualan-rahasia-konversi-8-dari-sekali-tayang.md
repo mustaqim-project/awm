@@ -20,10 +20,10 @@ reading_time: "5 menit"
 
 <h2>Elemen Penting dalam Live Streaming Jualan</h2>
 <ul>
-<li><strong>Pembukaan yang menarik perhatian</strong> — sampaikan produk unggulan atau promo khusus di awal sesi untuk menahan penonton lebih lama.</li>
-<li><strong>Demonstrasi produk secara langsung</strong> — tunjukkan detail, cara pakai, atau proses pembuatan produk secara nyata.</li>
-<li><strong>Interaksi aktif dengan penonton</strong> — jawab pertanyaan yang muncul di kolom komentar secara langsung.</li>
-<li><strong>Penawaran khusus selama sesi live</strong> — diskon atau bonus terbatas yang hanya berlaku selama siaran berlangsung untuk mendorong keputusan cepat.</li>
+<li><strong>Pembukaan yang menarik perhatian</strong>   sampaikan produk unggulan atau promo khusus di awal sesi untuk menahan penonton lebih lama.</li>
+<li><strong>Demonstrasi produk secara langsung</strong>   tunjukkan detail, cara pakai, atau proses pembuatan produk secara nyata.</li>
+<li><strong>Interaksi aktif dengan penonton</strong>   jawab pertanyaan yang muncul di kolom komentar secara langsung.</li>
+<li><strong>Penawaran khusus selama sesi live</strong>   diskon atau bonus terbatas yang hanya berlaku selama siaran berlangsung untuk mendorong keputusan cepat.</li>
 </ul>
 
 <h2>Tips Persiapan Sebelum Live Streaming</h2>

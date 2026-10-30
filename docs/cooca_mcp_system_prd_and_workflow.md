@@ -87,7 +87,7 @@ flowchart TD
 
 COOCA menyediakan dua mode transport protokol MCP:
 
-### 3.1 Mode 1: Remote HTTP Server-Sent Events (SSE) — *Recommended*
+### 3.1 Mode 1: Remote HTTP Server-Sent Events (SSE)   *Recommended*
 AI Client terhubung langsung ke COOCA Cloud melalui HTTPS SSE tanpa perlu instalasi runtime Node.js/Python lokal pada laptop user.
 * **Endpoint Inisialisasi SSE:** `GET https://api.cooca.id/v1/mcp/sse`
 * **Endpoint Pesan JSON-RPC:** `POST https://api.cooca.id/v1/mcp/message?sessionId={session_id}`

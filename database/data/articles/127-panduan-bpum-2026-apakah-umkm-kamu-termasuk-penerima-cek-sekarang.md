@@ -27,7 +27,7 @@ reading_time: "5 menit"
 <ol>
 <li><strong>Kunjungi kanal resmi</strong> yang ditunjuk pemerintah untuk pengecekan status bantuan UMKM, biasanya melalui situs resmi kementerian terkait atau eform yang diumumkan resmi.</li>
 <li><strong>Masukkan data diri</strong> sesuai KTP untuk verifikasi status pengajuan.</li>
-<li><strong>Cek hasil verifikasi</strong> — apakah terdaftar sebagai calon penerima, masih dalam proses, atau tidak memenuhi syarat.</li>
+<li><strong>Cek hasil verifikasi</strong>   apakah terdaftar sebagai calon penerima, masih dalam proses, atau tidak memenuhi syarat.</li>
 </ol>
 
 <h2>Yang Perlu Diwaspadai</h2>
@@ -36,7 +36,7 @@ reading_time: "5 menit"
 <li>Selalu verifikasi informasi program bantuan dari sumber resmi pemerintah, bukan dari pesan berantai media sosial yang belum jelas sumbernya.</li>
 </ul>
 
-<blockquote>Program bantuan seperti ini bersifat dinamis mengikuti kebijakan anggaran pemerintah — pastikan selalu mengecek informasi terbaru dari kanal resmi, bukan informasi lama yang sudah tidak berlaku.</blockquote>
+<blockquote>Program bantuan seperti ini bersifat dinamis mengikuti kebijakan anggaran pemerintah   pastikan selalu mengecek informasi terbaru dari kanal resmi, bukan informasi lama yang sudah tidak berlaku.</blockquote>
 
 <h2>Langkah Jika Belum Terdaftar sebagai Calon Penerima</h2>
 <p>Jika usahamu belum terdaftar, langkah pertama adalah memastikan NIB sudah aktif dan usaha sudah terdata di sistem Kemenkop UKM setempat. Data yang lengkap dan terverifikasi akan mempermudah proses pendataan untuk program bantuan di periode berikutnya.</p>

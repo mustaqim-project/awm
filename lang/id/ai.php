@@ -354,7 +354,7 @@ return [
     ],
 
     'lobby' => [
-        'title' => 'Virtual Office Headquarters — Pembagian Ruang Kerja Tim',
+        'title' => 'Virtual Office Headquarters   Pembagian Ruang Kerja Tim',
         'subtitle' => 'Semua AI Agent beroperasi dalam satu virtual office yang sama layaknya The Sims. Tugas didelegasikan kepada tim fungsional, dan eksekutif memegang kendali strategi.',
         'assign_team' => 'Tugaskan Tim AI',
         'executive_suite' => 'Eksekutif & Boardroom',
@@ -460,9 +460,9 @@ return [
     ],
 
     'offices' => [
-        'executive_title' => 'COOCA AI — Executive Office',
-        'operations_title' => 'COOCA AI — Operations Office',
-        'growth_title' => 'COOCA AI — Growth Office',
+        'executive_title' => 'COOCA AI   Executive Office',
+        'operations_title' => 'COOCA AI   Operations Office',
+        'growth_title' => 'COOCA AI   Growth Office',
         'digital_company_title' => 'COOCA AI Digital Company',
         'digital_workforce' => 'DIGITAL WORKFORCE',
         'agents_and_depts' => ':agents Agen &bull; :depts Divisi',

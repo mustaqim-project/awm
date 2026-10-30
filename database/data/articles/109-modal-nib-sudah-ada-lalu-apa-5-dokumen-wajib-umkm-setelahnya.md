@@ -28,7 +28,7 @@ reading_time: "5 menit"
 <p>Memisahkan rekening pribadi dan usaha membantu pencatatan keuangan lebih rapi, sekaligus jadi syarat administratif banyak program pembiayaan dan kerja sama bisnis.</p>
 
 <h2>5. Pembukuan atau Laporan Keuangan Sederhana</h2>
-<p>Dokumen ini sering diabaikan, padahal pembukuan yang konsisten — walau sederhana — adalah syarat hampir semua pengajuan modal, baik dari bank, koperasi, maupun investor.</p>
+<p>Dokumen ini sering diabaikan, padahal pembukuan yang konsisten   walau sederhana   adalah syarat hampir semua pengajuan modal, baik dari bank, koperasi, maupun investor.</p>
 
 <blockquote>Legalitas usaha dan kerapian data keuangan adalah dua fondasi yang sama pentingnya untuk bisa mengakses modal dan pertumbuhan.</blockquote>
 

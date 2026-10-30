@@ -1,4 +1,4 @@
-# COOCA — CUSTOMER MARKETPLACE MOBILE APP
+# COOCA   CUSTOMER MARKETPLACE MOBILE APP
 ## Master Product Requirements Document (PRD), Architecture & Implementation Blueprint
 
 ---
@@ -76,7 +76,7 @@ Navigasi utama menggunakan **Bottom Navigation Bar 5-Tab**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                   COOCA CUSTOMER APP — BOTTOM NAVBAR                   │
+│                   COOCA CUSTOMER APP   BOTTOM NAVBAR                   │
 ├────────────────────────────────────────────────────────────────────────┤
 │ 1. [ Beranda (Home) ]                                                  │
 │    • Search Bar & Location Chip (Kecamatan / Kota Saya)                │

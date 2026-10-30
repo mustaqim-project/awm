@@ -1175,7 +1175,7 @@ document.addEventListener('alpine:init', () => {
                         {{-- 4 Steps Layout --}}
                         <div class="space-y-4">
 
-                            {{-- LANGKAH 1 — Buka menu Plugins atau Apps --}}
+                            {{-- LANGKAH 1   Buka menu Plugins atau Apps --}}
                             <div class="p-4 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-2.5">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
@@ -1192,7 +1192,7 @@ document.addEventListener('alpine:init', () => {
                                 </p>
                             </div>
 
-                            {{-- LANGKAH 2 — Tambahkan MCP Server --}}
+                            {{-- LANGKAH 2   Tambahkan MCP Server --}}
                             <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">2</span>
@@ -1638,7 +1638,7 @@ document.addEventListener('alpine:init', () => {
                                 </div>
                             </div>
 
-                            {{-- LANGKAH 3 — Buat dan periksa tools --}}
+                            {{-- LANGKAH 3   Buat dan periksa tools --}}
                             <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">3</span>
@@ -1660,7 +1660,7 @@ document.addEventListener('alpine:init', () => {
                                 </div>
                             </div>
 
-                            {{-- LANGKAH 4 — Uji di percakapan --}}
+                            {{-- LANGKAH 4   Uji di percakapan --}}
                             <div class="p-5 rounded-[16px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-3.5">
                                 <div class="flex items-center gap-2">
                                     <span class="w-6 h-6 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 text-xs font-bold flex items-center justify-center shrink-0">4</span>

@@ -34,7 +34,7 @@ reading_time: "5 menit"
 <h3>5. Kesalahan Pencatatan Penjualan</h3>
 <p>Transaksi yang tidak tercatat dengan baik membuat perhitungan rasio menjadi tidak akurat, seolah-olah food cost lebih tinggi dari kondisi sebenarnya.</p>
 
-<blockquote>Food cost yang tinggi jarang disebabkan oleh satu faktor tunggal — biasanya kombinasi dari beberapa kebocoran kecil yang terakumulasi.</blockquote>
+<blockquote>Food cost yang tinggi jarang disebabkan oleh satu faktor tunggal   biasanya kombinasi dari beberapa kebocoran kecil yang terakumulasi.</blockquote>
 
 <h2>Cara Mulai Memperbaiki Food Cost</h2>
 <ol>

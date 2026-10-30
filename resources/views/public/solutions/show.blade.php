@@ -74,7 +74,7 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Solusi Khusus {{ $solution['badge'] }}
+                                {{ __('public_solutions.show_kicker_prefix', ['badge' => $solution['badge']]) }}
                             </p>
                         </div>
 
@@ -95,25 +95,25 @@
                                 <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
                                     <i data-lucide="smartphone" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Android, Tablet, atau Laptop</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.show_tile_devices') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
                                     <i data-lucide="printer" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Printer Bluetooth Thermal</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.show_tile_thermal') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-400/20">
                                     <i data-lucide="line-chart" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Laba bersih &amp; stok otomatis</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.show_tile_profit') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center shrink-0 mt-0.5 border border-purple-400/20">
                                     <i data-lucide="book-open" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Sinkron pembukuan finansial</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.show_tile_sync') }}</span>
                             </div>
                         </div>
 
@@ -121,14 +121,14 @@
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Mulai Coba Sekarang</span>
+                                <span>{{ __('public_solutions.show_cta_start') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                             </a>
                             <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text=Halo%20saya%20tertarik%20dengan%20solusi%20{{ urlencode($solution['title']) }}"
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true"></i>
-                                <span>Konsultasi via WhatsApp</span>
+                                <span>{{ __('public_solutions.show_cta_wa') }}</span>
                             </a>
                         </div>
 
@@ -136,15 +136,15 @@
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Android, Tablet &amp; Laptop</span>
+                                <span>{{ __('public_solutions.show_reassurance_devices') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Printer Thermal Bluetooth</span>
+                                <span>{{ __('public_solutions.show_reassurance_thermal') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>Sinkron Finansial Real-Time</span>
+                                <span>{{ __('public_solutions.show_reassurance_financial') }}</span>
                             </div>
                         </div>
                     </div>
@@ -166,13 +166,13 @@
                                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <div class="font-bold text-white text-xs sm:text-sm truncate">Terminal: {{ $solution['badge'] }}</div>
-                                        <div class="text-[10px] text-slate-400 truncate">Kasir POS &amp; Pembukuan Operasional</div>
+                                        <div class="font-bold text-white text-xs sm:text-sm truncate">{{ __('public_solutions.show_terminal_badge', ['badge' => $solution['badge']]) }}</div>
+                                        <div class="text-[10px] text-slate-400 truncate">{{ __('public_solutions.show_terminal_subtitle') }}</div>
                                     </div>
                                 </div>
                                 <span
                                     class="text-[11px] font-semibold text-emerald-400 bg-emerald-400/15 border border-emerald-400/30 px-2.5 py-1 rounded-full flex items-center gap-1.5 shrink-0">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span> Kasir Siap
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span> {{ __('public_solutions.show_terminal_ready') }}
                                 </span>
                             </div>
 
@@ -403,7 +403,7 @@
 
             {{-- Cross-Link to Other Verticals --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Solusi Industri Lainnya</h3>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.show_other_solutions_title') }}</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     @foreach ($otherSolutions as $os)
                         <a href="{{ route('solusi.show', $os['slug']) }}"
@@ -433,26 +433,27 @@
                     <div
                         class="text-xs font-semibold uppercase tracking-wider text-[#00C4D8] inline-flex items-center gap-1.5">
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
-                        <span>Tersedia untuk Android, Tablet, Laptop, & Printer Bluetooth</span>
+                        <span>{{ __('public_solutions.show_bottom_badge') }}</span>
                     </div>
                     <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
-                        Mulai Digitalisasi Usaha Anda Hari Ini
+                        {{ __('public_solutions.show_bottom_title') }}
                     </h3>
                     <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed text-pretty">
-                        Tidak perlu beli mesin kasir mahal. Cukup gunakan HP Android, tablet, atau laptop yang sudah Anda
-                        miliki sekarang untuk mengelola bisnis lebih rapi.
+                        {{ __('public_solutions.show_bottom_desc') }}
                     </p>
                     <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3.5">
                         <a href="{{ route('register') }}"
                             class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm inline-flex items-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-95 transition-all">
-                            <span>Daftar Akun COOCA</span>
+                            <span>{{ __('public_solutions.show_bottom_cta_register') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="h-12 px-7 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
-                            <span>Lihat Paket Harga</span>
+                            <span>{{ __('public_solutions.show_bottom_cta_pricing') }}</span>
                         </a>
                     </div>
+                </div>
+            </section>
                 </div>
             </section>
 

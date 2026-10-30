@@ -38,7 +38,7 @@
                     </h3>
                     <p class="text-[11px]" style="color: #8B5A2B99;">
                         @if ($hasQrTable)
-                            Scan QR meja terdeteksi — langsung pesan tanpa antre!
+                            Scan QR meja terdeteksi   langsung pesan tanpa antre!
                         @else
                             Masukkan nomor meja Anda untuk pesan langsung
                         @endif
@@ -109,7 +109,7 @@
                 style="background: rgba(139, 90, 43, 0.04); border: 1px solid rgba(139, 90, 43, 0.08);">
                 <i data-lucide="info" class="w-3.5 h-3.5 mt-0.5 shrink-0" style="color: #C88A58;"></i>
                 <p class="text-[11px] leading-relaxed" style="color: #6B5744;">
-                    Nomor meja akan otomatis terisi saat Anda scan QR code yang ada di meja. Tambahkan item kopi ke keranjang lalu checkout — pesanan langsung masuk ke barista.
+                    Nomor meja akan otomatis terisi saat Anda scan QR code yang ada di meja. Tambahkan item kopi ke keranjang lalu checkout   pesanan langsung masuk ke barista.
                 </p>
             </div>
 

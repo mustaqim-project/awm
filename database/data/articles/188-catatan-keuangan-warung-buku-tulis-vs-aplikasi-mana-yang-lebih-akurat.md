@@ -1,6 +1,6 @@
 ---
-title: "Catatan Keuangan Warung: Buku Tulis vs Aplikasi — Mana yang Lebih Akurat?"
-meta_title: "Catatan Keuangan Warung: Buku Tulis vs Aplikasi — Mana yang Lebih Akurat?"
+title: "Catatan Keuangan Warung: Buku Tulis vs Aplikasi   Mana yang Lebih Akurat?"
+meta_title: "Catatan Keuangan Warung: Buku Tulis vs Aplikasi   Mana yang Lebih Akurat?"
 meta_description: "Perbandingan akurasi pencatatan keuangan usaha menggunakan buku tulis konvensional dan aplikasi pembukuan digital untuk warung."
 slug: "catatan-keuangan-warung-buku-tulis-vs-aplikasi-mana-yang-lebih-akurat"
 primary_keyword: "buku tulis vs aplikasi"
@@ -11,7 +11,7 @@ cover_image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=for
 reading_time: "5 menit"
 ---
 
-# Catatan Keuangan Warung: Buku Tulis vs Aplikasi — Mana yang Lebih Akurat?
+# Catatan Keuangan Warung: Buku Tulis vs Aplikasi   Mana yang Lebih Akurat?
 
 <p>Buku tulis masih menjadi pilihan banyak pemilik warung untuk mencatat keuangan usaha karena dianggap sederhana dan tidak membutuhkan perangkat tambahan. Namun, seberapa akurat metode ini dibanding menggunakan aplikasi digital?</p>
 

@@ -24,7 +24,7 @@ reading_time: "5 menit"
 <p><strong>Kekurangan:</strong> perlu adaptasi awal bagi karyawan yang belum terbiasa menggunakan sistem digital.</p>
 
 <h2>Perbandingan dari Sisi Waktu</h2>
-<p>Mencatat 50 transaksi secara manual, termasuk merekap total penjualan harian, bisa memakan waktu signifikan di akhir hari — belum termasuk waktu tambahan jika terjadi kesalahan hitung yang harus ditelusuri ulang. Dengan sistem kasir digital, rekap otomatis tersedia begitu transaksi terakhir selesai diinput, tanpa perlu penghitungan ulang manual.</p>
+<p>Mencatat 50 transaksi secara manual, termasuk merekap total penjualan harian, bisa memakan waktu signifikan di akhir hari   belum termasuk waktu tambahan jika terjadi kesalahan hitung yang harus ditelusuri ulang. Dengan sistem kasir digital, rekap otomatis tersedia begitu transaksi terakhir selesai diinput, tanpa perlu penghitungan ulang manual.</p>
 
 <h2>Perbandingan dari Sisi Akurasi</h2>
 <p>Pada volume transaksi yang cukup tinggi, potensi human error dalam pencatatan manual meningkat, terutama saat kasir harus melayani banyak pelanggan sekaligus. Sistem digital mengurangi risiko ini karena perhitungan otomatis dilakukan sistem, bukan manual oleh kasir.</p>

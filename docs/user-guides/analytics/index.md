@@ -1,4 +1,4 @@
-# Panduan Pengguna — Analitik Bisnis & Tren Pertumbuhan
+# Panduan Pengguna   Analitik Bisnis & Tren Pertumbuhan
 > Breadcrumb: [Panduan Sistem](../../SYSTEM_GUIDE.md) › Analitik Bisnis & Tren Pertumbuhan  
 > Terakhir diverifikasi terhadap route aktual: Commit `38cdcdf` | Tanggal: 2026-10-25
 

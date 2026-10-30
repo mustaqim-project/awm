@@ -16,13 +16,13 @@ reading_time: "5 menit"
 <p>Melihat warung ramai pengunjung sering membuat pemilik usaha merasa yakin bahwa keuntungan yang didapat juga besar. Padahal, omzet tinggi belum tentu berbanding lurus dengan profit yang dihasilkan.</p>
 
 <h2>Perbedaan Mendasar Omzet dan Profit</h2>
-<p>Omzet adalah total pendapatan dari penjualan sebelum dikurangi biaya apa pun, sementara profit adalah sisa uang setelah seluruh biaya — bahan baku, operasional, dan biaya lain — dikurangkan dari omzet tersebut.</p>
+<p>Omzet adalah total pendapatan dari penjualan sebelum dikurangi biaya apa pun, sementara profit adalah sisa uang setelah seluruh biaya   bahan baku, operasional, dan biaya lain   dikurangkan dari omzet tersebut.</p>
 
 <h2>Kenapa Warung "Sibuk" Belum Tentu Profit Besar</h2>
 <ul>
-<li><strong>Margin per transaksi kecil</strong> — jika harga jual rendah dengan margin tipis, dibutuhkan volume sangat besar untuk menghasilkan profit signifikan.</li>
-<li><strong>Biaya operasional meningkat seiring keramaian</strong> — semakin ramai, semakin banyak bahan baku dan tenaga kerja yang dibutuhkan, yang juga meningkatkan biaya.</li>
-<li><strong>Promo atau diskon yang sering diberikan</strong> — keramaian yang didorong oleh promo besar-besaran bisa mengurangi margin secara signifikan.</li>
+<li><strong>Margin per transaksi kecil</strong>   jika harga jual rendah dengan margin tipis, dibutuhkan volume sangat besar untuk menghasilkan profit signifikan.</li>
+<li><strong>Biaya operasional meningkat seiring keramaian</strong>   semakin ramai, semakin banyak bahan baku dan tenaga kerja yang dibutuhkan, yang juga meningkatkan biaya.</li>
+<li><strong>Promo atau diskon yang sering diberikan</strong>   keramaian yang didorong oleh promo besar-besaran bisa mengurangi margin secara signifikan.</li>
 </ul>
 
 <h2>Cara Menghitung Omzet Harian dengan Benar</h2>

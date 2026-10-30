@@ -16,13 +16,13 @@ reading_time: "5 menit"
 <p>Prediksi penjualan berbasis kecerdasan buatan dulu identik dengan perusahaan besar yang memiliki data dalam jumlah masif. Kini, teknologi ini mulai bisa diakses usaha kecil, meski dengan pertanyaan besar: seberapa akurat hasilnya untuk skala warung?</p>
 
 <h2>Bagaimana AI Memprediksi Penjualan</h2>
-<p>Secara umum, sistem prediksi berbasis AI menganalisis pola data penjualan historis — seperti tren harian, mingguan, atau musiman — untuk memperkirakan kemungkinan penjualan di periode mendatang berdasarkan pola yang berulang.</p>
+<p>Secara umum, sistem prediksi berbasis AI menganalisis pola data penjualan historis   seperti tren harian, mingguan, atau musiman   untuk memperkirakan kemungkinan penjualan di periode mendatang berdasarkan pola yang berulang.</p>
 
 <h2>Faktor yang Memengaruhi Akurasi Prediksi untuk Warung Kecil</h2>
 <ul>
-<li><strong>Kualitas dan konsistensi data historis</strong> — semakin lengkap dan konsisten data penjualan yang tercatat, semakin baik pula dasar prediksi yang dihasilkan.</li>
-<li><strong>Stabilitas pola bisnis</strong> — usaha dengan pola penjualan yang relatif stabil (misalnya warung makan harian) cenderung lebih mudah diprediksi dibanding usaha musiman yang sangat fluktuatif.</li>
-<li><strong>Faktor eksternal tak terduga</strong> — perubahan mendadak seperti cuaca ekstrem, event lokal, atau perubahan tren konsumen bisa membuat prediksi meleset dari perkiraan.</li>
+<li><strong>Kualitas dan konsistensi data historis</strong>   semakin lengkap dan konsisten data penjualan yang tercatat, semakin baik pula dasar prediksi yang dihasilkan.</li>
+<li><strong>Stabilitas pola bisnis</strong>   usaha dengan pola penjualan yang relatif stabil (misalnya warung makan harian) cenderung lebih mudah diprediksi dibanding usaha musiman yang sangat fluktuatif.</li>
+<li><strong>Faktor eksternal tak terduga</strong>   perubahan mendadak seperti cuaca ekstrem, event lokal, atau perubahan tren konsumen bisa membuat prediksi meleset dari perkiraan.</li>
 </ul>
 
 <h2>Manfaat Prediksi Ini Meski Tidak 100% Akurat</h2>

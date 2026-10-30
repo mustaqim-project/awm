@@ -326,7 +326,7 @@
                                 Rp {{ number_format($totalNetSales, 0, ',', '.') }}
                             </td>
                             <td class="py-3 px-4 text-center text-black/40 dark:text-white/40">
-                                —
+                                 
                             </td>
                             <td class="py-3 px-4 text-right tabular-nums text-[#FF3B30] dark:text-[#FF453A]">
                                 {{ $totalPlatformFees > 0 ? '-Rp ' . number_format($totalPlatformFees, 0, ',', '.') : 'Rp 0' }}

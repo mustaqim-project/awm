@@ -1238,21 +1238,21 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 2. What Was Done
 - **Fase 6 (15+ Berkas, 23+ Modals Selesai 100%):**
-  1. **Task 6.1 — RBAC & Approvals System (3 Berkas, 8 Modals):**
+  1. **Task 6.1   RBAC & Approvals System (3 Berkas, 8 Modals):**
      - `resources/views/app/roles/index.blade.php`: `showAddModal` (z-[200]), `showEditModal` (z-[200]), `deleteModalOpen` (z-[220]), `showCloneModal` (z-[200]).
      - `resources/views/app/approvals/inbox.blade.php`: `detailModalOpen` (z-[200]), `rejectModalOpen` (z-[220]).
      - `resources/views/app/approvals/rules.blade.php`: `createModalOpen` (z-[200]), `editModalOpen` (z-[200]).
-  2. **Task 6.2 — WhatsApp Gateway & Broadcast (3 Berkas):**
+  2. **Task 6.2   WhatsApp Gateway & Broadcast (3 Berkas):**
      - `resources/views/app/whatsapp/logs.blade.php`, `broadcast.blade.php`, `index.blade.php`: Seluruh modal diaudit dan diverifikasi terstandarisasi dengan `<template x-teleport="body">`.
-  3. **Task 6.3 — AI Cockpit & Virtual Office (5 Berkas, 8 Modals):**
+  3. **Task 6.3   AI Cockpit & Virtual Office (5 Berkas, 8 Modals):**
      - `resources/views/app/ai/index.blade.php`, `office.blade.php`, `actions.blade.php`, `partials/consultation_modal.blade.php`, `partials/virtual_office_canvas.blade.php`: Seluruh modal konfigurasi AI, penugasan meja kantor virtual, kartu status karyawan AI, dan formulir konsultasi terstandarisasi dengan teleportasi body dan touch target 44px.
-  4. **Task 6.4 — Marketplace Hub & Media Sosial (5 Berkas):**
+  4. **Task 6.4   Marketplace Hub & Media Sosial (5 Berkas):**
      - `resources/views/app/social_media/inbox.blade.php`, `posts.blade.php`, `marketplace/index.blade.php`, `orders.blade.php`, `products.blade.php`: Terverifikasi rapi ter-teleportasi ke root `body`.
      - `resources/views/app/marketplace/logs.blade.php`: `detailModal` (z-[200] Payload/Response Sync Inspector) dibungkus `<template x-teleport="body">` dengan backdrop terpisah dan close button 44px.
-  5. **Task 6.5 — Landing Page, Portal, Billing Limits, Community & Audit Logs (7 Berkas, 14 Modals):**
+  5. **Task 6.5   Landing Page, Portal, Billing Limits, Community & Audit Logs (7 Berkas, 14 Modals):**
      - `resources/views/app/landing_page/edit.blade.php`: `showPreview` (z-[200]), `showPresetModal` (z-[200]), `showAddUrlModal` (z-[200]).
      - `resources/views/app/landing_page/popup.blade.php`: `mobilePreviewOpen` (z-[200] Apple Device Preview Mockup).
-     - `resources/views/app/portal/index.blade.php`: `showFaceAttendanceModal` (z-[200]), `showFaceRegisterModal` (z-[200]), `showCorrectionModal` (z-[200]), `showFeedbackModal` (z-[200]) — seluruh kamera WebRTC (`stopFaceRegCamera`, `closeAttendanceModal`) dan canvas biometrik tetap berfungsi sempurna.
+     - `resources/views/app/portal/index.blade.php`: `showFaceAttendanceModal` (z-[200]), `showFaceRegisterModal` (z-[200]), `showCorrectionModal` (z-[200]), `showFeedbackModal` (z-[200])   seluruh kamera WebRTC (`stopFaceRegCamera`, `closeAttendanceModal`) dan canvas biometrik tetap berfungsi sempurna.
      - `resources/views/app/billing/limits.blade.php`: `openFileManager` (z-[200]) dan `confirmDeleteModal` (z-[220] alert dialog didekopel ke root body terpisah untuk mencegah scroll & overlay entrapment).
      - `resources/views/app/community/index.blade.php` & `events.blade.php`: `selectedTicket` (z-[200] Tiket Event Komunitas).
      - `resources/views/app/security/audit-logs/index.blade.php`: `showModal` (z-[200] Visual Diff Viewer Audit Log).
@@ -1295,17 +1295,17 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 2. What Was Done
 - **Fase 5 (11 Berkas, 22 Modals Selesai 100%):**
-  1. **Task 5.1 — POS Backoffice & Manajemen Kasir (5 Berkas, 14 Modals):**
+  1. **Task 5.1   POS Backoffice & Manajemen Kasir (5 Berkas, 14 Modals):**
      - `resources/views/app/pos/orders.blade.php`: `showDetailModal` (z-[200]), `showVoidModal` (z-[220]), `showRefundModal` (z-[220]).
      - `resources/views/app/pos/shifts.blade.php`: `showOpenModal` (z-[200]), `showCloseModal` (z-[200]), `showMovementModal` (z-[200]), `showDetailModal` (z-[200]).
      - `resources/views/app/pos/tables.blade.php`: `showAddModal` (z-[200]), `showEditModal` (z-[200]), `showRegenModal` (z-[220]).
      - `resources/views/app/pos/printers/index.blade.php`: `showAddModal` (z-[200]), `showEditModal` (z-[200]), `showManualDrawerModal` (z-[220]).
      - `resources/views/app/pos/reports/partials/order_detail_modal.blade.php`: `isOpen` (z-[200] Slide-over Quick-View Detail Transaksi POS).
-  2. **Task 5.2 — Manajemen Inventori & Pergudangan (3 Berkas, 6 Modals):**
+  2. **Task 5.2   Manajemen Inventori & Pergudangan (3 Berkas, 6 Modals):**
      - `resources/views/app/inventory/opname.blade.php`: `showCreateModal` (z-[200]), `reconcileModalOpen` (z-[220]), `showImportModal` (z-[200] Bento XXL Pre-Commit Preview Opname).
      - `resources/views/app/inventory/transfers.blade.php`: `showCreateModal` (z-[200]), `receiveModalOpen` (z-[220]).
      - `resources/views/app/inventory/stocks.blade.php`: `showAdjustModal` (z-[200] Penyesuaian Stok Cepat & Supervisor PIN Verification).
-  3. **Task 5.3 — Storefront & Toko Online Merchant (3 Berkas, 8 Modals):**
+  3. **Task 5.3   Storefront & Toko Online Merchant (3 Berkas, 8 Modals):**
      - `resources/views/app/storefront/orders/show.blade.php`: `rejectModalOpen` (z-[220] Tolak Bukti Bayar), `verifyModalOpen` (z-[200] Konfirmasi QRIS Manual), `imageModalOpen` (z-[200] Lightbox Zoom Bukti), `waybillModalOpen` (z-[200] Terbitkan/Ubah Resi Kurir).
      - `resources/views/app/storefront/settings.blade.php`: `deleteModalOpen` (z-[220] Hapus Rekening), `addMethodModalOpen` (z-[200] Tambah Rekening/QRIS).
      - `resources/views/app/storefront/reservations/index.blade.php`: `showAssignModal` (z-[200] Alokasi Meja Restoran), `cancelModalOpen` (z-[220] Batalkan Reservasi).
@@ -1346,16 +1346,16 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 2. What Was Done
 - **Fase 4 (14 Berkas, 26 Modals Selesai 100%):**
-  1. **Task 4.1 — Pelanggan & Loyalty CRM (7 Modals):**
+  1. **Task 4.1   Pelanggan & Loyalty CRM (7 Modals):**
      - `resources/views/app/customers/index.blade.php`: `showAddModal`, `showEditModal`, `showDetailModal`, `showImportModal`.
      - `resources/views/app/crm/members.blade.php`: `showCreditModal`, `showPointsModal`.
      - `resources/views/app/crm/vouchers.blade.php`: `showVoucherModal`.
-  2. **Task 4.2 — Purchase Order (PO) & Supplier (8 Modals):**
+  2. **Task 4.2   Purchase Order (PO) & Supplier (8 Modals):**
      - `resources/views/app/purchase-orders/index.blade.php`: `instantModalOpen` (Penerimaan Stok Instan), `deleteModalOpen` (Hapus Draft PO).
      - `resources/views/app/purchase-orders/show.blade.php`: `cancelModalOpen` (Pembatalan PO dengan PIN Supervisor).
      - `resources/views/app/suppliers/index.blade.php`: `showAddModal`, `showEditModal`, `deleteModalOpen`, `showImportModal` (Interactive Pre-Commit Preview Excel).
      - `resources/views/app/purchasing/returns/show.blade.php`: `showPinModal` (Otorisasi Supervisor PIN Retur Pembelian).
-  3. **Task 4.3 — Invoice B2B, Quotation & Sales Orders (11 Modals):**
+  3. **Task 4.3   Invoice B2B, Quotation & Sales Orders (11 Modals):**
      - `resources/views/app/invoices/index.blade.php`: `deleteModalOpen` (Hapus Faktur Penjualan).
      - `resources/views/app/invoices/show.blade.php`: `showPaymentModal` (Catat Penerimaan Pembayaran), `confirmReleaseModalOpen` (Konfirmasi Rilis Faktur & Potong Stok), `confirmVoidModalOpen` (Batalkan / Void Faktur), `showReminderModal` (Kirim Pengingat Tagihan WA/Email).
      - `resources/views/app/quotations/show.blade.php`: `convertModalOpen` (Konversi Penawaran ke Sales Order).
@@ -2291,7 +2291,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   2. Mobile FCM Device Token Engine: Tabel `mobile_device_tokens`, relasi multi-tenant B2B (`user_id`, `business_id`) dan B2C (`global_customer_id`), endpoint pendaftaran & penonaktifan token saat logout (`/devices/fcm-token` & `/customer/devices/fcm-token`).
   3. POS Offline Batch Sync Engine: Endpoint `POST /api/v1/pos/sync/batch` dengan idempotency key berbasis `client_uuid` pada `pos_orders`. Transaksi offline dari smartphone/tablet kasir disinkronkan secara aman tanpa risiko double inventory deduction atau nota ganda saat internet pulih.
   4. Mobile Owner Pulse Real-Time Dashboard: Endpoint `GET /api/v1/mobile/dashboard/pulse` bertema Apple HIG Bento yang menyajikan omzet gabungan POS & Online Store hari ini vs kemarin (pertumbuhan YoY/DoD), margin laba kotor, daftar shift kasir aktif, antrean KDS, pesanan online pending, top 5 peringatan stok kritis, dan sparkline penjualan per jam.
-  5. Unified Test Suites: Penambahan test suite `MobileDeviceAndSyncApiTest` (4 tests, 50 assertions) yang digabungkan dengan suite mobile sebelumnya menghasilkan total 17 tests, 104 assertions — 100% PASS.
+  5. Unified Test Suites: Penambahan test suite `MobileDeviceAndSyncApiTest` (4 tests, 50 assertions) yang digabungkan dengan suite mobile sebelumnya menghasilkan total 17 tests, 104 assertions   100% PASS.
 - **Work Type:** Feature | Architecture | Database Migration | Push Notifications | Offline Sync | Bento Mobile Analytics
 
 #### 1. Business Context & Objective
@@ -2604,7 +2604,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 1. Business Context & Objective
 
-- **Konteks:** Sesuai arahan bisnis, integrasi Model Context Protocol (MCP) — yang memungkinkan agen AI pihak ketiga seperti Claude Desktop, Claude Code, Cursor IDE, ChatGPT, Google Gemini, Ollama, Dify, dan LangChain membaca data bisnis, katalog produk, stok, laporan kas/laba rugi, dan analitik Cooca — merupakan kapabilitas premium dan komputasi intensif yang wajib dibatasi hanya untuk pelanggan berbayar (*wajib subscribe*). Akun Free dilarang mengakses atau mengeksekusi tools MCP.
+- **Konteks:** Sesuai arahan bisnis, integrasi Model Context Protocol (MCP)   yang memungkinkan agen AI pihak ketiga seperti Claude Desktop, Claude Code, Cursor IDE, ChatGPT, Google Gemini, Ollama, Dify, dan LangChain membaca data bisnis, katalog produk, stok, laporan kas/laba rugi, dan analitik Cooca   merupakan kapabilitas premium dan komputasi intensif yang wajib dibatasi hanya untuk pelanggan berbayar (*wajib subscribe*). Akun Free dilarang mengakses atau mengeksekusi tools MCP.
 - **Masalah/Target:**
   1. Panel web manajemen integrasi MCP (`/settings/integrations/mcp`) sebelumnya belum dilindungi oleh middleware entitlement paket.
   2. Gateway API MCP (`/api/v1/mcp/message`, `/sse`) sebelumnya hanya memvalidasi keabsahan token tanpa memeriksa status keaktifan paket langganan tenant terkait.
@@ -2794,8 +2794,8 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:**
   - `resources/views/app/social_media/posts.blade.php`
 - **Testing & Verification:**
-  - `php artisan view:clear` — Berhasil.
-  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions — **100% PASSED**.
+  - `php artisan view:clear`   Berhasil.
+  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions   **100% PASSED**.
 
 ---
 
@@ -2859,10 +2859,10 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   - `lang/en/pos.php`
   - `lang/en/tax.php`
 - **Testing & Verification:**
-  - `tests/Feature/WhatsApp`: 58 tests, 369 assertions — **100% PASSED**.
-  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions — **100% PASSED**.
-  - `tests/Feature/SharedNavigationComponentsTest.php`: 5 tests, 25 assertions — **100% PASSED**.
-  - `tests/Feature/ComprehensiveLocalizationAndErgonomicsTest.php`: 3 tests, 59 assertions — **100% PASSED**.
+  - `tests/Feature/WhatsApp`: 58 tests, 369 assertions   **100% PASSED**.
+  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions   **100% PASSED**.
+  - `tests/Feature/SharedNavigationComponentsTest.php`: 5 tests, 25 assertions   **100% PASSED**.
+  - `tests/Feature/ComprehensiveLocalizationAndErgonomicsTest.php`: 3 tests, 59 assertions   **100% PASSED**.
 
 ---
 
@@ -2905,8 +2905,8 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   - `lang/id/social_media.php`
   - `lang/en/social_media.php`
 - **Testing & Verification:**
-  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions — **100% Passed**.
-  - `tests/Feature/WhatsApp`: 58 tests, 369 assertions — **100% Passed**.
+  - `tests/Feature/SocialMedia`: 75 tests, 439 assertions   **100% Passed**.
+  - `tests/Feature/WhatsApp`: 58 tests, 369 assertions   **100% Passed**.
 
 ---
 
@@ -5531,7 +5531,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - `tests/Feature/AiOfficeEnvironmentsTest.php`: 8 tests passed, 102 assertions (100% PASS).
 - `tests/Feature/AiDigitalCompanyTest.php`: 6 tests passed, 43 assertions (100% PASS).
 
-### [WORK-2026-10-01-277] Implementasi Visual Virtual Office Floor Plan (Pengalaman "Watch My AI Agents Work Now" — Pixel/Isometric Office Canvas, Real-Time Animated Desks, Floating Thought Bubbles, Live Activity Stream, dan Web Audio SFX)
+### [WORK-2026-10-01-277] Implementasi Visual Virtual Office Floor Plan (Pengalaman "Watch My AI Agents Work Now"   Pixel/Isometric Office Canvas, Real-Time Animated Desks, Floating Thought Bubbles, Live Activity Stream, dan Web Audio SFX)
 
 - **Date:** 2026-10-01
 - **Status:** COMPLETED
@@ -5652,9 +5652,9 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Konteks:** Pemilik usaha (Human Director) membutuhkan visualisasi ruang kerja AI yang mencerminkan perusahaan digital nyata dengan pembagian departemen dan fokus tugas yang jelas. Tiga kantor bukan merupakan tiga mesin AI terpisah, melainkan tiga perspektif/ruang kerja visual dari sistem organisasi COOCA AI yang sama, berbagi database, tools, agen, permission, riwayat kerja, dan workflow maker-checker.
 - **Masalah/Target:**
   1. *Tiga Lingkungan Kantor Digital Terpisah:*
-     - **Office 01 — Executive Office (`/cooca-ai/office/executive`):** Pusat komando strategi bisnis, visibilitas keuangan (AI CEO, AI CFO, Business Agent, Finance Agent, Reporting Agent), monitoring KPI (omzet, margin, kas, piutang), dan eskalasi risiko.
-     - **Office 02 — Operations Office (`/cooca-ai/office/operations`):** Pusat kendali operasional harian (AI COO, Inventory Agent, Purchasing Agent, Marketplace Agent), pemantauan stok kritis, rekomendasi titik pemesanan ulang (ROP), dan draf PO.
-     - **Office 03 — Growth Office (`/cooca-ai/office/growth`):** Pusat pertumbuhan komersial & kreatif (AI CMO, Sales Director, Marketing Agent, Content Agent, Social Media Agent, Sales Agent, Customer Agent), kampanye promosi, antrean konten media sosial, dan retensi pelanggan loyal vs dormant.
+     - **Office 01   Executive Office (`/cooca-ai/office/executive`):** Pusat komando strategi bisnis, visibilitas keuangan (AI CEO, AI CFO, Business Agent, Finance Agent, Reporting Agent), monitoring KPI (omzet, margin, kas, piutang), dan eskalasi risiko.
+     - **Office 02   Operations Office (`/cooca-ai/office/operations`):** Pusat kendali operasional harian (AI COO, Inventory Agent, Purchasing Agent, Marketplace Agent), pemantauan stok kritis, rekomendasi titik pemesanan ulang (ROP), dan draf PO.
+     - **Office 03   Growth Office (`/cooca-ai/office/growth`):** Pusat pertumbuhan komersial & kreatif (AI CMO, Sales Director, Marketing Agent, Content Agent, Social Media Agent, Sales Agent, Customer Agent), kampanye promosi, antrean konten media sosial, dan retensi pelanggan loyal vs dormant.
      - **Main Lobby / Company Lobby (`/cooca-ai`):** Gerbang utama organisasi yang menampilkan kartu 3 kantor, metrik hidup seluruh kantor, widget kolaborasi lintas departemen (*cross-office collaboration workflow timeline*), dan usulan aksi yang memerlukan persetujuan pemilik usaha.
   2. *Status Backend Nyata:* Memastikan status agen (IDLE, WORKING, ANALYZING, WAITING_APPROVAL, COMPLETED, FAILED) digerakkan 100% oleh data nyata tabel `ai_tasks` dan `ai_action_proposals`, tanpa animasi palsu atau avatar kartun.
   3. *Zero Emoji Mandate:* 100% Lucide SVG icons (`<i data-lucide="...">`). Desain Bento Apple HIG dengan continuous squircle, tipografi SF Pro `tabular-nums`, dan responsif mobile-first.
@@ -5904,7 +5904,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 
 #### 1. Business Context & Objective
 
-- **Konteks:** Sebagai platform SaaS multi-tenant untuk UMKM Indonesia yang siap ekspansi ke pengguna mancanegara dan ekspatriat, seluruh modul bisnis inti—khususnya Manajemen Kontak/Pelanggan, CRM & Loyalty, serta Pelaporan Feedback/Tiket—wajib mendukung lokalisasi penuh bahasa Indonesia (`id`) dan bahasa Inggris (`en`) secara simetris, konsisten, dan bebas dari teks mentah (*hardcoded text*).
+- **Konteks:** Sebagai platform SaaS multi-tenant untuk UMKM Indonesia yang siap ekspansi ke pengguna mancanegara dan ekspatriat, seluruh modul bisnis inti khususnya Manajemen Kontak/Pelanggan, CRM & Loyalty, serta Pelaporan Feedback/Tiket wajib mendukung lokalisasi penuh bahasa Indonesia (`id`) dan bahasa Inggris (`en`) secara simetris, konsisten, dan bebas dari teks mentah (*hardcoded text*).
 - **Masalah/Target:**
   1. *Sinkronisasi Kamus Dwibahasa 100% Simetris:* Memastikan setiap translation key pada `lang/id/customers.php`, `lang/id/crm.php`, dan `lang/id/feedback.php` memiliki padanan kata yang akurat dan proporsional pada `lang/en/customers.php`, `lang/en/crm.php`, dan `lang/en/feedback.php` dengan 0 disparitas key.
   2. *Eliminasi Total Hardcoded String & Raw Emoji di Blade:* Mengganti seluruh teks statis bahasa Indonesia pada view Blade dengan directive `{{ __('domain.key') }}`, serta memastikan tidak ada emoji mentah (mengganti emoji dengan ikon SVG Lucide profesional).
@@ -6852,8 +6852,8 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Permission Impact:** Supervisor PIN dapat menggunakan `supervisor_pin` bisnis atau fallback ke password user terautentikasi.
 
 #### 5. Verification & Testing
-- Unit & Feature Test: `php vendor/bin/phpunit tests/Feature/PurchaseOrderComprehensiveRemediationTest.php` (6 tests, 23 assertions — PASSED).
-- Regression Test: `php vendor/bin/phpunit tests/Feature/SupplierInvoiceAndPaymentTest.php tests/Feature/SalesAndPurchaseReturnIntegrationTest.php` (5 tests, 22 assertions — PASSED).
+- Unit & Feature Test: `php vendor/bin/phpunit tests/Feature/PurchaseOrderComprehensiveRemediationTest.php` (6 tests, 23 assertions   PASSED).
+- Regression Test: `php vendor/bin/phpunit tests/Feature/SupplierInvoiceAndPaymentTest.php tests/Feature/SalesAndPurchaseReturnIntegrationTest.php` (5 tests, 22 assertions   PASSED).
 - PHP Lint: Seluruh berkas PHP lulus `php -l` dengan 0 syntax error.
 
 ### [WORK-2026-09-30-257] Audit & Remediasi Multi-Industry UI Isolation across POS Terminal, Orders, Navigation, Costing Hub, & Topbar Spotlight (Zero Feature Leakage)
@@ -7780,7 +7780,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   - `LayoutQuickActionsSecurityAndDecouplingTest.php` (6 tests, 30 assertions) -> PASSED
   - `LayoutRealTimeAndPollingInfrastructureTest.php` (5 tests, 64 assertions) -> PASSED
   - `LayoutFinalRemediationAcceptanceTest.php` (7 tests, 64 assertions) -> PASSED
-  - **TOTAL: 58 tests, 486 assertions — 100% Passed, 0 Failures, 0 Errors.**
+  - **TOTAL: 58 tests, 486 assertions   100% Passed, 0 Failures, 0 Errors.**
 
 ### [WORK-2026-09-30-239] Implementasi Master Plan Layout & Partials Fase 9: Real-Time Infrastructure (Smart AJAX Polling Utility CoocaPoller, Scoped MutationObserver, Global Event Bus CoocaBus & Storage Pruning Previewer)
 
@@ -10350,7 +10350,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 #### 5. Verification & Testing
 
 - Pengujian otomatis PHPUnit:
-  - 59 test cases (269 assertions) — **100% Lulus (Green)**.
+  - 59 test cases (269 assertions)   **100% Lulus (Green)**.
   - Waktu eksekusi stabil dan performa sub-150ms per transaksi.
 
 #### 6. Important Decisions & Guardrails

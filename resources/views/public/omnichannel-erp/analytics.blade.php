@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Dasbor Analitik Bisnis & KPI Pemilik Usaha | COOCA')
-@section('description', 'Dasbor analitik bisnis real-time untuk pemilik toko: pantau omzet, margin per produk, performa cabang, dan jam sibuk dalam satu layar.')
-@section('og_title', 'Dasbor Analitik Bisnis & KPI Pemilik Usaha | COOCA')
-@section('og_description', 'Dasbor analitik bisnis real-time untuk pemilik toko: pantau omzet, margin per produk, performa cabang, dan jam sibuk dalam satu layar.')
+@section('title', __('public_erp.analytics_seo_title'))
+@section('description', __('public_erp.analytics_seo_desc'))
+@section('og_title', __('public_erp.analytics_seo_title'))
+@section('og_description', __('public_erp.analytics_seo_desc'))
 @section('keywords',
     'software analitik bisnis, dashboard kpi penjualan, laporan performa cabang, business intelligence umkm, analisis profit margin produk')
 
@@ -104,7 +104,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                                 <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                    Executive Cockpit &amp; Commercial Intelligence
+                                    {{ __('public_erp.analytics_hero_badge') }}
                                 </p>
                             </div>
                         </div>
@@ -113,26 +113,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words max-w-[22rem] sm:max-w-2xl lg:max-w-none">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
+                    {{ \App\Services\Seo\SeoMetadataService::getH1() ?: __('public_erp.analytics_hero_title') }}
                 </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Berhenti mengandalkan firasat untuk mengambil keputusan krusial. COOCA menyajikan dashboard bisnis terpusat yang memperlihatkan tren omzet, margin bersih per produk, cabang paling menguntungkan, dan jam sibuk toko secara real-time.
+                            {{ __('public_erp.analytics_hero_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Lihat Demo Dashboard BI</span>
+                                <span>{{ __('public_erp.analytics_hero_cta_primary') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.erp.erp') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Jelajahi Ekosistem ERP</span>
+                                <span>{{ __('public_erp.analytics_hero_cta_secondary') }}</span>
                             </a>
                         </div>
 
@@ -162,7 +162,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">Akurasi Keputusan Bisnis Berbasis Data</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.analytics_rating_text') }}</span>
                             </div>
                         </div>
 
@@ -171,15 +171,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Real-Time Instant</span>
+                                <span>{{ __('public_erp.analytics_checkpoint_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Drill-Down per SKU</span>
+                                <span>{{ __('public_erp.analytics_checkpoint_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Multi-Device Ready</span>
+                                <span>{{ __('public_erp.analytics_checkpoint_3') }}</span>
                             </div>
                         </div>
 
@@ -538,10 +538,9 @@
                         class="w-11 h-11 rounded-2xl bg-rose-100 dark:bg-rose-950 flex items-center justify-center text-rose-600 dark:text-rose-400">
                         <i data-lucide="shield-alert" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Peringatan Anomali Bisnis</h3>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_erp.analytics_feature_fraud_title') }}</h3>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Sistem otomatis memberi notifikasi jika terjadi lonjakan pembatalan pesanan (void), selisih kas
-                        kasir yang berulang, atau penurunan omzet drastis di salah satu cabang.
+                        {{ __('public_erp.analytics_feature_fraud_desc') }}
                     </p>
                 </div>
 
@@ -557,6 +556,30 @@
                         Dirancang seringkas mungkin untuk layar smartphone, memudahkan owner melihat grafik ringkas dan
                         saldo kas kapan pun diperlukan saat mobilitas tinggi.
                     </p>
+                </div>
+
+                {{-- Bento Card 6: 25 MCP Tools AI (Span 12) --}}
+                <div
+                    class="md:col-span-12 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-10 h-10 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                <i data-lucide="cpu" class="w-5 h-5"></i>
+                            </div>
+                            <span
+                                class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">MCP Protocol</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white">{{ __('public_erp.analytics_feature_mcp_title') }}</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+                            {{ __('public_erp.analytics_feature_mcp_desc') }}
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-[#060B1E]/60 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300">sales_velocity</span>
+                        <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-[#060B1E]/60 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300">cashier_fraud_audit</span>
+                        <span class="px-3 py-1.5 rounded-xl bg-white dark:bg-[#060B1E]/60 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300">stock_forecast</span>
+                    </div>
                 </div>
 
             </div>

@@ -89,19 +89,19 @@
                         <div class="flex items-center gap-2.5">
                             <span class="inline-flex w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Sistem Kasir &amp; Operasional Retail Modern
+                                {{ __('public_solutions.retail_kicker') }}
                             </p>
                         </div>
 
                         {{-- Main Headline --}}
                         <h1
                             class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.85rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.12] text-balance">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                            {{ app()->getLocale() === 'en' ? __('public_solutions.retail_title') : (\App\Services\Seo\SeoMetadataService::getH1() ?: __('public_solutions.retail_title')) }}
+                        </h1>
 
                         {{-- Subtitle Paragraph --}}
                         <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-2xl">
-                            Tinggalkan antrean kasir yang lambat dan kerumitan mencatat buku stok manual. COOCA Retail menghubungkan barcode scanner, konversi satuan dus ke pcs, harga grosir bertingkat, hingga kartu stok perpetual dalam satu layar yang mudah dipahami kasir.
+                            {{ __('public_solutions.retail_subtitle') }}
                         </p>
 
                         {{-- Tangible Value Highlights Bento Tiles --}}
@@ -110,25 +110,25 @@
                                 <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
                                     <i data-lucide="scan-barcode" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Scan barcode USB &amp; kamera HP</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.retail_feat_1') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
                                     <i data-lucide="layers" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Multi-satuan (Karton &rarr; Slop &rarr; Pcs)</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.retail_feat_2') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 border border-amber-400/20">
                                     <i data-lucide="tags" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Harga grosir tier jumlah beli</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.retail_feat_3') }}</span>
                             </div>
                             <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-6 h-6 rounded-lg bg-purple-500/15 text-purple-400 flex items-center justify-center shrink-0 mt-0.5 border border-purple-400/20">
-                                    <i data-lucide="message-circle" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                                    <i data-lucide="bell" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">Rekap kasbon &amp; tagihan via WhatsApp</span>
+                                <span class="text-xs sm:text-sm font-semibold text-slate-200 leading-snug min-w-0 flex-1">{{ __('public_solutions.retail_feat_4') }}</span>
                             </div>
                         </div>
 
@@ -136,7 +136,7 @@
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                             <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Mulai Coba Retail POS</span>
+                                <span>{{ __('public_solutions.retail_cta_start') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                             </a>
                             <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text=Halo%20saya%20tertarik%20dengan%20solusi%20Retail%20dan%20Toko%20COOCA"

@@ -106,7 +106,7 @@
 @push('styles')
 <style>
     /* ══════════════════════════════════════════════════════════════════
-       ARTICLE READER — Editorial-grade reading experience
+       ARTICLE READER   Editorial-grade reading experience
        Aesthetic: Clean editorial, tinted paper warmth, high readability
     ══════════════════════════════════════════════════════════════════ */
 
@@ -129,9 +129,9 @@
         border-radius: 0 2px 2px 0;
     }
 
-    /* ── Article prose — comfortable long-read typography ── */
+    /* ── Article prose   comfortable long-read typography ── */
     .article-prose {
-        font-size: 1.0625rem;  /* 17px — sweet spot between 16 and 18 */
+        font-size: 1.0625rem;  /* 17px   sweet spot between 16 and 18 */
         line-height: 1.8;
         letter-spacing: 0.005em;
         color: #2C2C2E;
@@ -449,7 +449,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
     </div>
 
     {{-- ═══════════════════════════════════════════════════════════════════
-         HERO — Compact metadata header + cover image
+         HERO   Compact metadata header + cover image
          Mobile: minimal (category, title, author row)
          Desktop: full breadcrumb + excerpt + toolbar
     ═══════════════════════════════════════════════════════════════════ --}}
@@ -459,7 +459,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
         <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-6 sm:pt-10 lg:pt-12 pb-6 sm:pb-10 lg:pb-12">
 
-            {{-- Breadcrumbs — hidden on mobile, shown sm+ --}}
+            {{-- Breadcrumbs   hidden on mobile, shown sm+ --}}
             <nav class="hidden sm:flex items-center gap-2 text-xs text-slate-400 mb-5" aria-label="Breadcrumb">
                 <a href="{{ route('landing') }}" class="art-touch art-focus hover:text-white transition-colors py-1">Beranda</a>
                 <span class="text-white/20">/</span>
@@ -484,7 +484,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                 {{ $post->title }}
             </h1>
 
-            {{-- Excerpt — hidden on mobile --}}
+            {{-- Excerpt   hidden on mobile --}}
             @if ($post->excerpt)
                 <p class="hidden sm:block text-base sm:text-lg text-slate-300 leading-relaxed mt-3 max-w-2xl text-pretty">
                     {{ $post->excerpt }}
@@ -504,7 +504,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </div>
                 </div>
 
-                {{-- Toolbar — compact on mobile --}}
+                {{-- Toolbar   compact on mobile --}}
                 <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
                     {{-- Font size toggle --}}
                     <div class="hidden sm:flex items-center bg-[#0E1E45] rounded-[10px] p-0.5 border border-white/15">
@@ -517,7 +517,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </div>
 
                     {{-- WhatsApp share --}}
-                    <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . ' — ' . url()->current()) }}"
+                    <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . '   ' . url()->current()) }}"
                         target="_blank" rel="noopener noreferrer"
                         class="art-touch art-focus min-h-[44px] min-w-[44px] px-3 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition"
                         aria-label="Kirim ke WhatsApp">
@@ -538,7 +538,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
     </header>
 
     {{-- ═══════════════════════════════════════════════════════════════════
-         COVER IMAGE — Full-width, immersive
+         COVER IMAGE   Full-width, immersive
     ═══════════════════════════════════════════════════════════════════ --}}
     @if ($post->cover_image)
         <div class="max-w-[1280px] mx-auto px-0 sm:px-6 lg:px-8 -mt-1 sm:mt-0">
@@ -549,7 +549,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
     @endif
 
     {{-- ═══════════════════════════════════════════════════════════════════
-         MAIN CONTENT AREA — Article + Sidebar
+         MAIN CONTENT AREA   Article + Sidebar
     ═══════════════════════════════════════════════════════════════════ --}}
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-10 items-start">
@@ -557,7 +557,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
             {{-- ═══ KOLOM UTAMA (8 cols) ═══ --}}
             <main class="lg:col-span-8 min-w-0">
 
-                {{-- Mobile TOC — collapsible accordion --}}
+                {{-- Mobile TOC   collapsible accordion --}}
                 <div x-show="headings.length > 0" class="lg:hidden mb-5">
                     <button @click="mobileTocOpen = !mobileTocOpen"
                         class="art-touch art-focus w-full min-h-[48px] px-4 flex items-center justify-between rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs"
@@ -584,7 +584,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </nav>
                 </div>
 
-                {{-- Article body — clean editorial card --}}
+                {{-- Article body   clean editorial card --}}
                 <article id="article-content"
                     class="bg-white dark:bg-[#1C1C1E] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] shadow-sm overflow-hidden">
 
@@ -610,27 +610,27 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             @if ($post->topic_cluster === 'pajak' || str_contains($post->slug, 'pajak') || str_contains($post->slug, 'pph'))
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>PP No. 55 Tahun 2022:</strong> Penyesuaian Pengaturan di Bidang Pajak Penghasilan (PPh Final UMKM 0,5% & Batas Bebas Pajak Omzet s.d. Rp500 Juta) — <a href="https://peraturan.bpk.go.id/Details/232490/pp-no-55-tahun-2022" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Dokumen Resmi BPK RI</a></span>
+                                <span><strong>PP No. 55 Tahun 2022:</strong> Penyesuaian Pengaturan di Bidang Pajak Penghasilan (PPh Final UMKM 0,5% & Batas Bebas Pajak Omzet s.d. Rp500 Juta)   <a href="https://peraturan.bpk.go.id/Details/232490/pp-no-55-tahun-2022" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Dokumen Resmi BPK RI</a></span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Direktorat Jenderal Pajak (DJP):</strong> Tata Cara Penyetoran & Pelaporan SPT Tahunan PPh Final UMKM — <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi DJP (pajak.go.id)</a></span>
+                                <span><strong>Direktorat Jenderal Pajak (DJP):</strong> Tata Cara Penyetoran & Pelaporan SPT Tahunan PPh Final UMKM   <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi DJP (pajak.go.id)</a></span>
                             </li>
                             @else
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>Online Single Submission (OSS RBA):</strong> Penerbitan Nomor Induk Berusaha (NIB) Resmi Berbasis Risiko — <a href="https://oss.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi OSS BKPM (oss.go.id)</a></span>
+                                <span><strong>Online Single Submission (OSS RBA):</strong> Penerbitan Nomor Induk Berusaha (NIB) Resmi Berbasis Risiko   <a href="https://oss.go.id" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Portal Resmi OSS BKPM (oss.go.id)</a></span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"></i>
-                                <span><strong>UU No. 6 Tahun 2023:</strong> Kemudahan, Perlindungan, dan Pemberdayaan Koperasi dan Usaha Mikro, Kecil, dan Menengah — <a href="https://peraturan.bpk.go.id/Details/246419/uu-no-6-tahun-2023" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Database Peraturan BPK RI</a></span>
+                                <span><strong>UU No. 6 Tahun 2023:</strong> Kemudahan, Perlindungan, dan Pemberdayaan Koperasi dan Usaha Mikro, Kecil, dan Menengah   <a href="https://peraturan.bpk.go.id/Details/246419/uu-no-6-tahun-2023" target="_blank" rel="noopener noreferrer" class="text-[#007AFF] underline hover:text-[#0055CC]">Database Peraturan BPK RI</a></span>
                             </li>
                             @endif
                         </ul>
                     </div>
                     @endif
 
-                    {{-- Article footer — author + updated_at + share (Prompt 10) --}}
+                    {{-- Article footer   author + updated_at + share (Prompt 10) --}}
                     <div class="px-5 sm:px-8 lg:px-12 py-5 bg-[#F9F9FB] dark:bg-[#0D0D0F] border-t border-black/[0.04] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
                             <span class="inline-flex items-center gap-1.5">
@@ -649,7 +649,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . ' — ' . url()->current()) }}"
+                            <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . '   ' . url()->current()) }}"
                                 target="_blank" rel="noopener noreferrer"
                                 class="art-touch art-focus min-h-[44px] px-4 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
@@ -664,7 +664,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     </div>
                 </article>
 
-                {{-- Contextual CTA Banner — below article (Prompt 9) --}}
+                {{-- Contextual CTA Banner   below article (Prompt 9) --}}
                 @php
                     $clusterKey = $post->topic_cluster ?? 'keuangan';
                     $clusterData = \App\Console\Commands\SeoTopicClusterCommand::CLUSTERS[$clusterKey] ?? \App\Console\Commands\SeoTopicClusterCommand::CLUSTERS['keuangan'];
@@ -683,7 +683,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
             </main>
 
-            {{-- ═══ SIDEBAR (4 cols) — Desktop only ═══ --}}
+            {{-- ═══ SIDEBAR (4 cols)   Desktop only ═══ --}}
             <aside class="hidden lg:block lg:col-span-4 space-y-5 lg:sticky lg:top-16">
 
                 {{-- Table of Contents --}}
@@ -757,7 +757,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
     </div>
 
     {{-- ═══════════════════════════════════════════════════════════════════
-         RELATED ARTICLES — Horizontal slider on mobile, grid on desktop
+         RELATED ARTICLES   Horizontal slider on mobile, grid on desktop
     ═══════════════════════════════════════════════════════════════════ --}}
     @if ($relatedPosts->isNotEmpty())
         <section class="border-t border-black/[0.06] dark:border-white/[0.08] py-10 sm:py-14 lg:py-16 bg-white dark:bg-[#0D0D0F]">

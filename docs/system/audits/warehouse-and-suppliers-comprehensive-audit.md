@@ -240,10 +240,10 @@ graph TD
 3. **Arsitektur Underline Tab Bar pada `warehouse/show.blade.php`**:
    - Halaman `warehouse/show.blade.php` saat ini menumpuk seluruh modul ke bawah (>1.160 baris), menyebabkan scrolling yang sangat panjang.
    - **Solusi:** Susun ke dalam 4 Underline Tabs terpadu dengan deep-linking `?tab=...`:
-     - **Tab 1: Stok Barang Fisik (`?tab=stocks`)** — Tabel stok aktual, pencarian, dan quick adjustment modal.
-     - **Tab 2: Penerimaan Barang PO (`?tab=receipts`)** — Riwayat Goods Receipts (GR).
-     - **Tab 3: Kartu Stok & Mutasi (`?tab=movements`)** — Audit trail mutasi harian.
-     - **Tab 4: Otorisasi Penyesuaian (`?tab=approvals`)** — Maker-Checker persetujuan penyesuaian stok bernilai tinggi.
+     - **Tab 1: Stok Barang Fisik (`?tab=stocks`)**   Tabel stok aktual, pencarian, dan quick adjustment modal.
+     - **Tab 2: Penerimaan Barang PO (`?tab=receipts`)**   Riwayat Goods Receipts (GR).
+     - **Tab 3: Kartu Stok & Mutasi (`?tab=movements`)**   Audit trail mutasi harian.
+     - **Tab 4: Otorisasi Penyesuaian (`?tab=approvals`)**   Maker-Checker persetujuan penyesuaian stok bernilai tinggi.
 
 ---
 

@@ -74,5 +74,25 @@ return [
     'services_feat_2' => 'Digital deposit invoicing via instant QRIS',
     'services_feat_3' => 'Automated WhatsApp appointment reminders for clients',
     'services_feat_4' => 'Therapist & stylist commission splitting per treatment',
-];
 
+    // Dynamic Solution Show (show.blade.php)
+    'show_kicker_prefix' => 'Dedicated :badge Solution',
+    'show_tile_devices' => 'Android, Tablet, or Laptop',
+    'show_tile_thermal' => 'Bluetooth Thermal Printer',
+    'show_tile_profit' => 'Automated Profit & Stock',
+    'show_tile_sync' => 'Synchronized Financial Ledger',
+    'show_cta_start' => 'Start Free Trial Now',
+    'show_cta_wa' => 'Consult via WhatsApp',
+    'show_reassurance_devices' => 'Android, Tablet & Laptop',
+    'show_reassurance_thermal' => 'Bluetooth Thermal Printer',
+    'show_reassurance_financial' => 'Real-Time Financial Sync',
+    'show_terminal_badge' => 'Terminal: :badge',
+    'show_terminal_subtitle' => 'POS Terminal & Operational Ledger',
+    'show_terminal_ready' => 'POS Terminal Ready',
+    'show_other_solutions_title' => 'Other Industry Solutions',
+    'show_bottom_badge' => 'Available on Android, Tablet, Laptop & Bluetooth Printers',
+    'show_bottom_title' => 'Start Modernizing Your Business Today',
+    'show_bottom_desc' => 'No need to purchase expensive legacy POS terminals. Use the smartphone, tablet, or laptop you already own to organize your business efficiently.',
+    'show_bottom_cta_register' => 'Register Free COOCA Account',
+    'show_bottom_cta_pricing' => 'View Pricing Plans',
+];

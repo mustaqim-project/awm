@@ -51,7 +51,7 @@ reading_time: "5 menit"
 <li>Evaluasi performa tiap tema secara berkala untuk melihat mana yang paling banyak mendapat interaksi.</li>
 </ul>
 
-<blockquote>Kalender konten bukan aturan kaku — gunakan sebagai kerangka dasar yang bisa disesuaikan dengan momen atau kebutuhan promosi tertentu.</blockquote>
+<blockquote>Kalender konten bukan aturan kaku   gunakan sebagai kerangka dasar yang bisa disesuaikan dengan momen atau kebutuhan promosi tertentu.</blockquote>
 
 <h2>Kesimpulan</h2>
 <p>Memiliki kalender konten mingguan membantu warung tetap konsisten memposting tanpa harus memikirkan ide dari nol setiap hari. Konsistensi ini penting untuk menjaga keterikatan dengan pengikut dari waktu ke waktu.</p>

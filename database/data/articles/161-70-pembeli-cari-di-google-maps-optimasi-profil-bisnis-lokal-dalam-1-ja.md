@@ -21,8 +21,8 @@ reading_time: "5 menit"
 <h2>Langkah Optimasi Profil Bisnis dalam 1 Jam</h2>
 <ol>
 <li><strong>Klaim dan verifikasi profil bisnis</strong> jika belum dilakukan, melalui Google Business Profile.</li>
-<li><strong>Lengkapi informasi dasar</strong> — nama usaha, kategori bisnis, alamat, nomor telepon, dan jam operasional yang akurat.</li>
-<li><strong>Unggah foto berkualitas</strong> — tampilan depan usaha, produk unggulan, dan suasana di dalam tempat usaha.</li>
+<li><strong>Lengkapi informasi dasar</strong>   nama usaha, kategori bisnis, alamat, nomor telepon, dan jam operasional yang akurat.</li>
+<li><strong>Unggah foto berkualitas</strong>   tampilan depan usaha, produk unggulan, dan suasana di dalam tempat usaha.</li>
 <li><strong>Tulis deskripsi bisnis yang jelas</strong> dengan menyebutkan jenis produk atau layanan utama.</li>
 <li><strong>Aktifkan fitur pesan atau tautan pemesanan</strong> jika tersedia untuk memudahkan calon pelanggan menghubungi langsung.</li>
 <li><strong>Minta pelanggan memberikan ulasan</strong> secara sopan setelah mereka berbelanja atau menggunakan layanan.</li>

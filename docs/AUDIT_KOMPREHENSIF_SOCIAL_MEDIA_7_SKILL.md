@@ -173,7 +173,7 @@ sequenceDiagram
 ### 3.1 Identitas Produk & Cakupan Modul
 - **Nama Modul**: Cooca Omni-Channel Social Media Marketing & Customer Engagement Engine.
 - **Target Pengguna**: Pemilik Toko (*Merchant Owner*), Admin Pemasaran (*Marketing Staff*), dan Operator Layanan Pelanggan (*CS / Social Media Lead*).
-- **Filosofi Desain**: *Apple Human Interface Guidelines (HIG) Bento UI v2.0* — Modal-First Canvas XXL, tipografi lapang, proteksi anti-phishing rekening bank, bebas string hardcoded, dan tata letak responsif ramah jempol (*Thumb-Zone Ergonomics*).
+- **Filosofi Desain**: *Apple Human Interface Guidelines (HIG) Bento UI v2.0*   Modal-First Canvas XXL, tipografi lapang, proteksi anti-phishing rekening bank, bebas string hardcoded, dan tata letak responsif ramah jempol (*Thumb-Zone Ergonomics*).
 
 ### 3.2 Kebutuhan Fungsional (Functional Requirements)
 1. **Multi-Channel Unified Composer**:

@@ -1,11 +1,11 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Software Keuangan & Arus Kas Bisnis Terpadu | COOCA')
-@section('description', 'Aplikasi keuangan & cash flow bisnis: pantau saldo kas bank multi-rekening, kontrol hutang piutang, dan kelola petty cash cabang rapi.')
+@section('title', __('public_erp.fin_seo_title'))
+@section('description', __('public_erp.fin_seo_desc'))
 @section('keywords', 'software manajemen keuangan, aplikasi cash flow bisnis, manajemen kas kecil petty cash, buku kas masuk keluar, kontrol hutang piutang')
 
-@section('og_title', 'Software Keuangan & Arus Kas Bisnis Terpadu | COOCA')
-@section('og_description', 'Aplikasi keuangan & cash flow bisnis: pantau saldo kas bank multi-rekening, kontrol hutang piutang, dan kelola petty cash cabang rapi.')
+@section('og_title', __('public_erp.fin_seo_title'))
+@section('og_description', __('public_erp.fin_seo_desc'))
 
     @push('seo')
         <script type="application/ld+json">
@@ -104,7 +104,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                                 <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                    Operational Cash Flow &amp; Treasury Control
+                                    {{ __('public_erp.fin_hero_badge') }}
                                 </p>
                             </div>
                         </div>
@@ -120,19 +120,19 @@
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Ketahui persis berapa uang kas nyata perusahaan Anda hari ini. Pantau saldo seluruh rekening bank, tagih piutang yang tertunda, jadwalkan pelunasan supplier, dan kunci pengeluaran kas kecil dengan sistem persetujuan digital.
+                            {{ __('public_erp.fin_hero_subtitle') }}
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Modul Keuangan</span>
+                                <span>{{ __('public_erp.fin_hero_cta_primary') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.erp.accounting') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 backdrop-blur-sm active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0">
-                                <span>Pelajari Modul Akuntansi</span>
+                                <span>{{ __('public_erp.fin_hero_cta_secondary') }}</span>
                             </a>
                         </div>
 
@@ -162,7 +162,7 @@
                                     <span class="text-xs sm:text-sm font-extrabold text-white ml-1 tabular-nums">4.9 /
                                         5.0</span>
                                 </div>
-                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">Kontrol Likuiditas &amp; Multi-Bank</span>
+                                <span class="text-[10px] sm:text-[11.5px] text-slate-400 font-medium">{{ __('public_erp.fin_rating_text') }}</span>
                             </div>
                         </div>
 
@@ -171,15 +171,15 @@
                             class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-3 sm:gap-x-5 gap-y-1 text-[10px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Multi-Rekening Bank</span>
+                                <span>{{ __('public_erp.fin_checkpoint_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Aging Report AR/AP</span>
+                                <span>{{ __('public_erp.fin_checkpoint_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1 sm:gap-1.5">
                                 <i data-lucide="check" class="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400"></i>
-                                <span>Petty Cash Approval</span>
+                                <span>{{ __('public_erp.fin_checkpoint_3') }}</span>
                             </div>
                         </div>
 

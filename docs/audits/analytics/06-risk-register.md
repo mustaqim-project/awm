@@ -1,4 +1,4 @@
-# Risk Register — Modul Analytics
+# Risk Register   Modul Analytics
 > Modul: Analytics | Baseline Commit: 38cdcdf | Tanggal: 2026-10-25 | Auditor: AI Agent (/laravel-module-audit) | Status Dokumen: Final
 
 ---

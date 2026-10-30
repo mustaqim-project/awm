@@ -123,13 +123,13 @@ final class AdminSettlementController extends Controller implements HasMiddlewar
 
         // Owner identity comparison for anti-fraud verification
         $business = $settlement->business;
-        $ownerName = $business?->users()->wherePivot('role', 'owner')->first()?->name ?? '—';
-        $accountHolderName = $settlement->payoutBankAccount?->account_holder_name ?? $settlement->destination_bank ?? '—';
+        $ownerName = $business?->users()->wherePivot('role', 'owner')->first()?->name ?? ' ';
+        $accountHolderName = $settlement->payoutBankAccount?->account_holder_name ?? $settlement->destination_bank ?? ' ';
 
         // Fuzzy match check (case-insensitive, trimmed)
         $ownerClean = mb_strtolower(trim($ownerName));
         $holderClean = mb_strtolower(trim($accountHolderName));
-        $identityMatch = $ownerClean !== '—' && $holderClean !== '—' && $ownerClean === $holderClean;
+        $identityMatch = $ownerClean !== ' ' && $holderClean !== ' ' && $ownerClean === $holderClean;
 
         if (request()->wantsJson()) {
             return response()->json([

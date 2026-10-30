@@ -44,7 +44,7 @@ COOCA AI beroperasi sebagai satu organisasi digital tunggal yang memiliki 3 ling
                                                      Customer
 ```
 
-### 2.1 Office 01 — Executive Office (`/cooca-ai/office/executive`)
+### 2.1 Office 01   Executive Office (`/cooca-ai/office/executive`)
 - **Pimpinan:** AI CEO (Chief Executive Officer) & AI CFO (Chief Financial Officer).
 - **Agen Spesialis:**
   - `Business Agent`: Analisis makro kesehatan bisnis, deteksi deviasi kinerja, dan diagnosa prioritas strategis.
@@ -52,15 +52,15 @@ COOCA AI beroperasi sebagai satu organisasi digital tunggal yang memiliki 3 ling
   - `Reporting Agent`: Penyusunan rekapitulasi harian, mingguan, bulanan, dan ringkasan eksekutif.
 - **Visual Metaphor:** Ruang komando eksekutif modern enterprise (Apple HIG Bento) dengan widget KPI `tabular-nums`, kartu prioritas strategis, dan eskalasi risiko.
 
-### 2.2 Office 02 — Operations Office (`/cooca-ai/office/operations`)
-- **Pimpinan:** AI COO (Chief Operating Officer) — *"Daily operations under control"*.
+### 2.2 Office 02   Operations Office (`/cooca-ai/office/operations`)
+- **Pimpinan:** AI COO (Chief Operating Officer)   *"Daily operations under control"*.
 - **Agen Spesialis:**
   - `Inventory Agent`: Pemantauan stok gudang harian, peringatan batas reorder point (ROP), dan dead-stock.
   - `Purchasing Agent`: Analisis harga dan performa pemasok, rekomendasi timing pengadaan, dan persiapan draf PO.
   - `Marketplace Agent`: Monitoring pesanan online, sinkronisasi stok dan harga multi-channel (Shopee, Tokopedia, TikTok Shop).
 - **Visual Metaphor:** Ruang kontrol operasional modern dengan indikator stok kritis, metrik katalog, dan antrean PO.
 
-### 2.3 Office 03 — Growth & People Office (`/cooca-ai/office/growth`)
+### 2.3 Office 03   Growth & People Office (`/cooca-ai/office/growth`)
 - **Pimpinan:** AI CMO (Chief Marketing Officer), AI Sales Director, & AI HR Lead.
 - **Agen Spesialis:**
   - `Marketing Agent`: Evaluasi efektivitas diskon/promosi dan perumusan kampanye pemasaran.
