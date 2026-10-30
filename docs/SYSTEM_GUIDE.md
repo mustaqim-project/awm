@@ -1088,5 +1088,22 @@ Berdasarkan direktif audit situs publik COOCA:
    - Mengalihkan rute duplikat `/resources/blog` via permanent redirect (HTTP 301) ke URL kanonikal `/blog`.
    - Menambahkan metadata E-E-A-T (`author` dan `reviewedBy` praktisi akuntansi & keuangan UMKM) pada schema JSON-LD dan header artikel detail blog.
 
+### 4.32 Matriks Hak Akses & Kunci Fitur Dinamis Admin (Admin-Configurable Feature Gates) & Penegakan Zero-Hardcoding Limitasi
+
+1. **Prinsip Zero-Hardcoding:**
+   - Semua angka limit kuota sumber daya (`product`, `material`, `pos`, `user`, `total_location`, `business`, `recipe`, `storage_gb`) pada halaman tenant `/billing/limits` (`resources/views/app/billing/limits.blade.php`), landing publik, dan kartu paket dibaca dinamis dari konfigurasi `SystemSetting` via `EntitlementService::getAllTierLimits()`.
+   - Tidak ada angka kuota atau batasan kapasitas yang di-hardcode dalam file template Blade.
+
+2. **Matriks Hak Akses & Kunci Fitur Dinamis (`/admin/billing-packages`):**
+   - Admin Superadmin memiliki kendali penuh melalui antarmuka Bento UI di `/admin/billing-packages` untuk membuka atau mengunci 17 fitur operasional per tingkat paket langganan (Free, Standard, Premium, Prestige).
+   - Fitur mencakup: AI Engine BYOAI, MCP Server, Transfer Stok Gudang, Multi-Pricing Cabang, KDS Dapur, Self-Order QR, PIN Kasir POS, Komisi Kasir, Kasbon Karyawan, Pekerja Harian, BPJS, THR, Slip Gaji WA, PPh 21 TER, Buku Besar & Konsolidasi Cabang, serta Ekspor & Impor Data Massal.
+   - Status kunci tersimpan di database `SystemSetting` (`tier_feature_{tier}_{feature}`) dan diprioritaskan di atas nilai default kode.
+
+3. **Integrasi End-to-End Entitlement & Middleware:**
+   - `EntitlementService` mengevaluasi method `isFeatureEnabled($tier, $feature)` untuk seluruh helper perizinan (`canUseKds`, `canTransferStock`, `canAccessAi`, `canCalculatePPh21`, dll.).
+   - Middleware `CheckResourceEntitlement` menegakkan hak akses secara otomatis dan menghentikan request secara elegan jika fitur sedang dikunci oleh admin.
+   - Halaman `/billing/limits` merender status gembok abu-abu (terkunci) atau centang hijau/ungu (terbuka) secara 100% dinamis sesuai pengaturan admin yang sedang aktif.
+
+
 
 

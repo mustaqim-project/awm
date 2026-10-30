@@ -81,6 +81,23 @@ Command konsol `app:process-subscription-lifecycle` dijalankan terjadwal untuk m
   - Setiap pemakaian promo tercatat atomik: merekam `promo_id`, `business_id`, `user_id`, `subscription_payment_id`, `discount_amount`, dan `final_paid_amount`.
   - Transaksi `subscription_payments` mencatat `discount_amount`, `promo_code`, dan `promo_id` untuk rekonsiliasi keuangan platform.
 
+### 3.7 Matriks Hak Akses & Kunci Fitur Dinamis Admin (Admin-Configurable Feature Gates & Zero-Hardcoding)
+* **Arsitektur Zero-Hardcoding:**
+  - Sesuai arahan audit sistem, seluruh batasan kuota sumber daya (`product`, `material`, `pos`, `user`, `total_location`, `business`, `recipe`, `storage_gb`) dan hak akses fitur (fitur terbuka vs terkunci) tidak boleh di-hardcode di file Blade maupun Controller.
+  - Seluruh data bersumber secara dinamis dari database admin (`SystemSetting`) melalui `EntitlementService`.
+* **17 Fitur Kanonikal yang Diatur Admin (`/admin/billing-packages`):**
+  - **AI & Otomasi:** `ai` (Asisten AI BYOAI), `mcp` (Model Context Protocol).
+  - **Multi-Cabang & Inventori:** `transfer_stock` (Transfer Stok Antar Gudang), `branch_pricing` (Multi-Pricing Cabang).
+  - **Restoran & Kasir POS:** `kds` (Kitchen Display System), `self_order` (Self-Order Meja QR), `pos_pin` (PIN Supervisor Kasir).
+  - **HRM & Penggajian:** `commission` (Komisi Kasir), `loan` (Kasbon Karyawan), `daily_worker` (Pekerja Harian), `bpjs` (Iuran BPJS), `thr` (Kalkulasi THR), `payroll_wa` (Kirim Slip Gaji via WhatsApp).
+  - **Pajak & Finansial Lanjutan:** `pph21` (PPh 21 TER A/B/C & Psl 17), `branch_accounting` (Buku Besar & Konsolidasi Cabang).
+  - **Integrasi Data:** `import` (Import Data Excel/CSV), `export` (Export Data Lengkap).
+* **Mekanisme Penyimpanan & Penegakan:**
+  - **Persistence:** Disimpan ke `SystemSetting` dengan kunci `tier_feature_{tier}_{feature}` (`'1'` untuk aktif/terbuka, `'0'` untuk terkunci) berkategori `billing`.
+  - **Entitlement Evaluation:** `EntitlementService::isFeatureEnabled($tier, $feature)` membaca `SystemSetting` terlebih dahulu sebelum fallback ke `DEFAULT_TIER_FEATURES`. Seluruh helper method (`canAccessAi`, `canUseKds`, `canTransferStock`, `canCalculatePPh21`, dll.) mengevaluasi metode ini.
+  - **Middleware Gate:** `CheckResourceEntitlement` mengevaluasi kapabilitas bisnis secara dinamis melalui `EntitlementService`, menolak akses secara elegan jika fitur dikunci oleh admin.
+  - **Antarmuka Tenant (`/billing/limits`):** Menampilkan status kuota dan indikator centang (terbuka) / gembok abu-abu (terkunci) secara 100% dinamis sesuai status konfigurasi yang ditetapkan admin.
+
 ---
 
 ## 4. Aturan Bisnis Billing (Business Rules)
