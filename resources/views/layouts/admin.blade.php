@@ -303,20 +303,16 @@
 @php
     $currentAdmin = Auth::guard('admin')->user();
     $adminDisplayName = $currentAdmin?->name ?? 'Administrator';
-    $pendingSubscriptionsCount = \App\Models\SubscriptionPayment::where('status', 'awaiting_approval')->count();
-    $pendingRecoveriesCount = \App\Models\AccountRecoveryRequest::where(
+    $pendingSubscriptionsCount = rescue(fn() => \App\Models\SubscriptionPayment::where('status', 'awaiting_approval')->count(), 0, false);
+    $pendingRecoveriesCount = rescue(fn() => \App\Models\AccountRecoveryRequest::where(
         'status',
         \App\Models\AccountRecoveryRequest::STATUS_PENDING,
-    )->count();
-    $pendingSettlementsBadge = \App\Models\PaymentSettlement::where(
+    )->count(), 0, false);
+    $pendingSettlementsBadge = rescue(fn() => \App\Models\PaymentSettlement::where(
         'status',
         \App\Models\PaymentSettlement::STATUS_PENDING,
-    )->count();
-    try {
-        $adminUnreadInboxCount = \App\Models\SocialMediaComment::where('is_platform', true)->where('status', 'unread')->count();
-    } catch (\Throwable $e) {
-        $adminUnreadInboxCount = 0;
-    }
+    )->count(), 0, false);
+    $adminUnreadInboxCount = rescue(fn() => \App\Models\SocialMediaComment::where('is_platform', true)->where('status', 'unread')->count(), 0, false);
 
     $allModules = [
         // Ringkasan & Tenant
