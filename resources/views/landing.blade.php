@@ -182,7 +182,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Business Operating System &amp; Omnichannel ERP
+                                Aplikasi Kasir, Stok &amp; Pembukuan UMKM
                             </p>
                         </div>
 
@@ -197,8 +197,7 @@
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Satukan kasir POS, stok resep otomatis, pembukuan real-time, dan toko online tanpa ketik ulang
-                            manual.
+                            Cukup dari HP atau tablet. Catat transaksi kasir, cetak struk thermal, potong stok otomatis, dan pantau laba harian tanpa spreadsheet rumit.
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->

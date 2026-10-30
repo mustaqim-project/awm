@@ -173,7 +173,7 @@ Route::prefix('marketplace')->name('marketplace.sub.')->group(function (): void 
 });
 
 Route::prefix('resources')->name('public.resources.')->group(function (): void {
-    Route::get('/blog', fn() => view('public.resources.blog'))->name('blog');
+    Route::get('/blog', fn() => redirect('/blog', 301))->name('blog');
     Route::get('/guides', fn() => view('public.resources.guides'))->name('guides');
     Route::get('/case-studies', fn() => view('public.resources.case-studies'))->name('case-studies');
     Route::get('/faq', fn() => view('public.resources.faq'))->name('faq');

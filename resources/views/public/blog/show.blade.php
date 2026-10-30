@@ -19,6 +19,10 @@
             '@type' => 'Person',
             'name' => $post->author_name ?? 'Tim Edukasi COOCA',
         ],
+        'reviewedBy' => [
+            '@type' => 'Person',
+            'name' => $post->reviewer_name ?? 'Praktisi Akuntansi & Keuangan UMKM',
+        ],
         'publisher' => [
             '@type' => 'Organization',
             'name' => 'COOCA',
@@ -632,6 +636,11 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             <span class="inline-flex items-center gap-1.5">
                                 <i data-lucide="user" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
                                 <span>Penulis: <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->author_name ?? 'Tim Edukasi COOCA' }}</strong></span>
+                            </span>
+                            <span class="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
+                            <span class="inline-flex items-center gap-1.5">
+                                <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i>
+                                <span>Ditinjau: <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->reviewer_name ?? 'Praktisi Akuntansi & Keuangan UMKM' }}</strong></span>
                             </span>
                             <span class="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
                             <span class="inline-flex items-center gap-1.5">
