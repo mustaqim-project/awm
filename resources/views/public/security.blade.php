@@ -6,24 +6,21 @@
 @section('og_description', 'Pelajari bagaimana COOCA mengamankan data transaksi kasir, keuangan, dan data pelanggan UMKM dengan arsitektur multi-tenant berstandar enterprise.')
 @section('canonical', url('/security'))
 
-@push('seo')
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "name": "Keamanan Sistem & Perlindungan Data COOCA",
-      "description": "Dokumentasi standar keamanan, isolasi tenant, enkripsi, dan kepatuhan regulasi UU PDP No. 27/2022 pada platform COOCA.",
-      "url": "{{ url('/security') }}",
-      "publisher": {
-        "@type": "Organization",
-        "name": "COOCA",
-        "url": "{{ url('/') }}"
-      }
-    }
-    </script>
-@endpush
-
 @section('content')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'WebPage',
+    'name' => 'Keamanan Sistem & Perlindungan Data COOCA',
+    'description' => 'Dokumentasi standar keamanan, isolasi tenant, enkripsi, dan kepatuhan regulasi UU PDP No. 27/2022 pada platform COOCA.',
+    'url' => url('/security'),
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => 'COOCA',
+        'url' => url('/'),
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
 <div class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors pb-24">
 
     <!-- ══════════════════════════════════════════════════════════════════════════ -->
@@ -257,7 +254,7 @@
                     <a href="{{ route('public.privacy') }}" class="text-xs font-semibold text-[#007AFF] hover:underline">
                         Baca Kebijakan Privasi Lengkap &rarr;
                     </a>
-                    <a href="{{ route('public.contact.index') }}" class="px-4 py-2 rounded-xl bg-[#007AFF] text-white text-xs font-bold hover:bg-[#0066DF] transition">
+                    <a href="{{ route('contact') }}" class="px-4 py-2 rounded-xl bg-[#007AFF] text-white text-xs font-bold hover:bg-[#0066DF] transition">
                         Hubungi Tim Teknis
                     </a>
                 </div>

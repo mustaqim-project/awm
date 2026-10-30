@@ -1062,4 +1062,31 @@ Repositori Flutter berada di `c:\laragon\www\mobile_app` dengan dukungan multi-p
    - **Alpine.js Canvas Poller:** Kanvas output pada `show.blade.php` melakukan polling status setiap 3 detik ke endpoint `ai-studio.generation.status`. Begitu status berubah menjadi `succeeded`, gambar langsung dirender instan tanpa reload halaman penuh.
    - **Ekspor 1-Klik ke Katalog Produk (`ai-studio.assets.export-to-catalog`):** Mengizinkan merchant langsung menyalin file gambar render AI ke storage produk publik (`products/{business_id}/...`) dan menyimpannya sebagai produk katalog baru atau foto utama produk yang sudah ada.
 
+### 4.31 Arsitektur Situs Publik, Sinkronisasi Paket/Limit Dinamis dari DB, Navigasi Kanonikal UMKM, & Kepatuhan Zero-Overclaim
+
+Berdasarkan direktif audit situs publik COOCA:
+1. **Single Source of Truth Tarif & Limitasi Paket:**
+   - Seluruh harga paket (`Free`, `Standard Rp 39.000`, `Premium Rp 89.000`, `Prestige Rp 199.000`), diskon tahunan, kuota limitasi sumber daya (`product`, `material`, `pos`, `user`, `outlet`, `recipe`, `storage_gb`), dan SLA bantuan teknis dibaca terpusat dari konfigurasi database admin (`SystemSetting`) dan `EntitlementService::getAllTierLimits()`.
+   - Diinjeksi ke seluruh tampilan publik melalui Global View Composer `AppServiceProvider.php` untuk views berawalan `public.*`, `layouts.public_marketing`, dan `landing`.
+   - Dilarang keras melakukan hardcoding angka tarif atau kuota limit di file template Blade. Pembuktian otomatis diuji via `PublicMarketingConsistencyAndRoutesTest` (terbukti gagal jika view hardcoded).
+
+2. **Navigasi Mega-Menu Berbahasa UMKM & Tautan Kanonikal:**
+   - Seluruh menu navigasi (Desktop & Mobile Drawer) dibersihkan dari terminologi fintech korporat ("Dynamic Budgeting", "Vendor Spend", "Revenue Sync", "Siap Global Invoice") dan diganti dengan istilah lugas operasional UMKM ("Arus Kas & Pembukuan", "Belanja Bahan & Pemasok", "Rekap Omzet & Laba", "Cetak Struk & Nota Kasir", "Asisten Teks Promosi AI", "Faktur Penjualan & Tagihan").
+   - Seluruh tautan diarahkan ke rute kanonikal aktif (`public.erp.accounting`, `public.erp.erp`, `public.erp.pos`, `public.content.creation`, `public.bos.overview`), mengeliminasi route 404 atau tautan salah sasaran.
+
+3. **Integritas Bukti Sosial & Kedaulatan Konten:**
+   - Artikel studi kasus fiktif di blog publik diberi badge `[Simulasi Model Bisnis]` atau `[Studi Kasus Edukasi]` beserta kotak disclaimer editorial eksplisit agar tidak memperdaya calon pengguna.
+   - Komponen testimoni terikat pada `SystemSetting::get('marketing_verified_testimonials')` (auto-hidden jika belum ada data riil yang disetujui pelanggan).
+   - Katalog produk marketplace di beranda memfilter merchant terverifikasi dan menyembunyikan fallback stock photo Unsplash fiktif.
+
+4. **Halaman Kepatuhan Keamanan Resmi (`/security`):**
+   - Menghubungkan tautan footer "Security" ke halaman dedicated `/security` (dengan 301 redirect dari `/keamanan`).
+   - Menyajikan 5 pilar arsitektur keamanan nyata yang tervalidasi di kode: Isolasi Data Multi-Tenant (`business_id`), Enkripsi Standar Perbankan (AES-256-CBC & Bcrypt), Audit Log Lengkap, Proteksi Siber OWASP & Rate Limiting, serta Kepatuhan UU PDP No. 27/2022.
+   - Menyatakan backup cloud snapshot infrastruktur secara transparan dan mencantumkan fitur MFA TOTP pada roadmap mendatang tanpa klaim palsu.
+
+5. **Konsolidasi SEO Canonical Blog:**
+   - Mengalihkan rute duplikat `/resources/blog` via permanent redirect (HTTP 301) ke URL kanonikal `/blog`.
+   - Menambahkan metadata E-E-A-T (`author` dan `reviewedBy` praktisi akuntansi & keuangan UMKM) pada schema JSON-LD dan header artikel detail blog.
+
+
 

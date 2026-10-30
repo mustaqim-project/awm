@@ -23410,3 +23410,45 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - `php -l` pada seluruh berkas yang dimodifikasi → **0 syntax errors**.
 - Laporan Audit Lengkap: `docs/security/AUDIT_KEAMANAN_END_TO_END_STORAGE_CDN_PRIVACY.md`.
 - Production Readiness Gate: **PASSED (Production Hardened)**.
+
+---
+
+### [WORK-2026-10-30-371] Public Website Audit, Dynamic Single Source of Truth Synchronization, & Zero-Overclaim Hardening
+- **Timestamp:** 2026-10-30T10:35:00+07:00
+- **Audited Target:** Situs Publik COOCA (`https://cooca.id`), Navigasi Mega-Menu, Halaman Pricing & Landing Komersial, Kebijakan Keamanan, serta SEO & Konten Blog
+- **Work Type:** Commercial Integrity Audit | Dynamic Pricing & Limit Binding | Canonical Route & Mega-Menu Refactoring | Zero-Overclaim Security Compliance | SEO Canonical Consolidation | Automated Feature Testing
+
+#### 1. Business Context & Objective
+- Melakukan audit komprehensif 8 dimensi (Poin A - H) pada seluruh lapisan publik COOCA untuk mengeliminasi ketidakkonsistenan harga dan limit kuota paket, menghapus klaim fiktif / *overclaim*, mereorganisasi navigasi mega-menu dari jargon korporat menjadi bahasa operasional UMKM yang mudah dipahami, menetapkan SLA dukungan teknis yang realistis, merancang halaman `/security` berbasis bukti kode nyata, dan mengunci seluruh informasi komersial agar bersumber secara dinamis dari database admin (`SystemSetting`) dan `EntitlementService::getAllTierLimits()`.
+
+#### 2. Key Remediations & Technical Implementation
+1. **Poin A & B (Sinkronisasi Harga Paket & Limit Kuota dari Single Source of Truth):**
+   - Memasang Global View Composer di `app/Providers/AppServiceProvider.php` untuk views berawalan `public.*`, `layouts.public_marketing`, dan `landing`, menyuntikkan `$tierLimits`, `$pricingData`, `$annualDiscountBadge`, dan `$supportSla`.
+   - Merefaktor `resources/views/public/pricing.blade.php`, `resources/views/public/landing_commercial/kasir_gratis.blade.php`, dan `resources/views/landing.blade.php` agar 100% membaca harga dan limit (`product`, `material`, `pos`, `user`, `outlet`, `recipe`, `storage_gb`) dari variabel composer, menghapus hardcoding statis.
+   - Menyelaraskan kuis rekomendasi paket di halaman pricing (hasil rekomendasi membaca `$pricingData['standard']['monthly']` dan `$pricingData['premium']['monthly']`).
+   - Memetakan gating fitur resep/BOM kuliner secara transparan: Standard (20 resep), Premium (resep unlimited), Prestige (multi-level BOM).
+2. **Poin C & D (Standardisasi Mega-Menu Navigasi Kanonikal UMKM & SLA Realistis):**
+   - Mengganti seluruh jargon fintech korporat di `resources/views/layouts/public_marketing.blade.php` (Desktop & Mobile Drawer) menjadi istilah operasional UMKM: "Dynamic Budgeting" $\rightarrow$ "Arus Kas & Pembukuan", "Vendor Spend" $\rightarrow$ "Belanja Bahan & Pemasok", "Revenue Sync" $\rightarrow$ "Rekap Omzet & Laba", "Receipt Capture" $\rightarrow$ "Cetak Struk & Nota Kasir", "WhatsApp AI Agents" $\rightarrow$ "Asisten Teks Promosi AI", "Siap Global" $\rightarrow$ "Faktur Penjualan & Tagihan".
+   - Mengarahkan seluruh tautan menu ke rute kanonikal aktif (`public.erp.accounting`, `public.erp.erp`, `public.erp.pos`, `public.content.creation`, `public.bos.overview`), mengeliminasi 404 dan tautan salah sasaran.
+   - Mengganti klaim "VIP 24 Jam" dan "Account Manager Pribadi" menjadi SLA realistis yang terikat dinamis ke `SystemSetting::get('support_working_hours')` dan `SystemSetting::get('support_response_time')` pada `resources/views/public/contact/index.blade.php`.
+3. **Poin E (Integritas Bukti Sosial & Filter Merchant Riil Marketplace):**
+   - Memberi label `[Simulasi Model Bisnis]` dan `[Studi Kasus Edukasi]` pada artikel blog studi kasus omzet (`099-*.md`, `021-*.md`, `014-*.md`) disertai kotak disclaimer editorial di awal artikel.
+   - Mengikat testimoni pada `SystemSetting::get('marketing_verified_testimonials')` via komponen `resources/views/public/partials/verified_testimonials.blade.php` (otomatis disembunyikan bila belum ada testimoni riil).
+   - Menghapus fallback stock photo Unsplash fiktif pada blok katalog marketplace di `resources/views/landing.blade.php`, menampilkan empty state bersih jika produk merchant aktif terverifikasi $< 3$.
+4. **Poin F (Halaman Keamanan Resmi & Kepatuhan Regulasi `/security`):**
+   - Merancang halaman baru `resources/views/public/security.blade.php` dengan tata letak Bento Apple HIG v2.0 yang memuat 5 pilar keamanan terverifikasi kode: Isolasi Data Multi-Tenant (`business_id`), Enkripsi Standar Perbankan (AES-256-CBC & Bcrypt), Rekam Jejak Audit Log, Proteksi Siber OWASP & Rate Limiting, serta Kepatuhan UU PDP No. 27/2022.
+   - Menambahkan rute `/security` dan redirect 301 dari `/keamanan` di `routes/public.php`, serta memperbarui tautan footer "Security" di `public_marketing.blade.php`.
+   - Menyatakan backup cloud snapshot infrastruktur secara transparan dan mencantumkan MFA TOTP pada roadmap mendatang tanpa klaim palsu.
+5. **Poin G & H (Konsolidasi SEO Blog & Positioning Hero Landing):**
+   - Mengalihkan rute duplikat `/resources/blog` via permanent redirect (HTTP 301) ke URL kanonikal `/blog` di `routes/public.php`.
+   - Menambahkan metadata E-E-A-T (`author` dan `reviewedBy` praktisi akuntansi & keuangan UMKM) pada schema JSON-LD dan tampilan header artikel detail `resources/views/public/blog/show.blade.php`.
+   - Menyelaraskan hero kicker beranda menjadi "Aplikasi Kasir, Stok & Pembukuan UMKM" dan subtitle yang berfokus langsung pada solusi nyata kasir HP/tablet tanpa spreadsheet rumit.
+
+#### 3. Verification & Automated Test Results
+- `php artisan test tests/Feature/PublicMarketingConsistencyAndRoutesTest.php` → **7 passed, 32 assertions (100% Success)**.
+- `php artisan test tests/Feature/PublicPagesStructureTest.php` → **7 passed, 41 assertions (100% Success)**.
+- Total Gabungan: **14 passed, 107 assertions (0 Failures, 0 Errors)**.
+- `php artisan view:clear && php artisan view:cache` → **Blade templates cached successfully**.
+- Modul Dokumentasi Terkait: `docs/system/modules/public-marketing-and-compliance.md`, `docs/SYSTEM_GUIDE.md` (Subseksi 4.31).
+- Production Readiness Gate: **PASSED (Production Hardened & Zero Overclaim)**.
+

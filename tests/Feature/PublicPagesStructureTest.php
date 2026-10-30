@@ -14,14 +14,11 @@ final class PublicPagesStructureTest extends TestCase
     {
         $response = $this->get(route('landing'));
 
-        $response->assertSee('Satu Sistem Operasi untuk Seluruh');
-        $response->assertSee('Denyut Bisnis Anda');
-        $response->assertSee('Business Operating System &amp; Omnichannel ERP', false);
+        $response->assertSee('Aplikasi Kasir, Stok &amp; Pembukuan UMKM', false);
+        $response->assertSee(\App\Services\Seo\SeoMetadataService::getH1());
         $response->assertSee('Mulai Coba Gratis');
-        $response->assertSee('100% Gratis Selamanya');
-        $response->assertSee('cooca.id/app/dashboard');
-        $response->assertSee('Realtime Cloud Sync');
-        $response->assertSee('Pengurangan Otomatis Bahan Baku');
+        $response->assertSee('Kelola POS, order, quotation, invoice, dan penjualan.');
+        $response->assertSee('Pantau stok, warehouse, purchasing, material, hingga pergerakan inventory.');
 
         // Verify Anti-Slop & Zero-Emoji: No music note emoji, no dots acting as logos
         $response->assertDontSee('♪');
