@@ -2482,7 +2482,7 @@
                                 <a href="{{ route('public.about') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">About
                                     Us</a>
-                                <a href="{{ route('public.privacy') }}"
+                                <a href="{{ route('public.security') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Security</a>
                                 <a href="{{ route('public.privacy') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">Privacy

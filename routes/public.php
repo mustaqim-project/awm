@@ -251,6 +251,13 @@ Route::get('/receipt/{order}/image', [PosTerminalWebController::class, 'receiptI
     ->name('public.receipt.image');
 
 // 12. Legal Policies (Privacy Policy & Terms of Service for Cooca, TikTok, Meta & Google)
+Route::get('/security', function () {
+    return view('public.security');
+})->name('public.security');
+Route::get('/keamanan', function () {
+    return redirect('/security', 301);
+});
+
 Route::get('/privacy', function () {
     $page = rescue(fn() => \App\Models\LegalPage::findBySlug('privacy-policy'), null, false);
     return view('public.privacy', compact('page'));
