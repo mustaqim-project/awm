@@ -17,11 +17,11 @@
         'image' => [$articleOgImage],
         'author' => [
             '@type' => 'Person',
-            'name' => $post->author_name ?? 'Tim Edukasi COOCA',
+            'name' => $post->author_name ?? __('public_blog.default_author'),
         ],
         'reviewedBy' => [
             '@type' => 'Person',
-            'name' => $post->reviewer_name ?? 'Praktisi Akuntansi & Keuangan UMKM',
+            'name' => $post->reviewer_name ?? __('public_blog.default_reviewer'),
         ],
         'publisher' => [
             '@type' => 'Organization',
@@ -47,13 +47,13 @@
             [
                 '@type' => 'ListItem',
                 'position' => 1,
-                'name' => 'Beranda',
+                'name' => __('public_blog.breadcrumb_home'),
                 'item' => url('/'),
             ],
             [
                 '@type' => 'ListItem',
                 'position' => 2,
-                'name' => 'Blog',
+                'name' => __('public_blog.nav_blog'),
                 'item' => url('/blog'),
             ],
             [
@@ -461,20 +461,20 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
             {{-- Breadcrumbs   hidden on mobile, shown sm+ --}}
             <nav class="hidden sm:flex items-center gap-2 text-xs text-slate-400 mb-5" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="art-touch art-focus hover:text-white transition-colors py-1">Beranda</a>
+                <a href="{{ route('landing') }}" class="art-touch art-focus hover:text-white transition-colors py-1">{{ __('public_blog.breadcrumb_home') }}</a>
                 <span class="text-white/20">/</span>
-                <a href="{{ route('blog.index') }}" class="art-touch art-focus hover:text-white transition-colors py-1">Blog</a>
+                <a href="{{ route('blog.index') }}" class="art-touch art-focus hover:text-white transition-colors py-1">{{ __('public_blog.nav_blog') }}</a>
                 <span class="text-white/20">/</span>
-                <span class="text-[#00C4D8] font-semibold truncate max-w-[200px]" aria-current="page">{{ $post->category ?? 'Edukasi' }}</span>
+                <span class="text-[#00C4D8] font-semibold truncate max-w-[200px]" aria-current="page">{{ $post->category ?? __('public_blog.default_category') }}</span>
             </nav>
 
             {{-- Category + Reading time --}}
             <div class="flex items-center gap-2 mb-3 sm:mb-4">
                 <span class="text-xs font-bold uppercase tracking-wider text-[#00C4D8]">
-                    {{ $post->category ?? 'Panduan Bisnis' }}
+                    {{ $post->category ?? __('public_blog.default_category') }}
                 </span>
                 <span class="text-white/20">·</span>
-                <span class="text-xs text-slate-300 font-medium">{{ $post->read_time ?? 3 }} menit baca</span>
+                <span class="text-xs text-slate-300 font-medium">{{ __('public_blog.read_time', ['minutes' => $post->read_time ?? 3]) }}</span>
                 <span class="text-white/20 hidden sm:inline">·</span>
                 <span class="text-xs text-slate-400 hidden sm:inline">{{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}</span>
             </div>
@@ -499,8 +499,8 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                         <i data-lucide="user-check" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     </div>
                     <div class="min-w-0">
-                        <div class="text-sm font-bold text-white truncate">{{ $post->author_name ?? 'Tim Edukasi COOCA' }}</div>
-                        <div class="text-xs text-slate-400 truncate hidden sm:block">Panduan & Edukasi Praktis</div>
+                        <div class="text-sm font-bold text-white truncate">{{ $post->author_name ?? __('public_blog.default_author') }}</div>
+                        <div class="text-xs text-slate-400 truncate hidden sm:block">{{ __('public_blog.default_author_sub') }}</div>
                     </div>
                 </div>
 
@@ -520,17 +520,17 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     <a href="https://api.whatsapp.com/send?text={{ urlencode($post->title . '   ' . url()->current()) }}"
                         target="_blank" rel="noopener noreferrer"
                         class="art-touch art-focus min-h-[44px] min-w-[44px] px-3 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition"
-                        aria-label="Kirim ke WhatsApp">
+                        aria-label="{{ __('public_blog.share_wa_aria') }}">
                         <i data-lucide="share-2" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">WA</span>
+                        <span class="hidden sm:inline">{{ __('public_blog.share_wa') }}</span>
                     </a>
 
                     {{-- Copy link --}}
                     <button @click="copyArticleLink()"
                         class="art-touch art-focus min-h-[44px] min-w-[44px] px-3 rounded-[10px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
-                        aria-label="Salin tautan">
+                        aria-label="{{ __('public_blog.copy_link') }}">
                         <i data-lucide="link" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline" x-text="copiedLink ? 'Tersalin!' : 'Salin'">Salin</span>
+                        <span class="hidden sm:inline" x-text="copiedLink ? '{{ __('public_blog.copied') }}' : '{{ __('public_blog.copy_link') }}'">{{ __('public_blog.copy_link') }}</span>
                     </button>
                 </div>
             </div>
@@ -564,7 +564,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                         :aria-expanded="mobileTocOpen">
                         <span class="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-white">
                             <i data-lucide="list" class="w-4 h-4 text-[#007AFF]"></i>
-                            Daftar Isi
+                            {{ __('public_blog.toc_title') }}
                         </span>
                         <span class="flex items-center gap-2">
                             <span class="text-xs font-mono text-[#007AFF]" x-text="scrollPercent + '%'"></span>
@@ -604,7 +604,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     <div class="px-5 sm:px-8 lg:px-12 py-4 bg-amber-500/[0.04] dark:bg-amber-500/[0.08] border-t border-amber-500/20">
                         <div class="text-xs font-bold text-amber-900 dark:text-amber-200 uppercase tracking-wider mb-2 flex items-center gap-2">
                             <i data-lucide="scale" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
-                            <span>Dasar Regulasi & Referensi Resmi Pemerintah RI</span>
+                            <span>{{ __('public_blog.regulation_title') }}</span>
                         </div>
                         <ul class="text-xs space-y-2 text-slate-700 dark:text-slate-300">
                             @if ($post->topic_cluster === 'pajak' || str_contains($post->slug, 'pajak') || str_contains($post->slug, 'pph'))
@@ -635,17 +635,17 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                         <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-500 dark:text-slate-400">
                             <span class="inline-flex items-center gap-1.5">
                                 <i data-lucide="user" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>
-                                <span>Penulis: <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->author_name ?? 'Tim Edukasi COOCA' }}</strong></span>
+                                <span>{{ __('public_blog.author_label') }} <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->author_name ?? __('public_blog.default_author') }}</strong></span>
                             </span>
                             <span class="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
                             <span class="inline-flex items-center gap-1.5">
                                 <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-500 shrink-0"></i>
-                                <span>Ditinjau: <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->reviewer_name ?? 'Praktisi Akuntansi & Keuangan UMKM' }}</strong></span>
+                                <span>{{ __('public_blog.reviewer_label') }} <strong class="font-semibold text-slate-700 dark:text-slate-300">{{ $post->reviewer_name ?? __('public_blog.default_reviewer') }}</strong></span>
                             </span>
                             <span class="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
                             <span class="inline-flex items-center gap-1.5">
                                 <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
-                                <span>Diperbarui: {{ $post->updated_at ? $post->updated_at->translatedFormat('d F Y') : ($post->created_at ? $post->created_at->translatedFormat('d F Y') : date('d F Y')) }}</span>
+                                <span>{{ __('public_blog.updated_label') }} {{ $post->updated_at ? $post->updated_at->translatedFormat('d F Y') : ($post->created_at ? $post->created_at->translatedFormat('d F Y') : date('d F Y')) }}</span>
                             </span>
                         </div>
                         <div class="flex items-center gap-2">
@@ -653,12 +653,12 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                                 target="_blank" rel="noopener noreferrer"
                                 class="art-touch art-focus min-h-[44px] px-4 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
                                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                                <span>Kirim WA</span>
+                                <span>{{ __('public_blog.send_wa') }}</span>
                             </a>
                             <button @click="copyArticleLink()"
                                 class="art-touch art-focus min-h-[44px] px-4 rounded-[10px] bg-slate-100 dark:bg-[#2C2C2E] hover:bg-slate-200 dark:hover:bg-[#38383A] text-slate-700 dark:text-white text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
                                 <i data-lucide="link" class="w-3.5 h-3.5"></i>
-                                <span x-text="copiedLink ? 'Tersalin!' : 'Salin Link'">Salin Link</span>
+                                <span x-text="copiedLink ? '{{ __('public_blog.copied') }}' : '{{ __('public_blog.copy_link_btn') }}'">{{ __('public_blog.copy_link_btn') }}</span>
                             </button>
                         </div>
                     </div>
@@ -691,7 +691,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                     class="p-5 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
                     <div class="flex items-center justify-between mb-3 pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-white flex items-center gap-2">
-                            <i data-lucide="list" class="w-4 h-4 text-[#007AFF]"></i> Daftar Isi
+                            <i data-lucide="list" class="w-4 h-4 text-[#007AFF]"></i> {{ __('public_blog.toc_title') }}
                         </span>
                         <span class="text-xs font-mono font-semibold text-[#007AFF]" x-text="scrollPercent + '%'"></span>
                     </div>
@@ -714,27 +714,27 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             <i data-lucide="message-circle" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-bold text-slate-900 dark:text-white">Pertanyaan Usaha?</div>
-                            <div class="text-xs text-slate-500">Konsultasi gratis ke tim COOCA</div>
+                            <div class="text-sm font-bold text-slate-900 dark:text-white">{{ __('public_blog.support_title') }}</div>
+                            <div class="text-xs text-slate-500">{{ __('public_blog.support_desc') }}</div>
                         </div>
                     </div>
-                    <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text={{ urlencode('Halo Tim COOCA, saya membaca artikel ' . $post->title . ' dan ingin konsultasi.') }}"
+                    <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text={{ urlencode(__('public_blog.support_wa_text', ['title' => $post->title])) }}"
                         target="_blank" rel="noopener noreferrer"
                         class="art-touch art-focus w-full min-h-[44px] rounded-[12px] bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-sm">
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        Tanya via WhatsApp
+                        {{ __('public_blog.support_btn') }}
                     </a>
                 </div>
 
                 {{-- Tools --}}
                 <div class="p-5 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-2.5">
                     <div class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-white flex items-center gap-2 mb-1">
-                        <i data-lucide="wrench" class="w-4 h-4 text-[#007AFF]"></i> Alat Gratis
+                        <i data-lucide="wrench" class="w-4 h-4 text-[#007AFF]"></i> {{ __('public_blog.free_tools_title') }}
                     </div>
                     @foreach ([
-                        ['route' => route('kalkulator.hpp'), 'label' => 'Kalkulator HPP', 'sub' => 'Hitung modal bahan baku'],
-                        ['route' => route('kalkulator.laba-bersih'), 'label' => 'Simulasi Laba Bersih', 'sub' => 'Omzet & beban operasional'],
-                        ['route' => route('template.index'), 'label' => 'Template Pembukuan', 'sub' => 'Spreadsheet gratis'],
+                        ['route' => route('kalkulator.hpp'), 'label' => __('public_blog.tool_hpp_title'), 'sub' => __('public_blog.tool_hpp_sub')],
+                        ['route' => route('kalkulator.laba-bersih'), 'label' => __('public_blog.tool_profit_title'), 'sub' => __('public_blog.tool_profit_sub')],
+                        ['route' => route('template.index'), 'label' => __('public_blog.tool_template_title'), 'sub' => __('public_blog.tool_template_sub')],
                     ] as $tool)
                         <a href="{{ $tool['route'] }}"
                             class="art-touch art-focus min-h-[44px] p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-slate-200 dark:hover:bg-[#38383A] transition flex items-center justify-between gap-3 group">
@@ -750,7 +750,7 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                 {{-- Back link --}}
                 <a href="{{ route('blog.index') }}" class="art-touch art-focus flex items-center justify-center gap-1.5 text-sm font-semibold text-[#007AFF] hover:underline min-h-[44px]">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    Semua Artikel
+                    {{ __('public_blog.all_articles_link') }}
                 </a>
             </aside>
         </div>
@@ -766,11 +766,11 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                 {{-- Section header --}}
                 <div class="flex items-end justify-between gap-4 mb-6 sm:mb-8">
                     <div>
-                        <div class="text-xs font-bold uppercase tracking-wider text-[#007AFF] mb-1">Baca Juga</div>
-                        <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Artikel Terkait</h2>
+                        <div class="text-xs font-bold uppercase tracking-wider text-[#007AFF] mb-1">{{ __('public_blog.related_kicker') }}</div>
+                        <h2 class="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">{{ __('public_blog.related_title') }}</h2>
                     </div>
                     <a href="{{ route('blog.index') }}" class="art-touch art-focus text-sm font-semibold text-[#007AFF] hover:underline flex items-center gap-1 min-h-[44px] shrink-0">
-                        Semua <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        {{ __('public_blog.related_view_all') }} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
 
@@ -789,15 +789,15 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
                             <div class="p-4 space-y-2">
                                 <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                    <span class="font-semibold text-[#007AFF] uppercase tracking-wider">{{ $rel->category ?? 'UMKM' }}</span>
+                                    <span class="font-semibold text-[#007AFF] uppercase tracking-wider">{{ $rel->category ?? __('public_blog.default_tag') }}</span>
                                     <span>·</span>
-                                    <span>{{ $rel->read_time ?? 3 }} min</span>
+                                    <span>{{ __('public_blog.read_time', ['minutes' => $rel->read_time ?? 3]) }}</span>
                                 </div>
                                 <h3 class="text-[0.9375rem] font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] transition-colors leading-snug line-clamp-2">
                                     {{ $rel->title }}
                                 </h3>
                                 <div class="flex items-center gap-1 text-xs font-semibold text-[#007AFF] pt-1">
-                                    <span>Baca</span>
+                                    <span>{{ __('public_blog.related_read') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
                                 </div>
                             </div>
@@ -810,10 +810,10 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
 
     {{-- ═══ MOBILE BOTTOM BAR ═══ --}}
     <nav class="art-bottom-bar md:hidden" aria-label="Navigasi">
-        <a href="{{ route('landing') }}" class="art-touch"><i data-lucide="home"></i><span>Beranda</span></a>
-        <a href="{{ route('blog.index') }}" class="art-touch active"><i data-lucide="book-open"></i><span>Blog</span></a>
-        <a href="{{ route('kalkulator.index') }}" class="art-touch"><i data-lucide="calculator"></i><span>Hitung</span></a>
-        <button @click="copyArticleLink()" class="art-touch"><i data-lucide="share-2"></i><span x-text="copiedLink ? 'Tersalin!' : 'Bagikan'">Bagikan</span></button>
+        <a href="{{ route('landing') }}" class="art-touch"><i data-lucide="home"></i><span>{{ __('public_blog.nav_home') }}</span></a>
+        <a href="{{ route('blog.index') }}" class="art-touch active"><i data-lucide="book-open"></i><span>{{ __('public_blog.nav_blog') }}</span></a>
+        <a href="{{ route('kalkulator.index') }}" class="art-touch"><i data-lucide="calculator"></i><span>{{ __('public_blog.nav_calc') }}</span></a>
+        <button @click="copyArticleLink()" class="art-touch"><i data-lucide="share-2"></i><span x-text="copiedLink ? '{{ __('public_blog.copied') }}' : '{{ __('public_blog.nav_share') }}'">{{ __('public_blog.nav_share') }}</span></button>
     </nav>
 
 </div>

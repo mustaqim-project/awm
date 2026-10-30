@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
-@section('description', 'Otomasi publikasi konten media sosial bisnis tanpa unggah manual: antrean tayang Instagram dan Facebook dengan jadwal terjadwal rapi.')
-@section('og_title', 'Publikasi Otomatis Media Sosial & Antrean Tayang | COOCA')
-@section('og_description', 'Otomasi publikasi konten media sosial bisnis tanpa unggah manual: antrean tayang Instagram dan Facebook dengan jadwal terjadwal rapi.')
+@section('title', __('public_content.pub_seo_title'))
+@section('description', __('public_content.pub_seo_desc'))
+@section('og_title', __('public_content.pub_seo_title'))
+@section('og_description', __('public_content.pub_seo_desc'))
 @section('keywords',
     'software publikasi otomatis media sosial, auto publish instagram facebook, aplikasi antrean posting medsos, penjadwalan konten otomatis, social media dispatch engine')
 
@@ -95,22 +95,18 @@
                             <div
                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                                 <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Cloud Dispatch &amp; Auto-Posting Engine</span>
+                                <span>{{ __('public_content.pub_kicker') }}</span>
                             </div>
 
                             <h1
                                 class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                                Tayangkan Konten Promosi Tepat Waktu <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Tanpa
-                                    Perlu Unggah Manual</span>
+                                {{ __('public_content.pub_title') }}
                             </h1>
                         </div>
 
                         <p
                             class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal text-pretty text-left max-w-xl">
-                            Lupakan alarm pengingat jam posting yang mengganggu aktivitas Anda. Mesin publikasi berbasis
-                            cloud COOCA mengeksekusi penayangan materi promosi ke Instagram dan Facebook
-                            secara otomatis, presisi, dan aman sesuai jadwal yang telah ditentukan.
+                            {{ __('public_content.pub_subtitle') }}
                         </p>
 
                         {{-- Action CTAs --}}
@@ -118,12 +114,12 @@
                             class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 pt-2 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all duration-200 min-h-[48px]">
-                                <span>Coba Modul Publikasi</span>
+                                <span>{{ __('public_content.pub_btn_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <a href="{{ route('public.content.analytics') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all min-h-[48px]">
-                                <span>Lihat Analitik Jangkauan</span>
+                                <span>{{ __('public_content.pub_btn_anl') }}</span>
                             </a>
                         </div>
 
@@ -135,21 +131,21 @@
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Cloud Auto-Post 24/7</span>
+                                <span>{{ __('public_content.pub_check_1') }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Meta API Resmi (IG &amp; FB)</span>
+                                <span>{{ __('public_content.pub_check_2') }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Auto-Retry Cerdas</span>
+                                <span>{{ __('public_content.pub_check_3') }}</span>
                             </div>
                         </div>
                     </div>
@@ -668,20 +664,19 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Mulai Publikasi Otomatis Tanpa Khawatir Terlewat
+                        {{ __('public_content.pub_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
-                        Otomasi jadwal penayangan media sosial bisnis Anda dengan mesin cloud terpercaya dan fokuskan waktu
-                        Anda untuk melayani pelanggan bersama COOCA.
+                        {{ __('public_content.pub_cta_desc') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
-                            Coba Demo Publikasi Otomatis
+                            {{ __('public_content.pub_cta_btn') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all">
-                            Konsultasi Otomasi Konten
+                            {{ __('public_content.pub_cta_consult') }}
                         </a>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Blog & Edukasi Bisnis UMKM: Finansial & Kasir | COOCA')
-@section('description', 'Pusat edukasi bisnis UMKM: tutorial hitung HPP, BEP titik impas, pembukuan kas, serta tips operasional kasir POS dan stok toko.')
-@section('og_title', 'Blog & Edukasi Bisnis UMKM: Finansial & Kasir | COOCA')
-@section('og_description', 'Pusat edukasi bisnis UMKM: tutorial hitung HPP, BEP titik impas, pembukuan kas, serta tips operasional kasir POS dan stok toko.')
+@section('title', __('public_blog.meta_title'))
+@section('description', __('public_blog.meta_desc'))
+@section('og_title', __('public_blog.meta_title'))
+@section('og_description', __('public_blog.meta_desc'))
 @section('canonical', route('blog.index'))
 @section('og_type', 'website')
 @section('keywords', 'blog umkm indonesia, tutorial pembukuan usaha, cara hitung hpp makanan, cara hitung bep, tips bisnis toko kecil, ai untuk umkm')
@@ -13,8 +13,8 @@
 {
   "@@context": "https://schema.org",
   "@type": "Blog",
-  "name": "Blog & Edukasi Bisnis UMKM COOCA",
-  "description": "Pusat panduan praktis, tips finansial, dan tutorial operasional UMKM Indonesia.",
+  "name": "{{ __('public_blog.schema_name') }}",
+  "description": "{{ __('public_blog.schema_desc') }}",
   "url": "{{ route('blog.index') }}",
   "publisher": {
     "@type": "Organization",
@@ -163,9 +163,9 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
 
             {{-- Breadcrumb Navigation --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-5 lg:mb-6" aria-label="Breadcrumb">
-                <a href="{{ route('landing') }}" class="hover:text-white transition-colors py-1 blog-focus blog-touch-target">Beranda</a>
+                <a href="{{ route('landing') }}" class="hover:text-white transition-colors py-1 blog-focus blog-touch-target">{{ __('public_blog.breadcrumb_home') }}</a>
                 <span aria-hidden="true" class="text-slate-600">/</span>
-                <span class="text-[#0A84FF] font-semibold" aria-current="page">Blog &amp; Panduan Praktis</span>
+                <span class="text-[#0A84FF] font-semibold" aria-current="page">{{ __('public_blog.breadcrumb_blog') }}</span>
             </nav>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
@@ -175,56 +175,56 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                     <div class="space-y-3 w-full">
                         {{-- Kicker --}}
                         <div class="text-xs font-bold uppercase tracking-wider text-[#0A84FF]">
-                            PUSAT PANDUAN &amp; EDUKASI UMKM
+                            {{ __('public_blog.kicker') }}
                         </div>
 
                         <h1 class="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold tracking-tight text-white leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            Wawasan Praktis untuk Kembangkan Usaha Anda
+                            {{ __('public_blog.title') }}
                         </h1>
                     </div>
 
                     <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-[32rem] lg:max-w-xl mx-auto lg:mx-0">
-                        Pelajari cara menghitung modal pokok (HPP), titik impas (BEP), tips mengelola arus kas harian, dan tutorial kasir tanpa rumus yang rumit.
+                        {{ __('public_blog.desc') }}
                     </p>
 
-                    {{-- Trust Commitments   teks diperbesar ke minimum 12px --}}
+                    {{-- Trust Commitments --}}
                     <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-1 text-left w-full">
                         <div class="p-3 sm:p-3.5 rounded-[14px] sm:rounded-[16px] bg-white/[0.04] border border-white/[0.08]">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5 sm:gap-2">
                                 <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span class="leading-snug">Bahasa Mudah</span>
+                                <span class="leading-snug">{{ __('public_blog.badge_easy_title') }}</span>
                             </div>
-                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">Bebas istilah asing</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">{{ __('public_blog.badge_easy_sub') }}</div>
                         </div>
 
                         <div class="p-3 sm:p-3.5 rounded-[14px] sm:rounded-[16px] bg-white/[0.04] border border-white/[0.08]">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5 sm:gap-2">
                                 <i data-lucide="calculator" class="w-4 h-4 text-[#0A84FF] shrink-0"></i>
-                                <span class="leading-snug">Contoh Nyata</span>
+                                <span class="leading-snug">{{ __('public_blog.badge_case_title') }}</span>
                             </div>
-                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">Studi kasus toko &amp; resto</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">{{ __('public_blog.badge_case_sub') }}</div>
                         </div>
 
                         <div class="p-3 sm:p-3.5 rounded-[14px] sm:rounded-[16px] bg-white/[0.04] border border-white/[0.08]">
                             <div class="text-xs font-bold text-white flex items-center gap-1.5 sm:gap-2">
                                 <i data-lucide="award" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                                <span class="leading-snug">Siap Pakai</span>
+                                <span class="leading-snug">{{ __('public_blog.badge_ready_title') }}</span>
                             </div>
-                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">Bisa diterapkan hari ini</div>
+                            <div class="text-xs text-slate-400 mt-1 leading-normal hidden sm:block">{{ __('public_blog.badge_ready_sub') }}</div>
                         </div>
                     </div>
 
-                    {{-- CTA Buttons   min-height 48px, full-width on mobile --}}
+                    {{-- CTA Buttons --}}
                     <div class="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3 w-full sm:w-auto">
                         <a href="#katalog-artikel"
                             class="blog-touch-target blog-focus h-12 px-7 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-sm min-h-[48px]">
-                            <span>Baca Artikel &amp; Panduan</span>
+                            <span>{{ __('public_blog.btn_read_articles') }}</span>
                             <i data-lucide="arrow-down" class="w-4 h-4 shrink-0"></i>
                         </a>
                         <a href="{{ route('kalkulator.index') }}"
                             class="blog-touch-target blog-focus h-12 px-6 rounded-[14px] bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.12] text-white text-sm font-semibold flex items-center justify-center gap-2 transition min-h-[48px]">
                             <i data-lucide="calculator" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                            <span>Coba Kalkulator Usaha</span>
+                            <span>{{ __('public_blog.btn_try_calc') }}</span>
                         </a>
                     </div>
                 </div>
@@ -238,11 +238,11 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                 <span class="w-3 h-3 rounded-full bg-[#FFBD2E]"></span>
                                 <span class="w-3 h-3 rounded-full bg-[#27C93F]"></span>
                                 <span class="text-xs font-mono font-semibold text-slate-300 ml-2">
-                                    Topik Unggulan UMKM
+                                    {{ __('public_blog.bento_title') }}
                                 </span>
                             </div>
                             <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-                                Bebas Akses
+                                {{ __('public_blog.bento_badge') }}
                             </span>
                         </div>
 
@@ -255,14 +255,14 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                         01
                                     </div>
                                     <div class="text-xs font-bold text-white group-hover:text-[#0A84FF] transition">
-                                        Rumus HPP Kuliner
+                                        {{ __('public_blog.bento_1_title') }}
                                     </div>
                                     <div class="text-xs text-slate-400 leading-normal">
-                                        Bahan baku, porsi, dan takaran akurat.
+                                        {{ __('public_blog.bento_1_desc') }}
                                     </div>
                                 </div>
                                 <div class="pt-3 flex items-center text-xs font-semibold text-[#0A84FF]">
-                                    <span>Buka Alat</span>
+                                    <span>{{ __('public_blog.bento_1_btn') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform"></i>
                                 </div>
                             </a>
@@ -274,14 +274,14 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                         02
                                     </div>
                                     <div class="text-xs font-bold text-white group-hover:text-[#0A84FF] transition">
-                                        Titik Impas (BEP)
+                                        {{ __('public_blog.bento_2_title') }}
                                     </div>
                                     <div class="text-xs text-slate-400 leading-normal">
-                                        Berapa porsi minimal agar usaha tidak rugi.
+                                        {{ __('public_blog.bento_2_desc') }}
                                     </div>
                                 </div>
                                 <div class="pt-3 flex items-center text-xs font-semibold text-[#0A84FF]">
-                                    <span>Buka Alat</span>
+                                    <span>{{ __('public_blog.bento_2_btn') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform"></i>
                                 </div>
                             </a>
@@ -293,14 +293,14 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                         03
                                     </div>
                                     <div class="text-xs font-bold text-white group-hover:text-[#0A84FF] transition">
-                                        SOP Kasir Toko
+                                        {{ __('public_blog.bento_3_title') }}
                                     </div>
                                     <div class="text-xs text-slate-400 leading-normal">
-                                        Cegah kebocoran kas dan selisih shift.
+                                        {{ __('public_blog.bento_3_desc') }}
                                     </div>
                                 </div>
                                 <div class="pt-3 flex items-center text-xs font-semibold text-[#0A84FF]">
-                                    <span>Buka Panduan</span>
+                                    <span>{{ __('public_blog.bento_3_btn') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3 ml-1 group-hover:translate-x-0.5 transition-transform"></i>
                                 </div>
                             </a>
@@ -309,10 +309,10 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                         <div class="p-3.5 rounded-[16px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="book-open" class="w-4 h-4 shrink-0"></i>
-                                <span>Kurikulum dan artikel diperbarui setiap minggu secara gratis.</span>
+                                <span>{{ __('public_blog.bento_footer_notice') }}</span>
                             </div>
                             <a href="{{ route('public.resources.blog') }}" class="blog-touch-target blog-focus font-bold underline text-xs shrink-0 ml-2 hover:text-emerald-300 py-2">
-                                Kurikulum Lengkap
+                                {{ __('public_blog.bento_footer_link') }}
                             </a>
                         </div>
                     </div>
@@ -335,15 +335,15 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                 <div class="blog-tabs-scroll flex items-center gap-1.5 p-1 rounded-[16px] bg-slate-200/60 dark:bg-[#1C1C1E] border border-black/[0.04] dark:border-white/[0.08] overflow-x-auto text-xs">
                     <a href="{{ route('blog.index') }}"
                         class="blog-touch-target blog-focus min-h-[44px] min-w-[44px] px-4 rounded-[12px] transition-all font-semibold whitespace-nowrap flex items-center {{ empty($currentCluster) ? 'bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
-                        Semua Artikel
+                        {{ __('public_blog.filter_all') }}
                     </a>
                     <a href="{{ route('blog.index', ['cluster' => 'tutorial']) }}"
                         class="blog-touch-target blog-focus min-h-[44px] min-w-[44px] px-4 rounded-[12px] transition-all font-semibold whitespace-nowrap flex items-center {{ $currentCluster === 'tutorial' ? 'bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
-                        Tutorial &amp; Panduan
+                        {{ __('public_blog.filter_tutorial') }}
                     </a>
                     <a href="{{ route('blog.index', ['cluster' => 'edukasi']) }}"
                         class="blog-touch-target blog-focus min-h-[44px] min-w-[44px] px-4 rounded-[12px] transition-all font-semibold whitespace-nowrap flex items-center {{ $currentCluster === 'edukasi' ? 'bg-white dark:bg-[#2C2C2E] text-slate-900 dark:text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
-                        Wawasan Finansial
+                        {{ __('public_blog.filter_edukasi') }}
                     </a>
                 </div>
 
@@ -358,7 +358,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                     <div class="relative flex items-center">
                         <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5"></i>
                         <input type="text" name="q" value="{{ $search }}"
-                            placeholder="Cari judul artikel atau topik..."
+                            placeholder="{{ __('public_blog.search_placeholder') }}"
                             class="blog-focus w-full h-12 pl-10 pr-4 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] rounded-[14px] text-slate-900 dark:text-white text-[16px] placeholder-slate-400 focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition shadow-xs">
                     </div>
                 </form>
@@ -369,11 +369,11 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                 <div class="blog-pills-wrap">
                     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar blog-tabs-scroll pr-8">
                         <span class="text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider text-xs shrink-0 mr-1">
-                            Kategori:
+                            {{ __('public_blog.category_label') }}
                         </span>
                         <a href="{{ route('blog.index', request()->except(['category', 'page'])) }}"
                             class="blog-touch-target blog-focus min-h-[44px] px-4 py-2 rounded-[12px] font-semibold whitespace-nowrap transition flex items-center {{ empty($currentCategory) ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-300 border border-black/[0.06] dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-[#2C2C2E]' }}">
-                            Semua
+                            {{ __('public_blog.category_all') }}
                         </a>
                         @foreach ($categories as $cat)
                             <a href="{{ route('blog.index', array_merge(request()->except(['category', 'page']), ['category' => $cat])) }}"
@@ -385,7 +385,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                             <a href="{{ route('blog.index', request()->except(['category', 'page'])) }}"
                                 class="blog-touch-target blog-focus text-xs text-rose-500 hover:underline ml-2 shrink-0 font-medium flex items-center gap-1 min-h-[44px] px-2">
                                 <i data-lucide="x" class="w-4 h-4"></i>
-                                <span>Reset</span>
+                                <span>{{ __('public_blog.filter_reset') }}</span>
                             </a>
                         @endif
                     </div>
@@ -402,7 +402,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                     {{ $featuredPost->category }}
                                 </span>
                                 <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                    {{ $featuredPost->read_time }} menit baca
+                                    {{ __('public_blog.read_time', ['minutes' => $featuredPost->read_time]) }}
                                 </span>
                             </div>
 
@@ -418,11 +418,11 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
 
                             <div class="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                                 <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                                    Ditulis oleh {{ $featuredPost->author_name }}
+                                    {{ __('public_blog.author_prefix', ['author' => $featuredPost->author_name]) }}
                                 </div>
                                 <a href="{{ route('blog.show', $featuredPost->slug) }}"
                                     class="blog-touch-target blog-focus min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-[0.98] w-full sm:w-auto justify-center">
-                                    <span>Baca Lengkap</span>
+                                    <span>{{ __('public_blog.btn_read_full') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
@@ -461,7 +461,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                     <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
                                         <span>{{ $post->published_at ? $post->published_at->format('d M Y') : '' }}</span>
                                         <span>•</span>
-                                        <span>{{ $post->read_time }} menit baca</span>
+                                        <span>{{ __('public_blog.read_time', ['minutes' => $post->read_time]) }}</span>
                                     </div>
 
                                     <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors leading-snug line-clamp-2">
@@ -479,7 +479,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                     {{ $post->author_name }}
                                 </span>
                                 <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform min-h-[44px] py-2">
-                                    <span>Baca Artikel</span>
+                                    <span>{{ __('public_blog.btn_read_article') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                 </span>
                             </div>
@@ -491,11 +491,11 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                             <i data-lucide="search-x" class="w-10 h-10 mx-auto mb-3 opacity-50"></i>
                         </div>
                         <p class="text-slate-500 dark:text-slate-400 text-sm">
-                            Belum ada artikel untuk kategori atau pencarian ini.
+                            {{ __('public_blog.empty_title') }}
                         </p>
                         <a href="{{ route('blog.index') }}" class="blog-touch-target blog-focus inline-flex items-center gap-1.5 text-sm font-semibold text-[#007AFF] min-h-[44px] px-4">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            Lihat Semua Artikel
+                            {{ __('public_blog.empty_reset') }}
                         </a>
                     </div>
                 @endforelse
@@ -516,19 +516,19 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
     <nav class="blog-bottom-bar md:hidden" aria-label="Navigasi blog">
         <a href="{{ route('landing') }}" class="blog-touch-target">
             <i data-lucide="home" class="w-5 h-5"></i>
-            <span>Beranda</span>
+            <span>{{ __('public_blog.nav_home') }}</span>
         </a>
         <a href="{{ route('blog.index') }}" class="blog-touch-target active" aria-current="page">
             <i data-lucide="book-open" class="w-5 h-5"></i>
-            <span>Blog</span>
+            <span>{{ __('public_blog.nav_blog') }}</span>
         </a>
         <a href="{{ route('kalkulator.index') }}" class="blog-touch-target">
             <i data-lucide="calculator" class="w-5 h-5"></i>
-            <span>Kalkulator</span>
+            <span>{{ __('public_blog.nav_calc') }}</span>
         </a>
         <a href="{{ route('register') }}" class="blog-touch-target">
             <i data-lucide="user-plus" class="w-5 h-5"></i>
-            <span>Daftar</span>
+            <span>{{ __('public_blog.nav_register') }}</span>
         </a>
     </nav>
 

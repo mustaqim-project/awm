@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap | COOCA')
-@section('description', 'Jawaban lengkap seputar lisensi gratis, kompatibilitas printer thermal, keamanan cloud, mode kasir offline, dan panduan migrasi data COOCA.')
-@section('og_title', 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap | COOCA')
-@section('og_description', 'Jawaban lengkap seputar lisensi gratis, kompatibilitas printer thermal, keamanan cloud, mode kasir offline, dan panduan migrasi data COOCA.')
+@section('title', __('public_resources.faq_seo_title'))
+@section('description', __('public_resources.faq_seo_desc'))
+@section('og_title', __('public_resources.faq_seo_title'))
+@section('og_description', __('public_resources.faq_seo_desc'))
 @section('canonical', route('public.resources.faq'))
 @section('og_type', 'website')
 
@@ -120,21 +120,18 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div
                             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                             <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                            <span>Pusat Bantuan &amp; Tanya Jawab</span>
+                            <span>{{ __('public_resources.faq_kicker') }}</span>
                         </div>
 
                         <h1
                             class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                            Semua Jawaban Jelas untuk Menjalankan Usaha <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Tanpa
-                                Ragu</span>
+                            {{ __('public_resources.faq_title') }}
                         </h1>
                     </div>
 
                     <p
                         class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal text-pretty text-left max-w-xl">
-                        Penjelasan jujur dan transparan mengenai skema gratis, kompatibilitas printer thermal Bluetooth,
-                        keamanan data cloud multi-tenant, hingga cara kerja kasir saat internet toko sedang mati.
+                        {{ __('public_resources.faq_subtitle') }}
                     </p>
 
                     <!-- Direct Action Buttons -->

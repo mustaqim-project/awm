@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Kalender Konten & Jadwal Promosi Bisnis Online | COOCA')
-@section('description', 'Rencanakan jadwal konten medsos sebulan penuh: kalender editorial visual terhubung langsung ke Instagram, Facebook, dan katalog toko.')
-@section('og_title', 'Kalender Konten & Jadwal Promosi Bisnis Online | COOCA')
-@section('og_description', 'Rencanakan jadwal konten medsos sebulan penuh: kalender editorial visual terhubung langsung ke Instagram, Facebook, dan katalog toko.')
+@section('title', __('public_content.cal_seo_title'))
+@section('description', __('public_content.cal_seo_desc'))
+@section('og_title', __('public_content.cal_seo_title'))
+@section('og_description', __('public_content.cal_seo_desc'))
 @section('keywords',
     'software kalender konten, aplikasi jadwal promosi bisnis, editorial calendar medsos, perencanaan konten produk, jadwal posting instagram facebook')
 
@@ -99,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Editorial Planning &amp; Visual Campaign Grid
+                                {{ __('public_content.cal_kicker') }}
                             </p>
                         </div>
 
@@ -107,29 +107,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.65rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words">
-                                Rencanakan Pemasaran Sebulan Penuh <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Dalam Satu Tampilan Visual.</span>
+                                {{ __('public_content.cal_title') }}
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-xl">
-                            Ketahui persis konten apa yang akan tayang besok, lusa, hingga akhir bulan. Susun tema promosi
-                            mingguan, sesuaikan dengan tanggal gajian pembeli, dan geser jadwal tayang secara leluasa dengan
-                            kalender editorial interaktif COOCA.
+                            {{ __('public_content.cal_subtitle') }}
                         </p>
 
                         {{-- Action Buttons --}}
                         <div class="pt-1 flex flex-row flex-wrap items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Demo Kalender</span>
+                                <span>{{ __('public_content.cal_btn_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.content.publishing') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 border border-white/15 backdrop-blur-sm transition-all min-h-[40px] sm:min-h-[48px]">
-                                <span>Lihat Alur Publikasi</span>
+                                <span>{{ __('public_content.cal_btn_pub') }}</span>
                             </a>
                         </div>
 
@@ -138,15 +135,15 @@
                             class="pt-1 flex flex-wrap items-center justify-start gap-x-4 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Pandangan Bulanan &amp; Mingguan</span>
+                                <span>{{ __('public_content.cal_check_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Drag &amp; Drop Jadwal Cepat</span>
+                                <span>{{ __('public_content.cal_check_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Multi-Kanal (IG, FB, WA)</span>
+                                <span>{{ __('public_content.cal_check_3') }}</span>
                             </div>
                         </div>
                     </div>
@@ -263,14 +260,10 @@
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
                     <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                        Tantangan Konsistensi Pemasaran
+                        {{ __('public_content.cal_pain_kicker') }}
                     </h2>
                     <p class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                        Mengapa Pemasaran Toko Anda Sering Terasa Sporadis & Tanpa Arah?
-                    </p>
-                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-3">
-                        Tanpa kalender editorial terencana, postingan media sosial dibuat terburu-buru hanya saat toko
-                        sedang sepi dan sering melewatkan momen penjualan penting.
+                        {{ __('public_content.cal_pain_title') }}
                     </p>
                 </div>
 
@@ -324,13 +317,10 @@
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                    Fitur Kalender Editorial COOCA
+                    {{ __('public_content.cal_bento_kicker') }}
                 </h2>
                 <p class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    Disiplin Pemasaran Tanpa Beban Eksekusi Rumit
-                </p>
-                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-3">
-                    Memudahkan penyusunan strategi jangka panjang dan memastikan eksekusi harian berjalan otomatis.
+                    {{ __('public_content.cal_bento_title') }}
                 </p>
             </div>
 
@@ -675,20 +665,19 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Mulai Rencanakan Pemasaran Toko Anda dengan Teratur
+                        {{ __('public_content.cal_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
-                        Hentikan kebingungan postingan mendadak dan bangun kehadiran media sosial yang konsisten dan
-                        berdampak bagi bisnis bersama COOCA.
+                        {{ __('public_content.cal_cta_desc') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
-                            Coba Demo Kalender Konten
+                            {{ __('public_content.cal_cta_btn') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all">
-                            Konsultasi Rencana Pemasaran
+                            {{ __('public_content.cal_cta_consult') }}
                         </a>
                     </div>
                 </div>

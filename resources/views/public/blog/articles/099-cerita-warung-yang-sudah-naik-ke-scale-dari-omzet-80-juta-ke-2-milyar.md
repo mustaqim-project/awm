@@ -47,7 +47,7 @@ Tim Edukasi COOCA
 <h2>Pelajaran yang Bisa Diambil Pelaku UMKM Lain</h2>
 <ul>
 <li>Sistem dan SOP yang terdokumentasi adalah fondasi penting sebelum melakukan ekspansi skala besar.</li>
-<li>Digitalisasi pencatatan membantu pengambilan keputusan berbasis data, bukan sekadar intuisi.</li>
+<li>Digitalisasi pencatatan kasir dan mutasi stok menyajikan data analitik akurat untuk memandu strategi pengadaan dan ekspansi bisnis secara terukur.</li>
 <li>Delegasi yang tepat memungkinkan pemilik usaha fokus pada strategi, bukan terjebak pada operasional harian yang semakin kompleks.</li>
 </ul>
 

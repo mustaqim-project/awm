@@ -1,7 +1,7 @@
 # Artikel #057
 
 **Judul Artikel \***
-Mau Buka Franchise? Digital Marketing Jadi Fondasi yang Wajib Kamu Bangun Dulu
+Mau Buka Franchise? Digital Marketing Jadi Fondasi yang Wajib Anda Bangun Dulu
 
 **Cluster Konten \***
 Cluster G - Strategi Bisnis
@@ -55,7 +55,7 @@ Sebelum menawarkan kemitraan franchise, fondasi digital marketing yang kuat perl
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Mau Buka Franchise? Digital Marketing Jadi Fondasi yang Wajib Kamu Bangun Dulu
+Mau Buka Franchise? Digital Marketing Jadi Fondasi yang Wajib Anda Bangun Dulu
 
 **Meta Description**
 Kenapa fondasi digital marketing perlu dibangun sebelum membuka peluang franchise, dan elemen apa saja yang perlu disiapkan.

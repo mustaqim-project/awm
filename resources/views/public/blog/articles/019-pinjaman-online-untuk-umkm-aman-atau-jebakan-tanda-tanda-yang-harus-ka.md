@@ -1,7 +1,7 @@
 # Artikel #019
 
 **Judul Artikel \***
-Pinjaman Online untuk UMKM: Aman atau Jebakan? Tanda-Tanda yang Harus Kamu Kenali
+Pinjaman Online untuk UMKM: Aman atau Jebakan? Tanda-Tanda yang Harus Anda Kenali
 
 **Cluster Konten \***
 Cluster A - Awareness & Edukasi
@@ -56,7 +56,7 @@ Pinjaman online bisa jadi solusi modal cepat, tapi juga berisiko jika salah pili
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Pinjaman Online untuk UMKM: Aman atau Jebakan? Tanda-Tanda yang Harus Kamu Kenali
+Pinjaman Online untuk UMKM: Aman atau Jebakan? Tanda-Tanda yang Harus Anda Kenali
 
 **Meta Description**
 Cara mengenali pinjaman online yang aman dan legal untuk UMKM, serta tanda-tanda pinjol ilegal yang harus dihindari.

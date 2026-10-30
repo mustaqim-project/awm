@@ -25,7 +25,7 @@ Menghadapi komplain pelanggan butuh cara komunikasi yang tepat agar hubungan tet
 <h2>Prinsip Dasar Merespons Komplain</h2>
 <ul>
 <li>Dengarkan dulu keluhan tanpa memotong atau langsung membela diri.</li>
-<li>Sampaikan permintaan maaf yang tulus, bukan sekadar formalitas.</li>
+<li>Sampaikan permohonan maaf secara profesional dengan mengakui ketidaknyamanan yang dialami pelanggan.</li>
 <li>Tawarkan solusi konkret, bukan hanya janji tanpa tindak lanjut.</li>
 <li>Tindak lanjuti setelah solusi diberikan untuk memastikan pelanggan benar-benar puas.</li>
 </ul>
@@ -52,7 +52,7 @@ Menghadapi komplain pelanggan butuh cara komunikasi yang tepat agar hubungan tet
 <p>Selain merespons dengan baik, mencatat pola komplain yang berulang membantu owner mengidentifikasi masalah operasional yang perlu diperbaiki secara sistematis, bukan hanya menangani kasus per kasus.</p>
 
 <h2>Kesimpulan</h2>
-<p>Template balasan komplain ini bisa jadi acuan dasar, namun tetap perlu disesuaikan dengan situasi dan karakter komunikasi usahamu. Yang terpenting adalah ketulusan dan tindak lanjut nyata, bukan sekadar kata-kata yang manis.</p>
+<p>Template balasan komplain ini menjadi pedoman standar layanan yang perlu disesuaikan dengan situasi spesifik toko Anda. Prioritas utama penanganan keluhan adalah kecepatan solusi nyata dan perbaikan kualitas operasional.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

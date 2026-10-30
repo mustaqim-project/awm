@@ -43,10 +43,10 @@ Tidak perlu datang ke kantor untuk memastikan status NIB. Berikut cara mengecek 
 <blockquote>Simpan bukti tangkapan layar setiap tahap pengajuan sebagai dokumentasi jika sewaktu-waktu diperlukan untuk konfirmasi ke petugas.</blockquote>
 
 <h2>Kenapa Rutin Mengecek Status Itu Penting</h2>
-<p>Status NIB bisa berubah seiring adanya pembaruan data usaha atau kebijakan baru. Mengecek secara berkala, terutama sebelum mengajukan kerja sama bisnis atau pembiayaan, memastikan dokumen yang kamu tunjukkan ke pihak lain benar-benar valid dan terbaru.</p>
+<p>Status NIB bisa berubah seiring adanya pembaruan data usaha atau kebijakan baru. Mengecek secara berkala, terutama sebelum mengajukan kerja sama bisnis atau pembiayaan, memastikan dokumen yang Anda tunjukkan ke pihak lain benar-benar valid dan terbaru.</p>
 
 <h2>Kesimpulan</h2>
-<p>Mengecek status NIB tidak memerlukan kunjungan fisik ke kantor mana pun - semua bisa dilakukan lewat akun OSS dalam hitungan menit. Rutin memeriksanya membantu memastikan legalitas usahamu selalu dalam kondisi siap digunakan.</p>
+<p>Mengecek status NIB tidak memerlukan kunjungan fisik ke kantor mana pun - semua bisa dilakukan lewat akun OSS dalam hitungan menit. Rutin memeriksanya membantu memastikan legalitas usaha Anda selalu dalam kondisi siap digunakan.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

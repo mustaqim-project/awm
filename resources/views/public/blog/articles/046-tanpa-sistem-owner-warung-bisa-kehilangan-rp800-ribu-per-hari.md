@@ -49,7 +49,7 @@ Tanpa sistem pencatatan yang baik, kerugian usaha bisa terjadi tanpa disadari da
 </ul>
 
 <h2>Langkah Awal Menutup Kebocoran Ini</h2>
-<p>Mulailah dengan melakukan audit sederhana terhadap kelima sumber kerugian di atas selama beberapa minggu untuk melihat pola yang terjadi di usahamu sendiri, sebelum memutuskan langkah perbaikan yang paling relevan.</p>
+<p>Mulailah dengan melakukan audit sederhana terhadap kelima sumber kerugian di atas selama beberapa minggu untuk melihat pola yang terjadi di usaha Anda sendiri, sebelum memutuskan langkah perbaikan yang paling relevan.</p>
 
 <h2>Kesimpulan</h2>
 <p>Kerugian usaha tanpa sistem pencatatan yang baik bisa terjadi secara diam-diam dari berbagai celah kecil setiap harinya. Menerapkan sistem pemantauan yang lebih ketat adalah langkah penting untuk menutup kebocoran ini dan menjaga profitabilitas usaha.</p>

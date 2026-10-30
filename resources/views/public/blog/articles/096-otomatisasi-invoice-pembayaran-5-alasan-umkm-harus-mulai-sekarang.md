@@ -36,7 +36,7 @@ Proses invoice dan penagihan pembayaran manual seringkali memakan waktu dan rawa
 <p>Sistem otomatis biasanya menyediakan status pembayaran secara real-time - lunas, tertunda, atau jatuh tempo - sehingga owner tidak perlu mengecek satu per satu secara manual.</p>
 
 <h3>5. Meningkatkan Kesan Profesional di Mata Klien</h3>
-<p>Invoice yang rapi, konsisten, dan terkirim tepat waktu memberi kesan profesional yang bisa memperkuat kepercayaan klien bisnis terhadap usahamu.</p>
+<p>Invoice yang rapi, konsisten, dan terkirim tepat waktu memberi kesan profesional yang bisa memperkuat kepercayaan klien bisnis terhadap usaha Anda.</p>
 
 <blockquote>Otomatisasi invoice bukan hanya soal kecepatan, tapi juga soal membangun citra profesional yang penting terutama saat melayani klien bisnis atau korporat.</blockquote>
 

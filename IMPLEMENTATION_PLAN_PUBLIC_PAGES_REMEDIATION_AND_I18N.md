@@ -242,18 +242,18 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 ### FASE 8: Refactoring Landing Komersial & Marketplace Publik
 *Tujuan: Memperbaiki bahasa emosional dan migrasi dwibahasa penuh.*
 
-- [ ] **Task 8.1   Kasir Gratis (`kasir_gratis.blade.php`):**  
+- [x] **Task 8.1   Kasir Gratis (`kasir_gratis.blade.php`):** (SELESAI)  
   Migrasi transparansi kuota 1 toko & 10 produk gratis selamanya ke kamus `public_commercial.free_*`.
-- [ ] **Task 8.2   Kasir Android (`kasir_android.blade.php`):**  
+- [x] **Task 8.2   Kasir Android (`kasir_android.blade.php`):** (SELESAI)  
   Migrasi panduan unduh APK dan spesifikasi minimum HP ke kamus `public_commercial.android_*`.
-- [ ] **Task 8.3   Kasir Offline (`kasir_offline.blade.php`):**  
+- [x] **Task 8.3   Kasir Offline (`kasir_offline.blade.php`):** (SELESAI)  
   Migrasi fitur transaksi saat sinyal internet mati ke kamus `public_commercial.offline_*`.
-- [ ] **Task 8.4   Koreksi Kalimat Emosional `products.blade.php`:**  
+- [x] **Task 8.4   Koreksi Kalimat Emosional `products.blade.php`:** (SELESAI)  
   Buka [resources/views/public/marketplace/products.blade.php](file:///c:/laragon/www/cooca_core/resources/views/public/marketplace/products.blade.php).  
   * Ganti *"Tanpa biaya perantara yang mencekik"* di baris 281 menjadi `{{ __('public_marketplace.producer_price_desc') }}` (*"Tanpa potongan komisi perantara yang tinggi..."*).
-- [ ] **Task 8.5   Migrasi Seluruh Direktori Marketplace (`businesses`, `categories`, `locations`, `search`, `index`):**  
+- [x] **Task 8.5   Migrasi Seluruh Direktori Marketplace (`businesses`, `categories`, `locations`, `search`, `index`):** (SELESAI)  
   Ekstrak seluruh teks ke kamus `public_marketplace.*`.
-- [ ] **Task 8.6   Direktori Discovery (`discovery/index.blade.php`):**  
+- [x] **Task 8.6   Direktori Discovery (`discovery/index.blade.php`):** (SELESAI)  
   Bersihkan duplikasi komentar blade di baris 41-45 dan migrasi teks ke kamus `public_discovery.*`.
 
 ---
@@ -261,15 +261,15 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 ### FASE 9: Refactoring Content Automation, Resources & Contact
 *Tujuan: Memasarkan fitur migrasi Excel cepat, melokalkan kicker asing, dan migrasi i18n.*
 
-- [ ] **Task 9.1   Lokalisasi Kicker Content Automation (`creation`, `calendar`, `publishing`, `analytics`):**  
+- [x] **Task 9.1 — Lokalisasi Kicker Content Automation (`creation`, `calendar`, `publishing`, `analytics`):** (SELESAI)  
   Terjemahkan overline bahasa Inggris asing (*"Product-Driven Content Creation Studio"*) menjadi istilah bahasa Indonesia yang ramah UMKM di `lang/id` dan bahasa Inggris formal di `lang/en`.
-- [ ] **Task 9.2   Variasi Kosakata "Terbaik" pada FAQ Analitik:**  
+- [x] **Task 9.2 — Variasi Kosakata "Terbaik" pada FAQ Analitik:** (SELESAI)  
   Variasikan pengulangan kata *"terbaik"* 5 kali di [content-automation/analytics.blade.php](file:///c:/laragon/www/cooca_core/resources/views/public/content-automation/analytics.blade.php).
-- [ ] **Task 9.3   Tambahkan Panduan Migrasi Data Excel (`guides.blade.php`):**  
+- [x] **Task 9.3 — Tambahkan Panduan Migrasi Data Excel (`guides.blade.php`):** (SELESAI)  
   Cantumkan panduan migrasi cepat dari software lama menggunakan **Unified Data Exchange Hub** COOCA.
-- [ ] **Task 9.4   Halaman Studi Kasus & FAQ (`case-studies.blade.php`, `faq.blade.php`):**  
+- [x] **Task 9.4 — Halaman Studi Kasus & FAQ (`case-studies.blade.php`, `faq.blade.php`):** (SELESAI)  
   Ganti pengulangan kata *"transformasi"* menjadi *"perubahan operasional"* dan migrasi teks ke kamus `public_resources.*`.
-- [ ] **Task 9.5   Halaman Kontak Resmi (`contact/index.blade.php`):**  
+- [x] **Task 9.5 — Halaman Kontak Resmi (`contact/index.blade.php`):** (SELESAI)  
   Migrasi SLA respon dukungan dan formulir pesan ke kamus `public_contact.*`.
 
 ---
@@ -312,13 +312,13 @@ Komponen Language Switcher akan dipasang pada 3 titik strategis antarmuka:
 ├────────────────────┼─────────────────────┼───────────────┼─────────────────┼────────────────┤
 │ Fase 1: Kamus i18n │ 12 Kamus ID + 12 EN │ 6 Task Utama  │ SELESAI (100%)  │ FONDASI (P0)   │
 │ Fase 2: Layout & SW│ 2 Layout Master     │ 5 Task Utama  │ SELESAI (100%)  │ KRITIS (P0)    │
-│ Fase 3: Home & BOS │ 4 File Blade        │ 4 Task Utama  │ PENDING TRIGGER │ KRITIS (P0-P1) │
+│ Fase 3: Home & BOS │ 4 File Blade        │ 4 Task Utama  │ SELESAI (100%)  │ KRITIS (P0-P1) │
 │ Fase 4: ERP Suite  │ 8 File Blade        │ 8 Task Utama  │ SELESAI (100%)  │ TINGGI (P1)    │
-│ Fase 5: Omnichannel│ 5 File Blade        │ 5 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │
-│ Fase 6: Solusi UMKM│ 7 File Blade        │ 7 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │
+│ Fase 5: Omnichannel│ 5 File Blade        │ 5 Task Utama  │ SELESAI (100%)  │ TINGGI (P1-P2) │
+│ Fase 6: Solusi UMKM│ 7 File Blade        │ 7 Task Utama  │ SELESAI (100%)  │ TINGGI (P1-P2) │
 │ Fase 7: Kalkulator │ 9 File Blade        │ 9 Task Utama  │ SELESAI (100%)  │ SEDANG (P2)    │
-│ Fase 8: Komersial  │ 9 File Blade        │ 6 Task Utama  │ PENDING TRIGGER │ TINGGI (P0-P2) │
-│ Fase 9: Resources  │ 8 File Blade        │ 5 Task Utama  │ PENDING TRIGGER │ SEDANG (P2)    │
+│ Fase 8: Komersial  │ 9 File Blade        │ 6 Task Utama  │ SELESAI (100%)  │ TINGGI (P0-P2) │
+│ Fase 9: Resources  │ 8 File Blade        │ 5 Task Utama  │ SELESAI (100%)  │ SEDANG (P2)    │
 │ Fase 10: Blog Edit │ 102 File (MD+Blade) │ 3 Task Utama  │ PENDING TRIGGER │ TINGGI (P1-P2) │
 │ Fase 11: QA & Uji  │ 53 File Blade       │ 5 Task Utama  │ PENDING TRIGGER │ VERIFIKASI (P0)│
 ├────────────────────┼─────────────────────┼───────────────┼─────────────────┼────────────────┤

@@ -1,7 +1,7 @@
 # Artikel #005
 
 **Judul Artikel \***
-Dari Warung ke Klinik Kecil: Cara Tentukan KBLI yang Benar untuk Jenis Usahamu
+Dari Warung ke Klinik Kecil: Cara Tentukan KBLI yang Benar untuk Jenis Usaha Anda
 
 **Cluster Konten \***
 Cluster K - Tutorial "Cara"
@@ -16,7 +16,7 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Kode KBLI menentukan jenis izin dan kewajiban usaha ke depan. Berikut cara memilih KBLI yang tepat sesuai jenis usahamu, dari warung makan sampai klinik kecil.
+Kode KBLI menentukan jenis izin dan kewajiban usaha ke depan. Berikut cara memilih KBLI yang tepat sesuai jenis usaha Anda, dari warung makan sampai klinik kecil.
 
 ## Konten Lengkap (HTML Didukung) \*
 
@@ -44,15 +44,15 @@ Kode KBLI menentukan jenis izin dan kewajiban usaha ke depan. Berikut cara memil
 <li>Tidak memperbarui KBLI saat usaha berkembang ke bidang baru.</li>
 </ul>
 
-<blockquote>Jika usahamu berkembang ke bidang baru, tambahkan KBLI baru di OSS - jangan biarkan legalitas usaha tertinggal dari kenyataan di lapangan.</blockquote>
+<blockquote>Jika usaha Anda berkembang ke bidang baru, tambahkan KBLI baru di OSS - jangan biarkan legalitas usaha tertinggal dari kenyataan di lapangan.</blockquote>
 
 <h2>Kesimpulan</h2>
-<p>Memilih KBLI yang tepat sejak awal akan menghemat waktu dan biaya saat mengurus izin turunan di kemudian hari. Luangkan waktu untuk riset kode yang paling sesuai, karena keputusan ini akan berdampak panjang pada arah legalitas usahamu.</p>
+<p>Memilih KBLI yang tepat sejak awal akan menghemat waktu dan biaya saat mengurus izin turunan di kemudian hari. Luangkan waktu untuk riset kode yang paling sesuai, karena keputusan ini akan berdampak panjang pada arah legalitas usaha Anda.</p>
 
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Dari Warung ke Klinik Kecil: Cara Tentukan KBLI yang Benar untuk Jenis Usahamu
+Dari Warung ke Klinik Kecil: Cara Tentukan KBLI yang Benar untuk Jenis Usaha Anda
 
 **Meta Description**
 Panduan memilih kode KBLI yang tepat untuk berbagai jenis usaha UMKM, dari warung makan hingga klinik kecil, agar izin usaha sesuai.

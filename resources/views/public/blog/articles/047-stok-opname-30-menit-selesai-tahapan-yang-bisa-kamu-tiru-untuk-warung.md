@@ -1,7 +1,7 @@
 # Artikel #047
 
 **Judul Artikel \***
-Stok Opname 30 Menit Selesai? Tahapan yang Bisa Kamu Tiru untuk Warung
+Stok Opname 30 Menit Selesai? Tahapan yang Bisa Anda Tiru untuk Warung
 
 **Cluster Konten \***
 Cluster K - Tutorial "Cara"
@@ -56,7 +56,7 @@ Stok opname sering dianggap merepotkan dan memakan waktu lama. Dengan tahapan ya
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Stok Opname 30 Menit Selesai? Tahapan yang Bisa Kamu Tiru untuk Warung
+Stok Opname 30 Menit Selesai? Tahapan yang Bisa Anda Tiru untuk Warung
 
 **Meta Description**
 Tahapan melakukan stok opname secara cepat dan akurat untuk warung, agar prosesnya tidak lagi terasa merepotkan.

@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Hubungi Tim Dukungan COOCA: Konsultasi & Bantuan Resmi')
-@section('description', 'Hubungi tim konsultan dan customer service resmi COOCA. Bantuan teknis aplikasi kasir POS, kalkulator HPP, pembukuan, atau kemitraan bisnis UMKM.')
-@section('og_title', 'Hubungi Tim Dukungan COOCA: Konsultasi & Bantuan Resmi')
-@section('og_description', 'Hubungi tim konsultan dan customer service resmi COOCA. Bantuan teknis aplikasi kasir POS atau kemitraan.')
+@section('title', __('public_contact.contact_seo_title'))
+@section('description', __('public_contact.contact_seo_desc'))
+@section('og_title', __('public_contact.contact_seo_title'))
+@section('og_description', __('public_contact.contact_seo_desc'))
 @section('canonical', route('contact'))
 @section('og_type', 'website')
 
@@ -44,22 +44,19 @@
                             <div
                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                                 <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Pusat Bantuan &amp; Konsultasi Resmi</span>
+                                <span>{{ __('public_contact.contact_kicker') }}</span>
                             </div>
 
                             <h1
                                 class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                                Tim Kami Siap Mendampingi <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Operasional
-                                    Bisnis Anda</span>
+                                {{ __('public_contact.contact_title_prefix') }} <span
+                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">{{ __('public_contact.contact_title_accent') }}</span>
                             </h1>
                         </div>
 
                         <p
                             class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal text-pretty text-left max-w-xl">
-                            Punya kendala teknis printer struk, sinkronisasi stok toko, atau ingin berkonsultasi mengenai
-                            perhitungan pembukuan dan otomasi konten? Kami mengutamakan pendampingan ramah, responsif,
-                            dan mudah dipahami tanpa istilah teknis yang membingungkan.
+                            {{ __('public_contact.contact_subtitle') }}
                         </p>
 
                         {{-- Direct Primary Actions --}}
@@ -69,12 +66,12 @@
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#34C759] hover:bg-[#2DB84D] text-white font-semibold text-sm shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-5 h-5 shrink-0"></i>
-                                <span>Chat WhatsApp Resmi</span>
+                                <span>{{ __('public_contact.wa_channel_button') }}</span>
                             </a>
                             <a href="#form-pesan"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all min-h-[48px]">
                                 <i data-lucide="mail" class="w-4 h-4 text-slate-300 shrink-0"></i>
-                                <span>Kirim Formulir Pesan</span>
+                                <span>{{ __('public_contact.form_btn_nav') }}</span>
                             </a>
                         </div>
 
@@ -86,21 +83,21 @@
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Respon Cepat {{ $supportSla['response_time'] ?? '< 15 Menit' }}</span>
+                                <span>{{ __('public_contact.contact_badge_response') }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Panduan Foto &amp; Video Call</span>
+                                <span>{{ __('public_contact.contact_badge_guide') }}</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div
                                     class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <span>Privasi &amp; Data Terenkripsi</span>
+                                <span>{{ __('public_contact.contact_badge_privacy') }}</span>
                             </div>
                         </div>
                     </div>
@@ -121,12 +118,11 @@
                                             class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                         <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                                     </span>
-                                    <span class="text-xs font-bold uppercase tracking-wider text-white">Status Operasional
-                                        Support</span>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-white">{{ __('public_contact.status_support_title') }}</span>
                                 </div>
                                 <span
                                     class="text-[11px] text-emerald-400 font-semibold bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                                    Siaga Melayani
+                                    {{ __('public_contact.status_support_active') }}
                                 </span>
                             </div>
 
@@ -141,7 +137,7 @@
                                     <div class="min-w-0 flex-1">
                                         <div
                                             class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider truncate">
-                                            WhatsApp Hotline</div>
+                                            {{ __('public_contact.channel_wa_hotline') }}</div>
                                         <div class="text-sm sm:text-base font-bold text-white font-mono truncate">
                                             {{ $officialWhatsapp }}</div>
                                     </div>
@@ -164,13 +160,13 @@
                                     <div class="min-w-0 flex-1">
                                         <div
                                             class="text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">
-                                            Email Resmi</div>
+                                            {{ __('public_contact.channel_email_official') }}</div>
                                         <a href="mailto:{{ $officialEmail }}"
                                             class="text-xs sm:text-sm font-bold text-white hover:underline truncate block">{{ $officialEmail }}</a>
                                     </div>
                                 </div>
                                 <a href="mailto:{{ $officialEmail }}"
-                                    class="text-xs font-bold text-[#00C4D8] hover:underline shrink-0 px-2.5 py-1 rounded-lg bg-[#007AFF]/10 border border-[#007AFF]/20">Kirim</a>
+                                    class="text-xs font-bold text-[#00C4D8] hover:underline shrink-0 px-2.5 py-1 rounded-lg bg-[#007AFF]/10 border border-[#007AFF]/20">{{ __('public_contact.email_channel_button') }}</a>
                             </div>
 
                             {{-- Channel 3: Office --}}
@@ -181,11 +177,10 @@
                                     <i data-lucide="map-pin" class="w-5 h-5"></i>
                                 </div>
                                 <div class="min-w-0 flex-1">
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Kantor
-                                        Operasional</div>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{{ __('public_contact.channel_office_ops') }}</div>
                                     <div class="text-xs sm:text-sm font-semibold text-white mt-0.5 leading-snug break-words">
                                         {{ $officeLocation }}</div>
-                                    <div class="text-[11px] text-slate-400 mt-1 leading-normal">{{ $supportSla['hours'] ?? 'Senin - Sabtu: 08.00 - 20.00 WIB' }}</div>
+                                    <div class="text-[11px] text-slate-400 mt-1 leading-normal">{{ $supportSla['hours'] ?? __('public_contact.channel_hours_default') }}</div>
                                 </div>
                             </div>
                         </div>
@@ -203,16 +198,15 @@
                         <div
                             class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] mb-2">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Formulir Pesan Dukungan</span>
+                            <span>{{ __('public_contact.form_kicker') }}</span>
                         </div>
                         <h2
                             class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight text-balance break-words">
-                            Tuliskan Pertanyaan atau Kendala Anda
+                            {{ __('public_contact.form_heading') }}
                         </h2>
                         <p
                             class="text-sm text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed text-pretty break-words">
-                            Isi data di bawah ini secara ringkas. Tim spesialis kami akan meninjau dan menghubungi Anda
-                            kembali.
+                            {{ __('public_contact.form_subheading') }}
                         </p>
                     </div>
 
@@ -221,7 +215,7 @@
                             class="p-4 rounded-[16px] bg-emerald-500/10 border border-emerald-500/25 text-slate-900 dark:text-white text-sm mb-8 flex items-start gap-3.5">
                             <i data-lucide="check-circle" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
                             <div>
-                                <div class="font-bold text-emerald-600 dark:text-emerald-400">Pesan Berhasil Terkirim</div>
+                                <div class="font-bold text-emerald-600 dark:text-emerald-400">{{ __('public_contact.form_success_title') }}</div>
                                 <div class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                                     {{ session('success_message') }}</div>
                             </div>
@@ -233,9 +227,9 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                    Nama Lengkap Pemilik / Pengelola <span class="text-[#FF3B30]">*</span>
+                                    {{ __('public_contact.form_label_name') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="text" name="name" required placeholder="Contoh: Hendra Wijaya"
+                                <input type="text" name="name" required placeholder="{{ __('public_contact.form_placeholder_name') }}"
                                     value="{{ old('name') }}"
                                     class="w-full h-12 px-4 bg-slate-50 dark:bg-[#070A14] border border-slate-200 dark:border-white/10 rounded-[14px] text-slate-900 dark:text-white text-[16px] focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition-all placeholder-slate-400">
                                 @error('name')
@@ -244,9 +238,9 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                    Alamat Email Aktif <span class="text-[#FF3B30]">*</span>
+                                    {{ __('public_contact.form_label_email') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <input type="email" name="email" required placeholder="email@contohtoko.com"
+                                <input type="email" name="email" required placeholder="{{ __('public_contact.form_placeholder_email') }}"
                                     value="{{ old('email') }}"
                                     class="w-full h-12 px-4 bg-slate-50 dark:bg-[#070A14] border border-slate-200 dark:border-white/10 rounded-[14px] text-slate-900 dark:text-white text-[16px] focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition-all placeholder-slate-400">
                                 @error('email')
@@ -258,20 +252,19 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                    Nomor WhatsApp (Untuk Balasan Cepat)
+                                    {{ __('public_contact.form_label_phone') }}
                                 </label>
-                                <input type="tel" name="phone" placeholder="081234567890"
+                                <input type="tel" name="phone" placeholder="{{ __('public_contact.form_placeholder_phone') }}"
                                     value="{{ old('phone') }}"
                                     class="w-full h-12 px-4 bg-slate-50 dark:bg-[#070A14] border border-slate-200 dark:border-white/10 rounded-[14px] text-slate-900 dark:text-white text-[16px] focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition-all placeholder-slate-400">
-                                <span class="text-[12px] text-slate-500 dark:text-slate-400 mt-1 block">Sangat disarankan
-                                    agar tim dapat merespon via WhatsApp</span>
+                                <span class="text-[12px] text-slate-500 dark:text-slate-400 mt-1 block">{{ __('public_contact.form_hint_phone') }}</span>
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                    Topik Permintaan <span class="text-[#FF3B30]">*</span>
+                                    {{ __('public_contact.form_label_subject') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="text" name="subject" required
-                                    placeholder="Contoh: Konsultasi paket software kasir" value="{{ old('subject') }}"
+                                    placeholder="{{ __('public_contact.form_placeholder_subject') }}" value="{{ old('subject') }}"
                                     class="w-full h-12 px-4 bg-slate-50 dark:bg-[#070A14] border border-slate-200 dark:border-white/10 rounded-[14px] text-slate-900 dark:text-white text-[16px] focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition-all placeholder-slate-400">
                                 @error('subject')
                                     <span class="text-xs text-[#FF3B30] mt-1.5 block font-medium">{{ $message }}</span>
@@ -281,10 +274,10 @@
 
                         <div>
                             <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                                Detail Pertanyaan / Kebutuhan Usaha Anda <span class="text-[#FF3B30]">*</span>
+                                {{ __('public_contact.form_label_message') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <textarea name="message" rows="5" required
-                                placeholder="Jelaskan jenis usaha Anda dan apa yang ingin Anda tanyakan atau butuhkan bantuan..."
+                                placeholder="{{ __('public_contact.form_placeholder_message') }}"
                                 class="w-full p-4 bg-slate-50 dark:bg-[#070A14] border border-slate-200 dark:border-white/10 rounded-[14px] text-slate-900 dark:text-white text-[16px] focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 focus:outline-none transition-all placeholder-slate-400">{{ old('message') }}</textarea>
                             @error('message')
                                 <span class="text-xs text-[#FF3B30] mt-1.5 block font-medium">{{ $message }}</span>
@@ -294,11 +287,11 @@
                         <div class="pt-2">
                             <button type="submit"
                                 class="w-full h-13 py-3.5 rounded-[16px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg shadow-[#007AFF]/25 active:scale-[0.99] transition-all">
-                                <span>Kirimkan Pesan Sekarang</span>
+                                <span>{{ __('public_contact.form_submit_button') }}</span>
                                 <i data-lucide="send" class="w-4 h-4"></i>
                             </button>
                             <p class="text-center text-xs text-slate-500 dark:text-slate-400 mt-3">
-                                Data kontak Anda aman dan hanya digunakan oleh tim COOCA untuk membalas pertanyaan ini.
+                                {{ __('public_contact.form_privacy_footer') }}
                             </p>
                         </div>
                     </form>

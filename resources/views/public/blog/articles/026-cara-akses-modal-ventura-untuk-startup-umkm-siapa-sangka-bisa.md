@@ -31,12 +31,12 @@ Modal ventura tidak hanya untuk startup teknologi besar. UMKM dengan model bisni
 <h2>Hal yang Dicari Investor Ventura</h2>
 <ul>
 <li>Model bisnis yang jelas dan sudah terbukti menghasilkan pendapatan konsisten.</li>
-<li>Potensi pertumbuhan yang bisa direplikasi, bukan sekadar usaha yang stagnan di satu lokasi.</li>
+<li>Potensi pertumbuhan model bisnis yang dapat direplikasi ke berbagai cabang dan kota secara efisien.</li>
 <li>Tim atau pemilik usaha yang punya visi jelas untuk pengembangan jangka panjang.</li>
 <li>Pencatatan keuangan yang transparan sebagai dasar penilaian kelayakan investasi.</li>
 </ul>
 
-<blockquote>Investor ventura mencari usaha yang punya potensi tumbuh berkali lipat, bukan sekadar usaha yang stabil di skala kecil.</blockquote>
+<blockquote>Investor ventura memprioritaskan usaha dengan model bisnis teruji yang memiliki potensi ekspansi multi-cabang secara terukur.</blockquote>
 
 <h2>Langkah Mempersiapkan Diri Mengakses Modal Ventura</h2>
 <ol>

@@ -1,7 +1,7 @@
 # Artikel #040
 
 **Judul Artikel \***
-Stok Menipis Tanpa Sadar? Sistem Notifikasi Ini Bisa Selamatkan Hari Sibukmu
+Stok Menipis Tanpa Sadar? Sistem Notifikasi Ini Bisa Selamatkan Hari Sibuk Anda
 
 **Cluster Konten \***
 Cluster G - Strategi Bisnis
@@ -57,7 +57,7 @@ Stok yang menipis tanpa disadari bisa mengganggu operasional di jam sibuk. Fitur
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Stok Menipis Tanpa Sadar? Sistem Notifikasi Ini Bisa Selamatkan Hari Sibukmu
+Stok Menipis Tanpa Sadar? Sistem Notifikasi Ini Bisa Selamatkan Hari Sibuk Anda
 
 **Meta Description**
 Cara kerja dan manfaat fitur notifikasi stok otomatis untuk mencegah kehabisan bahan baku di jam sibuk pada usaha UMKM.

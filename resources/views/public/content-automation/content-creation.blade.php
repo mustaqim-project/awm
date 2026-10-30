@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Pembuatan Konten Promosi & Desain Produk Toko | COOCA')
-@section('description', 'Ubah foto produk toko jadi materi promosi medsos memikat: copywriting siap pakai, visual produk, dan persetujuan draf sebelum tayang.')
-@section('og_title', 'Pembuatan Konten Promosi & Desain Produk Toko | COOCA')
-@section('og_description', 'Ubah foto produk toko jadi materi promosi medsos memikat: copywriting siap pakai, visual produk, dan persetujuan draf sebelum tayang.')
+@section('title', __('public_content.create_seo_title'))
+@section('description', __('public_content.create_seo_desc'))
+@section('og_title', __('public_content.create_seo_title'))
+@section('og_description', __('public_content.create_seo_desc'))
 @section('keywords',
     'software pembuatan konten promosi, workflow kreasi konten bisnis, generator materi promosi produk, copywriting katalog toko, studio konten umkm')
 
@@ -99,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Product-Driven Content Creation Studio
+                                {{ __('public_content.create_kicker') }}
                             </p>
                         </div>
 
@@ -107,28 +107,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.65rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words">
-                    {{ \App\Services\Seo\SeoMetadataService::getH1() }}
-                </h1>
+                                {{ __('public_content.create_title') }}
+                            </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-xl">
-                            Berhenti membuang waktu berjam-jam memikirkan ide postingan media sosial dari nol. Pilih produk
-                            langsung dari katalog toko Anda, susun variasi pesan untuk Instagram, TikTok, dan WhatsApp, lalu
-                            tinjau draf bersama tim sebelum otomatis dipublikasikan.
+                            {{ __('public_content.create_subtitle') }}
                         </p>
 
                         {{-- Action Buttons --}}
                         <div class="pt-1 flex flex-row flex-wrap items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Studio Konten</span>
+                                <span>{{ __('public_content.create_btn_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.content.calendar') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 border border-white/15 backdrop-blur-sm transition-all min-h-[40px] sm:min-h-[48px]">
-                                <span>Lihat Kalender Konten</span>
+                                <span>{{ __('public_content.create_btn_cal') }}</span>
                             </a>
                         </div>
 
@@ -137,15 +135,15 @@
                             class="pt-1 flex flex-wrap items-center justify-start gap-x-4 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Sumber dari Katalog Stok Riil</span>
+                                <span>{{ __('public_content.create_check_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Format Feed, Story &amp; Chat</span>
+                                <span>{{ __('public_content.create_check_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Alur Review Draf Tim</span>
+                                <span>{{ __('public_content.create_check_3') }}</span>
                             </div>
                         </div>
                     </div>
@@ -250,14 +248,13 @@
             <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-14">
                     <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                        Tantangan Pembuatan Konten
+                        {{ __('public_content.create_pain_kicker') }}
                     </h2>
                     <p class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                        Mengapa Tim Pemasaran Anda Sering Kehabisan Ide Konten Promosi?
+                        {{ __('public_content.create_pain_title') }}
                     </p>
                     <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-3">
-                        Banyak bisnis memiliki produk unggulan yang hebat, namun kesulitan mengomunikasikan nilainya di
-                        media sosial secara teratur karena alur pembuatan materi yang rumit.
+                        {{ __('public_content.create_pain_desc') }}
                     </p>
                 </div>
 
@@ -311,13 +308,13 @@
         <section class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-3">
-                    Fitur Studio Kreasi COOCA
+                    {{ __('public_content.create_bento_kicker') }}
                 </h2>
                 <p class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    Alur Kerja Konten Profesional Tanpa Biaya Agensi
+                    {{ __('public_content.create_bento_title') }}
                 </p>
                 <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-3">
-                    Memadukan data fisik produk toko dengan kemudahan menyusun pesan promosi yang persuasif.
+                    {{ __('public_content.create_bento_desc') }}
                 </p>
             </div>
 
@@ -431,13 +428,13 @@
                 <div class="text-center max-w-3xl mx-auto mb-14">
                     <div
                         class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007AFF]/15 text-[#00C4D8] text-xs font-semibold mb-3 border border-[#00C4D8]/30">
-                        <span>Alur Kerja Kreasi Terstruktur</span>
+                        <span>{{ __('public_content.create_wf_kicker') }}</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
-                        Dari Ide Produk Menjadi Materi Siap Terbit
+                        {{ __('public_content.create_wf_title') }}
                     </h2>
                     <p class="text-slate-400 text-sm sm:text-base mt-3">
-                        Bagaimana studio kreasi COOCA mempercepat proses promosi bisnis Anda.
+                        {{ __('public_content.create_wf_desc') }}
                     </p>
                 </div>
 
@@ -501,10 +498,10 @@
         <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="text-center mb-12">
                 <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-2">
-                    Pertanyaan Umum
+                    {{ __('public_content.create_faq_kicker') }}
                 </h2>
                 <p class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-                    Tanya Jawab Seputar Pembuatan Konten
+                    {{ __('public_content.create_faq_title') }}
                 </p>
             </div>
 
@@ -513,14 +510,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Bagaimana modul ini membantu saya membuat konten promosi produk toko?</span>
+                        <span>{{ __('public_content.create_faq_1_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Anda cukup memilih produk dari modul Inventori & POS. Sistem secara otomatis menarik nama barang,
-                        harga, keunggulan bahan, dan foto produk, lalu menyusun alternatif teks caption promosi yang siap
-                        diedit dan dijadwalkan.
+                        {{ __('public_content.create_faq_1_a') }}
                     </p>
                 </details>
 
@@ -528,13 +523,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Apakah teks promosi yang dihasilkan bisa disesuaikan dengan gaya bicara brand kami?</span>
+                        <span>{{ __('public_content.create_faq_2_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Bisa. Anda dapat mengatur Brand Voice (nada bicara brand)-misalnya kasual dan hangat untuk kafe kopi
-                        anak muda, atau profesional dan terpercaya untuk bengkel dan klinik kecantikan.
+                        {{ __('public_content.create_faq_2_a') }}
                     </p>
                 </details>
 
@@ -542,15 +536,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Apakah staf atau admin konten bisa langsung menerbitkan postingan tanpa sepengetahuan
-                            saya?</span>
+                        <span>{{ __('public_content.create_faq_3_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Tidak bisa, jika Anda mengaktifkan alur approval. Staf hanya dapat menyusun draf materi promosi ke
-                        status 'Menunggu Review'. Konten hanya akan masuk ke antrean publikasi setelah Anda atau manajer
-                        marketing menyetujuinya.
+                        {{ __('public_content.create_faq_3_a') }}
                     </p>
                 </details>
 
@@ -558,13 +549,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Apakah materi promosi bisa langsung dibagikan ke pesan WhatsApp pelanggan?</span>
+                        <span>{{ __('public_content.create_faq_4_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Bisa. Setiap materi konten yang dibuat menyediakan format teks pendek yang ringkas dan ramah,
-                        lengkap dengan link katalog belanja yang siap disebarkan ke daftar broadcast pelanggan.
+                        {{ __('public_content.create_faq_4_a') }}
                     </p>
                 </details>
             </div>
@@ -576,10 +566,10 @@
             <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8">
                 <div>
                     <h2 class="text-xs uppercase tracking-widest text-[#007AFF] font-bold mb-1">
-                        Langkah Selanjutnya
+                        {{ __('public_content.cnt_cluster_kicker') }}
                     </h2>
                     <p class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-                        Ekosistem Otomasi Konten
+                        {{ __('public_content.cnt_cluster_title') }}
                     </p>
                 </div>
                 <a href="{{ route('public.content.calendar') }}"
@@ -662,20 +652,19 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Mulai Hasilkan Konten Promosi Produk Berkualitas
+                        {{ __('public_content.create_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
-                        Bebaskan tim pemasaran Anda dari kebingungan ide konten harian dan ciptakan materi promosi yang
-                        terhubung dengan stok produk Anda bersama COOCA.
+                        {{ __('public_content.create_cta_desc') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
-                            Coba Demo Studio Konten
+                            {{ __('public_content.create_cta_btn') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all">
-                            Konsultasi Kebutuhan Konten
+                            {{ __('public_content.create_cta_consult') }}
                         </a>
                     </div>
                 </div>

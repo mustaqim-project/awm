@@ -6,10 +6,10 @@
     $caseStudyDisclaimer = $caseStudyConfig['disclaimer'] ?? 'Angka merupakan ilustrasi berdasarkan skenario umum dan bukan jaminan hasil.';
 @endphp
 
-@section('title', 'Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
-@section('description', 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.')
-@section('og_title', 'Studi Kasus UMKM: Efisiensi Operasional Nyata | COOCA')
-@section('og_description', 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.')
+@section('title', __('public_resources.cs_seo_title'))
+@section('description', __('public_resources.cs_seo_desc'))
+@section('og_title', __('public_resources.cs_seo_title'))
+@section('og_description', __('public_resources.cs_seo_desc'))
 @section('canonical', route('public.resources.case-studies'))
 @section('og_type', 'article')
 @section('keywords', 'studi kasus umkm, contoh skenario bisnis, efisiensi bisnis umkm, sistem kasir multi cabang, kontrol hpp makanan, aplikasi bengkel motor, software erp indonesia')
@@ -92,7 +92,7 @@
                             <div
                                 class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                                 <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                                <span>Contoh Skenario &amp; Solusi Nyata</span>
+                                <span>{{ __('public_resources.cs_kicker') }}</span>
                             </div>
 
                             <h1
@@ -363,7 +363,7 @@
             <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                 <div class="max-w-2xl space-y-2">
                     <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                        MATRIKS TRANSFORMASI
+                        {{ __('public_resources.cs_matrix_kicker') }}
                     </div>
                     <h2
                         class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
@@ -502,7 +502,7 @@
                 class="p-8 sm:p-12 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-center space-y-6 shadow-sm">
                 <div class="max-w-2xl mx-auto space-y-3">
                     <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                        MULAI TRANSFORMASI USAHA
+                        {{ __('public_resources.cs_cta_kicker') }}
                     </div>
                     <h3
                         class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -549,7 +549,7 @@
                             <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
                                 DETAIL SKENARIO STUDI KASUS</div>
                             <h3 class="text-xl font-bold text-slate-900 dark:text-white" id="modal-case-title">
-                                Simulasi Langkah Transformasi Operasional
+                                {{ __('public_resources.cs_modal_title') }}
                             </h3>
                         </div>
                         <button @click="closeDetail()"

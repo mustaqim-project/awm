@@ -40,7 +40,7 @@ Warung yang terlihat ramai belum tentu menghasilkan profit yang sebanding. Ini p
 </ol>
 
 <h2>Cara Mengetahui Profit Riil dari Omzet</h2>
-<p>Kurangi omzet harian dengan estimasi HPP dan biaya operasional harian (dibagi proporsional dari biaya bulanan) untuk mendapatkan gambaran profit harian yang lebih mendekati kondisi riil, bukan sekadar melihat angka omzet semata.</p>
+<p>Kurangkan omzet harian dengan estimasi HPP dan alokasi beban operasional harian guna memperoleh gambaran laba bersih riil yang akurat, sehingga Anda terhindar dari ilusi kas masuk yang semu.</p>
 
 <blockquote>Fokus hanya pada omzet tanpa memperhitungkan biaya bisa memberikan gambaran yang menyesatkan tentang kesehatan finansial usaha.</blockquote>
 

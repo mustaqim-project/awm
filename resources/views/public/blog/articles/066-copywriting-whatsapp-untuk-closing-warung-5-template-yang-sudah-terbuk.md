@@ -48,7 +48,7 @@ Kemampuan menulis pesan yang persuasif di WhatsApp bisa meningkatkan peluang clo
 <p>Template di atas bisa disesuaikan dengan gaya bahasa yang lebih formal atau santai, tergantung karakter usaha dan target pelanggan. Konsistensi gaya bahasa membantu membangun identitas komunikasi yang mudah dikenali pelanggan.</p>
 
 <h2>Kesimpulan</h2>
-<p>Copywriting yang tepat di WhatsApp bisa meningkatkan peluang closing penjualan secara signifikan. Template-template ini bisa jadi titik awal yang kemudian disesuaikan dengan gaya komunikasi khas usahamu sendiri.</p>
+<p>Copywriting yang tepat di WhatsApp bisa meningkatkan peluang closing penjualan secara signifikan. Template-template ini bisa jadi titik awal yang kemudian disesuaikan dengan gaya komunikasi khas usaha Anda sendiri.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

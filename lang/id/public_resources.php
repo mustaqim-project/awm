@@ -14,7 +14,9 @@ return [
     'res_title_lead' => 'Panduan Praktis, SOP & Studi Kasus Operasional UMKM',
     'res_subtitle_lead' => 'Pelajari cara terbaik menertibkan inventori toko, mengontrol HPP resep, dan mencegah kebocoran kasir berdasarkan skenario bisnis riil.',
 
-    // Case Studies
+    // Case Studies (Task 9.4: eliminasi kata 'transformasi')
+    'cs_seo_title' => 'Studi Kasus UMKM: Efisiensi Operasional & Pengendalian Modal | COOCA',
+    'cs_seo_desc' => 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.',
     'cs_kicker' => 'Contoh Skenario & Studi Kasus Nyata',
     'cs_title' => 'Studi Kasus UMKM: Efisiensi Operasional & Pengendalian Modal',
     'cs_subtitle' => 'Pelajari contoh skenario UMKM F&B, ritel, bengkel, dan laundry menertibkan stok gudang harian dan menutup kebocoran kasir bersama COOCA.',
@@ -25,28 +27,45 @@ return [
     'cs_filter_workshop' => 'Bengkel Motor',
     'cs_filter_laundry' => 'Laundry Kiloan',
     'cs_read_more' => 'Pelajari Alur Skenario',
+    'cs_matrix_kicker' => 'Matriks Perubahan Operasional',
+    'cs_matrix_title' => 'Hasil Pengendalian & Penataan Operasional Gerai',
+    'cs_cta_kicker' => 'Mulai Penataan Operasional Usaha',
+    'cs_cta_title' => 'Tertibkan Pembukuan dan Inventori Gerai Anda',
+    'cs_cta_desc' => 'Dapatkan pendampingan langsung dari tim spesialis COOCA untuk menyusun SOP operasional dan implementasi kasir terintegrasi.',
+    'cs_modal_title' => 'Simulasi Langkah Perubahan Operasional',
 
     // FAQ
+    'faq_seo_title' => 'Pusat Bantuan & Tanya Jawab (FAQ) Lengkap | COOCA',
+    'faq_seo_desc' => 'Jawaban lengkap seputar lisensi gratis, kompatibilitas printer thermal, keamanan cloud, mode kasir offline, dan panduan migrasi data COOCA.',
     'faq_kicker' => 'Pertanyaan Umum & Jawaban Transparan',
     'faq_title' => 'Tanya Jawab Seputar COOCA Business Operating System',
     'faq_subtitle' => 'Temukan jawaban jujur mengenai paket gratis, cara kerja tanpa internet, keamanan data, integrasi WhatsApp, dan cara migrasi dari pembukuan buku tulis.',
+    'faq_category_all' => 'Semua Topik',
     'faq_category_general' => 'Umum & Konsep',
     'faq_category_pos' => 'Kasir & Hardware',
     'faq_category_pricing' => 'Biaya & Paket Langganan',
     'faq_category_security' => 'Keamanan Data & Privasi',
+    'faq_search_placeholder' => 'Cari jawaban: printer thermal, mode offline, migrasi data...',
 
-    // Guides & SOP
+    // Guides & SOP (Task 9.3: Unified Data Exchange Hub)
+    'guide_seo_title' => 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM | COOCA',
+    'guide_seo_desc' => 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, migrasi via Unified Data Exchange Hub, dan SOP buka-tutup kasir.',
     'guide_kicker' => 'Dokumentasi SOP & Tutorial Mandiri',
-    'guide_title' => 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM',
-    'guide_subtitle' => 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, impor Excel produk massal, dan SOP buka-tutup kasir.',
+    'guide_title' => 'Membangun Operasional Gerai yang Rapi & Tertib',
+    'guide_subtitle' => 'Petunjuk langsung untuk pemilik usaha dan staf kasir. Dari cara mudah menyambungkan printer thermal Bluetooth, mengimpor ribuan produk dari Excel via Unified Data Exchange Hub, hingga SOP tutup kasir tanpa selisih uang setoran.',
+    'guide_tab_onboarding' => 'Setup 4 Langkah Cepat',
+    'guide_tab_printer' => 'Panduan Printer Thermal',
+    'guide_tab_sop' => 'Katalog SOP Gerai',
+    'guide_tab_toolkit' => 'Toolkit & Template Excel',
     'guide_step_1_title' => 'Registrasi Akun dan Profil Gerai',
     'guide_step_1_desc' => 'Daftarkan akun bisnis Anda, masukkan nama usaha, alamat gerai, dan nomor WhatsApp resmi untuk pengiriman struk digital.',
-    'guide_step_2_title' => 'Impor Data Produk dan Stok via Excel',
-    'guide_step_2_desc' => 'Unduh template spreadsheet resmi COOCA, salin daftar barang serta harga jual dan beli (HPP), lalu unggah untuk memuat seluruh katalog produk.',
+    'guide_step_2_title' => 'Migrasi Cepat via Unified Data Exchange Hub',
+    'guide_step_2_desc' => 'Gunakan Unified Data Exchange Hub untuk migrasi instan ribuan data produk, varian, dan modal (HPP) dari Excel atau software kasir lama tanpa risiko format rusak.',
     'guide_step_3_title' => 'Hubungkan Printer Thermal Struk',
     'guide_step_3_desc' => 'Sambungkan printer thermal 58mm atau 80mm via Bluetooth atau kabel USB ke tablet/laptop kasir, lalu lakukan tes cetak struk pertama.',
     'guide_step_4_title' => 'Jalankan Shift Kasir Pertama',
     'guide_step_4_desc' => 'Buka shift kasir dengan memasukkan nominal modal awal uang kembalian (float), lalu mulai layani transaksi pelanggan secara cepat.',
     'guide_download_template' => 'Unduh Template Excel Resmi',
+    'guide_toolkit_excel_title' => 'Template Excel Unified Data Exchange Hub',
+    'guide_toolkit_excel_desc' => 'Format spreadsheet baku dengan validasi otomatis kolom nama barang, kategori, satuan, harga modal (HPP), dan harga jual untuk migrasi cepat ribuan item.',
 ];
-

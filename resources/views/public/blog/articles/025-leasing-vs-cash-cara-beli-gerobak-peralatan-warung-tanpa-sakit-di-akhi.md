@@ -16,7 +16,7 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Membeli peralatan usaha seperti gerobak bisa dilakukan tunai atau leasing. Mana yang lebih menguntungkan tergantung kondisi arus kas usahamu.
+Membeli peralatan usaha seperti gerobak bisa dilakukan tunai atau leasing. Mana yang lebih menguntungkan tergantung kondisi arus kas usaha Anda.
 
 ## Konten Lengkap (HTML Didukung) \*
 

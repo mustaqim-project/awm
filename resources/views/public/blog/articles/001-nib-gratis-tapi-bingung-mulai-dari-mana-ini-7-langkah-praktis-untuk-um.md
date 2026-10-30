@@ -46,7 +46,7 @@ NIB (Nomor Induk Berusaha) bisa didapat gratis lewat OSS, tapi banyak pemilik UM
 <blockquote>Tips: Simpan salinan digital NIB di ponsel dan cetak fisiknya untuk ditunjukkan saat pemeriksaan atau pengajuan kerja sama bisnis.</blockquote>
 
 <h2>Setelah NIB Terbit, Lalu Apa?</h2>
-<p>NIB adalah pintu masuk, bukan akhir dari legalitas usaha. Tergantung jenis usaha, kamu mungkin masih perlu izin turunan seperti PIRT (untuk produk pangan) atau sertifikat halal. Mengelola seluruh dokumen usaha secara rapi - dari NIB, transaksi, sampai laporan keuangan - akan jauh lebih mudah kalau dilakukan dalam satu sistem digital, bukan tercecer di banyak folder dan buku catatan.</p>
+<p>NIB adalah pintu masuk, bukan akhir dari legalitas usaha. Tergantung jenis usaha, Anda mungkin masih perlu izin turunan seperti PIRT (untuk produk pangan) atau sertifikat halal. Mengelola seluruh dokumen usaha secara rapi - dari NIB, transaksi, sampai laporan keuangan - akan jauh lebih mudah kalau dilakukan dalam satu sistem digital, bukan tercecer di banyak folder dan buku catatan.</p>
 
 <h2>Kesimpulan</h2>
 <p>Mendaftar NIB tidak butuh biaya dan bisa dilakukan sendiri dari rumah asal tahu urutan langkahnya. Setelah legal di atas kertas, langkah berikutnya adalah memastikan operasional usaha berjalan rapi dan tercatat dengan baik agar pertumbuhan bisnis lebih mudah dipantau.</p>

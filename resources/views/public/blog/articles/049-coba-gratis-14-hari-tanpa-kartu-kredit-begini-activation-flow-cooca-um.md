@@ -51,7 +51,7 @@ COOCA.ID menyediakan masa coba gratis untuk pelaku UMKM yang ingin merasakan man
 </ul>
 
 <h2>Kesimpulan</h2>
-<p>Masa coba gratis 14 hari dari COOCA.ID memberi kesempatan bagi pelaku UMKM untuk merasakan langsung manfaat digitalisasi operasional usaha tanpa risiko finansial di awal. Ini adalah langkah awal yang aman untuk mengevaluasi apakah sistem ini benar-benar sesuai kebutuhan usahamu.</p>
+<p>Masa coba gratis 14 hari dari COOCA.ID memberi kesempatan bagi pelaku UMKM untuk merasakan langsung manfaat digitalisasi operasional usaha tanpa risiko finansial di awal. Ini adalah langkah awal yang aman untuk mengevaluasi apakah sistem ini benar-benar sesuai kebutuhan usaha Anda.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

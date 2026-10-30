@@ -1,7 +1,7 @@
 # Artikel #094
 
 **Judul Artikel \***
-Simulasi 'What-If' Bahan Naik 10%: Wajah Laba Bisnismu Sebulan ke Depan
+Simulasi 'What-If' Bahan Naik 10%: Wajah Laba Bisnis Anda Sebulan ke Depan
 
 **Cluster Konten \***
 Cluster D - Kalkulasi & Simulasi
@@ -55,7 +55,7 @@ Melakukan simulasi skenario kenaikan harga bahan baku membantu pemilik usaha mem
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Simulasi 'What-If' Bahan Naik 10%: Wajah Laba Bisnismu Sebulan ke Depan
+Simulasi 'What-If' Bahan Naik 10%: Wajah Laba Bisnis Anda Sebulan ke Depan
 
 **Meta Description**
 Cara melakukan simulasi what-if dampak kenaikan harga bahan baku sebesar 10% terhadap laba bulanan usaha, lengkap dengan strategi mitigasinya.

@@ -52,7 +52,7 @@ Stok yang menumpuk di akhir bulan sebenarnya adalah uang usaha yang 'tidur' dan 
 <p>Menggunakan data penjualan historis untuk memprediksi kebutuhan pembelian secara lebih akurat membantu mencegah penumpukan stok berlebih di kemudian hari, dibanding hanya mengandalkan perkiraan kasar.</p>
 
 <h2>Kesimpulan</h2>
-<p>Stok berlebih bukan sekadar masalah gudang penuh, tapi juga masalah arus kas yang tertahan dan tidak produktif. Mengidentifikasi dan mengonversi stok ini menjadi penjualan secara proaktif membantu menjaga kesehatan arus kas usaha secara keseluruhan.</p>
+<p>Persediaan bahan baku yang menumpuk merupakan dana kas yang terkunci dan berisiko mengalami penyusutan nilai atau kedaluwarsa. Mengidentifikasi barang lambat jual (slow-moving) dan mengonversinya menjadi kas likuid sangat penting demi kelancaran operasional usaha Anda.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

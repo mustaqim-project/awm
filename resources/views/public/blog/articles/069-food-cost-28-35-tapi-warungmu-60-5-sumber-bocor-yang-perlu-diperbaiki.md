@@ -1,7 +1,7 @@
 # Artikel #069
 
 **Judul Artikel \***
-Food Cost 28-35%, Tapi Warungmu 60%? 5 Sumber 'Bocor' yang Perlu Diperbaiki
+Food Cost 28-35%, Tapi Warung Anda 60%? 5 Sumber 'Bocor' yang Perlu Diperbaiki
 
 **Cluster Konten \***
 Cluster B - Solusi Masalah
@@ -57,7 +57,7 @@ Food cost yang jauh di atas standar industri kuliner biasanya menandakan ada keb
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Food Cost 28-35%, Tapi Warungmu 60%? 5 Sumber 'Bocor' yang Perlu Diperbaiki
+Food Cost 28-35%, Tapi Warung Anda 60%? 5 Sumber 'Bocor' yang Perlu Diperbaiki
 
 **Meta Description**
 5 sumber kebocoran biaya yang sering menyebabkan food cost warung jauh lebih tinggi dari standar industri kuliner, dan cara memperbaikinya.

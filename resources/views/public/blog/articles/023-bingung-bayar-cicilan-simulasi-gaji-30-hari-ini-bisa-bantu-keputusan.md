@@ -16,7 +16,7 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Sebelum memutuskan mengambil cicilan, simulasikan dulu arus kas harian usahamu selama 30 hari untuk melihat apakah cicilan tersebut realistis dibayar.
+Sebelum memutuskan mengambil cicilan, simulasikan dulu arus kas harian usaha Anda selama 30 hari untuk melihat apakah cicilan tersebut realistis dibayar.
 
 ## Konten Lengkap (HTML Didukung) \*
 
@@ -42,7 +42,7 @@ Sebelum memutuskan mengambil cicilan, simulasikan dulu arus kas harian usahamu s
 <h2>Manfaat Melakukan Simulasi Sebelum Mengambil Keputusan</h2>
 <ul>
 <li>Menghindari pengambilan pinjaman dengan cicilan yang sebenarnya terlalu berat untuk arus kas usaha.</li>
-<li>Membantu menentukan tenor pinjaman yang lebih realistis, bukan sekadar cicilan terkecil yang ditawarkan.</li>
+<li>Membantu menentukan tenor pinjaman yang paling aman bagi arus kas harian, alih-alih tergoda memilih opsi cicilan terpanjang dengan beban bunga tinggi.</li>
 <li>Memberi gambaran kapan waktu terbaik mengajukan pinjaman, misalnya menjelang musim ramai penjualan.</li>
 </ul>
 

@@ -43,7 +43,7 @@ Selain OSS, ada juga pendataan UMKM melalui Kementerian Koperasi dan UKM. Apa be
 <ol>
 <li>Pastikan NIB sudah terbit melalui OSS terlebih dahulu.</li>
 <li>Lengkapi pendataan UMKM melalui kanal resmi Kemenkop UKM di daerah masing-masing.</li>
-<li>Manfaatkan status terdaftar untuk mengakses informasi program pelatihan dan bantuan yang relevan dengan bidang usahamu.</li>
+<li>Manfaatkan status terdaftar untuk mengakses informasi program pelatihan dan bantuan yang relevan dengan bidang usaha Anda.</li>
 </ol>
 
 <h2>Kesimpulan</h2>

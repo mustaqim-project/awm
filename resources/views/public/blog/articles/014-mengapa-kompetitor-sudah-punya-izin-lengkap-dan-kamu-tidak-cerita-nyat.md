@@ -50,7 +50,7 @@ Tim Edukasi COOCA
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Mengapa Kompetitor Sudah Punya Izin Lengkap dan Kamu Tidak? Cerita Nyata Pedagang
+Mengapa Kompetitor Sudah Punya Izin Lengkap dan Anda Belum? Cerita Nyata Pedagang
 
 **Meta Description**
 Cerita nyata pedagang UMKM yang kehilangan peluang kerja sama karena belum memiliki NIB, dan pelajaran yang bisa diambil.

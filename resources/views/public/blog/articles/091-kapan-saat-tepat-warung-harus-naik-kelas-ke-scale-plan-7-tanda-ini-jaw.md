@@ -46,8 +46,8 @@ Beralih ke sistem atau paket layanan yang lebih lengkap perlu momentum yang tepa
 
 <blockquote>Naik kelas ke sistem yang lebih lengkap bukan soal gengsi, tapi soal kesiapan usaha menghadapi kompleksitas yang terus bertambah seiring pertumbuhan.</blockquote>
 
-<h2>Cara Mengevaluasi Kesiapan Usahamu</h2>
-<p>Cocokkan kondisi usahamu dengan ketujuh tanda di atas. Semakin banyak tanda yang sudah dialami, semakin kuat indikasi bahwa sistem yang digunakan saat ini sudah tidak lagi sepenuhnya mendukung kebutuhan operasional yang terus berkembang.</p>
+<h2>Cara Mengevaluasi Kesiapan Usaha Anda</h2>
+<p>Cocokkan kondisi usaha Anda dengan ketujuh tanda di atas. Semakin banyak tanda yang sudah dialami, semakin kuat indikasi bahwa sistem yang digunakan saat ini sudah tidak lagi sepenuhnya mendukung kebutuhan operasional yang terus berkembang.</p>
 
 <h2>Kesimpulan</h2>
 <p>Mengetahui tanda-tanda kesiapan usaha untuk naik kelas ke sistem yang lebih lengkap membantu pemilik usaha mengambil keputusan upgrade pada momentum yang tepat, tidak terlalu cepat maupun terlambat.</p>

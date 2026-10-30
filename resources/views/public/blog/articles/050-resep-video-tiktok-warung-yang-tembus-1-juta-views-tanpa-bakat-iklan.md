@@ -24,7 +24,7 @@ Membuat video TikTok viral tidak butuh bakat iklan khusus. Berikut pola konten s
 
 <h2>Pola Konten yang Sering Berhasil Menarik Penonton</h2>
 <h3>1. Proses di Balik Layar (Behind the Scenes)</h3>
-<p>Penonton menyukai konten yang menunjukkan proses memasak atau menyiapkan produk secara autentik, bukan sekadar hasil akhirnya saja.</p>
+<p>Audiens media sosial lebih tertarik pada transparansi proses persiapan dapur, kebersihan bahan baku, dan keahlian meracik menu yang ditampilkan secara langsung.</p>
 
 <h3>2. Momen Sibuk atau Ramai Pelanggan</h3>
 <p>Video yang menunjukkan antrian atau kesibukan warung secara alami sering menarik rasa penasaran penonton untuk ikut mencoba.</p>

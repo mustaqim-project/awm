@@ -23,7 +23,7 @@ Kenaikan harga bahan baku yang terlihat kecil bisa berdampak jauh lebih besar te
 <p>Kenaikan harga bahan baku sebesar 10% mungkin terdengar tidak signifikan, tapi dampaknya terhadap laba bersih usaha bisa jauh lebih besar dari yang dibayangkan. Berikut penjelasan mengapa hal ini bisa terjadi.</p>
 
 <h2>Kenapa Kenaikan Kecil Berdampak Besar pada Laba</h2>
-<p>Laba usaha dihitung dari selisih antara pendapatan dan seluruh biaya, termasuk bahan baku, operasional, dan biaya tetap lainnya. Karena margin keuntungan biasanya jauh lebih kecil dari total pendapatan, kenaikan biaya bahan baku langsung "memakan" porsi margin yang tersisa, bukan sekadar mengurangi persentase kecil dari total pendapatan.</p>
+<p>Laba usaha dihitung dari selisih antara pendapatan dan seluruh biaya, termasuk bahan baku, operasional, dan beban tetap. Karena margin keuntungan bersih umumnya berkisar 10-20% dari omzet, kenaikan biaya bahan langsung memangkas porsi laba bersih secara substansial.</p>
 
 <h2>Ilustrasi Sederhana</h2>
 <p>Misalkan sebuah usaha memiliki pendapatan Rp10.000.000 per bulan dengan biaya bahan baku Rp6.000.000 dan biaya operasional lain Rp2.500.000, sehingga laba bersih sekitar Rp1.500.000. Jika biaya bahan baku naik 10% menjadi Rp6.600.000 tanpa ada penyesuaian harga jual, laba bersih otomatis turun menjadi Rp900.000 - penurunan sekitar 40% dari laba awal, jauh lebih besar dibanding persentase kenaikan biaya bahan itu sendiri.</p>

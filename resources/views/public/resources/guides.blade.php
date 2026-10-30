@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM | COOCA')
-@section('description', 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, impor Excel produk massal, dan SOP buka-tutup kasir.')
-@section('og_title', 'Panduan Operasional & Dokumentasi SOP Bisnis UMKM | COOCA')
-@section('og_description', 'Panduan implementasi sistem COOCA: setup awal gerai, pairing printer thermal Bluetooth, impor Excel produk massal, dan SOP buka-tutup kasir.')
+@section('title', __('public_resources.guide_seo_title'))
+@section('description', __('public_resources.guide_seo_desc'))
+@section('og_title', __('public_resources.guide_seo_title'))
+@section('og_description', __('public_resources.guide_seo_desc'))
 @section('canonical', route('public.resources.guides'))
 @section('og_type', 'article')
 @section('keywords', 'panduan cooca, cara setting printer kasir bluetooth, sop kasir toko, cara impor produk excel, cara stok opname akurat, tutorial pos android')
@@ -25,8 +25,8 @@
     {
       "@type": "HowToStep",
       "position": 2,
-      "name": "Impor Data Produk dan Stok via Excel",
-      "text": "Unduh template spreadsheet resmi COOCA, salin daftar barang serta harga jual dan beli (HPP), lalu unggah untuk memuat seluruh katalog produk."
+      "name": "Migrasi Cepat via Unified Data Exchange Hub",
+      "text": "Gunakan Unified Data Exchange Hub untuk migrasi instan ribuan data produk, varian, dan modal (HPP) dari Excel atau software kasir lama tanpa risiko format rusak."
     },
     {
       "@type": "HowToStep",
@@ -91,22 +91,18 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div
                             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-xs sm:text-[13px] font-semibold text-[#00C4D8] backdrop-blur-md mb-2">
                             <span class="w-2 h-2 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                            <span>Panduan Operasional &amp; SOP Gerai</span>
+                            <span>{{ __('public_resources.guide_kicker') }}</span>
                         </div>
 
                         <h1
                             class="text-2.5xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-black tracking-tight text-white leading-[1.15] text-balance break-words text-left">
-                            Membangun Operasional Gerai yang <span
-                                class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Rapi
-                                &amp; Tertib</span>
+                            {{ __('public_resources.guide_title') }}
                         </h1>
                     </div>
 
                     <p
                         class="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed font-normal text-pretty text-left max-w-xl">
-                        Petunjuk langsung untuk pemilik usaha dan staf kasir. Dari cara mudah menyambungkan printer
-                        thermal Bluetooth, mengimpor ribuan produk dari Excel, hingga SOP tutup kasir tanpa selisih uang
-                        setoran.
+                        {{ __('public_resources.guide_subtitle') }}
                     </p>
 
                     <!-- Direct Action Buttons -->
@@ -251,28 +247,28 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     :class="activeTab === 'onboarding' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all flex items-center gap-2">
                     <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                    <span>Setup 4 Langkah</span>
+                    <span>{{ __('public_resources.guide_tab_onboarding') }}</span>
                 </button>
                 <button 
                     @click="activeTab = 'hardware'; refreshIcons();" 
                     :class="activeTab === 'hardware' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all flex items-center gap-2">
                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                    <span>Printer &amp; Hardware</span>
+                    <span>{{ __('public_resources.guide_tab_printer') }}</span>
                 </button>
                 <button 
                     @click="activeTab = 'sop'; refreshIcons();" 
                     :class="activeTab === 'sop' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all flex items-center gap-2">
                     <i data-lucide="clipboard-list" class="w-3.5 h-3.5"></i>
-                    <span>Blueprint SOP Kasir</span>
+                    <span>{{ __('public_resources.guide_tab_sop') }}</span>
                 </button>
                 <button 
                     @click="activeTab = 'toolkit'; refreshIcons();" 
                     :class="activeTab === 'toolkit' ? 'bg-[#007AFF] text-white font-bold' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-medium'"
                     class="px-3.5 py-2 rounded-[10px] text-xs transition-all flex items-center gap-2">
                     <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
-                    <span>Template Excel</span>
+                    <span>{{ __('public_resources.guide_tab_toolkit') }}</span>
                 </button>
             </div>
         </div>
@@ -303,13 +299,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         <div class="w-9 h-9 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center font-mono">
                             02
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Katalog Produk &amp; HPP</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_step_2_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                            Masukkan nama barang, barcode SKU, harga jual, dan modal beli (HPP). Untuk ratusan barang, gunakan impor Excel massal 1 kali klik.
+                            {{ __('public_resources.guide_step_2_desc') }}
                         </p>
                     </div>
                     <div class="p-3 rounded-[12px] bg-[#F2F2F7] dark:bg-[#2C2C2E] text-xs text-slate-600 dark:text-slate-400">
-                        <strong>Menu:</strong> Produk &rarr; Impor Excel
+                        <strong>Menu:</strong> Produk &rarr; Unified Data Exchange Hub (Impor Excel)
                     </div>
                 </div>
 
@@ -443,20 +439,20 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
         <div x-show="activeTab === 'toolkit'" class="space-y-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <!-- Template 1: Excel Import -->
+                <!-- Template 1: Excel Import via Unified Data Exchange Hub -->
                 <div class="p-6 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm flex flex-col justify-between space-y-6">
                     <div class="space-y-3">
                         <div class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Template Impor Excel Produk</h3>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_resources.guide_toolkit_excel_title') }}</h3>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                            Format baku berisi kolom nama barang, kategori, satuan, harga beli (HPP), dan harga jual untuk migrasi cepat ribuan item.
+                            {{ __('public_resources.guide_toolkit_excel_desc') }}
                         </p>
                     </div>
                     <a href="{{ route('template.index') }}" class="h-11 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-                        <span>Buka Katalog Template</span>
-                        <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        <span>{{ __('public_resources.guide_download_template') }}</span>
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
 

@@ -1,7 +1,7 @@
 # Artikel #004
 
 **Judul Artikel \***
-UMKM Wajib NIB di 2026? Aturan Baru yang Perlu Kamu Tahu Sebelum Mulai Jualan
+UMKM Wajib NIB di 2026? Aturan Baru yang Perlu Anda Ketahui Sebelum Mulai Jualan
 
 **Cluster Konten \***
 Cluster J - Berita & Update
@@ -41,12 +41,12 @@ Ketentuan seputar legalitas usaha terus diperbarui pemerintah. Berikut rangkuman
 <p>Pantau langsung informasi resmi dari situs oss.go.id atau kanal resmi Kementerian Investasi/BKPM secara berkala, terutama sebelum mengajukan NIB baru atau memperbarui izin usaha yang sudah ada. Selain itu, mencatat dan menyimpan seluruh dokumen usaha dalam sistem digital akan memudahkan proses pembaruan data jika sewaktu-waktu ada perubahan kebijakan yang mengharuskan penyesuaian.</p>
 
 <h2>Kesimpulan</h2>
-<p>Ketentuan NIB dan OSS RBA memang dinamis mengikuti kebijakan pemerintah, tapi intinya tetap sama: legalitas usaha bukan pilihan, melainkan fondasi agar UMKM bisa naik kelas. Pastikan kamu selalu mengecek sumber resmi sebelum mengambil keputusan berdasarkan aturan lama yang mungkin sudah berubah.</p>
+<p>Ketentuan NIB dan OSS RBA memang dinamis mengikuti kebijakan pemerintah, tapi intinya tetap sama: legalitas usaha bukan pilihan, melainkan fondasi agar UMKM bisa naik kelas. Pastikan Anda selalu mengecek sumber resmi sebelum mengambil keputusan berdasarkan aturan lama yang mungkin sudah berubah.</p>
 
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-UMKM Wajib NIB di 2026? Aturan Baru yang Perlu Kamu Tahu Sebelum Mulai Jualan
+UMKM Wajib NIB di 2026? Aturan Baru yang Perlu Anda Ketahui Sebelum Mulai Jualan
 
 **Meta Description**
 Rangkuman arah kebijakan NIB dan OSS RBA terbaru yang perlu dipahami pelaku UMKM sebelum memulai usaha di tahun 2026.

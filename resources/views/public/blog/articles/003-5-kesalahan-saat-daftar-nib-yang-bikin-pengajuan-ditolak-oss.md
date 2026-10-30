@@ -23,7 +23,7 @@ Pengajuan NIB di OSS seharusnya mudah, tapi banyak pelaku usaha gagal karena kes
 <p>OSS dirancang untuk mempermudah pelaku usaha, tapi tidak sedikit pengajuan NIB yang tertunda atau ditolak karena kesalahan kecil yang sebenarnya bisa dihindari.</p>
 
 <h2>1. Salah Pilih Kode KBLI</h2>
-<p>Kode Klasifikasi Baku Lapangan Usaha Indonesia (KBLI) harus benar-benar mencerminkan kegiatan usaha. Memilih kode yang terlalu umum atau tidak sesuai bisa membuat sistem meminta izin tambahan yang sebenarnya tidak relevan dengan usaha kamu.</p>
+<p>Kode Klasifikasi Baku Lapangan Usaha Indonesia (KBLI) harus benar-benar mencerminkan kegiatan usaha. Memilih kode yang terlalu umum atau tidak sesuai bisa membuat sistem meminta izin tambahan yang sebenarnya tidak relevan dengan usaha Anda.</p>
 
 <h2>2. Data KTP dan NPWP Tidak Sinkron</h2>
 <p>Sistem OSS terhubung dengan data Dukcapil dan DJP. Jika ada perbedaan nama, alamat, atau status pernikahan antara KTP dan NPWP, proses verifikasi otomatis bisa gagal.</p>

@@ -39,7 +39,7 @@ Jumlah followers yang terus bertambah tidak selalu berbanding lurus dengan penju
 
 <blockquote>Followers adalah metrik jangkauan, sementara penjualan adalah metrik konversi - keduanya membutuhkan strategi yang berbeda untuk dioptimalkan.</blockquote>
 
-<h2>Cara Mendiagnosis Masalah di Usahamu</h2>
+<h2>Cara Mendiagnosis Masalah di Usaha Anda</h2>
 <ol>
 <li>Cek apakah konten yang paling banyak disukai benar-benar relevan dengan produk yang dijual.</li>
 <li>Perhatikan apakah ada ajakan bertindak yang jelas di setiap konten (link, kontak, atau cara pemesanan).</li>

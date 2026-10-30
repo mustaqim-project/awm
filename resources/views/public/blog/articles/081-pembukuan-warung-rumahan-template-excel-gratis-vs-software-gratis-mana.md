@@ -34,7 +34,7 @@ Ada berbagai opsi gratis untuk memulai pembukuan usaha, dari template Excel hing
 <ul>
 <li>Jika usaha masih sangat sederhana dengan transaksi sedikit, template Excel bisa jadi titik awal yang cukup memadai.</li>
 <li>Jika volume transaksi sudah cukup tinggi dan butuh laporan otomatis, aplikasi pembukuan digital akan jauh lebih efisien dibanding Excel manual.</li>
-<li>Pertimbangkan juga kenyamanan dan kemampuan teknis pengguna - pilih yang benar-benar akan digunakan secara konsisten, bukan sekadar yang terlihat canggih.</li>
+<li>Pertimbangkan kemudahan operasional harian staf kasir Anda, prioritaskan sistem dengan antarmuka intuitif yang menjamin kedisiplinan input transaksi secara konsisten.</li>
 </ul>
 
 <blockquote>Alat pembukuan terbaik bukan yang paling canggih, tapi yang benar-benar digunakan secara konsisten setiap hari oleh pemilik usaha.</blockquote>

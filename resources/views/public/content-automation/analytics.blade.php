@@ -1,9 +1,9 @@
 @extends('layouts.public_marketing')
 
-@section('title', 'Analitik Konten Media Sosial & Konversi Omzet | COOCA')
-@section('description', 'Evaluasi performa konten medsos: pantau jangkauan impresi, engagement rate, klik katalog toko, hingga konversi omzet penjualan nyata.')
-@section('og_title', 'Analitik Konten Media Sosial & Konversi Omzet | COOCA')
-@section('og_description', 'Evaluasi performa konten medsos: pantau jangkauan impresi, engagement rate, klik katalog toko, hingga konversi omzet penjualan nyata.')
+@section('title', __('public_content.anl_seo_title'))
+@section('description', __('public_content.anl_seo_desc'))
+@section('og_title', __('public_content.anl_seo_title'))
+@section('og_description', __('public_content.anl_seo_desc'))
 @section('keywords',
     'software analitik konten, laporan performa media sosial, metrik engagement instagram facebook, analitik konversi konten penjualan, evaluasi promosi toko')
 
@@ -25,7 +25,7 @@
     "Pelacakan jangkauan (reach), impresi, dan interaksi (engagement) per postingan",
     "Pengukuran klik tautan produk yang mengarah ke kasir toko atau pemesanan online",
     "Perbandingan performa efektivitas antara Instagram, Facebook, dan WhatsApp",
-    "Rekomendasi jam tayang terbaik (Best Time to Post) berbasis data audiens riil",
+    "Rekomendasi jam tayang paling optimal berbasis data audiens riil",
     "Laporan ringkas yang dapat diekspor untuk evaluasi strategi pemasaran bulanan"
   ]
 }
@@ -53,10 +53,10 @@
     },
     {
       "@type": "Question",
-      "name": "Bagaimana cara mengetahui waktu terbaik untuk memposting konten toko saya?",
+      "name": "Bagaimana cara mengetahui jadwal tayang paling efektif untuk memposting konten toko saya?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sistem menganalisis riwayat postingan Anda sebelumnya dan memetakan pada hari apa dan jam berapa konten menerima interaksi dan klik pesanan tertinggi, memberikan rekomendasi jam tayang yang terbukti efektif untuk audiens Anda."
+        "text": "Sistem menganalisis riwayat postingan Anda sebelumnya dan memetakan pada hari apa dan jam berapa konten menerima interaksi dan klik pesanan tertinggi, memberikan rekomendasi jam tayang yang terbukti optimal untuk audiens Anda."
       }
     },
     {
@@ -64,7 +64,7 @@
       "name": "Apakah data laporan konten ini bisa diunduh untuk bahan evaluasi bersama tim?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Bisa. Anda dapat mengunduh ringkasan performa konten bulanan dalam format PDF atau Excel lengkap dengan metrik jangkauan dan peringkat konten terbaik."
+        "text": "Bisa. Anda dapat mengunduh ringkasan performa konten bulanan dalam format PDF atau Excel lengkap dengan metrik jangkauan dan peringkat materi promosi paling favorit bagi pelanggan."
       }
     }
   ]
@@ -99,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
                             <p class="text-xs sm:text-sm lg:text-[14px] font-bold uppercase tracking-wider text-[#00C4D8]">
-                                Content Performance &amp; Conversion Intelligence
+                                {{ __('public_content.anl_kicker') }}
                             </p>
                         </div>
 
@@ -107,29 +107,26 @@
                         <div class="w-full">
                             <h1
                                 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[2.65rem] xl:text-[3.25rem] font-extrabold text-white tracking-tight leading-[1.25] sm:leading-[1.18] text-balance break-words">
-                                Ketahui Konten Mana yang Benar-Benar <span
-                                    class="bg-gradient-to-r from-[#00C4D8] via-[#60A5FA] to-[#007AFF] bg-clip-text text-transparent">Menghasilkan Penjualan.</span>
+                                {{ __('public_content.anl_title') }}
                             </h1>
                         </div>
 
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg text-slate-300 leading-relaxed font-normal text-pretty max-w-xl">
-                            Jumlah likes dan komentar tidak ada artinya jika tidak berujung pada pembelian. COOCA
-                            memperlihatkan metrik performa media sosial yang terhubung langsung dengan klik katalog produk
-                            dan transaksi kasir toko Anda.
+                            {{ __('public_content.anl_subtitle') }}
                         </p>
 
                         {{-- Action Buttons --}}
                         <div class="pt-1 flex flex-row flex-wrap items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
                             <a href="{{ route('public.demo') }}"
                                 class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
-                                <span>Coba Demo Analitik</span>
+                                <span>{{ __('public_content.anl_btn_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </a>
                             <a href="{{ route('public.content.creation') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 border border-white/15 backdrop-blur-sm transition-all min-h-[40px] sm:min-h-[48px]">
-                                <span>Buat Konten Baru</span>
+                                <span>{{ __('public_content.anl_btn_create') }}</span>
                             </a>
                         </div>
 
@@ -138,15 +135,15 @@
                             class="pt-1 flex flex-wrap items-center justify-start gap-x-4 gap-y-1.5 text-[11px] sm:text-xs text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Reach &amp; Klik Order Riil</span>
+                                <span>{{ __('public_content.anl_check_1') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Terkait Omzet Kasir POS</span>
+                                <span>{{ __('public_content.anl_check_2') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                <span>Rekomendasi Jam Tayang</span>
+                                <span>{{ __('public_content.anl_check_3') }}</span>
                             </div>
                         </div>
                     </div>
@@ -366,7 +363,7 @@
                     </div>
                 </div>
 
-                {{-- Bento Card 2: Jam Tayang Terbaik (Span 5) --}}
+                {{-- Bento Card 2: Jam Tayang Paling Efektif (Span 5) --}}
                 <div
                     class="md:col-span-5 p-6 sm:p-8 rounded-3xl bg-[#FAFAFC] dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 flex flex-col justify-between">
                     <div class="space-y-4">
@@ -559,14 +556,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Bagaimana cara mengetahui waktu terbaik untuk memposting konten toko saya?</span>
+                        <span>{{ __('public_content.anl_faq_2_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Sistem menganalisis riwayat postingan Anda sebelumnya dan memetakan pada hari apa dan jam berapa
-                        konten menerima interaksi dan klik pesanan tertinggi, memberikan rekomendasi jam tayang yang
-                        terbukti efektif untuk audiens Anda.
+                        {{ __('public_content.anl_faq_2_a') }}
                     </p>
                 </details>
 
@@ -574,13 +569,12 @@
                     class="group p-5 rounded-2xl bg-[#FAFAFC] dark:bg-[#0E172F]/60 border border-slate-200/80 dark:border-white/10 transition-all [&_summary::-webkit-details-marker]:hidden">
                     <summary
                         class="flex items-center justify-between cursor-pointer text-sm sm:text-base font-bold text-slate-900 dark:text-white">
-                        <span>Apakah data laporan konten ini bisa diunduh untuk bahan evaluasi bersama tim?</span>
+                        <span>{{ __('public_content.anl_faq_3_q') }}</span>
                         <i data-lucide="chevron-down"
                             class="w-4 h-4 text-slate-500 group-open:rotate-180 transition-transform"></i>
                     </summary>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
-                        Bisa. Anda dapat mengunduh ringkasan performa konten bulanan dalam format PDF atau Excel lengkap
-                        dengan metrik jangkauan dan peringkat konten terbaik.
+                        {{ __('public_content.anl_faq_3_a') }}
                     </p>
                 </details>
             </div>
@@ -678,20 +672,19 @@
 
                 <div class="max-w-2xl mx-auto space-y-5 relative z-10">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
-                        Mulai Evaluasi Pemasaran Anda dengan Metrik Penjualan Nyata
+                        {{ __('public_content.anl_cta_title') }}
                     </h2>
                     <p class="text-sm sm:text-base text-slate-300">
-                        Hentikan tebak-tebakan performa konten dan dapatkan kejelasan ROI setiap postingan media sosial Anda
-                        bersama COOCA Content Analytics.
+                        {{ __('public_content.anl_cta_desc') }}
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
                         <a href="{{ route('public.demo') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
-                            Coba Demo Analitik Konten
+                            {{ __('public_content.anl_cta_btn') }}
                         </a>
                         <a href="{{ route('public.pricing') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/15 backdrop-blur-sm transition-all">
-                            Konsultasi Strategi Pemasaran
+                            {{ __('public_content.anl_cta_consult') }}
                         </a>
                     </div>
                 </div>

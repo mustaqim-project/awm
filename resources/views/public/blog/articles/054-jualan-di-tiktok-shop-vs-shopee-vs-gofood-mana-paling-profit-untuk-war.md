@@ -50,7 +50,7 @@ Setiap platform jualan online punya karakteristik berbeda. Berikut perbandingan 
 <p>Setiap platform memiliki skema biaya (komisi, biaya layanan, atau biaya promosi) yang berbeda. Pastikan harga jual di masing-masing kanal sudah memperhitungkan biaya ini agar margin keuntungan tetap terjaga.</p>
 
 <h2>Kesimpulan</h2>
-<p>Memilih antara TikTok Shop, Shopee, atau GoFood sebaiknya disesuaikan dengan jenis produk dan target pelanggan usahamu, bukan sekadar mengikuti tren. Menggunakan lebih dari satu kanal secara bersamaan juga bisa menjadi strategi untuk memperluas jangkauan pelanggan.</p>
+<p>Pemilihan kanal e-commerce antara TikTok Shop, Shopee, atau GoFood perlu diselaraskan dengan karakteristik margin produk dan perilaku belanja target konsumen Anda. Mengombinasikan kanal fisik dan digital dengan pencatatan inventori terpusat memberikan kestabilan omzet jangka panjang.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

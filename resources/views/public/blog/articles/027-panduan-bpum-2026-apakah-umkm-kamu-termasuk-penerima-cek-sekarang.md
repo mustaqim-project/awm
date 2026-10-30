@@ -1,7 +1,7 @@
 # Artikel #027
 
 **Judul Artikel \***
-Panduan BPUM 2026: Apakah UMKM Kamu Termasuk Penerima? Cek Sekarang
+Panduan BPUM 2026: Apakah UMKM Anda Termasuk Penerima? Cek Sekarang
 
 **Cluster Konten \***
 Cluster D - Kalkulasi & Simulasi
@@ -16,7 +16,7 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-BPUM adalah salah satu bentuk bantuan langsung bagi pelaku UMKM. Berikut cara mengecek apakah usahamu termasuk kategori yang berpotensi menerima program ini.
+BPUM adalah salah satu bentuk bantuan langsung bagi pelaku UMKM. Berikut cara mengecek apakah usaha Anda termasuk kategori yang berpotensi menerima program ini.
 
 ## Konten Lengkap (HTML Didukung) \*
 
@@ -46,7 +46,7 @@ BPUM adalah salah satu bentuk bantuan langsung bagi pelaku UMKM. Berikut cara me
 <blockquote>Program bantuan seperti ini bersifat dinamis mengikuti kebijakan anggaran pemerintah - pastikan selalu mengecek informasi terbaru dari kanal resmi, bukan informasi lama yang sudah tidak berlaku.</blockquote>
 
 <h2>Langkah Jika Belum Terdaftar sebagai Calon Penerima</h2>
-<p>Jika usahamu belum terdaftar, langkah pertama adalah memastikan NIB sudah aktif dan usaha sudah terdata di sistem Kemenkop UKM setempat. Data yang lengkap dan terverifikasi akan mempermudah proses pendataan untuk program bantuan di periode berikutnya.</p>
+<p>Jika usaha Anda belum terdaftar, langkah pertama adalah memastikan NIB sudah aktif dan usaha sudah terdata di sistem Kemenkop UKM setempat. Data yang lengkap dan terverifikasi akan mempermudah proses pendataan untuk program bantuan di periode berikutnya.</p>
 
 <h2>Kesimpulan</h2>
 <p>Mengecek status sebagai calon penerima bantuan UMKM sebaiknya selalu dilakukan melalui kanal resmi pemerintah untuk menghindari informasi yang tidak akurat maupun potensi penipuan. Melengkapi legalitas dan pendataan usaha sejak awal akan mempermudah proses ini di masa mendatang.</p>
@@ -54,7 +54,7 @@ BPUM adalah salah satu bentuk bantuan langsung bagi pelaku UMKM. Berikut cara me
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Panduan BPUM 2026: Apakah UMKM Kamu Termasuk Penerima? Cek Sekarang
+Panduan BPUM 2026: Apakah UMKM Anda Termasuk Penerima? Cek Sekarang
 
 **Meta Description**
 Cara mengecek status sebagai calon penerima bantuan UMKM seperti BPUM, kriteria umum penerima, dan hal yang perlu diwaspadai.

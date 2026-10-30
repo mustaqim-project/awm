@@ -16,7 +16,7 @@ Tim Edukasi COOCA
 
 ## Ringkasan / Excerpt
 
-Berikut contoh perhitungan BEP untuk café kecil berkapasitas 15 meja, lengkap dengan asumsi biaya yang bisa disesuaikan dengan kondisi usahamu sendiri.
+Berikut contoh perhitungan BEP untuk café kecil berkapasitas 15 meja, lengkap dengan asumsi biaya yang bisa disesuaikan dengan kondisi usaha Anda sendiri.
 
 ## Konten Lengkap (HTML Didukung) \*
 
@@ -41,9 +41,9 @@ Berikut contoh perhitungan BEP untuk café kecil berkapasitas 15 meja, lengkap d
 
 <blockquote>Jika target BEP mendekati atau melebihi kapasitas maksimal harian, ini adalah sinyal untuk mengevaluasi struktur biaya tetap atau strategi harga jual.</blockquote>
 
-<h2>Cara Menyesuaikan dengan Kondisi Usahamu</h2>
+<h2>Cara Menyesuaikan dengan Kondisi Usaha Anda</h2>
 <ol>
-<li>Ganti asumsi biaya tetap dan harga jual dengan angka riil dari usahamu sendiri.</li>
+<li>Ganti asumsi biaya tetap dan harga jual dengan angka riil dari usaha Anda sendiri.</li>
 <li>Hitung ulang BEP dengan data yang sudah disesuaikan tersebut.</li>
 <li>Bandingkan hasil BEP dengan kapasitas maksimal harian café untuk melihat tingkat kesulitan mencapai target tersebut.</li>
 </ol>
@@ -52,7 +52,7 @@ Berikut contoh perhitungan BEP untuk café kecil berkapasitas 15 meja, lengkap d
 <p>Jika hasil perhitungan menunjukkan BEP yang sulit dicapai dengan kapasitas yang ada, pertimbangkan untuk mengevaluasi biaya tetap yang bisa dikurangi, meningkatkan harga jual rata-rata, atau mencari cara meningkatkan turnover meja melalui strategi operasional yang lebih efisien.</p>
 
 <h2>Kesimpulan</h2>
-<p>Contoh perhitungan BEP untuk café kecil ini bisa menjadi panduan dasar yang disesuaikan dengan kondisi riil usahamu. Mengetahui angka BEP secara konkret membantu menetapkan target operasional harian yang jelas dan terukur.</p>
+<p>Contoh perhitungan BEP untuk café kecil ini bisa menjadi panduan dasar yang disesuaikan dengan kondisi riil usaha Anda. Mengetahui angka BEP secara konkret membantu menetapkan target operasional harian yang jelas dan terukur.</p>
 
 ## Pengaturan SEO (Meta Tags)
 

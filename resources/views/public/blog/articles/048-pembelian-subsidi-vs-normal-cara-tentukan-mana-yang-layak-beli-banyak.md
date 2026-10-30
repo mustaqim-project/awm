@@ -43,7 +43,7 @@ Membeli dalam jumlah banyak tidak selalu lebih hemat. Ini cara menentukan produk
 <li>Pastikan modal kerja yang dialokasikan untuk pembelian besar tidak mengganggu kebutuhan operasional lain.</li>
 </ol>
 
-<blockquote>Keputusan membeli banyak sebaiknya didasarkan pada data perputaran produk, bukan sekadar tergiur diskon volume dari supplier.</blockquote>
+<blockquote>Keputusan belanja grosir dalam jumlah besar wajib berpijak pada data perputaran stok riil mingguan guna mencegah uang modal tertahan di gudang.</blockquote>
 
 <h2>Contoh Penerapan</h2>
 <p>Bahan kering seperti beras, gula, atau minyak dengan masa simpan panjang umumnya lebih aman dibeli dalam jumlah besar dibanding bahan segar seperti sayuran atau daging yang perlu dibeli lebih sering dalam jumlah sesuai kebutuhan harian.</p>

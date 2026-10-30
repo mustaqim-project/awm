@@ -53,7 +53,7 @@ Bingung mau posting apa setiap hari? Berikut contoh kalender konten mingguan unt
 
 <h2>Tips Menggunakan Kalender Ini</h2>
 <ul>
-<li>Sesuaikan tema dan caption dengan karakter dan gaya bahasa usahamu sendiri.</li>
+<li>Sesuaikan tema dan caption dengan karakter dan gaya bahasa usaha Anda sendiri.</li>
 <li>Siapkan konten beberapa hari sebelumnya agar tidak terburu-buru di hari posting.</li>
 <li>Evaluasi performa tiap tema secara berkala untuk melihat mana yang paling banyak mendapat interaksi.</li>
 </ul>

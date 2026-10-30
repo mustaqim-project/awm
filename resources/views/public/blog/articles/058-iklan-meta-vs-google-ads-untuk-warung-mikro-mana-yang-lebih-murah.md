@@ -36,7 +36,7 @@ Memilih platform iklan yang tepat penting bagi warung dengan budget terbatas. Be
 <li>Jika tujuannya menjangkau orang yang sudah aktif mencari produk sejenis (misalnya lewat pencarian "warung makan dekat sini"), Google Ads bisa lebih relevan meski butuh pengaturan kata kunci yang tepat.</li>
 </ul>
 
-<blockquote>Bukan soal platform mana yang "lebih murah" secara mutlak, tapi platform mana yang lebih sesuai dengan tujuan dan tahap pemasaran usahamu saat ini.</blockquote>
+<blockquote>Bukan soal platform mana yang "lebih murah" secara mutlak, tapi platform mana yang lebih sesuai dengan tujuan dan tahap pemasaran usaha Anda saat ini.</blockquote>
 
 <h2>Tips Mengelola Budget Iklan Terbatas</h2>
 <ol>

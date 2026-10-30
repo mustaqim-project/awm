@@ -51,7 +51,7 @@ Caption yang terlalu jualan keras justru sering diabaikan pengikut. Berikut bebe
 <blockquote>Interaksi yang tinggi di kolom komentar sering kali berdampak lebih besar terhadap jangkauan konten dibanding sekadar jumlah likes.</blockquote>
 
 <h2>Menyesuaikan Caption dengan Karakter Usaha</h2>
-<p>Template di atas bisa disesuaikan dengan gaya bahasa dan karakter usahamu sendiri. Konsistensi gaya bahasa dari waktu ke waktu membantu membangun identitas yang mudah dikenali pengikut.</p>
+<p>Template di atas bisa disesuaikan dengan gaya bahasa dan karakter usaha Anda sendiri. Konsistensi gaya bahasa dari waktu ke waktu membantu membangun identitas yang mudah dikenali pengikut.</p>
 
 <h2>Kesimpulan</h2>
 <p>Caption yang efektif tidak selalu harus terang-terangan menjual. Pendekatan berbasis cerita, manfaat, dan ajakan berinteraksi sering kali lebih berhasil membangun kedekatan dengan pengikut sekaligus mendorong minat membeli secara alami.</p>
