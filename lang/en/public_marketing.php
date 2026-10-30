@@ -95,6 +95,7 @@ return [
     // Global Footer
     'footer_col_platform' => 'Platform',
     'footer_col_solutions' => 'Industry Solutions',
+    'footer_col_pos_apps' => 'POS Software',
     'footer_col_calculators' => 'Free Calculators',
     'footer_col_resources' => 'Guides & Resources',
     'footer_col_company' => 'Company',
@@ -108,6 +109,38 @@ return [
     'footer_tagline_sub' => 'One unified system to run operations, control inventory, and grow your MSME business.',
     'footer_copyright' => 'All Rights Reserved.',
     'footer_official_wa' => 'Official WhatsApp:',
+    'footer_all_rights' => 'All rights reserved.',
+    'footer_founded_by' => 'Founded by',
+
+    // Footer Links: Platform
+    'footer_plat_erp' => 'Integrated ERP',
+    'footer_plat_omni' => 'Omnichannel & WA',
+    'footer_plat_content' => 'Content Automation',
+    'footer_plat_market' => 'Marketplace & Stores',
+    'footer_plat_ai' => 'AI Analytics Assistant',
+
+    // Footer Links: Solusi Industri
+    'footer_sol_fnb' => 'F&B & Restaurant',
+    'footer_sol_retail' => 'Retail & Grocery',
+    'footer_sol_workshop' => 'Auto Workshop',
+    'footer_sol_laundry' => 'Laundromat',
+    'footer_sol_manufacturing' => 'Manufacturing',
+    'footer_sol_services' => 'Services & Clinics',
+
+    // Footer Links: Aplikasi Kasir
+    'footer_kasir_gratis' => 'Free POS (Rp0)',
+    'footer_kasir_android' => 'Android POS',
+    'footer_kasir_offline' => 'Offline POS',
+    'footer_kasir_apotek' => 'Pharmacy POS',
+    'footer_kasir_catering' => 'Catering POS',
+    'footer_download_apk' => 'Download Android APK',
+
+    // Footer Links: Panduan & Edukasi
+    'footer_blog' => 'Blog & Education',
+    'footer_guides' => 'User Guides',
+    'footer_case_studies' => 'Case Studies',
+    'footer_demo' => 'Webinars & Demo',
+    'footer_faq' => 'FAQ & Help Center',
 
     // Common Buttons & Modals
     'btn_try_free' => 'Start Free Trial',

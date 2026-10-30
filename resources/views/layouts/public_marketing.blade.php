@@ -597,17 +597,17 @@
 
                     <!-- Apple Theme Switcher Button (Desktop & Tablet only) -->
                     <button type="button" @click="toggleTheme()"
-                        class="hidden sm:flex w-9 h-9 sm:w-10 sm:h-10 rounded-full items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 active:scale-[0.95] transition-all shrink-0"
-                        title="Ganti Mode Terang/Gelap" aria-label="Toggle Theme">
+                        class="hidden sm:inline-flex w-8 h-8 rounded-full items-center justify-center text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 border border-white/10 active:scale-95 transition-all shrink-0 shadow-xs"
+                        title="{{ __('public_marketing.theme_label') }}" aria-label="{{ __('public_marketing.theme_label') }}">
                         <!-- Sun Icon for Dark Mode (Switch to Light) -->
-                        <svg x-show="isDark" x-cloak class="w-4.5 h-4.5 text-[#FFD60A]"
-                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg x-show="isDark" x-cloak class="w-4 h-4 text-[#FFD60A] shrink-0" width="16" height="16"
+                            fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                         </svg>
                         <!-- Moon Icon for Light Mode (Switch to Dark) -->
-                        <svg x-show="!isDark" class="w-4.5 h-4.5 text-slate-300"
-                            fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <svg x-show="!isDark" class="w-4 h-4 text-slate-300 hover:text-white shrink-0" width="16" height="16"
+                            fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                         </svg>
@@ -2062,14 +2062,14 @@
                 <div
                     class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-[#FFD60A]">
-                            <svg x-show="isDark" class="w-4 h-4" fill="none" stroke="currentColor"
-                                stroke-width="2" viewBox="0 0 24 24">
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center text-[#FFD60A] shrink-0">
+                            <svg x-show="isDark" class="w-4 h-4 shrink-0" width="16" height="16" fill="none" stroke="currentColor"
+                                stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                             </svg>
-                            <svg x-show="!isDark" class="w-4 h-4 text-slate-300" fill="none"
-                                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg x-show="!isDark" class="w-4 h-4 text-slate-300 shrink-0" width="16" height="16" fill="none"
+                                stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                             </svg>

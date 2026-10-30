@@ -95,6 +95,7 @@ return [
     // Global Footer
     'footer_col_platform' => 'Platform',
     'footer_col_solutions' => 'Solusi Industri',
+    'footer_col_pos_apps' => 'Aplikasi Kasir',
     'footer_col_calculators' => 'Kalkulator Gratis',
     'footer_col_resources' => 'Panduan & Edukasi',
     'footer_col_company' => 'Perusahaan',
@@ -108,6 +109,38 @@ return [
     'footer_tagline_sub' => 'Satu sistem untuk mengelola operasional, mengendalikan stok, dan menumbuhkan bisnis UMKM Anda.',
     'footer_copyright' => 'Hak Cipta Dilindungi Undang-Undang.',
     'footer_official_wa' => 'WhatsApp Resmi:',
+    'footer_all_rights' => 'All rights reserved.',
+    'footer_founded_by' => 'Founded by',
+
+    // Footer Links: Platform
+    'footer_plat_erp' => 'ERP Terpadu',
+    'footer_plat_omni' => 'Omnichannel & WA',
+    'footer_plat_content' => 'Automasi Konten',
+    'footer_plat_market' => 'Marketplace & Toko',
+    'footer_plat_ai' => 'Asisten Analitik AI',
+
+    // Footer Links: Solusi Industri
+    'footer_sol_fnb' => 'Kuliner & F&B',
+    'footer_sol_retail' => 'Retail & Toko',
+    'footer_sol_workshop' => 'Bengkel & Servis',
+    'footer_sol_laundry' => 'Laundry Kiloan',
+    'footer_sol_manufacturing' => 'Manufaktur & Pabrik',
+    'footer_sol_services' => 'Jasa & Salon',
+
+    // Footer Links: Aplikasi Kasir
+    'footer_kasir_gratis' => 'Kasir Gratis (Rp0)',
+    'footer_kasir_android' => 'Kasir Android',
+    'footer_kasir_offline' => 'Kasir Offline',
+    'footer_kasir_apotek' => 'Kasir Apotek',
+    'footer_kasir_catering' => 'Aplikasi Catering',
+    'footer_download_apk' => 'Download APK Kasir',
+
+    // Footer Links: Panduan & Edukasi
+    'footer_blog' => 'Blog & Edukasi',
+    'footer_guides' => 'Panduan Sistem',
+    'footer_case_studies' => 'Studi Kasus UMKM',
+    'footer_demo' => 'Webinar & Demo',
+    'footer_faq' => 'Pusat Bantuan & FAQ',
 
     // Common Buttons & Modals
     'btn_try_free' => 'Mulai Coba Gratis',
