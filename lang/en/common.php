@@ -117,4 +117,9 @@ return array (
   'download_pdf' => 'Download PDF',
   'status' => 'Status',
   'save_changes' => 'Save Changes',
+  'section' => 'Section',
+  'active_module_subnav' => 'Module Sub-Menu',
+  'parts' => 'Items',
+  'changes_saved_auto' => 'Changes saved automatically',
+  'sub_navigation' => 'Sub Navigation',
 );

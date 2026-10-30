@@ -117,4 +117,9 @@ return array (
   'download_pdf' => 'Unduh PDF',
   'status' => 'Status',
   'save_changes' => 'Simpan Perubahan',
+  'section' => 'Bagian',
+  'active_module_subnav' => 'Sub-Menu Modul',
+  'parts' => 'Bagian',
+  'changes_saved_auto' => 'Perubahan tersimpan otomatis',
+  'sub_navigation' => 'Sub Navigasi',
 );

@@ -4,7 +4,11 @@
     $navUsage = $navUsage ?? ($activeBiz ? $navEntitlement->getUsageSummary($activeBiz) : null);
     $isCorePlan = $navUsage['is_core'] ?? false;
 
-    $activeModuleKey = \App\Support\Navigation\NavigationRegistry::getActiveModuleKey();
+    $navContext = $navContext ?? \App\Support\Navigation\NavigationRegistry::getContextForCurrentRoute();
+    $activeModuleKey = $activeModuleKey ?? $navContext['module_key'] ?? \App\Support\Navigation\NavigationRegistry::getActiveModuleKey();
+    $activeModuleDef = $activeModuleDef ?? (!empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getModule($activeModuleKey) : null);
+    $secondaryNavTabs = $secondaryNavTabs ?? (!empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getTabsForModule($activeModuleKey) : []);
+    $hasSecondaryNav = $hasSecondaryNav ?? !empty($secondaryNavTabs);
 
     $isPosRoute = (request()->routeIs('pos.*') && !request()->routeIs('pos.modifiers.*')) || $activeModuleKey === 'pos';
     $isB2bSalesRoute = request()->routeIs('sales.*') || request()->routeIs('invoices.*') || in_array($activeModuleKey, ['sales'], true);
@@ -289,6 +293,65 @@
             settingsOpen: {{ $isSettingsRoute ? 'true' : 'false' }},
             activeFlyout: null
         }">
+
+        {{-- ======================================================== --}}
+        {{-- MOBILE & TABLET DRAWER: ACTIVE MODULE SUB-NAVIGATION     --}}
+        {{-- ======================================================== --}}
+        @if ($hasSecondaryNav)
+            <div class="sidebar-subnav-mobile lg:hidden mb-3">
+                <div x-data="{ subNavOpen: true }" class="rounded-[14px] bg-[#007AFF]/[0.08] dark:bg-[#007AFF]/15 border border-[#007AFF]/20 overflow-hidden">
+                    <button type="button" @click="subNavOpen = !subNavOpen"
+                        class="w-full flex items-center justify-between p-3 text-left transition-colors hover:bg-[#007AFF]/10">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="w-6 h-6 rounded-[8px] bg-[#007AFF] text-white flex items-center justify-center shadow-xs shrink-0">
+                                <i data-lucide="{{ $activeModuleDef['icon'] ?? 'compass' }}" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="overflow-hidden">
+                                <div class="text-[10px] font-bold uppercase tracking-wider text-[#007AFF]">
+                                    {{ __('common.active_module_subnav') }}
+                                </div>
+                                <div class="text-[12.5px] font-bold text-black dark:text-white truncate">
+                                    {{ $activeModuleDef['label'] ?? ucfirst($activeModuleKey) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0 ml-2">
+                            <span class="text-[11px] font-bold text-[#007AFF] px-2 py-0.5 rounded-full bg-[#007AFF]/15">
+                                {{ count($secondaryNavTabs) }} {{ __('common.parts') }}
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-black/50 dark:text-white/50 transition-transform duration-200"
+                                :class="subNavOpen ? 'rotate-180' : ''"></i>
+                        </div>
+                    </button>
+                    <div x-show="subNavOpen" x-transition:enter="transition-all ease-out duration-150" class="px-2.5 pb-2.5 space-y-1">
+                        @foreach ($secondaryNavTabs as $idx => $mTab)
+                            <a href="{{ $mTab['url'] }}"
+                                @click="sidebarOpen = false"
+                                data-subnav-key="{{ $mTab['key'] }}"
+                                data-active-mobile-subnav="{{ $mTab['is_active'] ? 'true' : 'false' }}"
+                                class="flex items-center justify-between px-3 py-2 rounded-[10px] text-[12.5px] font-medium transition-all {{ $mTab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-xs' : 'text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5' }}">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <span class="w-4 h-4 rounded-full flex items-center justify-center text-[10px] {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">
+                                        {{ $idx + 1 }}
+                                    </span>
+                                    <span class="truncate">{{ $mTab['label'] }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 shrink-0 ml-1">
+                                    @if (!empty($mTab['badge']))
+                                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
+                                            {{ $mTab['badge'] }}
+                                        </span>
+                                    @endif
+                                    @if ($mTab['is_active'])
+                                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white shrink-0"></i>
+                                    @endif
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        @endif
 
         {{-- ======================================================== --}}
         {{-- KLASTER 1: CORE BISNIS                                   --}}

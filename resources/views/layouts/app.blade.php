@@ -1316,6 +1316,12 @@
         $navEntitlement = app(\App\Domain\Billing\EntitlementService::class);
         $navUsage = $activeBiz ? $navEntitlement->getUsageSummary($activeBiz) : null;
         $isCorePlan = $navUsage['is_core'] ?? false;
+
+        $navContext = \App\Support\Navigation\NavigationRegistry::getContextForCurrentRoute();
+        $activeModuleKey = $activeModuleKey ?? $navContext['module_key'] ?? $activeModule ?? $module ?? null;
+        $activeModuleDef = !empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getModule($activeModuleKey) : null;
+        $secondaryNavTabs = !empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getTabsForModule($activeModuleKey) : [];
+        $hasSecondaryNav = !empty($secondaryNavTabs);
     @endphp
     <div class="min-h-full flex flex-col lg:flex-row">
 
@@ -1327,10 +1333,15 @@
             @click="sidebarOpen = false" style="display: none;"></div>
 
         <!-- Sidebar Navigation (Apple HIG / macOS Sonoma Edition) -->
-        @include('layouts.partials.sidebar', compact('activeBiz', 'navEntitlement', 'navUsage', 'isCorePlan'))
+        @include('layouts.partials.sidebar', compact('activeBiz', 'navEntitlement', 'navUsage', 'isCorePlan', 'activeModuleKey', 'activeModuleDef', 'secondaryNavTabs', 'hasSecondaryNav'))
+
+        <!-- Secondary Sidebar (Dual Sidebar Layout for Active Module) -->
+        @if ($hasSecondaryNav)
+            @include('layouts.partials.secondary-sidebar', compact('activeModuleKey', 'activeModuleDef', 'secondaryNavTabs'))
+        @endif
 
         <!-- Main Content Area (macOS Window Canvas) -->
-        <div :class="sidebarCollapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'"
+        <div :class="sidebarCollapsed ? '{{ $hasSecondaryNav ? 'lg:pl-[336px]' : 'lg:pl-[76px]' }}' : '{{ $hasSecondaryNav ? 'lg:pl-[532px]' : 'lg:pl-[272px]' }}'"
             class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
 
             @if ($activeBiz && ! $activeBiz->is_active)
