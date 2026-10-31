@@ -1016,7 +1016,7 @@
                         <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2.5">
                             <div class="flex justify-between items-center">
                                 <span class="text-black/50 dark:text-white/50">Workspace Aktif</span>
-                                <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || @json(__('admin.no_workspace_yet'))"></span>
+                                <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || '{{ addslashes(__('admin.no_workspace_yet')) }}'"></span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-black/50 dark:text-white/50">Terdaftar Sejak</span>

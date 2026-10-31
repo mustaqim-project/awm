@@ -2793,28 +2793,35 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         {{-- MODAL SUPERVISOR PIN DISCONNECT WHATSAPP WABA --}}
         <template x-teleport="body">
             <div x-show="showDisconnectModal" x-cloak
                 role="dialog" aria-modal="true" aria-labelledby="disconnect-modal-title"
                 @keydown.escape.window="showDisconnectModal = false"
-                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85"
-                x-transition:enter="ease-out duration-200"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0">
-                <div @click.away="showDisconnectModal = false"
-                    class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
+                class="fixed inset-0 z-[200] overflow-y-auto">
+                <!-- Standalone Backdrop -->
+                <div x-show="showDisconnectModal"
                     x-transition:enter="ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
                     x-transition:leave="ease-in duration-150"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95">
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/70 dark:bg-black/85 backdrop-blur-md transition-opacity"
+                    @click="showDisconnectModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showDisconnectModal = false">
+                    <div class="relative w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
+                        x-transition:enter="ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
                     
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center shrink-0">
@@ -2858,7 +2865,8 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
     </div>
 
     <script>

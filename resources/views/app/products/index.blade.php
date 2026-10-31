@@ -1455,10 +1455,24 @@
         @if (\App\Support\Context::hasPermission('products.create') || \App\Support\Context::hasPermission('products.manage'))
             <template x-teleport="body">
                 <div x-show="showAddModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    role="dialog"
+                    aria-modal="true"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
                     @keydown.escape.window="showAddModal = false">
-                    <div class="w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden"
-                        @click.outside="showAddModal = false">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showAddModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showAddModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-0 sm:p-4 md:p-6" @click.self="showAddModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden">
 
                         <!-- Mobile Grab Bar -->
                         <div class="w-10 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto my-2.5 sm:hidden shrink-0">
@@ -2105,18 +2119,33 @@
                         </form>
                     </div>
                 </div>
-            </template>
-        @endif
-        <!-- ===================================================== -->
-        <!-- 7. MODAL: EDIT DATA PRODUK (Full Layout XXL)          -->
-        <!-- ===================================================== -->
-        @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
-            <template x-teleport="body">
-                <div x-show="showEditModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    @keydown.escape.window="showEditModal = false">
-                    <div class="w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden"
-                        @click.outside="showEditModal = false">
+            </div>
+        </template>
+    @endif
+    <!-- ===================================================== -->
+    <!-- 7. MODAL: EDIT DATA PRODUK (Full Layout XXL)          -->
+    <!-- ===================================================== -->
+    @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
+        <template x-teleport="body">
+            <div x-show="showEditModal" x-cloak
+                role="dialog"
+                aria-modal="true"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                @keydown.escape.window="showEditModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showEditModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showEditModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-0 sm:p-4 md:p-6" @click.self="showEditModal = false">
+                    <div class="relative w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden">
 
                         <!-- Mobile Grab Bar -->
                         <div class="w-10 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto my-2.5 sm:hidden shrink-0">
@@ -2806,17 +2835,33 @@
                         </form>
                     </div>
                 </div>
-            </template>
-        @endif
+            </div>
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 8. SUB-MODALS: KATEGORI & SATUAN (AJAX Quick-Add)     -->
         <!-- ===================================================== -->
         <template x-teleport="body">
             <div x-show="showAddCategoryModal" x-cloak
-                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                <div class="w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl"
-                    @click.outside="showAddCategoryModal = false">
+                role="dialog"
+                aria-modal="true"
+                class="fixed inset-0 z-[210] overflow-y-auto"
+                @keydown.escape.window="showAddCategoryModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showAddCategoryModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showAddCategoryModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddCategoryModal = false">
+                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                         <div class="flex items-center gap-2.5">
                             <div
@@ -2861,13 +2906,29 @@
                     </form>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         <template x-teleport="body">
             <div x-show="showAddUnitModal" x-cloak
-                class="fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                <div class="w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl"
-                    @click.outside="showAddUnitModal = false">
+                role="dialog"
+                aria-modal="true"
+                class="fixed inset-0 z-[210] overflow-y-auto"
+                @keydown.escape.window="showAddUnitModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showAddUnitModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showAddUnitModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddUnitModal = false">
+                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                         <div class="flex items-center gap-2.5">
                             <div
@@ -2926,16 +2987,32 @@
                     </form>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 9. SCANNER MODALS (Apple Frosted Glass)                -->
         <!-- ===================================================== -->
         <template x-teleport="body">
             <div x-show="showProductScannerPermission" x-cloak
-                class="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                <div
-                    class="w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
+                role="dialog"
+                aria-modal="true"
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                @keydown.escape.window="showProductScannerPermission = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showProductScannerPermission"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showProductScannerPermission = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showProductScannerPermission = false">
+                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-start gap-3.5">
                         <div
                             class="w-11 h-11 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
@@ -2957,13 +3034,29 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         <template x-teleport="body">
-            <div x-show="showProductScanner" x-cloak @keydown.escape.window="closeProductScanner()"
-                class="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                <div class="w-full max-w-md rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4 shadow-2xl"
-                    @click.outside="closeProductScanner()">
+            <div x-show="showProductScanner" x-cloak
+                role="dialog"
+                aria-modal="true"
+                @keydown.escape.window="closeProductScanner()"
+                class="fixed inset-0 z-[220] overflow-y-auto">
+                <!-- Standalone Backdrop -->
+                <div x-show="showProductScanner"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="closeProductScanner()"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeProductScanner()">
+                    <div class="relative w-full max-w-md rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4 shadow-2xl">
                     <div class="flex items-center justify-between">
                         <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('products.modal_scanner_title') }}</h3>
                         <button type="button" @click="closeProductScanner()"
@@ -2995,17 +3088,32 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 11. BENTO APPLE HIG MODAL: HARGA PER CABANG           -->
         <!-- ===================================================== -->
         <template x-teleport="body">
             <div x-show="showBranchPricesModal" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                role="dialog"
+                aria-modal="true"
+                class="fixed inset-0 z-[200] overflow-y-auto"
                 @keydown.escape.window="showBranchPricesModal = false">
-                <div class="w-full max-w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[92vh] flex flex-col overflow-hidden"
-                    @click.outside="showBranchPricesModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showBranchPricesModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showBranchPricesModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-0 sm:p-4" @click.self="showBranchPricesModal = false">
+                    <div class="relative w-full max-w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[92vh] flex flex-col overflow-hidden">
 
                     <!-- Mobile Grab Bar -->
                     <div class="w-10 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto my-2.5 sm:hidden shrink-0"></div>
@@ -3240,7 +3348,8 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         <!-- ===================================================== -->
         <!-- 10. APPLE ALERT DIALOG (Hapus Produk)                  -->
@@ -3248,9 +3357,24 @@
         @if (\App\Support\Context::hasPermission('products.delete') || \App\Support\Context::hasPermission('products.manage'))
             <template x-teleport="body">
                 <div x-show="deleteModalOpen" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                    <div class="w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]"
-                        @click.outside="closeDelete()">
+                    role="dialog"
+                    aria-modal="true"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    @keydown.escape.window="closeDelete()">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="deleteModalOpen"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="closeDelete()"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDelete()">
+                        <div class="relative w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]">
                         <div class="px-5 pt-6 pb-4">
                             <div
                                 class="w-10 h-10 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3">
@@ -3288,8 +3412,9 @@
                         </div>
                     </div>
                 </div>
-            </template>
-        @endif
+            </div>
+        </template>
+    @endif
 
         <!-- ===================================================== -->
         <!-- 11. FLOATING BENTO BULK ACTION TOOLBAR                -->

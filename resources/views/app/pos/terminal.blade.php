@@ -2139,61 +2139,91 @@
     <!-- ===================================================== -->
     <!-- 3. MODAL: QUICK CUSTOMER (Apple Sheet Presentation)   -->
     <!-- ===================================================== -->
-    <div x-show="showCustomerModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4"
-        @keydown.escape.window="showCustomerModal = false">
-        <div class="pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white"
-            @click.outside="showCustomerModal = false">
-            <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
-                <div>
-                    <h3 class="font-semibold text-[16px] text-black dark:text-white">{{ __('pos.quick_customer_title') }}</h3>
-                    <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">{{ __('pos.quick_customer_desc') }}</p>
-                </div>
-                <button type="button" @click="showCustomerModal = false"
-                    class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+    <template x-teleport="body">
+        <div x-show="showCustomerModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showCustomerModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showCustomerModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showCustomerModal = false"></div>
 
-            <form @submit.prevent="createQuickCustomer" class="space-y-3">
-                <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_name') }} *</label>
-                    <input x-ref="quickCustomerName" type="text" x-model="newCustomer.name" required
-                        maxlength="255" placeholder="{{ __('pos.customer_name_placeholder') }}"
-                        class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCustomerModal = false">
+                <div class="pos-modal-panel relative w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
+                    <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
+                        <div>
+                            <h3 class="font-semibold text-[16px] text-black dark:text-white">{{ __('pos.quick_customer_title') }}</h3>
+                            <p class="text-[12px] text-black/45 dark:text-white/45 mt-0.5">{{ __('pos.quick_customer_desc') }}</p>
+                        </div>
+                        <button type="button" @click="showCustomerModal = false"
+                            class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form @submit.prevent="createQuickCustomer" class="space-y-3">
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_name') }} *</label>
+                            <input x-ref="quickCustomerName" type="text" x-model="newCustomer.name" required
+                                maxlength="255" placeholder="{{ __('pos.customer_name_placeholder') }}"
+                                class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_phone') }} *</label>
+                            <input type="tel" x-model="newCustomer.phone" required maxlength="50" inputmode="tel"
+                                placeholder="{{ __('pos.customer_phone_placeholder') }}"
+                                class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                        <p x-show="customerFormError" x-text="customerFormError" class="text-xs text-[#FF3B30]"></p>
+                        <div class="flex justify-end gap-2 pt-2 border-t border-black/10 dark:border-white/10">
+                            <button type="button" @click="showCustomerModal = false"
+                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
+                            <button type="submit" :disabled="isCreatingCustomer"
+                                class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-[13px] disabled:opacity-50 transition active:scale-[0.97]">
+                                <span x-text="isCreatingCustomer ? (window.COOCA_I18N?.saving || '{{ __('pos.saving') }}') : (window.COOCA_I18N?.save_customer || '{{ __('pos.save_customer') }}')"></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_phone') }} *</label>
-                    <input type="tel" x-model="newCustomer.phone" required maxlength="50" inputmode="tel"
-                        placeholder="{{ __('pos.customer_phone_placeholder') }}"
-                        class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                </div>
-                <p x-show="customerFormError" x-text="customerFormError" class="text-xs text-[#FF3B30]"></p>
-                <div class="flex justify-end gap-2 pt-2 border-t border-black/10 dark:border-white/10">
-                    <button type="button" @click="showCustomerModal = false"
-                        class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
-                    <button type="submit" :disabled="isCreatingCustomer"
-                        class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-[13px] disabled:opacity-50 transition active:scale-[0.97]">
-                        <span x-text="isCreatingCustomer ? (window.COOCA_I18N?.saving || '{{ __('pos.saving') }}') : (window.COOCA_I18N?.save_customer || '{{ __('pos.save_customer') }}')"></span>
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 4. MODAL: PAYMENT MODAL (Apple Sheet Presentation)    -->
     <!-- ===================================================== -->
-    <div x-show="showPaymentModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-3 sm:p-4"
-        style="display: none;"
-        @keydown.escape.window="if(!isProcessing) showPaymentModal = false"
-        @keydown.enter.prevent="if(!isProcessing && (isSplitPayment ? splitRemainingAmount === 0 : currentTenderAmount >= grandTotal)) submitCheckout()">
-        <div
-            class="pos-modal-panel w-full max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col max-h-[92vh] overflow-y-auto space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white"
-            @click.outside="if(!isProcessing) showPaymentModal = false">
+    <template x-teleport="body">
+        <div x-show="showPaymentModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="if(!isProcessing) showPaymentModal = false"
+            @keydown.enter.prevent="if(!isProcessing && (isSplitPayment ? splitRemainingAmount === 0 : currentTenderAmount >= grandTotal)) submitCheckout()">
+            <!-- Standalone Backdrop -->
+            <div x-show="showPaymentModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="if(!isProcessing) showPaymentModal = false"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-4" @click.self="if(!isProcessing) showPaymentModal = false">
+                <div class="pos-modal-panel relative w-full max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col max-h-[92vh] overflow-y-auto space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white">
             
             {{-- Modal Header & Mode Switcher --}}
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-black/5 dark:border-white/10">
@@ -2496,15 +2526,30 @@
             </div>
         </div>
     </div>
+</template>
 
     <!-- ===================================================== -->
     <!-- 4.1. MODAL: DYNAMIC QRIS COOCA PAY (TriPay Gateway)   -->
     <!-- ===================================================== -->
-    <div x-show="showQrisModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-3 sm:p-4"
-        style="display: none;">
-        <div class="pos-modal-panel w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-[26px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden transition-all"
-            @click.outside="/* Terkunci: modal tidak dapat ditutup dengan klik luar hingga lunas atau klik Ganti Metode Bayar */">
+    <template x-teleport="body">
+        <div x-show="showQrisModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showQrisModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showQrisModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-4">
+                <div class="pos-modal-panel relative w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-[26px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden transition-all">
 
             <!-- Modal Header -->
             <div class="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
@@ -2603,15 +2648,31 @@
             </div>
         </div>
     </div>
+</template>
 
     <!-- ===================================================== -->
     <!-- 5. MODAL: PAYMENT SUCCESS & RECEIPT (Bento UI Grid)  -->
     <!-- ===================================================== -->
-    <div x-show="showSuccessModal" x-cloak
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[3px] p-4"
-        @keydown.escape.window="if(showSuccessModal) resetForNewOrder()">
-        <div class="pos-modal-panel w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden"
-            @click.outside="resetForNewOrder()">
+    <template x-teleport="body">
+        <div x-show="showSuccessModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="if(showSuccessModal) resetForNewOrder()">
+            <!-- Standalone Backdrop -->
+            <div x-show="showSuccessModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="resetForNewOrder()"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="resetForNewOrder()">
+                <div class="pos-modal-panel relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden">
 
             <!-- Top Header Row -->
             <div
@@ -2859,29 +2920,37 @@
             </div>
         </div>
     </div>
+</template>
 
     <!-- ===================================================== -->
     <!-- 5B. MODAL: POS SETTINGS & HARDWARE HUB (Bento Apple Sheet) -->
     <!-- ===================================================== -->
-    <div x-show="showPosSettingsModal"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        style="display: none;"
-        @click.self="showPosSettingsModal = false"
-        @keydown.escape.window="showPosSettingsModal = false">
-        
-        <div class="pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh] text-black dark:text-white"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-95"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95">
+    <template x-teleport="body">
+        <div x-show="showPosSettingsModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showPosSettingsModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showPosSettingsModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showPosSettingsModal = false"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showPosSettingsModal = false">
+                <div class="pos-modal-panel relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh] text-black dark:text-white"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95">
 
             <!-- Modal Header -->
             <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.02] dark:bg-white/[0.02]">
@@ -3100,46 +3169,79 @@
             </div>
         </div>
     </div>
+</template>
 
     <!-- ===================================================== -->
     <!-- 6. MODAL: OPEN SHIFT (Apple Sheet)                    -->
     <!-- ===================================================== -->
-    <div x-show="showOpenShiftModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4"
-        style="display: none;">
-        <div
-            class="pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
-            <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_open_modal_title') }}</h3>
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_opening_cash_label') }}</label>
-                    <input type="number" x-model.number="shiftOpeningCash"
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+    <template x-teleport="body">
+        <div x-show="showOpenShiftModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showOpenShiftModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showOpenShiftModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showOpenShiftModal = false"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showOpenShiftModal = false">
+                <div class="pos-modal-panel relative w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
+                    <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_open_modal_title') }}</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_opening_cash_label') }}</label>
+                            <input type="number" x-model.number="shiftOpeningCash"
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                        <div>
+                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_notes_optional') }}</label>
+                            <input type="text" x-model="shiftNotes" placeholder="{{ __('pos.shift_notes_placeholder') }}"
+                                class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                        <button @click="showOpenShiftModal = false"
+                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
+                        <button @click="submitOpenShift()"
+                            class="h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">{{ __('pos.open_shift_btn') }}</button>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.shift_notes_optional') }}</label>
-                    <input type="text" x-model="shiftNotes" placeholder="{{ __('pos.shift_notes_placeholder') }}"
-                        class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                </div>
-            </div>
-            <div class="flex justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
-                <button @click="showOpenShiftModal = false"
-                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
-                <button @click="submitOpenShift()"
-                    class="h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] text-white font-semibold text-[13px] transition shadow-sm">{{ __('pos.open_shift_btn') }}</button>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 7. MODAL: CLOSE SHIFT & RECONCILIATION (Apple Sheet)  -->
     <!-- ===================================================== -->
-    <div x-show="showCloseShiftModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4"
-        style="display: none;">
-        <div
-            class="pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
-            <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_close_modal_title') }}</h3>
+    <template x-teleport="body">
+        <div x-show="showCloseShiftModal" x-cloak
+            role="dialog"
+            aria-modal="true"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            @keydown.escape.window="showCloseShiftModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showCloseShiftModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showCloseShiftModal = false"></div>
+
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showCloseShiftModal = false">
+                <div class="pos-modal-panel relative w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white">
+                    <h3 class="font-semibold text-[17px] text-black dark:text-white">{{ __('pos.shift_close_modal_title') }}</h3>
 
             <div
                 class="p-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 space-y-1.5 text-xs">
@@ -3199,9 +3301,10 @@
                     class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition">{{ __('pos.cancel') }}</button>
                 <button @click="submitCloseShift()"
                     class="h-9 px-5 rounded-[10px] bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] text-white font-semibold text-[13px] transition">{{ __('pos.close_reconcile_btn') }}</button>
+                </div>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- ===================================================== -->
     <!-- 8. MODAL: HELD ORDERS QUEUE (Apple Sheet)             -->

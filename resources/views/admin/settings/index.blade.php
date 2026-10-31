@@ -5,291 +5,7 @@
 ])
 
 @section('content')
-    <div class="max-w-[1250px] w-full min-w-0 mx-auto pb-28 lg:pb-10 space-y-6" x-data="{
-        activeTab: '{{ $defaultTab ?? request('tab', 'system') }}',
-        showSecret: false,
-        showPassword: false,
-        showMetaSecret: false,
-        showTikTokSecret: false,
-        showLinkedInSecret: false,
-        showIgSecret: false,
-        showIgToken: false,
-        showFbPageToken: false,
-        showThreadsToken: false,
-        showTripayKey: false,
-        showTripayPrivateKey: false,
-        showWaToken: false,
-        showWaSecret: false,
-        showBiteshipKey: false,
-        copiedOwner: false,
-        copiedCustomer: false,
-        copiedWebhook: false,
-        copiedTikTokRedirect: false,
-        copiedTikTokAdminRedirect: false,
-        copiedLinkedInRedirect: false,
-        copiedTripayCallback: false,
-        copiedWaWebhook: false,
-        copiedBiteshipWebhook: false,
-        showShopeePartnerKey: false,
-        showTikTokAppSecret: false,
-        showTokopediaClientSecret: false,
-        testingMarketplace{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingmarketplace') }}
-        testMarketplaceResult: null,
-        testMarketplaceConfig(provider) {
-            this.testingMarketplace = true;
-            this.testMarketplaceResult = null;
-            fetch('{{ route('admin.settings.test-marketplace') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ provider: provider })
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingMarketplace = false;
-                    this.testMarketplaceResult = data;
-                    if (data.success && window.AppAlert) {
-                        AppAlert.success(data.message);
-                    } else if (!data.success && window.AppAlert) {
-                        AppAlert.error(data.message);
-                    }
-                })
-                .catch(e => {
-                    this.testingMarketplace = false;
-                    if (window.AppAlert) {
-                        AppAlert.error('Gagal menguji Marketplace API: ' + (e.message || e));
-                    }
-                });
-        },
-        switchTab(tab) {
-            this.activeTab = tab;
-            const url = new URL(window.location);
-            url.searchParams.set('tab', tab);
-            window.history.replaceState({}, '', url);
-        },
-        copyToClipboard(text, type) {
-            navigator.clipboard.writeText(text).then(() => {
-                if (type === 'owner') {
-                    this.copiedOwner = true;
-                    setTimeout(() => this.copiedOwner = false, 2000);
-                } else if (type === 'customer') {
-                    this.copiedCustomer = true;
-                    setTimeout(() => this.copiedCustomer = false, 2000);
-                } else if (type === 'webhook') {
-                    this.copiedWebhook = true;
-                    setTimeout(() => this.copiedWebhook = false, 2000);
-                } else if (type === 'tiktok') {
-                    this.copiedTikTokRedirect = true;
-                    setTimeout(() => this.copiedTikTokRedirect = false, 2000);
-                } else if (type === 'tiktok_admin') {
-                    this.copiedTikTokAdminRedirect = true;
-                    setTimeout(() => this.copiedTikTokAdminRedirect = false, 2000);
-                } else if (type === 'linkedin') {
-                    this.copiedLinkedInRedirect = true;
-                    setTimeout(() => this.copiedLinkedInRedirect = false, 2000);
-                } else if (type === 'tripay') {
-                    this.copiedTripayCallback = true;
-                    setTimeout(() => this.copiedTripayCallback = false, 2000);
-                } else if (type === 'wa') {
-                    this.copiedWaWebhook = true;
-                    setTimeout(() => this.copiedWaWebhook = false, 2000);
-                } else if (type === 'biteship') {
-                    this.copiedBiteshipWebhook = true;
-                    setTimeout(() => this.copiedBiteshipWebhook = false, 2000);
-                }
-            });
-        },
-        testingSocial{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingsocial') }}
-        testSocialResult: null,
-        testSocialMediaConfig() {
-            this.testingSocial = true;
-            this.testSocialResult = null;
-            fetch('{{ route('admin.settings.test-social') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    }
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingSocial = false;
-                    if (data.success) {
-                        this.testSocialResult = data.data;
-                        if (window.AppAlert) {
-                            AppAlert.success(@json(__('admin.pengujian_kredensial_media_sosial_selesai')));
-                        }
-                    }
-                })
-                .catch(e => {
-                    this.testingSocial = false;
-                    if (window.AppAlert) {
-                        AppAlert.error(@json(__('admin.gagal_menjalankan_pengujian'))
-                            + ': ' + (e.message || e));
-                    }
-                });
-        },
-        testingTripay{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingtripay') }}
-        testTripayResult: null,
-        testTripayConfig() {
-            this.testingTripay = true;
-            this.testTripayResult = null;
-            fetch('{{ route('admin.settings.test-tripay') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    }
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingTripay = false;
-                    this.testTripayResult = data;
-                    if (data.success && window.AppAlert) {
-                        AppAlert.success(data.message);
-                    } else if (!data.success && window.AppAlert) {
-                        AppAlert.error(data.message);
-                    }
-                })
-                .catch(e => {
-                    this.testingTripay = false;
-                    if (window.AppAlert) {
-                        AppAlert.error(@json(__('admin.gagal_menguji_tripay')) + ': ' + (e.message || e));
-                    }
-                });
-        },
-        testingWa{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingwa') }}
-        testWaResult: null,
-        testWhatsAppConfig() {
-            this.testingWa = true;
-            this.testWaResult = null;
-            fetch('{{ route('admin.settings.test-whatsapp') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    }
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingWa = false;
-                    this.testWaResult = data;
-                    if (data.success && window.AppAlert) {
-                        AppAlert.success(data.message);
-                    } else if (!data.success && window.AppAlert) {
-                        AppAlert.error(data.message);
-                    }
-                })
-                .catch(e => {
-                    this.testingWa = false;
-                    if (window.AppAlert) {
-                        AppAlert.error(@json(__('admin.gagal_menguji_whatsapp')) + ': ' + (e.message || e));
-                    }
-                });
-        },
-        testingIg{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingig') }}
-        testIgResult: null,
-        testInstagramConfig() {
-            this.testingIg = true;
-            this.testIgResult = null;
-            fetch('{{ route('admin.settings.test-instagram') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    }
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingIg = false;
-                    this.testIgResult = data;
-                    if (data.success && window.AppAlert) {
-                        AppAlert.success(data.message);
-                    } else if (!data.success && window.AppAlert) {
-                        AppAlert.error(data.message);
-                    }
-                })
-                .catch(e => {
-                    this.testingIg = false;
-                    if (window.AppAlert) {
-                        AppAlert.error(@json(__('admin.gagal_menguji_instagram')) + ': ' + (e.message || e));
-                    }
-                });
-        },
-        testingBiteship{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingbiteship') }}
-        testBiteshipResult: null,
-        testBiteshipConfig() {
-            this.testingBiteship = true;
-            this.testBiteshipResult = null;
-            fetch('{{ route('admin.settings.test-biteship') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
-                    }
-                })
-                .then(r => r.json())
-                .then(data => {
-                    this.testingBiteship = false;
-                    this.testBiteshipResult = data;
-                    if (data.success && window.AppAlert) {
-                        AppAlert.success(data.message);
-                    } else if (!data.success && window.AppAlert) {
-                        AppAlert.error(data.message);
-                    }
-                })
-                .catch(e => {
-                    this.testingBiteship = false;
-                    if (window.AppAlert) {
-                        AppAlert.error(@json(__('admin.gagal_menguji_biteship')) + ': ' + (e.message || e));
-                    }
-                });
-        },
-        applyPreset(preset) {
-            if (preset === 'gmail') {
-                const m = document.querySelector('[name=mail_mailer]');
-                if (m) m.value = 'smtp';
-                const h = document.querySelector('[name=mail_host]');
-                if (h) h.value = 'smtp.gmail.com';
-                const p = document.querySelector('[name=mail_port]');
-                if (p) p.value = '587';
-                const e = document.querySelector('[name=mail_encryption]');
-                if (e) e.value = 'tls';
-            } else if (preset === 'mailtrap') {
-                const m = document.querySelector('[name=mail_mailer]');
-                if (m) m.value = 'smtp';
-                const h = document.querySelector('[name=mail_host]');
-                if (h) h.value = 'sandbox.smtp.mailtrap.io';
-                const p = document.querySelector('[name=mail_port]');
-                if (p) p.value = '2525';
-                const e = document.querySelector('[name=mail_encryption]');
-                if (e) e.value = 'tls';
-            } else if (preset === 'cpanel') {
-                const m = document.querySelector('[name=mail_mailer]');
-                if (m) m.value = 'smtp';
-                const h = document.querySelector('[name=mail_host]');
-                if (h) h.value = 'mail.domainanda.com';
-                const p = document.querySelector('[name=mail_port]');
-                if (p) p.value = '465';
-                const e = document.querySelector('[name=mail_encryption]');
-                if (e) e.value = 'ssl';
-            } else if (preset === 'log') {
-                const m = document.querySelector('[name=mail_mailer]');
-                if (m) m.value = 'log';
-            }
-            if (window.AppAlert) {
-                AppAlert.info('Preset ' + preset.toUpperCase() + ' berhasil diterapkan ke kolom SMTP.');
-            }
-        }
-    }">
+    <div class="max-w-[1250px] w-full min-w-0 mx-auto pb-28 lg:pb-10 space-y-6" x-data="adminSettingsPage()">
 
         <!-- Apple Segmented Tab Bar (macOS Sonoma / iOS 18 System Settings Style) -->
         <div
@@ -482,14 +198,14 @@
 
             <!-- Shortcut to Pricing & Billing Catalog -->
             @if(Auth::guard('admin')->user()?->hasPermission('admin.billing_packages.view'))
-<a href="{{ route('admin.billing-packages.index', 'subscription') }}"
-                class="h-10 px-4 rounded-[14px] text-[12.5px] font-bold text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/10 active:scale-98 transition-all flex items-center gap-1.5 self-start sm:self-auto shrink-0 cursor-pointer">
-                <i data-lucide="layers-3" class="w-4 h-4" stroke-width="1.8"></i>
-                <span>{{ __('admin.harga_paket_billing') }}</span>
-                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-black/35 dark:text-white/35"
-                    stroke-width="2"></i>
-            </a>
-@endif
+                <a href="{{ route('admin.billing-packages.index', 'subscription') }}"
+                    class="h-10 px-4 rounded-[14px] text-[12.5px] font-bold text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/10 active:scale-98 transition-all flex items-center gap-1.5 self-start sm:self-auto shrink-0 cursor-pointer">
+                    <i data-lucide="layers-3" class="w-4 h-4" stroke-width="1.8"></i>
+                    <span>{{ __('admin.harga_paket_billing') }}</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-black/35 dark:text-white/35"
+                        stroke-width="2"></i>
+                </a>
+            @endif
         </div>
 
 
@@ -509,3 +225,303 @@
 
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function adminSettingsPage() {
+    return {
+        activeTab: '{{ $defaultTab ?? request('tab', 'system') }}',
+        showSecret: false,
+        showPassword: false,
+        showMetaSecret: false,
+        showTikTokSecret: false,
+        showLinkedInSecret: false,
+        showIgSecret: false,
+        showIgToken: false,
+        showFbPageToken: false,
+        showThreadsToken: false,
+        showTripayKey: false,
+        showTripayPrivateKey: false,
+        showWaToken: false,
+        showWaSecret: false,
+        showBiteshipKey: false,
+        copiedOwner: false,
+        copiedCustomer: false,
+        copiedWebhook: false,
+        copiedTikTokRedirect: false,
+        copiedTikTokAdminRedirect: false,
+        copiedLinkedInRedirect: false,
+        copiedTripayCallback: false,
+        copiedWaWebhook: false,
+        copiedBiteshipWebhook: false,
+        showShopeePartnerKey: false,
+        showTikTokAppSecret: false,
+        showTokopediaClientSecret: false,
+        testingMarketplace: false,
+        testMarketplaceResult: null,
+        testMarketplaceConfig(provider) {
+            this.testingMarketplace = true;
+            this.testMarketplaceResult = null;
+            fetch('{{ route('admin.settings.test-marketplace') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ provider: provider })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingMarketplace = false;
+                    this.testMarketplaceResult = data;
+                    if (data.success && window.AppAlert) {
+                        AppAlert.success(data.message);
+                    } else if (!data.success && window.AppAlert) {
+                        AppAlert.error(data.message);
+                    }
+                })
+                .catch(e => {
+                    this.testingMarketplace = false;
+                    if (window.AppAlert) {
+                        AppAlert.error('Gagal menguji Marketplace API: ' + (e.message || e));
+                    }
+                });
+        },
+        switchTab(tab) {
+            this.activeTab = tab;
+            const url = new URL(window.location);
+            url.searchParams.set('tab', tab);
+            window.history.replaceState({}, '', url);
+        },
+        copyToClipboard(text, type) {
+            navigator.clipboard.writeText(text).then(() => {
+                if (type === 'owner') {
+                    this.copiedOwner = true;
+                    setTimeout(() => this.copiedOwner = false, 2000);
+                } else if (type === 'customer') {
+                    this.copiedCustomer = true;
+                    setTimeout(() => this.copiedCustomer = false, 2000);
+                } else if (type === 'webhook') {
+                    this.copiedWebhook = true;
+                    setTimeout(() => this.copiedWebhook = false, 2000);
+                } else if (type === 'tiktok') {
+                    this.copiedTikTokRedirect = true;
+                    setTimeout(() => this.copiedTikTokRedirect = false, 2000);
+                } else if (type === 'tiktok_admin') {
+                    this.copiedTikTokAdminRedirect = true;
+                    setTimeout(() => this.copiedTikTokAdminRedirect = false, 2000);
+                } else if (type === 'linkedin') {
+                    this.copiedLinkedInRedirect = true;
+                    setTimeout(() => this.copiedLinkedInRedirect = false, 2000);
+                } else if (type === 'tripay') {
+                    this.copiedTripayCallback = true;
+                    setTimeout(() => this.copiedTripayCallback = false, 2000);
+                } else if (type === 'wa') {
+                    this.copiedWaWebhook = true;
+                    setTimeout(() => this.copiedWaWebhook = false, 2000);
+                } else if (type === 'biteship') {
+                    this.copiedBiteshipWebhook = true;
+                    setTimeout(() => this.copiedBiteshipWebhook = false, 2000);
+                }
+            });
+        },
+        testingSocial: false,
+        testSocialResult: null,
+        testSocialMediaConfig() {
+            this.testingSocial = true;
+            this.testSocialResult = null;
+            fetch('{{ route('admin.settings.test-social') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingSocial = false;
+                    if (data.success) {
+                        this.testSocialResult = data.data;
+                        if (window.AppAlert) {
+                            AppAlert.success(@json(__('admin.pengujian_kredensial_media_sosial_selesai')));
+                        }
+                    }
+                })
+                .catch(e => {
+                    this.testingSocial = false;
+                    if (window.AppAlert) {
+                        AppAlert.error(@json(__('admin.gagal_menjalankan_pengujian'))
+                            + ': ' + (e.message || e));
+                    }
+                });
+        },
+        testingTripay: false,
+        testTripayResult: null,
+        testTripayConfig() {
+            this.testingTripay = true;
+            this.testTripayResult = null;
+            fetch('{{ route('admin.settings.test-tripay') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingTripay = false;
+                    this.testTripayResult = data;
+                    if (data.success && window.AppAlert) {
+                        AppAlert.success(data.message);
+                    } else if (!data.success && window.AppAlert) {
+                        AppAlert.error(data.message);
+                    }
+                })
+                .catch(e => {
+                    this.testingTripay = false;
+                    if (window.AppAlert) {
+                        AppAlert.error(@json(__('admin.gagal_menguji_tripay')) + ': ' + (e.message || e));
+                    }
+                });
+        },
+        testingWa: false,
+        testWaResult: null,
+        testWhatsAppConfig() {
+            this.testingWa = true;
+            this.testWaResult = null;
+            fetch('{{ route('admin.settings.test-whatsapp') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingWa = false;
+                    this.testWaResult = data;
+                    if (data.success && window.AppAlert) {
+                        AppAlert.success(data.message);
+                    } else if (!data.success && window.AppAlert) {
+                        AppAlert.error(data.message);
+                    }
+                })
+                .catch(e => {
+                    this.testingWa = false;
+                    if (window.AppAlert) {
+                        AppAlert.error(@json(__('admin.gagal_menguji_whatsapp')) + ': ' + (e.message || e));
+                    }
+                });
+        },
+        testingIg: false,
+        testIgResult: null,
+        testInstagramConfig() {
+            this.testingIg = true;
+            this.testIgResult = null;
+            fetch('{{ route('admin.settings.test-instagram') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingIg = false;
+                    this.testIgResult = data;
+                    if (data.success && window.AppAlert) {
+                        AppAlert.success(data.message);
+                    } else if (!data.success && window.AppAlert) {
+                        AppAlert.error(data.message);
+                    }
+                })
+                .catch(e => {
+                    this.testingIg = false;
+                    if (window.AppAlert) {
+                        AppAlert.error(@json(__('admin.gagal_menguji_instagram')) + ': ' + (e.message || e));
+                    }
+                });
+        },
+        testingBiteship: false,
+        testBiteshipResult: null,
+        testBiteshipConfig() {
+            this.testingBiteship = true;
+            this.testBiteshipResult = null;
+            fetch('{{ route('admin.settings.test-biteship') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '{{ csrf_token() }}'
+                    }
+                })
+                .then(r => r.json())
+                .then(data => {
+                    this.testingBiteship = false;
+                    this.testBiteshipResult = data;
+                    if (data.success && window.AppAlert) {
+                        AppAlert.success(data.message);
+                    } else if (!data.success && window.AppAlert) {
+                        AppAlert.error(data.message);
+                    }
+                })
+                .catch(e => {
+                    this.testingBiteship = false;
+                    if (window.AppAlert) {
+                        AppAlert.error(@json(__('admin.gagal_menguji_biteship')) + ': ' + (e.message || e));
+                    }
+                });
+        },
+        applyPreset(preset) {
+            if (preset === 'gmail') {
+                const m = document.querySelector('[name=mail_mailer]');
+                if (m) m.value = 'smtp';
+                const h = document.querySelector('[name=mail_host]');
+                if (h) h.value = 'smtp.gmail.com';
+                const p = document.querySelector('[name=mail_port]');
+                if (p) p.value = '587';
+                const e = document.querySelector('[name=mail_encryption]');
+                if (e) e.value = 'tls';
+            } else if (preset === 'mailtrap') {
+                const m = document.querySelector('[name=mail_mailer]');
+                if (m) m.value = 'smtp';
+                const h = document.querySelector('[name=mail_host]');
+                if (h) h.value = 'sandbox.smtp.mailtrap.io';
+                const p = document.querySelector('[name=mail_port]');
+                if (p) p.value = '2525';
+                const e = document.querySelector('[name=mail_encryption]');
+                if (e) e.value = 'tls';
+            } else if (preset === 'cpanel') {
+                const m = document.querySelector('[name=mail_mailer]');
+                if (m) m.value = 'smtp';
+                const h = document.querySelector('[name=mail_host]');
+                if (h) h.value = 'mail.domainanda.com';
+                const p = document.querySelector('[name=mail_port]');
+                if (p) p.value = '465';
+                const e = document.querySelector('[name=mail_encryption]');
+                if (e) e.value = 'ssl';
+            } else if (preset === 'log') {
+                const m = document.querySelector('[name=mail_mailer]');
+                if (m) m.value = 'log';
+            }
+            if (window.AppAlert) {
+                AppAlert.info('Preset ' + preset.toUpperCase() + ' berhasil diterapkan ke kolom SMTP.');
+            }
+        }
+    };
+}
+
+if (typeof Alpine !== 'undefined' && Alpine.data) {
+    Alpine.data('adminSettingsPage', adminSettingsPage);
+} else {
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('adminSettingsPage', adminSettingsPage);
+    });
+}
+</script>
+@endpush

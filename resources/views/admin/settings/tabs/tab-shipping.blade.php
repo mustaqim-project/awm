@@ -173,9 +173,9 @@
                             <button type="button" @click="testBiteshipConfig()" :disabled="testingBiteship"
                                 class="h-11 px-4 rounded-[14px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 active:scale-[0.98] text-[#FF9500] text-[13px] font-bold inline-flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50">
                                 <i data-lucide="refresh-cw" class="w-4 h-4"
-                                    :class="testingBiteship{{ __('admin.testing') ? '' : '' }}
-                                        ? 'animate-spin' : ''"></i>
-                                <span x-text="testingBiteship ? @json(__('admin.memverifikasi_api')) : @json(__('admin.uji_koneksi_api_biteship'))"></span>
+                                    :class="testingBiteship ? 'animate-spin' : ''"></i>
+                                <span x-show="testingBiteship">{{ __('admin.memverifikasi_api') }}</span>
+                                <span x-show="!testingBiteship">{{ __('admin.uji_koneksi_api_biteship') }}</span>
                             </button>
 
                             @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.update'))

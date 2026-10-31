@@ -1639,7 +1639,7 @@
                                         <div class="space-y-2 divide-y divide-black/[0.04] dark:divide-white/[0.04]">
                                             <div class="flex justify-between items-center pt-1.5">
                                                 <span class="text-black/60 dark:text-white/60">{{ __('calculator.run_cost_model_label') }}</span>
-                                                <span class="font-bold text-black dark:text-white" x-text="selectedCostModel ? selectedCostModel.name : (selectedProduct ? selectedProduct.name : {{ Js::from(__('calculator.selected_model_fallback')) }})"></span>
+                                                <span class="font-bold text-black dark:text-white" x-text="selectedCostModel ? selectedCostModel.name : (selectedProduct ? selectedProduct.name : '{{ addslashes(__('calculator.selected_model_fallback')) }}')"></span>
                                             </div>
                                             <div class="flex justify-between items-center pt-1.5">
                                                 <span class="text-black/60 dark:text-white/60">{{ __('calculator.run_total_batch_label') }}</span>
