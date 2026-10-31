@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('billing.checkout_title') . ' - Cooca',
-    'headerTitle' => __('billing.breadcrumb_checkout'),
-    'headerSubtitle' => __('billing.checkout_subtitle'),
 ])
 
 @section('content')

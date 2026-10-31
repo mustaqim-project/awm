@@ -1,0 +1,3602 @@
+{
+  "pos\\kitchen.blade.php": {
+    "rel_path": "pos\\kitchen.blade.php",
+    "lines": 476,
+    "size": 29796,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 3,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\orders.blade.php": {
+    "rel_path": "pos\\orders.blade.php",
+    "lines": 792,
+    "size": 57950,
+    "modals": [
+      {
+        "match": "<div x-show=\"showDetailModal\" x-cloak\n            class=\"fixed inset-0 z-[200] o",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\"\n                x-transition:enter=\"ease-out durat",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full sm:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[2",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showVoidModal\" x-cloak\n            class=\"fixed inset-0 z-[220] ove",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showVoidModal\"\n                x-transition:enter=\"ease-out duratio",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showRefundModal\" x-cloak\n            class=\"fixed inset-0 z-[220] o",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showRefundModal\"\n                x-transition:enter=\"ease-out durat",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28",
+        "widths": [
+          "md"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "2xl",
+      "2xl",
+      "md",
+      "md",
+      "md",
+      "md"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 3,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "2xl",
+      "md",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "2xl",
+      "md",
+      "md"
+    ]
+  },
+  "pos\\prep_sheet.blade.php": {
+    "rel_path": "pos\\prep_sheet.blade.php",
+    "lines": 375,
+    "size": 25898,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 2,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "xs"
+    ],
+    "narrow_modal_classes": [
+      "xs"
+    ]
+  },
+  "pos\\qr-card.blade.php": {
+    "rel_path": "pos\\qr-card.blade.php",
+    "lines": 164,
+    "size": 7896,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 3,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\receipt.blade.php": {
+    "rel_path": "pos\\receipt.blade.php",
+    "lines": 564,
+    "size": 29138,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "sm",
+      "md",
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "md",
+      "sm"
+    ]
+  },
+  "pos\\reports.blade.php": {
+    "rel_path": "pos\\reports.blade.php",
+    "lines": 83,
+    "size": 4793,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\shifts.blade.php": {
+    "rel_path": "pos\\shifts.blade.php",
+    "lines": 1010,
+    "size": 77639,
+    "modals": [
+      {
+        "match": "<div x-show=\"showOpenModal\"\n            x-cloak\n            class=\"fixed inset-0",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showOpenModal\"\n                x-transition:enter=\"ease-out duratio",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showCloseModal\"\n            x-cloak\n            class=\"fixed inset-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showCloseModal\"\n                x-transition:enter=\"ease-out durati",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-5xl xl:max-w-6xl rounded-[24px] bg-white dark:",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showMovementModal\"\n            x-cloak\n            class=\"fixed ins",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showMovementModal\"\n                x-transition:enter=\"ease-out dur",
+        "widths": [
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:",
+        "widths": [
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\"\n                x-transition:enter=\"ease-out durat",
+        "widths": [
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-4xl lg:max-w-5xl rounded-[24px] bg-white dark:",
+        "widths": [
+          "4xl",
+          "5xl"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "3xl",
+      "3xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 4,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 16,
+    "alpine_x_data": 3,
+    "all_modal_widths": [
+      "5xl",
+      "6xl",
+      "5xl",
+      "6xl",
+      "3xl",
+      "4xl",
+      "4xl",
+      "5xl"
+    ],
+    "narrow_modal_classes": [
+      "3xl"
+    ]
+  },
+  "pos\\tables.blade.php": {
+    "rel_path": "pos\\tables.blade.php",
+    "lines": 752,
+    "size": 53878,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\" \n            x-cloak\n            class=\"fixed inset-0",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAddModal\"\n                x-transition:enter=\"ease-out duration",
+        "widths": [
+          "3xl",
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg",
+        "widths": [
+          "3xl",
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" \n            x-cloak\n            class=\"fixed inset-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n                x-transition:enter=\"ease-out duratio",
+        "widths": [
+          "3xl",
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl bg",
+        "widths": [
+          "3xl",
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showRegenModal\" \n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showRegenModal\"\n                x-transition:enter=\"ease-out durati",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-b",
+        "widths": [
+          "sm"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "3xl",
+      "3xl",
+      "3xl",
+      "3xl",
+      "sm",
+      "sm"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 3,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 16,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "sm",
+      "3xl",
+      "4xl",
+      "5xl",
+      "3xl",
+      "4xl",
+      "5xl",
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "3xl",
+      "3xl",
+      "sm"
+    ]
+  },
+  "pos\\terminal.blade.php": {
+    "rel_path": "pos\\terminal.blade.php",
+    "lines": 7158,
+    "size": 525262,
+    "modals": [
+      {
+        "match": "<div x-show=\"showCustomerModal\" x-cloak\n        class=\"fixed inset-0 z-50 flex i",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showPaymentModal\"\n        class=\"fixed inset-0 z-50 flex items-cent",
+        "widths": [
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] ",
+        "widths": [
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showQrisModal\" x-cloak\n        class=\"fixed inset-0 z-50 flex items",
+        "widths": [
+          "sm",
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] ro",
+        "widths": [
+          "sm",
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showSuccessModal\" x-cloak\n        class=\"fixed inset-0 z-50 flex it",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px]",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showPosSettingsModal\"\n        x-transition:enter=\"transition ease-o",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showOpenShiftModal\"\n        class=\"fixed inset-0 z-50 flex items-ce",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showCloseShiftModal\"\n        class=\"fixed inset-0 z-50 flex items-c",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showHeldOrdersModal\"\n        class=\"fixed inset-0 z-50 flex items-c",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showHoldPromptModal\" x-cloak\n        class=\"fixed inset-0 z-50 flex",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showCashMovementModal\"\n        class=\"fixed inset-0 z-50 flex items",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showSupervisorPinModal\" x-cloak\n        class=\"fixed inset-0 z-[80]",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px]",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showModifierModal\" x-cloak\n        class=\"fixed inset-0 z-[65] flex",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showServiceVerticalModal\" x-cloak\n        class=\"fixed inset-0 z-[6",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showItemDetailModal\" x-cloak\n        class=\"fixed inset-0 z-[65] fl",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showIncomingOrdersModal\" x-cloak\n        class=\"fixed inset-0 z-[65",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#2C2C2E] rounded-[20px",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showRejectReasonModal\" x-cloak\n        class=\"fixed inset-0 z-[70] ",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showTablesModal\" x-cloak\n        class=\"fixed inset-0 z-[65] flex i",
+        "widths": [
+          "4xl"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-4xl bg-white dark:bg-[#2C2C2E] rounded-[20px",
+        "widths": [
+          "4xl"
+        ]
+      },
+      {
+        "match": "class=\"tableModalTab === 'tables' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:",
+        "widths": []
+      },
+      {
+        "match": "class=\"tableModalTab === 'reservations' ? 'bg-white dark:bg-[#1C1C1E] text-black",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"tableModalTab === 'tables'\" class=\"flex-1 overflow-y-auto pr-1\">",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"tableModalTab === 'reservations'\" class=\"flex-1 overflow-y-auto pr-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showTablePaymentModal\" x-cloak\n        class=\"fixed inset-0 z-[70] ",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px]",
+        "widths": [
+          "md"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "sm",
+      "sm",
+      "3xl",
+      "3xl",
+      "sm",
+      "md",
+      "sm",
+      "md",
+      "lg",
+      "lg",
+      "2xl",
+      "2xl",
+      "md",
+      "md",
+      "md",
+      "md",
+      "lg",
+      "lg",
+      "sm",
+      "sm",
+      "lg",
+      "lg",
+      "sm",
+      "sm",
+      "lg",
+      "md",
+      "md",
+      "lg",
+      "lg",
+      "md",
+      "md",
+      "2xl",
+      "2xl",
+      "sm",
+      "sm",
+      "md",
+      "md"
+    ],
+    "wrong_backdrops": 20,
+    "standalone_backdrops": 21,
+    "tables": 0,
+    "table_overflow": 3,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 4,
+    "touch_target_44_count": 27,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "lg",
+      "md",
+      "xl",
+      "xs",
+      "sm",
+      "3xl",
+      "4xl",
+      "sm",
+      "md",
+      "lg",
+      "2xl",
+      "md",
+      "md",
+      "lg",
+      "sm",
+      "lg",
+      "sm",
+      "lg",
+      "md",
+      "lg",
+      "md",
+      "2xl",
+      "sm",
+      "4xl",
+      "sm",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "lg",
+      "md",
+      "xl",
+      "xs",
+      "sm",
+      "3xl",
+      "sm",
+      "md",
+      "lg",
+      "2xl",
+      "md",
+      "md",
+      "lg",
+      "sm",
+      "lg",
+      "sm",
+      "lg",
+      "md",
+      "lg",
+      "md",
+      "2xl",
+      "sm",
+      "sm",
+      "md"
+    ]
+  },
+  "pos\\printers\\index.blade.php": {
+    "rel_path": "pos\\printers\\index.blade.php",
+    "lines": 1083,
+    "size": 78167,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\"\n            x-cloak\n            class=\"fixed inset-0 ",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAddModal\"\n                x-transition:enter=\"ease-out duration",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] ro",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n            x-cloak\n            class=\"fixed inset-0",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n                x-transition:enter=\"ease-out duratio",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-5xl xl:max-w-6xl bg-white dark:bg-[#1C1C1E] ro",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showManualDrawerModal\" x-cloak\n            class=\"fixed inset-0 z-[",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showManualDrawerModal\"\n                x-transition:enter=\"ease-out",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] ",
+        "widths": [
+          "2xl"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "2xl",
+      "2xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 3,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 17,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "sm",
+      "5xl",
+      "6xl",
+      "5xl",
+      "6xl",
+      "2xl"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "2xl"
+    ]
+  },
+  "pos\\reports\\print_summary.blade.php": {
+    "rel_path": "pos\\reports\\print_summary.blade.php",
+    "lines": 551,
+    "size": 25114,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 4,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\partials\\filter_bar.blade.php": {
+    "rel_path": "pos\\reports\\partials\\filter_bar.blade.php",
+    "lines": 189,
+    "size": 13887,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\partials\\kpi_cards.blade.php": {
+    "rel_path": "pos\\reports\\partials\\kpi_cards.blade.php",
+    "lines": 111,
+    "size": 7574,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\partials\\order_detail_modal.blade.php": {
+    "rel_path": "pos\\reports\\partials\\order_detail_modal.blade.php",
+    "lines": 539,
+    "size": 42704,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "2xl"
+    ],
+    "narrow_modal_classes": [
+      "2xl"
+    ]
+  },
+  "pos\\reports\\tabs\\cashiers.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\cashiers.blade.php",
+    "lines": 66,
+    "size": 4407,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\categories.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\categories.blade.php",
+    "lines": 65,
+    "size": 4230,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\channels.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\channels.blade.php",
+    "lines": 393,
+    "size": 27151,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\customers.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\customers.blade.php",
+    "lines": 71,
+    "size": 4706,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\discounts.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\discounts.blade.php",
+    "lines": 92,
+    "size": 6588,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\hourly.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\hourly.blade.php",
+    "lines": 44,
+    "size": 2662,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\outlets.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\outlets.blade.php",
+    "lines": 65,
+    "size": 4192,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\overview.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\overview.blade.php",
+    "lines": 241,
+    "size": 14407,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\payments.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\payments.blade.php",
+    "lines": 345,
+    "size": 21283,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm"
+    ]
+  },
+  "pos\\reports\\tabs\\products.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\products.blade.php",
+    "lines": 77,
+    "size": 5166,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\profitability.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\profitability.blade.php",
+    "lines": 100,
+    "size": 6805,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\refunds.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\refunds.blade.php",
+    "lines": 63,
+    "size": 4114,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\shifts.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\shifts.blade.php",
+    "lines": 128,
+    "size": 9033,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\transactions.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\transactions.blade.php",
+    "lines": 225,
+    "size": 15249,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "pos\\reports\\tabs\\voids.blade.php": {
+    "rel_path": "pos\\reports\\tabs\\voids.blade.php",
+    "lines": 113,
+    "size": 8251,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "sales\\returns\\create.blade.php": {
+    "rel_path": "sales\\returns\\create.blade.php",
+    "lines": 592,
+    "size": 38413,
+    "modals": [
+      {
+        "match": "<div x-show=\"confirmReturnModalOpen\" x-cloak\n                class=\"fixed inset-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmReturnModalOpen\"\n                    x-transition:enter=\"eas",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 9,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "sales\\returns\\edit.blade.php": {
+    "rel_path": "sales\\returns\\edit.blade.php",
+    "lines": 312,
+    "size": 20971,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "sales\\returns\\index.blade.php": {
+    "rel_path": "sales\\returns\\index.blade.php",
+    "lines": 400,
+    "size": 28228,
+    "modals": [
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                 x-cloak\n                 class=\"f",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                         x-transition:enter=\"trans",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm"
+    ]
+  },
+  "sales\\returns\\print.blade.php": {
+    "rel_path": "sales\\returns\\print.blade.php",
+    "lines": 526,
+    "size": 27765,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "4xl",
+      "4xl",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "sales\\returns\\show.blade.php": {
+    "rel_path": "sales\\returns\\show.blade.php",
+    "lines": 684,
+    "size": 42344,
+    "modals": [
+      {
+        "match": "<div x-show=\"approveModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"approveModalOpen\"\n                    x-transition:enter=\"ease-out ",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"completeModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"completeModalOpen\"\n                    x-transition:enter=\"ease-out",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 3,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "sales-orders\\create.blade.php": {
+    "rel_path": "sales-orders\\create.blade.php",
+    "lines": 611,
+    "size": 40595,
+    "modals": [
+      {
+        "match": "<div x-show=\"confirmModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmModalOpen\"\n                    x-transition:enter=\"ease-out ",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 11,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "sales-orders\\edit.blade.php": {
+    "rel_path": "sales-orders\\edit.blade.php",
+    "lines": 352,
+    "size": 27068,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 11,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "sales-orders\\index.blade.php": {
+    "rel_path": "sales-orders\\index.blade.php",
+    "lines": 401,
+    "size": 29228,
+    "modals": [
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                 x-cloak\n                 class=\"f",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                         x-transition:enter=\"trans",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md",
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "sm"
+    ]
+  },
+  "sales-orders\\show.blade.php": {
+    "rel_path": "sales-orders\\show.blade.php",
+    "lines": 457,
+    "size": 30708,
+    "modals": [
+      {
+        "match": "<div x-show=\"invoiceModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"invoiceModalOpen\"\n                    x-transition:enter=\"ease-out ",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 6,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "products\\bom.blade.php": {
+    "rel_path": "products\\bom.blade.php",
+    "lines": 439,
+    "size": 31874,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddItemModal\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": [
+          "xl",
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[20",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "xl",
+      "2xl"
+    ],
+    "wrong_backdrops": 2,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": true,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "xl",
+      "2xl"
+    ],
+    "narrow_modal_classes": [
+      "xl",
+      "2xl"
+    ]
+  },
+  "products\\index.blade.php": {
+    "rel_path": "products\\index.blade.php",
+    "lines": 3443,
+    "size": 290849,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\" x-cloak\n                    class=\"fixed inset-0 z-[2",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" x-cloak\n                    class=\"fixed inset-0 z-[",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddCategoryModal\" x-cloak\n                class=\"fixed inset-0 ",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddUnitModal\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showBranchPricesModal\" x-cloak\n                class=\"fixed inset-0",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                    class=\"fixed inset-0 z",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "sm",
+      "sm",
+      "2xl"
+    ],
+    "wrong_backdrops": 8,
+    "standalone_backdrops": 8,
+    "tables": 1,
+    "table_overflow": 3,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": true,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 22,
+    "alpine_x_data": 3,
+    "all_modal_widths": [
+      "md",
+      "5xl",
+      "6xl",
+      "5xl",
+      "6xl",
+      "sm",
+      "sm",
+      "sm",
+      "md",
+      "2xl",
+      "4xl"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "sm",
+      "sm",
+      "sm",
+      "md",
+      "2xl"
+    ]
+  },
+  "products\\modifiers.blade.php": {
+    "rel_path": "products\\modifiers.blade.php",
+    "lines": 1366,
+    "size": 96249,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddGroupModal || showEditGroupModal\" x-cloak\n             class",
+        "widths": [
+          "2xl",
+          "3xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddOptionModal || showEditOptionModal\" x-cloak\n             cla",
+        "widths": [
+          "xl",
+          "2xl",
+          "3xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"deleteGroupModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex ite",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteOptionModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex it",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "2xl",
+      "3xl",
+      "xl",
+      "2xl",
+      "3xl"
+    ],
+    "wrong_backdrops": 4,
+    "standalone_backdrops": 4,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": true,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 12,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "md",
+      "2xl",
+      "3xl",
+      "xl",
+      "2xl",
+      "3xl"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "2xl",
+      "3xl",
+      "xl",
+      "2xl",
+      "3xl"
+    ]
+  },
+  "inventory\\movements.blade.php": {
+    "rel_path": "inventory\\movements.blade.php",
+    "lines": 355,
+    "size": 27583,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 6,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "3xl"
+    ],
+    "narrow_modal_classes": [
+      "3xl"
+    ]
+  },
+  "inventory\\opname.blade.php": {
+    "rel_path": "inventory\\opname.blade.php",
+    "lines": 811,
+    "size": 58102,
+    "modals": [
+      {
+        "match": "<div x-show=\"showCreateModal\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showCreateModal\"\n                x-transition:enter=\"transition eas",
+        "widths": [
+          "xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"reconcileModalOpen\"\n            x-cloak\n            class=\"fixed in",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"reconcileModalOpen\"\n                x-transition:enter=\"transition ",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\"\n                x-transition:enter=\"transition eas",
+        "widths": [
+          "5xl"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 3,
+    "tables": 2,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 12,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "3xl",
+      "xl",
+      "5xl"
+    ],
+    "narrow_modal_classes": [
+      "3xl",
+      "xl"
+    ]
+  },
+  "inventory\\stocks.blade.php": {
+    "rel_path": "inventory\\stocks.blade.php",
+    "lines": 443,
+    "size": 33073,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAdjustModal\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAdjustModal\"\n                x-transition:enter=\"transition eas",
+        "widths": [
+          "lg"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "lg"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 10,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "3xl",
+      "lg"
+    ],
+    "narrow_modal_classes": [
+      "3xl",
+      "lg"
+    ]
+  },
+  "inventory\\transfers.blade.php": {
+    "rel_path": "inventory\\transfers.blade.php",
+    "lines": 395,
+    "size": 28132,
+    "modals": [
+      {
+        "match": "<div x-show=\"showCreateModal\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showCreateModal\"\n                x-transition:enter=\"transition eas",
+        "widths": [
+          "xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"receiveModalOpen\"\n            x-cloak\n            class=\"fixed inse",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"receiveModalOpen\"\n                x-transition:enter=\"transition ea",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 9,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "3xl",
+      "xl"
+    ],
+    "narrow_modal_classes": [
+      "3xl",
+      "xl"
+    ]
+  },
+  "purchasing\\bills\\index.blade.php": {
+    "rel_path": "purchasing\\bills\\index.blade.php",
+    "lines": 244,
+    "size": 18632,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "purchasing\\bills\\show.blade.php": {
+    "rel_path": "purchasing\\bills\\show.blade.php",
+    "lines": 225,
+    "size": 16396,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "purchasing\\receipts\\create.blade.php": {
+    "rel_path": "purchasing\\receipts\\create.blade.php",
+    "lines": 228,
+    "size": 17714,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 8,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "purchasing\\returns\\create.blade.php": {
+    "rel_path": "purchasing\\returns\\create.blade.php",
+    "lines": 185,
+    "size": 11477,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 5,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "purchasing\\returns\\index.blade.php": {
+    "rel_path": "purchasing\\returns\\index.blade.php",
+    "lines": 192,
+    "size": 13628,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "purchasing\\returns\\show.blade.php": {
+    "rel_path": "purchasing\\returns\\show.blade.php",
+    "lines": 238,
+    "size": 15842,
+    "modals": [
+      {
+        "match": "<div x-show=\"showPinModal\" x-cloak\n             class=\"fixed inset-0 z-[220] ove",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showPinModal\"\n                x-transition:enter=\"ease-out duration",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "<div class=\"relative bg-white dark:bg-[#1C1C1E] border border-black/10 dark:bord",
+        "widths": [
+          "sm"
+        ]
+      },
+      {
+        "match": "id=\"purchasing-pin-modal-title\" class=\"text-[16px] font-bold text-black dark:tex",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "sm",
+      "sm"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 4,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm"
+    ]
+  },
+  "purchase-orders\\create.blade.php": {
+    "rel_path": "purchase-orders\\create.blade.php",
+    "lines": 440,
+    "size": 33316,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 13,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "purchase-orders\\index.blade.php": {
+    "rel_path": "purchase-orders\\index.blade.php",
+    "lines": 573,
+    "size": 43620,
+    "modals": [
+      {
+        "match": "<div x-show=\"instantModalOpen\"\n            x-cloak\n            class=\"fixed inse",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"instantModalOpen\"\n                x-transition:enter=\"ease-out dura",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] b",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "id=\"modal-instant-stockin-title\" class=\"text-[16px] font-semibold text-black dar",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                x-transition:enter=\"ease-out durat",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "lg",
+      "lg"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 12,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "lg"
+    ],
+    "narrow_modal_classes": [
+      "lg"
+    ]
+  },
+  "purchase-orders\\print.blade.php": {
+    "rel_path": "purchase-orders\\print.blade.php",
+    "lines": 477,
+    "size": 24570,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "4xl",
+      "4xl",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "purchase-orders\\show.blade.php": {
+    "rel_path": "purchase-orders\\show.blade.php",
+    "lines": 436,
+    "size": 32085,
+    "modals": [
+      {
+        "match": "<div x-show=\"cancelModalOpen\"\n            x-cloak\n            class=\"fixed inset",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"cancelModalOpen\"\n                x-transition:enter=\"ease-out durat",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] b",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "id=\"cancel-po-modal-title\" class=\"text-[16px] font-semibold text-black dark:text",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "md"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 9,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "md"
+    ]
+  },
+  "suppliers\\index.blade.php": {
+    "rel_path": "suppliers\\index.blade.php",
+    "lines": 1351,
+    "size": 104122,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\" x-cloak\n                class=\"fixed inset-0 z-[200] ",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAddModal\"\n                    x-transition:enter=\"ease-out dura",
+        "widths": [
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl ",
+        "widths": [
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "id=\"modal-add-supplier-title\" class=\"text-base sm:text-lg font-bold text-slate-9",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" x-cloak\n                class=\"fixed inset-0 z-[200]",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n                    x-transition:enter=\"ease-out dur",
+        "widths": [
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl ",
+        "widths": [
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      {
+        "match": "id=\"modal-edit-supplier-title\" class=\"text-base sm:text-lg font-bold text-slate-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-[340px] rounded-[20px] bg-white/95 dark:bg-[#2",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\" x-cloak\n                    class=\"fixed inset-0 z",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\"\n                        x-transition:enter=\"ease-o",
+        "widths": [
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full bg-white dark:bg-[#1C1C1E] border-t lg:border border",
+        "widths": [
+          "6xl"
+        ]
+      },
+      {
+        "match": "id=\"import-supplier-modal-title\" class=\"text-base sm:text-lg font-bold text-blac",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "2xl",
+      "3xl",
+      "2xl",
+      "3xl",
+      "2xl",
+      "3xl",
+      "2xl",
+      "3xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 4,
+    "tables": 2,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": true,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 15,
+    "touch_target_44_count": 22,
+    "alpine_x_data": 4,
+    "all_modal_widths": [
+      "lg",
+      "xs",
+      "xs",
+      "sm",
+      "xs",
+      "2xl",
+      "3xl",
+      "4xl",
+      "2xl",
+      "3xl",
+      "4xl",
+      "6xl"
+    ],
+    "narrow_modal_classes": [
+      "lg",
+      "xs",
+      "xs",
+      "sm",
+      "xs",
+      "2xl",
+      "3xl",
+      "2xl",
+      "3xl"
+    ]
+  },
+  "invoices\\create.blade.php": {
+    "rel_path": "invoices\\create.blade.php",
+    "lines": 498,
+    "size": 38459,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 12,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "invoices\\edit.blade.php": {
+    "rel_path": "invoices\\edit.blade.php",
+    "lines": 440,
+    "size": 35057,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 10,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "invoices\\index.blade.php": {
+    "rel_path": "invoices\\index.blade.php",
+    "lines": 438,
+    "size": 32906,
+    "modals": [
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n             x-cloak\n             class=\"fixed ins",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                x-transition:enter=\"ease-out durat",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "invoices\\print.blade.php": {
+    "rel_path": "invoices\\print.blade.php",
+    "lines": 491,
+    "size": 27105,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "4xl",
+      "4xl",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "invoices\\show.blade.php": {
+    "rel_path": "invoices\\show.blade.php",
+    "lines": 917,
+    "size": 65906,
+    "modals": [
+      {
+        "match": "<div x-show=\"showPaymentModal\"\n            x-cloak\n            class=\"fixed inse",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showPaymentModal\"\n                x-transition:enter=\"ease-out dura",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[18px] bg-wh",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "id=\"invoice-payment-modal-title\" class=\"text-[17px] font-semibold text-black dar",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmReleaseModalOpen\"\n            x-cloak\n            class=\"fix",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmReleaseModalOpen\"\n                x-transition:enter=\"ease-o",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmVoidModalOpen\"\n            x-cloak\n            class=\"fixed ",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmVoidModalOpen\"\n                x-transition:enter=\"ease-out ",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmDeleteModalOpen\"\n            x-cloak\n            class=\"fixe",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"confirmDeleteModalOpen\"\n                x-transition:enter=\"ease-ou",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[320px] rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showReminderModal\"\n            x-cloak\n            class=\"fixed ins",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showReminderModal\"\n                x-transition:enter=\"ease-out dur",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "<div class=\"relative w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] b",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "id=\"invoice-reminder-modal-title\" class=\"text-[17px] font-bold text-black dark:t",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "md",
+      "lg",
+      "lg"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 5,
+    "tables": 2,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 14,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "md",
+      "md",
+      "lg"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "md",
+      "lg"
+    ]
+  },
+  "quotations\\create.blade.php": {
+    "rel_path": "quotations\\create.blade.php",
+    "lines": 285,
+    "size": 22786,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "quotations\\edit.blade.php": {
+    "rel_path": "quotations\\edit.blade.php",
+    "lines": 348,
+    "size": 27821,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "quotations\\index.blade.php": {
+    "rel_path": "quotations\\index.blade.php",
+    "lines": 348,
+    "size": 24957,
+    "modals": [
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n             x-cloak\n             class=\"fixed ins",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                x-transition:enter=\"ease-out durat",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                     x-transition:enter=\"transitio",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "quotations\\show.blade.php": {
+    "rel_path": "quotations\\show.blade.php",
+    "lines": 338,
+    "size": 23422,
+    "modals": [
+      {
+        "match": "<div x-show=\"convertModalOpen\"\n            x-cloak\n            class=\"fixed inse",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"convertModalOpen\"\n                x-transition:enter=\"ease-out dura",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"relative w-[300px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 b",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n             x-cloak\n             class=\"fixed ins",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                x-transition:enter=\"ease-out durat",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                     x-transition:enter=\"transitio",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "sm",
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "sm"
+    ]
+  },
+  "warehouse\\index.blade.php": {
+    "rel_path": "warehouse\\index.blade.php",
+    "lines": 1812,
+    "size": 142135,
+    "modals": [
+      {
+        "match": "<div x-show=\"showCreateModal\"\n             x-cloak\n             class=\"fixed ins",
+        "widths": [
+          "2xl",
+          "4xl",
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n             x-cloak\n             class=\"fixed inset",
+        "widths": [
+          "2xl",
+          "4xl",
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n             x-cloak\n             class=\"fixed ins",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "2xl",
+      "2xl"
+    ],
+    "wrong_backdrops": 3,
+    "standalone_backdrops": 3,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": true,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 16,
+    "touch_target_44_count": 17,
+    "alpine_x_data": 6,
+    "all_modal_widths": [
+      "sm",
+      "2xl",
+      "4xl",
+      "5xl",
+      "6xl",
+      "2xl",
+      "4xl",
+      "5xl",
+      "6xl"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "2xl",
+      "2xl"
+    ]
+  },
+  "warehouse\\show.blade.php": {
+    "rel_path": "warehouse\\show.blade.php",
+    "lines": 1899,
+    "size": 164444,
+    "modals": [
+      {
+        "match": "<div x-show=\"confirmModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" x-cloak\n                class=\"fixed inset-0 z-[200]",
+        "widths": [
+          "2xl",
+          "4xl",
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAdjustModal\" x-cloak\n                    class=\"fixed inset-0 z",
+        "widths": [
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "2xl",
+      "2xl",
+      "3xl"
+    ],
+    "wrong_backdrops": 3,
+    "standalone_backdrops": 3,
+    "tables": 3,
+    "table_overflow": 4,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 6,
+    "touch_target_44_count": 14,
+    "alpine_x_data": 6,
+    "all_modal_widths": [
+      "sm",
+      "xs",
+      "sm",
+      "md",
+      "2xl",
+      "4xl",
+      "5xl",
+      "2xl",
+      "3xl",
+      "4xl"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "xs",
+      "sm",
+      "md",
+      "2xl",
+      "2xl",
+      "3xl"
+    ]
+  },
+  "materials\\index.blade.php": {
+    "rel_path": "materials\\index.blade.php",
+    "lines": 1261,
+    "size": 90886,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\" x-cloak\n                    class=\"fixed inset-0 z-[2",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showPriceModal\" x-cloak\n                    class=\"fixed inset-0 z-",
+        "widths": [
+          "xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" x-cloak\n                    class=\"fixed inset-0 z-[",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddSupplierModal\" x-cloak\n                class=\"fixed inset-0 ",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddCategoryModal\" x-cloak\n                class=\"fixed inset-0 ",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showAddUnitModal\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                    class=\"fixed inset-0 z",
+        "widths": [
+          "sm"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "xl",
+      "2xl",
+      "md",
+      "md",
+      "md",
+      "sm"
+    ],
+    "wrong_backdrops": 7,
+    "standalone_backdrops": 7,
+    "tables": 1,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": true,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 14,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "md",
+      "5xl",
+      "6xl",
+      "xl",
+      "2xl",
+      "md",
+      "md",
+      "md",
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "xl",
+      "2xl",
+      "md",
+      "md",
+      "md",
+      "sm"
+    ]
+  },
+  "storefront\\settings.blade.php": {
+    "rel_path": "storefront\\settings.blade.php",
+    "lines": 402,
+    "size": 27713,
+    "modals": [
+      {
+        "match": "<div x-show=\"deleteModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"deleteModalOpen\"\n                    x-transition:enter=\"transition",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"addMethodModalOpen\" x-cloak\n                class=\"fixed inset-0 z-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"addMethodModalOpen\"\n                    x-transition:enter=\"transit",
+        "widths": [
+          "md"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "md"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 0,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 5,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "md"
+    ]
+  },
+  "storefront\\orders\\index.blade.php": {
+    "rel_path": "storefront\\orders\\index.blade.php",
+    "lines": 564,
+    "size": 42968,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 4,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "storefront\\orders\\shipping_label.blade.php": {
+    "rel_path": "storefront\\orders\\shipping_label.blade.php",
+    "lines": 421,
+    "size": 19880,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "storefront\\orders\\show.blade.php": {
+    "rel_path": "storefront\\orders\\show.blade.php",
+    "lines": 1295,
+    "size": 101875,
+    "modals": [
+      {
+        "match": "<div x-show=\"rejectModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"rejectModalOpen\"\n                    x-transition:enter=\"transition",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"verifyModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[20",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"verifyModalOpen\"\n                    x-transition:enter=\"transition",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"imageModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[200",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"imageModalOpen\"\n                    x-transition:enter=\"transition ",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"waybillModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[2",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"waybillModalOpen\"\n                    x-transition:enter=\"transitio",
+        "widths": [
+          "lg"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "md",
+      "2xl",
+      "lg"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 4,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 7,
+    "alpine_x_data": 3,
+    "all_modal_widths": [
+      "4xl",
+      "md",
+      "md",
+      "2xl",
+      "lg"
+    ],
+    "narrow_modal_classes": [
+      "md",
+      "md",
+      "2xl",
+      "lg"
+    ]
+  },
+  "storefront\\partials\\navigation.blade.php": {
+    "rel_path": "storefront\\partials\\navigation.blade.php",
+    "lines": 111,
+    "size": 8327,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "storefront\\reservations\\index.blade.php": {
+    "rel_path": "storefront\\reservations\\index.blade.php",
+    "lines": 786,
+    "size": 64595,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAssignModal\" x-cloak\n                    class=\"fixed inset-0 z",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAssignModal\"\n                        x-transition:enter=\"transi",
+        "widths": [
+          "md"
+        ]
+      },
+      {
+        "match": "<div x-show=\"cancelModalOpen\" x-cloak\n                class=\"fixed inset-0 z-[22",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"cancelModalOpen\"\n                    x-transition:enter=\"transition",
+        "widths": [
+          "md"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "md",
+      "md"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 1,
+    "touch_target_44_count": 3,
+    "alpine_x_data": 3,
+    "all_modal_widths": [
+      "sm",
+      "xs",
+      "md",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "xs",
+      "md",
+      "md"
+    ]
+  },
+  "storefront\\shipping\\index.blade.php": {
+    "rel_path": "storefront\\shipping\\index.blade.php",
+    "lines": 628,
+    "size": 44521,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 3,
+    "touch_target_44_count": 9,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "2xl"
+    ],
+    "narrow_modal_classes": [
+      "2xl"
+    ]
+  },
+  "storefront\\tabs\\tab-features.blade.php": {
+    "rel_path": "storefront\\tabs\\tab-features.blade.php",
+    "lines": 130,
+    "size": 10191,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "storefront\\tabs\\tab-fulfillment.blade.php": {
+    "rel_path": "storefront\\tabs\\tab-fulfillment.blade.php",
+    "lines": 76,
+    "size": 5475,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [
+      "xl"
+    ],
+    "narrow_modal_classes": [
+      "xl"
+    ]
+  },
+  "storefront\\tabs\\tab-general.blade.php": {
+    "rel_path": "storefront\\tabs\\tab-general.blade.php",
+    "lines": 112,
+    "size": 8734,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "storefront\\tabs\\tab-payment-settlement.blade.php": {
+    "rel_path": "storefront\\tabs\\tab-payment-settlement.blade.php",
+    "lines": 216,
+    "size": 14541,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "storefront\\tabs\\tab-schedule.blade.php": {
+    "rel_path": "storefront\\tabs\\tab-schedule.blade.php",
+    "lines": 153,
+    "size": 10633,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 3,
+    "alpine_x_data": 1,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "marketplace\\chat.blade.php": {
+    "rel_path": "marketplace\\chat.blade.php",
+    "lines": 350,
+    "size": 21308,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 0,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "sm"
+    ],
+    "narrow_modal_classes": [
+      "sm"
+    ]
+  },
+  "marketplace\\index.blade.php": {
+    "rel_path": "marketplace\\index.blade.php",
+    "lines": 586,
+    "size": 43410,
+    "modals": [
+      {
+        "match": "<div x-show=\"disconnectModal\" x-cloak\n            class=\"fixed inset-0 z-[220] o",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"disconnectModal\"\n                x-transition:enter=\"ease-out durat",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"disconnectModal\"\n                x-transition:enter=\"ease-out durat",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "id=\"disconnect-modal-title\" class=\"text-[16px] font-bold text-black dark:text-wh",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "lg"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 0,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 1,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "lg"
+    ],
+    "narrow_modal_classes": [
+      "lg"
+    ]
+  },
+  "marketplace\\logs.blade.php": {
+    "rel_path": "marketplace\\logs.blade.php",
+    "lines": 311,
+    "size": 21339,
+    "modals": [
+      {
+        "match": "<div x-show=\"detailModal\" x-cloak\n            class=\"fixed inset-0 z-[200] flex ",
+        "widths": []
+      },
+      {
+        "match": "<div class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transiti",
+        "widths": []
+      },
+      {
+        "match": "<div @click.away=\"detailModal = false\"\n                @keydown.escape.window=\"d",
+        "widths": [
+          "4xl"
+        ]
+      },
+      {
+        "match": "id=\"modal-detail-log-title\" class=\"text-[17px] font-bold text-black dark:text-wh",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 3,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 3,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "4xl"
+    ],
+    "narrow_modal_classes": []
+  },
+  "marketplace\\orders.blade.php": {
+    "rel_path": "marketplace\\orders.blade.php",
+    "lines": 831,
+    "size": 57920,
+    "modals": [
+      {
+        "match": "<div x-show=\"pullModal\" x-cloak\n            class=\"fixed inset-0 z-[200] overflo",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"pullModal\"\n                x-transition:enter=\"ease-out duration-20",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"pullModal\"\n                x-transition:enter=\"ease-out duration-20",
+        "widths": [
+          "lg"
+        ]
+      },
+      {
+        "match": "id=\"pull-orders-modal-title\" class=\"text-[16px] font-bold text-black dark:text-w",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"detailModal\" x-cloak\n            class=\"fixed inset-0 z-[200] overf",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"detailModal\"\n                x-transition:enter=\"ease-out duration-",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"detailModal\"\n                x-transition:enter=\"ease-out duration-",
+        "widths": [
+          "2xl"
+        ]
+      },
+      {
+        "match": "id=\"order-detail-modal-title\" class=\"text-[17px] font-bold text-black dark:text-",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [
+      "lg",
+      "2xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 2,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 2,
+    "alpine_x_data": 1,
+    "all_modal_widths": [
+      "lg",
+      "2xl"
+    ],
+    "narrow_modal_classes": [
+      "lg",
+      "2xl"
+    ]
+  },
+  "marketplace\\products.blade.php": {
+    "rel_path": "marketplace\\products.blade.php",
+    "lines": 2296,
+    "size": 168028,
+    "modals": [
+      {
+        "match": "<div x-show=\"mappingModal\" x-cloak\n            class=\"fixed inset-0 z-[200] over",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"mappingModal\"\n                x-transition:enter=\"ease-out duration",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"mappingModal\"\n                x-transition:enter=\"ease-out duration",
+        "widths": [
+          "5xl",
+          "6xl"
+        ]
+      },
+      {
+        "match": "id=\"marketplace-mapping-modal-title\" class=\"text-[18px] font-bold text-black dar",
+        "widths": []
+      }
+    ],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 1,
+    "tables": 1,
+    "table_overflow": 2,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 12,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "5xl",
+      "6xl",
+      "md"
+    ],
+    "narrow_modal_classes": [
+      "md"
+    ]
+  },
+  "marketplace\\shipping_label.blade.php": {
+    "rel_path": "marketplace\\shipping_label.blade.php",
+    "lines": 797,
+    "size": 42439,
+    "modals": [],
+    "narrow_modals": [],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 0,
+    "tables": 1,
+    "table_overflow": 0,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": false,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 0,
+    "alpine_x_data": 0,
+    "all_modal_widths": [],
+    "narrow_modal_classes": []
+  },
+  "customers\\index.blade.php": {
+    "rel_path": "customers\\index.blade.php",
+    "lines": 1504,
+    "size": 115932,
+    "modals": [
+      {
+        "match": "<div x-show=\"showAddModal\" \n                    x-cloak\n                    @key",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAddModal\"\n                        x-transition:enter=\"ease-out ",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showAddModal\"\n                            x-transition:enter=\"ease-",
+        "widths": [
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showEditModal\" \n                x-cloak\n                @keydown.es",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n                    x-transition:enter=\"ease-out dur",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showEditModal\"\n                        x-transition:enter=\"ease-out",
+        "widths": [
+          "5xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\" \n                x-cloak\n                @keydown.",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\"\n                    x-transition:enter=\"ease-out d",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showDetailModal\"\n                        x-transition:enter=\"ease-o",
+        "widths": [
+          "3xl"
+        ]
+      },
+      {
+        "match": "<div x-show=\"showImportModal\" \n                    x-cloak\n                    @",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\"\n                        x-transition:enter=\"ease-o",
+        "widths": []
+      },
+      {
+        "match": "<div x-show=\"showImportModal\"\n                            x-transition:enter=\"ea",
+        "widths": [
+          "6xl"
+        ]
+      }
+    ],
+    "narrow_modals": [
+      "3xl"
+    ],
+    "wrong_backdrops": 0,
+    "standalone_backdrops": 4,
+    "tables": 2,
+    "table_overflow": 1,
+    "plus_duplications": 0,
+    "has_snap_slider": false,
+    "has_fixed_bottom": false,
+    "has_tabular_nums": true,
+    "input_small_fonts": 0,
+    "touch_target_44_count": 44,
+    "alpine_x_data": 2,
+    "all_modal_widths": [
+      "sm",
+      "5xl",
+      "5xl",
+      "3xl",
+      "6xl"
+    ],
+    "narrow_modal_classes": [
+      "sm",
+      "3xl"
+    ]
+  }
+}

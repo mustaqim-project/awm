@@ -1,0 +1,354 @@
+[
+  {
+    "file": "billing/checkout.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('billing.checkout_title') . ' - Cooca',\n    'headerTitle' => __('billing.breadcrumb_checkout'),\n    'headerSubtitle' => __('billing.checkout_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('billing.checkout_title') . ' - Cooca',\n])",
+    "mod_hdr_line": 318,
+    "mod_snippet": "<x-module-header\n            :title=\"__('billing.checkout_title')\"\n            :subtitle=\"__('billing.checkout_subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => __('billing.breadcrumb_billing'), 'route' => 'billing.limits'],\n                ['label' => __('billing.breadcrumb_checkout')],\n            ]\""
+  },
+  {
+    "file": "billing/history.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('billing.breadcrumb_history') . ' - Cooca',\n    'headerTitle' => __('billing.history_title'),\n    'headerSubtitle' => __('billing.history_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('billing.breadcrumb_history') . ' - Cooca',\n])",
+    "mod_hdr_line": 32,
+    "mod_snippet": "<x-module-header\n            :title=\"__('billing.history_title')\"\n            :subtitle=\"__('billing.history_subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => __('billing.breadcrumb_billing'), 'route' => 'billing.limits'],\n                ['label' => __('billing.breadcrumb_history')],\n            ]\""
+  },
+  {
+    "file": "billing/limits.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('billing.meta_title_limits'),\n    'headerTitle' => __('billing.title'),\n    'headerSubtitle' => __('billing.subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('billing.meta_title_limits'),\n])",
+    "mod_hdr_line": 30,
+    "mod_snippet": "<x-module-header\n            :title=\"__('billing.title')\"\n            :subtitle=\"__('billing.subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => __('billing.breadcrumb_billing'), 'route' => 'billing.limits'],\n                ['label' => __('billing.breadcrumb_limits')],\n            ]\""
+  },
+  {
+    "file": "billing/payment.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('billing.payment_page_title', ['order' => $payment->order_number]),\n    'headerTitle' => __('billing.header_payment_instructions'),\n    'headerSubtitle' => __('billing.header_payment_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('billing.payment_page_title', ['order' => $payment->order_number]),\n])",
+    "mod_hdr_line": 204,
+    "mod_snippet": "<x-module-header\n            :title=\"__('billing.payment_instruction_title', ['package' => $payment->package_name ?? ($payment->cycle === 'annual' ? __('billing.plan_core_annual') : __('billing.plan_core_monthly'))])\"\n            :subtitle=\"__('billing.payment_instruction_subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => __('billing.breadcrumb_billing'), 'route' => 'billing.limits'],\n                ['label' => __('billing.breadcrumb_history'), 'route' => 'billing.history'],\n                ['label' => $payment->order_number],"
+  },
+  {
+    "file": "crm/members.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('crm.members_title') . ' - Cooca',\n    'headerTitle' => __('crm.members_title'),\n    'headerSubtitle' => __('crm.subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('crm.members_title') . ' - Cooca',\n])",
+    "mod_hdr_line": 94,
+    "mod_snippet": "<x-module-header\n            module=\"crm\"\n            title=\"{{ __('crm.title') }}\"\n            subtitle=\"{{ __('crm.subtitle') }}\" />\n\n        <x-module-tabs module=\"crm\" />"
+  },
+  {
+    "file": "crm/vouchers.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('crm.vouchers_title') . ' - Cooca',\n    'headerTitle' => __('crm.vouchers_title'),\n    'headerSubtitle' => __('crm.vouchers_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('crm.vouchers_title') . ' - Cooca',\n])",
+    "mod_hdr_line": 21,
+    "mod_snippet": "<x-module-header\n            module=\"crm\"\n            title=\"{{ __('crm.vouchers_title') }}\"\n            subtitle=\"{{ __('crm.vouchers_subtitle') }}\">\n            @if (\\App\\Support\\Context::hasPermission('crm.manage'))\n                <button type=\"button\" @click=\"showVoucherModal = true\"\n                    class=\"h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer\">"
+  },
+  {
+    "file": "customers/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('customers.title') . ' - Cooca',\n    'headerTitle' => __('customers.directory_title'),\n    'headerSubtitle' => __('customers.subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('customers.title') . ' - Cooca',\n])",
+    "mod_hdr_line": 229,
+    "mod_snippet": "<x-module-header\n            module=\"crm\"\n            :title=\"__('customers.title')\"\n            :subtitle=\"__('customers.subtitle')\">\n            @if (\\App\\Support\\Context::hasPermission('customers.export'))\n            <a href=\"{{ route('customers.export') }}\"\n                class=\"h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 w-full sm:w-auto\""
+  },
+  {
+    "file": "feedback/create.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature'),\n    'headerTitle' => $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature'),\n    'headerSubtitle' => $type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature'),\n])",
+    "mod_hdr_line": 25,
+    "mod_snippet": "<x-module-header\n        module=\"feedback\"\n        :title=\"$type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature')\"\n        :subtitle=\"$type === 'bugs' ? __('feedback.subtitle_bugs_detail') : __('feedback.subtitle_features_detail')\"\n        :breadcrumbs=\"$breadcrumbs\">\n        <a href=\"{{ route($type === 'bugs' ? 'feedback.bugs.index' : 'feedback.features.index') }}\"\n            class=\"h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-[13px] font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto\">"
+  },
+  {
+    "file": "feedback/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerTitle' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerSubtitle' => $type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n])",
+    "mod_hdr_line": 21,
+    "mod_snippet": "<x-module-header\n        module=\"feedback\"\n        :title=\"$type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features')\"\n        :subtitle=\"$type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features')\"\n        :breadcrumbs=\"$breadcrumbs\">\n        <a href=\"{{ route($type === 'bugs' ? 'feedback.bugs.create' : 'feedback.features.create') }}\"\n            class=\"h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.97] transition flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto\">"
+  },
+  {
+    "file": "feedback/show.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => $item->title,\n    'headerTitle' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerSubtitle' => $item->title,\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => $item->title,\n])",
+    "mod_hdr_line": 25,
+    "mod_snippet": "<x-module-header\n        module=\"feedback\"\n        :title=\"$item->title\"\n        :subtitle=\"($type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features')) . ' #' . $item->id . ' \u2022 ' . $item->created_at->format('d M Y H:i')\"\n        :breadcrumbs=\"$breadcrumbs\">\n        <div class=\"flex items-center gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap\">\n            <a href=\"{{ route($type === 'bugs' ? 'feedback.bugs.index' : 'feedback.features.index') }}\""
+  },
+  {
+    "file": "invoices/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('sales.invoices.page_title'),\n    'headerTitle' => __('sales.invoices.header_title'),\n    'headerSubtitle' => __('sales.invoices.header_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('sales.invoices.page_title'),\n])",
+    "mod_hdr_line": 28,
+    "mod_snippet": "<x-module-header\n        module=\"sales\"\n        :title=\"__('sales.invoices.module_title')\"\n        :subtitle=\"__('sales.invoices.module_subtitle')\">\n        @if(\\App\\Support\\Context::hasPermission('invoices.export'))\n        <a href=\"{{ route('invoices.export-excel') }}\"\n           class=\"h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2\">"
+  },
+  {
+    "file": "invoices/show.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),\n    'headerTitle' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),\n    'headerSubtitle' => __('sales.invoices.show_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),\n])",
+    "mod_hdr_line": 91,
+    "mod_snippet": "<x-module-header\n        module=\"sales\"\n        :title=\"__('sales.invoices.show_title', ['number' => $invoice->invoice_number])\"\n        :subtitle=\"($invoice->customer?->name ?? __('sales.invoices.customer_label')) . ' \u00b7 ' . __('sales.sales_orders.summary_issued_on', ['date' => $invoice->invoice_date?->translatedFormat('d F Y') ?? ''])\"\n        :breadcrumbs=\"[\n            ['label' => __('sales.invoices.breadcrumb_dashboard'), 'url' => route('dashboard')],\n            ['label' => __('sales.sales_orders.module_title'), 'url' => route('sales.orders.index')],"
+  },
+  {
+    "file": "marketplace/chat.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.chat_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.chat_header_title'),\n    'headerSubtitle' => __('marketplace.chat_page_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.chat_page_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 15,
+    "mod_snippet": "<x-module-header\n        module=\"marketplace\"\n        :title=\"__('marketplace.chat_page_title')\"\n        :subtitle=\"__('marketplace.chat_module_subtitle')\">\n        <x-slot:actions>\n            <div class=\"hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20\">\n                <span class=\"w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse\"></span>"
+  },
+  {
+    "file": "marketplace/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.page_title'),\n    'headerSubtitle' => __('marketplace.page_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.page_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 90,
+    "mod_snippet": "<x-module-header\n        module=\"marketplace\"\n        :title=\"__('marketplace.hub_title')\"\n        :subtitle=\"__('marketplace.hub_subtitle')\">\n        <x-slot:actions>\n            <div class=\"hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20\">\n                <span class=\"w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse\"></span>"
+  },
+  {
+    "file": "marketplace/logs.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.logs_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.logs_header_title'),\n    'headerSubtitle' => __('marketplace.logs_page_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.logs_page_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 41,
+    "mod_snippet": "<x-module-header\n        module=\"marketplace\"\n        :title=\"__('marketplace.logs_header_title')\"\n        :subtitle=\"__('marketplace.logs_module_subtitle')\">\n        <x-slot:actions>\n            <a href=\"{{ route('marketplace-hub.index') }}\"\n                class=\"min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] flex items-center justify-center gap-1.5 cursor-pointer\">"
+  },
+  {
+    "file": "marketplace/orders.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.orders_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.orders_page_title'),\n    'headerSubtitle' => __('marketplace.orders_page_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.orders_page_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 201,
+    "mod_snippet": "<x-module-header\n        module=\"marketplace\"\n        :title=\"__('marketplace.orders_page_title')\"\n        :subtitle=\"__('marketplace.orders_module_subtitle')\">\n        <x-slot:actions>\n            <div class=\"hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20\">\n                <span class=\"w-1.5 h-1.5 rounded-full bg-[#34C759]\" :class=\"refreshing ? 'animate-spin' : 'animate-pulse'\"></span>"
+  },
+  {
+    "file": "marketplace/products.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.products_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.products_page_title'),\n    'headerSubtitle' => __('marketplace.products_page_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('marketplace.products_page_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 883,
+    "mod_snippet": "<x-module-header\n        module=\"marketplace\"\n        :title=\"__('marketplace.products_module_title')\"\n        :subtitle=\"__('marketplace.products_module_subtitle')\">\n        <x-slot:actions>\n            {{-- Live Feed Status Indicator --}}\n            <div class=\"hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20 shadow-sm\" title=\"{{ __('marketplace.katalog_produk_tersinkronisasi_live_dengan_saluran') }}\">"
+  },
+  {
+    "file": "master-data/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => $title,\n    'headerTitle' => $title,\n    'headerSubtitle' => $subtitle,\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => $title,\n])",
+    "mod_hdr_line": 132,
+    "mod_snippet": "<x-module-header :title=\"$title\" :subtitle=\"$subtitle\" :breadcrumbs=\"$breadcrumbs\">\n            @if (in_array($type, ['material-categories', 'product-categories', 'units'], true) &&\n                    \\App\\Support\\Context::hasPermission($managePermission))\n                <button type=\"button\" @click.stop=\"openAdd()\"\n                    class=\"h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-[#007AFF]/25 cursor-pointer\">\n                    <svg class=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\">\n                        <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 4.5v15m7.5-7.5h-15\" />"
+  },
+  {
+    "file": "materials/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('materials.title'),\n    'headerTitle' => __('materials.header_title'),\n    'headerSubtitle' => __('materials.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('materials.title'),\n])",
+    "mod_hdr_line": 216,
+    "mod_snippet": "<x-module-header\n            title=\"{{ __('materials.catalog_title') }}\"\n            subtitle=\"{{ __('materials.catalog_subtitle') }}\"\n            :breadcrumbs=\"[\n                ['label' => __('materials.breadcrumb_dashboard'), 'url' => route('dashboard')],\n                ['label' => __('materials.breadcrumb_materials'), 'url' => route('materials.index')],\n                ['label' => __('materials.breadcrumb_catalog'), 'url' => null],"
+  },
+  {
+    "file": "products/bom.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('products.bom_title_prefix', ['name' => $product->name]),\n    'headerTitle' => __('products.bom_header_title'),\n    'headerSubtitle' => __('products.bom_header_subtitle', ['name' => $product->name]),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('products.bom_title_prefix', ['name' => $product->name]),\n])",
+    "mod_hdr_line": 31,
+    "mod_snippet": "<x-module-header\n        :title=\"__('products.bom_header_title')\"\n        :subtitle=\"__('products.bom_header_subtitle', ['name' => $product->name])\"\n        :breadcrumbs=\"[\n            ['label' => __('products.breadcrumb_dashboard'), 'url' => route('dashboard')],\n            ['label' => __('products.page_title'), 'url' => route('products.index')],\n            ['label' => $product->name, 'url' => route('products.index', ['edit' => $product->id])],"
+  },
+  {
+    "file": "products/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('products.katalog_produk_model_hpp'),\n    'headerTitle' => 'Katalog Produk & Model HPP',\n    'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('products.katalog_produk_model_hpp'),\n])",
+    "mod_hdr_line": 782,
+    "mod_snippet": "<x-module-header\n            :title=\"__('products.page_title')\"\n            :subtitle=\"__('products.page_subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => 'Dashboard', 'url' => route('dashboard')],\n                ['label' => __('products.page_title'), 'url' => route('products.index')],\n                ['label' => __('products.tab_catalog'), 'url' => null],"
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('products.modifiers_title'),\n    'headerTitle' => __('products.modifiers_title'),\n    'headerSubtitle' => __('products.modifiers_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('products.modifiers_title'),\n])",
+    "mod_hdr_line": 13,
+    "mod_snippet": "<x-module-header\n        :title=\"__('products.modifiers_title')\"\n        :subtitle=\"__('products.modifiers_subtitle')\"\n        :breadcrumbs=\"[\n            ['label' => 'Dashboard', 'url' => route('dashboard')],\n            ['label' => __('products.page_title'), 'url' => route('products.index')],\n            ['label' => __('products.breadcrumb_modifiers'), 'url' => null],"
+  },
+  {
+    "file": "purchase-orders/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.title'),\n    'headerTitle' => __('purchasing.header_title'),\n    'headerSubtitle' => __('purchasing.header_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.title'),\n])",
+    "mod_hdr_line": 38,
+    "mod_snippet": "<x-module-header\n        :title=\"__('purchasing.header_title')\"\n        :subtitle=\"__('purchasing.header_subtitle')\">\n        @if(\\App\\Support\\Context::hasPermission('purchasing.manage'))\n            <button type=\"button\" @click=\"instantModalOpen = true\"\n                    class=\"min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5\">\n                <i data-lucide=\"zap\" class=\"w-4 h-4\"></i>"
+  },
+  {
+    "file": "purchasing/bills/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.title'),\n    'headerTitle' => __('purchasing.bills.title'),\n    'headerSubtitle' => __('purchasing.bills.subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.title'),\n])",
+    "mod_hdr_line": 12,
+    "mod_snippet": "<x-module-header\n        title=\"{{ __('purchasing.bills.title') }}\"\n        subtitle=\"{{ __('purchasing.bills.subtitle') }}\">\n        @if(\\App\\Support\\Context::hasPermission('finance.payables') || \\App\\Support\\Context::hasPermission('accounting.view'))\n            <a href=\"{{ route('finance.payables') }}\" class=\"min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5\">\n                <i data-lucide=\"clock\" class=\"w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]\"></i>\n                <span>{{ __('purchasing.bills.aging_analysis') }}</span>"
+  },
+  {
+    "file": "purchasing/bills/show.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.detail_title', ['number' => $invoice->invoice_number]),\n    'headerTitle' => __('purchasing.bills.title'),\n    'headerSubtitle' => __('purchasing.bills.detail_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.detail_title', ['number' => $invoice->invoice_number]),\n])",
+    "mod_hdr_line": 12,
+    "mod_snippet": "<x-module-header\n        title=\"{{ $invoice->invoice_number }}\"\n        subtitle=\"{{ $invoice->supplier->name }} &bull; GR: {{ $invoice->goodsReceipt->receipt_number ?? '-' }}\">\n        <div class=\"flex items-center gap-2\">\n            @if($invoice->status === 'paid')\n                <span class=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]\">\n                    <span class=\"w-1.5 h-1.5 rounded-full bg-[#34C759]\"></span> {{ __('purchasing.bills.status_paid') }}"
+  },
+  {
+    "file": "purchasing/receipts/create.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.receipts.title', ['number' => $purchaseOrder->po_number]),\n    'headerTitle' => __('purchasing.receipts.header_title'),\n    'headerSubtitle' => __('purchasing.receipts.header_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.receipts.title', ['number' => $purchaseOrder->po_number]),\n])",
+    "mod_hdr_line": 15,
+    "mod_snippet": "<x-module-header\n        title=\"{{ __('purchasing.receipts.header_title') }}\"\n        subtitle=\"{{ __('purchasing.receipts.header_subtitle') }}\">\n        <div class=\"flex items-center gap-2\">\n            <span class=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#007AFF]/12 text-[#007AFF] dark:text-[#0A84FF]\">\n                PO: {{ $purchaseOrder->po_number }}\n            </span>"
+  },
+  {
+    "file": "purchasing/returns/create.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.create_title'),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.create_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.create_title'),\n])",
+    "mod_hdr_line": 14,
+    "mod_snippet": "<x-module-header\n        title=\"{{ __('purchasing.returns.create_title') }}\"\n        subtitle=\"{{ __('purchasing.returns.create_subtitle') }}\">\n        <div class=\"flex items-center gap-2\">\n            <a href=\"{{ route('purchase.returns.index') }}\"\n               class=\"min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5\">\n                <i data-lucide=\"arrow-left\" class=\"w-4 h-4 text-black/60 dark:text-white/60\"></i>"
+  },
+  {
+    "file": "purchasing/returns/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.title'),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.title'),\n])",
+    "mod_hdr_line": 12,
+    "mod_snippet": "<x-module-header\n        title=\"{{ __('purchasing.returns.title') }}\"\n        subtitle=\"{{ __('purchasing.returns.subtitle') }}\">\n        @if(\\App\\Support\\Context::hasPermission('purchase.returns') || \\App\\Support\\Context::hasPermission('purchasing.manage'))\n            <a href=\"{{ route('purchase.returns.create') }}\" class=\"min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]\">\n                <i data-lucide=\"plus\" class=\"w-4 h-4\"></i>\n                <span>{{ __('purchasing.returns.btn_create_return') }}</span>"
+  },
+  {
+    "file": "purchasing/returns/show.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.detail_title', ['number' => $return->return_number]),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.detail_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.detail_title', ['number' => $return->return_number]),\n])",
+    "mod_hdr_line": 12,
+    "mod_snippet": "<x-module-header\n        title=\"{{ $return->return_number }}\"\n        subtitle=\"Ref. GR: {{ $return->goodsReceipt->receipt_number ?? '-' }} &bull; Supplier: {{ $return->supplier->name ?? '-' }}\">\n        <div class=\"flex items-center gap-2\">\n            @if($return->status === 'completed')\n                <span class=\"inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]\">\n                    <span class=\"w-1.5 h-1.5 rounded-full bg-[#34C759]\"></span> {{ __('purchasing.returns.status_completed') }}"
+  },
+  {
+    "file": "quotations/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('sales.quotations.page_title'),\n    'headerTitle' => __('sales.quotations.header_title'),\n    'headerSubtitle' => __('sales.quotations.header_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('sales.quotations.page_title'),\n])",
+    "mod_hdr_line": 27,
+    "mod_snippet": "<x-module-header\n        module=\"sales\"\n        :title=\"__('sales.quotations.module_title')\"\n        :subtitle=\"__('sales.quotations.module_subtitle')\">\n        @if(\\App\\Support\\Context::hasPermission('sales.pipeline'))\n        <a href=\"{{ route('sales.quotations.create') }}\" class=\"h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25\">\n            <i data-lucide=\"plus\" class=\"w-4 h-4\"></i>"
+  },
+  {
+    "file": "sales-orders/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('sales.sales_orders.page_title'),\n    'headerTitle' => __('sales.sales_orders.header_title'),\n    'headerSubtitle' => __('sales.sales_orders.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('sales.sales_orders.page_title'),\n])",
+    "mod_hdr_line": 38,
+    "mod_snippet": "<x-module-header\n            module=\"sales\"\n            :title=\"__('sales.sales_orders.module_title')\"\n            :subtitle=\"__('sales.sales_orders.module_subtitle')\">\n            @if (\\App\\Support\\Context::hasPermission('sales.pipeline'))\n                <a href=\"{{ route('sales.orders.create') }}\"\n                    class=\"h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 w-full sm:w-auto\">"
+  },
+  {
+    "file": "sales/returns/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('sales.returns.page_title'),\n    'headerTitle' => __('sales.returns.header_title'),\n    'headerSubtitle' => __('sales.returns.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('sales.returns.page_title'),\n])",
+    "mod_hdr_line": 37,
+    "mod_snippet": "<x-module-header\n            module=\"sales\"\n            :title=\"__('sales.returns.module_title')\"\n            :subtitle=\"__('sales.returns.module_subtitle')\">\n            @if (\\App\\Support\\Context::hasPermission('sales.returns') || \\App\\Support\\Context::hasPermission('sales.pipeline'))\n                <a href=\"{{ route('sales.returns.create') }}\"\n                    class=\"h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 w-full sm:w-auto\">"
+  },
+  {
+    "file": "services/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('services.title'),\n    'headerTitle' => __('services.header_title'),\n    'headerSubtitle' => __('services.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('services.title'),\n])",
+    "mod_hdr_line": 179,
+    "mod_snippet": "<x-module-header\n            :title=\"__('services.header_title')\"\n            :subtitle=\"__('services.header_subtitle')\"\n            :breadcrumbs=\"[\n                ['label' => 'Dashboard', 'url' => route('dashboard')],\n                ['label' => 'Produk', 'url' => route('products.index')],\n                ['label' => __('services.header_title'), 'url' => null],"
+  },
+  {
+    "file": "social_media/calendar.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('social_media.calendar_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.calendar_header_title'),\n    'headerSubtitle' => __('social_media.calendar_header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('social_media.calendar_header_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 32,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            title=\"{{ __('social_media.calendar_title') }}\"\n            subtitle=\"{{ __('social_media.calendar_subtitle') }}\">\n            <x-slot:actions>\n                <a href=\"{{ route('social-media.posts.index') }}\"\n                    class=\"min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm\">"
+  },
+  {
+    "file": "social_media/inbox.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('social_media.unified_inbox_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.unified_inbox_title'),\n    'headerSubtitle' => __('social_media.unified_inbox_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('social_media.unified_inbox_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('social_media.unified_inbox_title')\"\n            :subtitle=\"__('social_media.unified_inbox_subtitle')\">\n            <x-slot:actions>\n                {{-- AI Auto-Reply Status Pill --}}\n                @if($hasAiConfig)"
+  },
+  {
+    "file": "social_media/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('social_media.header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.header_title'),\n    'headerSubtitle' => __('social_media.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('social_media.header_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('social_media.cockpit_title')\"\n            :subtitle=\"__('social_media.cockpit_subtitle', ['business' => $business->name])\">\n            <x-slot:actions>\n                <a href=\"{{ route('social-media.posts.index') }}\"\n                    class=\"min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm\">"
+  },
+  {
+    "file": "social_media/insights.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('social_media.insights_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.insights_header_title'),\n    'headerSubtitle' => __('social_media.insights_header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('social_media.insights_header_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('social_media.insights_title')\"\n            :subtitle=\"__('social_media.insights_subtitle')\">\n            <x-slot:actions>\n                <button @click=\"syncAccountsMetrics()\" :disabled=\"isSyncingAccounts\"\n                    class=\"flex-1 sm:flex-initial min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer\">"
+  },
+  {
+    "file": "social_media/posts.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('social_media.posts_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.posts_header_title'),\n    'headerSubtitle' => __('social_media.posts_header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('social_media.posts_header_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('social_media.posts_title')\"\n            :subtitle=\"__('social_media.posts_subtitle')\">\n            <x-slot:actions>\n                @if(isset($canSchedulePost) && !$canSchedulePost && empty($hasSocialAddon))\n                    <button type=\"button\""
+  },
+  {
+    "file": "suppliers/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.supplier.title'),\n    'headerTitle' => __('purchasing.supplier.header_title'),\n    'headerSubtitle' => __('purchasing.supplier.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('purchasing.supplier.title'),\n])",
+    "mod_hdr_line": 203,
+    "mod_snippet": "<x-module-header\n            :title=\"__('purchasing.supplier.header_title')\"\n            :subtitle=\"__('purchasing.supplier.header_subtitle')\">\n            @if ($business->isModuleEnabled(\\App\\Domain\\Template\\ModuleRegistry::MODULE_RECIPE_BOM) && \\App\\Support\\Context::hasPermission('inventory.view'))\n                <a href=\"{{ route('materials.index') }}\"\n                    class=\"min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5\">\n                    <i data-lucide=\"boxes\" class=\"w-4 h-4 text-black/50 dark:text-white/50\"></i>"
+  },
+  {
+    "file": "warehouse/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('warehouse.title'),\n    'headerTitle' => __('warehouse.header_title'),\n    'headerSubtitle' => __('warehouse.header_subtitle')\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('warehouse.title'),\n])",
+    "mod_hdr_line": 348,
+    "mod_snippet": "<x-module-header\n        :title=\"__('warehouse.header_title')\"\n        :subtitle=\"__('warehouse.header_subtitle')\">\n        @if(\\App\\Support\\Context::hasPermission('inventory.manage') || \\App\\Support\\Context::isAdminOrOwner() || \\App\\Support\\Context::hasPermission('warehouse.manage'))\n            {{-- Secondary Action: Kelola Cabang di Pengaturan --}}\n            <a href=\"{{ route('settings.index', ['tab' => 'branches']) }}\"\n               class=\"min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-slate-700 dark:text-slate-200 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5\""
+  },
+  {
+    "file": "warehouse/show.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('warehouse.detail_title', ['name' => $location->name]),\n    'headerTitle' => __('warehouse.detail_header', ['name' => $location->name]),\n    'headerSubtitle' => __('warehouse.detail_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('warehouse.detail_title', ['name' => $location->name]),\n])",
+    "mod_hdr_line": 73,
+    "mod_snippet": "<x-module-header\n            title=\"{{ $location->name }}\"\n            subtitle=\"{{ $location->address ?: __('warehouse.no_address') }}\"\n            badge=\"{{ $badgeLabel }}\"\n            :breadcrumbs=\"[\n                ['label' => __('warehouse.breadcrumbs.dashboard'), 'url' => route('dashboard')],\n                ['label' => __('warehouse.breadcrumbs.inventory'), 'url' => route('inventory.stocks')],"
+  },
+  {
+    "file": "whatsapp/broadcast.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.broadcast_title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.broadcast_header_title'),\n    'headerSubtitle' => __('whatsapp.broadcast_header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.broadcast_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('whatsapp.broadcast_title')\"\n            :subtitle=\"__('whatsapp.broadcast_subtitle')\">\n            <x-slot:actions>\n                <a href=\"{{ route('whatsapp.logs.index') }}\"\n                    class=\"flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto shrink-0 whitespace-nowrap\">"
+  },
+  {
+    "file": "whatsapp/index.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.header_title'),\n    'headerSubtitle' => __('whatsapp.header_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 11,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            :title=\"__('whatsapp.title')\"\n            :subtitle=\"__('whatsapp.subtitle', ['business' => $business->name])\">\n            <x-slot:actions>\n                <a href=\"{{ route('whatsapp.inbox.index') }}\"\n                    class=\"flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062cc] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm shadow-[#007AFF]/25\">"
+  },
+  {
+    "file": "whatsapp/logs.blade.php",
+    "ext_lines": "1-5",
+    "original_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.logs_title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.logs_title'),\n    'headerSubtitle' => __('whatsapp.logs_subtitle'),\n])",
+    "cleaned_ext": "@extends('layouts.app', [\n    'title' => __('whatsapp.logs_title') . ' - ' . $business->name,\n])",
+    "mod_hdr_line": 23,
+    "mod_snippet": "<x-module-header\n            module=\"communication\"\n            title=\"{{ __('whatsapp.logs_title') }}\"\n            subtitle=\"{{ __('whatsapp.logs_subtitle') }}\">\n            <x-slot:actions>\n                <div class=\"flex items-center gap-2 w-full sm:w-auto flex-wrap\">\n                    <a href=\"{{ route('whatsapp.logs.export', request()->query()) }}\""
+  }
+]

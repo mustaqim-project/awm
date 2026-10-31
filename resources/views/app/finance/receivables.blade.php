@@ -390,17 +390,25 @@
     <template x-teleport="body">
         <div x-show="showImportModal"
             x-cloak
-            class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100"
-            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            role="dialog" aria-modal="true"
             @keydown.escape.window="if (!importExecuting) showImportModal = false">
 
-        <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
-            @click.away="if (!importExecuting) showImportModal = false"
+            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <div x-show="showImportModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="if (!importExecuting) showImportModal = false"></div>
+
+            <!-- 2. Centered Scroll & Dialog Container -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="if (!importExecuting) showImportModal = false">
+                <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
+                    @click.away="if (!importExecuting) showImportModal = false"
             x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100"
@@ -613,6 +621,7 @@
                 </div>
             </div>
 
+            </div>
         </div>
     </div>
 </template>

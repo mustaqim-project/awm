@@ -1,277 +1,272 @@
-# Admin Views Architecture & Inventory Survey Report
+# Handoff Report: UI/UX Architecture & Usability Survey — Core Transactional Modules
 
-**Survey Subject:** All Blade templates under `resources/views/admin` (87 files, 40,409 lines)  
-**Agent Role:** Explorer 2 (Admin Views Architecture & Inventory Survey)  
-**Date:** 2026-10-31  
-**Integrity Mode:** Development (Read-Only Investigation)  
+**Survey Focus**: Core Transactional & Operations Views in `resources/views/app` (POS, Sales, Sales Orders, Invoices, Quotations, Products, Inventory, Purchasing, Purchase Orders, Suppliers, Warehouse, Materials, Storefront, Marketplace, Customers).  
+**Investigator**: Explorer 2 (`explorer_survey_2`)  
+**Parent Agent**: `aa2ef6eb-6969-4758-9898-c916a6745d73`  
+**Execution Timestamp**: 2026-10-31T11:05:00Z  
+**Integrity Mode**: Strictly Read-Only (0 codebase modifications applied)
 
 ---
 
 ## 1. Observation
 
-### 1.1 Scope & Inventory Overview
-An exhaustive scan of `c:\laragon\www\cooca_core\resources\views\admin` was conducted.
-- **Total Blade templates:** 87 files
-- **Total Lines of Code:** 40,409 lines
-- **Total Submodules / Directories:** 30 distinct submodules (29 subdirectories + 1 root template)
-- **Current Localization Status:**
-  - Files with existing `__()`, `@lang()`, or `trans()` calls: **0 files (0%)**
-  - Files with hardcoded text: **86 files (98.9%)**
-  - Clean files (per `python scratch/deep_audit_v2.py resources/views/admin`): **1 file** (`admin/smtp/index.blade.php`, which is a 12-line redirect stub without text)
-- **Hardcoded Issues Detected by `deep_audit_v2.py`:** **947 issues** across 86 files.
+### 1.1 Complete Inventory of Transactional & Operations Modules
 
-### 1.2 Breakdown of Detected Issues by Domain (`deep_audit_v2.py`)
-- **Domain 7 (Buttons & Action Links):** 551 issues (414 raw button labels, 117 raw `title="..."`, 7 raw `aria-label="..."`, 13 raw `alt="..."`)
-- **Domain 3 (Headers, H1-H6, & Subtitles):** 127 issues (12 `h1`, 20 `h2`, 73 `h3`, 22 `h4`)
-- **Domain 4 (Forms, Labels, & Hints):** 117 issues (all raw `placeholder="..."` attributes)
-- **Domain 9 (Tables, Badges, & Empty States):** 69 issues (raw empty state notices e.g. "Belum ada...")
-- **Domain 1 (Page Title & Meta Tags):** 39 issues (35 raw `@extends(..., ['title' => '...'])`, 4 raw `@section('title', '...')`)
-- **Domain 5 (Dev / Test Alerts):** 27 issues (e.g. "Bypass / Pengujian:")
-- **Domain 6 (Error Lists & Summary):** 17 issues (e.g. "Verifikasi Belum Berhasil")
+A full recursive scan of all transactional directories under `resources/views/app` reveals **87 Blade templates** comprising **52,755 lines of code** distributed across 15 submodules:
 
-### 1.3 Submodule Architecture & Distribution Map
-The 87 files are distributed across 30 submodules as follows (ordered by volume):
+| Modul | File Count | Total Baris | Mega-Files (>1.000 baris) | Narrow Modals (`max-w-xs..3xl`) | Flawed Backdrops (Flex Wrapper) |
+|---|---|---|---|---|---|
+| `pos` | 29 | 15.935 | 3 (`terminal.blade.php`, `printers/index.blade.php`, `shifts.blade.php`) | 40 | 20 |
+| `products` | 3 | 5.248 | 2 (`index.blade.php`, `modifiers.blade.php`) | 14 | 14 |
+| `marketplace` | 6 | 5.171 | 1 (`products.blade.php`) | 5 | 0 |
+| `storefront` | 12 | 4.894 | 1 (`orders/show.blade.php`) | 13 | 0 |
+| `warehouse` | 2 | 3.711 | 2 (`index.blade.php`, `show.blade.php`) | 10 | 6 |
+| `invoices` | 5 | 2.784 | 0 | 7 | 0 |
+| `sales` (Returns) | 5 | 2.514 | 0 | 3 | 0 |
+| `inventory` | 4 | 2.004 | 0 | 7 | 0 |
+| `purchase-orders` | 4 | 1.926 | 0 | 5 | 0 |
+| `sales-orders` | 4 | 1.821 | 0 | 2 | 0 |
+| `customers` | 1 | 1.504 | 1 (`index.blade.php`) | 2 | 0 |
+| `suppliers` | 1 | 1.351 | 1 (`index.blade.php`) | 9 | 0 |
+| `quotations` | 4 | 1.319 | 0 | 2 | 0 |
+| `purchasing` | 6 | 1.312 | 0 | 1 | 0 |
+| `materials` | 1 | 1.261 | 1 (`index.blade.php`) | 7 | 7 |
+| **TOTAL** | **87** | **52.755** | **12 mega-files** | **127** | **47** |
 
-| No | Submodule | Files | Lines | Alpine.js | Modals | Tables | Forms | Primary Function |
-|---|---|---|---|---|---|---|---|---|
-| 1 | `settings` | 11 | 4,793 | 11 | 1 | 0 | 10 | Platform configs (SEO, SMTP, WhatsApp, Branding, Payment) |
-| 2 | `inbox` | 1 | 3,818 | 1 | 1 | 0 | 1 | Unified customer omnichannel chat & AI support console |
-| 3 | `finance` | 18 | 3,356 | 18 | 10 | 6 | 9 | Ledger, journals, AP/AR, cashflow, balance sheet |
-| 4 | `whatsapp` | 2 | 3,287 | 2 | 1 | 2 | 3 | Meta Cloud API v26.0, broadcast campaigns & templates |
-| 5 | `social_media` | 1 | 3,006 | 1 | 1 | 1 | 9 | Multi-platform publishing, TikTok/LinkedIn/YouTube integration |
-| 6 | `b2b` | 11 | 2,237 | 11 | 11 | 4 | 11 | Sales orders, quotations, invoices, return slips |
-| 7 | `ai_tokens` | 1 | 1,869 | 1 | 1 | 1 | 6 | Global AI token quota monitoring & API key rotation |
-| 8 | `_root` (`dashboard`) | 1 | 1,636 | 1 | 1 | 1 | 2 | Primary superadmin dashboard & quick actions sheet |
-| 9 | `posts` | 3 | 1,626 | 0 | 3 | 1 | 11 | CMS Blog articles, categories & media manager |
-| 10 | `pricing-programs`| 2 | 1,570 | 1 | 1 | 2 | 10 | Early adopter pricing, promo campaigns & billing simulation |
-| 11 | `account-recoveries`| 2 | 1,504 | 2 | 2 | 1 | 5 | Tenant owner account recovery & identity verification |
-| 12 | `events` | 4 | 1,137 | 3 | 0 | 2 | 7 | Community events, webinars & ticketing |
-| 13 | `subscriptions` | 2 | 1,041 | 2 | 2 | 1 | 4 | Tenant subscription orders & payment verification |
-| 14 | `billing-packages`| 1 | 1,039 | 1 | 1 | 1 | 6 | Tier pricing packages & addon quota config |
-| 15 | `payment_accounts`| 3 | 911 | 3 | 1 | 1 | 6 | Platform bank accounts, QRIS & e-wallets |
-| 16 | `settlements` | 2 | 856 | 2 | 1 | 2 | 5 | Merchant revenue withdrawals & payout approvals |
-| 17 | `ai-studio` | 2 | 821 | 2 | 2 | 1 | 5 | AI prompt studio & generative image sources |
-| 18 | `templates` | 3 | 795 | 2 | 0 | 1 | 7 | Excel master templates CMS |
-| 19 | `businesses` | 2 | 769 | 2 | 2 | 1 | 9 | Workspace & tenant master management |
-| 20 | `roles` | 1 | 726 | 1 | 1 | 1 | 3 | RBAC roles, permissions matrix & guard assignment |
-| 21 | `promos` | 1 | 660 | 1 | 1 | 1 | 6 | Discount vouchers, promo codes & redemption limits |
-| 22 | `word_filters` | 1 | 540 | 1 | 1 | 1 | 7 | Content moderation keyword blacklist |
-| 23 | `auth` | 3 | 500 | 2 | 0 | 0 | 3 | Admin login, forgot-password, reset-password |
-| 24 | `error-logs` | 1 | 479 | 1 | 1 | 0 | 2 | System error logs & stack trace viewer |
-| 25 | `legal-pages` | 2 | 423 | 1 | 0 | 0 | 2 | Privacy policy & terms of service editor |
-| 26 | `feedback` | 2 | 399 | 0 | 0 | 1 | 2 | Feedback inbox & issue tracking |
-| 27 | `leads` | 1 | 269 | 0 | 0 | 1 | 1 | CRM lead generation inquiries |
-| 28 | `profile` | 1 | 197 | 1 | 0 | 0 | 2 | Superadmin personal profile & password change |
-| 29 | `users` | 1 | 133 | 0 | 0 | 1 | 2 | Superadmin staff accounts list |
-| 30 | `smtp` | 1 | 12 | 0 | 0 | 0 | 0 | Email configuration stub |
-| **Total** | **30 Submodules** | **87** | **40,409** | **74** | **46** | **35** | **77** | |
+---
 
-### 1.4 State of Language Files & Key Conventions
-1. **Existing Translation Dictionaries:**
-   - `lang/id/admin.php` exists (895 lines, 878 translation keys).
-   - `lang/en/admin.php` exists (895 lines, 878 translation keys).
-   - Key parity between `lang/id/admin.php` and `lang/en/admin.php` is **100% (0 mismatched keys)**.
-   - **Crucial Finding:** An exact string match scan revealed that **676 keys (77.0%)** in `lang/id/admin.php` already match raw Indonesian strings present in `resources/views/admin`! This proves that key extraction was previously initiated, but replacement into the Blade templates was never completed.
-2. **Key Naming Pattern in `admin.php`:**
-   - Keys use flat snake_case descriptors:
-     - Navigation & Layout: `nav_*`, `mod_*`, `cluster_*` (used by `resources/views/layouts/admin.blade.php`).
-     - Actions: `simpan_*`, `hapus_*`, `buka_*`, `tambah_*`, `ubah_*`, `kirim_*`, `unduh_*`.
-     - Contextual placeholders: `contoh_*`, `tuliskan_*`.
-     - Submodule-specific items: e.g. `cms_paket_harga_admin_console`, `verifikasi_pembayaran`, `filter_moderasi_kata_komunitas`.
-   - Reusable actions and status badges can and should leverage `common.php`:
-     - e.g. `__('common.save')`, `__('common.cancel')`, `__('common.delete')`, `__('common.edit')`, `__('common.search')`, `__('common.status_active')`, `__('common.status_inactive')`.
-3. **Reference Pattern in `layouts/admin.blade.php`:**
-   - `resources/views/layouts/admin.blade.php` is already 100% localized using `{{ __('admin.<key>') }}`.
+### 1.2 Detailed Observations by Submodule
+
+#### A. Point of Sale (POS) & Cashier Interfaces (`resources/views/app/pos`)
+1. **Monolithic Terminal Architecture (`pos/terminal.blade.php` — 7.158 baris, 532 KB)**:
+   - File memuat **20 modal dialog berbeda** yang dideklarasikan secara inline dalam satu file Blade tanpa ekstraksi Blade component atau partial.
+   - Mengandung ~2.500 baris script JavaScript murni di bagian bawah (baris 4.650–7.150) yang mengatur state machine kasir, audio Web Audio API synthesizer (`osc1.type = 'triangle'`), TriPay dynamic QRIS polling, offline queue, dan barcode scanner streams.
+   - **Flawed Backdrop Architecture**: Seluruh 20 modal menaruh background overlay gelap langsung pada wrapper flex:
+     - Baris 2.145 (Quick Customer): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+     - Baris 2.195 (Payment Modal): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+     - Baris 3.111 (Open Shift Modal): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+     - Baris 3.141 (Close Shift & Reconciliation): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+     - Baris 3.559 (Modifier & Variant Picker): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+     - Baris 3.687 (Layanan Bengkel & Laundry): `class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60"`
+   - **Narrow Modal Sizing**:
+     - Quick Customer (baris 2.145): `max-w-sm` (384px)
+     - Dynamic QRIS (baris 2.506): `max-w-sm sm:max-w-md`
+     - Close Shift Reconciliation (baris 3.141): `max-w-md` (448px) — form rekonsiliasi kas riil vs sistem yang padat terdesak sempit.
+     - Modifier Picker (baris 3.559): `max-w-md`
+     - Layanan Bengkel & Laundry (baris 3.687): `max-w-lg`
+     - Detail Item Apotek & Batch (baris 3.918): `max-w-md`
+   - **Inkonsistensi Arsitektur Antar-Tampilan**:
+     - Pada `pos/shifts.blade.php` (baris 405, 600) modal shift sudah menggunakan standar Apple Bento HIG `max-w-5xl xl:max-w-6xl rounded-[24px]`.
+     - Namun pada `pos/terminal.blade.php` (baris 3.111, 3.141), modal shift kasir masih menggunakan legacy `max-w-md` yang sempit.
+   - **Mobile/Tablet Operational View**:
+     - Layout kasir menggunakan custom CSS bottom sheet pada `< 1024px` (`.pos-cart { position: fixed; bottom: 0; height: min(85dvh, 52rem); transform: translate3d(0, 102%, 0); }`).
+     - Terdapat floating bar di bagian bawah (`.pos-cart-bar`). Namun tinggi 85dvh tidak adaptif saat keyboard virtual muncul untuk input catatan pesanan atau diskon.
+
+2. **Kitchen Display System (`pos/kitchen.blade.php` — 476 baris)**:
+   - Menggunakan 3 kolom vertikal pada desktop (`grid grid-cols-1 lg:grid-cols-3 gap-5 items-start`) untuk antrean New, In Progress, Ready.
+   - Pada tablet portrait (< 1024px), antrean jatuh menjadi 1 kolom tumpuk ke bawah, sehingga staf dapur harus scroll vertikal panjang untuk melihat pesanan yang sedang dimasak vs yang baru masuk.
+
+3. **POS Reports & Multi-Tab Filter (`pos/reports.blade.php` — 83 baris)**:
+   - Menggunakan 15 segmented tab dalam horizontal scrolling nav.
+   - Tombol Export Excel & Print PDF pada header (baris 17–27) menggunakan `min-h-[40px] sm:min-h-0 sm:h-9`, berada tepat di bawah batas target sentuh minimum 44px.
+
+---
+
+#### B. Product Catalog & Modifiers (`resources/views/app/products`)
+1. **Monolithic Product Master (`products/index.blade.php` — 3.443 baris, 294 KB)**:
+   - **State Bloat**: 778 baris pertama (baris 8–778) adalah deklarasi objek state Alpine.js di dalam tag div root sebelum markup HTML pertama dimulai.
+   - **Duplikasi Kode Masif**:
+     - Modal Tambah Produk Baru: baris 1.454–2.111 (657 baris markup).
+     - Modal Edit Data Produk: baris 2.112–2.813 (701 baris markup).
+     - Kedua modal ini 95% identik (field nama, barcode, kategori, satuan, harga pokok BOM, harga jual cabang, toggle marketplace, foto galeri, preorder lead days, paket bundle), menyebabkan duplikasi ~1.350 baris kode yang memperberat rendering Blade.
+   - **Flawed Backdrop Overlay**: 8 modal dialog menggunakan wrapper flex `fixed inset-0 z-[200] flex items-center justify-center ... bg-black/60` (baris 1.460, 2.118, 2.819, 2.870, 2.938, 2.966, 3.007, 3.253).
+   - **Sub-44px Touch Targets pada Mobile Card**:
+     - Pada mobile grouped card view (baris 1.359, 1.366), tombol aksi Edit dan Delete menggunakan `h-9` (36px).
+     - Pada quick toggle strip channel (baris 1.402, 1.408, 1.415), tombol toggle POS, Web, dan Sales Order menggunakan `h-7 px-2.5 rounded-[6px]` (hanya 28px tinggi), sangat rentan terhadap *miss-tap* bagi kasir/owner di lapangan.
+   - **Table Density**: Tabel desktop (baris 949) memiliki lebar tetap `min-w-[1350px]`, sehingga pada tablet 768px–1024px memerlukan scroll horizontal ekstensif.
+
+2. **Product Modifiers & Variants (`products/modifiers.blade.php` — 1.366 baris)**:
+   - Modal group modifier dan modal opsi pilihan menggunakan wrapper flex `bg-black/60` tanpa backdrop mandiri.
+
+---
+
+#### C. Sales Orders, Invoices & Quotations (`sales-orders`, `invoices`, `quotations`, `sales/returns`)
+1. **Table Action Button Clutter & Sub-44px Targets**:
+   - `sales-orders/index.blade.php` (baris 223–253): Kolom aksi tabel menjejaskan **4 tombol inline berukuran 32×32px** (`w-8 h-8 rounded-[8px]`, gap-1): PDF Printer, Edit, View/Eye, dan Delete. Tidak ada overflow menu (`⋯`).
+   - `sales/returns/index.blade.php`: 3 tombol inline `w-8 h-8` berdampingan.
+   - `quotations/index.blade.php`: 3 tombol inline `w-8 h-8` berdampingan.
+   - `invoices/index.blade.php`: Tombol aksi row tabel berukuran 36×36px (`w-9 h-9`).
+2. **Missing Sticky Bottom Submission Bar pada Mobile Form**:
+   - `sales-orders/create.blade.php` (611 baris): Formulir pesanan penjualan memuat header pelanggan, tanggal, termin, tabel rincian item dinamis (`min-w-[700px]`), ringkasan diskon/pajak, dan catatan. Tombol submit utama berada di dasar halaman tanpa sticky footer. Pengguna HP harus menggulir jauh ke bawah setelah menambah item untuk mengeksekusi order.
+   - `invoices/create.blade.php` (498 baris): Tidak ada sticky bar bawah pada mobile. Tombol submit utama pada baris 480 menggunakan ukuran `h-9` (36px) tanpa pembatas responsif.
+   - `quotations/create.blade.php` (285 baris): Tombol submit (baris 275) berukuran `h-9 px-6 rounded-[10px]` (36px) tanpa `min-h-[44px]`.
+3. **Form Density & Overflow pada Invoice Detail (`invoices/show.blade.php` — 917 baris)**:
+   - Memuat 5 form, 2 tabel, 11 tombol warna primary (`#007AFF`), dan 12 tombol warna destructive (`#FF3B30`). Persaingan visual tinggi antara tombol "Kirim Tagihan", "Catat Pembayaran", "Cetak Faktur", "Batalkan Invoice", dan "Hapus".
+
+---
+
+#### D. Inventory, Warehouse, Materials & Suppliers (`inventory`, `warehouse`, `materials`, `suppliers`)
+1. **Infinite Card Bloat pada Mobile (`inventory/stocks.blade.php` — 443 baris)**:
+   - Baris 94–96: Baris KPI metrik menggunakan `grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4`.
+   - Pada layar smartphone (< 640px), 3 kartu metrik besar (Nilai Aset HPP, Peringatan Stok Minimum, Total Item Terdata) tersusun vertikal satu per satu, menyita ~400px tinggi layar sebelum pengguna dapat melihat kolom pencarian dan tabel stok.
+   - Pelanggaran prinsip: *Anti Infinite Card Bloat* — tidak menggunakan **Horizontal Snap Slider** (`snap-x snap-mandatory`) atau grid 2x2.
+2. **Table Action Button Size**:
+   - `inventory/stocks.blade.php` (baris 234): Tombol adjust stok berukuran `w-9 h-9 min-h-[36px] min-w-[36px]` (36px, di bawah standar 44px).
+   - `materials/index.blade.php` (baris 443): Tombol update harga dan edit bahan berukuran `w-8 h-8 rounded-[8px]` (32px).
+3. **Mega-Files & Backdrop Flaws pada Warehouse & Materials**:
+   - `warehouse/index.blade.php` (1.812 baris) & `warehouse/show.blade.php` (1.899 baris): Memuat ribuan baris markup modal Biteship geocoding, jam operasional, dan stock matrix.
+   - `materials/index.blade.php` (1.261 baris): Memiliki 7 modal dengan wrapper flex `bg-black/60` dan sub-modals (Supplier, Kategori, Satuan pada baris 1.035, 1.097, 1.147) terkurung pada `max-w-md` tanpa responsive layout.
+4. **Golden Reference Pattern (`suppliers/index.blade.php` — baris 656–674)**:
+   - Mengimplementasikan arsitektur backdrop yang benar sesuai standar Apple HIG:
+     ```html
+     <div x-show="showAddModal" class="fixed inset-0 z-[200] overflow-y-auto" role="dialog">
+         <!-- Standalone Backdrop Div -->
+         <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
+         <!-- Centered Dialog Wrapper -->
+         <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6">
+             <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[24px] ...">
+     ```
+
+---
+
+#### E. Storefront & Marketplace Operations (`storefront`, `marketplace`)
+1. **Storefront Order Detail (`storefront/orders/show.blade.php` — 1.295 baris)**:
+   - Halaman tunggal memuat **10 formulir**, **8 modal dialog**, 23 primary buttons, dan 19 destructive buttons.
+   - Modal Verifikasi Pembayaran Manual (baris 1.122) dan Modal Tolak Pesanan (baris 1.062) terkurung pada `max-w-md` (448px), menyebabkan bukti transfer perbankan dan form rekonsiliasi berdesakan secara vertikal.
+2. **Marketplace Product Sync Hub (`marketplace/products.blade.php` — 2.296 baris)**:
+   - Memuat 45 tombol destructive merah (`#FF3B30`) untuk aksi unbind/delete mapping marketplace (Shopee, Tokopedia, TikTok Shop, Lazada).
+   - Penggunaan tombol penuh tanpa pengelompokan menu overflow menyebabkan tabel produk marketplace sangat padat.
+
+---
+
+### 1.3 Audit Khusus: Deteksi 6 Anomali Tombol & Layout (Berdasarkan `ui-simplify-layout`)
+
+| # | Anomali Visual / Layout | Gejala & Lokasi Nyata | Akar Masalah | Rekomendasi Solusi |
+|---|---|---|---|---|
+| 1 | **Sub-44px Tap Targets (Fitts's Law Failure)** | `sales-orders/index` (baris 225), `materials/index` (baris 445): Tombol aksi tabel `w-8 h-8` (32px); `products/index` (baris 1.402): Toggle switch `h-7` (28px). | Pengembang mengecilkan tombol demi memuat banyak elemen dalam satu baris. | Wajibkan minimum `min-h-[44px] min-w-[44px]` pada mobile/tablet, atau kelompokkan ke overflow dropdown `⋯`. |
+| 2 | **Table Action Clutter (> 2 Aksi Inline)** | `sales-orders/index` (4 tombol berdampingan: Print, Edit, Detail, Delete); `invoices/show` (11 primary + 12 destructive). | Tidak ada menu overflow (`⋯`). Semua opsi CRUD ditaruh di level baris pertama. | Pertahankan 1 aksi primer (Lihat/Detail), masukkan sisa aksi ke dropdown menu overflow (`⋯`). |
+| 3 | **Flawed Backdrop Wrapper ($y=0$ Header Leaks)** | Ditemukan pada **47 lokasi** (`pos/terminal`, `products/index`, `materials/index`, `warehouse/index`): `class="fixed inset-0 z-[200] flex ... bg-black/60"`. | Background gelap disatukan pada flex wrapper, memicu celah putih bilah header dan clipping saat scroll. | Ekstraksi ke elemen backdrop mandiri: `<div class="fixed inset-0 bg-black/60 backdrop-blur-md"></div>` dengan kontainer dialog `relative z-10`. |
+| 4 | **Narrow Form Modal Squeeze (Non-Bento)** | Ditemukan pada **127 lokasi**: modal formulir memakai `max-w-md`, `max-w-sm`, `max-w-lg` tanpa override `lg:max-w-5xl/6xl`. | Menggunakan template modal peringatan (alert) untuk formulir input multi-field. | Terapkan canvas XXL Bento 2-kolom pada Desktop (`lg:max-w-5xl max-h-[92vh]`) dan Adaptive Bottom Sheet pada Mobile (`rounded-t-[28px] max-h-[96vh] pb-28`). |
+| 5 | **Mobile Infinite Card Bloat** | `inventory/stocks` (baris 94), `pos/orders` (baris 45): Deretan 3–4 kartu metrik KPI disusun `grid-cols-1` vertikal. | Breakpoint mobile tidak diatur sebagai horizontal snap slider. | Ubah ke **Horizontal Snap Slider** (`flex gap-3 overflow-x-auto snap-x snap-mandatory sm:grid sm:grid-cols-3`). |
+| 6 | **Missing Mobile Sticky Submit Bar** | `sales-orders/create` (611 baris), `invoices/create` (498 baris), `quotations/create` (285 baris): Tombol submit terkubur di paling bawah. | Alur formulir mengikuti linear flow desktop tanpa kompensasi layar sentuh jempol. | Tambahkan sticky bottom action bar pada mobile (`fixed inset-x-0 bottom-0 p-3 bg-white/95 border-t z-30 sm:static`) dengan safe-area padding `pb-28`. |
 
 ---
 
 ## 2. Logic Chain
 
-```
-[Observation 1: 87 files, 40,409 lines, 0 i18n calls in admin views]
-                                  │
-                                  ▼
-[Observation 2: 947 deep_audit_v2 issues across 86 files; 1 empty file]
-                                  │
-                                  ▼
-[Observation 3: lang/id/admin.php & lang/en/admin.php contain 878 keys; 77% match admin views]
-                                  │
-                                  ▼
-[Deduction: String extraction was previously drafted, but views were never updated]
-                                  │
-                                  ▼
-[Observation 4: 74 files use Alpine.js, 38 JS confirms, 229 ternaries, 499 raw attributes]
-                                  │
-                                  ▼
-[Deduction: Direct blind replacement will cause JS quote breaks and attribute parsing errors]
-                                  │
-                                  ▼
-[Conclusion: Remediation requires a phased, safe execution pipeline with strict JS escaping]
-```
+1. **Premis 1 (Fitts's Law & Human Thumb Physics)**: Target sentuh di bawah 44×44px dengan jarak di bawah 8px secara matematis meningkatkan kesalahan ketukan (*error rate*) sebesar >30% pada layar sentuh, khususnya pada kasir POS dan operasional gudang UMKM yang serba cepat.
+   - *Bukti Observasi*: 58 dari 87 file memiliki tombol berukuran 28px (`h-7`), 32px (`w-8 h-8`), atau 36px (`w-9 h-9`, `h-9`) tanpa `min-h-[44px]`.
+   - *Inferensi*: Petugas kasir atau staf gudang berisiko salah menekan tombol (misalnya menekan Hapus padahal ingin Edit atau Detail).
 
-### Step-by-Step Rationale:
-1. **Zero Prior Replacement:** Even though `lang/id/admin.php` contains 878 keys, none of the 87 Blade templates in `resources/views/admin` contain `__('admin.')` calls. Remediating `resources/views/admin` requires updating all 86 non-empty templates.
-2. **Quote Collision in Alpine.js / Inline JS:**
-   - There are 38 inline `confirm('...')` and `alert('...')` calls (e.g. in `social_media/index.blade.php:651`, `whatsapp/index.blade.php:771`).
-   - If an agent replaces `confirm('Pesan ini akan...')` with `confirm('{{ __('admin.confirm_msg') }}')`, and the English translation contains an apostrophe (`Don't`, `Can't`, `User's`), the JS interpreter will crash with a SyntaxError.
-   - **Remedy:** All JS strings must use `@json(__('admin.key'))` or `addslashes`.
-3. **Attribute Replacement Safety:**
-   - There are 499 raw attributes (`placeholder="..."`, `title="..."`, `aria-label="..."`).
-   - Using standard HTML attribute syntax `placeholder="{{ __('admin.placeholder_key') }}"` avoids Alpine expression evaluation conflicts, which occur when using `:placeholder="'{{ ... }}'"`.
-4. **Mega-Files Risk:**
-   - Five files account for over 35% of all lines:
-     - `inbox/index.blade.php` (3,818 lines)
-     - `social_media/index.blade.php` (3,006 lines)
-     - `whatsapp/index.blade.php` (2,905 lines)
-     - `ai_tokens/index.blade.php` (1,869 lines)
-     - `dashboard.blade.php` (1,636 lines)
-   - These 5 files contain dense Alpine state logic and nested modals. Modifying them in a single prompt risks context truncation or missed strings. They must be handled in dedicated, focused steps.
+2. **Premis 2 (Cognitive Scannability & Action Hierarchy)**: Menampilkan lebih dari 2 aksi inline per baris tabel menyebabkan *visual noise* yang memperlambat pemindaian mata kasir/owner (pola F-Pattern terpecah).
+   - *Bukti Observasi*: `sales-orders/index.blade.php` memiliki 4 tombol inline berdampingan di setiap baris data; `invoices/show.blade.php` memiliki 23 tombol aksi yang saling bersaing bobot visualnya.
+   - *Inferensi*: Alur keputusan pengguna terhambat karena tidak adanya primary visual cue yang dominan.
+
+3. **Premis 3 (Bento Apple HIG vs Modal Narrow Squeeze)**: Formulir transaksi (rekonsiliasi kas, input produk BOM, harga cabang, verifikasi bukti bayar) membutuhkan bidang visual yang lapang agar data master, kalkulasi, dan field input dapat dilihat tanpa scroll vertikal berlebih.
+   - *Bukti Observasi*: 127 kemunculan kelas `max-w-xs`, `max-w-sm`, `max-w-md`, dan `max-w-lg` pada modal formulir input data, termasuk form rekonsiliasi kas `pos/terminal.blade.php` line 3141 (`max-w-md`).
+   - *Inferensi*: Pengguna dipaksa menggulir di dalam dialog sempit dengan bilah scroll berlapis (*nested scrollbars*), memicu klaustrofobia visual dan kelelahan operasional.
+
+4. **Premis 4 (Backdrop Architecture & Viewport Edge-to-Edge)**: Menaruh background overlay hitam transparan pada flex wrapper (`class="fixed inset-0 flex ... bg-black/60"`) menyebabkan lapisan backdrop gagal menutupi area di luar flex bounding box saat header sticky atau viewport safe-area aktif.
+   - *Bukti Observasi*: 47 modal di `pos/terminal.blade.php`, `products/index.blade.php`, dan `materials/index.blade.php` menggunakan pola flex wrapper tersebut. Sebaliknya, `suppliers/index.blade.php` telah memisahkan backdrop mandiri secara benar.
+   - *Inferensi*: Terjadi kebocoran visual bilah atas (*topbar bleed*) dan modal terpotong pada browser mobile.
+
+5. **Premis 5 (Maintainability & Monolithic Danger)**: Menggabungkan 7.158 baris kode, 20 modal, dan 2.500 baris inline JavaScript ke dalam satu file `pos/terminal.blade.php` meningkatkan risiko regresi kode, menyulitkan caching Blade, dan memicu memory spike pada parser.
+   - *Bukti Observasi*: `pos/terminal.blade.php` berukuran 532 KB dengan 7.158 baris. `products/index.blade.php` menduplikasi 1.350 baris kode modal Create dan Edit secara verbatim.
+   - *Inferensi*: Refactoring modular berbasis Blade partials (`resources/views/app/pos/terminal/partials/*` dan `resources/views/app/products/partials/*`) mutlak diperlukan demi stabilitas produksi.
 
 ---
 
-## 3. Complex UI Elements & Replacement Guidelines
+## 3. Caveats
 
-The survey identified the following critical UI complexities across the 87 templates:
-
-| Complex UI Element | Total Count | Risk Description | Safe Replacement Syntax |
-|---|---|---|---|
-| **Alpine.js `x-data` State** | 56 declarations across 74 files | Hardcoded strings inside JS objects (e.g., `modalTitle: 'Detail Tenant'`) | Declare translatable data via `@json(__('...'))` or bind dynamically |
-| **JS `confirm()`, `alert()`, `prompt()`** | 38 occurrences | Unescaped single quotes in English strings (e.g., `don't`, `it's`) will break JS | Use `confirm(@json(__('admin.key')))` |
-| **Blade Ternary Expressions** | 229 occurrences | `{{ $item->is_active ? 'Aktif' : 'Nonaktif' }}` | `{{ $item->is_active ? __('common.status_active') : __('common.status_inactive') }}` |
-| **Raw Attributes (`placeholder`, `title`, etc.)** | 499 occurrences | Double quotes inside attributes | `placeholder="{{ __('admin.key') }}"` or `:placeholder="@json(__('admin.key'))"` |
-| **Modals & Dialogs** | 111 triggers/backdrops across 46 files | Multi-layered Alpine toggles (`x-show="createOpen"`, `@click.away`) | Keep all Alpine directives untouched; replace inner text nodes only |
-| **Dynamic Interpolations** | ~180 occurrences | Strings with dynamic Blade variables like `Menampilkan {{ $count }} data` | Use parameter binding: `{{ __('admin.showing_count', ['count' => $count]) }}` |
-| **Data Tables** | 35 files with `<table>` | Complex `<thead>` sorting links, tooltips, empty state spans | Replace `<th>` labels and empty state `<td>` spans with `{{ __('admin.key') }}` |
+1. **Read-Only Scope**: Seluruh pengamatan dilakukan secara statis melalui inspeksi kode, parsing AST, dan regex audit tanpa menjalankan browser runtime rendering atau headless Puppeteer/Playwright. Perilaku visual di layar nyata (seperti animasi transisi Alpine.js `x-transition`) didasarkan pada analisis kode Tailwind & Alpine.
+2. **Dynamic Alpine JS State**: Beberapa modal di `pos/terminal.blade.php` dan `products/index.blade.php` dibuka berdasarkan event dinamis JavaScript (`$dispatch`, inline methods). Kondisi reaktifitas dinamis saat runtime bergantung pada kelengkapan payload data dari backend controller.
+3. **Hardware / Thermal Printer Constraints**: Antarmuka printer di `pos/printers/index.blade.php` melibatkan interaksi WebUSB, Bluetooth ESC/POS, dan Network socket printing yang hanya dapat diuji sepenuhnya dengan perangkat keras printer termal nyata.
 
 ---
 
-## 4. Proposed Logical Grouping & Remediation Milestones
+## 4. Conclusion
 
-To ensure maximum safety, prevent context overflow, and guarantee that each milestone can be independently verified with `python scratch/deep_audit_v2.py`, the 87 files are decomposed into **6 logical milestones**:
+Secara keseluruhan, arsitektur antarmuka modul transaksional COOCA (`resources/views/app`) telah memiliki pondasi visual yang modern berbasis Tailwind CSS dan Alpine.js, dengan beberapa tampilan (seperti `pos/shifts.blade.php`, `pos/printers/index.blade.php`, dan `suppliers/index.blade.php`) yang telah mengadopsi standar Apple Bento HIG secara konsisten.
+
+Namun, terdapat **5 kelemahan sistemik** yang memerlukan perbaikan terstruktur:
+1. **Monolitik Terminal Kasir & Mega-Files**: `pos/terminal.blade.php` (7.158 baris), `products/index.blade.php` (3.443 baris), dan `warehouse/index.blade.php` (1.812 baris) perlu didekomposisi menjadi sub-partial modular.
+2. **Cacat Arsitektur Backdrop (47 lokasi)**: Wrapper flex dengan background langsung harus dimigrasikan ke arsitektur backdrop mandiri seperti pada `suppliers/index.blade.php`.
+3. **Penyempitan Modal Formulir (127 lokasi)**: Seluruh pop-up formulir harus dinaikkan ke canvas Bento XXL (`max-w-5xl`/`6xl` pada desktop) dan Adaptive Bottom Sheet (`rounded-t-[28px] max-h-[96vh]` dengan safe-area `pb-28` pada mobile).
+4. **Target Sentuh < 44px & Clutter Aksi Tabel**: Baris tabel dengan 3–4 tombol kecil (`w-8 h-8`) harus dirampingkan menjadi 1 aksi primer + 1 menu overflow (`⋯`), serta memastikan target sentuh minimum 44×44px.
+5. **Mobile Viewport Optimization**: Mengganti tumpukan kartu metrik vertikal (Infinite Card Bloat) pada `inventory/stocks` dan `pos/orders` dengan **Horizontal Snap Slider** (`snap-x snap-mandatory`), serta menambahkan sticky bottom action bar pada formulir transaksi mobile (`sales-orders/create`, `invoices/create`, `purchase-orders/create`).
+
+### Rekomendasi Roadmap Remediasi (4 Fase)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                      ADMIN VIEWS REMEDIATION ROADMAP (87 FILES)                        │
-├───────────┬───────────────────────────────────────┬──────────┬───────────┬─────────────┤
-│ Milestone │ Scope / Modules                       │ Files    │ Lines     │ Complexity  │
-├───────────┼───────────────────────────────────────┼──────────┼───────────┼─────────────┤
-│ Phase 1   │ Core Admin, Auth & Main Dashboard     │ 8 files  │ 3,204 l   │ Medium      │
-│ Phase 2   │ Tenant Operations & Subscriptions     │ 10 files │ 6,583 l   │ Medium-High │
-│ Phase 3   │ Finance, Banking & B2B Sales          │ 34 files │ 7,360 l   │ High        │
-│ Phase 4   │ Marketing, Content, Community & CMS   │ 16 files │ 5,189 l   │ Medium      │
-│ Phase 5   │ Communication Mega-Files (Channels)   │ 4 files  │ 10,111 l  │ Critical    │
-│ Phase 6   │ System Configuration & AI Services    │ 15 files │ 7,962 l   │ High        │
-├───────────┼───────────────────────────────────────┼──────────┼───────────┼─────────────┤
-│ **TOTAL** │ **All 30 Submodules**                 │ **87**   │ **40,409**│             │
-└───────────┴───────────────────────────────────────┴──────────┴───────────┴─────────────┘
+│                        ROADMAP REMEDIASI UI/UX TRANSAKSIONAL COOCA                     │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 🚀 FASE 1: Standarisasi Backdrop Mandiri & Penegakan Touch Target (Quick Wins)         │
+│ • Perbaiki 47 flawed backdrop flex wrappers menjadi standalone backdrop div            │
+│ • Naikkan target sentuh tombol aksi tabel dan toggle mobile ke min-h-[44px]            │
+│ • Terapkan menu overflow (⋯) pada tabel sales-orders, quotations, dan materials        │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 📐 FASE 2: Dekomposisi Mega-File Produk & Eliminasi Duplikasi Modal                    │
+│ • Ekstraksi products/index.blade.php: pisahkan state Alpine ke assets/js               │
+│ • Satukan modal Create & Edit Produk (~1.350 baris duplikat) menjadi shared partial    │
+│ • Naikkan sub-modal kategori, satuan, dan barcode ke Bento XXL canvas                  │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 📱 FASE 3: Optimalisasi Operasional Mobile & Ergonomi Layar Sentuh                     │
+│ • Terapkan Horizontal Snap Slider pada metrik inventory/stocks dan pos/orders          │
+│ • Tambahkan Sticky Bottom Submit Bar pada formulir transaksi mobile                    │
+│ • Eliminasi text-xs pada 45 input form untuk mencegah iOS Safari auto-zoom             │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 💎 FASE 4: Modularisasi POS Terminal Kasir (pos/terminal.blade.php)                    │
+│ • Pecah 20 modal inline pos/terminal.blade.php ke folder pos/terminal/modals/*        │
+│ • Ekstraksi 2.500 baris script kasir ke modul JS terisolasi (pos-engine.js)           │
+│ • Selaraskan modal shift kasir pos/terminal dengan standar Bento XXL pos/shifts        │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Detailed Milestone Breakdown:
-
-#### Phase 1: Core Admin, Auth & Main Dashboard (8 files, 3,204 lines)
-- `admin/dashboard.blade.php` (1,636 lines) - Superadmin primary KPI & webhook console
-- `admin/roles/index.blade.php` (726 lines) - RBAC roles & permissions
-- `admin/auth/login.blade.php` (177 lines)
-- `admin/auth/reset-password.blade.php` (184 lines)
-- `admin/auth/forgot-password.blade.php` (139 lines)
-- `admin/profile/index.blade.php` (197 lines) - Admin profile settings
-- `admin/users/index.blade.php` (133 lines) - Superadmin staff
-- `admin/smtp/index.blade.php` (12 lines) - Stub
-
-#### Phase 2: Tenant Operations & Subscriptions (10 files, 6,583 lines)
-- `admin/pricing-programs/index.blade.php` (1,421 lines) & `simulate.blade.php` (149 lines)
-- `admin/account-recoveries/index.blade.php` (888 lines) & `show.blade.php` (616 lines)
-- `admin/subscriptions/index.blade.php` (729 lines) & `show.blade.php` (312 lines)
-- `admin/billing-packages/index.blade.php` (1,039 lines)
-- `admin/businesses/index.blade.php` (429 lines) & `show.blade.php` (340 lines)
-- `admin/promos/index.blade.php` (660 lines)
-
-#### Phase 3: Finance, Banking & B2B Sales (34 files, 7,360 lines)
-- **`finance` (18 files, 3,356 lines):**
-  - `index.blade.php` (634 lines)
-  - 9 Modals (`modal-coa`, `modal-create-ap`, `modal-create-ar`, `modal-create-journal`, `modal-create-transaction`, `modal-lightbox`, `modal-pay-ap`, `modal-pay-ar`)
-  - 8 Tabs (`tab-ap`, `tab-ar`, `tab-balance-sheet`, `tab-cashflow`, `tab-coa`, `tab-journals`, `tab-ledger`, `tab-sync`, `tab-trial-balance`)
-- **`b2b` (11 files, 2,237 lines):**
-  - `index.blade.php` (328 lines)
-  - 6 Modals (`modal-create-invoice`, `modal-create-order`, `modal-create-quotation`, `modal-create-return`, `modal-edit-document`, `modal-record-payment`)
-  - 4 Tabs (`tab-invoices`, `tab-orders`, `tab-quotations`, `tab-returns`)
-- **`payment_accounts` (3 files, 911 lines):** `index.blade.php` (382 lines), `edit.blade.php` (287 lines), `create.blade.php` (242 lines)
-- **`settlements` (2 files, 856 lines):** `index.blade.php` (572 lines), `show.blade.php` (284 lines)
-
-#### Phase 4: Marketing, Content, Community & CMS (16 files, 5,189 lines)
-- `admin/posts/index.blade.php` (811 lines), `create.blade.php` (410 lines), `edit.blade.php` (405 lines)
-- `admin/events/index.blade.php` (296 lines), `create.blade.php` (263 lines), `edit.blade.php` (263 lines), `show.blade.php` (315 lines)
-- `admin/templates/index.blade.php` (413 lines), `create.blade.php` (186 lines), `edit.blade.php` (196 lines)
-- `admin/word_filters/index.blade.php` (540 lines)
-- `admin/legal-pages/index.blade.php` (176 lines), `edit.blade.php` (247 lines)
-- `admin/feedback/index.blade.php` (169 lines), `show.blade.php` (230 lines)
-- `admin/leads/index.blade.php` (269 lines)
-
-#### Phase 5: Communication Mega-Files (4 files, 10,111 lines)
-- `admin/inbox/index.blade.php` (3,818 lines) - Mega-file: Live chat, AI agent, Webhooks
-- `admin/whatsapp/index.blade.php` (2,905 lines) - Mega-file: Meta Cloud API, blast campaigns, templates
-- `admin/whatsapp/blast_show.blade.php` (382 lines)
-- `admin/social_media/index.blade.php` (3,006 lines) - Mega-file: Social media scheduler & OAuth channels
-
-#### Phase 6: System Configuration & AI Services (15 files, 7,962 lines)
-- **`settings` (11 files, 4,793 lines):**
-  - `index.blade.php` (510 lines)
-  - 10 Tabs: `tab-social` (943 lines), `tab-whatsapp` (612 lines), `tab-social-links` (555 lines), `tab-seo` (513 lines), `tab-branding` (365 lines), `tab-shipping` (267 lines), `tab-system` (266 lines), `tab-payment` (265 lines), `tab-smtp` (256 lines), `tab-marketplace` (241 lines)
-- `admin/ai_tokens/index.blade.php` (1,869 lines) - API token pool & quota monitoring
-- `admin/ai-studio/sources.blade.php` (483 lines) & `pricing.blade.php` (338 lines)
-- `admin/error-logs/index.blade.php` (479 lines)
-
 ---
 
-## 5. Caveats
+## 5. Verification Method
 
-1. **Non-destructive Invariance:** During this survey, absolutely NO view files, models, controllers, or translation dictionaries were altered.
-2. **Translation Key Strategy:**
-   - Existing keys in `lang/id/admin.php` and `lang/en/admin.php` already provide coverage for 676 common admin phrases.
-   - However, because the total file count is 87 files with 40,409 lines, completing full localization will require adding an estimated ~800 to 1,000 additional keys to both `lang/id/admin.php` and `lang/en/admin.php`.
-   - Reusable actions (Simpan, Batal, Ubah, Hapus, Cari, Status) should reuse `common.php` to avoid bloating `admin.php` with duplicate keys.
-3. **Mega-Files Context Limits:** Modifying `inbox/index.blade.php` (3,818 lines), `whatsapp/index.blade.php` (2,905 lines), and `social_media/index.blade.php` (3,006 lines) will require chunked replacements or targeted tool calls to prevent tool payload limits.
+Untuk memverifikasi temuan audit secara independen, jalankan serangkaian script inspeksi di bawah ini:
 
----
-
-## 6. Conclusion
-
-- `resources/views/admin` is currently **0% localized** in view source code, with **86 files containing 947 hardcoded string issues** detected by `scratch/deep_audit_v2.py`.
-- Fortunately, dictionary preparation is already 77% aligned: `lang/id/admin.php` and `lang/en/admin.php` already hold 878 keys with 100% ID-EN parity, ready to be leveraged during remediation.
-- The 6-phase decomposition outlined in Section 4 provides a logically sound, risk-isolated execution path that balances file sizes, isolates mega-files, and prevents Alpine.js / JS quote breakages.
-
----
-
-## 7. Verification Method
-
-To independently reproduce and verify this survey:
-
-1. **Run Inventory Scan:**
+1. **Verifikasi Total File & Baris Transaksional**:
    ```powershell
-   python .agents/teamwork/explorer_survey_2/survey_admin.py
+   python -c "
+   import os, glob
+   base = r'c:\laragon\www\cooca_core\resources\views\app'
+   mods = ['pos', 'sales', 'sales-orders', 'products', 'inventory', 'purchasing', 'purchase-orders', 'suppliers', 'invoices', 'quotations', 'warehouse', 'materials', 'storefront', 'marketplace', 'customers']
+   tot_f, tot_l = 0, 0
+   for m in mods:
+       fl = glob.glob(os.path.join(base, m, '**', '*.blade.php'), recursive=True)
+       ln = sum(sum(1 for _ in open(f, 'r', encoding='utf-8', errors='ignore')) for f in fl)
+       print(f'{m:20}: {len(fl):2} files | {ln:,} lines')
+       tot_f += len(fl); tot_l += ln
+   print(f'TOTAL: {tot_f} files | {tot_l:,} lines')
+   "
    ```
-   *Expected result:* 87 files, 40,409 lines, 30 submodules, 0 files with i18n calls.
 
-2. **Run Deep Audit Script:**
+2. **Verifikasi Cacat Backdrop Wrapper (47 Lokasi)**:
    ```powershell
-   python scratch/deep_audit_v2.py resources/views/admin
+   python -c "
+   import os, glob, re
+   base = r'c:\laragon\www\cooca_core\resources\views\app'
+   pattern = re.compile(r'class=\"[^\"]*\bfixed\s+inset-0\b[^\"]*\bflex\b[^\"]*\bbg-black/(?:[0-9]+)\b')
+   for root, _, files in os.walk(base):
+       for f in files:
+           if f.endswith('.blade.php'):
+               p = os.path.join(root, f)
+               cnt = len(pattern.findall(open(p, 'r', encoding='utf-8', errors='ignore').read()))
+               if cnt > 0:
+                   print(f'{os.path.relpath(p, base)}: {cnt} flawed backdrops')
+   "
    ```
-   *Expected result:* 86 files with issues, 1 clean file (`smtp/index.blade.php`), 947 total issues.
 
-3. **Verify Language File Parity:**
-   ```powershell
-   python .agents/teamwork/explorer_survey_2/analyze_lang_admin.py
-   ```
-   *Expected result:* 878 keys in `lang/id/admin.php`, 878 keys in `lang/en/admin.php`, 0 key discrepancies.
+3. **Verifikasi Penyempitan Modal Sempit (127 Lokasi)**:
+   Periksa `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\scan_results.json` untuk daftar lengkap modal dengan kelas `max-w-xs`, `max-w-sm`, `max-w-md`, dan `max-w-lg`.
 
-4. **Verify Key Match Ratio:**
+4. **Verifikasi Kondisi Ketiadaan Modifikasi (Read-Only Guarantee)**:
+   Jalankan git status untuk membuktikan tidak ada perubahan pada file repositori di luar direktori teamwork:
    ```powershell
-   python .agents/teamwork/explorer_survey_2/match_keys.py
+   git status resources/views/app
    ```
-   *Expected result:* 676 keys (77.0%) match strings in `resources/views/admin`.
-
-5. **Verify Complex UI Elements:**
-   ```powershell
-   python .agents/teamwork/explorer_survey_2/inspect_complex_ui.py
-   ```
-   *Expected result:* 56 `x-data` blocks, 38 JS confirms, 229 Blade ternaries, 499 raw translatable attributes, 111 modal triggers.
+   *(Harus menghasilkan working tree clean, tanpa modified files).*

@@ -1367,17 +1367,25 @@
         @if (\App\Support\Context::hasPermission('products.create'))
             <template x-teleport="body">
                 <div x-show="showQuickSaveModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
                     role="dialog" aria-modal="true" aria-labelledby="quick-save-modal-title"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
+                    @keydown.escape.window="showQuickSaveModal = false"
                     style="display: none;">
-                    <div @click.away="showQuickSaveModal = false"
-                        class="w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[92vh] rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
+                    <!-- 1. Standalone Independent Backdrop Overlay -->
+                    <div x-show="showQuickSaveModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showQuickSaveModal = false"></div>
+
+                    <!-- 2. Centered Scroll & Dialog Container -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showQuickSaveModal = false">
+                        <div @click.away="showQuickSaveModal = false"
+                            class="w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[92vh] rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
@@ -1534,6 +1542,7 @@
                         </div>
 
                     </div>
+                    </div>
                 </div>
             </template>
         @endif
@@ -1544,17 +1553,25 @@
         @if (\App\Support\Context::hasPermission('costing.manage'))
             <template x-teleport="body">
                 <div x-show="showSaveModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
                     role="dialog" aria-modal="true" aria-labelledby="save-run-modal-title"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
+                    @keydown.escape.window="showSaveModal = false"
                     style="display: none;">
-                    <div @click.away="showSaveModal = false"
-                        class="w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
+                    <!-- 1. Standalone Independent Backdrop Overlay -->
+                    <div x-show="showSaveModal"
+                        x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showSaveModal = false"></div>
+
+                    <!-- 2. Centered Scroll & Dialog Container -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showSaveModal = false">
+                        <div @click.away="showSaveModal = false"
+                            class="w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
@@ -1656,6 +1673,7 @@
                             </button>
                         </div>
 
+                    </div>
                     </div>
                 </div>
             </template>

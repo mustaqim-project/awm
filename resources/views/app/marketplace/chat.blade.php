@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('marketplace.chat_page_title') . ' - ' . $business->name,
-    'headerTitle' => __('marketplace.chat_header_title'),
-    'headerSubtitle' => __('marketplace.chat_page_subtitle'),
 ])
 
 @section('content')

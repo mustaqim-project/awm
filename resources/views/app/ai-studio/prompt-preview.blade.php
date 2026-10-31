@@ -1,9 +1,25 @@
 {{-- Sheet Transparansi Prompt & Kuotasi Kredit AI Studio (Apple HIG Sheet Modal) --}}
-<div x-show="promptModalOpen" x-transition.opacity
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-md"
-    style="display: none;">
-    <div @click.away="promptModalOpen = false"
-        class="w-full max-w-2xl max-h-[90vh] flex flex-col rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<template x-teleport="body">
+    <div x-show="promptModalOpen" x-cloak
+        class="fixed inset-0 z-[200] overflow-y-auto"
+        role="dialog" aria-modal="true"
+        @keydown.escape.window="promptModalOpen = false"
+        style="display: none;">
+        <!-- 1. Standalone Independent Backdrop Overlay -->
+        <div x-show="promptModalOpen"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+            @click="promptModalOpen = false"></div>
+
+        <!-- 2. Centered Scroll & Dialog Container -->
+        <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="promptModalOpen = false">
+            <div @click.away="promptModalOpen = false"
+                class="w-full max-w-2xl max-h-[90vh] flex flex-col rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
         <!-- Sheet Header -->
         <div class="px-6 py-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between bg-black/[0.01] dark:bg-white/[0.02]">
@@ -113,5 +129,7 @@
             </button>
         </div>
 
+        </div>
     </div>
 </div>
+</template>

@@ -200,10 +200,24 @@
         @if (\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
             <div x-show="uploadModalOpen" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                x-transition.opacity
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="uploadModalOpen = false">
-                <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
+
+                <!-- 1. Standalone Independent Backdrop Overlay -->
+                <div x-show="uploadModalOpen"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="uploadModalOpen = false"></div>
+
+                <!-- 2. Centered Scroll & Dialog Container -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="uploadModalOpen = false">
+                    <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
                     @click.outside="uploadModalOpen = false"
                     x-data="{ isSubmitting: false }">
                     <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
@@ -275,6 +289,7 @@
                             </button>
                         </div>
                     </form>
+                </div>
                 </div>
             </div>
         </template>

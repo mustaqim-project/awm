@@ -1,24 +1,46 @@
-## 2026-10-31T01:19:52Z
-[Message] timestamp=2026-10-31T01:19:52Z sender=9ef06ef4-5dc0-47a7-a57e-c16ff5ac4a9f priority=MESSAGE_PRIORITY_HIGH content=Read the authoritative user request at:
-c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+# Dispatch Task: Explorer Survey 3 — Management, Settings, Finance, Reports & Operational Modules
 
-Your role is Explorer 3 (App Views & Translation Architecture Survey).
-Your working directory is:
-c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3
+## Objective
+Survey and audit all management, analytical, and back-office modules in `resources/views/app`, specifically focusing on:
+1. Dashboards, analytics, KPIs, metric cards, charts, summaries.
+2. Finance, accounting, ledgers, expenses, cash flow, payment methods.
+3. Customers, CRM, loyalty programs, members.
+4. HRM, employees, shifts, attendance, payroll.
+5. Settings, business profile, multi-outlet configurations, role/permissions management, audit logs, notifications.
+6. Empty states, loading states, error boundaries, modal dialogues, filter drawers, and multi-industry UI adaptations.
 
-Skills to consult:
-- C:\Users\Ulfah Ramadhani\.gemini\config\skills\multi-language-and-i18n\SKILL.md
-- C:\Users\Ulfah Ramadhani\.gemini\config\skills\cooca-agent-directive\SKILL.md
+## Scope Boundaries
+- STRICTLY READ-ONLY. DO NOT write or modify any application files in `resources/views/app` or anywhere in `resources/` or `app/`.
+- Your working directory is `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3`. Write all your notes, progress, and final report here.
 
-Tasks:
-1. Survey all Blade templates in `resources/views/app` (185 files).
-2. Map the directory structure, submodules, and file distribution under `resources/views/app` (e.g. pos, inventory, finance, hrm, settings, crm, etc.).
-3. Survey existing translation files in `lang/id` and `lang/en` and root JSON language files (`lang/id.json`, `lang/en.json` if any).
-   - What modular PHP files exist in `lang/id/*.php` and `lang/en/*.php`?
-   - What are their keys, depth, naming patterns?
-   - What is the current state of bilingual parity between id and en?
-4. Analyze how `app` views interact with translations (conventions, common reusable keys vs feature-specific keys).
-5. Identify complex UI elements, Alpine.js reactive states, formatting helpers, and dynamic text interpolations across `app` views.
-6. Propose a logical grouping/decomposition of `app` views into 3-5 modular milestones for parallel or sequential remediation.
-7. Deliver a comprehensive survey report in `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md` and send a message when complete.
-Remember: DO NOT modify any application or view source code. You are read-only.
+## Input Information
+- User requirements: `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` (MUST read first)
+- Target directory: `c:\laragon\www\cooca_core\resources\views\app`
+- Relevant skills & guidelines to consult:
+  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\cooca-agent-directive\SKILL.md`
+  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\reports-and-dashboard-audit\SKILL.md`
+  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\multi-industry-system-audit\SKILL.md`
+  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-ux-pro-max\SKILL.md`
+
+## Output Requirements
+Produce a structured handoff report in `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md` containing:
+1. Complete inventory of management, reporting, settings, and CRM/HR views found.
+2. Dashboard architecture, visual hierarchy, and reporting usability evaluation.
+3. Detailed UI/UX findings: view file path, visual/UX issue description, severity (CRITICAL / HIGH / MEDIUM / LOW), concrete improvement recommendations.
+4. Empty state, error handling, and multi-industry adaptability analysis.
+
+
+## 2026-10-31T10:54:31Z
+[Message from aa2ef6eb-6969-4758-9898-c916a6745d73]
+You are an Explorer agent for surveying the UI/UX architecture of resources/views/app in COOCA.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3
+Read your dispatch details at: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\DISPATCH.md
+Read the original request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+
+CRITICAL RULES:
+- STRICTLY READ-ONLY. DO NOT modify any codebase files in resources/views/app or anywhere in the repository.
+- Survey all management, settings, finance, reports, CRM, HR, and analytics views in resources/views/app.
+- Evaluate dashboard architecture, visual hierarchy, metric cards, modal dialogs, empty states, error handling, and multi-industry adaptability.
+- Identify specific UI/UX issues, visual hierarchy flaws, clutter, or inconsistency.
+- Write your final handoff report to: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md
+- Send a completion message back when done.

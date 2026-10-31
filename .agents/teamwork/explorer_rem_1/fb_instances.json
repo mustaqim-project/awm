@@ -1,0 +1,610 @@
+[
+  {
+    "file": "calculator.blade.php",
+    "line": 1370,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showQuickSaveModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"quick-save-modal-title\"\n                    x-transition:enter=\"transition ease-out duration-200\"\n                    x-transition:enter-start=\"opacity-0\""
+  },
+  {
+    "file": "calculator.blade.php",
+    "line": 1547,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showSaveModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"save-run-modal-title\"\n                    x-transition:enter=\"transition ease-out duration-200\"\n                    x-transition:enter-start=\"opacity-0\""
+  },
+  {
+    "file": "ai-studio/index.blade.php",
+    "line": 368,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "<div x-show=\"deleteModalOpen\" x-transition.opacity class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm\" style=\"display: none;\">\n        <div @click.away=\"deleteModalOpen = false\" class=\"w-full max-w-sm rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 shadow-2xl space-y-4\">\n            <div class=\"w-10 h-10 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center\">\n                <i data-lucide=\"alert-triangle\" class=\"w-5 h-5\"></i>"
+  },
+  {
+    "file": "ai-studio/prompt-preview.blade.php",
+    "line": 3,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50",
+    "x_show": "promptModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/50 backdrop-blur-md\"\n    style=\"display: none;\">\n    <div @click.away=\"promptModalOpen = false\"\n        class=\"w-full max-w-2xl max-h-[90vh] flex flex-col rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200\">"
+  },
+  {
+    "file": "ai-studio/show.blade.php",
+    "line": 372,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50",
+    "x_show": "exportModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm\"\n        style=\"display: none;\">\n        <div @click.away=\"exportModalOpen = false\"\n            class=\"w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-5\">"
+  },
+  {
+    "file": "ai-studio/show.blade.php",
+    "line": 450,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50",
+    "x_show": "generationDrawerOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm\"\n        style=\"display: none;\">\n        <div @click.away=\"generationDrawerOpen = false\"\n            class=\"w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4\">"
+  },
+  {
+    "file": "finance/expenses.blade.php",
+    "line": 332,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showCreateModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "finance/payables.blade.php",
+    "line": 335,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showImportModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n            x-transition:enter=\"transition ease-out duration-200\"\n            x-transition:enter-start=\"opacity-0\"\n            x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "finance/receivables.blade.php",
+    "line": 393,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showImportModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n            x-transition:enter=\"transition ease-out duration-200\"\n            x-transition:enter-start=\"opacity-0\"\n            x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "finance/accounting/coa.blade.php",
+    "line": 261,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "createModalOpen",
+    "x_data": "{ isSubmitting: false }",
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                x-transition.opacity\n                @keydown.escape.window=\"createModalOpen = false\">\n                <div class=\"w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]\""
+  },
+  {
+    "file": "finance/accounting/coa.blade.php",
+    "line": 343,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "editModalOpen",
+    "x_data": "{ isSubmitting: false }",
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                x-transition.opacity\n                @keydown.escape.window=\"editModalOpen = false\">\n                <div class=\"w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]\""
+  },
+  {
+    "file": "finance/accounting/coa.blade.php",
+    "line": 406,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md\"\n                @keydown.escape.window=\"deleteModalOpen = false\">\n                <div class=\"w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[22px] shadow-2xl border border-black/10 dark:border-white/10 p-6 space-y-5\"\n                    @click.outside=\"deleteModalOpen = false\">"
+  },
+  {
+    "file": "finance/accounting/coa.blade.php",
+    "line": 444,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showImportModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                x-transition:enter=\"transition ease-out duration-200\"\n                x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "finance/accounting/reconciliation.blade.php",
+    "line": 203,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "uploadModalOpen",
+    "x_data": "{ isSubmitting: false }",
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                x-transition.opacity\n                @keydown.escape.window=\"uploadModalOpen = false\">\n                <div class=\"w-full max-w-full sm:max-w-3xl lg:max-w-4xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]\""
+  },
+  {
+    "file": "finance/cash-bank/index.blade.php",
+    "line": 513,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showAccountModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "finance/cash-bank/index.blade.php",
+    "line": 612,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "editAccountModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "finance/cash-bank/index.blade.php",
+    "line": 688,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showInflowModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "finance/cash-bank/index.blade.php",
+    "line": 814,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showOutflowModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "finance/cash-bank/index.blade.php",
+    "line": 944,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showTransferModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    x-transition:enter=\"transition ease-out duration-250\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-200\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "master-data/index.blade.php",
+    "line": 718,
+    "class": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @click.self=\"showAddModal = false\"\n                    @keydown.escape.window=\"showAddModal = false\"\n                    x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\""
+  },
+  {
+    "file": "master-data/index.blade.php",
+    "line": 923,
+    "class": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showEditModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @click.self=\"showEditModal = false\"\n                    @keydown.escape.window=\"showEditModal = false\"\n                    x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\""
+  },
+  {
+    "file": "master-data/index.blade.php",
+    "line": 1138,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md\"\n                @keydown.escape.window=\"closeDelete()\"\n                x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-150\""
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 595,
+    "class": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @keydown.escape.window=\"showAddModal = false\">\n\n                <!-- Modal Container: Apple Bottom Sheet on mobile, XXL Centered Bento Dialog on desktop -->"
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 822,
+    "class": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showPriceModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @keydown.escape.window=\"showPriceModal = false\">\n\n                <div class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-xl transition-all\""
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 919,
+    "class": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showEditModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @keydown.escape.window=\"showEditModal = false\">\n\n                <div class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-2xl transition-all\""
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 1033,
+    "class": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddSupplierModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"showAddSupplierModal = false\">\n            <div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"\n                @click.outside=\"showAddSupplierModal = false\">"
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 1095,
+    "class": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddCategoryModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"showAddCategoryModal = false\">\n            <div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"\n                @click.outside=\"showAddCategoryModal = false\">"
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 1145,
+    "class": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddUnitModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"showAddUnitModal = false\">\n            <div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"\n                @click.outside=\"showAddUnitModal = false\">"
+  },
+  {
+    "file": "materials/index.blade.php",
+    "line": 1211,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md\"\n                    @keydown.escape.window=\"closeDelete()\">\n                <div class=\"w-full max-w-sm rounded-[24px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden shadow-2xl border border-black/[0.08] dark:border-white/[0.1] text-center\"\n                    @click.outside=\"closeDelete()\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 2143,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showCustomerModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showCustomerModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"\n            @click.outside=\"showCustomerModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 2190,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50",
+    "x_show": "showPaymentModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-3 sm:p-4\"\n        style=\"display: none;\"\n        @keydown.escape.window=\"if(!isProcessing) showPaymentModal = false\"\n        @keydown.enter.prevent=\"if(!isProcessing && (isSplitPayment ? splitRemainingAmount === 0 : currentTenderAmount >= grandTotal)) submitCheckout()\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 2504,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60",
+    "x_show": "showQrisModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-3 sm:p-4\"\n        style=\"display: none;\">\n        <div class=\"pos-modal-panel w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-[26px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden transition-all\"\n            @click.outside=\"/* Terkunci: modal tidak dapat ditutup dengan klik luar hingga lunas atau klik Ganti Metode Bayar */\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 2611,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50",
+    "x_show": "showSuccessModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[3px] p-4\"\n        @keydown.escape.window=\"if(showSuccessModal) resetForNewOrder()\">\n        <div class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden\"\n            @click.outside=\"resetForNewOrder()\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 2873,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60",
+    "x_show": null,
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4\"\n        style=\"display: none;\"\n        @click.self=\"showPosSettingsModal = false\"\n        @keydown.escape.window=\"showPosSettingsModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3108,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showOpenShiftModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"\n        style=\"display: none;\">\n        <div\n            class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3138,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showCloseShiftModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"\n        style=\"display: none;\">\n        <div\n            class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3210,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showHeldOrdersModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"\n        style=\"display: none;\">\n        <div\n            class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3252,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showHoldPromptModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\">\n        <div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"\n            @click.outside=\"showHoldPromptModal = false\">\n            <div>"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3280,
+    "class": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40",
+    "x_show": "showCashMovementModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"\n        style=\"display: none;\"\n        @keydown.escape.window=\"showCashMovementModal = false\">\n        <div"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3405,
+    "class": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/50",
+    "x_show": "showSupervisorPinModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-4\"\n        @keydown.escape.window=\"if(!supervisorPinLoading) closeSupervisorPinModal()\">\n        <div class=\"pos-modal-panel w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl rounded-[18px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"if(!supervisorPinLoading) closeSupervisorPinModal()\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3468,
+    "class": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/40",
+    "x_show": "showScannerPermission",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\">\n        <div\n            class=\"w-[300px] rounded-[14px] bg-white dark:bg-[#2C2C2E] overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 text-black dark:text-white\">\n            <div class=\"px-5 pt-5 pb-4\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3498,
+    "class": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50",
+    "x_show": "showBarcodeScanner",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @click.self=\"closeBarcodeScanner()\">\n        <div\n            class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-4 sm:p-5 space-y-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3557,
+    "class": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50",
+    "x_show": "showModifierModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showModifierModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showModifierModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3685,
+    "class": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50",
+    "x_show": "showServiceVerticalModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showServiceVerticalModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showServiceVerticalModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 3916,
+    "class": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50",
+    "x_show": "showItemDetailModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showItemDetailModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showItemDetailModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 4000,
+    "class": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50",
+    "x_show": "showIncomingOrdersModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showIncomingOrdersModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showIncomingOrdersModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 4170,
+    "class": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50",
+    "x_show": "showRejectReasonModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showRejectReasonModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showRejectReasonModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 4198,
+    "class": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50",
+    "x_show": "showTablesModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showTablesModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-4xl bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white flex flex-col max-h-[90vh]\"\n            @click.outside=\"showTablesModal = false\">"
+  },
+  {
+    "file": "pos/terminal.blade.php",
+    "line": 4483,
+    "class": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50",
+    "x_show": "showTablePaymentModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"\n        @keydown.escape.window=\"showTablePaymentModal = false\">\n        <div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"\n            @click.outside=\"showTablePaymentModal = false\">"
+  },
+  {
+    "file": "products/bom.blade.php",
+    "line": 290,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddItemModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"showAddItemModal = false\">\n                <div class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"\n                    @click.outside=\"showAddItemModal = false\">"
+  },
+  {
+    "file": "products/bom.blade.php",
+    "line": 407,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                <div class=\"w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]\"\n                    @click.outside=\"closeDelete()\">\n                    <div class=\"px-5 pt-6 pb-4\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 1460,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @keydown.escape.window=\"showAddModal = false\">\n                    <div class=\"w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"\n                        @click.outside=\"showAddModal = false\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 2118,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showEditModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                    @keydown.escape.window=\"showEditModal = false\">\n                    <div class=\"w-full max-w-full sm:max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1250px] inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"\n                        @click.outside=\"showEditModal = false\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 2819,
+    "class": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddCategoryModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                <div class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\"\n                    @click.outside=\"showAddCategoryModal = false\">\n                    <div class=\"flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 2870,
+    "class": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddUnitModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                <div class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\"\n                    @click.outside=\"showAddUnitModal = false\">\n                    <div class=\"flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 2938,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showProductScannerPermission",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                <div\n                    class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\">\n                    <div class=\"flex items-start gap-3.5\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 2966,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showProductScanner",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                <div class=\"w-full max-w-md rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4 shadow-2xl\"\n                    @click.outside=\"closeProductScanner()\">\n                    <div class=\"flex items-center justify-between\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 3007,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "showBranchPricesModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"showBranchPricesModal = false\">\n                <div class=\"w-full max-w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[92vh] flex flex-col overflow-hidden\"\n                    @click.outside=\"showBranchPricesModal = false\">"
+  },
+  {
+    "file": "products/index.blade.php",
+    "line": 3253,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n                    <div class=\"w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]\"\n                        @click.outside=\"closeDelete()\">\n                        <div class=\"px-5 pt-6 pb-4\">"
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "line": 517,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddGroupModal || showEditGroupModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n             @keydown.escape.window=\"showAddGroupModal = false; showEditGroupModal = false;\">\n            <div class=\"w-full max-w-full sm:max-w-2xl md:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"\n                 @click.outside=\"showAddGroupModal = false; showEditGroupModal = false;\">"
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "line": 827,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showAddOptionModal || showEditOptionModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n             @keydown.escape.window=\"showAddOptionModal = false; showEditOptionModal = false;\">\n            <div class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"\n                 @click.outside=\"showAddOptionModal = false; showEditOptionModal = false;\">"
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "line": 1026,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "deleteGroupModalOpen",
+    "x_data": null,
+    "context": "<div x-show=\"deleteGroupModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n            <div class=\"w-full max-w-[340px] rounded-[22px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]\"\n                @click.outside=\"closeDeleteGroup()\">\n                <div class=\"px-6 pt-6 pb-4\">"
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "line": 1058,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "deleteOptionModalOpen",
+    "x_data": null,
+    "context": "<div x-show=\"deleteOptionModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">\n            <div class=\"w-full max-w-[340px] rounded-[22px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]\"\n                @click.outside=\"closeDeleteOption()\">\n                <div class=\"px-6 pt-6 pb-4\">"
+  },
+  {
+    "file": "settings/index.blade.php",
+    "line": 1943,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "templateModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto\"\n                    role=\"dialog\"\n                    aria-modal=\"true\"\n                    @click.self=\"closeApplyTemplate()\""
+  },
+  {
+    "file": "settings/index.blade.php",
+    "line": 2011,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showCreateBranchModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto\"\n                 role=\"dialog\"\n                 aria-modal=\"true\"\n                 aria-labelledby=\"create-branch-modal-title\""
+  },
+  {
+    "file": "settings/index.blade.php",
+    "line": 2363,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75",
+    "x_show": "showEditBranchModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto\"\n                 role=\"dialog\"\n                 aria-modal=\"true\"\n                 aria-labelledby=\"edit-branch-modal-title\""
+  },
+  {
+    "file": "settings/index.blade.php",
+    "line": 2723,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "deleteBranchModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto\"\n                 role=\"dialog\"\n                 aria-modal=\"true\"\n                 aria-labelledby=\"delete-branch-modal-title\""
+  },
+  {
+    "file": "settings/index.blade.php",
+    "line": 2777,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85",
+    "x_show": "showDisconnectModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85\"\n                x-transition:enter=\"ease-out duration-200\"\n                x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "warehouse/index.blade.php",
+    "line": 1048,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75",
+    "x_show": "showCreateModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"\n             x-transition:enter=\"transition ease-out duration-200\"\n             x-transition:enter-start=\"opacity-0\"\n             x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "warehouse/index.blade.php",
+    "line": 1348,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75",
+    "x_show": "showEditModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"\n             x-transition:enter=\"transition ease-out duration-200\"\n             x-transition:enter-start=\"opacity-0\"\n             x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "warehouse/index.blade.php",
+    "line": 1769,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80",
+    "x_show": "deleteModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4\"\n             x-transition:enter=\"transition ease-out duration-200\"\n             x-transition:enter-start=\"opacity-0\"\n             x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "warehouse/show.blade.php",
+    "line": 1333,
+    "class": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80",
+    "x_show": "confirmModalOpen",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4\"\n                x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-150\"\n                x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "warehouse/show.blade.php",
+    "line": 1379,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75",
+    "x_show": "showEditModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"\n                x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-150\"\n                x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "warehouse/show.blade.php",
+    "line": 1697,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75",
+    "x_show": "showAdjustModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"\n                    x-transition:enter=\"transition ease-out duration-200\" x-transition:enter-start=\"opacity-0\"\n                    x-transition:enter-end=\"opacity-100\" x-transition:leave=\"transition ease-in duration-150\"\n                    x-transition:leave-start=\"opacity-100\" x-transition:leave-end=\"opacity-0\""
+  },
+  {
+    "file": "whatsapp/index.blade.php",
+    "line": 538,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85",
+    "x_show": "showDisconnectModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85\"\n                x-transition:enter=\"ease-out duration-200\"\n                x-transition:enter-start=\"opacity-0\"\n                x-transition:enter-end=\"opacity-100\""
+  },
+  {
+    "file": "whatsapp/logs.blade.php",
+    "line": 422,
+    "class": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75",
+    "x_show": "openPruneModal",
+    "x_data": null,
+    "context": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"\n                @keydown.escape.window=\"openPruneModal = false\"\n                @click.self=\"openPruneModal = false\" style=\"display: none;\">\n            <div role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"pruneModalTitle\""
+  }
+]

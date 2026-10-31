@@ -1,0 +1,466 @@
+[
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 452,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"relative w-full sm:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl\"",
+    "line_content": "<div class=\"relative w-full sm:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-wh"
+  },
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 651,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-whi"
+  },
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 730,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-whi"
+  },
+  {
+    "module": "pos",
+    "file": "pos/receipt.blade.php",
+    "line": 446,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"no-print fixed bottom-5 left-1/2 -translate-x-1/2 z-50 max-w-sm w-full px-4 transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none\"",
+    "line_content": "<div id=\"escpos-toast\" class=\"no-print fixed bottom-5 left-1/2 -translate-x-1/2 z-50 max-w-sm w-full px-4 transition-all duration-300 transf"
+  },
+  {
+    "module": "pos",
+    "file": "pos/tables.blade.php",
+    "line": 708,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"relative w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[20px] border border-black/5 dark:border-white/10 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-center space-y-4 text-black dark:text-white my-auto\"",
+    "line_content": "<div class=\"relative w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl rounded-[20px] border border-black/5 dark:border-whit"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2145,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2506,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-[26px] border border-black/10 dark:border-white/15 p-5 sm:p-6 flex flex-col space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden transition-all\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-sm sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-[26px] border border-black/10 dark:border-white/1"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2613,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)] text-black dark:text-white relative overflow-hidden\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/15 p-5 sm:p-6"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2878,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[90vh] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-[0"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3111,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 spac"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3141,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 spac"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3213,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 sm:p-6 spac"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3253,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3284,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 sm:p-6 spac"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3407,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl rounded-[18px] border border-black/10 dark:border-white/15 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-sm bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl rounded-[18px] border border-black/10 dark:bo"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3501,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-4 sm:p-5 space-y-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] text-black dark:text-white\"",
+    "line_content": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[16px] border border-black/10 dark:border-white/10 p-4 sm:p-5 spac"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3559,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3687,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-lg bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3918,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4002,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-2xl bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4172,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-sm bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4485,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] text-black dark:text-white\"",
+    "line_content": "<div class=\"pos-modal-panel w-full max-w-md bg-white dark:bg-[#2C2C2E] rounded-[20px] border border-black/10 dark:border-white/10 p-5 space-"
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 1018,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/15 max-h-[92vh] overflow-y-auto my-8\"",
+    "line_content": "<div class=\"relative w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 sm:p-7 space-y-6 shadow-[0_25px_60px_rgba(0,0,0,0.35)] b"
+  },
+  {
+    "module": "pos",
+    "file": "pos/reports/partials/order_detail_modal.blade.php",
+    "line": 36,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"pointer-events-auto w-screen max-w-2xl bg-white dark:bg-[#1C1C1E] shadow-2xl flex flex-col border-l border-black/10 dark:border-white/10\"",
+    "line_content": "class=\"pointer-events-auto w-screen max-w-2xl bg-white dark:bg-[#1C1C1E] shadow-2xl flex flex-col border-l border-black/10 dark:border-white"
+  },
+  {
+    "module": "products",
+    "file": "products/bom.blade.php",
+    "line": 292,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"",
+    "line_content": "<div class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-whi"
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2820,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/["
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2871,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/["
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2940,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl\"",
+    "line_content": "class=\"w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08]"
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2967,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"w-full max-w-md rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-5 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-md rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/["
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 3009,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"w-full max-w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[92vh] flex flex-col overflow-hidden\"",
+    "line_content": "<div class=\"w-full max-w-full sm:max-w-2xl rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border bord"
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 519,
+    "current_width": "max-w-3xl",
+    "class_snippet": "class=\"w-full max-w-full sm:max-w-2xl md:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"",
+    "line_content": "<div class=\"w-full max-w-full sm:max-w-2xl md:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-wh"
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 829,
+    "current_width": "max-w-3xl",
+    "class_snippet": "class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden\"",
+    "line_content": "<div class=\"w-full max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/settings.blade.php",
+    "line": 254,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/settings.blade.php",
+    "line": 318,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/1"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1062,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4 max-h-[92vh] overflow-y-auto\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/["
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1122,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-wh"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1179,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"relative z-10 max-w-2xl max-h-[90vh] overflow-hidden rounded-[20px] shadow-2xl\"",
+    "line_content": "<div class=\"relative z-10 max-w-2xl max-h-[90vh] overflow-hidden rounded-[20px] shadow-2xl\" @click.stop>"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1205,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative z-10 w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-wh"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/reservations/index.blade.php",
+    "line": 676,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto\"",
+    "line_content": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dar"
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/reservations/index.blade.php",
+    "line": 740,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4\"",
+    "line_content": "<div class=\"relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/"
+  },
+  {
+    "module": "warehouse",
+    "file": "warehouse/show.blade.php",
+    "line": 1339,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center\"",
+    "line_content": "<div class=\"w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/["
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 825,
+    "current_width": "max-w-xl",
+    "class_snippet": "class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-xl transition-all\"",
+    "line_content": "<div class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-w"
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 922,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] shadow-[0_24px_60px_rgba(0,0,0,0.3)] max-h-[90vh] flex flex-col overflow-hidden sm:max-w-2xl transition-all\"",
+    "line_content": "<div class=\"w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-w"
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 1035,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-"
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 1097,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-"
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 1147,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl\"",
+    "line_content": "<div class=\"w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-"
+  },
+  {
+    "module": "materials",
+    "file": "materials/index.blade.php",
+    "line": 1213,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"w-full max-w-sm rounded-[24px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden shadow-2xl border border-black/[0.08] dark:border-white/[0.1] text-center\"",
+    "line_content": "<div class=\"w-full max-w-sm rounded-[24px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden shadow-2xl border border-black/"
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/show.blade.php",
+    "line": 531,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]\"",
+    "line_content": "<div class=\"relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-b"
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/show.blade.php",
+    "line": 804,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_50px_rgba(0,0,0,0.25)] overflow-hidden text-left\"",
+    "line_content": "<div class=\"relative w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_50"
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/opname.blade.php",
+    "line": 403,
+    "current_width": "max-w-xl",
+    "class_snippet": "class=\"relative z-10 w-full sm:max-w-xl rounded-t-[24px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] max-h-[90vh] overflow-y-auto\"",
+    "line_content": "<div class=\"relative z-10 w-full sm:max-w-xl rounded-t-[24px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:borde"
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/stocks.blade.php",
+    "line": 334,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative z-10 w-full sm:max-w-lg rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto\"",
+    "line_content": "<div class=\"relative z-10 w-full sm:max-w-lg rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:borde"
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/transfers.blade.php",
+    "line": 253,
+    "current_width": "max-w-xl",
+    "class_snippet": "class=\"relative z-10 w-full sm:max-w-xl rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto\"",
+    "line_content": "<div class=\"relative z-10 w-full sm:max-w-xl rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:borde"
+  },
+  {
+    "module": "marketplace",
+    "file": "marketplace/index.blade.php",
+    "line": 534,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10\"",
+    "line_content": "class=\"relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 s"
+  },
+  {
+    "module": "marketplace",
+    "file": "marketplace/orders.blade.php",
+    "line": 555,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10\"",
+    "line_content": "class=\"relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 s"
+  },
+  {
+    "module": "marketplace",
+    "file": "marketplace/orders.blade.php",
+    "line": 650,
+    "current_width": "max-w-2xl",
+    "class_snippet": "class=\"relative w-full max-w-2xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-2xl z-10 max-h-[92vh] overflow-y-auto\"",
+    "line_content": "class=\"relative w-full max-w-2xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 "
+  },
+  {
+    "module": "purchase-orders",
+    "file": "purchase-orders/index.blade.php",
+    "line": 372,
+    "current_width": "max-w-lg",
+    "class_snippet": "class=\"relative w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4\"",
+    "line_content": "<div class=\"relative w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden sh"
+  },
+  {
+    "module": "purchase-orders",
+    "file": "purchase-orders/show.blade.php",
+    "line": 366,
+    "current_width": "max-w-md",
+    "class_snippet": "class=\"relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4\"",
+    "line_content": "<div class=\"relative w-full max-w-md rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden sh"
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/returns/show.blade.php",
+    "line": 204,
+    "current_width": "max-w-sm",
+    "class_snippet": "class=\"relative bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[16px] max-w-sm w-full p-5 space-y-4 shadow-xl\"",
+    "line_content": "<div class=\"relative bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[16px] max-w-sm w-full p-5 space-y-4 sha"
+  }
+]

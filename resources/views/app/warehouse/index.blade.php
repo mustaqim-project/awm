@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('warehouse.title'),
-    'headerTitle' => __('warehouse.header_title'),
-    'headerSubtitle' => __('warehouse.header_subtitle')
 ])
 
 @section('content')
@@ -1045,16 +1043,23 @@ function warehouseIndexHub() {
     <template x-teleport="body">
         <div x-show="showCreateModal"
              x-cloak
-             class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-[200] overflow-y-auto"
+             role="dialog" aria-modal="true"
              @keydown.escape.window="showCreateModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showCreateModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showCreateModal = false"></div>
 
-            <div class="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCreateModal = false">
+                <div class="relative w-full max-w-[94vw] sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
              @click.outside="showCreateModal = false"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 scale-95"
@@ -1332,6 +1337,7 @@ function warehouseIndexHub() {
             </form>
         </div>
     </div>
+</div>
 </template>
 
     {{-- ===================================================== --}}
@@ -1345,16 +1351,23 @@ function warehouseIndexHub() {
     <template x-teleport="body">
         <div x-show="showEditModal"
              x-cloak
-             class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-[200] overflow-y-auto"
+             role="dialog" aria-modal="true"
              @keydown.escape.window="showEditModal = false">
+            <!-- Standalone Backdrop -->
+            <div x-show="showEditModal"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="showEditModal = false"></div>
 
-            <div class="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditModal = false">
+                <div class="relative w-full max-w-[94vw] sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
              @click.outside="showEditModal = false"
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 scale-95"
@@ -1758,6 +1771,7 @@ function warehouseIndexHub() {
             </form>
         </div>
     </div>
+</div>
 </template>
 
     {{-- ===================================================== --}}
@@ -1766,47 +1780,55 @@ function warehouseIndexHub() {
     <template x-teleport="body">
         <div x-show="deleteModalOpen"
              x-cloak
-             class="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-[220] overflow-y-auto"
+             role="dialog" aria-modal="true"
              @keydown.escape.window="closeDelete()">
+            <!-- Standalone Backdrop -->
+            <div x-show="deleteModalOpen"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md transition-opacity"
+                @click="closeDelete()"></div>
 
-            <div class="w-full max-w-[340px] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
-             @click.away="closeDelete()"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-95">
+            <!-- Centered Dialog Wrapper -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDelete()">
+                <div class="relative w-full max-w-[340px] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 overflow-hidden text-center shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+                 @click.away="closeDelete()"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95">
 
-            <div class="px-6 pt-6 pb-5">
-                <div class="w-12 h-12 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3.5">
-                    <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                <div class="px-6 pt-6 pb-5">
+                    <div class="w-12 h-12 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3.5">
+                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                    </div>
+                    <p class="text-base font-bold text-slate-900 dark:text-white">{{ __('warehouse.delete_modal.title') }}</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
+                        <span x-text="deleteTarget.name" class="font-bold text-slate-900 dark:text-white"></span>. {{ __('warehouse.delete_modal.has_stock_warning') }}
+                    </p>
                 </div>
-                <p class="text-base font-bold text-slate-900 dark:text-white">{{ __('warehouse.delete_modal.title') }}</p>
-                <p class="text-xs text-slate-600 dark:text-slate-400 mt-1.5 leading-relaxed">
-                    <span x-text="deleteTarget.name" class="font-bold text-slate-900 dark:text-white"></span>. {{ __('warehouse.delete_modal.has_stock_warning') }}
-                </p>
-            </div>
 
-            <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.12] text-xs font-semibold">
-                <button type="button" @click="closeDelete()"
-                        class="min-h-[48px] py-3.5 text-slate-600 dark:text-slate-300 border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                    {{ __('warehouse.actions.cancel') }}
-                </button>
-                <button type="button" @click="submitDelete()"
-                        class="min-h-[48px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                    {{ __('warehouse.actions.delete') }}
-                </button>
+                <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.12] text-xs font-semibold">
+                    <button type="button" @click="closeDelete()"
+                            class="min-h-[48px] py-3.5 text-slate-600 dark:text-slate-300 border-r border-black/[0.08] dark:border-white/[0.12] active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        {{ __('warehouse.actions.cancel') }}
+                    </button>
+                    <button type="button" @click="submitDelete()"
+                            class="min-h-[48px] py-3.5 text-[#FF3B30] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
+                        {{ __('warehouse.actions.delete') }}
+                    </button>
+                </div>
+            </div>
             </div>
         </div>
-    </div>
-</template>
+    </template>
 
 </div>
 @endsection

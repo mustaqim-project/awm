@@ -1,0 +1,2573 @@
+{
+  "dashboards_analytics": [
+    {
+      "file": "dashboard.blade.php",
+      "lines": 1355,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 3,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 31,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 30,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 3,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isWorkshop",
+          "isPharmacy",
+          "isLaundry",
+          "isFoodIndustry",
+          "isWorkshop",
+          "isLaundry",
+          "isPharmacy"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 4,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "calculator.blade.php",
+      "lines": 1665,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 3,
+        "legacy_rounded": 0,
+        "hairline_border": 22,
+        "legacy_border": 0,
+        "bento_canvas": 25,
+        "primary_apple_blue": 35,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 54,
+        "pulse_dots": 0,
+        "kpi_headers": 1
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 5,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 2
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isFoodIndustry",
+          "isWorkshop",
+          "isLaundry",
+          "isModuleEnabled"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 4
+      }
+    },
+    {
+      "file": "analytics/index.blade.php",
+      "lines": 573,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 10,
+        "legacy_rounded": 0,
+        "hairline_border": 28,
+        "legacy_border": 0,
+        "bento_canvas": 10,
+        "primary_apple_blue": 8,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 19,
+        "pulse_dots": 0,
+        "kpi_headers": 5
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 10,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "reports/index.blade.php",
+      "lines": 882,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 24,
+        "primary_apple_blue": 17,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 81,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 3
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 4,
+        "overflow_x_auto": 5
+      }
+    },
+    {
+      "file": "profitability/index.blade.php",
+      "lines": 283,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 5,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 13,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isModuleEnabled"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "simulator/index.blade.php",
+      "lines": 826,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 5,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 8,
+        "primary_apple_blue": 18,
+        "tailwind_blue_indigo": 1
+      },
+      "metric_cards": {
+        "tabular_nums": 34,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 2
+      }
+    }
+  ],
+  "finance_accounting": [
+    {
+      "file": "finance/expenses.blade.php",
+      "lines": 731,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 5,
+        "legacy_rounded": 0,
+        "hairline_border": 10,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 13,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 11,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/journals.blade.php",
+      "lines": 245,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 15,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 12,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/payables.blade.php",
+      "lines": 685,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 6,
+        "legacy_border": 0,
+        "bento_canvas": 13,
+        "primary_apple_blue": 7,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 15,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "finance/receivables.blade.php",
+      "lines": 743,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 8,
+        "legacy_border": 0,
+        "bento_canvas": 15,
+        "primary_apple_blue": 37,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 24,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "finance/accounting/balance-sheet.blade.php",
+      "lines": 634,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 12,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 12,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 17,
+        "pulse_dots": 0,
+        "kpi_headers": 1
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "finance/accounting/coa.blade.php",
+      "lines": 801,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 4,
+        "legacy_rounded": 0,
+        "hairline_border": 8,
+        "legacy_border": 0,
+        "bento_canvas": 16,
+        "primary_apple_blue": 27,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 4,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 4,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "finance/accounting/general-ledger.blade.php",
+      "lines": 211,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 2,
+        "legacy_border": 0,
+        "bento_canvas": 6,
+        "primary_apple_blue": 7,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 14,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/accounting/reconciliation.blade.php",
+      "lines": 284,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 1,
+        "legacy_rounded": 0,
+        "hairline_border": 4,
+        "legacy_border": 0,
+        "bento_canvas": 8,
+        "primary_apple_blue": 14,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 6,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/accounting/trial-balance.blade.php",
+      "lines": 191,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 10,
+        "legacy_border": 0,
+        "bento_canvas": 4,
+        "primary_apple_blue": 7,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 15,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/cash-bank/index.blade.php",
+      "lines": 1055,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 8,
+        "legacy_rounded": 0,
+        "hairline_border": 10,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 27,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 17,
+        "pulse_dots": 0,
+        "kpi_headers": 6
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 5,
+        "modal_count": 5
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/cash-bank/ledger.blade.php",
+      "lines": 314,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 12,
+        "primary_apple_blue": 8,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 9,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/edc-terminals/index.blade.php",
+      "lines": 324,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 6,
+        "primary_apple_blue": 9,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 10,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "finance/external-reconciliation/index.blade.php",
+      "lines": 585,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 1,
+        "legacy_rounded": 18,
+        "hairline_border": 4,
+        "legacy_border": 0,
+        "bento_canvas": 4,
+        "primary_apple_blue": 12,
+        "tailwind_blue_indigo": 1
+      },
+      "metric_cards": {
+        "tabular_nums": 20,
+        "pulse_dots": 1,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "finance/payout-accounts/index.blade.php",
+      "lines": 278,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 3,
+        "primary_apple_blue": 15,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 2,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": true,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "finance/settlements/index.blade.php",
+      "lines": 613,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 2,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 19,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 14,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "finance/settlements/show.blade.php",
+      "lines": 317,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 5,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 6,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 6,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "invoices/index.blade.php",
+      "lines": 438,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 8,
+        "primary_apple_blue": 12,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 14,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 3
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "invoices/create.blade.php",
+      "lines": 498,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 3,
+        "primary_apple_blue": 10,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 14,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "invoices/edit.blade.php",
+      "lines": 440,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 3,
+        "primary_apple_blue": 10,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 14,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "invoices/show.blade.php",
+      "lines": 917,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 4,
+        "legacy_border": 0,
+        "bento_canvas": 2,
+        "primary_apple_blue": 21,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 29,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 10,
+        "modal_count": 17
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "invoices/print.blade.php",
+      "lines": 491,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 1,
+        "bento_canvas": 2,
+        "primary_apple_blue": 2,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 21,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "tax/index.blade.php",
+      "lines": 1398,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 96,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 27,
+        "primary_apple_blue": 25,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 1,
+        "kpi_headers": 10
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 4,
+        "modal_count": 16
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "billing/checkout.blade.php",
+      "lines": 1092,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 6,
+        "legacy_rounded": 0,
+        "hairline_border": 58,
+        "legacy_border": 6,
+        "bento_canvas": 5,
+        "primary_apple_blue": 40,
+        "tailwind_blue_indigo": 4
+      },
+      "metric_cards": {
+        "tabular_nums": 10,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "billing/history.blade.php",
+      "lines": 445,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 6,
+        "legacy_rounded": 0,
+        "hairline_border": 34,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 11,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 10,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 3
+      }
+    },
+    {
+      "file": "billing/invoice.blade.php",
+      "lines": 1014,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 1,
+        "legacy_rounded": 0,
+        "hairline_border": 8,
+        "legacy_border": 0,
+        "bento_canvas": 2,
+        "primary_apple_blue": 2,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 3,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "billing/limits.blade.php",
+      "lines": 2696,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 32,
+        "legacy_rounded": 0,
+        "hairline_border": 52,
+        "legacy_border": 40,
+        "bento_canvas": 2,
+        "primary_apple_blue": 2,
+        "tailwind_blue_indigo": 77
+      },
+      "metric_cards": {
+        "tabular_nums": 41,
+        "pulse_dots": 0,
+        "kpi_headers": 28
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 4,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 2
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "hasDineInFeature",
+          "hasDineInFeature",
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "hasDineInFeature"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 3,
+        "overflow_x_auto": 3
+      }
+    },
+    {
+      "file": "billing/payment.blade.php",
+      "lines": 907,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 10,
+        "legacy_rounded": 3,
+        "hairline_border": 48,
+        "legacy_border": 0,
+        "bento_canvas": 6,
+        "primary_apple_blue": 31,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 7,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    }
+  ],
+  "crm_customers": [
+    {
+      "file": "customers/index.blade.php",
+      "lines": 1504,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 13,
+        "legacy_rounded": 0,
+        "hairline_border": 38,
+        "legacy_border": 0,
+        "bento_canvas": 25,
+        "primary_apple_blue": 60,
+        "tailwind_blue_indigo": 1
+      },
+      "metric_cards": {
+        "tabular_nums": 7,
+        "pulse_dots": 0,
+        "kpi_headers": 15
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 12,
+        "modal_count": 12
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 3
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isModuleEnabled",
+          "isWorkshop",
+          "isModuleEnabled",
+          "isWorkshop",
+          "isModuleEnabled",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "crm/members.blade.php",
+      "lines": 765,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 8,
+        "legacy_rounded": 0,
+        "hairline_border": 24,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 11,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 10,
+        "pulse_dots": 0,
+        "kpi_headers": 6
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 8,
+        "modal_count": 6
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isWorkshop",
+          "isModuleEnabled",
+          "isWorkshop",
+          "isModuleEnabled",
+          "isWorkshop",
+          "isWorkshop",
+          "isWorkshop"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "crm/vouchers.blade.php",
+      "lines": 367,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 9,
+        "legacy_rounded": 0,
+        "hairline_border": 18,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 10,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 4,
+        "pulse_dots": 0,
+        "kpi_headers": 6
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 9,
+        "modal_count": 3
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 1
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "feedback/index.blade.php",
+      "lines": 116,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 3,
+        "legacy_rounded": 0,
+        "hairline_border": 6,
+        "legacy_border": 0,
+        "bento_canvas": 3,
+        "primary_apple_blue": 4,
+        "tailwind_blue_indigo": 3
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 3,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "feedback/create.blade.php",
+      "lines": 218,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 1,
+        "legacy_rounded": 0,
+        "hairline_border": 6,
+        "legacy_border": 0,
+        "bento_canvas": 1,
+        "primary_apple_blue": 5,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": true,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "feedback/show.blade.php",
+      "lines": 227,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 8,
+        "legacy_border": 0,
+        "bento_canvas": 2,
+        "primary_apple_blue": 8,
+        "tailwind_blue_indigo": 3
+      },
+      "metric_cards": {
+        "tabular_nums": 1,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 2,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "community/index.blade.php",
+      "lines": 1279,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 54,
+        "hairline_border": 0,
+        "legacy_border": 29,
+        "bento_canvas": 13,
+        "primary_apple_blue": 20,
+        "tailwind_blue_indigo": 12
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 1,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 4,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "community/events.blade.php",
+      "lines": 638,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 38,
+        "hairline_border": 0,
+        "legacy_border": 17,
+        "bento_canvas": 0,
+        "primary_apple_blue": 3,
+        "tailwind_blue_indigo": 12
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 1
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 4,
+        "modal_count": 1
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "community/event_payment.blade.php",
+      "lines": 295,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 12,
+        "hairline_border": 0,
+        "legacy_border": 4,
+        "bento_canvas": 3,
+        "primary_apple_blue": 3,
+        "tailwind_blue_indigo": 2
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 1,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    }
+  ],
+  "hrm_workforce": [
+    {
+      "file": "hrm/index.blade.php",
+      "lines": 5705,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 18,
+        "legacy_rounded": 12,
+        "hairline_border": 12,
+        "legacy_border": 4,
+        "bento_canvas": 53,
+        "primary_apple_blue": 129,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 84,
+        "pulse_dots": 3,
+        "kpi_headers": 8
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 19,
+        "modal_count": 45
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 10,
+        "overflow_x_auto": 9
+      }
+    },
+    {
+      "file": "hrm/payroll/create.blade.php",
+      "lines": 415,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 3,
+        "primary_apple_blue": 11,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 19,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "hrm/payroll/payslip.blade.php",
+      "lines": 403,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 6,
+        "legacy_border": 3,
+        "bento_canvas": 0,
+        "primary_apple_blue": 4,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 17,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "hrm/payroll/show.blade.php",
+      "lines": 830,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 5,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 10,
+        "primary_apple_blue": 25,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 36,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 2,
+        "modal_count": 8
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "labor-machines/index.blade.php",
+      "lines": 1268,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 24,
+        "primary_apple_blue": 35,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 37,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 11,
+        "modal_count": 19
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isModuleEnabled"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 3
+      }
+    }
+  ],
+  "settings_governance": [
+    {
+      "file": "settings/index.blade.php",
+      "lines": 4143,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 8,
+        "legacy_rounded": 0,
+        "hairline_border": 14,
+        "legacy_border": 1,
+        "bento_canvas": 33,
+        "primary_apple_blue": 123,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 25,
+        "pulse_dots": 2,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 8,
+        "modal_count": 11
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": true,
+        "gating_matches": [
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "hasDineInFeature",
+          "isModuleEnabled",
+          "isModuleEnabled",
+          "isFoodIndustry",
+          "isModuleEnabled",
+          "isModuleEnabled"
+        ]
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 4
+      }
+    },
+    {
+      "file": "settings/roles.blade.php",
+      "lines": 1,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 0,
+        "primary_apple_blue": 0,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "settings/integrations/mcp.blade.php",
+      "lines": 3363,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 6,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 10,
+        "primary_apple_blue": 0,
+        "tailwind_blue_indigo": 41
+      },
+      "metric_cards": {
+        "tabular_nums": 7,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 9,
+        "modal_count": 12
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 8
+      }
+    },
+    {
+      "file": "settings/integrations/social_media.blade.php",
+      "lines": 361,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 6,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 5,
+        "primary_apple_blue": 13,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "settings/integrations/whatsapp.blade.php",
+      "lines": 779,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 8,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 30,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 6,
+        "pulse_dots": 1,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "profile/edit.blade.php",
+      "lines": 309,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 5,
+        "primary_apple_blue": 11,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 1,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "profile/verify-contact.blade.php",
+      "lines": 75,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 1,
+        "primary_apple_blue": 2,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": false,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": true,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "roles/index.blade.php",
+      "lines": 1048,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 4,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 20,
+        "primary_apple_blue": 34,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 13,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 7,
+        "modal_count": 14
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "security/audit-logs/index.blade.php",
+      "lines": 654,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 2,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 7,
+        "primary_apple_blue": 15,
+        "tailwind_blue_indigo": 1
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 4
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 1,
+        "modal_count": 4
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "security/audit-logs/show.blade.php",
+      "lines": 121,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 0,
+        "legacy_border": 0,
+        "bento_canvas": 1,
+        "primary_apple_blue": 0,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 0,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 0,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "approvals/history.blade.php",
+      "lines": 192,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 1,
+        "legacy_rounded": 0,
+        "hairline_border": 14,
+        "legacy_border": 0,
+        "bento_canvas": 6,
+        "primary_apple_blue": 7,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 4,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": false,
+        "backdrop_blur": 2,
+        "modal_count": 0
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 1,
+        "overflow_x_auto": 2
+      }
+    },
+    {
+      "file": "approvals/inbox.blade.php",
+      "lines": 381,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 4,
+        "legacy_rounded": 0,
+        "hairline_border": 26,
+        "legacy_border": 0,
+        "bento_canvas": 9,
+        "primary_apple_blue": 12,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 7,
+        "pulse_dots": 0,
+        "kpi_headers": 2
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 5,
+        "modal_count": 7
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 1
+      }
+    },
+    {
+      "file": "approvals/rules.blade.php",
+      "lines": 522,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 4,
+        "legacy_rounded": 0,
+        "hairline_border": 28,
+        "legacy_border": 0,
+        "bento_canvas": 11,
+        "primary_apple_blue": 27,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 1,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 5,
+        "modal_count": 8
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 0
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": false
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 0,
+        "overflow_x_auto": 0
+      }
+    },
+    {
+      "file": "master-data/index.blade.php",
+      "lines": 1174,
+      "emojis": [],
+      "bento_styling": {
+        "rounded_bento": 0,
+        "legacy_rounded": 0,
+        "hairline_border": 6,
+        "legacy_border": 0,
+        "bento_canvas": 20,
+        "primary_apple_blue": 47,
+        "tailwind_blue_indigo": 0
+      },
+      "metric_cards": {
+        "tabular_nums": 16,
+        "pulse_dots": 0,
+        "kpi_headers": 0
+      },
+      "modals": {
+        "has_modal": true,
+        "backdrop_blur": 6,
+        "modal_count": 3
+      },
+      "empty_states": {
+        "has_empty_directive": true,
+        "empty_state_keywords": 3
+      },
+      "error_handling": {
+        "has_errors_any": false,
+        "has_error_directive": false,
+        "has_flash_alerts": true
+      },
+      "multi_industry": {
+        "has_industry_gating": false,
+        "gating_matches": []
+      },
+      "responsive_tables": {
+        "table_count": 2,
+        "overflow_x_auto": 2
+      }
+    }
+  ]
+}

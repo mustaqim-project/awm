@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('billing.payment_page_title', ['order' => $payment->order_number]),
-    'headerTitle' => __('billing.header_payment_instructions'),
-    'headerSubtitle' => __('billing.header_payment_subtitle'),
 ])
 
 @section('content')

@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),
-    'headerTitle' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),
-    'headerSubtitle' => $type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features'),
 ])
 
 @section('content')

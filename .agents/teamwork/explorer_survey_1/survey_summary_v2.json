@@ -1,0 +1,3201 @@
+{
+  "total_views": 185,
+  "directories_count": 44,
+  "directories": {
+    "_root": 2,
+    "ai": 18,
+    "ai-studio": 8,
+    "analytics": 1,
+    "approvals": 3,
+    "billing": 5,
+    "community": 3,
+    "crm": 2,
+    "customers": 1,
+    "docs": 2,
+    "feedback": 3,
+    "finance": 16,
+    "hrm": 4,
+    "import": 1,
+    "inventory": 4,
+    "invoices": 5,
+    "labor-machines": 1,
+    "landing_page": 2,
+    "marketplace": 6,
+    "master-data": 1,
+    "materials": 1,
+    "mcp": 1,
+    "portal": 1,
+    "pos": 29,
+    "products": 3,
+    "profile": 2,
+    "profitability": 1,
+    "purchase-orders": 4,
+    "purchasing": 6,
+    "quotations": 4,
+    "reports": 1,
+    "roles": 1,
+    "sales": 5,
+    "sales-orders": 4,
+    "security": 2,
+    "services": 1,
+    "settings": 5,
+    "simulator": 1,
+    "social_media": 5,
+    "storefront": 12,
+    "suppliers": 1,
+    "tax": 1,
+    "warehouse": 2,
+    "whatsapp": 4
+  },
+  "layout_usage": {
+    "layouts.app": 134,
+    "none (partial or standalone)": 51
+  },
+  "component_usage": {
+    "x-module-header": 66,
+    "x-breadcrumb": 1,
+    "x-module-tabs": 69,
+    "x-table-search": 0,
+    "x-sortable-th": 0,
+    "x-table-sort-th": 22,
+    "x-document-stepper": 1,
+    "x-quota-modal": 0
+  },
+  "architectural_patterns": {
+    "double_headers": [
+      "billing/checkout.blade.php",
+      "billing/history.blade.php",
+      "billing/limits.blade.php",
+      "billing/payment.blade.php",
+      "crm/members.blade.php",
+      "crm/vouchers.blade.php",
+      "customers/index.blade.php",
+      "feedback/create.blade.php",
+      "feedback/index.blade.php",
+      "feedback/show.blade.php",
+      "invoices/index.blade.php",
+      "invoices/show.blade.php",
+      "marketplace/chat.blade.php",
+      "marketplace/index.blade.php",
+      "marketplace/logs.blade.php",
+      "marketplace/orders.blade.php",
+      "marketplace/products.blade.php",
+      "master-data/index.blade.php",
+      "materials/index.blade.php",
+      "products/bom.blade.php",
+      "products/index.blade.php",
+      "products/modifiers.blade.php",
+      "purchase-orders/index.blade.php",
+      "purchasing/bills/index.blade.php",
+      "purchasing/bills/show.blade.php",
+      "purchasing/receipts/create.blade.php",
+      "purchasing/returns/create.blade.php",
+      "purchasing/returns/index.blade.php",
+      "purchasing/returns/show.blade.php",
+      "quotations/index.blade.php",
+      "sales/returns/index.blade.php",
+      "sales-orders/index.blade.php",
+      "services/index.blade.php",
+      "social_media/calendar.blade.php",
+      "social_media/inbox.blade.php",
+      "social_media/index.blade.php",
+      "social_media/insights.blade.php",
+      "social_media/posts.blade.php",
+      "suppliers/index.blade.php",
+      "warehouse/index.blade.php",
+      "warehouse/show.blade.php",
+      "whatsapp/broadcast.blade.php",
+      "whatsapp/index.blade.php",
+      "whatsapp/logs.blade.php"
+    ],
+    "views_without_mobile_bottom_padding": [
+      "ai/actions.blade.php",
+      "ai/history.blade.php",
+      "ai/index.blade.php",
+      "ai/lobby.blade.php",
+      "ai/office.blade.php",
+      "ai/providers.blade.php",
+      "ai/offices/executive.blade.php",
+      "ai/offices/growth.blade.php",
+      "ai/offices/operations.blade.php",
+      "community/events.blade.php",
+      "community/event_payment.blade.php",
+      "community/index.blade.php",
+      "crm/vouchers.blade.php",
+      "feedback/create.blade.php",
+      "feedback/index.blade.php",
+      "feedback/show.blade.php",
+      "finance/settlements/show.blade.php",
+      "inventory/opname.blade.php",
+      "inventory/stocks.blade.php",
+      "inventory/transfers.blade.php",
+      "invoices/index.blade.php",
+      "pos/kitchen.blade.php",
+      "pos/orders.blade.php",
+      "pos/prep_sheet.blade.php",
+      "pos/reports.blade.php",
+      "pos/shifts.blade.php",
+      "pos/tables.blade.php",
+      "profile/verify-contact.blade.php",
+      "quotations/index.blade.php",
+      "reports/index.blade.php",
+      "sales/returns/index.blade.php",
+      "sales-orders/index.blade.php"
+    ],
+    "views_with_hardcoded_grid_cols": [
+      [
+        "ai/index.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "ai/lobby.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "ai/office.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        [
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "ai-studio/create.blade.php",
+        [
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "analytics/index.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "billing/invoice.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "billing/limits.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "crm/members.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "labor-machines/index.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "marketplace/orders.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "marketplace/products.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "pos/terminal.blade.php",
+        [
+          "grid-cols-3",
+          "grid-cols-3",
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "pos/reports/partials/order_detail_modal.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "products/index.blade.php",
+        [
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "sales/returns/print.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "sales/returns/show.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "sales-orders/show.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "social_media/calendar.blade.php",
+        [
+          "grid-cols-7",
+          "grid-cols-7"
+        ]
+      ],
+      [
+        "social_media/insights.blade.php",
+        [
+          "grid-cols-4",
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "social_media/posts.blade.php",
+        [
+          "grid-cols-4"
+        ]
+      ],
+      [
+        "storefront/orders/shipping_label.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ],
+      [
+        "warehouse/index.blade.php",
+        [
+          "grid-cols-3"
+        ]
+      ]
+    ],
+    "modals_total": 476,
+    "modals_with_teleport": 447,
+    "modals_missing_teleport": [
+      "ai-studio/index.blade.php",
+      "ai-studio/prompt-preview.blade.php",
+      "ai-studio/show.blade.php",
+      "pos/terminal.blade.php"
+    ],
+    "modals_narrow_sizing": [
+      [
+        "calculator.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "ai-studio/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "ai-studio/show.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "approvals/inbox.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "approvals/rules.blade.php",
+        [
+          "max-w-md",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "billing/limits.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "crm/members.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "crm/vouchers.blade.php",
+        [
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "customers/index.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "finance/accounting/coa.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "finance/edc-terminals/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "finance/payout-accounts/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "finance/settlements/index.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "hrm/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "hrm/payroll/show.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "inventory/stocks.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "invoices/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "invoices/show.blade.php",
+        [
+          "max-w-md",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "labor-machines/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "landing_page/edit.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "landing_page/popup.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "marketplace/index.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "marketplace/orders.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "marketplace/products.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "master-data/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "materials/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "portal/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "pos/orders.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "pos/tables.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "pos/terminal.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "pos/printers/index.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "products/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "products/modifiers.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "purchase-orders/index.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "purchase-orders/show.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "purchasing/returns/show.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "quotations/show.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "roles/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "sales/returns/index.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "sales/returns/show.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "sales-orders/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "security/audit-logs/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "services/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "settings/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "social_media/inbox.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "social_media/posts.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "storefront/settings.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "storefront/orders/show.blade.php",
+        [
+          "max-w-md",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "storefront/reservations/index.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "suppliers/index.blade.php",
+        [
+          "max-w-sm",
+          "max-w-lg"
+        ]
+      ],
+      [
+        "tax/index.blade.php",
+        [
+          "max-w-lg"
+        ]
+      ],
+      [
+        "warehouse/index.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "warehouse/show.blade.php",
+        [
+          "max-w-md",
+          "max-w-sm"
+        ]
+      ],
+      [
+        "whatsapp/broadcast.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ],
+      [
+        "whatsapp/index.blade.php",
+        [
+          "max-w-md"
+        ]
+      ],
+      [
+        "whatsapp/logs.blade.php",
+        [
+          "max-w-sm"
+        ]
+      ]
+    ],
+    "tables_total": 161,
+    "tables_with_overflow_wrapper": 148,
+    "tables_missing_overflow_wrapper": [
+      "billing/invoice.blade.php",
+      "finance/accounting/balance-sheet.blade.php",
+      "invoices/print.blade.php",
+      "marketplace/shipping_label.blade.php",
+      "pos/reports/print_summary.blade.php",
+      "purchase-orders/print.blade.php",
+      "sales/returns/print.blade.php",
+      "security/audit-logs/show.blade.php"
+    ],
+    "tables_without_sort": [
+      "ai/actions.blade.php",
+      "ai/history.blade.php",
+      "ai-studio/credit-history.blade.php",
+      "analytics/index.blade.php",
+      "approvals/history.blade.php",
+      "billing/history.blade.php",
+      "docs/index.blade.php",
+      "finance/journals.blade.php",
+      "finance/accounting/balance-sheet.blade.php",
+      "finance/accounting/general-ledger.blade.php",
+      "finance/accounting/reconciliation.blade.php",
+      "finance/accounting/trial-balance.blade.php",
+      "finance/cash-bank/ledger.blade.php",
+      "finance/external-reconciliation/index.blade.php",
+      "finance/settlements/show.blade.php",
+      "hrm/payroll/create.blade.php",
+      "hrm/payroll/show.blade.php",
+      "invoices/create.blade.php",
+      "invoices/edit.blade.php",
+      "invoices/print.blade.php",
+      "marketplace/logs.blade.php",
+      "marketplace/orders.blade.php",
+      "marketplace/products.blade.php",
+      "marketplace/shipping_label.blade.php",
+      "pos/printers/index.blade.php",
+      "pos/reports/partials/order_detail_modal.blade.php",
+      "pos/reports/tabs/cashiers.blade.php",
+      "pos/reports/tabs/categories.blade.php",
+      "pos/reports/tabs/channels.blade.php",
+      "pos/reports/tabs/customers.blade.php",
+      "pos/reports/tabs/discounts.blade.php",
+      "pos/reports/tabs/outlets.blade.php",
+      "pos/reports/tabs/payments.blade.php",
+      "pos/reports/tabs/products.blade.php",
+      "pos/reports/tabs/profitability.blade.php",
+      "pos/reports/tabs/refunds.blade.php",
+      "pos/reports/tabs/shifts.blade.php",
+      "pos/reports/tabs/transactions.blade.php",
+      "pos/reports/tabs/voids.blade.php",
+      "products/bom.blade.php",
+      "products/modifiers.blade.php",
+      "purchase-orders/create.blade.php",
+      "purchase-orders/print.blade.php",
+      "purchase-orders/show.blade.php",
+      "purchasing/bills/index.blade.php",
+      "purchasing/bills/show.blade.php",
+      "purchasing/receipts/create.blade.php",
+      "purchasing/returns/index.blade.php",
+      "purchasing/returns/show.blade.php",
+      "quotations/create.blade.php",
+      "quotations/edit.blade.php",
+      "quotations/index.blade.php",
+      "quotations/show.blade.php",
+      "roles/index.blade.php",
+      "sales/returns/create.blade.php",
+      "sales/returns/edit.blade.php",
+      "sales/returns/index.blade.php",
+      "sales/returns/print.blade.php",
+      "sales/returns/show.blade.php",
+      "sales-orders/create.blade.php",
+      "sales-orders/edit.blade.php",
+      "sales-orders/index.blade.php",
+      "sales-orders/show.blade.php",
+      "security/audit-logs/show.blade.php",
+      "settings/index.blade.php",
+      "settings/integrations/mcp.blade.php",
+      "simulator/index.blade.php",
+      "social_media/posts.blade.php",
+      "storefront/orders/index.blade.php",
+      "storefront/reservations/index.blade.php",
+      "whatsapp/broadcast.blade.php",
+      "whatsapp/broadcast_detail.blade.php",
+      "whatsapp/logs.blade.php"
+    ],
+    "tables_missing_tabular_nums": [
+      "ai/actions.blade.php",
+      "ai-studio/credit-history.blade.php",
+      "billing/invoice.blade.php",
+      "docs/index.blade.php",
+      "docs/partials/sec_ai.blade.php",
+      "marketplace/orders.blade.php",
+      "marketplace/products.blade.php",
+      "marketplace/shipping_label.blade.php",
+      "social_media/inbox.blade.php",
+      "tax/index.blade.php"
+    ],
+    "tables_missing_empty_state": [
+      "calculator.blade.php",
+      "ai/actions.blade.php",
+      "ai/history.blade.php",
+      "ai/index.blade.php",
+      "ai-studio/credit-history.blade.php",
+      "analytics/index.blade.php",
+      "approvals/history.blade.php",
+      "billing/history.blade.php",
+      "billing/invoice.blade.php",
+      "billing/limits.blade.php",
+      "crm/members.blade.php",
+      "docs/index.blade.php",
+      "finance/expenses.blade.php",
+      "finance/journals.blade.php",
+      "finance/payables.blade.php",
+      "finance/receivables.blade.php",
+      "finance/accounting/balance-sheet.blade.php",
+      "finance/accounting/coa.blade.php",
+      "finance/accounting/general-ledger.blade.php",
+      "finance/accounting/trial-balance.blade.php",
+      "finance/cash-bank/index.blade.php",
+      "finance/cash-bank/ledger.blade.php",
+      "finance/external-reconciliation/index.blade.php",
+      "finance/settlements/index.blade.php",
+      "finance/settlements/show.blade.php",
+      "hrm/index.blade.php",
+      "hrm/payroll/create.blade.php",
+      "hrm/payroll/show.blade.php",
+      "import/index.blade.php",
+      "inventory/movements.blade.php",
+      "inventory/opname.blade.php",
+      "invoices/create.blade.php",
+      "invoices/edit.blade.php",
+      "invoices/index.blade.php",
+      "invoices/print.blade.php",
+      "invoices/show.blade.php",
+      "labor-machines/index.blade.php",
+      "marketplace/logs.blade.php",
+      "marketplace/products.blade.php",
+      "marketplace/shipping_label.blade.php",
+      "materials/index.blade.php",
+      "portal/index.blade.php",
+      "pos/orders.blade.php",
+      "pos/prep_sheet.blade.php",
+      "pos/shifts.blade.php",
+      "pos/printers/index.blade.php",
+      "pos/reports/print_summary.blade.php",
+      "pos/reports/partials/order_detail_modal.blade.php",
+      "pos/reports/tabs/cashiers.blade.php",
+      "pos/reports/tabs/categories.blade.php",
+      "pos/reports/tabs/channels.blade.php",
+      "pos/reports/tabs/customers.blade.php",
+      "pos/reports/tabs/discounts.blade.php",
+      "pos/reports/tabs/outlets.blade.php",
+      "pos/reports/tabs/products.blade.php",
+      "pos/reports/tabs/profitability.blade.php",
+      "pos/reports/tabs/refunds.blade.php",
+      "pos/reports/tabs/shifts.blade.php",
+      "pos/reports/tabs/transactions.blade.php",
+      "pos/reports/tabs/voids.blade.php",
+      "products/bom.blade.php",
+      "products/index.blade.php",
+      "products/modifiers.blade.php",
+      "purchase-orders/create.blade.php",
+      "purchase-orders/print.blade.php",
+      "purchase-orders/show.blade.php",
+      "purchasing/bills/index.blade.php",
+      "purchasing/bills/show.blade.php",
+      "purchasing/receipts/create.blade.php",
+      "purchasing/returns/index.blade.php",
+      "purchasing/returns/show.blade.php",
+      "quotations/create.blade.php",
+      "quotations/edit.blade.php",
+      "quotations/index.blade.php",
+      "quotations/show.blade.php",
+      "roles/index.blade.php",
+      "sales/returns/edit.blade.php",
+      "sales/returns/index.blade.php",
+      "sales/returns/print.blade.php",
+      "sales/returns/show.blade.php",
+      "sales-orders/create.blade.php",
+      "sales-orders/edit.blade.php",
+      "sales-orders/index.blade.php",
+      "sales-orders/show.blade.php",
+      "security/audit-logs/index.blade.php",
+      "security/audit-logs/show.blade.php",
+      "services/index.blade.php",
+      "settings/index.blade.php",
+      "settings/integrations/mcp.blade.php",
+      "simulator/index.blade.php",
+      "social_media/inbox.blade.php",
+      "storefront/orders/index.blade.php",
+      "storefront/reservations/index.blade.php",
+      "tax/index.blade.php",
+      "warehouse/index.blade.php",
+      "warehouse/show.blade.php",
+      "whatsapp/broadcast.blade.php",
+      "whatsapp/broadcast_detail.blade.php",
+      "whatsapp/logs.blade.php"
+    ],
+    "emoji_in_views": [
+      [
+        "ai/partials/agent_inspector_hud.blade.php",
+        [
+          "\u25cf"
+        ]
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        [
+          "\u2b50",
+          "\u25cf"
+        ]
+      ],
+      [
+        "billing/invoice.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "community/index.blade.php",
+        [
+          "\u2605"
+        ]
+      ],
+      [
+        "landing_page/edit.blade.php",
+        [
+          "\u2b50"
+        ]
+      ],
+      [
+        "master-data/index.blade.php",
+        [
+          "\u2715"
+        ]
+      ],
+      [
+        "mcp/oauth/consent.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "pos/reports/print_summary.blade.php",
+        [
+          "\ud83d\ude97",
+          "\ud83d\udcdd",
+          "\ud83e\uddfa"
+        ]
+      ],
+      [
+        "pos/reports/partials/order_detail_modal.blade.php",
+        [
+          "\ud83d\udc8a"
+        ]
+      ],
+      [
+        "pos/reports/tabs/transactions.blade.php",
+        [
+          "\ud83c\udff7",
+          "\ufe0f",
+          "\ud83d\udc8a",
+          "\ud83d\ude97",
+          "\ud83e\uddfa"
+        ]
+      ],
+      [
+        "sales/returns/show.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "social_media/inbox.blade.php",
+        [
+          "\ud83d\ude0a",
+          "\u2728",
+          "\ud83d\ude4f"
+        ]
+      ],
+      [
+        "social_media/posts.blade.php",
+        [
+          "\u2500"
+        ]
+      ]
+    ],
+    "animate_pulse_in_views": [
+      [
+        "ai/lobby.blade.php",
+        2
+      ],
+      [
+        "ai/partials/agent_inspector_hud.blade.php",
+        1
+      ],
+      [
+        "ai/partials/consultation_modal.blade.php",
+        3
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        9
+      ],
+      [
+        "ai-studio/index.blade.php",
+        1
+      ],
+      [
+        "ai-studio/show.blade.php",
+        2
+      ],
+      [
+        "community/event_payment.blade.php",
+        1
+      ],
+      [
+        "community/index.blade.php",
+        1
+      ],
+      [
+        "finance/external-reconciliation/index.blade.php",
+        1
+      ],
+      [
+        "hrm/index.blade.php",
+        3
+      ],
+      [
+        "inventory/movements.blade.php",
+        1
+      ],
+      [
+        "landing_page/edit.blade.php",
+        1
+      ],
+      [
+        "landing_page/popup.blade.php",
+        1
+      ],
+      [
+        "marketplace/chat.blade.php",
+        1
+      ],
+      [
+        "marketplace/index.blade.php",
+        1
+      ],
+      [
+        "marketplace/orders.blade.php",
+        1
+      ],
+      [
+        "marketplace/products.blade.php",
+        1
+      ],
+      [
+        "portal/index.blade.php",
+        5
+      ],
+      [
+        "pos/shifts.blade.php",
+        1
+      ],
+      [
+        "pos/tables.blade.php",
+        3
+      ],
+      [
+        "pos/terminal.blade.php",
+        7
+      ],
+      [
+        "pos/reports/partials/order_detail_modal.blade.php",
+        1
+      ],
+      [
+        "products/index.blade.php",
+        1
+      ],
+      [
+        "services/index.blade.php",
+        1
+      ],
+      [
+        "settings/index.blade.php",
+        2
+      ],
+      [
+        "settings/integrations/whatsapp.blade.php",
+        1
+      ],
+      [
+        "social_media/inbox.blade.php",
+        1
+      ],
+      [
+        "social_media/insights.blade.php",
+        6
+      ],
+      [
+        "storefront/orders/show.blade.php",
+        1
+      ],
+      [
+        "storefront/shipping/index.blade.php",
+        1
+      ],
+      [
+        "tax/index.blade.php",
+        1
+      ],
+      [
+        "warehouse/show.blade.php",
+        1
+      ]
+    ],
+    "button_touch_target_issues": []
+  },
+  "directory_breakdown": {
+    "_root": {
+      "views": [
+        "calculator.blade.php",
+        "dashboard.blade.php"
+      ],
+      "modals": 2,
+      "tables": 6,
+      "issues": []
+    },
+    "ai": {
+      "views": [
+        "ai/actions.blade.php",
+        "ai/history.blade.php",
+        "ai/index.blade.php",
+        "ai/lobby.blade.php",
+        "ai/office.blade.php",
+        "ai/providers.blade.php",
+        "ai/offices/executive.blade.php",
+        "ai/offices/growth.blade.php",
+        "ai/offices/operations.blade.php",
+        "ai/partials/agent_inspector_hud.blade.php",
+        "ai/partials/consultation_modal.blade.php",
+        "ai/partials/office_navigation.blade.php",
+        "ai/partials/office_script.blade.php",
+        "ai/partials/virtual_office_canvas.blade.php",
+        "ai/partials/desks/executive_desks.blade.php",
+        "ai/partials/desks/growth_desks.blade.php",
+        "ai/partials/desks/lobby_desks.blade.php",
+        "ai/partials/desks/operations_desks.blade.php"
+      ],
+      "modals": 22,
+      "tables": 6,
+      "issues": []
+    },
+    "ai-studio": {
+      "views": [
+        "ai-studio/create.blade.php",
+        "ai-studio/credit-history.blade.php",
+        "ai-studio/index.blade.php",
+        "ai-studio/prompt-preview.blade.php",
+        "ai-studio/show.blade.php",
+        "ai-studio/inspiration/index.blade.php",
+        "ai-studio/inspiration/show.blade.php",
+        "ai-studio/partials/topup-modal.blade.php"
+      ],
+      "modals": 4,
+      "tables": 1,
+      "issues": []
+    },
+    "analytics": {
+      "views": [
+        "analytics/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 1,
+      "issues": []
+    },
+    "approvals": {
+      "views": [
+        "approvals/history.blade.php",
+        "approvals/inbox.blade.php",
+        "approvals/rules.blade.php"
+      ],
+      "modals": 12,
+      "tables": 1,
+      "issues": []
+    },
+    "billing": {
+      "views": [
+        "billing/checkout.blade.php",
+        "billing/history.blade.php",
+        "billing/invoice.blade.php",
+        "billing/limits.blade.php",
+        "billing/payment.blade.php"
+      ],
+      "modals": 6,
+      "tables": 7,
+      "issues": []
+    },
+    "community": {
+      "views": [
+        "community/events.blade.php",
+        "community/event_payment.blade.php",
+        "community/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 0,
+      "issues": []
+    },
+    "crm": {
+      "views": [
+        "crm/members.blade.php",
+        "crm/vouchers.blade.php"
+      ],
+      "modals": 9,
+      "tables": 1,
+      "issues": []
+    },
+    "customers": {
+      "views": [
+        "customers/index.blade.php"
+      ],
+      "modals": 12,
+      "tables": 2,
+      "issues": []
+    },
+    "docs": {
+      "views": [
+        "docs/index.blade.php",
+        "docs/partials/sec_ai.blade.php"
+      ],
+      "modals": 0,
+      "tables": 3,
+      "issues": []
+    },
+    "feedback": {
+      "views": [
+        "feedback/create.blade.php",
+        "feedback/index.blade.php",
+        "feedback/show.blade.php"
+      ],
+      "modals": 0,
+      "tables": 0,
+      "issues": []
+    },
+    "finance": {
+      "views": [
+        "finance/expenses.blade.php",
+        "finance/journals.blade.php",
+        "finance/payables.blade.php",
+        "finance/receivables.blade.php",
+        "finance/accounting/balance-sheet.blade.php",
+        "finance/accounting/coa.blade.php",
+        "finance/accounting/general-ledger.blade.php",
+        "finance/accounting/reconciliation.blade.php",
+        "finance/accounting/trial-balance.blade.php",
+        "finance/cash-bank/index.blade.php",
+        "finance/cash-bank/ledger.blade.php",
+        "finance/edc-terminals/index.blade.php",
+        "finance/external-reconciliation/index.blade.php",
+        "finance/payout-accounts/index.blade.php",
+        "finance/settlements/index.blade.php",
+        "finance/settlements/show.blade.php"
+      ],
+      "modals": 31,
+      "tables": 18,
+      "issues": []
+    },
+    "hrm": {
+      "views": [
+        "hrm/index.blade.php",
+        "hrm/payroll/create.blade.php",
+        "hrm/payroll/payslip.blade.php",
+        "hrm/payroll/show.blade.php"
+      ],
+      "modals": 51,
+      "tables": 12,
+      "issues": []
+    },
+    "import": {
+      "views": [
+        "import/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 4,
+      "issues": []
+    },
+    "inventory": {
+      "views": [
+        "inventory/movements.blade.php",
+        "inventory/opname.blade.php",
+        "inventory/stocks.blade.php",
+        "inventory/transfers.blade.php"
+      ],
+      "modals": 12,
+      "tables": 5,
+      "issues": []
+    },
+    "invoices": {
+      "views": [
+        "invoices/create.blade.php",
+        "invoices/edit.blade.php",
+        "invoices/index.blade.php",
+        "invoices/print.blade.php",
+        "invoices/show.blade.php"
+      ],
+      "modals": 18,
+      "tables": 6,
+      "issues": []
+    },
+    "labor-machines": {
+      "views": [
+        "labor-machines/index.blade.php"
+      ],
+      "modals": 15,
+      "tables": 2,
+      "issues": []
+    },
+    "landing_page": {
+      "views": [
+        "landing_page/edit.blade.php",
+        "landing_page/popup.blade.php"
+      ],
+      "modals": 14,
+      "tables": 0,
+      "issues": []
+    },
+    "marketplace": {
+      "views": [
+        "marketplace/chat.blade.php",
+        "marketplace/index.blade.php",
+        "marketplace/logs.blade.php",
+        "marketplace/orders.blade.php",
+        "marketplace/products.blade.php",
+        "marketplace/shipping_label.blade.php"
+      ],
+      "modals": 15,
+      "tables": 4,
+      "issues": []
+    },
+    "master-data": {
+      "views": [
+        "master-data/index.blade.php"
+      ],
+      "modals": 3,
+      "tables": 2,
+      "issues": []
+    },
+    "materials": {
+      "views": [
+        "materials/index.blade.php"
+      ],
+      "modals": 7,
+      "tables": 1,
+      "issues": []
+    },
+    "mcp": {
+      "views": [
+        "mcp/oauth/consent.blade.php"
+      ],
+      "modals": 0,
+      "tables": 0,
+      "issues": []
+    },
+    "portal": {
+      "views": [
+        "portal/index.blade.php"
+      ],
+      "modals": 12,
+      "tables": 2,
+      "issues": []
+    },
+    "pos": {
+      "views": [
+        "pos/kitchen.blade.php",
+        "pos/orders.blade.php",
+        "pos/prep_sheet.blade.php",
+        "pos/qr-card.blade.php",
+        "pos/receipt.blade.php",
+        "pos/reports.blade.php",
+        "pos/shifts.blade.php",
+        "pos/tables.blade.php",
+        "pos/terminal.blade.php",
+        "pos/printers/index.blade.php",
+        "pos/reports/print_summary.blade.php",
+        "pos/reports/partials/filter_bar.blade.php",
+        "pos/reports/partials/kpi_cards.blade.php",
+        "pos/reports/partials/order_detail_modal.blade.php",
+        "pos/reports/tabs/cashiers.blade.php",
+        "pos/reports/tabs/categories.blade.php",
+        "pos/reports/tabs/channels.blade.php",
+        "pos/reports/tabs/customers.blade.php",
+        "pos/reports/tabs/discounts.blade.php",
+        "pos/reports/tabs/hourly.blade.php",
+        "pos/reports/tabs/outlets.blade.php",
+        "pos/reports/tabs/overview.blade.php",
+        "pos/reports/tabs/payments.blade.php",
+        "pos/reports/tabs/products.blade.php",
+        "pos/reports/tabs/profitability.blade.php",
+        "pos/reports/tabs/refunds.blade.php",
+        "pos/reports/tabs/shifts.blade.php",
+        "pos/reports/tabs/transactions.blade.php",
+        "pos/reports/tabs/voids.blade.php"
+      ],
+      "modals": 65,
+      "tables": 23,
+      "issues": []
+    },
+    "products": {
+      "views": [
+        "products/bom.blade.php",
+        "products/index.blade.php",
+        "products/modifiers.blade.php"
+      ],
+      "modals": 16,
+      "tables": 3,
+      "issues": []
+    },
+    "profile": {
+      "views": [
+        "profile/edit.blade.php",
+        "profile/verify-contact.blade.php"
+      ],
+      "modals": 0,
+      "tables": 0,
+      "issues": []
+    },
+    "profitability": {
+      "views": [
+        "profitability/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 0,
+      "issues": []
+    },
+    "purchase-orders": {
+      "views": [
+        "purchase-orders/create.blade.php",
+        "purchase-orders/index.blade.php",
+        "purchase-orders/print.blade.php",
+        "purchase-orders/show.blade.php"
+      ],
+      "modals": 9,
+      "tables": 4,
+      "issues": []
+    },
+    "purchasing": {
+      "views": [
+        "purchasing/bills/index.blade.php",
+        "purchasing/bills/show.blade.php",
+        "purchasing/receipts/create.blade.php",
+        "purchasing/returns/create.blade.php",
+        "purchasing/returns/index.blade.php",
+        "purchasing/returns/show.blade.php"
+      ],
+      "modals": 3,
+      "tables": 5,
+      "issues": []
+    },
+    "quotations": {
+      "views": [
+        "quotations/create.blade.php",
+        "quotations/edit.blade.php",
+        "quotations/index.blade.php",
+        "quotations/show.blade.php"
+      ],
+      "modals": 9,
+      "tables": 4,
+      "issues": []
+    },
+    "reports": {
+      "views": [
+        "reports/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 4,
+      "issues": []
+    },
+    "roles": {
+      "views": [
+        "roles/index.blade.php"
+      ],
+      "modals": 13,
+      "tables": 1,
+      "issues": []
+    },
+    "sales": {
+      "views": [
+        "sales/returns/create.blade.php",
+        "sales/returns/edit.blade.php",
+        "sales/returns/index.blade.php",
+        "sales/returns/print.blade.php",
+        "sales/returns/show.blade.php"
+      ],
+      "modals": 15,
+      "tables": 5,
+      "issues": []
+    },
+    "sales-orders": {
+      "views": [
+        "sales-orders/create.blade.php",
+        "sales-orders/edit.blade.php",
+        "sales-orders/index.blade.php",
+        "sales-orders/show.blade.php"
+      ],
+      "modals": 12,
+      "tables": 4,
+      "issues": []
+    },
+    "security": {
+      "views": [
+        "security/audit-logs/index.blade.php",
+        "security/audit-logs/show.blade.php"
+      ],
+      "modals": 3,
+      "tables": 3,
+      "issues": []
+    },
+    "services": {
+      "views": [
+        "services/index.blade.php"
+      ],
+      "modals": 4,
+      "tables": 1,
+      "issues": []
+    },
+    "settings": {
+      "views": [
+        "settings/index.blade.php",
+        "settings/roles.blade.php",
+        "settings/integrations/mcp.blade.php",
+        "settings/integrations/social_media.blade.php",
+        "settings/integrations/whatsapp.blade.php"
+      ],
+      "modals": 15,
+      "tables": 2,
+      "issues": []
+    },
+    "simulator": {
+      "views": [
+        "simulator/index.blade.php"
+      ],
+      "modals": 0,
+      "tables": 1,
+      "issues": []
+    },
+    "social_media": {
+      "views": [
+        "social_media/calendar.blade.php",
+        "social_media/inbox.blade.php",
+        "social_media/index.blade.php",
+        "social_media/insights.blade.php",
+        "social_media/posts.blade.php"
+      ],
+      "modals": 13,
+      "tables": 5,
+      "issues": []
+    },
+    "storefront": {
+      "views": [
+        "storefront/settings.blade.php",
+        "storefront/orders/index.blade.php",
+        "storefront/orders/shipping_label.blade.php",
+        "storefront/orders/show.blade.php",
+        "storefront/partials/navigation.blade.php",
+        "storefront/reservations/index.blade.php",
+        "storefront/shipping/index.blade.php",
+        "storefront/tabs/tab-features.blade.php",
+        "storefront/tabs/tab-fulfillment.blade.php",
+        "storefront/tabs/tab-general.blade.php",
+        "storefront/tabs/tab-payment-settlement.blade.php",
+        "storefront/tabs/tab-schedule.blade.php"
+      ],
+      "modals": 18,
+      "tables": 2,
+      "issues": []
+    },
+    "suppliers": {
+      "views": [
+        "suppliers/index.blade.php"
+      ],
+      "modals": 12,
+      "tables": 2,
+      "issues": []
+    },
+    "tax": {
+      "views": [
+        "tax/index.blade.php"
+      ],
+      "modals": 12,
+      "tables": 1,
+      "issues": []
+    },
+    "warehouse": {
+      "views": [
+        "warehouse/index.blade.php",
+        "warehouse/show.blade.php"
+      ],
+      "modals": 8,
+      "tables": 4,
+      "issues": []
+    },
+    "whatsapp": {
+      "views": [
+        "whatsapp/broadcast.blade.php",
+        "whatsapp/broadcast_detail.blade.php",
+        "whatsapp/index.blade.php",
+        "whatsapp/logs.blade.php"
+      ],
+      "modals": 4,
+      "tables": 3,
+      "issues": []
+    }
+  },
+  "findings_by_severity": {
+    "CRITICAL": [],
+    "HIGH": [
+      {
+        "view": "resources/views/app/ai/actions.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/history.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/index.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/ai/lobby.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/lobby.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/ai/office.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/office.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/ai/providers.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/offices/executive.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/offices/growth.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/offices/operations.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/ai/partials/virtual_office_canvas.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/ai-studio/create.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/ai-studio/index.blade.php",
+        "issue": "Modal Missing Teleportation: Modal lacks <template x-teleport=\"body\">. Causes stacking context issues where modal can appear behind sticky topbars or navigation drawers.",
+        "recommendation": "Wrap modal dialog in <template x-teleport=\"body\"> with z-[200] and backdrop layer covering $y=0$."
+      },
+      {
+        "view": "resources/views/app/ai-studio/prompt-preview.blade.php",
+        "issue": "Modal Missing Teleportation: Modal lacks <template x-teleport=\"body\">. Causes stacking context issues where modal can appear behind sticky topbars or navigation drawers.",
+        "recommendation": "Wrap modal dialog in <template x-teleport=\"body\"> with z-[200] and backdrop layer covering $y=0$."
+      },
+      {
+        "view": "resources/views/app/ai-studio/show.blade.php",
+        "issue": "Modal Missing Teleportation: Modal lacks <template x-teleport=\"body\">. Causes stacking context issues where modal can appear behind sticky topbars or navigation drawers.",
+        "recommendation": "Wrap modal dialog in <template x-teleport=\"body\"> with z-[200] and backdrop layer covering $y=0$."
+      },
+      {
+        "view": "resources/views/app/analytics/index.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/billing/invoice.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/billing/invoice.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/billing/limits.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/community/events.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/community/event_payment.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/community/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/crm/members.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/crm/vouchers.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/feedback/create.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/feedback/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/feedback/show.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/balance-sheet.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/finance/settlements/show.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/inventory/opname.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/inventory/stocks.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/inventory/transfers.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/invoices/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/invoices/print.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/labor-machines/index.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/marketplace/orders.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/marketplace/shipping_label.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/pos/kitchen.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/orders.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/prep_sheet.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/reports.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/shifts.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/tables.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/pos/terminal.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3, grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/pos/terminal.blade.php",
+        "issue": "Modal Missing Teleportation: Modal lacks <template x-teleport=\"body\">. Causes stacking context issues where modal can appear behind sticky topbars or navigation drawers.",
+        "recommendation": "Wrap modal dialog in <template x-teleport=\"body\"> with z-[200] and backdrop layer covering $y=0$."
+      },
+      {
+        "view": "resources/views/app/pos/reports/print_summary.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/pos/reports/partials/order_detail_modal.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/products/index.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/profile/verify-contact.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/print.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/quotations/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/reports/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/sales/returns/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/sales/returns/print.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/sales/returns/print.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/sales/returns/show.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/sales-orders/index.blade.php",
+        "issue": "Missing Mobile Bottom Padding: View lacks pb-28/pb-36 padding on main container. Content and action buttons at page bottom will be obstructed by the fixed iOS bottom navigation tab bar.",
+        "recommendation": "Add pb-28 sm:pb-32 lg:pb-10 to the page content wrapper container."
+      },
+      {
+        "view": "resources/views/app/sales-orders/show.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/security/audit-logs/show.blade.php",
+        "issue": "Table Without Overflow Container: <table> element lacks parent wrapper with .table-responsive or overflow-x-auto. Causes severe horizontal scroll and page blowout on mobile screens.",
+        "recommendation": "Wrap table inside <div class=\"table-responsive overflow-x-auto rounded-[16px] border border-black/5 dark:border-white/10\">."
+      },
+      {
+        "view": "resources/views/app/social_media/calendar.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-7' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/social_media/insights.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/social_media/posts.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-4' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/storefront/orders/shipping_label.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      },
+      {
+        "view": "resources/views/app/warehouse/index.blade.php",
+        "issue": "Unresponsive Hardcoded Grid: Uses 'grid-cols-3' without mobile breakpoint prefix (e.g., grid-cols-1 sm:grid-cols-2 lg:grid-cols-4). Breaks layout on mobile viewports (<640px).",
+        "recommendation": "Convert to mobile-first responsive grid: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4."
+      }
+    ],
+    "MEDIUM": [
+      {
+        "view": "resources/views/app/calculator.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/calculator.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/ai/actions.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/ai/history.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/ai/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/ai-studio/credit-history.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/ai-studio/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/ai-studio/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/analytics/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/approvals/history.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/approvals/inbox.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/approvals/rules.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/billing/checkout.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/billing/history.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/billing/history.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/billing/invoice.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/billing/limits.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/billing/limits.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/billing/limits.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/billing/payment.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/crm/members.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/crm/members.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/crm/members.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/crm/vouchers.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/crm/vouchers.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/customers/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/customers/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/docs/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/feedback/create.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/feedback/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/feedback/show.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/finance/expenses.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/journals.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/payables.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/receivables.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/balance-sheet.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/coa.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/coa.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/general-ledger.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/accounting/trial-balance.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/cash-bank/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/cash-bank/ledger.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/edc-terminals/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/finance/external-reconciliation/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/payout-accounts/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/finance/settlements/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/finance/settlements/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/finance/settlements/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/hrm/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/hrm/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/hrm/payroll/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/hrm/payroll/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/hrm/payroll/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/import/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/inventory/movements.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/inventory/opname.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/inventory/stocks.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/invoices/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/invoices/edit.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/invoices/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/invoices/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/invoices/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/invoices/print.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/invoices/show.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/invoices/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/invoices/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/labor-machines/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/labor-machines/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/landing_page/edit.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/landing_page/popup.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/marketplace/chat.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/marketplace/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/marketplace/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/marketplace/logs.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/marketplace/logs.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/marketplace/orders.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/marketplace/orders.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/marketplace/shipping_label.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/master-data/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/master-data/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/materials/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/materials/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/materials/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/portal/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/portal/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/orders.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/pos/orders.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/prep_sheet.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/shifts.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/tables.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/pos/terminal.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/pos/printers/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/pos/printers/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/print_summary.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/partials/order_detail_modal.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/cashiers.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/categories.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/channels.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/customers.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/discounts.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/outlets.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/products.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/profitability.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/refunds.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/shifts.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/transactions.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/voids.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/products/bom.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/products/bom.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/products/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/products/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/products/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/products/modifiers.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/products/modifiers.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/products/modifiers.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/print.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/purchase-orders/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchasing/bills/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/bills/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchasing/bills/show.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/bills/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchasing/receipts/create.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/receipts/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/create.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/show.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/purchasing/returns/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/quotations/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/quotations/edit.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/quotations/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/quotations/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/quotations/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/quotations/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/roles/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/roles/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales/returns/edit.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales/returns/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/sales/returns/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/sales/returns/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales/returns/print.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales/returns/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/sales/returns/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales-orders/create.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales-orders/edit.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales-orders/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/sales-orders/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/sales-orders/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/sales-orders/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/security/audit-logs/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/security/audit-logs/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/security/audit-logs/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/services/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/services/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/services/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/settings/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/settings/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/settings/integrations/mcp.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/simulator/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/social_media/calendar.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/social_media/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/social_media/insights.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/social_media/posts.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/social_media/posts.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/storefront/settings.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/storefront/orders/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/storefront/orders/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/storefront/reservations/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/storefront/reservations/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/suppliers/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/suppliers/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm, max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/tax/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-lg) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/tax/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/warehouse/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/warehouse/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/warehouse/index.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/warehouse/show.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/warehouse/show.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md, max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/warehouse/show.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/whatsapp/broadcast.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/whatsapp/broadcast.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/whatsapp/broadcast.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/whatsapp/broadcast_detail.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      },
+      {
+        "view": "resources/views/app/whatsapp/index.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/whatsapp/index.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-md) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/whatsapp/logs.blade.php",
+        "issue": "Double Header Redundancy: Topbar receives headerTitle while page content renders <x-module-header>, causing duplicate page titles and vertical space wastage.",
+        "recommendation": "Harmonize topbar headerTitle with module header actions, or streamline <x-module-header> to breadcrumbs/actions toolbar without repeating title/subtitle."
+      },
+      {
+        "view": "resources/views/app/whatsapp/logs.blade.php",
+        "issue": "Cramped Modal Dialog: Uses narrow width constraints (max-w-sm) instead of Bento Apple HIG full-size canvas (app-modal-dialog-md/lg/xxl).",
+        "recommendation": "Upgrade to Bento Apple HIG full-size modal: class=\"app-modal-dialog app-modal-dialog-lg sm:rounded-[24px]\" or 2-column bento layout."
+      },
+      {
+        "view": "resources/views/app/whatsapp/logs.blade.php",
+        "issue": "Missing Structured Empty State: Table lacks user-friendly empty state illustration and action button when data collection is empty.",
+        "recommendation": "Implement Apple HIG quiet empty state with Lucide icon, reassuring microcopy, and a clear primary action button."
+      }
+    ],
+    "LOW": [
+      {
+        "view": "resources/views/app/ai/actions.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/ai/lobby.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 2 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/ai/partials/agent_inspector_hud.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u25cf) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/ai/partials/agent_inspector_hud.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/ai/partials/consultation_modal.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 3 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/ai/partials/virtual_office_canvas.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2b50 \u25cf) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/ai/partials/virtual_office_canvas.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 9 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/ai-studio/credit-history.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/ai-studio/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/ai-studio/show.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 2 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/billing/invoice.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/billing/invoice.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2713) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/community/event_payment.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/community/index.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2605) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/community/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/docs/index.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/docs/partials/sec_ai.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/finance/external-reconciliation/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/hrm/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 3 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/inventory/movements.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/landing_page/edit.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2b50) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/landing_page/edit.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/landing_page/popup.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/marketplace/chat.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/marketplace/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/marketplace/orders.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/marketplace/orders.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/marketplace/products.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/marketplace/shipping_label.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/master-data/index.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2715) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/mcp/oauth/consent.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2713) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/portal/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 5 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/pos/shifts.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/pos/tables.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 3 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/pos/terminal.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 7 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/pos/reports/print_summary.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\ud83d\ude97 \ud83d\udcdd \ud83e\uddfa) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/pos/reports/partials/order_detail_modal.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\ud83d\udc8a) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/pos/reports/partials/order_detail_modal.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/pos/reports/tabs/transactions.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\ud83c\udff7 \ufe0f \ud83d\udc8a \ud83d\ude97 \ud83e\uddfa) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/products/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/sales/returns/show.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2713) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/services/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/settings/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 2 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/settings/integrations/whatsapp.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\ud83d\ude0a \u2728 \ud83d\ude4f) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/social_media/inbox.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/social_media/insights.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 6 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/social_media/posts.blade.php",
+        "issue": "Raw Unicode Emojis in Interface: Found raw emojis (\u2500) violating Apple HIG professional UI standards.",
+        "recommendation": "Replace raw emojis with semantic Lucide SVG icons (<i data-lucide=\"...\">)."
+      },
+      {
+        "view": "resources/views/app/storefront/orders/show.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/storefront/shipping/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/tax/index.blade.php",
+        "issue": "Missing Tabular Numbers on Numeric/Currency Data: Financial figures rendered without tabular-nums font feature, causing jagged column alignment.",
+        "recommendation": "Add tabular-nums to currency and quantity cells (e.g., class=\"font-mono font-semibold tabular-nums\")."
+      },
+      {
+        "view": "resources/views/app/tax/index.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      },
+      {
+        "view": "resources/views/app/warehouse/show.blade.php",
+        "issue": "Decorative Pulse Dot: Contains 1 instance(s) of animate-pulse on UI badges/metrics. Design system mandates animate-pulse only for live hardware status.",
+        "recommendation": "Remove animate-pulse from static labels, use clean typographic weight or solid status indicator."
+      }
+    ]
+  }
+}

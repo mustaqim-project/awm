@@ -1,0 +1,3302 @@
+{
+  "total_views": 185,
+  "directories": {
+    "_root": 2,
+    "ai": 18,
+    "ai-studio": 8,
+    "analytics": 1,
+    "approvals": 3,
+    "billing": 5,
+    "community": 3,
+    "crm": 2,
+    "customers": 1,
+    "docs": 2,
+    "feedback": 3,
+    "finance": 16,
+    "hrm": 4,
+    "import": 1,
+    "inventory": 4,
+    "invoices": 5,
+    "labor-machines": 1,
+    "landing_page": 2,
+    "marketplace": 6,
+    "master-data": 1,
+    "materials": 1,
+    "mcp": 1,
+    "portal": 1,
+    "pos": 29,
+    "products": 3,
+    "profile": 2,
+    "profitability": 1,
+    "purchase-orders": 4,
+    "purchasing": 6,
+    "quotations": 4,
+    "reports": 1,
+    "roles": 1,
+    "sales": 5,
+    "sales-orders": 4,
+    "security": 2,
+    "services": 1,
+    "settings": 5,
+    "simulator": 1,
+    "social_media": 5,
+    "storefront": 12,
+    "suppliers": 1,
+    "tax": 1,
+    "warehouse": 2,
+    "whatsapp": 4
+  },
+  "layout_usage": {
+    "none (partial or standalone)": 183,
+    "layouts.app": 2
+  },
+  "component_usage": {
+    "x-module-header": 66,
+    "x-breadcrumb": 1,
+    "x-table-search": 0,
+    "x-sortable-th": 0,
+    "x-table-sort-th": 22,
+    "x-document-stepper": 1,
+    "x-quota-modal": 0
+  },
+  "patterns": {
+    "modals_found": 86,
+    "modals_with_teleport": 78,
+    "modals_missing_teleport": 8,
+    "modals_details": [
+      "dashboard.blade.php",
+      "ai/providers.blade.php",
+      "ai-studio/index.blade.php",
+      "ai-studio/prompt-preview.blade.php",
+      "ai-studio/show.blade.php",
+      "ai-studio/partials/topup-modal.blade.php",
+      "analytics/index.blade.php",
+      "pos/terminal.blade.php"
+    ],
+    "tables_found": 161,
+    "tables_with_overflow_wrapper": 148,
+    "tables_missing_overflow_wrapper": 13,
+    "tables_details": [
+      "billing/invoice.blade.php",
+      "finance/accounting/balance-sheet.blade.php",
+      "invoices/print.blade.php",
+      "marketplace/shipping_label.blade.php",
+      "pos/reports/print_summary.blade.php",
+      "purchase-orders/print.blade.php",
+      "sales/returns/print.blade.php",
+      "security/audit-logs/show.blade.php"
+    ],
+    "tabular_nums_found": 136,
+    "buttons_with_min_h_44": 0,
+    "buttons_short_touch_target": 0,
+    "pill_badges_found": 0,
+    "pulse_dots_found": 64,
+    "emoji_found": 37,
+    "emoji_details": [
+      [
+        "ai/partials/agent_inspector_hud.blade.php",
+        [
+          "\u25cf"
+        ]
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        [
+          "\u25cf",
+          "\u2b50"
+        ]
+      ],
+      [
+        "billing/invoice.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "community/index.blade.php",
+        [
+          "\u2605"
+        ]
+      ],
+      [
+        "landing_page/edit.blade.php",
+        [
+          "\u2b50"
+        ]
+      ],
+      [
+        "master-data/index.blade.php",
+        [
+          "\u2715"
+        ]
+      ],
+      [
+        "mcp/oauth/consent.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "pos/reports/print_summary.blade.php",
+        [
+          "\ud83d\udcdd",
+          "\ud83d\ude97",
+          "\ud83e\uddfa"
+        ]
+      ],
+      [
+        "pos/reports/partials/order_detail_modal.blade.php",
+        [
+          "\ud83d\udc8a"
+        ]
+      ],
+      [
+        "pos/reports/tabs/transactions.blade.php",
+        [
+          "\ud83e\uddfa",
+          "\ud83d\udc8a",
+          "\ud83d\ude97",
+          "\ud83c\udff7",
+          "\ufe0f"
+        ]
+      ],
+      [
+        "sales/returns/show.blade.php",
+        [
+          "\u2713"
+        ]
+      ],
+      [
+        "social_media/inbox.blade.php",
+        [
+          "\u2728",
+          "\ud83d\ude0a",
+          "\ud83d\ude4f"
+        ]
+      ],
+      [
+        "social_media/posts.blade.php",
+        [
+          "\u2500"
+        ]
+      ]
+    ],
+    "pulse_details": [
+      [
+        "ai/lobby.blade.php",
+        2
+      ],
+      [
+        "ai/partials/agent_inspector_hud.blade.php",
+        1
+      ],
+      [
+        "ai/partials/consultation_modal.blade.php",
+        3
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        9
+      ],
+      [
+        "ai-studio/index.blade.php",
+        1
+      ],
+      [
+        "ai-studio/show.blade.php",
+        2
+      ],
+      [
+        "community/event_payment.blade.php",
+        1
+      ],
+      [
+        "community/index.blade.php",
+        1
+      ],
+      [
+        "finance/external-reconciliation/index.blade.php",
+        1
+      ],
+      [
+        "hrm/index.blade.php",
+        3
+      ],
+      [
+        "inventory/movements.blade.php",
+        1
+      ],
+      [
+        "landing_page/edit.blade.php",
+        1
+      ],
+      [
+        "landing_page/popup.blade.php",
+        1
+      ],
+      [
+        "marketplace/chat.blade.php",
+        1
+      ],
+      [
+        "marketplace/index.blade.php",
+        1
+      ],
+      [
+        "marketplace/orders.blade.php",
+        1
+      ],
+      [
+        "marketplace/products.blade.php",
+        1
+      ],
+      [
+        "portal/index.blade.php",
+        5
+      ],
+      [
+        "pos/shifts.blade.php",
+        1
+      ],
+      [
+        "pos/tables.blade.php",
+        3
+      ],
+      [
+        "pos/terminal.blade.php",
+        7
+      ],
+      [
+        "pos/reports/partials/order_detail_modal.blade.php",
+        1
+      ],
+      [
+        "products/index.blade.php",
+        1
+      ],
+      [
+        "services/index.blade.php",
+        1
+      ],
+      [
+        "settings/index.blade.php",
+        2
+      ],
+      [
+        "settings/integrations/whatsapp.blade.php",
+        1
+      ],
+      [
+        "social_media/inbox.blade.php",
+        1
+      ],
+      [
+        "social_media/insights.blade.php",
+        6
+      ],
+      [
+        "storefront/orders/show.blade.php",
+        1
+      ],
+      [
+        "storefront/shipping/index.blade.php",
+        1
+      ],
+      [
+        "tax/index.blade.php",
+        1
+      ],
+      [
+        "warehouse/show.blade.php",
+        1
+      ]
+    ],
+    "nested_cards_issues": []
+  },
+  "file_evaluations": [
+    {
+      "path": "resources/views/app/calculator.blade.php",
+      "subdir": "_root",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/dashboard.blade.php",
+      "subdir": "_root",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/actions.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/history.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/index.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/lobby.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (2 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/office.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/providers.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/offices/executive.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/offices/growth.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/offices/operations.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/partials/agent_inspector_hud.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u25cf",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/partials/consultation_modal.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (3 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/partials/office_navigation.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai/partials/office_script.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai/partials/virtual_office_canvas.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u25cf \u2b50",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (9 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai/partials/desks/executive_desks.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai/partials/desks/growth_desks.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai/partials/desks/lobby_desks.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai/partials/desks/operations_desks.blade.php",
+      "subdir": "ai",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/ai-studio/create.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/credit-history.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/index.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/prompt-preview.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/show.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Fake pulse dots (2 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/inspiration/index.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/inspiration/show.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/ai-studio/partials/topup-modal.blade.php",
+      "subdir": "ai-studio",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/analytics/index.blade.php",
+      "subdir": "analytics",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/approvals/history.blade.php",
+      "subdir": "approvals",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/approvals/inbox.blade.php",
+      "subdir": "approvals",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/approvals/rules.blade.php",
+      "subdir": "approvals",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/billing/checkout.blade.php",
+      "subdir": "billing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/billing/history.blade.php",
+      "subdir": "billing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/billing/invoice.blade.php",
+      "subdir": "billing",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Raw emojis in UI: \u2713",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/billing/limits.blade.php",
+      "subdir": "billing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/billing/payment.blade.php",
+      "subdir": "billing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/community/events.blade.php",
+      "subdir": "community",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/community/event_payment.blade.php",
+      "subdir": "community",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/community/index.blade.php",
+      "subdir": "community",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2605",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/crm/members.blade.php",
+      "subdir": "crm",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/crm/vouchers.blade.php",
+      "subdir": "crm",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/customers/index.blade.php",
+      "subdir": "customers",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/docs/index.blade.php",
+      "subdir": "docs",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/docs/partials/sec_ai.blade.php",
+      "subdir": "docs",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/feedback/create.blade.php",
+      "subdir": "feedback",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/feedback/index.blade.php",
+      "subdir": "feedback",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/feedback/show.blade.php",
+      "subdir": "feedback",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/expenses.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/journals.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/payables.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/receivables.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/accounting/balance-sheet.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/accounting/coa.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/accounting/general-ledger.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/accounting/reconciliation.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/accounting/trial-balance.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/cash-bank/index.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/cash-bank/ledger.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/edc-terminals/index.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/external-reconciliation/index.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/payout-accounts/index.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/settlements/index.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/finance/settlements/show.blade.php",
+      "subdir": "finance",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/hrm/index.blade.php",
+      "subdir": "hrm",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (3 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/hrm/payroll/create.blade.php",
+      "subdir": "hrm",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/hrm/payroll/payslip.blade.php",
+      "subdir": "hrm",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/hrm/payroll/show.blade.php",
+      "subdir": "hrm",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/import/index.blade.php",
+      "subdir": "import",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/inventory/movements.blade.php",
+      "subdir": "inventory",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/inventory/opname.blade.php",
+      "subdir": "inventory",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/inventory/stocks.blade.php",
+      "subdir": "inventory",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/inventory/transfers.blade.php",
+      "subdir": "inventory",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/invoices/create.blade.php",
+      "subdir": "invoices",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/invoices/edit.blade.php",
+      "subdir": "invoices",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/invoices/index.blade.php",
+      "subdir": "invoices",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/invoices/print.blade.php",
+      "subdir": "invoices",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/invoices/show.blade.php",
+      "subdir": "invoices",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/labor-machines/index.blade.php",
+      "subdir": "labor-machines",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/landing_page/edit.blade.php",
+      "subdir": "landing_page",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2b50",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/landing_page/popup.blade.php",
+      "subdir": "landing_page",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/chat.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/index.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/logs.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/orders.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/products.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/marketplace/shipping_label.blade.php",
+      "subdir": "marketplace",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/master-data/index.blade.php",
+      "subdir": "master-data",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2715",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/materials/index.blade.php",
+      "subdir": "materials",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/mcp/oauth/consent.blade.php",
+      "subdir": "mcp",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2713",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/portal/index.blade.php",
+      "subdir": "portal",
+      "layout": "layouts.app",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (5 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/kitchen.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/orders.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/prep_sheet.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/qr-card.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/receipt.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/shifts.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/tables.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (3 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/terminal.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Modal without x-teleport=\"body\"",
+          "severity": "MEDIUM",
+          "fix": "Wrap modal sheet in <template x-teleport=\"body\"> to guarantee z-index layering above sidebars and headers"
+        },
+        {
+          "issue": "Fake pulse dots (7 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/printers/index.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/print_summary.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Raw emojis in UI: \ud83d\udcdd \ud83d\ude97 \ud83e\uddfa",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/partials/filter_bar.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/pos/reports/partials/kpi_cards.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/pos/reports/partials/order_detail_modal.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \ud83d\udc8a",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/cashiers.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/categories.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/channels.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/customers.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/discounts.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/hourly.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/outlets.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/overview.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/payments.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/products.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/profitability.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/refunds.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/shifts.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/transactions.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \ud83e\uddfa \ud83d\udc8a \ud83d\ude97 \ud83c\udff7 \ufe0f",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/pos/reports/tabs/voids.blade.php",
+      "subdir": "pos",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/products/bom.blade.php",
+      "subdir": "products",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/products/index.blade.php",
+      "subdir": "products",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/products/modifiers.blade.php",
+      "subdir": "products",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/profile/edit.blade.php",
+      "subdir": "profile",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/profile/verify-contact.blade.php",
+      "subdir": "profile",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/profitability/index.blade.php",
+      "subdir": "profitability",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchase-orders/create.blade.php",
+      "subdir": "purchase-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchase-orders/index.blade.php",
+      "subdir": "purchase-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchase-orders/print.blade.php",
+      "subdir": "purchase-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchase-orders/show.blade.php",
+      "subdir": "purchase-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/bills/index.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/bills/show.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/receipts/create.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/returns/create.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/returns/index.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/purchasing/returns/show.blade.php",
+      "subdir": "purchasing",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/quotations/create.blade.php",
+      "subdir": "quotations",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/quotations/edit.blade.php",
+      "subdir": "quotations",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/quotations/index.blade.php",
+      "subdir": "quotations",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/quotations/show.blade.php",
+      "subdir": "quotations",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/reports/index.blade.php",
+      "subdir": "reports",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/roles/index.blade.php",
+      "subdir": "roles",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales/returns/create.blade.php",
+      "subdir": "sales",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales/returns/edit.blade.php",
+      "subdir": "sales",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales/returns/index.blade.php",
+      "subdir": "sales",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales/returns/print.blade.php",
+      "subdir": "sales",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales/returns/show.blade.php",
+      "subdir": "sales",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2713",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales-orders/create.blade.php",
+      "subdir": "sales-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales-orders/edit.blade.php",
+      "subdir": "sales-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales-orders/index.blade.php",
+      "subdir": "sales-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/sales-orders/show.blade.php",
+      "subdir": "sales-orders",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/security/audit-logs/index.blade.php",
+      "subdir": "security",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/security/audit-logs/show.blade.php",
+      "subdir": "security",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Table without responsive overflow wrapper",
+          "severity": "HIGH",
+          "fix": "Wrap table in <div class=\"table-responsive\"> or <div class=\"overflow-x-auto\"> to prevent mobile viewport blowout"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/services/index.blade.php",
+      "subdir": "services",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/settings/index.blade.php",
+      "subdir": "settings",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (2 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/settings/roles.blade.php",
+      "subdir": "settings",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/settings/integrations/mcp.blade.php",
+      "subdir": "settings",
+      "layout": "layouts.app",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/settings/integrations/social_media.blade.php",
+      "subdir": "settings",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/settings/integrations/whatsapp.blade.php",
+      "subdir": "settings",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/simulator/index.blade.php",
+      "subdir": "simulator",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/social_media/calendar.blade.php",
+      "subdir": "social_media",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/social_media/inbox.blade.php",
+      "subdir": "social_media",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2728 \ud83d\ude0a \ud83d\ude4f",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/social_media/index.blade.php",
+      "subdir": "social_media",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/social_media/insights.blade.php",
+      "subdir": "social_media",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (6 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/social_media/posts.blade.php",
+      "subdir": "social_media",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Raw emojis in UI: \u2500",
+          "severity": "LOW",
+          "fix": "Replace raw emojis with Lucide SVG icons"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/settings.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/orders/index.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/orders/shipping_label.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/orders/show.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/partials/navigation.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": []
+    },
+    {
+      "path": "resources/views/app/storefront/reservations/index.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/shipping/index.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/tabs/tab-features.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/tabs/tab-fulfillment.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/tabs/tab-general.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/tabs/tab-payment-settlement.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/storefront/tabs/tab-schedule.blade.php",
+      "subdir": "storefront",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/suppliers/index.blade.php",
+      "subdir": "suppliers",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/tax/index.blade.php",
+      "subdir": "tax",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/warehouse/index.blade.php",
+      "subdir": "warehouse",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/warehouse/show.blade.php",
+      "subdir": "warehouse",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Fake pulse dots (1 instances)",
+          "severity": "LOW",
+          "fix": "Restrict animate-pulse only to real hardware socket/bluetooth connectivity"
+        },
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/whatsapp/broadcast.blade.php",
+      "subdir": "whatsapp",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/whatsapp/broadcast_detail.blade.php",
+      "subdir": "whatsapp",
+      "layout": "none (partial or standalone)",
+      "has_header": false,
+      "has_modal": false,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/whatsapp/index.blade.php",
+      "subdir": "whatsapp",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": false,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    },
+    {
+      "path": "resources/views/app/whatsapp/logs.blade.php",
+      "subdir": "whatsapp",
+      "layout": "none (partial or standalone)",
+      "has_header": true,
+      "has_modal": true,
+      "has_table": true,
+      "issues": [
+        {
+          "issue": "Stand-alone view without layout extension",
+          "severity": "LOW",
+          "fix": "Ensure view is intended as a modal partial/component, or extend layouts.app"
+        }
+      ]
+    }
+  ]
+}

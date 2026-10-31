@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('billing.meta_title_limits'),
-    'headerTitle' => __('billing.title'),
-    'headerSubtitle' => __('billing.subtitle'),
 ])
 
 @section('content')

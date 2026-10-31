@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('whatsapp.broadcast_title') . ' - ' . $business->name,
-    'headerTitle' => __('whatsapp.broadcast_header_title'),
-    'headerSubtitle' => __('whatsapp.broadcast_header_subtitle'),
 ])
 
 @section('content')

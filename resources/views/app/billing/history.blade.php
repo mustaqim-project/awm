@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('billing.breadcrumb_history') . ' - Cooca',
-    'headerTitle' => __('billing.history_title'),
-    'headerSubtitle' => __('billing.history_subtitle'),
 ])
 
 @section('content')

@@ -510,13 +510,23 @@
             {{-- ====================================================== --}}
             <template x-teleport="body">
                 <div x-show="showAccountModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="showAccountModal = false">
-                    <div class="w-full max-w-full sm:max-w-2xl lg:max-w-3xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
-                        @click.away="showAccountModal = false"
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showAccountModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showAccountModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showAccountModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -602,6 +612,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </template>
 
             {{-- ====================================================== --}}
@@ -609,13 +620,23 @@
             {{-- ====================================================== --}}
             <template x-teleport="body">
                 <div x-show="editAccountModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="editAccountModal = false">
-                    <div class="w-full max-w-full sm:max-w-2xl lg:max-w-3xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
-                        @click.away="editAccountModal = false"
+                    <!-- Standalone Backdrop -->
+                    <div x-show="editAccountModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="editAccountModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="editAccountModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -678,6 +699,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </template>
 
             {{-- ====================================================== --}}
@@ -685,13 +707,23 @@
             {{-- ====================================================== --}}
             <template x-teleport="body">
                 <div x-show="showInflowModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="showInflowModal = false">
-                    <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
-                        @click.away="showInflowModal = false"
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showInflowModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showInflowModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showInflowModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -804,6 +836,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </template>
 
             {{-- ====================================================== --}}
@@ -811,13 +844,23 @@
             {{-- ====================================================== --}}
             <template x-teleport="body">
                 <div x-show="showOutflowModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="showOutflowModal = false">
-                    <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
-                        @click.away="showOutflowModal = false"
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showOutflowModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showOutflowModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showOutflowModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -934,6 +977,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </template>
 
             {{-- ====================================================== --}}
@@ -941,13 +985,23 @@
             {{-- ====================================================== --}}
             <template x-teleport="body">
                 <div x-show="showTransferModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="showTransferModal = false">
-                    <div class="w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
-                        @click.away="showTransferModal = false"
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showTransferModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showTransferModal = false"></div>
+
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showTransferModal = false">
+                        <div class="relative w-full max-w-full sm:max-w-3xl lg:max-w-4xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                         x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                         x-transition:enter-start="opacity-0 scale-95 translate-y-4"
                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -1048,6 +1102,7 @@
                         </form>
                     </div>
                 </div>
+            </div>
             </template>
         @endif
 

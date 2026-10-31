@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => $title,
-    'headerTitle' => $title,
-    'headerSubtitle' => $subtitle,
 ])
 
 @section('content')
@@ -715,15 +713,23 @@
                 \App\Support\Context::hasPermission($managePermission))
             <template x-teleport="body">
                 <div x-show="showAddModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    @click.self="showAddModal = false"
-                    @keydown.escape.window="showAddModal = false"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
+                    @keydown.escape.window="showAddModal = false">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showAddModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showAddModal = false"></div>
 
-                <div @click.outside="showAddModal = false"
-                    class="w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showAddModal = false">
+                        <div class="relative w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -910,6 +916,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
     @endif
 
@@ -920,15 +927,23 @@
                 \App\Support\Context::hasPermission($managePermission))
             <template x-teleport="body">
                 <div x-show="showEditModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                    @click.self="showEditModal = false"
-                    @keydown.escape.window="showEditModal = false"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
+                    @keydown.escape.window="showEditModal = false">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showEditModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showEditModal = false"></div>
 
-                <div @click.outside="showEditModal = false"
-                    class="w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showEditModal = false">
+                        <div class="relative w-full sm:max-w-lg rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto"
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -1127,6 +1142,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
     @endif
 
@@ -1135,31 +1151,43 @@
         <!-- ===================================================== -->
         <template x-teleport="body">
             <div x-show="deleteModalOpen" x-cloak
-                class="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md"
-                @keydown.escape.window="closeDelete()"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="closeDelete()">
+                <!-- Standalone Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md transition-opacity"
+                    @click="closeDelete()"></div>
 
-            <div class="w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
-                @click.away="closeDelete()" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDelete()">
+                    <div class="relative w-[290px] rounded-[14px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl overflow-hidden text-center shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-black/5 dark:border-white/10"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="px-4 pt-5 pb-4">
-                    <p class="text-[17px] font-semibold text-black dark:text-white">Hapus Data Master?</p>
-                    <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                        <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan
-                        dihapus dari sistem. Tindakan ini tidak dapat dipulihkan.
-                    </p>
-                </div>
+                        <div class="px-4 pt-5 pb-4">
+                            <p class="text-[17px] font-semibold text-black dark:text-white">Hapus Data Master?</p>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
+                                <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span> akan
+                                dihapus dari sistem. Tindakan ini tidak dapat dipulihkan.
+                            </p>
+                        </div>
 
-                <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
-                    <button type="button" @click="closeDelete()"
-                        class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
-                    <button type="button" @click="submitDelete()"
-                        class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.delete') }}</button>
+                        <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
+                            <button type="button" @click="closeDelete()"
+                                class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
+                            <button type="button" @click="submitDelete()"
+                                class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.delete') }}</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>

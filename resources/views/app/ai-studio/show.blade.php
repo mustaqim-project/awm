@@ -368,148 +368,184 @@
     <!-- ========================================== -->
     <!-- 3. MODAL: EXPORT TO PRODUCT CATALOG (AC-010) -->
     <!-- ========================================== -->
-    <div x-show="exportModalOpen" x-transition.opacity
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-        style="display: none;">
-        <div @click.away="exportModalOpen = false"
-            class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-5">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center">
-                        <i data-lucide="package-plus" class="w-4 h-4"></i>
-                    </span>
-                    <div>
-                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.simpan_ke_katalog_produk') }}</h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">Jadikan hasil render foto resmi produk Anda</p>
+    <template x-teleport="body">
+        <div x-show="exportModalOpen" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            role="dialog" aria-modal="true"
+            @keydown.escape.window="exportModalOpen = false"
+            style="display: none;">
+            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <div x-show="exportModalOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="exportModalOpen = false"></div>
+
+            <!-- 2. Centered Scroll & Dialog Container -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="exportModalOpen = false">
+                <div @click.away="exportModalOpen = false"
+                    class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center">
+                                <i data-lucide="package-plus" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.simpan_ke_katalog_produk') }}</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Jadikan hasil render foto resmi produk Anda</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="exportModalOpen = false" class="p-1 rounded-full text-black/40 hover:bg-black/5">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tab Switcher (Update existing vs Create new) -->
+                    <div class="flex p-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-xs font-semibold">
+                        <button type="button" @click="exportMode = 'update'"
+                            class="flex-1 py-1.5 rounded-[8px] transition-all"
+                            :class="exportMode === 'update' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.perbarui_produk_terkait') }}</button>
+                        <button type="button" @click="exportMode = 'new'"
+                            class="flex-1 py-1.5 rounded-[8px] transition-all"
+                            :class="exportMode === 'new' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.buat_produk_baru') }}</button>
+                    </div>
+
+                    <!-- Form: Update existing product -->
+                    <div x-show="exportMode === 'update'" class="space-y-3">
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-semibold text-black dark:text-white">Pilih Produk Sasaran</label>
+                            <select x-model="exportTargetProductId"
+                                class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
+                                @if ($attachedProduct)
+                                    <option value="{{ $attachedProduct->id }}">Produk Proyek Ini: {{ $attachedProduct->name }}</option>
+                                @endif
+                                <option value="">-- Pilih Produk Lain --</option>
+                            </select>
+                        </div>
+                        <p class="text-[11px] text-black/50 dark:text-white/50">
+                            Foto produk di database katalog akan digantikan dengan gambar render AI Studio ini.
+                        </p>
+                    </div>
+
+                    <!-- Form: Create brand new product -->
+                    <div x-show="exportMode === 'new'" class="space-y-3" style="display: none;">
+                        <div class="space-y-1">
+                            <label class="text-xs font-semibold text-black dark:text-white">Nama Produk Baru <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="newProductName" placeholder="Contoh: Kopi Robusta Premium 250g"
+                                class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-semibold text-black dark:text-white">Harga Jual (Rp) <span class="text-red-500">*</span></label>
+                            <input type="number" x-model="newProductPrice" placeholder="50000" min="0"
+                                class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5 dark:border-white/5">
+                        <button type="button" @click="exportModalOpen = false"
+                            class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
+                        <button type="button" @click="submitExportToCatalog()" :disabled="exporting"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#34C759] hover:bg-[#2db24f] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
+                            <i data-lucide="check" class="w-3.5 h-3.5" x-show="!exporting"></i>
+                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="exporting" style="display: none;"></i>
+                            <span x-text="exporting ? 'Menyimpan...' : 'Simpan Sekarang'">{{ __('ai.simpan_sekarang') }}</span>
+                        </button>
                     </div>
                 </div>
-                <button type="button" @click="exportModalOpen = false" class="p-1 rounded-full text-black/40 hover:bg-black/5">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <!-- Tab Switcher (Update existing vs Create new) -->
-            <div class="flex p-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-xs font-semibold">
-                <button type="button" @click="exportMode = 'update'"
-                    class="flex-1 py-1.5 rounded-[8px] transition-all"
-                    :class="exportMode === 'update' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.perbarui_produk_terkait') }}</button>
-                <button type="button" @click="exportMode = 'new'"
-                    class="flex-1 py-1.5 rounded-[8px] transition-all"
-                    :class="exportMode === 'new' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.buat_produk_baru') }}</button>
-            </div>
-
-            <!-- Form: Update existing product -->
-            <div x-show="exportMode === 'update'" class="space-y-3">
-                <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-black dark:text-white">Pilih Produk Sasaran</label>
-                    <select x-model="exportTargetProductId"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
-                        @if ($attachedProduct)
-                            <option value="{{ $attachedProduct->id }}">Produk Proyek Ini: {{ $attachedProduct->name }}</option>
-                        @endif
-                        <option value="">-- Pilih Produk Lain --</option>
-                    </select>
-                </div>
-                <p class="text-[11px] text-black/50 dark:text-white/50">
-                    Foto produk di database katalog akan digantikan dengan gambar render AI Studio ini.
-                </p>
-            </div>
-
-            <!-- Form: Create brand new product -->
-            <div x-show="exportMode === 'new'" class="space-y-3" style="display: none;">
-                <div class="space-y-1">
-                    <label class="text-xs font-semibold text-black dark:text-white">Nama Produk Baru <span class="text-red-500">*</span></label>
-                    <input type="text" x-model="newProductName" placeholder="Contoh: Kopi Robusta Premium 250g"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-semibold text-black dark:text-white">Harga Jual (Rp) <span class="text-red-500">*</span></label>
-                    <input type="number" x-model="newProductPrice" placeholder="50000" min="0"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
-                </div>
-            </div>
-
-            <!-- Modal Footer -->
-            <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5 dark:border-white/5">
-                <button type="button" @click="exportModalOpen = false"
-                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
-                <button type="button" @click="submitExportToCatalog()" :disabled="exporting"
-                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#34C759] hover:bg-[#2db24f] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
-                    <i data-lucide="check" class="w-3.5 h-3.5" x-show="!exporting"></i>
-                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="exporting" style="display: none;"></i>
-                    <span x-text="exporting ? 'Menyimpan...' : 'Simpan Sekarang'">{{ __('ai.simpan_sekarang') }}</span>
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- ========================================== -->
     <!-- 4. DRAWER / MODAL: DISPATCH NEW GENERATION -->
     <!-- ========================================== -->
-    <div x-show="generationDrawerOpen" x-transition.opacity
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-        style="display: none;">
-        <div @click.away="generationDrawerOpen = false"
-            class="w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    </span>
-                    <h3 class="text-sm font-bold text-black dark:text-white">Pesan Render Generasi Baru</h3>
+    <template x-teleport="body">
+        <div x-show="generationDrawerOpen" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            role="dialog" aria-modal="true"
+            @keydown.escape.window="generationDrawerOpen = false"
+            style="display: none;">
+            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <div x-show="generationDrawerOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="generationDrawerOpen = false"></div>
+
+            <!-- 2. Centered Scroll & Dialog Container -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="generationDrawerOpen = false">
+                <div @click.away="generationDrawerOpen = false"
+                    class="w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            </span>
+                            <h3 class="text-sm font-bold text-black dark:text-white">Pesan Render Generasi Baru</h3>
+                        </div>
+                        <button type="button" @click="generationDrawerOpen = false" class="p-1 rounded-full text-black/40 hover:bg-black/5">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Model Selection -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-black dark:text-white">Pilihan Engine Model AI</label>
+                        <select x-model="dispatchModel" @change="onDrawerModelChange()"
+                            class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                            <option value="ideogram-v2">Ideogram v2 (15 Kredit - Unggul Tipografi &amp; Label)</option>
+                            <option value="dall-e-3">OpenAI DALL-E 3 (20 Kredit - Fotografi Realistik Tinggi)</option>
+                            <option value="sdxl">Stable Diffusion XL (10 Kredit - Cepat &amp; Artistik)</option>
+                        </select>
+                    </div>
+
+                    <!-- Custom Prompt Override if desired -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-black dark:text-white">Teks Prompt Kustom (Opsional)</label>
+                        <textarea x-model="dispatchCustomPrompt" rows="3"
+                            placeholder="{{ __('ai.biarkan_kosong_untuk_menggunakan_prompt_aktif') }}"
+                            class="w-full p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs font-mono text-black dark:text-white"></textarea>
+                    </div>
+
+                    <!-- Hold Notice & Cost -->
+                    <div class="p-3.5 rounded-[12px] bg-[#007AFF]/5 border border-[#007AFF]/20 flex items-center justify-between text-xs">
+                        <span class="text-black/70 dark:text-white/70">Biaya Reservasi:</span>
+                        <span class="font-bold text-[#007AFF] text-sm" x-text="dispatchCost + ' Kredit'">15 Kredit</span>
+                    </div>
+
+                    <!-- Insufficient Balance Warning inside Drawer -->
+                    <div x-show="creditsBalance < dispatchCost" class="p-3 rounded-[12px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs text-amber-700 dark:text-amber-300">
+                        <span class="text-[11px]">Saldo kredit Anda (<strong x-text="creditsBalance"></strong>) tidak mencukupi.</span>
+                        <button type="button" @click="$dispatch('open-ai-topup-modal', { required: dispatchCost, available: creditsBalance, message: 'Saldo kredit Anda tidak mencukupi untuk render variasi ini.' })"
+                            class="px-2.5 py-1 rounded-[8px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[10px] shadow-xs hover:from-amber-600 hover:to-orange-600">
+                            Top Up Sekarang
+                        </button>
+                    </div>
+
+                    <!-- Footer Actions -->
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5">
+                        <button type="button" @click="generationDrawerOpen = false"
+                            class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
+                        <button type="button" @click="dispatchNewGeneration()" :disabled="dispatching"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
+                            <i data-lucide="wand-2" class="w-3.5 h-3.5" x-show="!dispatching"></i>
+                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="dispatching" style="display: none;"></i>
+                            <span x-text="dispatching ? 'Memproses...' : 'Mulai Render Visual'">Mulai Render Visual</span>
+                        </button>
+                    </div>
                 </div>
-                <button type="button" @click="generationDrawerOpen = false" class="p-1 rounded-full text-black/40 hover:bg-black/5">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <!-- Model Selection -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-semibold text-black dark:text-white">Pilihan Engine Model AI</label>
-                <select x-model="dispatchModel" @change="onDrawerModelChange()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="ideogram-v2">Ideogram v2 (15 Kredit - Unggul Tipografi &amp; Label)</option>
-                    <option value="dall-e-3">OpenAI DALL-E 3 (20 Kredit - Fotografi Realistik Tinggi)</option>
-                    <option value="sdxl">Stable Diffusion XL (10 Kredit - Cepat &amp; Artistik)</option>
-                </select>
-            </div>
-
-            <!-- Custom Prompt Override if desired -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-semibold text-black dark:text-white">Teks Prompt Kustom (Opsional)</label>
-                <textarea x-model="dispatchCustomPrompt" rows="3"
-                    placeholder="{{ __('ai.biarkan_kosong_untuk_menggunakan_prompt_aktif') }}"
-                    class="w-full p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs font-mono text-black dark:text-white"></textarea>
-            </div>
-
-            <!-- Hold Notice & Cost -->
-            <div class="p-3.5 rounded-[12px] bg-[#007AFF]/5 border border-[#007AFF]/20 flex items-center justify-between text-xs">
-                <span class="text-black/70 dark:text-white/70">Biaya Reservasi:</span>
-                <span class="font-bold text-[#007AFF] text-sm" x-text="dispatchCost + ' Kredit'">15 Kredit</span>
-            </div>
-
-            <!-- Insufficient Balance Warning inside Drawer -->
-            <div x-show="creditsBalance < dispatchCost" class="p-3 rounded-[12px] bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs text-amber-700 dark:text-amber-300">
-                <span class="text-[11px]">Saldo kredit Anda (<strong x-text="creditsBalance"></strong>) tidak mencukupi.</span>
-                <button type="button" @click="$dispatch('open-ai-topup-modal', { required: dispatchCost, available: creditsBalance, message: 'Saldo kredit Anda tidak mencukupi untuk render variasi ini.' })"
-                    class="px-2.5 py-1 rounded-[8px] bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[10px] shadow-xs hover:from-amber-600 hover:to-orange-600">
-                    Top Up Sekarang
-                </button>
-            </div>
-
-            <!-- Footer Actions -->
-            <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5">
-                <button type="button" @click="generationDrawerOpen = false"
-                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
-                <button type="button" @click="dispatchNewGeneration()" :disabled="dispatching"
-                    class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
-                    <i data-lucide="wand-2" class="w-3.5 h-3.5" x-show="!dispatching"></i>
-                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="dispatching" style="display: none;"></i>
-                    <span x-text="dispatching ? 'Memproses...' : 'Mulai Render Visual'">Mulai Render Visual</span>
-                </button>
             </div>
         </div>
-    </div>
+    </template>
 
     <!-- Top Up Modal Component -->
     @include('app.ai-studio.partials.topup-modal')

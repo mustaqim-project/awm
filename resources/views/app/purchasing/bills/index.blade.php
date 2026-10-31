@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('purchasing.bills.title'),
-    'headerTitle' => __('purchasing.bills.title'),
-    'headerSubtitle' => __('purchasing.bills.subtitle')
 ])
 
 @section('content')

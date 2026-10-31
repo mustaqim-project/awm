@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('crm.members_title') . ' - Cooca',
-    'headerTitle' => __('crm.members_title'),
-    'headerSubtitle' => __('crm.subtitle'),
 ])
 
 @php

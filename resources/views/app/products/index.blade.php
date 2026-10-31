@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('products.katalog_produk_model_hpp'),
-    'headerTitle' => 'Katalog Produk & Model HPP',
-    'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',
 ])
 
 @section('content')

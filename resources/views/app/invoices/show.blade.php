@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),
-    'headerTitle' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),
-    'headerSubtitle' => __('sales.invoices.show_subtitle')
 ])
 
 @php

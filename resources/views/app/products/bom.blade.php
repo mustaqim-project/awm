@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('products.bom_title_prefix', ['name' => $product->name]),
-    'headerTitle' => __('products.bom_header_title'),
-    'headerSubtitle' => __('products.bom_header_subtitle', ['name' => $product->name]),
 ])
 
 @section('content')
@@ -287,10 +285,23 @@
     @if (\App\Support\Context::hasPermission('products.edit'))
         <template x-teleport="body">
             <div x-show="showAddItemModal" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="showAddItemModal = false">
-                <div class="w-full max-w-full sm:max-w-xl md:max-w-2xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden"
-                    @click.outside="showAddItemModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showAddItemModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showAddItemModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-0 sm:p-4" @click.self="showAddItemModal = false">
+                    <div class="relative w-full max-w-full sm:max-w-xl md:max-w-2xl inset-x-0 bottom-0 sm:inset-auto sm:my-auto rounded-t-[28px] sm:rounded-[24px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.3)] max-h-[94vh] sm:max-h-[90vh] flex flex-col overflow-hidden">
 
                     <!-- Mobile Grab Bar -->
                     <div class="w-10 h-1.5 rounded-full bg-black/20 dark:bg-white/20 mx-auto my-2.5 sm:hidden shrink-0"></div>
@@ -395,6 +406,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
     @endif
 
@@ -404,31 +416,46 @@
     @if (\App\Support\Context::hasPermission('products.edit'))
         <template x-teleport="body">
             <div x-show="deleteModalOpen" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md">
-                <div class="w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]"
-                    @click.outside="closeDelete()">
-                    <div class="px-5 pt-6 pb-4">
-                        <div class="w-10 h-10 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3">
-                            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
+                @keydown.escape.window="closeDelete()">
+                <!-- Standalone Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="closeDelete()"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDelete()">
+                    <div class="relative w-full max-w-[320px] rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-2xl overflow-hidden text-center shadow-2xl border border-black/[0.08] dark:border-white/[0.1]">
+                        <div class="px-5 pt-6 pb-4">
+                            <div class="w-10 h-10 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center mx-auto mb-3">
+                                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('products.modal_delete_bom_title') }}</h4>
+                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
+                                <span x-text="deleteTarget.name" class="font-semibold text-black dark:text-white"></span> {{ __('products.modal_delete_bom_desc') }}
+                            </p>
+                            <div class="mt-3 p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] text-[11px] text-black/50 dark:text-white/50 text-left flex items-start gap-1.5">
+                                <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
+                                <span>{{ __('products.peace_of_mind_delete_bom') }}</span>
+                            </div>
                         </div>
-                        <h4 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('products.modal_delete_bom_title') }}</h4>
-                        <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
-                            <span x-text="deleteTarget.name" class="font-semibold text-black dark:text-white"></span> {{ __('products.modal_delete_bom_desc') }}
-                        </p>
-                        <div class="mt-3 p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] text-[11px] text-black/50 dark:text-white/50 text-left flex items-start gap-1.5">
-                            <i data-lucide="info" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
-                            <span>{{ __('products.peace_of_mind_delete_bom') }}</span>
+                        <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.1] text-[15px] font-medium">
+                            <button type="button" @click="closeDelete()"
+                                class="py-3 text-[#007AFF] border-r border-black/[0.08] dark:border-white/[0.1] active:bg-black/5 dark:active:bg-white/5 transition-colors min-h-[44px]">
+                                {{ __('products.btn_cancel') }}
+                            </button>
+                            <button type="button" @click="submitDelete()"
+                                class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors min-h-[44px]">
+                                {{ __('products.btn_delete_confirm') }}
+                            </button>
                         </div>
-                    </div>
-                    <div class="grid grid-cols-2 border-t border-black/[0.08] dark:border-white/[0.1] text-[15px] font-medium">
-                        <button type="button" @click="closeDelete()"
-                            class="py-3 text-[#007AFF] border-r border-black/[0.08] dark:border-white/[0.1] active:bg-black/5 dark:active:bg-white/5 transition-colors min-h-[44px]">
-                            {{ __('products.btn_cancel') }}
-                        </button>
-                        <button type="button" @click="submitDelete()"
-                            class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors min-h-[44px]">
-                            {{ __('products.btn_delete_confirm') }}
-                        </button>
                     </div>
                 </div>
             </div>

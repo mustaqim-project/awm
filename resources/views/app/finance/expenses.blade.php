@@ -329,13 +329,24 @@
         @if (\App\Support\Context::hasPermission('expenses.manage'))
         <template x-teleport="body">
             <div x-show="showCreateModal" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                x-transition:enter="transition ease-out duration-250" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="showCreateModal = false">
 
-            <div class="w-full max-w-[95vw] lg:max-w-5xl 2xl:max-w-[1250px] mx-auto rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
+                <!-- 1. Standalone Independent Backdrop Overlay -->
+                <div x-show="showCreateModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showCreateModal = false"></div>
+
+                <!-- 2. Centered Scroll & Dialog Container -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCreateModal = false">
+                    <div class="w-full max-w-[95vw] lg:max-w-5xl 2xl:max-w-[1250px] mx-auto rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col max-h-[92vh]"
                 @click.away="showCreateModal = false"
                 x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-300"
                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
@@ -687,6 +698,7 @@
                     </div>
 
                 </form>
+                </div>
             </div>
         </div>
     </template>

@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('warehouse.detail_title', ['name' => $location->name]),
-    'headerTitle' => __('warehouse.detail_header', ['name' => $location->name]),
-    'headerSubtitle' => __('warehouse.detail_subtitle'),
 ])
 
 @section('content')
@@ -1330,43 +1328,54 @@
         {{-- ===================================================== --}}
         <template x-teleport="body">
             <div x-show="confirmModalOpen" x-cloak
-                class="fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="confirmModalOpen = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="confirmModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md transition-opacity"
+                    @click="confirmModalOpen = false"></div>
 
-                <div class="w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
-                @click.outside="confirmModalOpen = false"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmModalOpen = false">
+                    <div class="relative w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
-                <div class="w-12 h-12 rounded-[14px] mx-auto flex items-center justify-center"
-                    :class="confirmIsDanger ? 'bg-[#FF3B30]/12 text-[#FF3B30]' : 'bg-[#34C759]/12 text-[#34C759]'">
-                    <template x-if="confirmIsDanger">
-                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                    </template>
-                    <template x-if="!confirmIsDanger">
-                        <i data-lucide="check-circle-2" class="w-6 h-6"></i>
-                    </template>
+                    <div class="w-12 h-12 rounded-[14px] mx-auto flex items-center justify-center"
+                        :class="confirmIsDanger ? 'bg-[#FF3B30]/12 text-[#FF3B30]' : 'bg-[#34C759]/12 text-[#34C759]'">
+                        <template x-if="confirmIsDanger">
+                            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                        </template>
+                        <template x-if="!confirmIsDanger">
+                            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                        </template>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white" x-text="confirmTitle"></h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" x-text="confirmDesc"></p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <button type="button" @click="confirmModalOpen = false"
+                            class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
+                            {{ __('warehouse.actions.cancel') }}
+                        </button>
+                        <button type="button" @click="executeConfirm()"
+                            class="min-h-[44px] px-4 rounded-[12px] text-xs font-bold text-white transition cursor-pointer active:scale-[0.98]"
+                            :class="confirmIsDanger ? 'bg-[#FF3B30] hover:bg-[#E02D22]' : 'bg-[#34C759] hover:bg-[#2FB34F]'">
+                            <span x-text="confirmIsDanger ? '{{ __('warehouse.actions.reject') }}' : '{{ __('warehouse.actions.approve') }}'"></span>
+                        </button>
+                    </div>
                 </div>
-
-                <div class="space-y-1.5">
-                    <h3 class="text-base font-bold text-slate-900 dark:text-white" x-text="confirmTitle"></h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" x-text="confirmDesc"></p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button type="button" @click="confirmModalOpen = false"
-                        class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer">
-                        {{ __('warehouse.actions.cancel') }}
-                    </button>
-                    <button type="button" @click="executeConfirm()"
-                        class="min-h-[44px] px-4 rounded-[12px] text-xs font-bold text-white transition cursor-pointer active:scale-[0.98]"
-                        :class="confirmIsDanger ? 'bg-[#FF3B30] hover:bg-[#E02D22]' : 'bg-[#34C759] hover:bg-[#2FB34F]'">
-                        <span x-text="confirmIsDanger ? '{{ __('warehouse.actions.reject') }}' : '{{ __('warehouse.actions.approve') }}'"></span>
-                    </button>
                 </div>
             </div>
         </template>
@@ -1376,13 +1385,23 @@
         {{-- ===================================================== --}}
         <template x-teleport="body">
             <div x-show="showEditModal" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="showEditModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showEditModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showEditModal = false"></div>
 
-                <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-4xl xl:max-w-5xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditModal = false">
+                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-4xl xl:max-w-5xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                 @click.outside="showEditModal = false" x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                 x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
@@ -1686,6 +1705,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </template>
 
         {{-- ===================================================== --}}
@@ -1694,13 +1714,23 @@
         @if (\App\Support\Context::hasPermission('inventory.manage'))
             <template x-teleport="body">
                 <div x-show="showAdjustModal" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
+                    role="dialog" aria-modal="true"
                     @keydown.escape.window="showAdjustModal = false">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="showAdjustModal"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="showAdjustModal = false"></div>
 
-                    <div class="w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showAdjustModal = false">
+                        <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden"
                     @click.outside="showAdjustModal = false" x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                     x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
@@ -1892,6 +1922,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
     @endif
 

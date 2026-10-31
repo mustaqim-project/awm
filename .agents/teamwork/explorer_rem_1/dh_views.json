@@ -1,0 +1,310 @@
+[
+  {
+    "file": "billing/checkout.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('billing.checkout_title') . ' - Cooca',\n    'headerTitle' => __('billing.breadcrumb_checkout'),\n    'headerSubtitle' => __('billing.checkout_subtitle'),\n])",
+    "mod_hdr_line": 318
+  },
+  {
+    "file": "billing/history.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('billing.breadcrumb_history') . ' - Cooca',\n    'headerTitle' => __('billing.history_title'),\n    'headerSubtitle' => __('billing.history_subtitle'),\n])",
+    "mod_hdr_line": 32
+  },
+  {
+    "file": "billing/limits.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('billing.meta_title_limits'),\n    'headerTitle' => __('billing.title'),\n    'headerSubtitle' => __('billing.subtitle'),\n])",
+    "mod_hdr_line": 30
+  },
+  {
+    "file": "billing/payment.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('billing.payment_page_title', ['order' => $payment->order_number]),\n    'headerTitle' => __('billing.header_payment_instructions'),\n    'headerSubtitle' => __('billing.header_payment_subtitle'),\n])",
+    "mod_hdr_line": 204
+  },
+  {
+    "file": "crm/members.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('crm.members_title') . ' - Cooca',\n    'headerTitle' => __('crm.members_title'),\n    'headerSubtitle' => __('crm.subtitle'),\n])",
+    "mod_hdr_line": 94
+  },
+  {
+    "file": "crm/vouchers.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('crm.vouchers_title') . ' - Cooca',\n    'headerTitle' => __('crm.vouchers_title'),\n    'headerSubtitle' => __('crm.vouchers_subtitle'),\n])",
+    "mod_hdr_line": 21
+  },
+  {
+    "file": "customers/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('customers.title') . ' - Cooca',\n    'headerTitle' => __('customers.directory_title'),\n    'headerSubtitle' => __('customers.subtitle'),\n])",
+    "mod_hdr_line": 229
+  },
+  {
+    "file": "feedback/create.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature'),\n    'headerTitle' => $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature'),\n    'headerSubtitle' => $type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features'),\n])",
+    "mod_hdr_line": 25
+  },
+  {
+    "file": "feedback/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerTitle' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerSubtitle' => $type === 'bugs' ? __('feedback.subtitle_bugs') : __('feedback.subtitle_features'),\n])",
+    "mod_hdr_line": 21
+  },
+  {
+    "file": "feedback/show.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => $item->title,\n    'headerTitle' => $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features'),\n    'headerSubtitle' => $item->title,\n])",
+    "mod_hdr_line": 25
+  },
+  {
+    "file": "invoices/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('sales.invoices.page_title'),\n    'headerTitle' => __('sales.invoices.header_title'),\n    'headerSubtitle' => __('sales.invoices.header_subtitle')\n])",
+    "mod_hdr_line": 28
+  },
+  {
+    "file": "invoices/show.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),\n    'headerTitle' => __('sales.invoices.show_title', ['number' => $invoice->invoice_number]),\n    'headerSubtitle' => __('sales.invoices.show_subtitle')\n])",
+    "mod_hdr_line": 91
+  },
+  {
+    "file": "marketplace/chat.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('marketplace.chat_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.chat_header_title'),\n    'headerSubtitle' => __('marketplace.chat_page_subtitle'),\n])",
+    "mod_hdr_line": 15
+  },
+  {
+    "file": "marketplace/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('marketplace.page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.page_title'),\n    'headerSubtitle' => __('marketplace.page_subtitle'),\n])",
+    "mod_hdr_line": 90
+  },
+  {
+    "file": "marketplace/logs.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('marketplace.logs_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.logs_header_title'),\n    'headerSubtitle' => __('marketplace.logs_page_subtitle'),\n])",
+    "mod_hdr_line": 41
+  },
+  {
+    "file": "marketplace/orders.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('marketplace.orders_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.orders_page_title'),\n    'headerSubtitle' => __('marketplace.orders_page_subtitle'),\n])",
+    "mod_hdr_line": 201
+  },
+  {
+    "file": "marketplace/products.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('marketplace.products_page_title') . ' - ' . $business->name,\n    'headerTitle' => __('marketplace.products_page_title'),\n    'headerSubtitle' => __('marketplace.products_page_subtitle'),\n])",
+    "mod_hdr_line": 883
+  },
+  {
+    "file": "master-data/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => $title,\n    'headerTitle' => $title,\n    'headerSubtitle' => $subtitle,\n])",
+    "mod_hdr_line": 132
+  },
+  {
+    "file": "materials/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('materials.title'),\n    'headerTitle' => __('materials.header_title'),\n    'headerSubtitle' => __('materials.header_subtitle'),\n])",
+    "mod_hdr_line": 216
+  },
+  {
+    "file": "products/bom.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('products.bom_title_prefix', ['name' => $product->name]),\n    'headerTitle' => __('products.bom_header_title'),\n    'headerSubtitle' => __('products.bom_header_subtitle', ['name' => $product->name]),\n])",
+    "mod_hdr_line": 31
+  },
+  {
+    "file": "products/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('products.katalog_produk_model_hpp'),\n    'headerTitle' => 'Katalog Produk & Model HPP',\n    'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',\n])",
+    "mod_hdr_line": 782
+  },
+  {
+    "file": "products/modifiers.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('products.modifiers_title'),\n    'headerTitle' => __('products.modifiers_title'),\n    'headerSubtitle' => __('products.modifiers_subtitle'),\n])",
+    "mod_hdr_line": 13
+  },
+  {
+    "file": "purchase-orders/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.title'),\n    'headerTitle' => __('purchasing.header_title'),\n    'headerSubtitle' => __('purchasing.header_subtitle')\n])",
+    "mod_hdr_line": 38
+  },
+  {
+    "file": "purchasing/bills/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.title'),\n    'headerTitle' => __('purchasing.bills.title'),\n    'headerSubtitle' => __('purchasing.bills.subtitle')\n])",
+    "mod_hdr_line": 12
+  },
+  {
+    "file": "purchasing/bills/show.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.bills.detail_title', ['number' => $invoice->invoice_number]),\n    'headerTitle' => __('purchasing.bills.title'),\n    'headerSubtitle' => __('purchasing.bills.detail_subtitle')\n])",
+    "mod_hdr_line": 12
+  },
+  {
+    "file": "purchasing/receipts/create.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.receipts.title', ['number' => $purchaseOrder->po_number]),\n    'headerTitle' => __('purchasing.receipts.header_title'),\n    'headerSubtitle' => __('purchasing.receipts.header_subtitle')\n])",
+    "mod_hdr_line": 15
+  },
+  {
+    "file": "purchasing/returns/create.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.create_title'),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.create_subtitle')\n])",
+    "mod_hdr_line": 14
+  },
+  {
+    "file": "purchasing/returns/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.title'),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.subtitle')\n])",
+    "mod_hdr_line": 12
+  },
+  {
+    "file": "purchasing/returns/show.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.returns.detail_title', ['number' => $return->return_number]),\n    'headerTitle' => __('purchasing.returns.title'),\n    'headerSubtitle' => __('purchasing.returns.detail_subtitle')\n])",
+    "mod_hdr_line": 12
+  },
+  {
+    "file": "quotations/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('sales.quotations.page_title'),\n    'headerTitle' => __('sales.quotations.header_title'),\n    'headerSubtitle' => __('sales.quotations.header_subtitle')\n])",
+    "mod_hdr_line": 27
+  },
+  {
+    "file": "sales/returns/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('sales.returns.page_title'),\n    'headerTitle' => __('sales.returns.header_title'),\n    'headerSubtitle' => __('sales.returns.header_subtitle'),\n])",
+    "mod_hdr_line": 37
+  },
+  {
+    "file": "sales-orders/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('sales.sales_orders.page_title'),\n    'headerTitle' => __('sales.sales_orders.header_title'),\n    'headerSubtitle' => __('sales.sales_orders.header_subtitle'),\n])",
+    "mod_hdr_line": 38
+  },
+  {
+    "file": "services/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('services.title'),\n    'headerTitle' => __('services.header_title'),\n    'headerSubtitle' => __('services.header_subtitle'),\n])",
+    "mod_hdr_line": 179
+  },
+  {
+    "file": "social_media/calendar.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('social_media.calendar_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.calendar_header_title'),\n    'headerSubtitle' => __('social_media.calendar_header_subtitle'),\n])",
+    "mod_hdr_line": 32
+  },
+  {
+    "file": "social_media/inbox.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('social_media.unified_inbox_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.unified_inbox_title'),\n    'headerSubtitle' => __('social_media.unified_inbox_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "social_media/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('social_media.header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.header_title'),\n    'headerSubtitle' => __('social_media.header_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "social_media/insights.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('social_media.insights_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.insights_header_title'),\n    'headerSubtitle' => __('social_media.insights_header_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "social_media/posts.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('social_media.posts_header_title') . ' - ' . $business->name,\n    'headerTitle' => __('social_media.posts_header_title'),\n    'headerSubtitle' => __('social_media.posts_header_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "suppliers/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('purchasing.supplier.title'),\n    'headerTitle' => __('purchasing.supplier.header_title'),\n    'headerSubtitle' => __('purchasing.supplier.header_subtitle'),\n])",
+    "mod_hdr_line": 203
+  },
+  {
+    "file": "warehouse/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('warehouse.title'),\n    'headerTitle' => __('warehouse.header_title'),\n    'headerSubtitle' => __('warehouse.header_subtitle')\n])",
+    "mod_hdr_line": 348
+  },
+  {
+    "file": "warehouse/show.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('warehouse.detail_title', ['name' => $location->name]),\n    'headerTitle' => __('warehouse.detail_header', ['name' => $location->name]),\n    'headerSubtitle' => __('warehouse.detail_subtitle'),\n])",
+    "mod_hdr_line": 73
+  },
+  {
+    "file": "whatsapp/broadcast.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('whatsapp.broadcast_title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.broadcast_header_title'),\n    'headerSubtitle' => __('whatsapp.broadcast_header_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "whatsapp/index.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('whatsapp.title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.header_title'),\n    'headerSubtitle' => __('whatsapp.header_subtitle'),\n])",
+    "mod_hdr_line": 11
+  },
+  {
+    "file": "whatsapp/logs.blade.php",
+    "ext_start": 1,
+    "ext_end": 5,
+    "ext_code": "@extends('layouts.app', [\n    'title' => __('whatsapp.logs_title') . ' - ' . $business->name,\n    'headerTitle' => __('whatsapp.logs_title'),\n    'headerSubtitle' => __('whatsapp.logs_subtitle'),\n])",
+    "mod_hdr_line": 23
+  }
+]

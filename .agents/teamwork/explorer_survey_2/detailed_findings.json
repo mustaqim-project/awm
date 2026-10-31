@@ -1,0 +1,1658 @@
+[
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2142,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showCustomerModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2143,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2143,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2190,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-3 sm:p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-3xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2190,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-3 sm:p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2377,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"splitEvenly(2)\" class=\"px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-whi",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2378,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"splitEvenly(3)\" class=\"px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-whi",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2379,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"splitEvenly(4)\" class=\"px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-whi",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2380,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"splitEvenly(5)\" class=\"px-2.5 py-1 rounded-[8px] bg-black/5 dark:bg-white/10 hover:bg-[#007AFF] hover:text-whi",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2503,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showQrisModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2504,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-3 sm:p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2504,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-3 sm:p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2610,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showSuccessModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2611,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[3px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2611,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[3px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2873,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 2873,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3107,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showOpenShiftModal\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3108,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3108,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3137,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showCloseShiftModal\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3138,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3138,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3209,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showHeldOrdersModal\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3210,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3210,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3251,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showHoldPromptModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3252,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\">",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3252,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3279,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showCashMovementModal\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3280,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3280,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3329,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"cashMovementAmount = 10000\" class=\"px-2 py-0.5 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-bla",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3330,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"cashMovementAmount = 20000\" class=\"px-2 py-0.5 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-bla",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3331,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"cashMovementAmount = 50000\" class=\"px-2 py-0.5 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-bla",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3332,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"cashMovementAmount = 100000\" class=\"px-2 py-0.5 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-bl",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3333,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"cashMovementAmount = 200000\" class=\"px-2 py-0.5 rounded-[7px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-bl",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3404,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showSupervisorPinModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3405,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3405,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/50 backdrop-blur-[4px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3468,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[80] flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3497,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showBarcodeScanner\" x-cloak @keydown.escape.window=\"closeBarcodeScanner()\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3498,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3498,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3556,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showModifierModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3557,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3557,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3684,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showServiceVerticalModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3685,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3685,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3915,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showItemDetailModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3916,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3916,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 3999,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showIncomingOrdersModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4000,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4000,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4169,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showRejectReasonModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4170,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4170,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4198,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[65] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4482,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showTablePaymentModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4483,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/terminal.blade.php",
+    "line": 4483,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[70] flex items-center justify-center bg-black/50 backdrop-blur-[2px] p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 449,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 648,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/orders.blade.php",
+    "line": 727,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/tables.blade.php",
+    "line": 202,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('storefront.reservations.index') }}\" class=\"px-2.5 py-1 rounded-full text-[10.5px] font-bold bg-[#FF9500]/10 text-[#D97706",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/tables.blade.php",
+    "line": 705,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/shifts.blade.php",
+    "line": 282,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"printShiftReport('{{ $shift->id }}')\" title=\"{{ __('pos.cetak_struk_shift_esc_pos') }}\" aria-label=\"{{ __('pos",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/shifts.blade.php",
+    "line": 286,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"openCloseModal('{{ $shift->id }}', {{ (float) ($shift->opening_cash + $shift->total_cash_sales + $shift->total",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/shifts.blade.php",
+    "line": 784,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-3xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 470,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"submit\" class=\"w-8 h-8 rounded-[8px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] flex items-center justify-center shr",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 523,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"runTestPrint('{{ $p->id }}')\" class=\"h-8 px-2.5 rounded-lg text-[12px] font-medium bg-black/[0.05] dark:bg-whi",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 540,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"openEdit({{ json_encode($p) }})\" class=\"h-8 px-2.5 rounded-lg text-[12px] font-medium bg-black/[0.05] dark:bg-",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 547,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"submit\" class=\"h-8 px-2.5 rounded-lg text-[12px] font-medium bg-[#FF3B30]/10 text-[#FF3B30]\">",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "pos",
+    "file": "pos/printers/index.blade.php",
+    "line": 1015,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "pos",
+    "file": "pos/reports/partials/order_detail_modal.blade.php",
+    "line": 107,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"fetchOrderDetail(currentOrderId)\" class=\"px-3 py-1 rounded-[8px] bg-[#FF3B30] text-white text-[11px] font-bold",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "sales_orders",
+    "file": "sales-orders/edit.blade.php",
+    "line": 187,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "sales_orders",
+    "file": "sales-orders/edit.blade.php",
+    "line": 249,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"removeItem(idx)\" :disabled=\"items.length <= 1\" class=\"w-7 h-7 rounded-[6px] text-black/40 hover:text-[#FF3B30]",
+    "issue": "Button/link with small height class (h-7) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/create.blade.php",
+    "line": 326,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/create.blade.php",
+    "line": 354,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"removeItem(index)\" :disabled=\"items.length <= 1\" class=\"h-6 px-2 rounded-[5px] text-[#FF3B30] bg-[#FF3B30]/10 ",
+    "issue": "Button/link with small height class (h-6) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/edit.blade.php",
+    "line": 270,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/edit.blade.php",
+    "line": 298,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"removeItem(index)\" :disabled=\"items.length <= 1\" class=\"h-6 px-2 rounded-[5px] text-[#FF3B30] bg-[#FF3B30]/10 ",
+    "issue": "Button/link with small height class (h-6) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/show.blade.php",
+    "line": 458,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"showPaymentModal = true\" class=\"h-7 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/1",
+    "issue": "Button/link with small height class (h-7) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/show.blade.php",
+    "line": 528,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "invoices",
+    "file": "invoices/show.blade.php",
+    "line": 801,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "quotations",
+    "file": "quotations/create.blade.php",
+    "line": 103,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "quotations",
+    "file": "quotations/create.blade.php",
+    "line": 179,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"removeItem(idx)\" :disabled=\"items.length <= 1\" class=\"w-7 h-7 rounded-[6px] text-black/40 hover:text-[#FF3B30]",
+    "issue": "Button/link with small height class (h-7) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "quotations",
+    "file": "quotations/edit.blade.php",
+    "line": 149,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "quotations",
+    "file": "quotations/edit.blade.php",
+    "line": 225,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"removeItem(idx)\" :disabled=\"items.length <= 1\" class=\"w-7 h-7 rounded-[6px] text-black/40 hover:text-[#FF3B30]",
+    "issue": "Button/link with small height class (h-7) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "quotations",
+    "file": "quotations/index.blade.php",
+    "line": 263,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('sales.quotations.show', $q) }}\" class=\"h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 fl",
+    "issue": "Button/link with small height class (h-8) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 1460,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2118,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2818,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddCategoryModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2819,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2819,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2869,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddUnitModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2870,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2870,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2937,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showProductScannerPermission\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2938,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2938,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2965,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showProductScanner\" x-cloak @keydown.escape.window=\"closeProductScanner()\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2966,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 2966,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 3006,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showBranchPricesModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 3007,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 3007,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/index.blade.php",
+    "line": 3253,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 516,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddGroupModal || showEditGroupModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 517,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 517,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 697,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"groupForm.max_selection = 2\" class=\"px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 hover:bg-black/10\">Maks. 2<",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 698,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"groupForm.max_selection = 3\" class=\"px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 hover:bg-black/10\">Maks. 3<",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 699,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"groupForm.max_selection = 5\" class=\"px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 hover:bg-black/10\">Maks. 5<",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 700,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"groupForm.max_selection = 10\" class=\"px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 hover:bg-black/10\">Maks. 1",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 826,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddOptionModal || showEditOptionModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 827,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 827,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 1026,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"deleteGroupModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 ba",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/modifiers.blade.php",
+    "line": 1058,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"deleteOptionModalOpen\" x-cloak class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 b",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/bom.blade.php",
+    "line": 289,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddItemModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/bom.blade.php",
+    "line": 290,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "products",
+    "file": "products/bom.blade.php",
+    "line": 290,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "products",
+    "file": "products/bom.blade.php",
+    "line": 407,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\">",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/stocks.blade.php",
+    "line": 332,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/opname.blade.php",
+    "line": 401,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "inventory",
+    "file": "inventory/transfers.blade.php",
+    "line": 251,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/bills/index.blade.php",
+    "line": 89,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('purchasing.bills.index') }}\" class=\"min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] transition-all {{ !request",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/bills/index.blade.php",
+    "line": 92,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('purchasing.bills.index', ['status' => 'unpaid']) }}\" class=\"min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] tr",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/bills/index.blade.php",
+    "line": 95,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('purchasing.bills.index', ['status' => 'partial']) }}\" class=\"min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] t",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/bills/index.blade.php",
+    "line": 98,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('purchasing.bills.index', ['status' => 'paid']) }}\" class=\"min-h-[36px] flex items-center px-3.5 py-1.5 rounded-[7px] tran",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/bills/index.blade.php",
+    "line": 105,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('purchasing.bills.index') }}\" class=\"min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-[9px] text-[12px] font-medium text",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchasing",
+    "file": "purchasing/returns/show.blade.php",
+    "line": 201,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "purchase_orders",
+    "file": "purchase-orders/create.blade.php",
+    "line": 228,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"addItem()\" class=\"min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-[9px] text-[13px] sm:text-[12px] font-med",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchase_orders",
+    "file": "purchase-orders/index.blade.php",
+    "line": 369,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "purchase_orders",
+    "file": "purchase-orders/show.blade.php",
+    "line": 331,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('invoices.show', $inv->id) }}\" class=\"min-h-[36px] px-3.5 py-1.5 rounded-[9px] bg-white dark:bg-[#2C2C2E] text-black dark:",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "purchase_orders",
+    "file": "purchase-orders/show.blade.php",
+    "line": 363,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 582,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<a href=\"{{ route('storefront.shipping.index') }}\" class=\"inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-e",
+    "issue": "Button/link with small height class (py-0.5) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1048,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1226,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"warehouseForm.geofence_radius_meters = 50\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10px",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1227,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"warehouseForm.geofence_radius_meters = 100\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10p",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1228,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"warehouseForm.geofence_radius_meters = 200\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10p",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1229,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"warehouseForm.geofence_radius_meters = 500\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10p",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1348,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1421,
+    "category": "INPUT_SMALL_FONT_IOS_ZOOM",
+    "severity": "HIGH",
+    "snippet": "<select name=\"type\" x-model=\"editData.type\" class=\"w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounde",
+    "issue": "Form input uses 'text-xs' without 16px mobile base, causing iOS Safari to automatically zoom in on focus and break viewport layout."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1554,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"editData.geofence_radius_meters = 50\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10px] fon",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1555,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"editData.geofence_radius_meters = 100\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10px] fo",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1556,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"editData.geofence_radius_meters = 200\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10px] fo",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1557,
+    "category": "TOUCH_TARGET_TOO_SMALL",
+    "severity": "MEDIUM",
+    "snippet": "<button type=\"button\" @click=\"editData.geofence_radius_meters = 500\" class=\"min-h-[36px] sm:min-h-0 px-2.5 py-1 rounded-[6px] text-[10px] fo",
+    "issue": "Button/link with small height class (py-1) below the 44px Apple HIG touch target recommendation."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/index.blade.php",
+    "line": 1769,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/show.blade.php",
+    "line": 1333,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-md p-4\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/show.blade.php",
+    "line": 1379,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/show.blade.php",
+    "line": 1639,
+    "category": "INPUT_SMALL_FONT_IOS_ZOOM",
+    "severity": "HIGH",
+    "snippet": "<input type=\"time\" x-model=\"period.start\" class=\"h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-",
+    "issue": "Form input uses 'text-xs' without 16px mobile base, causing iOS Safari to automatically zoom in on focus and break viewport layout."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/show.blade.php",
+    "line": 1641,
+    "category": "INPUT_SMALL_FONT_IOS_ZOOM",
+    "severity": "HIGH",
+    "snippet": "<input type=\"time\" x-model=\"period.end\" class=\"h-8 px-2 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[6",
+    "issue": "Form input uses 'text-xs' without 16px mobile base, causing iOS Safari to automatically zoom in on focus and break viewport layout."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "warehouse/show.blade.php",
+    "line": 1697,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-center justify-center bg-black/60 dark:bg-black/75 backdrop-blur-md p-3 sm:p-6\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 595,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 821,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showPriceModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 822,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 822,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 918,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showEditModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 919,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 919,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1032,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddSupplierModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1033,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1033,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1094,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddCategoryModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1095,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1095,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1144,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "<div x-show=\"showAddUnitModal\" x-cloak",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1145,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1145,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[210] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1211,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md\"",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-sm' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "materials/index.blade.php",
+    "line": 1211,
+    "category": "FLAWED_BACKDROP_WRAPPER",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md\"",
+    "issue": "Backdrop dark background placed directly on flex wrapper, leaking topbar and causing header clipping ($y=0$ gap)."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "suppliers/index.blade.php",
+    "line": 671,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "warehouse_materials_suppliers",
+    "file": "suppliers/index.blade.php",
+    "line": 850,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1060,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1120,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1177,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/85 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-2xl' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/orders/show.blade.php",
+    "line": 1203,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-lg' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/reservations/index.blade.php",
+    "line": 673,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/reservations/index.blade.php",
+    "line": 738,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/settings.blade.php",
+    "line": 252,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  },
+  {
+    "module": "storefront",
+    "file": "storefront/settings.blade.php",
+    "line": 316,
+    "category": "NARROW_FORM_MODAL",
+    "severity": "HIGH",
+    "snippet": "class=\"fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md\"></div>",
+    "issue": "Modal form container restricted to narrow canvas 'max-w-md' instead of Apple HIG Bento XXL canvas (lg:max-w-5xl/6xl) or adaptive mobile bottom sheet."
+  }
+]

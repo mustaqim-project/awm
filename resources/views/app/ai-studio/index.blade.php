@@ -365,27 +365,46 @@
     @endif
 
     <!-- Delete Confirmation Modal (Apple Sheet Style) -->
-    <div x-show="deleteModalOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" style="display: none;">
-        <div @click.away="deleteModalOpen = false" class="w-full max-w-sm rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 shadow-2xl space-y-4">
-            <div class="w-10 h-10 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center">
-                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="deleteModalOpen" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            role="dialog" aria-modal="true"
+            @keydown.escape.window="deleteModalOpen = false">
+            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <div x-show="deleteModalOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="deleteModalOpen = false"></div>
+
+            <!-- 2. Centered Scroll & Dialog Container -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="deleteModalOpen = false">
+                <div @click.away="deleteModalOpen = false" class="w-full max-w-sm rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 shadow-2xl space-y-4">
+                    <div class="w-10 h-10 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.hapus_proyek_ai_studio') }}</h3>
+                        <p class="text-xs text-black/60 dark:text-white/60">
+                            Proyek <span class="font-semibold text-black dark:text-white" x-text="deleteProjectName"></span> beserta riwayat prompt akan dihapus. Aset render yang telah disimpan ke katalog produk tidak akan terpengaruh.
+                        </p>
+                    </div>
+                    <form :action="deleteActionUrl" method="POST" class="flex items-center justify-end gap-2 pt-2">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" @click="deleteModalOpen = false"
+                            class="px-3 py-2 rounded-[10px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
+                        <button type="submit"
+                            class="px-4 py-2 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-sm transition-all">{{ __('admin.ya_hapus') }}</button>
+                    </form>
+                </div>
             </div>
-            <div class="space-y-1">
-                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.hapus_proyek_ai_studio') }}</h3>
-                <p class="text-xs text-black/60 dark:text-white/60">
-                    Proyek <span class="font-semibold text-black dark:text-white" x-text="deleteProjectName"></span> beserta riwayat prompt akan dihapus. Aset render yang telah disimpan ke katalog produk tidak akan terpengaruh.
-                </p>
-            </div>
-            <form :action="deleteActionUrl" method="POST" class="flex items-center justify-end gap-2 pt-2">
-                @csrf
-                @method('DELETE')
-                <button type="button" @click="deleteModalOpen = false"
-                    class="px-3 py-2 rounded-[10px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
-                <button type="submit"
-                    class="px-4 py-2 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-sm transition-all">{{ __('admin.ya_hapus') }}</button>
-            </form>
         </div>
-    </div>
+    </template>
 
     <!-- Top Up Modal Component -->
     @include('app.ai-studio.partials.topup-modal')

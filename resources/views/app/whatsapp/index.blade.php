@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('whatsapp.title') . ' - ' . $business->name,
-    'headerTitle' => __('whatsapp.header_title'),
-    'headerSubtitle' => __('whatsapp.header_subtitle'),
 ])
 
 @section('content')
@@ -533,17 +531,25 @@
         <!-- Teleported Supervisor PIN Disconnect Modal -->
         <template x-teleport="body">
             <div x-show="showDisconnectModal" x-cloak
+                class="fixed inset-0 z-[200] overflow-y-auto"
                 role="dialog" aria-modal="true" aria-labelledby="disconnect-modal-title"
-                @keydown.escape.window="showDisconnectModal = false"
-                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 dark:bg-black/85"
-                x-transition:enter="ease-out duration-200"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0">
-                <div @click.away="showDisconnectModal = false"
-                    class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
+                @keydown.escape.window="showDisconnectModal = false">
+
+                <!-- 1. Standalone Independent Backdrop Overlay -->
+                <div x-show="showDisconnectModal"
+                    x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showDisconnectModal = false"></div>
+
+                <!-- 2. Centered Scroll & Dialog Container -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showDisconnectModal = false">
+                    <div @click.away="showDisconnectModal = false"
+                        class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-4"
                     x-transition:enter="ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95"
                     x-transition:enter-end="opacity-100 scale-100"
@@ -590,6 +596,7 @@
                             <i data-lucide="unlink" class="w-4 h-4"></i>
                             <span x-text="disconnectLoading ? '{{ __('whatsapp.verifying') }}' : '{{ __('whatsapp.disconnect_action_btn') }}'"></span>
                         </button>
+                    </div>
                     </div>
                 </div>
             </div>

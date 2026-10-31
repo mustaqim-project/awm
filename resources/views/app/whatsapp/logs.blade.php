@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('whatsapp.logs_title') . ' - ' . $business->name,
-    'headerTitle' => __('whatsapp.logs_title'),
-    'headerSubtitle' => __('whatsapp.logs_subtitle'),
 ])
 
 @section('content')
@@ -418,56 +416,58 @@
         <!-- 4. STORAGE PRUNING PREVIEW MODAL                      -->
         <!-- ===================================================== -->
         <template x-teleport="body">
-            <div x-show="openPruneModal" x-transition.opacity.duration.200ms
-                class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                @keydown.escape.window="openPruneModal = false"
-                @click.self="openPruneModal = false" style="display: none;">
-            <div role="dialog" aria-modal="true" aria-labelledby="pruneModalTitle"
-                class="w-full max-w-[500px] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 sm:p-7 space-y-5 animate-in fade-in zoom-in-95 duration-200">
-                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center">
-                            <i data-lucide="database-zap" class="w-5 h-5"></i>
+            <div x-show="openPruneModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="pruneModalTitle" @keydown.escape.window="openPruneModal = false" style="display: none;">
+                <!-- Standalone Backdrop -->
+                <div x-show="openPruneModal" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity" @click="openPruneModal = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="openPruneModal = false">
+                    <div class="relative w-full max-w-[500px] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl p-6 sm:p-7 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+                        <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center">
+                                    <i data-lucide="database-zap" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 id="pruneModalTitle" class="text-[16px] font-bold text-black dark:text-white">{{ __('whatsapp.prune_modal_title') }}</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('whatsapp.prune_older_than', ['days' => 90]) }}</p>
+                                </div>
+                            </div>
+                            <button type="button" @click="openPruneModal = false"
+                                aria-label="{{ __('whatsapp.close_btn') }}"
+                                class="min-w-[44px] min-h-[44px] w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:bg-black/10 transition">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
                         </div>
-                        <div>
-                            <h3 id="pruneModalTitle" class="text-[16px] font-bold text-black dark:text-white">{{ __('whatsapp.prune_modal_title') }}</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('whatsapp.prune_older_than', ['days' => 90]) }}</p>
+
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                <span class="text-[11px] text-black/50 dark:text-white/50 uppercase font-semibold block">{{ __('whatsapp.prune_estimated_records') }}</span>
+                                <strong class="text-[20px] font-bold text-[#FF9500] mt-1 block tabular-nums">0 {{ __('whatsapp.rows_unit') }}</strong>
+                            </div>
+                            <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
+                                <span class="text-[11px] text-black/50 dark:text-white/50 uppercase font-semibold block">{{ __('whatsapp.prune_estimated_storage') }}</span>
+                                <strong class="text-[20px] font-bold text-[#34C759] mt-1 block tabular-nums">0.0 MB</strong>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 text-[12px] text-[#248A3D] dark:text-[#30D158] flex items-center gap-2.5">
+                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-[#34C759]"></i>
+                            <span>{{ __('whatsapp.prune_safe_notice') }}</span>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-2">
+                            <button type="button" @click="openPruneModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">
+                                {{ __('whatsapp.cancel_btn') }}
+                            </button>
+                            <button type="button" @click="handlePruneConfirm()"
+                                class="min-h-[44px] px-5 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white font-bold text-[13px] shadow-sm transition active:scale-[0.98]">
+                                {{ __('whatsapp.prune_btn') }}
+                            </button>
                         </div>
                     </div>
-                    <button type="button" @click="openPruneModal = false"
-                        aria-label="{{ __('whatsapp.close_btn') }}"
-                        class="min-w-[44px] min-h-[44px] w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:bg-black/10 transition">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 text-center">
-                    <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                        <span class="text-[11px] text-black/50 dark:text-white/50 uppercase font-semibold block">{{ __('whatsapp.prune_estimated_records') }}</span>
-                        <strong class="text-[20px] font-bold text-[#FF9500] mt-1 block tabular-nums">0 {{ __('whatsapp.rows_unit') }}</strong>
-                    </div>
-                    <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5">
-                        <span class="text-[11px] text-black/50 dark:text-white/50 uppercase font-semibold block">{{ __('whatsapp.prune_estimated_storage') }}</span>
-                        <strong class="text-[20px] font-bold text-[#34C759] mt-1 block tabular-nums">0.0 MB</strong>
-                    </div>
-                </div>
-
-                <div class="p-3.5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 text-[12px] text-[#248A3D] dark:text-[#30D158] flex items-center gap-2.5">
-                    <i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-[#34C759]"></i>
-                    <span>{{ __('whatsapp.prune_safe_notice') }}</span>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-2">
-                    <button type="button" @click="openPruneModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition">
-                        {{ __('whatsapp.cancel_btn') }}
-                    </button>
-                    <button type="button" @click="handlePruneConfirm()"
-                        class="min-h-[44px] px-5 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white font-bold text-[13px] shadow-sm transition active:scale-[0.98]">
-                        {{ __('whatsapp.prune_btn') }}
-                    </button>
                 </div>
             </div>
-        </div>
         </template>
 
     </div>

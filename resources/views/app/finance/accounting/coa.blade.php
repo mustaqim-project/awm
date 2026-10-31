@@ -258,12 +258,24 @@
         @if(\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
             <div x-show="createModalOpen" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                x-transition.opacity
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="createModalOpen = false">
-                <div class="w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
-                    @click.outside="createModalOpen = false"
-                    x-data="{ isSubmitting: false }">
+                <!-- Standalone Backdrop -->
+                <div x-show="createModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="createModalOpen = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="createModalOpen = false">
+                    <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
+                        x-data="{ isSubmitting: false }">
                     <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
@@ -333,6 +345,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
 
         {{-- ========================================================== --}}
@@ -340,12 +353,24 @@
         {{-- ========================================================== --}}
         <template x-teleport="body">
             <div x-show="editModalOpen" x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                x-transition.opacity
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="editModalOpen = false">
-                <div class="w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
-                    @click.outside="editModalOpen = false"
-                    x-data="{ isSubmitting: false }">
+                <!-- Standalone Backdrop -->
+                <div x-show="editModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="editModalOpen = false"></div>
+
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="editModalOpen = false">
+                    <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
+                        x-data="{ isSubmitting: false }">
                     <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center shrink-0">
@@ -396,6 +421,7 @@
                     </form>
                 </div>
             </div>
+        </div>
         </template>
 
         {{-- ========================================================== --}}
@@ -403,35 +429,49 @@
         {{-- ========================================================== --}}
         <template x-teleport="body">
             <div x-show="deleteModalOpen" x-cloak
-                class="fixed inset-0 z-[220] flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md"
+                class="fixed inset-0 z-[220] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="deleteModalOpen = false">
-                <div class="w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[22px] shadow-2xl border border-black/10 dark:border-white/10 p-6 space-y-5"
-                    @click.outside="deleteModalOpen = false">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-[14px] bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center shrink-0">
-                            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('finance.modal_delete_sub_account_title') }}</h2>
-                            <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
-                                {{ __('finance.modal_delete_sub_account_prompt', ['account' => '']) }}<span class="font-semibold text-black dark:text-white" x-text="deleteAccountData.code + ' – ' + deleteAccountData.name"></span>
-                            </p>
-                        </div>
-                    </div>
+                <!-- Standalone Backdrop -->
+                <div x-show="deleteModalOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md transition-opacity"
+                    @click="deleteModalOpen = false"></div>
 
-                    <form method="POST" :action="deleteAccountData.url" class="flex items-center justify-end gap-2.5 pt-2">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" @click="deleteModalOpen = false"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
-                            {{ __('common.cancel') }}
-                        </button>
-                        <button type="submit"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(255,59,48,0.35)] flex items-center gap-1.5">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            <span>{{ __('finance.btn_confirm_delete_sub_account') }}</span>
-                        </button>
-                    </form>
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="deleteModalOpen = false">
+                    <div class="relative w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[22px] shadow-2xl border border-black/10 dark:border-white/10 p-6 space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-[14px] bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center shrink-0">
+                                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('finance.modal_delete_sub_account_title') }}</h2>
+                                <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
+                                    {{ __('finance.modal_delete_sub_account_prompt', ['account' => '']) }}<span class="font-semibold text-black dark:text-white" x-text="deleteAccountData.code + ' – ' + deleteAccountData.name"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <form method="POST" :action="deleteAccountData.url" class="flex items-center justify-end gap-2.5 pt-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" @click="deleteModalOpen = false"
+                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors">
+                                {{ __('common.cancel') }}
+                            </button>
+                            <button type="submit"
+                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(255,59,48,0.35)] flex items-center gap-1.5">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                <span>{{ __('finance.btn_confirm_delete_sub_account') }}</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </template>
@@ -441,16 +481,23 @@
         <template x-teleport="body">
             <div x-show="showImportModal"
                 x-cloak
-                class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-md"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 z-[200] overflow-y-auto"
+                role="dialog" aria-modal="true"
                 @keydown.escape.window="if (!importExecuting) showImportModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showImportModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="if (!importExecuting) showImportModal = false"></div>
 
-            <div class="w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="if (!importExecuting) showImportModal = false">
+                    <div class="relative w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
                 @click.away="if (!importExecuting) showImportModal = false"
                 x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 scale-95"
@@ -662,6 +709,7 @@
 
             </div>
         </div>
+    </div>
     </template>
     @endif
 

@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('social_media.calendar_header_title') . ' - ' . $business->name,
-    'headerTitle' => __('social_media.calendar_header_title'),
-    'headerSubtitle' => __('social_media.calendar_header_subtitle'),
 ])
 
 @section('content')

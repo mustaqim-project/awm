@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('purchasing.receipts.title', ['number' => $purchaseOrder->po_number]),
-    'headerTitle' => __('purchasing.receipts.header_title'),
-    'headerSubtitle' => __('purchasing.receipts.header_subtitle')
 ])
 
 @section('content')

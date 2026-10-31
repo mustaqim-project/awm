@@ -1,401 +1,244 @@
-# Handoff Report — Explorer 3: App Views & Translation Architecture Survey
+# UI/UX Architectural Survey & Audit Report: Management, Settings, Finance, Reports, CRM, HR & Analytics Views
 
-**Date**: 2026-10-31  
-**Agent Role**: Explorer 3 (App Views & Translation Architecture Survey)  
-**Target Directory**: `c:\laragon\www\cooca_core\resources\views\app` & `c:\laragon\www\cooca_core\lang`  
+**Agent**: Explorer Survey 3  
 **Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3`  
-**Status**: Completed (Read-Only Survey)
+**Target Codebase Scope**: `resources/views/app/` (Back-Office, Management, Analytics, Governance, and Operational Modules)  
+**Evaluation Standards**: Bento Apple HIG v2.0 Design System, Multi-Industry Zero Feature Leakage, UI Simplify Layout & Action Proximity, Reports & Multi-Domain Dashboard Blueprint.
 
 ---
 
 ## 1. Observation
 
-### 1.1 App Views Scope & Distribution (`resources/views/app`)
-- **Total Blade Templates**: Exactly 185 `.blade.php` files located under `resources/views/app`.
-- **Total Lines of Code**: 134,824 lines across all 185 files.
-- **Existing Localization Density**: 12,267 existing `__('...')` / `@lang('...')` calls across the files.
-- **Audit Tool Output (`python scratch/deep_audit_v2.py resources/views/app`)**:
-  - **Total files audited**: 185
-  - **Clean files (0 hardcoded issues)**: 107 files (57.8%)
-  - **Files with hardcoded issues**: 78 files (42.2%)
-  - **Total remaining hardcoded issues**: 762 issues
-- **Submodule Breakdown (44 distinct submodule buckets)**:
-  - `pos`: 29 files (15,934 lines | 1,675 i18n calls | 30 issues across 6 files | 23 clean files)
-  - `ai`: 18 files (9,751 lines | 677 i18n calls | 17 issues in 1 file | 17 clean files)
-  - `finance`: 16 files (8,011 lines | 1,113 i18n calls | 9 issues across 3 files | 13 clean files)
-  - `storefront`: 12 files (4,896 lines | 589 i18n calls | 4 issues across 2 files | 10 clean files)
-  - `ai-studio`: 8 files (3,182 lines | 0 i18n calls | 69 issues across 8 files | 0 clean files)
-  - `marketplace`: 6 files (5,175 lines | 385 i18n calls | 35 issues across 5 files | 1 clean file)
-  - `purchasing`: 6 files (1,316 lines | 157 i18n calls | 3 issues in 1 file | 5 clean files)
-  - `billing`: 5 files (6,154 lines | 734 i18n calls | 2 issues in 1 file | 4 clean files)
-  - `invoices`: 5 files (2,784 lines | 369 i18n calls | 1 issue in 1 file | 4 clean files)
-  - `sales`: 5 files (2,524 lines | 255 i18n calls | 25 issues across 4 files | 1 clean file)
-  - `settings`: 5 files (8,655 lines | 912 i18n calls | 19 issues across 4 files | 1 clean file)
-  - `social_media`: 5 files (6,494 lines | 509 i18n calls | 45 issues across 4 files | 1 clean file)
-  - `hrm`: 4 files (5,263 lines | 894 i18n calls | 0 issues | 4 clean files — 100% clean)
-  - `inventory`: 4 files (2,022 lines | 154 i18n calls | 33 issues across 3 files | 1 clean file)
-  - `purchase-orders`: 4 files (1,930 lines | 174 i18n calls | 3 issues across 2 files | 2 clean files)
-  - `quotations`: 4 files (1,327 lines | 135 i18n calls | 25 issues across 4 files | 0 clean files)
-  - `sales-orders`: 4 files (1,829 lines | 170 i18n calls | 20 issues across 4 files | 0 clean files)
-  - `whatsapp`: 4 files (2,898 lines | 368 i18n calls | 2 issues in 1 file | 3 clean files)
-  - `approvals`: 3 files (1,146 lines | 147 i18n calls | 0 issues | 3 clean files — 100% clean)
-  - `community`: 3 files (2,222 lines | 0 i18n calls | 48 issues across 3 files | 0 clean files)
-  - `feedback`: 3 files (785 lines | 95 i18n calls | 0 issues | 3 clean files — 100% clean)
-  - `products`: 3 files (5,252 lines | 488 i18n calls | 14 issues across 2 files | 1 clean file)
-  - `landing_page`: 2 files (4,102 lines | 0 i18n calls | 96 issues across 2 files | 0 clean files)
-  - `docs`: 2 files (2,587 lines | 0 i18n calls | 72 issues across 2 files | 0 clean files)
-  - `profile`: 2 files (386 lines | 0 i18n calls | 18 issues across 2 files | 0 clean files)
-  - `security`: 2 files (1,061 lines | 0 issues | 2 clean files — 100% clean)
-  - `warehouse`: 2 files (3,711 lines | 382 i18n calls | 2 issues in 1 file | 1 clean file)
-  - `crm`: 2 files (1,132 lines | 118 i18n calls | 2 issues in 1 file | 1 clean file)
-  - `root` (`dashboard.blade.php`, `calculator.blade.php`): 2 files (3,020 lines | 339 i18n calls | 0 issues — 100% clean)
-  - Single-file submodules (1 file each):
-    - `import`: 2,195 lines | 0 i18n calls | 62 issues (0% localized data import wizard)
-    - `labor-machines`: 1,293 lines | 4 i18n calls | 32 issues
-    - `master-data`: 1,188 lines | 0 i18n calls | 28 issues
-    - `customers`: 1,506 lines | 132 i18n calls | 11 issues
-    - `suppliers`: 1,353 lines | 100 i18n calls | 11 issues
-    - `reports`: 890 lines | 0 i18n calls | 10 issues
-    - `services`: 1,252 lines | 109 i18n calls | 5 issues
-    - `tax`: 1,398 lines | 177 i18n calls | 4 issues
-    - `mcp`: 130 lines | 0 i18n calls | 2 issues
-    - `profitability`: 283 lines | 0 i18n calls | 2 issues
-    - `portal`: 2,547 lines | 247 i18n calls | 1 issue
-    - `analytics`: 867 lines | 0 issues (100% clean)
-    - `materials`: 1,241 lines | 150 i18n calls | 0 issues (100% clean)
-    - `roles`: 1,351 lines | 112 i18n calls | 0 issues (100% clean)
-    - `simulator`: 559 lines | 71 i18n calls | 0 issues (100% clean)
+A full static and structural survey was conducted across 61 Blade view files (totaling 51,084 lines of code) spanning 19 submodules and root files under `resources/views/app/`.
 
-- **Completely Clean Submodules (9 submodules, 18 files)**:
-  `root` (dashboard, calculator), `analytics`, `approvals`, `feedback`, `hrm`, `materials`, `roles`, `security`, `simulator`.
+### 1.1 Complete Inventory of Surveyed Back-Office Views
+
+| Domain / Category | Submodules / Files | File Count | Total Lines | Architectural Role |
+|---|---|:---:|:---:|---|
+| **Dashboards & Analytics** | `dashboard.blade.php`, `calculator.blade.php`, `analytics/index.blade.php`, `reports/index.blade.php`, `profitability/index.blade.php`, `simulator/index.blade.php` | 6 | 5,584 | Operational Cockpit, Business Intelligence, BEP Costing, Financial Statement Reports |
+| **Finance & Accounting** | `finance/expenses.blade.php`, `finance/journals.blade.php`, `finance/payables.blade.php`, `finance/receivables.blade.php`, `finance/accounting/*` (5 files), `finance/cash-bank/*` (2 files), `finance/edc-terminals/index.blade.php`, `finance/external-reconciliation/index.blade.php`, `finance/payout-accounts/index.blade.php`, `finance/settlements/*` (2 files), `invoices/*` (5 files), `tax/index.blade.php`, `billing/*` (5 files) | 27 | 18,347 | General Ledger, Cash/Bank Accounts, AP/AR, Tax Simulators, Invoicing, Billing & Limits |
+| **CRM, Members & Feedback** | `customers/index.blade.php`, `crm/members.blade.php`, `crm/vouchers.blade.php`, `feedback/index.blade.php`, `feedback/create.blade.php`, `feedback/show.blade.php`, `community/index.blade.php`, `community/events.blade.php`, `community/event_payment.blade.php` | 9 | 5,409 | Customer Directory, Loyalty Points & Vouchers, Product Feedback Tickets, Community Hub |
+| **HRM & Workforce** | `hrm/index.blade.php`, `hrm/payroll/create.blade.php`, `hrm/payroll/payslip.blade.php`, `hrm/payroll/show.blade.php`, `labor-machines/index.blade.php` | 5 | 8,621 | Employee Profiles, GPS Geofence & Biometrics, Shifts/Rosters, Payroll, Labor & Machine Rates |
+| **Settings & Governance** | `settings/index.blade.php`, `settings/roles.blade.php`, `settings/integrations/mcp.blade.php`, `settings/integrations/social_media.blade.php`, `settings/integrations/whatsapp.blade.php`, `profile/edit.blade.php`, `profile/verify-contact.blade.php`, `roles/index.blade.php`, `security/audit-logs/index.blade.php`, `security/audit-logs/show.blade.php`, `approvals/history.blade.php`, `approvals/inbox.blade.php`, `approvals/rules.blade.php`, `master-data/index.blade.php` | 14 | 13,123 | Multi-Outlet Branches, RBAC Roles & Permissions, Append-Only Audit Trail, Approval Rules, MCP Integrations |
+| **TOTAL SURVEYED** | **19 Submodules & Root Files** | **61** | **51,084** | **Complete Back-Office & Management Ecosystem** |
 
 ---
 
-### 1.2 Existing Translation Architecture (`lang/id` & `lang/en`)
-- **PHP Translation Files**:
-  - `lang/id/*.php`: Exactly 66 files.
-  - `lang/en/*.php`: Exactly 66 files.
-  - 100% symmetric filename pairing between `lang/id` and `lang/en`.
-- **JSON Language Files**:
-  - `lang/id.json`: **Does NOT exist** (0 files).
-  - `lang/en.json`: **Does NOT exist** (0 files).
-  - All project translations are strictly modular PHP arrays returning `return [ ... ];`.
-- **Key Count & Parity Metrics**:
-  - Total keys in `lang/id`: **17,068 keys**.
-  - Total keys in `lang/en`: **17,068 keys**.
-  - Total common keys: **17,068 keys**.
-  - Missing keys in EN: **0**.
-  - Missing keys in ID: **0**.
-  - **Bilingual Key Parity**: **100.00%** across all 66 modular files.
-- **Key Depth & Naming Structure**:
-  - **Flat Array (Depth 2, e.g. `file.key`)**:
-    - `common.php` (120 keys, e.g. `save`, `cancel`, `edit`, `delete`, `actions`)
-    - `pos.php` (1,740 keys, e.g. `pos.accept_and_forward_kds`, `pos.btn_checkout`)
-    - `hrm.php` (890 keys)
-    - `admin.php` (875 keys)
-    - `billing.php` (716 keys)
-    - `settings.php` (406 keys)
-  - **Nested Hierarchical Array (Depth 3 to 4, e.g. `file.group.subgroup.key`)**:
-    - `storefront.php` (1,578 keys, depth 4, e.g. `storefront.nav.home`, `storefront.catalog.product_detail`)
-    - `finance.php` (940 keys, depth 3, e.g. `finance.journal_unbalanced`, `finance.accounts.*`)
-    - `sales.php` (765 keys, depth 3, e.g. `sales.sales_orders.page_title`, `sales.quotations.title`, `sales.returns.*`)
-    - `ai.php` (690 keys, depth 4, e.g. `ai.navigation.virtual_office`, `ai.offices.available`)
-    - `purchasing.php` (411 keys, depth 4)
-    - `tax.php` (247 keys, depth 3)
-    - `validation.php` (41 keys, depth 4)
+### 1.2 Direct Code Observations & Verbatim Snippets
 
----
+#### Observation O1: Monolithic View Bloat with 15 Inline Modals and 10 Tables
+- **File**: `resources/views/app/hrm/index.blade.php` (5,705 lines)
+- **Direct observation**: Contains 10 data tables (Lines 1049, 1604, 1828, 2013, 2197, 2432, 2607, 2807, 5380, 5620) and 15 complete modal dialogues spanning lines 2988 to 5498 (over 2,510 continuous lines of modal markup without a single partial template):
+  - Line 2988: `showFaceRegisterModal` (Face registration)
+  - Line 3134: `showFaceAttendanceModal` (Face attendance)
+  - Line 3261: `showAddLocationModal` (Add geofence location)
+  - Line 3401: `showEditLocationModal` (Edit geofence location)
+  - Line 3543: `showAddEmployeeModal` (Add employee)
+  - Line 3871: `showEditEmployeeModal` (Edit employee)
+  - Line 4193: `showAddLoanModal` (Add employee cash loan / kasbon)
+  - Line 4304: `showAddCorrectionModal` (Add attendance correction)
+  - Line 4433: `showReviewCorrectionModal` (Review correction approval)
+  - Line 4612: `showAddShiftModal` (Add shift)
+  - Line 4755: `showEditShiftModal` (Edit shift)
+  - Line 4899: `showAddScheduleModal` (Add roster/schedule)
+  - Line 5064: `showEditScheduleModal` (Edit roster/schedule)
+  - Line 5229: `showImportEmployeeModal` (Import employee CSV/Excel)
+  - Line 5465: `showImportAttendanceModal` (Import attendance CSV/Excel)
 
-### 1.3 Breakdown of the 762 Issues in `resources/views/app`
-By inspecting `scratch/deep_audit_v2.py`:
-- **Domain Breakdown**:
-  1. `7. Buttons & Action Links`: 476 issues (62.5%)
-  2. `3. Headers, H1, & Subtitles`: 107 issues (14.0%)
-  3. `4. Forms, Labels, & Hints`: 81 issues (10.6%)
-  4. `9. Tables, Badges, & Empty`: 53 issues (7.0%)
-  5. `6. Error Lists & Summary`: 24 issues (3.1%)
-  6. `1. Page Title & Meta Tags`: 17 issues (2.2%)
-  7. `5. Dev / Test Alerts`: 4 issues (0.5%)
-- **Issue Type Breakdown**:
-  - `raw_button_label`: 308 issues (e.g. `<button>Batal</button>`, `<button>Simpan Perubahan</button>`, `<button>Hapus</button>`)
-  - `raw_attr_title`: 119 issues (e.g. `title="Tutup"`, `title="Unduh PDF"`, `title="Pilih Sudut Pandang Kamera"`)
-  - `raw_attr_placeholder`: 81 issues (e.g. `placeholder="u.p. Nama PIC Pelanggan"`, `placeholder="Cari peran..."`)
-  - `empty_state_hardcoded`: 53 issues (e.g. `Belum Ada Riwayat Transaksi`, `Belum Ada Proyek Visual`, `Belum ada render`)
-  - `raw_heading_h3`: 46 issues
-  - `raw_attr_aria-label`: 38 issues (e.g. `aria-label="Tutup modal"`, `aria-label="Tutup tiket"`)
-  - `raw_heading_h2`: 28 issues
-  - `validation_errors_raw`: 24 issues (e.g. `Terjadi kesalahan saat mengunggah file.`)
-  - `raw_heading_h4`: 18 issues
-  - `extends_title_raw`: 17 issues (e.g. `@extends('...', ['title' => 'Riwayat Ledger & Kredit AI Studio'])`)
-  - `raw_heading_h1`: 12 issues
-  - `raw_attr_alt`: 11 issues (e.g. `alt="Foto Produk"`, `alt="QRIS Code"`)
-  - `dev_bypass_hardcoded`: 4 issues
-  - `raw_heading_h5`: 3 issues
+#### Observation O2: Massive Inline JavaScript within Blade Templates
+- **File**: `resources/views/app/settings/index.blade.php` (4,143 lines)
+  - Direct observation: Lines 2838 to 4143 (1,306 lines) consist entirely of raw JavaScript within `<script>` tags rather than modular Alpine scripts or external assets.
+- **File**: `resources/views/app/settings/integrations/mcp.blade.php` (3,363 lines)
+  - Direct observation: Lines 127 to 537 contain 411 lines of inline JavaScript defining `mcpSettingsHub()`, while lines 538 to 3364 contain 2,826 lines of complex permissions tables and token generation sheets.
 
----
+#### Observation O3: Complete Absence of Bento Apple HIG in Community Views
+- **Files**: `resources/views/app/community/index.blade.php` (1,279 lines), `community/events.blade.php` (638 lines), `community/event_payment.blade.php` (295 lines)
+- **Direct observation**: 98 total instances of legacy Tailwind border radius (`rounded-2xl`, `rounded-xl`) and 50 instances of legacy borders (`border-slate-200/80`, `border-gray-200`). Zero instances of Bento Apple HIG hairline borders (`border-black/[0.06] dark:border-white/[0.08]`) or squircle cards (`rounded-[20px]`).
+- Example at `community/index.blade.php:179`:
+  ```html
+  <div class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 shadow-2xs">
+  ```
+- Example at `community/index.blade.php:229`:
+  ```html
+  <span id="unread-notif-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white animate-pulse">
+  ```
+  *(Violates Apple HIG ban on `animate-pulse` on static text counters).*
 
-### 1.4 Translation Usage Conventions in `app` Views
-- **Top Translation Prefixes Called in Views**:
-  - `pos`: 1,636 calls
-  - `finance`: 1,041 calls
-  - `hrm`: 1,022 calls
-  - `sales`: 926 calls
-  - `billing`: 734 calls
-  - `ai`: 668 calls
-  - `storefront`: 587 calls
-  - `social_media`: 547 calls
-  - `products`: 488 calls
-  - `whatsapp`: 463 calls
-  - `purchasing`: 425 calls
-  - `mcp`: 420 calls
-  - `marketplace`: 385 calls
-  - `warehouse`: 368 calls
-  - `settings`: 348 calls
-  - `portal`: 250 calls
-  - `common`: 205 calls (e.g. `common.close`, `common.cancel`, `common.previous`, `common.next`, `common.actions`)
-- **Key Pattern Conventions**:
-  - Views predominantly access their own domain dictionary (`pos.*`, `finance.*`, `hrm.*`, `sales.*`).
-  - Cross-module views like `settings/index.blade.php` include partials from `settings.*`, `mcp.*`, `whatsapp.*`, and `social_media.*`.
-  - Submodules with hyphens in directory names map to snake_case language files:
-    - `sales-orders/` and `quotations/` use `sales.sales_orders.*` and `sales.quotations.*`.
-    - `purchase-orders/` uses `purchasing.*`.
-    - `master-data/` uses `master_data.php`.
-    - `labor-machines/` uses `labor_machines.php`.
+#### Observation O4: Responsive Table Horizontal Clipping (Missing `overflow-x-auto`)
+- **File**: `resources/views/app/finance/accounting/balance-sheet.blade.php`
+  - Lines 436-438:
+    ```html
+    <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+        <div class="max-h-[380px] overflow-y-auto">
+            <table class="w-full text-left text-[12px] border-collapse">
+    ```
+  - Direct observation: Table has `overflow-y-auto` but lacks `overflow-x-auto`. On screens < 400px, multi-column accounting rows clip horizontally without ability to scroll.
+- **File**: `resources/views/app/security/audit-logs/show.blade.php`
+  - Lines 83-84:
+    ```html
+    <div class="rounded-[18px] border border-black/5 dark:border-white/10 overflow-hidden">
+        <table class="w-full text-left text-[13.5px]">
+    ```
+  - Direct observation: 3-column forensic diff table is wrapped in `overflow-hidden` instead of `overflow-x-auto`.
+- **File**: `resources/views/app/customers/index.blade.php`
+  - Lines 1427-1429:
+    ```html
+    <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+        <div class="max-h-[380px] overflow-y-auto">
+            <table class="w-full text-left text-[12px] border-collapse">
+    ```
+  - Direct observation: Import preview modal table has `overflow-y-auto` only; columns overflow and clip horizontally.
 
----
+#### Observation O5: Header Action Overcrowding (Button Clutter)
+- **File**: `resources/views/app/finance/cash-bank/index.blade.php`
+  - Lines 20-47: 5 individual action buttons rendered side-by-side inside `<x-module-header>`:
+    1. Line 20: `button @click="showAccountModal = true"` (`btn_add_account`)
+    2. Line 25: `button @click="showInflowModal = true"` (`btn_cash_inflow` - green)
+    3. Line 30: `button @click="showOutflowModal = true"` (`btn_cash_outflow` - red)
+    4. Line 35: `button @click="showTransferModal = true"` (`btn_cash_transfer` - blue)
+    5. Line 42: `a href="{{ route('finance.cash-bank.ledger') }}"` (`btn_cash_ledger`)
+  - Direct observation: Header wraps into 3 rows on tablet and mobile viewports, displacing title and violating single-primary CTA discipline.
 
-### 1.5 UI Complexity, Alpine.js, & Dynamic Patterns
-- **Alpine.js Density**: 126 out of 185 files (68.1%) use Alpine.js, containing 203 distinct `x-data` scopes.
-- **Dynamic Attribute Bindings**:
-  - Multiple views bind dynamic attributes using Alpine expressions:
-    - `pos/terminal.blade.php`: `:title="isFullscreen ? 'Keluar Fullscreen' : 'Mode Layar Penuh'"`
-    - `ai/partials/virtual_office_canvas.blade.php`: `:title="isFullscreen ? 'Keluar Mode Layar Penuh [ESC]' : 'Masuk Mode Layar Penuh [F]'"`
-    - `social_media/inbox.blade.php`: `:placeholder="'Balas di ' + (activeThread?.channel_label || 'WhatsApp') + '...'"`
-  - High risk of syntax breakage if agents blindly replace text without preserving Alpine `:`-binding semantics.
-- **Formatting Helpers**:
-  - `number_format(...)`: 949 occurrences across financial, POS, and sales calculations.
-  - Date formatting (`->translatedFormat(...)` / `->format(...)`): 270 occurrences.
-  - `formatRupiah(...)`: 153 occurrences.
-- **Heavy / Monolithic Views**:
-  - `pos/terminal.blade.php`: 7,158 lines (POS terminal, split payment, scanner, KDS sync).
-  - `ai/partials/virtual_office_canvas.blade.php`: 3,875 lines (3D canvas, keyboard shortcuts `[E]`, `[ESC]`, `[R]`, camera HUD).
-  - `landing_page/edit.blade.php`: 3,334 lines (drag-and-drop page builder, block editor, live theme preview).
-  - `import/index.blade.php`: 2,195 lines (Excel data import wizard, column mapper, batch execution, live log).
-  - `social_media/inbox.blade.php`: 1,793 lines (omnichannel chat manager, sentiment badge, auto-responder).
-- **Scanner Edge Cases**:
-  - In `pos/terminal.blade.php:4698`: `canBypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' : 'false' }}` triggers `scratch/deep_audit_v2.py` under `5. Dev / Test Alerts` because the line contains `BypassSupervisor:`. The scanner rule `if '__(' in matched: continue` means adding an inline translation or translatable comment will resolve the trigger without altering variable names.
+#### Observation O6: Pill & Badge Inflation in Approvals Inbox
+- **File**: `resources/views/app/approvals/inbox.blade.php`
+  - Lines 41-73: Filter tabs are wrapped in `rounded-full` pills, each containing an internal `rounded-full` count badge.
+  - Lines 92-97:
+    ```html
+    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] uppercase tracking-wider">
+        {{ $ticket->getDocumentTypeLabel() }}
+    </span>
+    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/15 text-[#FF9500]">
+        {{ __('approvals.waiting_level', ['current' => $ticket->current_level, 'total' => $ticket->total_levels]) }}
+    </span>
+    ```
+  - Direct observation: 3-4 pill badges rendered side-by-side in ticket cards, causing visual noise and pill fatigue.
+
+#### Observation O7: Raw Unicode Emojis and Symbols
+- **File**: `resources/views/app/master-data/index.blade.php`
+  - Lines 740, 801, 945, 1010: Raw unicode `✕` (`\u2715`) used for modal close and clear buttons:
+    ```html
+    <button type="button" @click="showAddModal = false"
+        class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition">✕</button>
+    ```
+  - Direct observation: 28x28px (`w-7 h-7`) size violates Apple HIG minimum 44x44px touch target; literal unicode symbol used instead of Lucide icon `<i data-lucide="x">`.
+- **File**: `resources/views/app/community/index.blade.php`: Line 521 uses literal unicode star `★` (`\u2605`).
+- **File**: `resources/views/app/billing/invoice.blade.php`: Line 891 uses literal unicode checkmark `✓` (`\u2713`).
+
+#### Observation O8: Hardcoded UI Text in Core Reports and Profiles
+- **File**: `resources/views/app/reports/index.blade.php`:
+  - Line 609: `<h3>Analisis Umur Hutang Vendor (AP Aging)</h3>`
+  - Line 597: `Tidak ada piutang invoice yang belum lunas.`
+  - Lines 625-630: `No. Tagihan Vendor`, `Supplier / Vendor`, `Tgl Tagihan`, `Jatuh Tempo`, `Keterlambatan`, `Sisa Hutang`
+  - Line 650: `Belum Jatuh Tempo`
+  - Lines 139, 149: `Export Excel`, `Cetak`
+- **File**: `resources/views/app/profile/edit.blade.php`:
+  - Lines 3-4: `'headerTitle' => 'Pengaturan Akun & Keamanan'`, `'headerSubtitle' => 'Kelola informasi...'`
+  - Lines 41-42: `Alamat email Anda belum diverifikasi`, `Cek kotak masuk...`
+  - Line 76: `Terdapat beberapa kesalahan validasi:`
+- **File**: `resources/views/app/labor-machines/index.blade.php`:
+  - Lines 1-4: `'title' => 'Tenaga Kerja & Mesin'`, `'headerTitle' => 'Biaya Tenaga Kerja & Mesin'`
+  - Lines 118-134: `Dashboard`, `Biaya Produksi`, `Tenaga Kerja & Mesin`, `Konversi tarif upah...`
+  - Lines 143, 148: `Tambah Tarif Upah`, `Tambah Mesin Baru`
 
 ---
 
 ## 2. Logic Chain
 
-```
-[Observation 1.1]
-185 Blade files in resources/views/app
-107 files are 100% clean
-78 files contain 762 hardcoded issues
-     │
-     ▼
-[Observation 1.3]
-Issues are clustered into specific types:
-- 308 raw button labels
-- 119 raw title attributes
-- 81 raw placeholder attributes
-- 53 hardcoded empty states
-- 46 h3 headings
-- 38 raw aria-labels
-- 28 h2 headings
-- 24 raw validation messages
-     │
-     ▼
-[Observation 1.2 & 1.4]
-Existing lang architecture has 66 files in ID and 66 files in EN
-100.00% key parity (17,068 keys each)
-No root JSON files exist
-Views reference modular files (pos.*, finance.*, sales.*, common.*)
-     │
-     ▼
-[Observation 1.5]
-126 files use Alpine.js with reactive attribute bindings (:title, :placeholder)
-Heavy monolithic views exist (Virtual Office Canvas, Landing Page Builder, POS Terminal)
-     │
-     ▼
-[Deduction: Milestone Decomposition]
-Remediation must be organized into 5 balanced, domain-coherent milestones that:
-1. Group related business domains and their corresponding translation files together.
-2. Distribute the issue count evenly (100–140 issues per milestone, with heavy builders isolated into Milestone 5).
-3. Ensure 100% mathematical coverage of all 78 dirty files without omissions or duplicates.
-```
+1. **Premise 1 (Maintainability & Performance)**: `hrm/index.blade.php` (5,705 LOC), `settings/index.blade.php` (4,143 LOC), and `mcp.blade.php` (3,363 LOC) embed massive data tables, modals, and JavaScript directly into single view files (Observation O1, O2).
+   - *Inference*: Compiling and rendering multi-thousand line Blade views containing 10+ unpaginated modal DOM subtrees imposes severe DOM weight, slows initial render, increases memory usage during compilation, and makes isolated code modifications extremely risky. Modals should be decoupled into modular Blade components (`@include` or `<x-*>`).
+
+2. **Premise 2 (Design System Alignment)**: The COOCA Bento Apple HIG v2.0 specification mandates consistent continuous squircle cards (`rounded-[20px]`/`rounded-[24px]`), hairline borders (`border-black/[0.06] dark:border-white/[0.08]`), and dark surfaces (`#1C1C1E`).
+   - *Inference*: `community/*` and `tax/index.blade.php` completely bypass these standards with legacy `rounded-2xl` and `border-slate-200/80` or `rounded-3xl` with dark buttons (Observation O3). This produces an inconsistent visual experience where community and tax screens feel like a third-party app bolted onto COOCA.
+
+3. **Premise 3 (Mobile Touch & Responsive Usability)**: On mobile viewports (360px–390px), data tables wider than 360px will break out of card boundaries or truncate unless wrapped in a dedicated horizontal scroll container (`overflow-x-auto`).
+   - *Inference*: `finance/accounting/balance-sheet.blade.php`, `security/audit-logs/show.blade.php`, and `customers/index.blade.php` wrap tables in `overflow-y-auto` or `overflow-hidden` without `overflow-x-auto` (Observation O4). Users accessing the balance sheet or audit diffs on mobile cannot view all financial columns, breaking usability for mobile business owners.
+
+4. **Premise 4 (Action Hierarchy & Cognitive Load)**: Apple HIG guidelines and the *UI Simplify Layout* skill dictate that every screen must have exactly one primary action, with secondary actions grouped into consolidated menus.
+   - *Inference*: `finance/cash-bank/index.blade.php` renders 5 action buttons in the header (Observation O5). This visual competition causes analysis paralysis and causes buttons to wrap awkwardly on mobile devices. Adopting the Dashboard's `quickMenuOpen` popover pattern solves this cleanly.
+
+5. **Premise 5 (Multi-Language Parity & Icon Consistency)**: Zero Hardcoded Text is mandatory for 100% bilingual parity (ID/EN), and Unicode emojis/symbols in interactive controls are strictly prohibited in favor of Lucide SVGs (WCAG accessible touch targets $\ge 44\times44\text{px}$).
+   - *Inference*: `master-data/index.blade.php` uses `✕` with a 28x28px touch target (Observation O7), while `reports/index.blade.php`, `profile/edit.blade.php`, and `labor-machines/index.blade.php` have hardcoded Indonesian strings (Observation O8). When English users navigate these screens, they encounter untranslated Indonesian text and broken touch targets.
 
 ---
 
 ## 3. Caveats
 
-1. **Admin Views Out of Scope**: `resources/views/admin` (87 files) was not surveyed by this explorer because this investigation is explicitly scoped to `resources/views/app` (185 files) and the global translation architecture (`lang/`).
-2. **Scanner Specifics**: `scratch/deep_audit_v2.py` is the official benchmark tool specified in `ORIGINAL_REQUEST.md`. Any remediation must satisfy its exact regex patterns (e.g., verifying attributes, headings, empty states, and bypass notices).
-3. **No Code Modification Assumption**: Per Explorer instructions, no view or translation files were edited during this survey. All counts reflect the pristine workspace state.
+1. **Read-Only Investigation**: All observations were gathered via static code inspection and AST analysis without modifying any codebase files in `resources/views/app/` or database schemas.
+2. **Browser Layout Rendering vs. Blade Markup**: Certain CSS classes (such as `overflow-x-auto` on higher-level parents like `<x-app-layout>`) may provide partial horizontal scrolling, but internal `overflow-hidden` on immediate parent divs will still clip tables locally.
+3. **No Code Modification Undertaken**: In strict compliance with the dispatch directive, no Blade files or stylesheets were edited during this survey.
 
 ---
 
-## 4. Conclusion & Proposed 5-Milestone Decomposition
+## 4. Conclusion: Ranked Findings & Actionable Remediation Plan
 
-All 78 dirty files (762 issues) partition cleanly into **5 modular milestones** based on business domain, component architecture, and translation namespace:
+### 4.1 Detailed Findings Matrix
 
-```
-┌─────────────────────────────────────────────────────────────────────────────────────────────┐
-│                       5-MILESTONE MODULAR DECOMPOSITION FOR APP VIEWS                       │
-├────────────┬─────────────────────────────┬───────┬───────┬────────┬────────┬────────────────┤
-│ Milestone  │ Domain Scope                │ Files │ Dirty │ Issues │ Lines  │ Lang Files     │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ M1         │ Retail & Omnichannel Comm.  │ 56    │ 19    │ 118    │ 36,990 │ pos, products, │
-│            │ (POS, Inventory, Storefront,│       │       │        │        │ inventory,     │
-│            │ Products, Warehouse, Mktpl) │       │       │        │        │ warehouse, etc.│
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ M2         │ B2B Trade, Purchasing & CRM │ 33    │ 20    │ 106    │ 16,953 │ sales,         │
-│            │ (Sales, SO, Quotes, Invoices│       │       │        │        │ purchasing,    │
-│            │ PO, Suppliers, Customers)   │       │       │        │        │ customers, crm │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ M3         │ Finance, Tax, Settings & Fdn│ 34    │ 16    │ 125    │ 30,805 │ finance, tax,  │
-│            │ (Finance, Billing, Settings,│       │       │        │        │ settings, auth,│
-│            │ Master Data, Labor, Profile)│       │       │        │        │ labor_machines │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ M4         │ AI Suite & Social Omnichan. │ 36    │ 15    │ 135    │ 22,458 │ ai, ai_studio, │
-│            │ (AI Office, AI Studio,      │       │       │        │        │ social_media,  │
-│            │ Social Media, WhatsApp, MCP)│       │       │        │        │ whatsapp, mcp  │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ M5         │ Heavy Builders, Docs & Comm.│ 8     │ 8     │ 278    │ 11,106 │ landing_page,  │
-│            │ (Landing Page Builder, Docs,│       │       │        │        │ docs, import,  │
-│            │ Import Wizard, Community)   │       │       │        │        │ community      │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ Clean Sub. │ 9 Submodules (HRM, Roles,   │ 18    │ 0     │ 0      │ 16,512 │ Already clean  │
-│            │ Feedback, Security, Root)   │       │       │        │        │                │
-├────────────┼─────────────────────────────┼───────┼───────┼────────┼────────┼────────────────┤
-│ TOTAL      │ Entire resources/views/app  │ 185   │ 78    │ 762    │ 134,824│ 100% Covered   │
-└────────────┴─────────────────────────────┴───────┴───────┴────────┴────────┴────────────────┘
-```
+| Finding ID | View File Path | Issue Description | Severity | Concrete Improvement Recommendation |
+|---|---|---|:---:|---|
+| **F-01** | `resources/views/app/hrm/index.blade.php` | Monolithic 5,705-line view embedding 10 full tables and 15 complete modal dialogues inline. | **CRITICAL** | Decompose the 15 modals into dedicated partials in `resources/views/app/hrm/partials/` (e.g., `modal-add-employee.blade.php`, `modal-face-registration.blade.php`) and lazy-load table tabs. |
+| **F-02** | `resources/views/app/settings/index.blade.php` | Over 1,300 lines of inline JavaScript in `<script>` tags across 7 tabs. | **HIGH** | Extract inline JS into external modular Alpine component `public/js/app/settings-hub.js` or Alpine store. |
+| **F-03** | `resources/views/app/settings/integrations/mcp.blade.php` | 3,236 lines of inline JS and dense permissions matrices in a single view file; uses `bg-neutral-900 dark:bg-white` instead of Bento Primary Blue. | **HIGH** | Refactor permissions matrix into dedicated partials; standardize action buttons to Apple Primary Blue (`bg-[#007AFF] text-white`). |
+| **F-04** | `resources/views/app/community/index.blade.php`, `events.blade.php`, `event_payment.blade.php` | 100% legacy Tailwind styling (`rounded-2xl`, `border-slate-200/80`, `shadow-2xs`), completely missing Bento Apple HIG continuous squircle tokens; fake pulse dot on notification counter. | **HIGH** | Migrate community views to Bento Apple HIG v2.0: replace `rounded-2xl` with `rounded-[20px]`, `border-slate-200` with hairline `border-black/[0.06] dark:border-white/[0.08]`; remove `animate-pulse` from notification badge. |
+| **F-05** | `resources/views/app/finance/accounting/balance-sheet.blade.php` (L:437), `security/audit-logs/show.blade.php` (L:83), `customers/index.blade.php` (L:1428) | Financial and forensic diff tables wrapped in `overflow-y-auto` or `overflow-hidden` without `overflow-x-auto`. | **HIGH** | Add `overflow-x-auto` to table wrapper divs to prevent column clipping on mobile screens (< 400px). |
+| **F-06** | `resources/views/app/tax/index.blade.php` | 80 instances of legacy `rounded-3xl`/`rounded-2xl`; black primary CTA button clashing with system blue; lacks tabular-nums on summary numbers. | **HIGH** | Standardize container cards to `rounded-[20px]`, form controls to `rounded-[12px]`, CTA buttons to `bg-[#007AFF] text-white`, and add `tabular-nums` to all monetary outputs. |
+| **F-07** | `resources/views/app/finance/cash-bank/index.blade.php` (L:20-47) | Header action overcrowding: 5 full-size action buttons rendered side-by-side in `<x-module-header>`. | **MEDIUM** | Consolidate secondary actions (`Catat Kas Masuk`, `Catat Kas Keluar`, `Transfer Kas`) into a single "Aksi Cepat Kas" popover menu with `quickMenuOpen`, keeping only `Tambah Akun` as primary CTA. |
+| **F-08** | `resources/views/app/approvals/inbox.blade.php` (L:41-73, 92-97) | Pill & Badge Inflation: nested `rounded-full` pills in filter tabs, and 3-4 pill badges side-by-side per ticket card. | **MEDIUM** | Convert filter tabs to Apple macOS segmented control (`rounded-[10px]` bar); replace ticket type badge with pure typographic overline and retain only 1 status badge per card. |
+| **F-09** | `resources/views/app/billing/limits.blade.php` | Inconsistent dark mode surface: mixes Tailwind Slate (`dark:bg-slate-900`, `dark:border-slate-800`) with iOS dark palette. | **MEDIUM** | Replace `dark:bg-slate-900` with `dark:bg-[#1C1C1E]` and `dark:border-slate-800` with `dark:border-white/[0.08]`. |
+| **F-10** | `resources/views/app/master-data/index.blade.php` (L:740, 801, 945, 1010) | Raw unicode `✕` (`\u2715`) with undersized 28x28px (`w-7 h-7`) touch targets. | **MEDIUM** | Replace `✕` with `<i data-lucide="x" class="w-4 h-4"></i>` and ensure button container meets minimum 44x44px touch target (`min-h-[44px] min-w-[44px] sm:min-h-[32px] sm:min-w-[32px]`). |
+| **F-11** | `resources/views/app/reports/index.blade.php` (L:85, 139, 149, 597, 609, 625-650) | Hardcoded Indonesian strings in Aging tables, export buttons, and empty states. | **MEDIUM** | Wrap all strings with `__()` and register missing keys in `lang/id/analytics.php` and `lang/en/analytics.php`. |
+| **F-12** | `resources/views/app/labor-machines/index.blade.php` (L:1-5, 118-148), `profile/edit.blade.php` (L:3-5, 41-76) | Hardcoded Indonesian strings in page headers, breadcrumbs, and error validation summaries. | **MEDIUM** | Migrate all hardcoded texts to localization helper `__()`. |
+| **F-13** | `resources/views/app/simulator/index.blade.php` (L:18-54), `reports/index.blade.php` (L:122, 136, 146, 164), `profile/edit.blade.php` (L:37, 54, 63, 73, 96) | Inconsistent icon implementation: raw inline `<svg>` elements mixed with Lucide icons. | **LOW** | Replace raw inline `<svg>` tags with standard `<i data-lucide="...">` icons for consistent stroke weight and rendering. |
+| **F-14** | `resources/views/app/hrm/index.blade.php` (Zero Industry Gating) | Complete lack of multi-industry adaptability in a 5,705-line workforce view. | **LOW** | Integrate industry-specific workforce tabs using `$business->template_code` (e.g. shift rosters for F&B/Retail vs project billable hours for Agency/Service). |
 
-### Detailed Milestone Target Manifest:
+---
 
-#### Milestone 1: Retail & Omnichannel Commerce (19 dirty files | 118 issues)
-- `inventory/stocks.blade.php` (17 issues, 451 lines)
-- `marketplace/products.blade.php` (17 issues, 2,296 lines — all 17 are `raw_attr_title`)
-- `inventory/transfers.blade.php` (15 issues, 405 lines)
-- `pos/terminal.blade.php` (9 issues, 7,158 lines)
-- `products/index.blade.php` (8 issues, 3,445 lines)
-- `marketplace/index.blade.php` (8 issues, 586 lines)
-- `marketplace/orders.blade.php` (8 issues, 835 lines)
-- `pos/shifts.blade.php` (7 issues, 1,010 lines)
-- `products/modifiers.blade.php` (6 issues, 1,368 lines)
-- `pos/orders.blade.php` (5 issues, 792 lines)
-- `pos/printers/index.blade.php` (5 issues, 1,082 lines)
-- `pos/reports/tabs/payments.blade.php` (3 issues, 345 lines)
-- `warehouse/index.blade.php` (2 issues, 1,812 lines)
-- `storefront/orders/index.blade.php` (2 issues, 566 lines)
-- `storefront/shipping/index.blade.php` (2 issues, 628 lines)
-- `pos/tables.blade.php` (1 issue, 752 lines)
-- `inventory/opname.blade.php` (1 issue, 811 lines)
-- `marketplace/chat.blade.php` (1 issue, 350 lines)
-- `marketplace/shipping_label.blade.php` (1 issue, 797 lines)
+### 4.2 Multi-Industry Adaptability & Isolation Evaluation
 
-#### Milestone 2: B2B Trade, Purchasing & CRM (20 dirty files | 106 issues)
-- `quotations/index.blade.php` (13 issues, 352 lines)
-- `suppliers/index.blade.php` (11 issues, 1,353 lines)
-- `customers/index.blade.php` (11 issues, 1,506 lines)
-- `sales/returns/index.blade.php` (10 issues, 404 lines)
-- `sales-orders/index.blade.php` (10 issues, 405 lines)
-- `sales/returns/edit.blade.php` (9 issues, 314 lines)
-- `quotations/edit.blade.php` (7 issues, 348 lines)
-- `sales-orders/edit.blade.php` (5 issues, 352 lines)
-- `services/index.blade.php` (5 issues, 1,252 lines)
-- `sales/returns/show.blade.php` (4 issues, 688 lines)
-- `sales-orders/show.blade.php` (4 issues, 461 lines)
-- `quotations/show.blade.php` (4 issues, 342 lines)
-- `purchasing/returns/show.blade.php` (3 issues, 242 lines)
-- `sales/returns/create.blade.php` (2 issues, 592 lines)
-- `purchase-orders/print.blade.php` (2 issues, 481 lines)
-- `crm/vouchers.blade.php` (2 issues, 367 lines)
-- `sales-orders/create.blade.php` (1 issue, 611 lines)
-- `quotations/create.blade.php` (1 issue, 285 lines)
-- `purchase-orders/create.blade.php` (1 issue, 440 lines)
-- `invoices/index.blade.php` (1 issue, 438 lines)
+1. **Exemplary Implementations (Gold Standard)**:
+   - `resources/views/app/calculator.blade.php`: Features adaptive presets (`applyPreset()`) customized for Workshop (`oli`, `tuneup`, `rem`, `servis_berkala`), Laundry (`kiloan`, `bedcover`, `dryclean`, `sepatu`), and F&B/Retail (`kopi`, `makanan`, `roti`). Gating correctly switches between material and labor rates.
+   - `resources/views/app/customers/index.blade.php`: Automotive vehicle fields (`vehicle_license_plate`, `vehicle_model`, `vehicle_mileage`) in Add Modal, Edit Modal, and Customer Detail sheets are strictly gated via `@if($isWorkshop)`, guaranteeing Zero Feature Leakage into Retail, F&B, or Agensi tenants.
+   - `resources/views/app/dashboard.blade.php`: HPP benchmarks dynamically adapt via `$defaultHpp = match(true) { isWorkshop => 45k, isRetail => 35k, isPharmacy => 25k, isLaundry => 5k, default => 15k }`.
 
-#### Milestone 3: Finance, Tax, Settings & Foundation (16 dirty files | 125 issues)
-- `labor-machines/index.blade.php` (32 issues, 1,293 lines)
-- `master-data/index.blade.php` (28 issues, 1,188 lines)
-- `profile/edit.blade.php` (14 issues, 309 lines)
-- `settings/index.blade.php` (13 issues, 4,151 lines)
-- `reports/index.blade.php` (10 issues, 890 lines)
-- `finance/expenses.blade.php` (6 issues, 731 lines)
-- `tax/index.blade.php` (4 issues, 1,398 lines — all 4 are `aria-label="Tutup modal"`)
-- `settings/integrations/social_media.blade.php` (4 issues, 361 lines)
-- `profile/verify-contact.blade.php` (4 issues, 77 lines)
-- `finance/settlements/show.blade.php` (2 issues, 317 lines)
-- `billing/payment.blade.php` (2 issues, 907 lines)
-- `profitability/index.blade.php` (2 issues, 283 lines)
-- `finance/edc-terminals/index.blade.php` (1 issue, 324 lines)
-- `settings/integrations/mcp.blade.php` (1 issue, 3,363 lines)
-- `settings/integrations/whatsapp.blade.php` (1 issue, 779 lines)
-- `portal/index.blade.php` (1 issue, 2,547 lines)
-
-#### Milestone 4: AI Suite, Studio & Social Omnichannel (15 dirty files | 135 issues)
-- `social_media/inbox.blade.php` (34 issues, 1,793 lines)
-- `ai/partials/virtual_office_canvas.blade.php` (17 issues, 3,875 lines)
-- `ai-studio/show.blade.php` (16 issues, 766 lines)
-- `ai-studio/index.blade.php` (15 issues, 429 lines)
-- `ai-studio/create.blade.php` (13 issues, 695 lines)
-- `ai-studio/partials/topup-modal.blade.php` (8 issues, 507 lines)
-- `ai-studio/inspiration/index.blade.php` (6 issues, 255 lines)
-- `ai-studio/credit-history.blade.php` (5 issues, 179 lines)
-- `ai-studio/inspiration/show.blade.php` (4 issues, 232 lines)
-- `social_media/index.blade.php` (4 issues, 492 lines)
-- `social_media/posts.blade.php` (4 issues, 2,489 lines)
-- `social_media/insights.blade.php` (3 issues, 1,412 lines)
-- `ai-studio/prompt-preview.blade.php` (2 issues, 119 lines)
-- `whatsapp/index.blade.php` (2 issues, 937 lines)
-- `mcp/oauth/consent.blade.php` (2 issues, 130 lines)
-
-#### Milestone 5: Heavy Builders, Docs, Import & Community (8 dirty files | 278 issues)
-- `landing_page/edit.blade.php` (80 issues, 3,334 lines — monolithic drag-and-drop landing page editor)
-- `import/index.blade.php` (62 issues, 2,195 lines — full interactive Excel import wizard)
-- `docs/index.blade.php` (36 issues, 1,014 lines — business owner documentation guide)
-- `docs/partials/sec_ai.blade.php` (36 issues, 1,573 lines — AI operations documentation)
-- `community/index.blade.php` (25 issues, 1,279 lines)
-- `landing_page/popup.blade.php` (16 issues, 768 lines — promotional popup builder)
-- `community/events.blade.php` (16 issues, 642 lines)
-- `community/event_payment.blade.php` (7 issues, 301 lines)
+2. **Gaps & Improvement Areas**:
+   - `resources/views/app/hrm/index.blade.php`: Presents identical HR workflows regardless of whether the business is a small coffee shop (1-3 baristas), an auto garage (mechanics with commission), or a factory (hourly machine labor). Adding context-aware presets would dramatically simplify the UI for micro-businesses.
+   - `resources/views/app/labor-machines/index.blade.php`: Currently separated from core costing and HRM. For manufacturing and workshop tenants, machine rates should be cross-linked directly within product recipe BOMs and service orders.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify all findings and datasets:
+To independently verify all findings and statistics documented in this report:
 
-1. **Verify Baseline Issue Counts**:
-   ```powershell
-   python scratch/deep_audit_v2.py resources/views/app
+1. **Inventory & View Count Verification**:
+   ```bash
+   python -c "import os; views = r'c:\laragon\www\cooca_core\resources\views\app'; target = ['analytics','finance','reports','profitability','crm','customers','hrm','labor-machines','settings','profile','roles','security','approvals','master-data','tax','billing','feedback','community','simulator']; print('Target files:', len([os.path.join(r, f) for d in target for r, dirs, files in os.walk(os.path.join(views, d)) for f in files if f.endswith('.blade.php')] + [os.path.join(views, 'dashboard.blade.php'), os.path.join(views, 'calculator.blade.php')]))"
    ```
-   *Expected*: Total files = 185, Clean files = 107, Files with issues = 78, Total issues = 762.
+   *Expected result*: Exactly 61 files matching the inventory.
 
-2. **Verify Translation Key Parity**:
-   ```powershell
-   python .agents/teamwork/explorer_survey_3/print_lang_stats.py
+2. **Inspect HRM Monolithic View & Inline Modals**:
+   ```bash
+   python -c "with open(r'c:\laragon\www\cooca_core\resources\views\app\hrm\index.blade.php', 'r', encoding='utf-8') as f: lines = f.readlines(); print('Total lines:', len(lines)); print('Fixed inset-0 modals:', sum(1 for l in lines if 'class=\"fixed inset-0 z-[200] overflow-y-auto\"' in l)); print('Tables:', sum(1 for l in lines if '<table' in l))"
    ```
-   *Expected*: 66 files in ID and 66 in EN, 17,068 keys in each, 100% key parity.
+   *Expected result*: 5,705 lines, 15 modals, 10 tables.
 
-3. **Verify Milestone Math & File Partitioning**:
-   ```powershell
-   python .agents/teamwork/explorer_survey_3/verify_milestones.py
+3. **Verify Table Overflow Missing in Balance Sheet & Audit Logs**:
+   ```bash
+   python -c "for fp in [r'c:\laragon\www\cooca_core\resources\views\app\finance\accounting\balance-sheet.blade.php', r'c:\laragon\www\cooca_core\resources\views\app\security\audit-logs\show.blade.php']: 
+       with open(fp, 'r', encoding='utf-8') as f: 
+           c = f.read(); print(fp.split('\\\\')[-1], 'has overflow-x-auto:', 'overflow-x-auto' in c)"
    ```
-   *Expected*: 
-   - Dirty files: M1 (19) + M2 (20) + M3 (16) + M4 (15) + M5 (8) = 78 dirty files.
-   - Issues: M1 (118) + M2 (106) + M3 (125) + M4 (135) + M5 (278) = 762 issues.
-   - Clean submodules: 9 submodules (18 files).
-   - Grand Total files: 78 dirty + 18 clean + remaining clean files across submodules = 185 files.
+   *Expected result*: Both return `False`.
 
-4. **Verify Blade Syntax Integrity (Non-breaking Baseline Check)**:
-   ```powershell
-   php -l resources/views/app/dashboard.blade.php
+4. **Verify Unicode Emojis and Symbols**:
+   ```bash
+   python -c "for fp in [r'c:\laragon\www\cooca_core\resources\views\app\master-data\index.blade.php', r'c:\laragon\www\cooca_core\resources\views\app\community\index.blade.php']:
+       with open(fp, 'r', encoding='utf-8') as f:
+           for i, l in enumerate(f, 1):
+               if any(s in l for s in ['\u2715', '\u2605']): print(f'{fp.split(chr(92))[-1]}:{i} -> {l.strip()[:60]}')"
    ```
+   *Expected result*: Lines 740, 801, 945, 1010 in master-data with `✕` and Line 521 in community with `★`.
 
 5. **Invalidation Conditions**:
-   - Any modification to `resources/views/app` or `lang/` that alters file count, issue count, or key counts will require re-running `survey_data.json` generation.
+   - If `hrm/index.blade.php` is decomposed into partials under 1,000 LOC, Finding F-01 is invalidated.
+   - If `overflow-x-auto` is added to lines 437 in `balance-sheet.blade.php` and line 83 in `security/audit-logs/show.blade.php`, Finding F-05 is invalidated.
+   - If `community/*` templates are refactored to use Bento tokens `rounded-[20px]` and `border-black/[0.06] dark:border-white/[0.08]`, Finding F-04 is invalidated.

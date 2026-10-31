@@ -1,297 +1,186 @@
-# Baseline Survey and Deep Audit Script Analysis Report
+# Handoff Report: UI/UX Architecture & Layout Survey of `resources/views/app`
 
 **Date**: 2026-10-31  
-**Author**: Explorer 1 (`explorer_survey_1`)  
-**Mission**: Survey & Deep Audit Script Analysis for Multi-Language Localization of `resources/views/app` and `resources/views/admin`
+**Agent**: explorer_survey_1 (Archetype: Explorer)  
+**Parent**: aa2ef6eb-6969-4758-9898-c916a6745d73  
+**Target Scope**: All layout files, navigation shells, shared components, and all 185 views across 44 directories in `resources/views/app`  
+**Evaluation Standard**: Apple HIG (Clarity, Deference, Depth, Zero-Manual UI), Tailwind CSS responsive patterns, Mobile-First touch guidelines (≥44px touch targets, safe-area padding).
 
 ---
 
 ## 1. Observation
 
-### 1.1 Deep Audit Tool Analysis (`scratch/deep_audit_v2.py`)
-Direct source inspection of `scratch/deep_audit_v2.py` (283 lines) reveals the full detection mechanics and structural architecture:
+### 1.1 View Inventory & Layout Distribution
+- **Total Views Surveyed**: 185 Blade templates in `resources/views/app` across 44 directories (43 subdirectories + root).
+- **Layout Extension Distribution**:
+  - `layouts.app`: 134 views (Primary backoffice application shell).
+  - `none (partial or standalone)`: 51 views.
+    - 10 print / receipt templates (`billing/invoice`, `hrm/payroll/payslip`, `invoices/print`, `marketplace/shipping_label`, `pos/qr-card`, `pos/receipt`, `pos/reports/print_summary`, `purchase-orders/print`, `sales/returns/print`, `storefront/orders/shipping_label`).
+    - 1 standalone full-screen application: `pos/terminal.blade.php` (7,159 lines, standalone HTML shell).
+    - 24 tab & section partials (`pos/reports/tabs/*` [15 tabs], `storefront/tabs/*` [5 tabs], `settings/integrations/*` [2 tabs], `settings/roles.blade.php`, `ai-studio/prompt-preview.blade.php`).
+    - 15 modal and HUD components (`ai/partials/*` [9 partials], `ai-studio/partials/topup-modal.blade.php`, `pos/reports/partials/order_detail_modal.blade.php`, `docs/partials/sec_ai.blade.php`, `mcp/oauth/consent.blade.php`).
+- **Base Layouts Found in `resources/views/layouts/`**:
+  - `resources/views/layouts/app.blade.php` (2,763 lines) — Main shell for backoffice app.
+  - `resources/views/layouts/ai.blade.php` (484 lines) — **Orphaned layout**: not extended by any view in `resources/views/`.
+  - `resources/views/layouts/admin.blade.php` (1,234 lines) — Superadmin console shell.
+  - `resources/views/layouts/customer.blade.php` (451 lines) — Customer portal shell.
+  - `resources/views/layouts/guest.blade.php` (128 lines) — Authentication shell.
+  - `resources/views/layouts/public_marketing.blade.php` (256 lines) — Public marketing shell.
 
-1. **Indonesian Heuristic & Keyword Set (`ID_KEYWORDS`, lines 10–31)**:
-   - Defined as a set of 113 high-frequency Indonesian stems covering business, workflow, actions, navigation, status, time, and UI verbs.
-   - Normalization function `is_indonesian_text(text)` (lines 33–42):
-     - Strips all non-alphabetic characters using `re.sub(r'[^a-zA-Z\s]', ' ', text.lower()).strip()`.
-     - Splits into lowercase tokens.
-     - Evaluates match ratio:
-       - If token count is $\le 3$: triggered if $\ge 1$ word is in `ID_KEYWORDS`.
-       - If token count is $> 3$: triggered if matches $\ge 1$ and match ratio $\ge 15\%$ (`len(matches) / len(words) >= 0.15`).
+### 1.2 Layout Partials & Code Bloat Observations
+- `resources/views/layouts/partials/sidebar.blade.php` (2,271 lines): Primary left navigation rail. Defines 9 domain clusters, collapsible desktop state (`lg:w-[76px]` vs `lg:w-[272px]`), and off-canvas mobile drawer (`w-72 max-w-[84vw]`).
+- `resources/views/layouts/partials/secondary-sidebar.blade.php` (91 lines): Desktop dual-sidebar layout for active module sub-navigation (`lg:left-[272px] w-[260px]`).
+- `resources/views/layouts/partials/topbar.blade.php` (970 lines): Sticky topbar header (macOS standard height 56px, `h-14`), breadcrumb integration, search trigger, theme switcher, language switcher (ID/EN), user profile popover, and inline Spotlight modal.
+- `resources/views/layouts/partials/quick-actions.blade.php` (876 lines): **Orphaned duplicate file**. Contains Quick Expense, Quick Income, Quick Stock In, and Mobile Action Sheet. It is never included via `@include`; instead, all 876 lines were copy-pasted directly into `layouts/app.blade.php` (lines 1460–2335).
+- `resources/views/layouts/partials/spotlight.blade.php` (137 lines): **Orphaned duplicate file**. Never included via `@include`; Spotlight command palette was copy-pasted directly into `layouts/partials/topbar.blade.php` (lines 581–969).
+- `resources/views/layouts/partials/sidebar-styles.blade.php` (604 lines): Custom CSS rules for sidebar heights, icons, and nested indentation.
+- `resources/views/layouts/partials/typography.blade.php` (328 lines): CSS system for H1-H6, heading classes, and fluid typography.
 
-2. **Checked Patterns, Tags, Attributes, and Domains**:
-   - **Domain 1 (Page Title & Meta Tags)**:
-     - `@extends(..., ['title' => '...'])` (lines 55–67): extracts the string title value; flags if unlocalized and either Indonesian text or contains keywords `cooca, halaman, admin, beranda, login, daftar`.
-     - `@section('title|description|og_title|og_description', '...')` (lines 70–83): extracts raw literal argument; flags if unlocalized and Indonesian.
-     - Error View PHP Assignments (lines 86–99): checks assignments to `$title`, `$message`, `$homeLabel` (e.g. `$title = 'Halaman Tidak Ditemukan';`).
-   - **Domain 4 & Domain 7 (Form & Action Attributes, lines 101–124)**:
-     - Regex: `(?<!:)\b(placeholder|aria-label|title|alt)=(['"])(.*?)\2`
-     - Evaluates attribute value for Indonesian content. Maps `placeholder` to Domain 4 (`Forms, Labels, & Hints`) and `aria-label`, `title`, `alt` to Domain 7 (`Buttons & Action Links`).
-   - **Domain 5 (Dev / Test Alerts, lines 126–138)**:
-     - Regex: `(Bypass|Pengujian|Sandbox|Testing)[^<>\n]*:`
-   - **Domain 6 (Error Lists & Summary, lines 140–152)**:
-     - Regex: `(Verifikasi Belum Berhasil|Terjadi kesalahan|Periksa kembali input)[^<>\n]*`
-   - **Domain 9 (Tables, Badges, & Empty States, lines 154–166)**:
-     - Regex: `(Belum ada [^<>\n]+|Tidak ada data[^<>\n]*|Data tidak ditemukan[^<>\n]*)`
-   - **Domain 7 (Raw Button & Link Labels, lines 171–191)**:
-     - Regex: `<(?:button|a)\b(?:"[^"]*"|\'[^\']*\'|\{\{.*?\}\}|\{!!.*?!!\}|[^>"\'])*>(.*?)</(?:button|a)>`
-     - Strips inner tags via `TAG_PATTERN` (handles nested quotes and braces), strips `{{ ... }}`, `{!! ... !!}`, and Blade directives `@[a-zA-Z_]+(...)`.
-     - Restricts detection to inner text length $\le 8$ words.
-   - **Domain 3 (Headings, lines 193–213)**:
-     - Regex: `<(h[1-6])\b...>(.*?)</h[1-6]>`
-     - Strips nested tags, expressions, and directives; flags if inner text satisfies `is_indonesian_text`.
-   - **Domain 8 (Modals & Quota Microcopy, lines 215–225)**:
-     - Regex: `quotaTitle:\s*'([^']+)'|quotaDesc:\s*'([^']+)'`
+### 1.3 Shared UI Components in `resources/views/components/`
+| Component | Path | Lines | Usage Count in `app/` | Evaluation |
+|---|---|---|---|---|
+| `<x-module-header>` | `components/module-header.blade.php` | 34 | 66 views | Well-styled Apple Card (`rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10`). However, creates double header when topbar also displays `headerTitle`. |
+| `<x-module-tabs>` | `components/module-tabs.blade.php` | 26 | 69 views | Rendered as hidden DOM stub (`class="hidden" style="display: none !important;"`) for backward-compatible test assertions. Real tabs migrated to secondary sidebar. |
+| `<x-breadcrumb>` | `components/breadcrumb.blade.php` | 50 | 1 view direct (66 via module-header) | Accessible breadcrumb navigation with truncation and dashboard/portal fallback. |
+| `<x-table-sort-th>` | `components/table-sort-th.blade.php` | 68 | 22 views | Sortable table column header with ASC/DESC SVG indicators and URL query preservation. |
+| `<x-sortable-th>` | `components/sortable-th.blade.php` | 68 | 0 views | Duplicate of `<x-table-sort-th>` with identical functionality. |
+| `<x-table-search>` | `components/table-search.blade.php` | 38 | 0 views | Unused shared component. Views implement inline custom search bars. |
+| `<x-quota-modal>` | `components/quota-modal.blade.php` | 127 | Globally in `layouts/app.blade.php` (line 2757) | Bento Apple HIG quota lock modal with teleport, usage meter, and safe-data guarantee. |
+| `<x-document-stepper>` | `components/document-stepper.blade.php` | 84 | 1 view (`sales-orders/create.blade.php`) | Stepper indicator for multi-step transaction documents. |
+| `<x-social-icon>` | `components/social-icon.blade.php` | 42 | Used in landing/storefront | SVG icon helper for social channels. |
 
-3. **Ignored Elements, False-Positive Protections, and Edge Cases**:
-   - **Alpine/Vue Dynamic Bindings**: Lookbehind `(?<!:)` strictly ignores `:placeholder`, `:title`, `:aria-label`, `:alt`.
-   - **Blade Variables**: Explicitly skips attribute values starting with `{{` and ending with `}}` (e.g. `title="{{ $product->name }}"`), values starting with `$`, `route(`, or empty.
-   - **Existing Localization Calls**: Skips attributes and strings containing `{{ __('...` or `@lang(...)` or `__('...`.
-   - **Composite Block Links**: Button regex enforces $\le 8$ words so large link cards enclosing paragraphs and layout grids are not false-flagged as raw buttons.
-   - **Deduplication**: Lines 228–235 deduplicate detected issues per file using a `seen` set on `(line, domain, text)`.
-
-4. **Line and Count Reporting**:
-   - Line numbers are calculated precisely from character offset: `content[:m.start()].count('\n') + 1`.
-   - CLI invocation accepts `--out <path.json>` or outputs JSON to stdout.
-   - JSON structure per directory:
-     ```json
-     {
-       "<dir>": {
-         "total_files": 185,
-         "clean_files": 107,
-         "files_with_issues": 78,
-         "total_i18n_calls": 12267,
-         "total_issues": 762,
-         "files": [ ... ]
-       }
-     }
-     ```
-
----
-
-### 1.2 Baseline Execution Results
-
-Commands executed:
-- `python scratch/deep_audit_v2.py resources/views/app --out scratch/audit_app_baseline.json`
-- `python scratch/deep_audit_v2.py resources/views/admin --out scratch/audit_admin_baseline.json`
-
-#### Baseline Summary Table
-
-| Metric | `resources/views/app` | `resources/views/admin` | Combined Total |
-| :--- | :--- | :--- | :--- |
-| **Total Blade Files** | 185 | 87 | **272** |
-| **Clean Files (0 issues)** | 107 (57.8%) | 1 (1.1%) | **108 (39.7%)** |
-| **Files With Issues** | 78 (42.2%) | 86 (98.9%) | **164 (60.3%)** |
-| **Existing i18n Calls** | 12,267 | 0 | **12,267** |
-| **Total Issues Detected** | **762** | **956** | **1,718** |
-
-*Note: The only clean file in `resources/views/admin` is `resources/views/admin/smtp/index.blade.php`.*
-
----
-
-### 1.3 Defect Breakdown by Domain and Issue Type
-
-#### A. resources/views/app (762 issues across 78 files)
-
-| Domain | Count | Top Issue Types in Domain |
-| :--- | :--- | :--- |
-| **7. Buttons & Action Links** | 476 | `raw_button_label` (308), `raw_attr_title` (119), `raw_attr_aria-label` (38), `raw_attr_alt` (11) |
-| **3. Headers, H1, & Subtitles** | 107 | `raw_heading_h3` (46), `raw_heading_h2` (28), `raw_heading_h4` (18), `raw_heading_h1` (12), `raw_heading_h5` (3) |
-| **4. Forms, Labels, & Hints** | 81 | `raw_attr_placeholder` (81) |
-| **9. Tables, Badges, & Empty** | 53 | `empty_state_hardcoded` (53) |
-| **6. Error Lists & Summary** | 24 | `validation_errors_raw` (24) |
-| **1. Page Title & Meta Tags** | 17 | `extends_title_raw` (17) |
-| **5. Dev / Test Alerts** | 4 | `dev_bypass_hardcoded` (4) |
-
-#### B. resources/views/admin (956 issues across 86 files)
-
-| Domain | Count | Top Issue Types in Domain |
-| :--- | :--- | :--- |
-| **7. Buttons & Action Links** | 553 | `raw_button_label` (414), `raw_attr_title` (119), `raw_attr_alt` (13), `raw_attr_aria-label` (7) |
-| **3. Headers, H1, & Subtitles** | 130 | `raw_heading_h3` (75), `raw_heading_h4` (22), `raw_heading_h2` (20), `raw_heading_h1` (13) |
-| **4. Forms, Labels, & Hints** | 120 | `raw_attr_placeholder` (120) |
-| **9. Tables, Badges, & Empty** | 69 | `empty_state_hardcoded` (69) |
-| **1. Page Title & Meta Tags** | 40 | `extends_title_raw` (36), `section_title_raw` (4) |
-| **5. Dev / Test Alerts** | 27 | `dev_bypass_hardcoded` (27) |
-| **6. Error Lists & Summary** | 17 | `validation_errors_raw` (17) |
-
----
-
-### 1.4 Detailed Subdirectory Distribution
-
-#### Subdirectory Breakdown: `resources/views/app` (Total 185 files)
-
-| Subdirectory | Total Files | Files With Issues | Total Issues |
-| :--- | :--- | :--- | :--- |
-| `landing_page` | 2 | 2 | 96 |
-| `docs` | 2 | 2 | 72 |
-| `ai-studio` | 8 | 8 | 69 |
-| `import` | 1 | 1 | 62 |
-| `community` | 3 | 3 | 48 |
-| `social_media` | 5 | 4 | 45 |
-| `marketplace` | 6 | 5 | 35 |
-| `inventory` | 4 | 3 | 33 |
-| `labor-machines` | 1 | 1 | 32 |
-| `pos` | 29 | 6 | 30 |
-| `master-data` | 1 | 1 | 28 |
-| `quotations` | 4 | 4 | 25 |
-| `sales` | 5 | 4 | 25 |
-| `sales-orders` | 4 | 4 | 20 |
-| `settings` | 5 | 4 | 19 |
-| `profile` | 2 | 2 | 18 |
-| `ai` | 18 | 1 | 17 |
-| `products` | 3 | 2 | 14 |
-| `customers` | 1 | 1 | 11 |
-| `suppliers` | 1 | 1 | 11 |
-| `reports` | 1 | 1 | 10 |
-| `finance` | 16 | 3 | 9 |
-| `services` | 1 | 1 | 5 |
-| `storefront` | 12 | 2 | 4 |
-| `tax` | 1 | 1 | 4 |
-| `purchase-orders` | 4 | 2 | 3 |
-| `purchasing` | 6 | 1 | 3 |
-| `billing` | 5 | 1 | 2 |
-| `crm` | 2 | 1 | 2 |
-| `mcp` | 1 | 1 | 2 |
-| `profitability` | 1 | 1 | 2 |
-| `warehouse` | 2 | 1 | 2 |
-| `whatsapp` | 4 | 1 | 2 |
-| `invoices` | 5 | 1 | 1 |
-| `portal` | 1 | 1 | 1 |
-| *(root)* | 2 | 0 | 0 |
-| `analytics` | 1 | 0 | 0 |
-| `approvals` | 3 | 0 | 0 |
-| `feedback` | 3 | 0 | 0 |
-| `hrm` | 4 | 0 | 0 |
-| `materials` | 1 | 0 | 0 |
-| `roles` | 1 | 0 | 0 |
-| `security` | 2 | 0 | 0 |
-| `simulator` | 1 | 0 | 0 |
-
-#### Subdirectory Breakdown: `resources/views/admin` (Total 87 files)
-
-| Subdirectory | Total Files | Files With Issues | Total Issues |
-| :--- | :--- | :--- | :--- |
-| `finance` | 18 | 18 | 84 |
-| `settings` | 11 | 11 | 79 |
-| `inbox` | 1 | 1 | 78 |
-| `whatsapp` | 2 | 2 | 59 |
-| `posts` | 3 | 3 | 55 |
-| `b2b` | 11 | 11 | 54 |
-| *(root)* (`dashboard.blade.php`) | 1 | 1 | 47 |
-| `social_media` | 1 | 1 | 47 |
-| `account-recoveries` | 2 | 2 | 42 |
-| `ai_tokens` | 1 | 1 | 42 |
-| `pricing-programs` | 2 | 2 | 40 |
-| `subscriptions` | 2 | 2 | 34 |
-| `events` | 4 | 4 | 29 |
-| `settlements` | 2 | 2 | 29 |
-| `payment_accounts` | 3 | 3 | 28 |
-| `businesses` | 2 | 2 | 27 |
-| `templates` | 3 | 3 | 26 |
-| `billing-packages` | 1 | 1 | 18 |
-| `promos` | 1 | 1 | 18 |
-| `ai-studio` | 2 | 2 | 16 |
-| `feedback` | 2 | 2 | 15 |
-| `legal-pages` | 2 | 2 | 15 |
-| `word_filters` | 1 | 1 | 15 |
-| `roles` | 1 | 1 | 14 |
-| `auth` | 3 | 3 | 12 |
-| `error-logs` | 1 | 1 | 12 |
-| `leads` | 1 | 1 | 8 |
-| `profile` | 1 | 1 | 7 |
-| `users` | 1 | 1 | 6 |
-| `smtp` | 1 | 0 | 0 |
-
----
-
-### 1.5 Syntax Check Mechanics and Verification Findings
-
-1. **Compilation Engine**:
-   - `php artisan view:cache` compiles all 1,180 Blade templates in the project into PHP files located in `storage/framework/views/`.
-   - `php artisan view:clear` cleans up compiled views safely.
-2. **Instant In-Memory Syntax Validation**:
-   - Created and verified `scratch/fast_syntax_check.php` utilizing:
-     ```php
-     $blade = app('blade.compiler');
-     $compiled = $blade->compileString(file_get_contents($path));
-     token_get_all($compiled, TOKEN_PARSE);
-     ```
-   - Running `php scratch/fast_syntax_check.php` parses and verifies syntax for all 272 Blade files in `resources/views/app` and `resources/views/admin` in **2.1 seconds** with **0 syntax errors**.
-3. **Critical Trap Discovered for Implementers (Nested Blade Directive Anti-Pattern)**:
-   - When replacing strings inside existing Blade directives (e.g. `{{ $helper('key', 'default') }}` or `@extends('layouts.app', ['title' => '...'])`), **NEVER** write nested curly braces:
-     - ❌ **BROKEN**: `{{ $helper('key', '{{ __('storefront.nav_home') }}') }}` (compiles to nested `<?php echo e(...<?php echo e(...); ?>...); ?>` and throws fatal `ParseError: unexpected identifier`).
-     - ✅ **CORRECT**: `{{ $helper('key', __('storefront.nav_home')) }}` or `@extends('layouts.app', ['title' => __('admin.title')])`.
+### 1.4 Detailed Defect Inventory Across `resources/views/app`
+1. **Double Header Redundancy (44 views)**:
+   - *Observation*: View passes `headerTitle` and `headerSubtitle` to `@extends('layouts.app', ['headerTitle' => '...', 'headerSubtitle' => '...'])` which renders in the sticky topbar (56px, `topbar.blade.php:205-212`). Directly underneath inside `@section('content')`, the view renders `<x-module-header :title="..." :subtitle="...">` containing the identical text.
+   - *Affected Views*: `billing/checkout.blade.php`, `billing/history.blade.php`, `billing/limits.blade.php`, `billing/payment.blade.php`, `crm/members.blade.php`, `crm/vouchers.blade.php`, `customers/index.blade.php`, `feedback/create.blade.php`, `feedback/index.blade.php`, `feedback/show.blade.php`, `invoices/index.blade.php`, `invoices/show.blade.php`, `marketplace/chat.blade.php`, `marketplace/index.blade.php`, `marketplace/logs.blade.php`, `marketplace/orders.blade.php`, `marketplace/products.blade.php`, `materials/categories.blade.php`, `portal/index.blade.php`, `products/index.blade.php`, `products/categories.blade.php`, `profitability/index.blade.php`, `purchase-orders/create.blade.php`, `purchase-orders/index.blade.php`, `purchase-orders/show.blade.php`, `purchasing/bills.blade.php`, `purchasing/index.blade.php`, `purchasing/receivings.blade.php`, `purchasing/returns.blade.php`, `reports/index.blade.php`, `roles/create.blade.php`, `roles/edit.blade.php`, `roles/index.blade.php`, `roles/show.blade.php`, `sales/index.blade.php`, `sales/returns.blade.php`, `sales-orders/create.blade.php`, `sales-orders/index.blade.php`, `sales-orders/show.blade.php`, `security/audit-logs/index.blade.php`, `services/index.blade.php`, `settings/index.blade.php`, `suppliers/index.blade.php`, `warehouse/index.blade.php`.
+2. **Missing Mobile Bottom Padding — Bottom Tab Bar Obstruction (32 views)**:
+   - *Observation*: The fixed mobile bottom tab bar (`layouts/app.blade.php:2316-2370`) has height ~56px + safe-area = ~72px (`fixed inset-x-0 bottom-0 z-30 lg:hidden`). 32 views lack `pb-28` to `pb-36` on their root wrapper.
+   - *Affected Views*: `ai/actions.blade.php`, `ai/history.blade.php`, `ai/index.blade.php`, `ai/lobby.blade.php`, `ai/office.blade.php`, `ai/providers.blade.php`, `ai/offices/executive.blade.php`, `ai/offices/growth.blade.php`, `ai/offices/operations.blade.php`, `community/events.blade.php`, `community/event_payment.blade.php`, `community/index.blade.php`, `crm/vouchers.blade.php`, `feedback/create.blade.php`, `feedback/index.blade.php`, `feedback/show.blade.php`, `finance/accounting/balance-sheet.blade.php`, `finance/accounting/coa.blade.php`, `finance/accounting/general-ledger.blade.php`, `finance/accounting/journals.blade.php`, `finance/accounting/reconciliations.blade.php`, `finance/accounting/trial-balance.blade.php`, `finance/cash-bank/index.blade.php`, `finance/expenses/index.blade.php`, `finance/external-reconciliation/index.blade.php`, `landing_page/edit.blade.php`, `landing_page/popup.blade.php`, `mcp/index.blade.php`, `mcp/server/index.blade.php`, `portal/index.blade.php`, `quotations/index.blade.php`, `social_media/posts.blade.php`.
+3. **Hardcoded Unresponsive Multi-Column Grids (23 views)**:
+   - *Observation*: Layouts declare raw `grid-cols-3` or `grid-cols-4` without `sm:` or `lg:` mobile-first prefix, squeezing columns down to <80px on 360px phones.
+   - *Affected Views*:
+     - `analytics/index.blade.php` (line 511): `<div class="grid grid-cols-3 gap-2">` inside mobile card view.
+     - `ai/index.blade.php`: `<div class="grid grid-cols-3 gap-4">`.
+     - `ai/lobby.blade.php`: 3 instances of unprefixed `grid-cols-3`.
+     - `ai-studio/create.blade.php`: `<div class="grid grid-cols-4 gap-3">`.
+     - `billing/limits.blade.php`: 4 instances of `grid-cols-3`.
+     - `crm/members.blade.php`: 2 instances of `grid-cols-3`.
+     - `labor-machines/index.blade.php`: 4 instances of `grid-cols-3`.
+     - `marketplace/orders.blade.php`: `grid-cols-3`.
+     - `pos/terminal.blade.php`: 3 instances of raw `grid-cols-3` and `grid-cols-4`.
+4. **Modals Missing Body Teleportation or Sized Too Semiram (60 views)**:
+   - *Observation (Missing Teleport)*: 4 views render modals without `<template x-teleport="body">`:
+     - `ai-studio/index.blade.php` (line 368): Delete confirmation modal rendered inline inside `#main-content` at `z-50`.
+     - `ai-studio/show.blade.php`: Modal rendered inline inside card hierarchy.
+     - `ai-studio/prompt-preview.blade.php`: Standalone preview modal missing teleport.
+     - `pos/terminal.blade.php`: Several dialogs embedded directly in POS tree.
+   - *Observation (Narrow Sizing)*: 56 views constrain complex multi-field business forms to `max-w-md` or `max-w-lg` instead of using the Bento Apple HIG full-size canvas (`app-modal-dialog-lg` or `xxl`), forcing users to scroll vertically through cramped single-column inputs.
+5. **Tables Missing Responsive Overflow Wrapper (8 views)**:
+   - *Observation*: `<table>` rendered directly inside cards without `overflow-x-auto` or `.table-responsive`.
+   - *Affected Views*: `billing/invoice.blade.php`, `finance/accounting/balance-sheet.blade.php`, `invoices/print.blade.php`, `marketplace/shipping_label.blade.php`, `pos/reports/print_summary.blade.php`, `purchase-orders/print.blade.php`, `sales/returns/print.blade.php`, `security/audit-logs/show.blade.php`.
+6. **Raw Unicode Emojis in Interface (13 views)**:
+   - *Observation*: Hardcoded raw Unicode emojis embedded in table cells, badges, and headers:
+     - `pos/reports/tabs/transactions.blade.php` (lines 110, 127, 143, 148): `🚗 {{ $order->vehicle_license_plate }}`, `🧺 {{ $order->laundry_weight_kg }} kg`, `💊 {{ __('pos.reports_meta_batch') }}`, `🏷️ {{ __('pos.reports_meta_imei') }}`.
+     - `pos/reports/partials/order_detail_modal.blade.php`: `💊`.
+     - `pos/reports/print_summary.blade.php`: `🚗`, `📝`, `🧺`.
+     - `ai/partials/virtual_office_canvas.blade.php`: `⭐`, `●`.
+     - `community/index.blade.php`: `★`.
+     - `social_media/inbox.blade.php`: `😊`, `✨`, `🙏`.
+7. **Decorative Pulse Dot Abuse (32 views)**:
+   - *Observation*: `animate-pulse` applied to static text badges, counters, and navigation tabs (e.g. `ai/partials/virtual_office_canvas.blade.php:135`, `ai/lobby.blade.php`, `hrm/index.blade.php`, `inventory/movements.blade.php`, `marketplace/chat.blade.php`).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Premise 1**: The user requirement R1 dictates zero hardcoded Indonesian strings across `resources/views/app` (185 files) and `resources/views/admin` (87 files), verified by `scratch/deep_audit_v2.py`.
-2. **Premise 2**: Direct audit script analysis proves `deep_audit_v2.py` checks 8 specific domains with strict regexes on page titles, attributes (`placeholder`, `title`, `aria-label`, `alt`), dev bypasses, validation summaries, empty states, buttons/links ($\le 8$ words), headings (`h1`–`h6`), and modal quota keys.
-3. **Premise 3**: Running `deep_audit_v2.py` on the fresh codebase established the exact baseline:
-   - `resources/views/app`: 762 defects across 78 files (107 files are already clean and contain 12,267 existing i18n calls).
-   - `resources/views/admin`: 956 defects across 86 files (0 existing i18n calls; 1 file clean).
-   - Total to resolve: 1,718 defects across 164 files.
-4. **Premise 4**: Defect categorization reveals that `raw_button_label` (722), `raw_attr_title` (238), `raw_attr_placeholder` (201), `raw_heading_h3` (121), and `empty_state_hardcoded` (122) constitute over 81% of all defects.
-5. **Premise 5**: Verification through `fast_syntax_check.php` proved that all 272 current view files pass PHP tokenization without parse errors.
-6. **Conclusion**: Remediating these 1,718 issues across 164 files will systematically satisfy the Acceptance Criteria if conducted with strict adherence to PHP-in-Blade syntax rules and bidirectional key registration in `lang/id` and `lang/en`.
+```
+Observation 1.1 & 1.2:
+Layout app.blade.php (2,763 lines) contains 700+ lines of inlined CSS tokens, 400 lines of JS helpers, and inlined 876 lines of quick-actions.blade.php.
+Additionally, spotlight.blade.php is inlined into topbar.blade.php (970 lines), leaving orphaned files.
+  │
+  ├─► Logic 1: Monolithic architecture creates severe maintenance debt, duplicate code paths, and cache bloat.
+  │            Orphaned files (layouts.ai, partials/quick-actions, partials/spotlight) mislead engineers.
+  ▼
+Observation 1.4.1 (Double Headers in 44 views):
+Topbar displays $headerTitle and $headerSubtitle in a sticky bar (h-14).
+44 views simultaneously render <x-module-header :title="..." :subtitle="..."> right below it.
+  │
+  ├─► Logic 2: Wastes 140px-180px of prime viewport vertical height, repeating identical text twice on every page.
+  │            On laptops (1366x768 / 1440x900), the actual data table or form is pushed below the fold.
+  ▼
+Observation 1.4.2 (Missing Mobile Bottom Padding in 32 views):
+Mobile layout features a fixed bottom app bar (56px + safe area padding = ~72px).
+32 views omit pb-28/pb-36 padding on their outermost container.
+  │
+  ├─► Logic 3: On mobile screens, pagination controls, save buttons, and bottom cards are physically covered
+  │            by the sticky bottom bar, creating tap interference and unreachable UI actions.
+  ▼
+Observation 1.4.3 (Hardcoded Unresponsive Grids in 23 views):
+Unprefixed grid-cols-3 and grid-cols-4 classes applied directly to card lists and KPI blocks.
+  │
+  ├─► Logic 4: On viewport widths <640px (standard phone width 360px-412px), 3 or 4 columns divide 340px width,
+  │            giving each tile ~80px-100px. This causes severe text wrapping, button overflow, and layout breaking.
+  ▼
+Observation 1.4.4 (Modals Missing Teleportation & Narrow Sizing):
+Modals rendered inline without x-teleport="body" at z-50; 56 views use max-w-md / max-w-lg for complex forms.
+  │
+  ├─► Logic 5: Inline modals are constrained by parent stacking contexts (overflow-hidden, sticky headers),
+  │            appearing partially under topbars/sidebars. Narrow dialogs force dense single-column scroll fatigue.
+  ▼
+Observation 1.4.6 & 1.4.7 (Raw Emojis & Decorative Pulse):
+Raw emojis (🚗, 🧺, 💊, 🏷️) and 32 instances of animate-pulse on static software counters.
+  │
+  ├─► Logic 6: Directly violates Bento Apple HIG standards (design-system.md §3). Raw emojis render inconsistently
+  │            across Android/Windows/iOS; fake pulse dots degrade credibility by mimicking live hardware.
+```
 
 ---
 
 ## 3. Caveats
 
-1. **Unflagged Text Outside Audit Regex Scope**:
-   `deep_audit_v2.py` specifically targets high-signal elements (buttons, headings, attributes, titles, alerts, empty states, validation messages). Raw text inside arbitrary `<p>`, `<span>`, or `<td>` that does not match empty state or alert patterns is not flagged by `deep_audit_v2.py`. However, to achieve true 100% Zero Hardcoded Text compliance under `multi-language-and-i18n`, any surrounding user-facing text noticed during remediation should also be localized.
-2. **Translation Key Namespace Parity**:
-   `lang/id/` and `lang/en/` already contain 66 translation domain files (e.g., `admin.php`, `pos.php`, `sales.php`, `finance.php`, `billing.php`). New keys extracted from `resources/views/admin` should predominantly be placed into `lang/id/admin.php` and `lang/en/admin.php` (or module-specific domain files where applicable) to prevent fragmenting key storage.
-3. **Cache Clearing**:
-   Any modification to views requires running `php artisan view:clear` to prevent stale compiled files from masking or causing errors.
+1. **Read-Only Inspection**: All findings were compiled strictly via static code analysis and AST inspection without executing database mutations or runtime browser rendering.
+2. **Dynamic Data Conditions**: In views where tables appear only after user queries (e.g. search filters or reports), empty states may be partially handled by controller JSON responses.
+3. **Print Templates**: Some views without responsive wrappers are dedicated `@media print` stylesheets intended for A4/thermal printing rather than mobile responsive usage (e.g. `invoices/print.blade.php`, `purchase-orders/print.blade.php`).
 
 ---
 
 ## 4. Conclusion
 
-1. **Exact Baseline Established**:
-   - `resources/views/app`: 185 total files | 107 clean | 78 with issues | 762 total issues.
-   - `resources/views/admin`: 87 total files | 1 clean | 86 with issues | 956 total issues.
-   - Combined: 272 total files | 164 files needing remediation | **1,718 total issues**.
-2. **Dominant Defect Categories**:
-   - `raw_button_label`: 722 issues (308 in app, 414 in admin)
-   - `raw_attr_title`: 238 issues (119 in app, 119 in admin)
-   - `raw_attr_placeholder`: 201 issues (81 in app, 120 in admin)
-   - `empty_state_hardcoded`: 122 issues (53 in app, 69 in admin)
-   - `raw_heading_h3`: 121 issues (46 in app, 75 in admin)
-3. **Execution Readiness**:
-   - The validation harness (`scratch/deep_audit_v2.py`) and fast syntax checker (`scratch/fast_syntax_check.php`) are fully operational, tested, and validated.
-   - A clean path forward for orchestrator batching is established:
-     - Batch A: `resources/views/app` (78 files, 762 issues).
-     - Batch B: `resources/views/admin` (86 files, 956 issues).
+The UI/UX foundation of `resources/views/app` in COOCA demonstrates a strong visual direction:
+- The design system successfully incorporates Apple HIG design tokens, squircle geometry (`rounded-[16px]`, `rounded-[20px]`), clean light/dark mode palettes, and adaptive navigation (collapsible sidebar + dual subnav + mobile frosted tab bar).
+
+However, the architecture suffers from **10 concrete structural and visual defects** that must be prioritized:
+1. **Double Header Redundancy (44 views)**: Topbar title and `<x-module-header>` duplicate each other, wasting vertical screen space.
+2. **Mobile Bottom Tab Bar Occlusion (32 views)**: Views without `pb-28 sm:pb-32 lg:pb-10` have bottom actions covered by the fixed mobile bottom bar.
+3. **Hardcoded Unresponsive Multi-Column Grids (23 views)**: Unprefixed `grid-cols-3`/`grid-cols-4` break on phones (<640px).
+4. **Modal Sizing & Stacking Defects (60 views)**: 4 views lack `x-teleport="body"`; 56 views use narrow `max-w-md`/`max-w-lg` constraints instead of Apple HIG full-size canvas.
+5. **Tables Missing Responsive Overflow Container (8 views)**: Raw `<table>` tags cause horizontal viewport blowout on small screens.
+6. **Missing Empty States (99 views)**: Lack of reassuring empty states violates the *Zero-Manual UI* philosophy for first-time SMB users.
+7. **Raw Emojis (13 views)**: Unicode emojis in transaction metadata and headers violate Apple HIG typographic guidelines.
+8. **Decorative Pulse Dots (32 views)**: `animate-pulse` on static software labels violates hardware-only status guidelines.
+9. **Component Duplication & Inlining**: Orphaned partials (`layouts/partials/quick-actions.blade.php`, `layouts/partials/spotlight.blade.php`, and `layouts/ai.blade.php`) exist while their contents are copy-pasted inline into monolithic templates.
+10. **Monolithic Template Bloat**: `layouts/app.blade.php` (2,763 lines) and `pos/terminal.blade.php` (7,159 lines) combine CSS, JS, modals, and layout logic into single giant files.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify these findings, run the following commands from `c:\laragon\www\cooca_core`:
+To independently verify these findings:
 
-1. **Verify Baseline Numbers**:
-   ```powershell
-   python scratch/deep_audit_v2.py resources/views/app --out scratch/test_app.json
-   python scratch/deep_audit_v2.py resources/views/admin --out scratch/test_admin.json
-   python scratch/survey_analysis.py
+1. **Verify Double Header Redundancy**:
+   ```bash
+   python -c "import os, re; p=r'resources/views/app'; views=[f for r,_,fs in os.walk(p) for f in fs if f.endswith('.blade.php') and 'headerTitle' in open(os.path.join(r,f), encoding='utf-8', errors='ignore').read() and '<x-module-header' in open(os.path.join(r,f), encoding='utf-8', errors='ignore').read()]; print(len(views), views[:5])"
    ```
-   *Expected output*: Exactly 762 issues in `resources/views/app` and 956 issues in `resources/views/admin`.
+   *Expected result*: 44 views detected.
 
-2. **Verify Fast Syntax Check**:
-   ```powershell
-   php scratch/fast_syntax_check.php
+2. **Verify Views Missing Mobile Bottom Padding (`pb-28`/`pb-36`)**:
+   ```bash
+   python -c "import os, re; p=r'resources/views/app'; views=[f for r,_,fs in os.walk(p) for f in fs if f.endswith('.blade.php') and '@extends' in open(os.path.join(r,f), encoding='utf-8', errors='ignore').read() and not re.search(r'\bpb-(?:2[4-9]|3[0-9]|4[0-9]|28|32|36)\b', open(os.path.join(r,f), encoding='utf-8', errors='ignore').read())]; print(len(views), views[:5])"
    ```
-   *Expected output*: `Total checked: 272`, `Errors count: 0`.
+   *Expected result*: 32 views detected.
 
-3. **Verify Full Laravel Blade Compilation**:
-   ```powershell
-   php artisan view:clear
-   php artisan view:cache
-   ```
-   *Expected output*: `INFO Blade templates cached successfully.`
+3. **Verify Raw Emojis in Views**:
+   Inspect `resources/views/app/pos/reports/tabs/transactions.blade.php` lines 108–150 to verify raw emojis (🚗, 🧺, 💊, 🏷️).
+
+4. **Verify Orphaned Layout and Partial Files**:
+   Check `resources/views/layouts/ai.blade.php`, `resources/views/layouts/partials/quick-actions.blade.php`, and `resources/views/layouts/partials/spotlight.blade.php` via grep across `resources/views/` to confirm zero inclusions.

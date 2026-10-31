@@ -1,7 +1,5 @@
 @extends('layouts.app', [
     'title' => __('crm.vouchers_title') . ' - Cooca',
-    'headerTitle' => __('crm.vouchers_title'),
-    'headerSubtitle' => __('crm.vouchers_subtitle'),
 ])
 
 @section('content')

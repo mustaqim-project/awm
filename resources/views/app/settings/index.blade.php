@@ -1940,16 +1940,24 @@
         @if (\App\Support\Context::hasPermission('settings.edit'))
             <template x-teleport="body">
                 <div x-show="templateModalOpen" x-cloak
-                    class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto"
+                    class="fixed inset-0 z-[200] overflow-y-auto"
                     role="dialog"
                     aria-modal="true"
-                    @click.self="closeApplyTemplate()"
-                    @keydown.escape.window="closeApplyTemplate()"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                    @keydown.escape.window="closeApplyTemplate()">
+                    <!-- Standalone Backdrop -->
+                    <div x-show="templateModalOpen"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                        @click="closeApplyTemplate()"></div>
 
-                    <div class="relative z-10 w-full max-w-lg rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.3)] p-6 space-y-5 text-left my-auto"
+                    <!-- Centered Dialog Wrapper -->
+                    <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeApplyTemplate()">
+                        <div class="relative w-full max-w-lg rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_24px_64px_rgba(0,0,0,0.3)] p-6 space-y-5 text-left my-auto"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
@@ -1999,6 +2007,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </template>
         @endif
 
@@ -2008,20 +2017,25 @@
         <template x-teleport="body">
             <div x-show="showCreateBranchModal"
                  x-cloak
-                 class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto"
+                 class="fixed inset-0 z-[200] overflow-y-auto"
                  role="dialog"
                  aria-modal="true"
                  aria-labelledby="create-branch-modal-title"
-                 @click.self="showCreateBranchModal = false"
-                 @keydown.escape.window="showCreateBranchModal = false"
-                 x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition ease-in duration-150"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0">
+                 @keydown.escape.window="showCreateBranchModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showCreateBranchModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showCreateBranchModal = false"></div>
 
-                <div class="relative z-10 w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden my-auto">
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showCreateBranchModal = false">
+                    <div class="relative w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden my-auto">
 
                     {{-- Header --}}
                     <div class="px-5 py-4 sm:px-6 sm:py-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
@@ -2352,7 +2366,8 @@
                     </form>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         {{-- ===================================================== --}}
         {{-- MODAL 2: EDIT DATA CABANG (APPLE BENTO MAP SHEET)     --}}
@@ -2360,20 +2375,25 @@
         <template x-teleport="body">
             <div x-show="showEditBranchModal"
                  x-cloak
-                 class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto"
+                 class="fixed inset-0 z-[200] overflow-y-auto"
                  role="dialog"
                  aria-modal="true"
                  aria-labelledby="edit-branch-modal-title"
-                 @click.self="showEditBranchModal = false"
-                 @keydown.escape.window="showEditBranchModal = false"
-                 x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition ease-in duration-150"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0">
+                 @keydown.escape.window="showEditBranchModal = false">
+                <!-- Standalone Backdrop -->
+                <div x-show="showEditBranchModal"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="showEditBranchModal = false"></div>
 
-                <div class="relative z-10 w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden my-auto">
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditBranchModal = false">
+                    <div class="relative w-full max-w-[95vw] lg:max-w-4xl xl:max-w-5xl max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden my-auto">
 
                     {{-- Header --}}
                     <div class="px-5 py-4 sm:px-6 sm:py-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-slate-50/50 dark:bg-white/[0.02]">
@@ -2712,7 +2732,8 @@
                     </form>
                 </div>
             </div>
-        </template>
+        </div>
+    </template>
 
         {{-- ===================================================== --}}
         {{-- MODAL 3: KONFIRMASI HAPUS CABANG (APPLE ALERT)        --}}
@@ -2720,20 +2741,25 @@
         <template x-teleport="body">
             <div x-show="deleteBranchModalOpen"
                  x-cloak
-                 class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm overflow-y-auto"
+                 class="fixed inset-0 z-[220] overflow-y-auto"
                  role="dialog"
                  aria-modal="true"
                  aria-labelledby="delete-branch-modal-title"
-                 @click.self="closeDeleteBranch()"
-                 @keydown.escape.window="closeDeleteBranch()"
-                 x-transition:enter="transition ease-out duration-150"
-                 x-transition:enter-start="opacity-0 scale-95"
-                 x-transition:enter-end="opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-100"
-                 x-transition:leave-start="opacity-100 scale-100"
-                 x-transition:leave-end="opacity-0 scale-95">
+                 @keydown.escape.window="closeDeleteBranch()">
+                <!-- Standalone Backdrop -->
+                <div x-show="deleteBranchModalOpen"
+                    x-transition:enter="transition ease-out duration-150"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                    @click="closeDeleteBranch()"></div>
 
-                <div class="relative z-10 w-full max-w-sm rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl overflow-hidden text-center my-auto"
+                <!-- Centered Dialog Wrapper -->
+                <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="closeDeleteBranch()">
+                    <div class="relative w-full max-w-sm rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] shadow-2xl overflow-hidden text-center my-auto"
                      x-transition:enter="transition ease-out duration-150"
                      x-transition:enter-start="opacity-0 scale-95"
                      x-transition:enter-end="opacity-100 scale-100"
