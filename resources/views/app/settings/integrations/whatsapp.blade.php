@@ -488,7 +488,7 @@
                                     </div>
                                 </div>
                                 <div class="text-[11px] italic border-t border-black/10 dark:border-white/10 pt-1"
-                                    x-text="receiptFooterNote || @json($business->pos_receipt_footer_note ?? __('settings.default_footer_note'))">
+                                    x-text="receiptFooterNote || '{{ addslashes($business->pos_receipt_footer_note ?? __(\'settings.default_footer_note\')) }}'">
                                 </div>
                                 <div class="pt-1">
                                     <div class="w-full py-1.5 px-2 bg-white dark:bg-white/10 text-[#007AFF] text-center font-semibold rounded text-[11px] shadow-xs flex items-center justify-center gap-1.5">

@@ -1579,13 +1579,13 @@
                             @php
                                 $catFeatures = array_filter($featureDefinitions, fn($f) => $f['category'] === $catKey);
                             @endphp
-                            <div x-show="isCategoryVisible(@json($catFeatures))" class="rounded-[14px] bg-black/[0.01] dark:bg-white/[0.015] border border-black/5 dark:border-white/5 p-4 space-y-3">
+                            <div x-show="isCategoryVisible('{{ $catKey }}')" class="rounded-[14px] bg-black/[0.01] dark:bg-white/[0.015] border border-black/5 dark:border-white/5 p-4 space-y-3">
                                 <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
                                     <span class="p-1 rounded-[6px] bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">
                                         <i data-lucide="{{ $catMeta['icon'] ?? 'settings' }}" class="w-3.5 h-3.5"></i>
                                     </span>
                                     <h4 class="text-[13px] font-bold text-black dark:text-white">{{ $catMeta['name'] }}</h4>
-                                    <span class="text-[11px] text-black/40 dark:text-white/40 tabular-nums" x-text="'(' + Object.keys(@json($catFeatures)).filter(k => isFeatureVisible(k)).length + ')'">({{ count($catFeatures) }})</span>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40 tabular-nums" x-text="'(' + getCategoryVisibleCount('{{ $catKey }}') + ')'">({{ count($catFeatures) }})</span>
                                 </div>
 
                                 <div class="space-y-2">
@@ -1745,7 +1745,7 @@
                 <!-- 7 Thematic Bento Clusters -->
                 @foreach ($clusterMap as $clusterId => $cluster)
                     <!-- Cluster Card -->
-                    <div x-show="isClusterVisible(@json($cluster['keys']))"
+                    <div x-show="isClusterVisible('{{ $clusterId }}')"
                          class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-sm">
                         <div class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
                             <div class="flex items-center gap-2.5">
@@ -2922,20 +2922,51 @@
                 relevantModules: @json($relevantModuleKeys),
                 relevantFeatures: @json($relevantFeatureKeys),
 
+                categoryFeaturesMap: {
+                    @foreach($featureCategories as $catKey => $catMeta)
+                        '{{ $catKey }}': [
+                            @foreach(array_filter($featureDefinitions, fn($f) => $f['category'] === $catKey) as $fKey => $fDef)
+                                '{{ $fKey }}',
+                            @endforeach
+                        ],
+                    @endforeach
+                },
+                clusterKeysMap: {
+                    @foreach($clusterMap as $clusterId => $cluster)
+                        '{{ $clusterId }}': [
+                            @foreach($cluster['keys'] as $mKey)
+                                '{{ $mKey }}',
+                            @endforeach
+                        ],
+                    @endforeach
+                },
+
                 isModuleVisible(key) {
                     return this.industryFilterMode === 'all' || this.relevantModules.includes(key);
                 },
                 isFeatureVisible(key) {
                     return this.industryFilterMode === 'all' || this.relevantFeatures.includes(key);
                 },
-                isClusterVisible(keys) {
+                isClusterVisible(clusterIdOrKeys) {
                     if (this.industryFilterMode === 'all') return true;
+                    const keys = Array.isArray(clusterIdOrKeys) ? clusterIdOrKeys : (this.clusterKeysMap[clusterIdOrKeys] || []);
                     return keys.some(k => this.relevantModules.includes(k));
                 },
-                isCategoryVisible(features) {
+                isCategoryVisible(catKeyOrFeatures) {
                     if (this.industryFilterMode === 'all') return true;
-                    const fKeys = Object.keys(features);
+                    let fKeys = [];
+                    if (typeof catKeyOrFeatures === 'string') {
+                        fKeys = this.categoryFeaturesMap[catKeyOrFeatures] || [];
+                    } else if (Array.isArray(catKeyOrFeatures)) {
+                        fKeys = catKeyOrFeatures;
+                    } else if (typeof catKeyOrFeatures === 'object' && catKeyOrFeatures !== null) {
+                        fKeys = Object.keys(catKeyOrFeatures);
+                    }
                     return fKeys.some(k => this.relevantFeatures.includes(k));
+                },
+                getCategoryVisibleCount(catKey) {
+                    const fKeys = this.categoryFeaturesMap[catKey] || [];
+                    return fKeys.filter(k => this.isFeatureVisible(k)).length;
                 },
                 get visibleModulesCount() {
                     return Object.keys(this.modulesState).filter(k => this.isModuleVisible(k)).length;
@@ -3081,9 +3112,9 @@
                     } catch (err) {
                         console.error('Apply tier error:', err);
                         if (window.AppAlert) {
-                            window.AppAlert.toast('error', err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
+                            window.AppAlert.toast('error', err.message || '{{ addslashes(__('purchasing.terjadi_kesalahan_sistem')) }}');
                         } else {
-                            alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
+                            alert(err.message || '{{ addslashes(__('purchasing.terjadi_kesalahan_sistem')) }}');
                         }
                     } finally {
                         this.applyingTier = false;
@@ -4173,5 +4204,14 @@
                 }
             };
         }
+
+        if (typeof Alpine !== 'undefined' && Alpine.data) {
+            Alpine.data('settingsPage', settingsPage);
+        } else {
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('settingsPage', settingsPage);
+            });
+        }
+        window.settingsPage = settingsPage;
     </script>
 @endsection

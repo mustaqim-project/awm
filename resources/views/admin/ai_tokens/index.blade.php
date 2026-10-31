@@ -58,8 +58,8 @@
                         @click="testConnection()"
                         :disabled="isTesting"
                         class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-semibold text-black/80 dark:text-white/90 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center gap-2 border border-black/5 dark:border-white/10 disabled:opacity-50">
-                        <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="isTesting{{ __('admin.testing') ? '' : '' }} ? 'animate-spin' : ''" stroke-width="1.75"></i>
-                        <span x-text="isTesting{{ __('admin.testing') ? '' : '' }} ? {{ Js::from(__('admin.testing_gateway')) }} : {{ Js::from(__('admin.live_ping_gateway')) }}"></span>
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="isTesting ? 'animate-spin' : ''" stroke-width="1.75"></i>
+                        <span x-text="isTesting ? {{ Js::from(__('admin.testing_gateway')) }} : {{ Js::from(__('admin.live_ping_gateway')) }}"></span>
                     </button>
                     <button type="button" 
                         @click="openAddKeyModal()"
@@ -122,8 +122,8 @@
                     <div class="flex items-center gap-2.5 shrink-0">
                         <button type="button" @click="testConnection()" :disabled="isTesting"
                             class="px-4 py-2 rounded-[10px] text-[12.5px] font-semibold text-white bg-white/10 hover:bg-white/15 active:scale-[0.98] transition border border-white/15 flex items-center gap-2 disabled:opacity-50">
-                            <i data-lucide="activity" class="w-3.5 h-3.5 text-[#38BDF8]" :class="isTesting{{ __('admin.testing') ? '' : '' }} ? 'animate-spin' : ''"></i>
-                            <span x-text="isTesting{{ __('admin.testing') ? '' : '' }} ? {{ Js::from(__('admin.testing_gateway')) }} : {{ Js::from(__('admin.live_ping_all_providers')) }}"></span>
+                            <i data-lucide="activity" class="w-3.5 h-3.5 text-[#38BDF8]" :class="isTesting ? 'animate-spin' : ''"></i>
+                            <span x-text="isTesting ? {{ Js::from(__('admin.testing_gateway')) }} : {{ Js::from(__('admin.live_ping_all_providers')) }}"></span>
                         </button>
                         <button type="button" @click="openAddKeyModal()"
                             class="px-4 py-2 rounded-[10px] text-[12.5px] font-semibold text-black bg-[#38BDF8] hover:bg-[#0EA5E9] active:scale-[0.98] transition flex items-center gap-1.5 shadow-md shadow-[#38BDF8]/20">
@@ -502,8 +502,8 @@
                                 <button type="button" @click="testSingleKey(k.id)" :disabled="testingKeyId === k.id"
                                     class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-black/75 dark:text-white/80 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition flex items-center gap-1 shadow-xs disabled:opacity-50"
                                     title="{{ __('admin.uji_koneksi_khusus_untuk_key_ini') }}">
-                                    <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="testingKeyId{{ __('admin.testing') ? '' : '' }} === k.id ? 'animate-spin' : ''"></i>
-                                    <span x-text="testingKeyId{{ __('admin.testing') ? '' : '' }} === k.id ? {{ Js::from(__('admin.testing')) }} : {{ Js::from(__('admin.ping_test')) }}"></span>
+                                    <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="testingKeyId === k.id ? 'animate-spin' : ''"></i>
+                                    <span x-text="testingKeyId === k.id ? {{ Js::from(__('admin.testing')) }} : {{ Js::from(__('admin.ping_test')) }}"></span>
                                 </button>
 
                                 <!-- Edit Key Modal Trigger -->
@@ -1443,9 +1443,9 @@ function aiEngineConsole(config) {
         },
 
         // Testing States
-        isTesting{{ __('admin.testing') ? '' : '' }}: false,
+        isTesting: false,
         isDetecting: false,
-        testingKeyId{{ __('admin.testing') ? '' : '' }}: null,
+        testingKeyId: null,
         pingFeedback: {},
         testFeedback: { show: false, success: true, message: '' },
 
