@@ -40,7 +40,7 @@ final class LandingPageResponsiveHeroTest extends TestCase
         $response->assertStatus(200);
 
         // Eyebrow overline kicker
-        $response->assertSee('Business Operating System &amp; Omnichannel ERP', false);
+        $response->assertSee('Aplikasi Kasir, Stok &amp; Pembukuan UMKM', false);
         // Headline
         $response->assertSee('Aplikasi Kasir UMKM: Kasir, Stok &amp; Pembukuan dalam Satu Sistem Cepat', false);
         // Responsive headline scale

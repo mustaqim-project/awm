@@ -1086,7 +1086,7 @@
                         <button type="submit" :disabled="status !== 'connected'"
                             class="w-full min-h-[48px] sm:min-h-[50px] rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-50 disabled:pointer-events-none text-white text-[14px] font-bold inline-flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>{{ __('common.send') }}</span>
+                            <span>{{ __('admin.send') }}</span>
                         </button>
                     </form>
                 </div>
