@@ -637,7 +637,7 @@
                         <!-- Kas Masuk / Keluar Button -->
                         <button @click="showCashMovementModal = true"
                             class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] bg-white/10 hover:bg-white/15 active:scale-[0.97] text-white text-[12px] font-medium transition flex items-center gap-1.5 border border-white/10"
-                            title="Kas Masuk / Kas Keluar">
+                            title="{{ __('pos.kas_masuk_kas_keluar') }}">
                             <svg class="w-4 h-4 text-white/70 shrink-0" fill="none"
                                 stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -650,12 +650,12 @@
                     <!-- Dedicated Setting POS & Hardware Hub Button -->
                     <button type="button" @click="showPosSettingsModal = true"
                         class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] bg-white/10 hover:bg-white/15 active:scale-[0.97] text-white text-[12px] font-medium transition flex items-center gap-1.5 border border-white/10"
-                        title="Pusat Pengaturan POS & Hardware">
+                        title="{{ __('pos.pusat_pengaturan_pos_hardware') }}">
                         <svg class="w-4 h-4 text-white/80 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <span class="hidden md:inline">Setting POS</span>
+                        <span class="hidden md:inline">{{ __('pos.setting_pos') }}</span>
                     </button>
 
                     <!-- Fullscreen Toggle (Desktop) -->
@@ -2543,7 +2543,7 @@
             <!-- QR Code Card -->
             <div class="p-4 rounded-[20px] bg-white border border-black/10 shadow-inner flex flex-col items-center justify-center relative">
                 <template x-if="activeQrisPayment && activeQrisPayment.qr_url">
-                    <img :src="activeQrisPayment.qr_url" alt="QRIS Code" class="w-56 h-56 sm:w-60 sm:h-60 object-contain rounded-xl select-none">
+                    <img :src="activeQrisPayment.qr_url" alt="{{ __('admin.qris_code') }}" class="w-56 h-56 sm:w-60 sm:h-60 object-contain rounded-xl select-none">
                 </template>
                 <template x-if="!activeQrisPayment || !activeQrisPayment.qr_url">
                     <div class="w-56 h-56 flex flex-col items-center justify-center text-gray-400 gap-2">
@@ -3759,7 +3759,7 @@
                             @feature('vertical.workshop_service_history')
                             <template x-if="vehicleLicensePlate && vehicleLicensePlate.length >= 3">
                                 <button type="button" @click="checkVehicleHistory()" class="text-[11px] font-bold text-[#007AFF] hover:underline inline-flex items-center gap-1">
-                                    <i data-lucide="history" class="w-3 h-3"></i> Cek Riwayat
+                                    <i data-lucide="history" class="w-3 h-3"></i> {{ __('pos.check_history') }}
                                 </button>
                             </template>
                             @endfeature
@@ -3811,7 +3811,7 @@
                     </div>
                     <div class="space-y-1.5 max-h-40 overflow-y-auto no-scrollbar">
                         <template x-if="vehicleHistoryRecords.length === 0">
-                            <p class="text-[11px] text-black/50 dark:text-white/50 italic py-1">Belum ada riwayat servis tercatat untuk kendaraan ini.</p>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 italic py-1">{{ __('pos.belum_ada_riwayat_servis_tercatat_untuk') }}</p>
                         </template>
                         <template x-for="(record, rIdx) in vehicleHistoryRecords" :key="rIdx">
                             <div class="p-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5 space-y-0.5 text-[11px]">
@@ -4695,7 +4695,7 @@
 
                 // Supervisor PIN authorization state
                 maxCashierDiscountPercent: {{ (float) ($business->pos_max_cashier_discount_percent ?? 0) }},
-                canBypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' : 'false' }},
+                canBypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' : 'false' }}, /* {{ __('auth.supervisor_bypass') }} */
                 supervisorApprovedForOrder: false,
                 showSupervisorPinModal: false,
                 supervisorPinInput: '',
@@ -5900,7 +5900,7 @@
                         AppAlert.warning('{{ __('pos.allow_popup_qris_slip') }}');
                         return;
                     }
-                    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>{{ __('pos.qris_slip_title') }}${orderNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;text-align:center;padding:24px;color:#111;margin:0;background:#fff}.header{margin-bottom:12px}.brand{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px}.sub{font-size:12px;color:#666;margin-top:4px}.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#e8f4fd;color:#007aff;font-size:11px;font-weight:700;margin-top:8px}.amount-box{margin:16px auto;padding:12px;border-radius:12px;background:#f8f9fa;border:1px dashed #d1d5db;max-width:320px}.amount-label{font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700}.amount-val{font-size:24px;font-weight:900;color:#007aff;margin-top:2px}.qr-box{margin:12px auto;padding:12px;border-radius:16px;border:1px solid #e5e7eb;display:inline-block;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.05)}.qr-img{width:240px;height:240px;object-fit:contain;display:block}.footer{margin-top:14px;font-size:11.5px;color:#4b5563;line-height:1.5}.actions{margin-top:18px}.btn{padding:9px 20px;border-radius:10px;background:#007aff;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}@media print{.actions{display:none}body{padding:0}}</style></head><body><div class="header"><div class="brand">{{ $business->name ?? 'COOCA POS' }}</div><div class="sub">{{ __('pos.qris_slip_header_sub') }}${orderNum}</div><span class="badge">{{ __('pos.qris_slip_badge') }}</span></div><div class="amount-box"><div class="amount-label">{{ __('pos.qris_slip_total_bill') }}</div><div class="amount-val">${totalFormatted}</div></div><div class="qr-box"><img src="${qrUrl}" class="qr-img" alt="QRIS Code" /></div><div class="footer">{{ __('pos.qris_slip_scan_hint') }}</div><div class="actions"><button class="btn" onclick="window.print()">{{ __('pos.print_qr_slip_btn') }}</button></div></body></html>`);
+                    win.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>{{ __('pos.qris_slip_title') }}${orderNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;text-align:center;padding:24px;color:#111;margin:0;background:#fff}.header{margin-bottom:12px}.brand{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px}.sub{font-size:12px;color:#666;margin-top:4px}.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#e8f4fd;color:#007aff;font-size:11px;font-weight:700;margin-top:8px}.amount-box{margin:16px auto;padding:12px;border-radius:12px;background:#f8f9fa;border:1px dashed #d1d5db;max-width:320px}.amount-label{font-size:11px;color:#6b7280;text-transform:uppercase;font-weight:700}.amount-val{font-size:24px;font-weight:900;color:#007aff;margin-top:2px}.qr-box{margin:12px auto;padding:12px;border-radius:16px;border:1px solid #e5e7eb;display:inline-block;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.05)}.qr-img{width:240px;height:240px;object-fit:contain;display:block}.footer{margin-top:14px;font-size:11.5px;color:#4b5563;line-height:1.5}.actions{margin-top:18px}.btn{padding:9px 20px;border-radius:10px;background:#007aff;color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}@media print{.actions{display:none}body{padding:0}}</style></head><body><div class="header"><div class="brand">{{ $business->name ?? 'COOCA POS' }}</div><div class="sub">{{ __('pos.qris_slip_header_sub') }}${orderNum}</div><span class="badge">{{ __('pos.qris_slip_badge') }}</span></div><div class="amount-box"><div class="amount-label">{{ __('pos.qris_slip_total_bill') }}</div><div class="amount-val">${totalFormatted}</div></div><div class="qr-box"><img src="${qrUrl}" class="qr-img" alt="{{ __('admin.qris_code') }}" /></div><div class="footer">{{ __('pos.qris_slip_scan_hint') }}</div><div class="actions"><button class="btn" onclick="window.print()">{{ __('pos.print_qr_slip_btn') }}</button></div></body></html>`);
                     win.document.close();
                 },
 
@@ -6756,7 +6756,7 @@
                         .status)) || [];
 
                     if (unpaidOrders.length === 0) {
-                        // Meja kosong / belum ada order: jadikan meja aktif untuk pesanan baru
+                        // Meja kosong / {{ __('pos.belum_ada_order_jadikan_meja_aktif') }}
                         this.selectedTable = table;
                         this.orderType = 'dine_in';
                         this.activeTableOrderId = null;

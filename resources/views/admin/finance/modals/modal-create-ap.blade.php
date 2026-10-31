@@ -71,7 +71,7 @@
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                         Perihal / Judul Tagihan <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <input type="text" name="title" required placeholder="Tagihan Cloud VPS Production Bulan Ini"
+                    <input type="text" name="title" required placeholder="{{ __('admin.tagihan_cloud_vps_production_bulan_ini') }}"
                         class="w-full h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
                 </div>
             </div>
@@ -142,7 +142,7 @@
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                     Catatan Tagihan
                 </label>
-                <textarea name="notes" rows="2" placeholder="Biaya perpanjangan server tahunan / kuota token tambahan..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.biaya_perpanjangan_server_tahunan_kuota_token') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30] resize-none"></textarea>
             </div>
 
@@ -158,9 +158,7 @@
             {{-- Buttons --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showCreateApModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] transition-all shadow-sm shadow-[#FF3B30]/25 cursor-pointer flex items-center gap-2">
                     <i data-lucide="check" class="w-4 h-4"></i>

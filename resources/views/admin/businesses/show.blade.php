@@ -12,7 +12,7 @@
             <a href="{{ route('admin.businesses.index') }}"
                 class="text-[13px] font-bold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1.5 transition">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-                <span>Kembali ke Daftar Bisnis</span>
+                <span>{{ __('admin.kembali_ke_daftar_bisnis') }}</span>
             </a>
             <div class="flex flex-wrap items-center gap-2.5">
                 {{-- Gate Impersonasi: Masuk ke Workspace Bisnis untuk Cek Bug --}}
@@ -22,9 +22,9 @@
                         @csrf
                         <button type="submit"
                             class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#FF9500]/25 cursor-pointer"
-                            title="Masuk ke Workspace {{ $business->name }} untuk Cek Bug">
+                            title="{{ __('admin.masuk_ke_workspace_business_name_untuk') }}">
                             <i data-lucide="log-in" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Masuk ke Bisnis (Cek Bug)</span>
+                            <span>{{ __('admin.masuk_ke_bisnis_cek_bug') }}</span>
                         </button>
                     </form>
                 @endif
@@ -43,7 +43,7 @@
                             <button type="submit"
                                 class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                                 <i data-lucide="check-circle" class="w-4 h-4" stroke-width="2"></i>
-                                <span>Aktifkan Kembali Workspace</span>
+                                <span>{{ __('admin.aktifkan_kembali_workspace') }}</span>
                             </button>
                         </form>
                     @endif
@@ -179,7 +179,7 @@
                             <div class="w-9 h-9 rounded-[12px] bg-[#34C759]/10 flex items-center justify-center text-[#34C759] dark:text-[#30D158]">
                                 <i data-lucide="shield-check" class="w-4.5 h-4.5" stroke-width="2"></i>
                             </div>
-                            <h3 class="text-[15px] font-bold text-black dark:text-white">Status Langganan SaaS</h3>
+                            <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.status_langganan_saas') }}</h3>
                         </div>
                         <span class="text-[12px] text-black/55 dark:text-white/55 tabular-nums">
                             Sisa Token AI: <strong class="text-[#AF52DE] dark:text-[#BF5AF2]">{{ number_format($business->subscription?->ai_tokens_remaining ?? 0) }}</strong>
@@ -220,12 +220,12 @@
                         <div class="w-9 h-9 rounded-[12px] bg-[#FF9500]/10 flex items-center justify-center text-[#FF9500] dark:text-[#FF9F0A]">
                             <i data-lucide="receipt" class="w-4.5 h-4.5" stroke-width="1.5"></i>
                         </div>
-                        <h3 class="text-[15px] font-bold text-black dark:text-white">Riwayat Tagihan &amp; Pembayaran</h3>
+                        <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.riwayat_tagihan_pembayaran') }}</h3>
                     </div>
 
                     @if ($business->subscriptionPayments->isEmpty())
                         <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">
-                            Belum ada riwayat transaksi pembayaran paket untuk workspace ini.
+                            {{ __('admin.belum_ada_riwayat_transaksi_pembayaran_paket') }}
                         </div>
                     @else
                         <div class="space-y-2.5 mt-4 text-[13px]">
@@ -306,7 +306,7 @@
                             <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white">Tangguhkan Bisnis?</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.tangguhkan_bisnis') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50">Operasional transaksi akan dinonaktifkan dan notifikasi resmi akan otomatis dikirimkan via email ke pemilik bisnis.</p>
                         </div>
                     </div>
@@ -323,13 +323,9 @@
 
                         <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
                             <button type="button" @click="showSuspendModal = false"
-                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                                Batal
-                            </button>
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
                             <button type="submit"
-                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm">
-                                Konfirmasi Suspend
-                            </button>
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm">{{ __('admin.konfirmasi_suspend') }}</button>
                         </div>
                     </form>
                 </div>

@@ -618,7 +618,7 @@
                     </div>
                 </div>
 
-                <!-- State 1: Upload Zone (Belum ada preview) -->
+                <!-- State 1: Upload Zone ({{ __('inventory.belum_ada_preview') }}>
                 <div x-show="!importPreview" class="space-y-4">
                     <!-- Langkah 1: Unduh Lembar Blanko Sesuai Lokasi Terpilih -->
                     <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">

@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Buku Kas & Akuntansi Platform - Admin Console',
+    'title' => __('admin.buku_kas_akuntansi_platform_admin_console'),
     'headerTitle' => 'Finance & Corporate Accounting Platform',
     'headerSubtitle' => 'Buku Kas, Jurnal Umum Berpasangan, Buku Besar, Neraca Saldo, Laporan Neraca & Laba Rugi terintegrasi dengan Billing dan Settlement',
 ])
@@ -149,9 +149,9 @@
                     @csrf
                     <button type="submit"
                         class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-                        title="Tarik transaksi baru dari Billing Subscriptions dan Settlement Merchant">
+                        title="{{ __('admin.tarik_transaksi_baru_dari_billing_subscriptions') }}">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                        <span>Sinkronisasi Otomatis</span>
+                        <span>{{ __('admin.sinkronisasi_otomatis') }}</span>
                     </button>
                 </form>
             @endif
@@ -170,7 +170,7 @@
                 <button type="button" @click="openCreate()"
                     class="h-10 px-4.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                    <span>Catat Transaksi</span>
+                    <span>{{ __('admin.catat_transaksi') }}</span>
                 </button>
             @endif
         </div>
@@ -354,7 +354,7 @@
         <div class="flex items-center gap-2">
             <div class="relative flex-1 sm:w-56">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-black/40 dark:text-white/40"></i>
-                <input type="text" name="search" value="{{ $search }}" placeholder="Cari nomor/judul..."
+                <input type="text" name="search" value="{{ $search }}" placeholder="{{ __('admin.cari_nomor_judul') }}"
                     class="w-full h-9.5 pl-9 pr-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
 
@@ -365,7 +365,7 @@
 
             <a href="{{ route('admin.finance.index') }}"
                 class="h-9.5 w-9.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/60 dark:text-white/60 flex items-center justify-center transition-all"
-                title="Reset Filter">
+                title="{{ __('common.reset') }}">
                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -413,7 +413,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                 class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer">
                 <i data-lucide="check-square" class="w-4 h-4 text-[#FF9500]"></i>
-                <span>Neraca Saldo</span>
+                <span>{{ __('admin.neraca_saldo') }}</span>
             </button>
 
             {{-- Tab 5: Balance Sheet & PnL --}}
@@ -433,7 +433,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                 class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer">
                 <i data-lucide="list-tree" class="w-4 h-4 text-[#FF2D55]"></i>
-                <span>Bagan Akun (COA)</span>
+                <span>{{ __('admin.bagan_akun_coa') }}</span>
             </button>
 
             {{-- Tab 7: Billing & Settlement Sync --}}
@@ -503,7 +503,7 @@
             
             <div class="px-6 py-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
                 <div>
-                    <h3 class="text-[16px] font-bold text-black dark:text-white">Ubah Transaksi Kas</h3>
+                    <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.ubah_transaksi_kas') }}</h3>
                     <p class="text-[11.5px] text-black/50 dark:text-white/50 font-mono" x-text="editTrx ? editTrx.transaction_number : ''"></p>
                 </div>
                 <button type="button" @click="showEditModal = false"
@@ -589,13 +589,9 @@
 
                 <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showEditModal = false"
-                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] cursor-pointer">
-                        Batal
-                    </button>
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] cursor-pointer">{{ __('common.cancel') }}</button>
                     <button type="submit"
-                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                        Perbarui Transaksi
-                    </button>
+                        class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">{{ __('admin.perbarui_transaksi') }}</button>
                 </div>
             </form>
         </div>
@@ -611,7 +607,7 @@
                 <i data-lucide="alert-triangle" class="w-6 h-6"></i>
             </div>
 
-            <h3 class="text-[16px] font-bold text-black dark:text-white">Hapus Transaksi Kas?</h3>
+            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.hapus_transaksi_kas') }}</h3>
             <p class="text-[12.5px] text-black/55 dark:text-white/55 mt-1.5 leading-relaxed">
                 Transaksi <span class="font-mono font-bold text-black dark:text-white" x-text="deleteTrx ? deleteTrx.transaction_number : ''"></span> beserta entri jurnal terkait akan dihapus secara soft-delete.
             </p>
@@ -620,13 +616,9 @@
                 @csrf
                 @method('DELETE')
                 <button type="button" @click="showDeleteModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
-                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] shadow-sm shadow-[#FF3B30]/25 cursor-pointer">
-                    Ya, Hapus
-                </button>
+                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] shadow-sm shadow-[#FF3B30]/25 cursor-pointer">{{ __('admin.ya_hapus') }}</button>
             </form>
         </div>
     </div>

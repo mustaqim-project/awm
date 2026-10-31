@@ -55,8 +55,7 @@
                 class="inline-flex items-center justify-center w-16 h-16 rounded-[22px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] shadow-[0_8px_24px_rgba(0,122,255,0.35)] mb-2 transition-transform hover:scale-105 duration-200">
                 <i data-lucide="key-round" class="w-8 h-8 text-white" stroke-width="2"></i>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-black dark:text-white">Atur Ulang Sandi
-            </h1>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-black dark:text-white">{{ __('admin.atur_ulang_sandi') }}</h1>
             <p class="text-xs sm:text-sm text-black/55 dark:text-white/55">Kirimkan tautan reset kata sandi ke email
                 administrator</p>
         </div>
@@ -112,7 +111,7 @@
                 <button type="submit"
                     class="w-full min-h-[50px] py-3.5 px-4 rounded-[14px] glow-btn bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
                     <i data-lucide="send" class="w-4 h-4"></i>
-                    <span>Kirim Tautan Pemulihan Kata Sandi</span>
+                    <span>{{ __('admin.kirim_tautan_pemulihan_kata_sandi') }}</span>
                 </button>
             </form>
 
@@ -121,7 +120,7 @@
                 <a href="{{ route('admin.login') }}"
                     class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors">
                     <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                    <span>Kembali ke Halaman Login Admin</span>
+                    <span>{{ __('admin.kembali_ke_halaman_login_admin') }}</span>
                 </a>
             </div>
         </div>

@@ -1183,7 +1183,7 @@ document.addEventListener('alpine:init', () => {
                                         <h4 class="text-xs font-semibold text-neutral-900 dark:text-white">{{ __('mcp.chatgpt_step1_heading') }}</h4>
                                     </div>
                                     <a href="https://chatgpt.com/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-[8px] bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 text-xs font-medium inline-flex items-center gap-1.5 transition-colors">
-                                        <span>Buka chatgpt.com</span>
+                                        <span>{{ __('settings.buka_chatgpt_com') }}</span>
                                         <i data-lucide="external-link" class="w-3 h-3"></i>
                                     </a>
                                 </div>

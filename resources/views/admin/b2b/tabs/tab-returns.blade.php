@@ -119,7 +119,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.returns.pdf', $r) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#e11d48]/10 hover:text-[#e11d48] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Nota Retur Penjualan Resmi PDF (A4)" rel="noopener noreferrer">
+                                    title="{{ __('admin.unduh_cetak_nota_retur_penjualan_resmi') }}" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>
@@ -132,7 +132,7 @@
                                         refund_method: '{{ $r->refund_method }}'
                                     }, '{{ route('admin.b2b.returns.update', $r) }}')"
                                         class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#d97706]/15 hover:text-[#d97706] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
-                                        title="Ubah Retur">
+                                        title="{{ __('admin.ubah_retur') }}">
                                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                     </button>
                                 @endif
@@ -158,7 +158,7 @@
                                             @csrf
                                             <button type="submit"
                                                 class="h-8 px-2.5 rounded-[9px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                                title="Selesaikan Retur & Pulihkan Stok">
+                                                title="{{ __('admin.selesaikan_retur_pulihkan_stok') }}">
                                                 <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                                 <span>Selesaikan</span>
                                             </button>
@@ -189,7 +189,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
-                                            title="Hapus Retur">
+                                            title="{{ __('admin.hapus_retur') }}">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>

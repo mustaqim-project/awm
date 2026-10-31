@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
-                            <h2 class="text-[15px] sm:text-[16px] font-bold text-black dark:text-white">Kanal Media Sosial &amp; Komunitas Resmi</h2>
+                            <h2 class="text-[15px] sm:text-[16px] font-bold text-black dark:text-white">{{ __('admin.kanal_media_sosial_komunitas_resmi') }}</h2>
                             <span
                                 class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25">
                                 <i data-lucide="check-circle-2" class="w-3 h-3" stroke-width="2"></i>
@@ -78,7 +78,7 @@
                                     / Username</label>
                                 <input type="text" name="social_instagram_handle"
                                     value="{{ old('social_instagram_handle', $socialInstagramHandle) }}"
-                                    placeholder="@cooca.indonesia"
+                                    placeholder="{{ __('admin.cooca_indonesia_2') }}"
                                     class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#DD2A7B]/50 transition">
                             </div>
                             <div>
@@ -88,12 +88,12 @@
                                 <div class="flex items-center gap-2">
                                     <input type="url" name="social_instagram_url"
                                         value="{{ old('social_instagram_url', $socialInstagramUrl) }}"
-                                        placeholder="https://instagram.com/cooca.indonesia"
+                                        placeholder="{{ __('admin.https_instagram_com_cooca_indonesia') }}"
                                         class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#DD2A7B]/50 transition">
                                     @if (!empty($socialInstagramUrl))
                                         <a href="{{ $socialInstagramUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Profil" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_profil') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -138,7 +138,7 @@
                                     Halaman</label>
                                 <input type="text" name="social_facebook_name"
                                     value="{{ old('social_facebook_name', $socialFacebookName) }}"
-                                    placeholder="Cooca Indonesia"
+                                    placeholder="{{ __('admin.cooca_indonesia') }}"
                                     class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1877F2]/50 transition">
                             </div>
                             <div>
@@ -153,7 +153,7 @@
                                     @if (!empty($socialFacebookUrl))
                                         <a href="{{ $socialFacebookUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Halaman" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_halaman') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -214,7 +214,7 @@
                                     @if (!empty($socialTiktokUrl))
                                         <a href="{{ $socialTiktokUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka TikTok" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_tiktok') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -275,7 +275,7 @@
                                     @if (!empty($socialYoutubeUrl))
                                         <a href="{{ $socialYoutubeUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka YouTube" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_youtube') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -336,7 +336,7 @@
                                     @if (!empty($socialTwitterUrl))
                                         <a href="{{ $socialTwitterUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka X" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_x') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -382,7 +382,7 @@
                                     Perusahaan</label>
                                 <input type="text" name="social_linkedin_name"
                                     value="{{ old('social_linkedin_name', $socialLinkedinName) }}"
-                                    placeholder="Cooca Indonesia"
+                                    placeholder="{{ __('admin.cooca_indonesia') }}"
                                     class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0A66C2]/50 transition">
                             </div>
                             <div>
@@ -397,7 +397,7 @@
                                     @if (!empty($socialLinkedinUrl))
                                         <a href="{{ $socialLinkedinUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka LinkedIn" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_linkedin') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -422,8 +422,7 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-[15px] font-bold text-black dark:text-white">WhatsApp Kontak / CS
-                                    </h3>
+                                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.whatsapp_kontak_cs') }}</h3>
                                     <p class="text-[11px] text-black/50 dark:text-white/50">Layanan Pelanggan &amp;
                                         Helpdesk</p>
                                 </div>
@@ -459,7 +458,7 @@
                                     @if (!empty($socialWhatsappUrl))
                                         <a href="{{ $socialWhatsappUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Chat" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_chat') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -520,7 +519,7 @@
                                     @if (!empty($socialTelegramUrl))
                                         <a href="{{ $socialTelegramUrl }}" target="_blank"
                                             class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] flex items-center justify-center text-black/60 dark:text-white/60 shrink-0"
-                                            title="Buka Telegram" rel="noopener noreferrer">
+                                            title="{{ __('admin.buka_telegram') }}" rel="noopener noreferrer">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -545,7 +544,7 @@
                 <button type="submit"
                     class="w-full sm:w-auto h-12 sm:h-11 px-6 rounded-[14px] text-[13px] sm:text-[14px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="save" class="w-4.5 h-4.5" stroke-width="2"></i>
-                    <span>Simpan Media Sosial</span>
+                    <span>{{ __('admin.simpan_media_sosial') }}</span>
                 </button>
 
                 @endif

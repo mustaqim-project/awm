@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Agenda Event Komunitas - Cooca',
+    'title' => __('community.agenda_event_komunitas_cooca'),
     'headerTitle' => 'Agenda Event Komunitas',
     'headerSubtitle' => 'Seminar bisnis, pelatihan kasir POS, dan meetup eksklusif untuk seluruh pengguna Cooca',
 ])
@@ -186,9 +186,9 @@
         @if($upcomingEvents->isEmpty())
             <div class="bg-white dark:bg-slate-900/90 p-12 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 text-center space-y-2">
                 <i data-lucide="calendar-x" class="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600"></i>
-                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">Belum Ada Event Mendatang</h3>
+                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">{{ __('community.belum_ada_event_mendatang') }}</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-                    Saat ini belum ada agenda baru yang dijadwalkan. Agenda seminar dan workshop terbaru akan segera hadir.
+                    Saat ini {{ __('community.belum_ada_agenda_baru_yang_dijadwalkan') }} segera hadir.
                 </p>
             </div>
         @else
@@ -282,14 +282,14 @@
                                     <a href="{{ route('community.events.payment.show', $userReg) }}"
                                         class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-amber-600/20">
                                         <i data-lucide="qr-code" class="w-4 h-4"></i>
-                                        <span>Lanjutkan Bayar QRIS ({{ $userReg->getFormattedAmountPaid() }})</span>
+                                        <span>{{ __('community.continue_pay_qris') }} ({{ $userReg->getFormattedAmountPaid() }})</span>
                                     </a>
                                 @else
                                     <div class="flex items-center gap-2">
                                         <button type="button" @click="viewTicket('{{ $evt->id }}')"
                                             class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                             <i data-lucide="ticket" class="w-4 h-4"></i>
-                                            <span>Lihat Tiket &amp; Check-in</span>
+                                            <span>{{ __('community.lihat_tiket_check_in') }}</span>
                                         </button>
                                     </div>
                                 @endif
@@ -325,7 +325,7 @@
         @if(empty($myRegistrations) || count($myRegistrations) === 0)
             <div class="bg-white dark:bg-slate-900/90 p-12 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 text-center space-y-2">
                 <i data-lucide="ticket" class="w-12 h-12 mx-auto text-slate-300 dark:text-slate-600"></i>
-                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">Belum Ada Tiket Event</h3>
+                <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">{{ __('community.belum_ada_tiket_event') }}</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                     Anda belum mendaftar ke event apa pun. Buka tab "Event Mendatang" untuk mendaftar ke seminar dan workshop yang tersedia.
                 </p>
@@ -389,21 +389,19 @@
                                     <a href="{{ route('community.events.payment.show', $reg) }}"
                                         class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-xs">
                                         <i data-lucide="qr-code" class="w-4 h-4"></i>
-                                        <span>Bayar via QRIS</span>
+                                        <span>{{ __('community.bayar_via_qris') }}</span>
                                     </a>
                                 @else
                                     <button type="button" @click="viewTicket('{{ $reg->event_id }}')"
                                         class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 cursor-pointer">
                                         <i data-lucide="scan-barcode" class="w-4 h-4"></i>
-                                        <span>Buka Tiket Digital</span>
+                                        <span>{{ __('community.buka_tiket_digital') }}</span>
                                     </button>
                                 @endif
                                 @if(! $reg->isCheckedIn())
                                     <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('{{ $reg->isPaid() ? 'Batalkan pendaftaran event ini? Tiket berbayar yang sudah dibatalkan tidak otomatis di-refund.' : 'Batalkan pendaftaran event ini?' }}')">
                                         @csrf
-                                        <button type="submit" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">
-                                            Batal
-                                        </button>
+                                        <button type="submit" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">{{ __('common.cancel') }}</button>
                                     </form>
                                 @endif
                             @endif
@@ -458,7 +456,7 @@
                     </div>
                     <button type="button" @click="selectedTicket = null"
                         class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition cursor-pointer"
-                        aria-label="Tutup tiket">
+                        aria-label="{{ __('community.tutup_tiket') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -523,7 +521,7 @@
                             <a :href="selectedTicket?.online_meeting_url" target="_blank" rel="noopener noreferrer"
                                 class="w-full py-2 px-3 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-xs cursor-pointer">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Buka Ruang Meeting Sekarang</span>
+                                <span>{{ __('community.buka_ruang_meeting_sekarang') }}</span>
                             </a>
                         </div>
                     </template>
@@ -580,7 +578,7 @@
                         <div class="space-y-3">
                             <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                                 <i data-lucide="navigation" class="w-3.5 h-3.5 text-emerald-600"></i>
-                                <span>Pilihan Metode Check-in Mandiri:</span>
+                                <span>{{ __('community.pilihan_metode_check_in_mandiri') }}</span>
                             </h5>
 
                             <!-- Method A: Check-in via Geolocation GPS -->
@@ -612,7 +610,7 @@
                                     Ketik kode QR event yang tertera di banner registrasi jika GPS tidak akurat.
                                 </p>
                                 <div class="flex items-center gap-2">
-                                    <input type="text" x-model="barcodeInput" placeholder="Ketik kode (COOCA-EVT-...)"
+                                    <input type="text" x-model="barcodeInput" placeholder="{{ __('community.ketik_kode_cooca_evt') }}"
                                         class="flex-1 h-9 px-3 rounded-xl text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white uppercase">
                                     <button type="button" @click="checkinBarcodeSubmit()" :disabled="barcodeLoading || !barcodeInput"
                                         class="px-4 h-9 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 transition cursor-pointer">
@@ -631,9 +629,7 @@
             <!-- Modal Footer -->
             <div class="p-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 text-right">
                 <button type="button" @click="selectedTicket = null"
-                    class="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition cursor-pointer">
-                    Tutup
-                </button>
+                    class="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition cursor-pointer">{{ __('common.close') }}</button>
             </div>
         </div>
     </div>

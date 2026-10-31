@@ -93,9 +93,9 @@ final class CommunicationNavigationTest extends TestCase
 
     private function assertCommunicationTabsPresent($response): void
     {
-        $response->assertSee('WhatsApp Inbox');
-        $response->assertSee('WhatsApp Broadcast');
-        $response->assertSee('Media Sosial');
+        $response->assertSee('WhatsApp Gateway');
+        $response->assertSee('Siaran Pesan (Broadcast)');
+        $response->assertSee('Koneksi Akun');
         $response->assertSee(route('whatsapp.index'));
         $response->assertSee(route('whatsapp.broadcast.index'));
         $response->assertSee(route('social-media.index'));

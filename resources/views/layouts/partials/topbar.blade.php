@@ -2,6 +2,12 @@
     $activeBiz = $activeBiz ?? \App\Support\Context::business();
     $currentUser = auth()->user();
 
+    $navContext = $navContext ?? \App\Support\Navigation\NavigationRegistry::getContextForCurrentRoute();
+    $activeModuleKey = $activeModuleKey ?? $navContext['module_key'] ?? null;
+    $activeModuleDef = $activeModuleDef ?? (!empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getModule($activeModuleKey) : null);
+    $secondaryNavTabs = $secondaryNavTabs ?? (!empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getTabsForModule($activeModuleKey) : []);
+    $hasSecondaryNav = $hasSecondaryNav ?? !empty($secondaryNavTabs);
+
     $canAccessPos =
         \App\Support\Context::hasPermission('pos.terminal') ||
         \App\Support\Context::hasPermission('pos.orders') ||
@@ -181,16 +187,39 @@
             <i :data-lucide="sidebarCollapsed ? 'panel-left-open' : 'panel-left-close'" class="w-4 h-4"></i>
         </button>
 
+        @if ($hasSecondaryNav)
+            <!-- Desktop Secondary Sidebar Collapse/Expand Toggle Button -->
+            <button @click="toggleSecondarySidebarCollapse()" type="button"
+                id="tour-toggle-secondary-sidebar-btn"
+                class="hidden lg:flex items-center justify-center w-8.5 h-8.5 rounded-[8px] text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 shrink-0 transition-all cursor-pointer"
+                :class="secondarySidebarCollapsed ? 'bg-[#007AFF]/10 text-[#007AFF]' : ''"
+                :title="secondarySidebarCollapsed ? '{{ __('navigation.expand_secondary_sidebar') }}' : '{{ __('navigation.collapse_secondary_sidebar') }}'"
+                aria-label="{{ __('navigation.toggle_secondary_sidebar') }}">
+                <i :data-lucide="secondarySidebarCollapsed ? 'panel-right-open' : 'panel-right-close'" class="w-4 h-4"></i>
+            </button>
+        @endif
+
         <!-- Header Title & Subtitle Hierarchy -->
-        <div class="min-w-0 flex-1">
-            <h1 title="{{ $headerTitle ?? $title ?? 'Cooca' }}"
-                class="text-[15px] sm:text-[16px] font-semibold text-black dark:text-white truncate leading-tight tracking-tight">
-                {{ $headerTitle ?? $title ?? 'Cooca' }}
-            </h1>
-            <p title="{{ $headerSubtitle ?? __('navigation.default_subtitle') }}"
-                class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block max-w-md truncate leading-tight mt-0.5">
-                {{ \Illuminate\Support\Str::words($headerSubtitle ?? __('navigation.default_subtitle'), 15, '...') }}
-            </p>
+        <div class="min-w-0 flex-1 flex items-center gap-2">
+            <div class="min-w-0">
+                <h1 title="{{ $headerTitle ?? $title ?? 'Cooca' }}"
+                    class="text-[15px] sm:text-[16px] font-semibold text-black dark:text-white truncate leading-tight tracking-tight">
+                    {{ $headerTitle ?? $title ?? 'Cooca' }}
+                </h1>
+                <p title="{{ $headerSubtitle ?? __('navigation.default_subtitle') }}"
+                    class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block max-w-md truncate leading-tight mt-0.5">
+                    {{ \Illuminate\Support\Str::words($headerSubtitle ?? __('navigation.default_subtitle'), 15, '...') }}
+                </p>
+            </div>
+            @if ($hasSecondaryNav)
+                <button @click="sidebarOpen = true" type="button"
+                    data-mobile-subnav-trigger="true"
+                    class="lg:hidden inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 dark:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#38ACFF] text-[11px] font-semibold shrink-0 cursor-pointer active:scale-95 transition-all"
+                    title="{{ __('common.sub_navigation') }}">
+                    <span class="max-w-[110px] truncate">{{ $activeModuleDef['label'] ?? $activeModuleKey }}</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 shrink-0"></i>
+                </button>
+            @endif
         </div>
     </div>
 

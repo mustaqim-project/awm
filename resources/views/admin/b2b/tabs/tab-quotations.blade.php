@@ -4,7 +4,7 @@
         <div>
             <h3 class="text-[15px] font-bold text-black dark:text-white flex items-center gap-2">
                 <i data-lucide="file-text" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Daftar Surat Penawaran Harga (Sales Quotations)</span>
+                <span>{{ __('admin.daftar_surat_penawaran_harga_sales_quotations') }}</span>
             </h3>
             <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
                 Monitoring seluruh dokumen penawaran harga pra-transaksi B2B, batas masa berlaku, dan konversi ke Pesanan Penjualan (SO).
@@ -46,7 +46,7 @@
                             </div>
                             @if($q->salesOrder)
                                 <div class="mt-1">
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-[#34C759] bg-[#34C759]/12 px-1.5 py-0.2 rounded" title="Telah Dikonversi ke SO">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-[#34C759] bg-[#34C759]/12 px-1.5 py-0.2 rounded" title="{{ __('admin.telah_dikonversi_ke_so') }}">
                                         <i data-lucide="check" class="w-2.5 h-2.5"></i>
                                         SO: {{ $q->salesOrder->so_number }}
                                     </span>
@@ -143,7 +143,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.quotations.pdf', $q) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/10 hover:text-[#007AFF] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Surat Penawaran Resmi PDF (A4)" rel="noopener noreferrer">
+                                    title="{{ __('admin.unduh_cetak_surat_penawaran_resmi_pdf') }}" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>
@@ -158,7 +158,7 @@
                                         notes: '{{ addslashes($q->notes ?? '') }}'
                                     }, '{{ route('admin.b2b.quotations.update', $q) }}')"
                                         class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#6366f1]/15 hover:text-[#6366f1] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
-                                        title="Ubah Penawaran">
+                                        title="{{ __('admin.ubah_penawaran') }}">
                                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                     </button>
                                 @endif
@@ -171,7 +171,7 @@
                                         @csrf
                                         <button type="submit"
                                             class="h-8 px-2.5 rounded-[9px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                            title="Konversi ke Pesanan Penjualan">
+                                            title="{{ __('admin.konversi_ke_pesanan_penjualan') }}">
                                             <i data-lucide="arrow-right-circle" class="w-3.5 h-3.5"></i>
                                             <span>Jadikan SO</span>
                                         </button>
@@ -187,7 +187,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
-                                            title="Hapus Penawaran">
+                                            title="{{ __('admin.hapus_penawaran') }}">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>

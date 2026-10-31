@@ -85,7 +85,7 @@
             <div>
                 <h3 class="text-[15px] font-bold text-black dark:text-white flex items-center gap-2">
                     <i data-lucide="file-check" class="w-4 h-4 text-[#FF3B30]"></i>
-                    <span>Daftar Hutang Usaha &amp; Tagihan Vendor (Accounts Payable)</span>
+                    <span>{{ __('admin.daftar_hutang_usaha_tagihan_vendor_accounts') }}</span>
                 </h3>
                 <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
                     Catat kewajiban tagihan server Hostinger/AWS, lisensi OpenAI/Gemini, WhatsApp Gateway, dan beban operasional dengan rekonsiliasi otomatis ke Akun 2130.
@@ -167,7 +167,7 @@
                                          data-title="Tagihan {{ $ap->bill_number }} - {{ $ap->vendor_name }}"
                                         class="inline-flex items-center gap-1 text-[10.5px] font-medium text-[#007AFF] hover:underline mt-1 cursor-pointer">
                                         <i data-lucide="paperclip" class="w-3 h-3"></i>
-                                        <span>Lihat Faktur/Tagihan</span>
+                                        <span>{{ __('admin.lihat_faktur_tagihan') }}</span>
                                     </button>
                                 @endif
                             </td>
@@ -249,7 +249,7 @@
                                         <button type="button" @click="openPayAp(@js($ap))"
                                             class="h-8 px-3 rounded-[9px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5">
                                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                            <span>Bayar Tagihan</span>
+                                            <span>{{ __('admin.bayar_tagihan') }}</span>
                                         </button>
                                     @endif
                                 @else
@@ -290,10 +290,10 @@
                                                         @if($pay->attachment_url)
                                                             <button type="button" @click="previewImage($el.dataset.url, $el.dataset.title)"
                                          data-url="{{ $pay->attachment_url }}"
-                                         data-title="Bukti Transfer Keluar {{ $pay->payment_number }}"
+                                         data-title="{{ __('admin.outgoing_transfer_proof') }}"
                                                                 class="text-[#007AFF] hover:underline font-semibold inline-flex items-center gap-1 cursor-pointer">
                                                                 <i data-lucide="image" class="w-3 h-3"></i>
-                                                                <span>Bukti Transfer Keluar</span>
+                                                                <span>{{ __('admin.bukti_transfer_keluar') }}</span>
                                                             </button>
                                                         @endif
 
@@ -315,7 +315,7 @@
                         <tr>
                             <td colspan="8" class="py-12 text-center text-black/40 dark:text-white/40">
                                 <i data-lucide="file-check" class="w-10 h-10 mx-auto stroke-[1.2] opacity-40 mb-2"></i>
-                                <div class="text-[13px] font-semibold">Belum Ada Tagihan Hutang Vendor (AP)</div>
+                                <div class="text-[13px] font-semibold">{{ __('admin.belum_ada_tagihan_hutang_vendor_ap') }}</div>
                                 <div class="text-[12px] text-black/35 dark:text-white/35 mt-0.5">
                                     Klik tombol "Catat Tagihan Vendor" untuk mendaftarkan tagihan vendor cloud, AI API, atau biaya operasional.
                                 </div>

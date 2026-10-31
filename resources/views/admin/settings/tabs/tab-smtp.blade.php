@@ -50,7 +50,7 @@
                     <button type="button" @click="applyPreset('log')"
                         class="h-8 px-3 rounded-[10px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] hover:bg-[#FF9500]/10 hover:border-[#FF9500]/30 active:scale-95 text-[12px] font-semibold text-black/80 dark:text-white/80 flex items-center gap-1.5 transition-all cursor-pointer">
                         <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#FF9500]" stroke-width="2"></i>
-                        <span>Driver Log (Simpan File)</span>
+                        <span>{{ __('admin.driver_log_simpan_file') }}</span>
                     </button>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                     <div class="pt-4 border-t border-black/[0.04] dark:border-white/[0.06] space-y-4">
                         <div class="flex items-center gap-2">
                             <i data-lucide="user-check" class="w-4 h-4 text-[#34C759] dark:text-[#30D158]" stroke-width="2"></i>
-                            <h4 class="text-[13px] font-bold text-black dark:text-white">Identitas Pengirim Email (Sender Header)</h4>
+                            <h4 class="text-[13px] font-bold text-black dark:text-white">{{ __('admin.identitas_pengirim_email_sender_header') }}</h4>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
@@ -181,10 +181,10 @@
                     <div class="pt-4 flex justify-end">
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.smtp.update'))
 
-                        <button type="submit" aria-label="Simpan Pengaturan SMTP"
+                        <button type="submit" aria-label="{{ __('admin.simpan_pengaturan_smtp') }}"
                             class="w-full sm:w-auto h-12 sm:h-10 px-6 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Simpan Pengaturan SMTP</span>
+                            <span>{{ __('admin.simpan_pengaturan_smtp_2') }}</span>
                         </button>
 
                         @endif
@@ -223,10 +223,10 @@
                         </div>
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.smtp.update'))
 
-                        <button type="submit" aria-label="Kirim Email Uji Coba"
+                        <button type="submit" aria-label="{{ __('admin.kirim_email_uji_coba') }}"
                             class="w-full h-12 sm:h-10 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2FB84C] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#34C759]/25 cursor-pointer">
                             <i data-lucide="zap" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Kirim</span>
+                            <span>{{ __('admin.kirim') }}</span>
                         </button>
 
                         @endif

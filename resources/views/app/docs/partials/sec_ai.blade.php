@@ -13,7 +13,7 @@
             </span>
             <div>
                 <div class="flex items-center gap-2 flex-wrap">
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-black dark:text-white tracking-tight">Asisten Pintar AI &amp; Intelijen Bisnis</h2>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-black dark:text-white tracking-tight">{{ __('docs.asisten_pintar_ai_intelijen_bisnis') }}</h2>
                     <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">POV Business Owner</span>
                     <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">20 Sektor Industri</span>
                 </div>
@@ -27,7 +27,7 @@
                 <a href="{{ route('cooca-ai.pos') }}"
                     class="h-9 px-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-[12px] font-semibold flex items-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-95">
                     <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                    <span>Tanya AI POS</span>
+                    <span>{{ __('docs.tanya_ai_pos') }}</span>
                 </a>
                 <a href="{{ route('cooca-ai.index') }}"
                     class="h-9 px-3.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[12px] font-semibold flex items-center gap-1.5 transition active:scale-95">
@@ -45,7 +45,7 @@
                     class="h-9 px-3 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[12px] font-semibold flex items-center gap-1.5 transition active:scale-95"
                     title="Atur Kunci API Model AI (Gemini, GPT-4o, Claude, Ollama)">
                     <i data-lucide="settings-2" class="w-3.5 h-3.5 text-purple-500"></i>
-                    <span>Pengaturan Model</span>
+                    <span>{{ __('docs.pengaturan_model') }}</span>
                 </a>
             @endif
         </div>
@@ -58,7 +58,7 @@
                 <i data-lucide="line-chart" class="w-5 h-5"></i>
             </div>
             <div class="space-y-1.5">
-                <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">Mengapa Asisten AI Cooca Menjadi Otak Pengendali Bisnis Anda?</h3>
+                <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">{{ __('docs.mengapa_asisten_ai_cooca_menjadi_otak') }}</h3>
                 <p class="text-xs sm:text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
                     AI Cooca <strong>bukan sekadar chatbot obrolan umum</strong>. Sistem ini bekerja layaknya <strong>Direktur Operasional &amp; Analis Keuangan Pribadi</strong> yang terhubung langsung ke basis data kasir POS, mutasi stok gudang, buku kas, invoice pelanggan, dan shift kerja staf Anda. Anda tidak perlu lagi berkutat dengan rumus Excel yang rumit atau menunggu laporan mingguan staf yang sering terlambat. Cukup ketik pertanyaan dalam bahasa sehari-hari, dan sistem menyajikan jawaban angka akurat serta usulan tindakan siap eksekusi.
                 </p>
@@ -133,7 +133,7 @@
                             <span>Tanya Jawab Bahasa Alami (Tanya AI POS)</span>
                         </div>
                         <a href="{{ route('cooca-ai.pos') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Layar</span>
+                            <span>{{ __('docs.buka_layar') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     </div>
@@ -149,7 +149,7 @@
                 </div>
                 <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                     <span>Respons real-time &lt; 2 detik</span>
-                    <a href="{{ route('cooca-ai.pos') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">Mulai Tanya POS &rarr;</a>
+                    <a href="{{ route('cooca-ai.pos') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline">{{ __('docs.mulai_tanya_pos_rarr') }}</a>
                 </div>
             </div>
 
@@ -186,7 +186,7 @@
                 </div>
                 <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                     <span>3 Kantor Spesialis Aktif</span>
-                    <a href="{{ route('cooca-ai.office.executive') }}" class="font-semibold text-[#007AFF] hover:underline">Masuk Executive Office &rarr;</a>
+                    <a href="{{ route('cooca-ai.office.executive') }}" class="font-semibold text-[#007AFF] hover:underline">{{ __('docs.masuk_executive_office_rarr') }}</a>
                 </div>
             </div>
 
@@ -223,7 +223,7 @@
                 </div>
                 <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                     <span>Aman tanpa eksekusi liar</span>
-                    <a href="{{ route('cooca-ai.actions') }}" class="font-semibold text-amber-600 dark:text-amber-400 hover:underline">Kelola Proposal &rarr;</a>
+                    <a href="{{ route('cooca-ai.actions') }}" class="font-semibold text-amber-600 dark:text-amber-400 hover:underline">{{ __('docs.kelola_proposal_rarr') }}</a>
                 </div>
             </div>
 
@@ -266,7 +266,7 @@
                 </div>
                 <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                     <span>Enkripsi Kunci API AES-256</span>
-                    <a href="{{ route('billing.limits') }}" class="font-semibold text-purple-600 dark:text-purple-400 hover:underline">Cek Kuota Paket &rarr;</a>
+                    <a href="{{ route('billing.limits') }}" class="font-semibold text-purple-600 dark:text-purple-400 hover:underline">{{ __('docs.cek_kuota_paket_rarr') }}</a>
                 </div>
             </div>
         </div>
@@ -276,9 +276,7 @@
     <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-6 shadow-2xs">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-black/5 dark:border-white/10">
             <div>
-                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight">
-                    Matriks Penerapan Praktis untuk 20 Sektor Industri UMKM
-                </h3>
+                <h3 class="text-base sm:text-lg font-bold text-black dark:text-white tracking-tight">{{ __('docs.matriks_penerapan_praktis_untuk_20_sektor') }}</h3>
                 <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">
                     Contoh konkret masalah bisnis, contoh prompt yang dapat langsung ditanyakan ke AI, serta tautan langsung ke modul terkait untuk masing-masing bidang usaha Anda
                 </p>
@@ -328,11 +326,11 @@
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-1">
                             <a href="{{ route('pos.tables.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
                                 <i data-lucide="layout-grid" class="w-3 h-3"></i>
-                                <span>Denah Meja</span>
+                                <span>{{ __('docs.denah_meja') }}</span>
                             </a>
                             <a href="{{ route('pos.terminal') }}" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="calculator" class="w-3 h-3"></i>
-                                <span>Buka Kasir</span>
+                                <span>{{ __('docs.buka_kasir') }}</span>
                             </a>
                         </div>
                     </div>
@@ -362,7 +360,7 @@
                             </a>
                             <a href="{{ route('inventory.stocks') }}" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="boxes" class="w-3 h-3"></i>
-                                <span>Stok Beans</span>
+                                <span>{{ __('docs.stok_beans') }}</span>
                             </a>
                         </div>
                     </div>
@@ -532,7 +530,7 @@
                             </a>
                             <a href="{{ route('inventory.stocks') }}" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="layers" class="w-3 h-3"></i>
-                                <span>Stok Roll Media</span>
+                                <span>{{ __('docs.stok_roll_media') }}</span>
                             </a>
                         </div>
                     </div>
@@ -562,7 +560,7 @@
                             </a>
                             <a href="{{ route('finance.expenses.index') }}" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="banknote" class="w-3 h-3"></i>
-                                <span>Biaya Upah Tukang</span>
+                                <span>{{ __('docs.biaya_upah_tukang') }}</span>
                             </a>
                         </div>
                     </div>
@@ -588,7 +586,7 @@
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-1">
                             <a href="{{ route('inventory.stocks') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
                                 <i data-lucide="shield" class="w-3 h-3"></i>
-                                <span>Stok Besi &amp; Logam</span>
+                                <span>{{ __('docs.stok_besi_logam') }}</span>
                             </a>
                             <a href="{{ route('purchase-orders.index') }}" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="truck" class="w-3 h-3"></i>
@@ -622,7 +620,7 @@
                             </a>
                             <a href="{{ route('inventory.stocks') }}" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="package" class="w-3 h-3"></i>
-                                <span>Stok Kemasan Box</span>
+                                <span>{{ __('docs.stok_kemasan_box') }}</span>
                             </a>
                         </div>
                     </div>
@@ -672,7 +670,7 @@
                             </a>
                             <a href="{{ route('crm.members.index') }}" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="tag" class="w-3 h-3"></i>
-                                <span>Buat Diskon Bundling</span>
+                                <span>{{ __('docs.buat_diskon_bundling') }}</span>
                             </a>
                         </div>
                     </div>
@@ -748,7 +746,7 @@
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-1">
                             <a href="{{ route('pos.terminal') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
                                 <i data-lucide="file-plus" class="w-3 h-3"></i>
-                                <span>Input PKB Kasir</span>
+                                <span>{{ __('docs.input_pkb_kasir') }}</span>
                             </a>
                             <a href="{{ route('whatsapp.index') }}" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="message-circle" class="w-3 h-3"></i>
@@ -782,7 +780,7 @@
                             </a>
                             <a href="{{ route('hrm.payrolls.index') }}" class="text-[11px] font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="wallet" class="w-3 h-3"></i>
-                                <span>Slip Komisi Staf</span>
+                                <span>{{ __('docs.slip_komisi_staf') }}</span>
                             </a>
                         </div>
                     </div>
@@ -812,7 +810,7 @@
                             </a>
                             <a href="{{ route('customers.index') }}" class="text-[11px] font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="contact" class="w-3 h-3"></i>
-                                <span>Data Pelanggan</span>
+                                <span>{{ __('docs.data_pelanggan') }}</span>
                             </a>
                         </div>
                     </div>
@@ -838,7 +836,7 @@
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-1">
                             <a href="{{ route('pos.terminal') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
                                 <i data-lucide="car" class="w-3 h-3"></i>
-                                <span>Kasir Cuci Mobil</span>
+                                <span>{{ __('docs.kasir_cuci_mobil') }}</span>
                             </a>
                             <a href="{{ route('finance.cash-bank.index') }}" class="text-[11px] font-semibold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="coins" class="w-3 h-3"></i>
@@ -948,11 +946,11 @@
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-1">
                             <a href="{{ route('invoices.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
                                 <i data-lucide="receipt" class="w-3 h-3"></i>
-                                <span>Daftar Invoice Klien</span>
+                                <span>{{ __('docs.daftar_invoice_klien') }}</span>
                             </a>
                             <a href="{{ route('finance.receivables') }}" class="text-[11px] font-semibold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="scale" class="w-3 h-3"></i>
-                                <span>Buku Piutang Usaha</span>
+                                <span>{{ __('docs.buku_piutang_usaha') }}</span>
                             </a>
                         </div>
                     </div>
@@ -1008,7 +1006,7 @@
                             </div>
                             <a href="{{ route('cooca-ai.actions') }}" class="text-[11.5px] font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
                                 <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
-                                <span>Tinjau Rekomendasi Pengiriman AI &rarr;</span>
+                                <span>{{ __('docs.tinjau_rekomendasi_pengiriman_ai_rarr') }}</span>
                             </a>
                         </div>
                     </div>
@@ -1066,7 +1064,7 @@
         <div class="pt-2 flex items-center justify-between text-xs">
             <span class="text-black/50 dark:text-white/50">Ingin mengatur izin staf kasir untuk fitur AI?</span>
             <a href="{{ route('roles.index') }}" class="font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                <span>Atur Peran &amp; Hak Akses Kasir</span>
+                <span>{{ __('docs.atur_peran_hak_akses_kasir') }}</span>
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -1116,7 +1114,7 @@
             <a href="{{ route('social-media.inbox.index', ['rules' => 1]) }}"
                 class="shrink-0 h-8 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-[11.5px] font-bold flex items-center justify-center gap-1.5 transition shadow-xs whitespace-nowrap">
                 <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-                <span>Buka Tabel Input Sekarang</span>
+                <span>{{ __('docs.buka_tabel_input_sekarang') }}</span>
             </a>
         </div>
 
@@ -1403,7 +1401,7 @@
                     </div>
                     <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2 flex-wrap">
                         <a href="{{ route('products.index') }}" class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Master Produk</span>
+                            <span>{{ __('docs.buka_master_produk') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                         <a href="{{ route('crm.vouchers.index') }}" class="text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
@@ -1426,7 +1424,7 @@
                     </div>
                     <div class="pt-2 border-t border-black/5 dark:border-white/5">
                         <a href="{{ route('social-media.inbox.index') }}" class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Inbox Chat Toko</span>
+                            <span>{{ __('docs.buka_inbox_chat_toko') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     </div>
@@ -1445,7 +1443,7 @@
                     </div>
                     <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-2 flex-wrap">
                         <a href="{{ route('cooca-ai.providers') }}" class="text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
-                            <span>Pengaturan AI</span>
+                            <span>{{ __('docs.pengaturan_ai') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                         <a href="{{ route('cooca-ai.actions') }}" class="text-[11px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
@@ -1466,7 +1464,7 @@
                     <i data-lucide="help-circle" class="w-4 h-4"></i>
                 </span>
                 <div>
-                    <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">Tanya Jawab Pemilik Usaha (FAQ AI)</h3>
+                    <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">{{ __('docs.tanya_jawab_pemilik_usaha_faq_ai') }}</h3>
                     <p class="text-xs text-black/50 dark:text-white/50">Jawaban atas pertanyaan umum seputar biaya, koneksi offline, dan kontrol operasional</p>
                 </div>
             </div>
@@ -1509,36 +1507,34 @@
 
     <!-- 7. DIREKTORI TAUTAN CEPAT KE SELURUH FITUR TERKAIT -->
     <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3.5 shadow-2xs">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
-            Tautan Cepat &amp; Direktori Navigasi Fitur Pendukung AI
-        </h3>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('docs.tautan_cepat_direktori_navigasi_fitur_pendukung') }}</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 text-xs">
             
             <a href="{{ route('pos.terminal') }}"
                 class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 dark:border-white/5 transition flex flex-col justify-between group">
                 <div class="flex items-center gap-2">
                     <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
-                    <span class="font-semibold text-black dark:text-white text-[11px]">Kasir POS</span>
+                    <span class="font-semibold text-black dark:text-white text-[11px]">{{ __('pos.terminal') }}</span>
                 </div>
-                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">Layar Sentuh Kasir</span>
+                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('pos.touchscreen_cashier') ?? 'Layar Sentuh Kasir' }}</span>
             </a>
 
             <a href="{{ route('inventory.stocks') }}"
                 class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-emerald-500/10 border border-black/5 dark:border-white/5 transition flex flex-col justify-between group">
                 <div class="flex items-center gap-2">
                     <i data-lucide="boxes" class="w-4 h-4 text-emerald-500"></i>
-                    <span class="font-semibold text-black dark:text-white text-[11px]">Stok Gudang</span>
+                    <span class="font-semibold text-black dark:text-white text-[11px]">{{ __('docs.warehouse_stock') }}</span>
                 </div>
-                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">Pantauan Real-Time</span>
+                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('docs.realtime_monitoring') }}</span>
             </a>
 
             <a href="{{ route('purchase-orders.index') }}"
                 class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-indigo-500/10 border border-black/5 dark:border-white/5 transition flex flex-col justify-between group">
                 <div class="flex items-center gap-2">
                     <i data-lucide="truck" class="w-4 h-4 text-indigo-500"></i>
-                    <span class="font-semibold text-black dark:text-white text-[11px]">Pesanan Beli PO</span>
+                    <span class="font-semibold text-black dark:text-white text-[11px]">{{ __('docs.po_purchase_order') }}</span>
                 </div>
-                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">Draf Restok Supplier</span>
+                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('docs.draft_supplier_restock') }}</span>
             </a>
 
             <a href="{{ route('sales.orders.index') }}"
@@ -1563,9 +1559,9 @@
                 class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-amber-500/10 border border-black/5 dark:border-white/5 transition flex flex-col justify-between group">
                 <div class="flex items-center gap-2">
                     <i data-lucide="line-chart" class="w-4 h-4 text-amber-500"></i>
-                    <span class="font-semibold text-black dark:text-white text-[11px]">Laporan Laba</span>
+                    <span class="font-semibold text-black dark:text-white text-[11px]">{{ __('docs.profit_report') }}</span>
                 </div>
-                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">Neraca &amp; Laba Rugi</span>
+                <span class="text-[10px] text-black/40 dark:text-white/40 mt-1">{{ __('docs.balance_profit_loss') }}</span>
             </a>
 
         </div>

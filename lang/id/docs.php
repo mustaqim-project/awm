@@ -73,4 +73,12 @@ return [
     'matriks_penerapan_praktis_untuk_20_sektor' => 'Matriks Penerapan Praktis untuk 20 Sektor Industri UMKM',
     'tanya_jawab_pemilik_usaha_faq_ai' => 'Tanya Jawab Pemilik Usaha (FAQ AI)',
     'tautan_cepat_direktori_navigasi_fitur_pendukung' => 'Tautan Cepat & Direktori Navigasi Fitur Pendukung AI',
+    'warehouse_stock' => 'Stok Gudang',
+    'realtime_monitoring' => 'Pantauan Real-Time',
+    'po_purchase_order' => 'Pesanan Beli PO',
+    'draft_supplier_restock' => 'Draf Restok Supplier',
+    'profit_report' => 'Laporan Laba',
+    'balance_profit_loss' => 'Neraca & Laba Rugi',
+    'virtual_office_ai' => '3D Virtual Office & AI',
+    'twenty_businesses' => '20 Usaha',
 ];

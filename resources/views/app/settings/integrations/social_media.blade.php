@@ -118,7 +118,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun Facebook atau Instagram yang terhubung.</p>
+                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_facebook_atau_instagram') }}</p>
                     @endif
                 </div>
 
@@ -187,7 +187,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun TikTok yang terhubung.</p>
+                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_tiktok_yang_terhubung') }}</p>
                     @endif
                 </div>
 
@@ -255,7 +255,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun LinkedIn yang terhubung.</p>
+                        <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_linkedin_yang_terhubung') }}</p>
                     @endif
                 </div>
 
@@ -347,7 +347,7 @@
                     <div class="w-7 h-7 rounded-[8px] bg-[#007AFF] text-white flex items-center justify-center shrink-0">
                         <i data-lucide="shield-check" class="w-4 h-4"></i>
                     </div>
-                    <h4 class="text-[13.5px] font-bold text-black dark:text-white">Otorisasi &amp; Token Aman</h4>
+                    <h4 class="text-[13.5px] font-bold text-black dark:text-white">{{ __('settings.otorisasi_token_aman') }}</h4>
                 </div>
                 <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
                     Sistem COOCA menggunakan protokol resmi OAuth 2.0 dengan enkripsi token AES-256. Token TikTok dan LinkedIn diperbarui secara otomatis di latar belakang tanpa mengganggu operasional.

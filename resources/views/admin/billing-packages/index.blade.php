@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'CMS Paket & Harga - Admin Console',
+    'title' => __('admin.cms_paket_harga_admin_console'),
     'headerTitle' => 'CMS Paket & Harga',
     'headerSubtitle' => 'Kelola katalog paket subscription, top-up token AI, dan storage yang dijual di halaman checkout tenant',
 ])
@@ -66,8 +66,7 @@
                     <i data-lucide="layers-3" class="w-6 h-6" stroke-width="1.5"></i>
                 </div>
                 <div>
-                    <h1 class="text-[19px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">Katalog Paket
-                        Billing Platform</h1>
+                    <h1 class="text-[19px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">{{ __('admin.katalog_paket_billing_platform') }}</h1>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Semua paket aktif langsung tersedia di
                         checkout tenant. Harga terpusat dan konsisten.</p>
                 </div>
@@ -145,8 +144,7 @@
                                 <i data-lucide="settings-2" class="w-4 h-4" stroke-width="1.5"></i>
                             </div>
                             <div>
-                                <h3 class="text-[14px] font-bold text-[#5856D6] dark:text-[#5E5CE6]">Harga Bawaan &amp;
-                                    Kuota Langganan Cooca</h3>
+                                <h3 class="text-[14px] font-bold text-[#5856D6] dark:text-[#5E5CE6]">{{ __('admin.harga_bawaan_kuota_langganan_cooca') }}</h3>
                                 <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Nilai fallback yang dipakai
                                     saat tenant memilih Core tanpa paket khusus.</p>
                             </div>
@@ -154,7 +152,7 @@
                         <button type="submit"
                             class="h-9 px-4 rounded-[12px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Simpan Default</span>
+                            <span>{{ __('admin.simpan_default') }}</span>
                         </button>
                     </div>
 
@@ -331,7 +329,7 @@
                                         <div class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 flex items-center justify-center text-[#007AFF] dark:text-[#0A84FF] shrink-0">
                                             <i data-lucide="sliders" class="w-4 h-4" stroke-width="2"></i>
                                         </div>
-                                        <span>Konfigurasi Lengkap Batas Kuota Sumber Daya (17 Limit x 4 Level)</span>
+                                        <span>{{ __('admin.konfigurasi_lengkap_batas_kuota_sumber_daya') }}</span>
                                     </h4>
                                     <p class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
                                         Semua 17 batas sumber daya dapat diatur bebas untuk tiap level (Free, Standard, Premium, Prestige).
@@ -447,7 +445,7 @@
                                             <div class="w-7 h-7 rounded-[8px] bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 shrink-0">
                                                 <i data-lucide="lock" class="w-4 h-4" stroke-width="2"></i>
                                             </div>
-                                            <span>Matriks Hak Akses &amp; Kunci Fitur per Paket (Feature Access &amp; Lock Matrix)</span>
+                                            <span>{{ __('admin.matriks_hak_akses_kunci_fitur_per') }}</span>
                                         </h4>
                                         <p class="text-[11.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
                                             Atur fitur yang dibuka (unlocked) atau dikunci (locked) untuk tiap level paket. Pengaturan ini langsung mengontrol middleware otorisasi sistem dan indikator gembok pada halaman limits pelanggan.
@@ -553,7 +551,7 @@
                                 <button type="submit"
                                     class="h-9 px-5 rounded-[12px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-2 shadow-sm shrink-0">
                                     <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                    <span>Simpan Semua Batas Kuota, Fitur &amp; Harga</span>
+                                    <span>{{ __('admin.simpan_semua_batas_kuota_fitur_harga') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -582,7 +580,7 @@
                         <button type="submit"
                             class="h-9 px-4 rounded-[12px] text-[12px] font-bold text-white bg-[#AF52DE] hover:bg-[#9A45C6] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Simpan Default</span>
+                            <span>{{ __('admin.simpan_default') }}</span>
                         </button>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
@@ -625,7 +623,7 @@
                         <button type="submit"
                             class="h-9 px-4 rounded-[12px] text-[12px] font-bold text-white bg-[#30B0C7] hover:bg-[#2998AF] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="save" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Simpan Default</span>
+                            <span>{{ __('admin.simpan_default') }}</span>
                         </button>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
@@ -669,7 +667,7 @@
                     <h2 class="text-[15px] font-bold text-black dark:text-white flex items-center gap-2">
                         <i data-lucide="plus-circle" class="w-4.5 h-4.5 text-[#34C759] dark:text-[#30D158]"
                             stroke-width="2"></i>
-                        <span>Tambah Paket Baru</span>
+                        <span>{{ __('admin.tambah_paket_baru') }}</span>
                     </h2>
                     <p class="text-[11px] text-black/50 dark:text-white/50 mt-1">Paket langsung muncul di opsi checkout
                         tenant.</p>
@@ -699,7 +697,7 @@
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Deskripsi
                         Singkat</label>
-                    <textarea name="description" rows="2" maxlength="1000" placeholder="Keterangan manfaat paket..."
+                    <textarea name="description" rows="2" maxlength="1000" placeholder="{{ __('admin.keterangan_manfaat_paket') }}"
                         class="w-full px-3.5 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] leading-relaxed text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition"></textarea>
                 </div>
 
@@ -753,7 +751,7 @@
                 <button type="submit"
                     class="w-full h-11 rounded-[14px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Simpan Paket Baru</span>
+                    <span>{{ __('admin.simpan_paket_baru') }}</span>
                 </button>
                 @endif
             </form>
@@ -900,7 +898,7 @@
                             <button type="button" @click="openEdit('{{ $package->id }}')"
                                 class="h-8 px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                <span>Edit Paket</span>
+                                <span>{{ __('admin.edit_paket') }}</span>
                             </button>
                         </div>
                         @endif
@@ -912,7 +910,7 @@
                             class="w-14 h-14 mx-auto rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/35 dark:text-white/35 mb-3">
                             <i data-lucide="package-open" class="w-7 h-7" stroke-width="1.5"></i>
                         </div>
-                        <h4 class="text-[16px] font-bold text-black dark:text-white">Belum ada paket pada katalog ini</h4>
+                        <h4 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.belum_ada_paket_pada_katalog_ini') }}</h4>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-1 max-w-sm mx-auto">Gunakan formulir di
                             samping untuk menambahkan paket baru pada katalog
                             {{ strtolower($tabMap[$type]['label'] ?? 'ini') }}.</p>
@@ -934,7 +932,7 @@
                     <h4 class="text-[16px] font-bold text-black dark:text-white flex items-center gap-2">
                         <i data-lucide="edit-3" class="w-4.5 h-4.5 text-[#007AFF] dark:text-[#0A84FF]"
                             stroke-width="2"></i>
-                        <span>Edit Detail Paket</span>
+                        <span>{{ __('admin.edit_detail_paket') }}</span>
                     </h4>
                     <button type="button" @click="closeEdit()"
                         class="p-1.5 rounded-[10px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.98] transition-colors">
@@ -1024,11 +1022,11 @@
                     <div
                         class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-2.5">
                         <button type="button" @click="closeEdit()"
-                            class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] active:scale-[0.98] transition">Batal</button>
+                            class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] active:scale-[0.98] transition">{{ __('common.cancel') }}</button>
                         <button type="submit"
                             class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-2 shadow-sm shadow-[#007AFF]/25">
                             <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Simpan Perubahan</span>
+                            <span>{{ __('common.save_changes') }}</span>
                         </button>
                     </div>
                 </form>

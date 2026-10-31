@@ -137,7 +137,7 @@
             </div>
             <div class="mt-3">
                 <div class="text-[18px] font-bold tracking-tight text-black dark:text-white truncate">
-                    {{ $topMethod ? ($topMethod->method ?? $topMethod->method_label ?? 'Belum ada data') : 'Belum ada data' }}
+                    {{ $topMethod ? ($topMethod->method ?? $topMethod->method_label ?? __('common.no_data_yet')) : __('common.no_data_yet') }}
                 </div>
                 <div class="text-[11px] text-black/45 dark:text-white/45 mt-1">
                     @if($topMethod)
@@ -155,7 +155,7 @@
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 shadow-xs space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <h3 class="text-[14px] font-bold text-black dark:text-white">Komposisi Saluran Pembayaran</h3>
+                    <h3 class="text-[14px] font-bold text-black dark:text-white">{{ __('pos.payment_channel_composition') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50">Proporsi perolehan omzet kasir berdasarkan metode pembayaran</p>
                 </div>
                 <div class="text-[12px] font-semibold text-black/60 dark:text-white/60 tabular-nums">
@@ -291,7 +291,7 @@
                                         {{ __('pos.reports_payments_empty') }}
                                     </div>
                                     <p class="text-[12px] text-black/40 dark:text-white/40 max-w-sm">
-                                        Belum ada transaksi pembayaran yang selesai pada periode tanggal dan filter yang dipilih. Silakan sesuaikan tanggal atau preset filter di atas.
+                                        {{ __('pos.no_completed_payment_transactions_desc') }} Silakan sesuaikan tanggal atau preset filter di atas.
                                     </p>
                                 </div>
                             </td>

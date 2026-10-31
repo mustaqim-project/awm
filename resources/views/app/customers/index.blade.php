@@ -136,9 +136,9 @@
             .catch(err => {
                 this.importLoading = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 } else {
-                    alert(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 }
             });
         },
@@ -207,9 +207,9 @@
             .catch(err => {
                 this.importExecuting = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || 'Terjadi kesalahan sistem saat mengeksekusi import.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem_saat_mengeksekusi_import') }}
                 } else {
-                    alert(err.message || 'Terjadi kesalahan sistem.');
+                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
                 }
             });
         },
@@ -233,7 +233,7 @@
             @if (\App\Support\Context::hasPermission('customers.export'))
             <a href="{{ route('customers.export') }}"
                 class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 w-full sm:w-auto"
-                title="Export seluruh direktori pelanggan ke file Excel (.xlsx)">
+                title="{{ __('customers.export_seluruh_direktori_pelanggan_ke_file') }}">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                 <span>Export Excel</span>
             </a>
@@ -242,7 +242,7 @@
             @if (\App\Support\Context::hasPermission('customers.create'))
                 <button type="button" @click="showImportModal = true"
                     class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black dark:text-white text-[13px] font-medium border border-black/[0.08] dark:border-white/[0.1] transition flex items-center justify-center gap-1.5 w-full sm:w-auto cursor-pointer"
-                    title="Import data pelanggan massal dari file Excel">
+                    title="{{ __('customers.import_data_pelanggan_massal_dari_file') }}">
                     <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
                     <span>Import Excel</span>
                 </button>
@@ -1264,7 +1264,7 @@
                                     </div>
                                     <div>
                                         <h3 class="text-base sm:text-lg font-bold text-black dark:text-white flex items-center gap-2">
-                                            <span>Import Pelanggan via Excel</span>
+                                            <span>{{ __('customers.import_customers_via_excel') }}</span>
                                             <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">Interactive Preview</span>
                                         </h3>
                                         <p class="text-[12px] text-black/50 dark:text-white/50">Validasi otomatis anti-duplikat sebelum data masuk ke sistem buku besar CRM</p>
@@ -1275,7 +1275,7 @@
                                     <a href="{{ route('customers.template') }}"
                                         class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
                                         <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
-                                        <span>Unduh Template Excel</span>
+                                        <span>{{ __('purchasing.unduh_template_excel') }}</span>
                                     </a>
                                     <button type="button" @click="if (!importExecuting) showImportModal = false"
                                         class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -1301,7 +1301,7 @@
                                 <a href="{{ route('customers.template') }}"
                                     class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
                                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                    <span>Unduh Template (.xlsx)</span>
+                                    <span>{{ __('purchasing.unduh_template_xlsx') }}</span>
                                 </a>
                             </div>
 
@@ -1390,7 +1390,7 @@
                                     <button type="button" @click="importFilter = 'all'"
                                         class="px-3 py-1.5 rounded-[8px] transition"
                                         :class="importFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
-                                        Semua (<span x-text="importPreview ? importPreview.total_rows : 0"></span>)
+                                        {{ __('common.all') }} (<span x-text="importPreview ? importPreview.total_rows : 0"></span>)
                                     </button>
                                     <button type="button" @click="importFilter = 'valid'"
                                         class="px-3 py-1.5 rounded-[8px] transition"
@@ -1484,9 +1484,7 @@
                         <div class="flex items-center gap-2.5">
                             <button type="button" @click="if (!importExecuting) showImportModal = false"
                                 class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
-                                :disabled="importExecuting">
-                                Batal
-                            </button>
+                                :disabled="importExecuting">{{ __('common.cancel') }}</button>
 
                             <button type="button" x-show="importPreview" @click="executeCustomerImport()"
                                 class="h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"

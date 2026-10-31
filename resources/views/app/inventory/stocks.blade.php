@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Inventori & Stok Multi-Gudang',
+    'title' => __('inventory.inventori_stok_multi_gudang'),
     'headerTitle' => 'Inventori & Stok Multi-Gudang',
     'headerSubtitle' => 'Pantau stok produk di seluruh cabang/outlet & gudang secara real-time dengan sistem kartu stok'
 ])
@@ -45,9 +45,7 @@
         {{-- Baris 2: H1 Title + Entity Status Badge + Action Bar --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">
-                    Inventori &amp; Stok Real-Time
-                </h1>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">{{ __('inventory.inventori_stok_real_time') }}</h1>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
                     {{ $stocks->total() }} Produk Terdata
                 </span>
@@ -57,13 +55,13 @@
                 <a href="{{ route('inventory.movements') }}"
                    class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-xl text-[13px] font-medium text-black/80 dark:text-white/80 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.02] dark:hover:bg-white/[0.04] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs">
                     <i data-lucide="history" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
-                    <span>Riwayat Mutasi</span>
+                    <span>{{ __('inventory.riwayat_mutasi') }}</span>
                 </a>
                 @if(\App\Support\Context::hasPermission('inventory.manage'))
                     <a href="{{ route('import.index', ['tab' => 'inventory']) }}"
                        class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
                         <i data-lucide="upload" class="w-4 h-4"></i>
-                        <span>Import Stok</span>
+                        <span>{{ __('inventory.import_stok') }}</span>
                     </a>
                 @endif
             </div>
@@ -145,7 +143,7 @@
             <!-- Search Field -->
             <div class="sm:col-span-6 relative">
                 <i data-lucide="search" class="w-4 h-4 text-black/35 dark:text-white/35 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama produk atau kode SKU..."
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('inventory.cari_nama_produk_atau_kode_sku') }}"
                     class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-xl pl-10 pr-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
             </div>
 
@@ -163,9 +161,7 @@
 
             <!-- Actions -->
             <div class="sm:col-span-2 flex items-center gap-2">
-                <button type="submit" class="flex-1 h-11 sm:h-10 px-4 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold active:scale-[0.98] transition-all flex items-center justify-center shadow-xs cursor-pointer">
-                    Filter
-                </button>
+                <button type="submit" class="flex-1 h-11 sm:h-10 px-4 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold active:scale-[0.98] transition-all flex items-center justify-center shadow-xs cursor-pointer">{{ __('common.filter') }}</button>
                 <a href="{{ route('inventory.stocks') }}" class="h-11 sm:h-10 px-3.5 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all flex items-center justify-center">
                     Reset
                 </a>
@@ -181,13 +177,13 @@
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] whitespace-nowrap bg-black/[0.015] dark:bg-white/[0.015]">
-                        <x-table-sort-th :col="0" type="string" title="Produk & SKU" />
+                        <x-table-sort-th :col="0" type="string" title="{{ __('inventory.produk_sku') }}" />
                         <x-table-sort-th :col="1" type="string" title="Lokasi / Outlet" />
-                        <x-table-sort-th :col="2" type="number" title="Stok Fisik" align="right" />
-                        <x-table-sort-th :col="3" type="number" title="Stok Min." align="right" />
+                        <x-table-sort-th :col="2" type="number" title="{{ __('inventory.stok_fisik') }}" align="right" />
+                        <x-table-sort-th :col="3" type="number" title="{{ __('inventory.stok_min') }}" align="right" />
                         <x-table-sort-th :col="4" type="number" title="HPP / Unit" align="right" />
-                        <x-table-sort-th :col="5" type="number" title="Total Nilai" align="right" />
-                        <x-table-sort-th :col="6" type="number" title="Status" align="center" />
+                        <x-table-sort-th :col="5" type="number" title="{{ __('inventory.total_nilai') }}" align="right" />
+                        <x-table-sort-th :col="6" type="number" title="{{ __('common.status') }}" align="center" />
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
@@ -251,7 +247,7 @@
                             <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto mb-2.5 text-black/40 dark:text-white/40">
                                 <i data-lucide="package" class="w-6 h-6"></i>
                             </div>
-                            <p class="font-medium">Belum ada data stok tercatat pada filter ini.</p>
+                            <p class="font-medium">{{ __('inventory.belum_ada_data_stok_tercatat_pada') }}</p>
                         </td>
                     </tr>
                     @endforelse
@@ -303,7 +299,7 @@
             </div>
         </div>
         @empty
-        <div class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">Belum ada data stok tercatat.</div>
+        <div class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">{{ __('inventory.belum_ada_data_stok_tercatat') }}</div>
         @endforelse
 
         @if($stocks->hasPages())
@@ -352,7 +348,7 @@
                         <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
                             <i data-lucide="sliders" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white">Penyesuaian Stok Cepat</h3>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('inventory.penyesuaian_stok_cepat') }}</h3>
                     </div>
                     <button type="button" @click="showAdjustModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
@@ -428,19 +424,15 @@
                             <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                 PIN Supervisor <span class="text-[#FF3B30]">*</span>
                             </label>
-                            <input type="password" name="supervisor_pin" maxlength="10" placeholder="Masukkan PIN Supervisor"
+                            <input type="password" name="supervisor_pin" maxlength="10" placeholder="{{ __('inventory.masukkan_pin_supervisor') }}"
                                 :required="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"
                                 class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-red-300 dark:border-red-500/40 rounded-lg px-3 text-[14px] font-mono tracking-widest text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition">
                         </div>
                     </div>
 
                     <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
-                        <button type="button" @click="showAdjustModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
-                            Batal
-                        </button>
-                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                            Simpan Perubahan
-                        </button>
+                        <button type="button" @click="showAdjustModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">{{ __('common.save_changes') }}</button>
                     </div>
                 </form>
             </div>

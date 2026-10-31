@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Detail Pencairan Settlement #' . $settlement->settlement_number])
+@extends('layouts.admin', ['title' => __('admin.detail_pencairan_settlement') . $settlement->settlement_number])
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6 pb-16">
@@ -29,7 +29,7 @@
         <a href="{{ route('admin.settlements.index') }}"
             class="h-9 px-4 rounded-[10px] text-xs font-medium text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/10 hover:bg-black/10 transition flex items-center gap-1.5">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali</span>
+            <span>{{ __('common.back') }}</span>
         </a>
     </div>
 
@@ -129,7 +129,7 @@
                     <i data-lucide="banknote" class="w-4 h-4"></i>
                 </div>
                 <div>
-                    <h2 class="text-[15px] font-bold text-black dark:text-white">Aksi Admin: Setujui atau Tolak Pencairan</h2>
+                    <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.aksi_admin_setujui_atau_tolak_pencairan') }}</h2>
                     <p class="text-xs text-black/50 dark:text-white/50">Transfer manual ke rekening merchant, upload bukti, lalu setujui. Notifikasi WhatsApp akan terkirim otomatis.</p>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">Catatan Admin (Opsional)</label>
-                        <input type="text" name="admin_notes" placeholder="Contoh: Transfer BCA #01234 jam 14:30"
+                        <input type="text" name="admin_notes" placeholder="{{ __('admin.contoh_transfer_bca_01234_jam_14') }}"
                             class="w-full h-10 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759] focus:outline-none">
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/10">
@@ -187,7 +187,7 @@
                     @csrf
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">Alasan Penolakan *</label>
-                        <textarea name="rejection_reason" rows="3" required placeholder="Jelaskan alasan penolakan pencairan saldo..."
+                        <textarea name="rejection_reason" rows="3" required placeholder="{{ __('admin.jelaskan_alasan_penolakan_pencairan_saldo') }}"
                             class="w-full rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3 py-2.5 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#FF3B30] focus:outline-none resize-none"></textarea>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-black/5 dark:border-white/10">
@@ -211,7 +211,7 @@
         <div class="p-5 rounded-[22px] bg-[#FF3B30]/5 dark:bg-[#FF3B30]/10 border border-[#FF3B30]/20 space-y-2">
             <div class="flex items-center gap-2">
                 <i data-lucide="alert-circle" class="w-4 h-4 text-[#FF3B30]"></i>
-                <h3 class="text-[13px] font-bold text-[#FF3B30]">Alasan Penolakan</h3>
+                <h3 class="text-[13px] font-bold text-[#FF3B30]">{{ __('admin.alasan_penolakan') }}</h3>
             </div>
             <p class="text-xs text-black/70 dark:text-white/70">{{ $settlement->rejection_reason }}</p>
         </div>
@@ -226,19 +226,19 @@
                         <i data-lucide="image" class="w-4 h-4"></i>
                     </div>
                     <div>
-                        <h3 class="text-[15px] font-bold text-black dark:text-white">Bukti Transfer Bank Resmi</h3>
+                        <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.bukti_transfer_bank_resmi') }}</h3>
                         <p class="text-xs text-black/50 dark:text-white/50">Ditransfer pada {{ $settlement->transferred_at ? $settlement->transferred_at->format('d M Y H:i') : '-' }} oleh {{ $settlement->admin?->name ?? 'Admin COOCA' }}</p>
                     </div>
                 </div>
                 <a href="{{ $settlement->proof_image_url }}" target="_blank" download
                     class="h-8 px-3 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] text-xs font-semibold hover:bg-[#007AFF]/20 transition flex items-center gap-1.5">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>Unduh Bukti</span>
+                    <span>{{ __('admin.unduh_bukti') }}</span>
                 </a>
             </div>
 
             <div class="flex justify-center p-2 rounded-[16px] bg-black/[0.02] dark:bg-black/30 border border-black/5 dark:border-white/5">
-                <img src="{{ $settlement->proof_image_url }}" alt="Struk Transfer" class="max-h-96 rounded-[12px] object-contain shadow-xs">
+                <img src="{{ $settlement->proof_image_url }}" alt="{{ __('admin.struk_transfer') }}" class="max-h-96 rounded-[12px] object-contain shadow-xs">
             </div>
 
             @if($settlement->admin_notes)

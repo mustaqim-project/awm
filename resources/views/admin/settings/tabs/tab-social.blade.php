@@ -179,7 +179,7 @@
                                 <div class="w-7 h-7 rounded-[9px] bg-gradient-to-tr from-[#F58529] to-[#DD2A7B] text-white flex items-center justify-center shrink-0">
                                     <i data-lucide="instagram" class="w-4 h-4"></i>
                                 </div>
-                                <h4 class="text-[13.5px] font-bold text-black dark:text-white">Selamat datang di Instagram API</h4>
+                                <h4 class="text-[13.5px] font-bold text-black dark:text-white">{{ __('admin.selamat_datang_di_instagram_api') }}</h4>
                             </div>
                             <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
                                 Mulailah menggunakan API Instagram untuk membuat, menerbitkan, dan mengelola konten. Anda juga bisa berinteraksi dengan pengguna dengan mengirim dan menerima pesan, serta memoderasi komentar.
@@ -273,7 +273,7 @@
                                     </div>
                                     <a href="https://developers.facebook.com/apps/1454871749894754/instagram-business/API-Setup/?business_id=2409028599628721#" target="_blank"
                                         class="w-full h-8 px-3 rounded-[8px] bg-[#E1306C]/10 hover:bg-[#E1306C]/20 text-[#E1306C] text-[11.5px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
-                                        <span>Buka API Setup Instagram di Meta</span>
+                                        <span>{{ __('admin.buka_api_setup_instagram_di_meta') }}</span>
                                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                     </a>
                                 </div>
@@ -375,7 +375,7 @@
                                 <div class="relative">
                                     <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 font-mono text-[13px]">&#64;</span>
                                     <input type="text" name="instagram_username" value="{{ old('instagram_username', $instagramUsername ?? 'cooca.indonesia') }}"
-                                        placeholder="cooca.indonesia"
+                                        placeholder="{{ __('admin.cooca_indonesia_3') }}"
                                         class="w-full h-11 pl-8 pr-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#E1306C]/50 transition">
                                 </div>
                             </div>
@@ -461,7 +461,7 @@
                                     Nama Halaman Facebook
                                 </label>
                                 <input type="text" name="social_media_page_name" value="{{ old('social_media_page_name', $socialMediaPageName ?? 'Cooca Indonesia') }}"
-                                    placeholder="Cooca Indonesia"
+                                    placeholder="{{ __('admin.cooca_indonesia') }}"
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#1877F2]/50 transition">
                             </div>
 
@@ -541,7 +541,7 @@
                                     Threads Username
                                 </label>
                                 <input type="text" name="threads_username" value="{{ old('threads_username', $threadsUsername ?? 'cooca.indonesia') }}"
-                                    placeholder="cooca.indonesia"
+                                    placeholder="{{ __('admin.cooca_indonesia_3') }}"
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white font-mono placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-black/30 dark:focus:ring-white/30 transition">
                             </div>
 
@@ -768,7 +768,7 @@
                         <button type="submit"
                             class="w-full sm:w-auto h-11 px-6 rounded-[14px] text-[13.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4"></i>
-                            <span>Simpan Pengaturan Media Sosial</span>
+                            <span>{{ __('admin.simpan_pengaturan_media_sosial') }}</span>
                         </button>
 
 
@@ -927,7 +927,7 @@
                             class="p-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black dark:text-white text-[12px] font-medium flex items-center justify-between transition-colors">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="shield-alert" class="w-4 h-4 text-[#FF9500]"></i>
-                                <span>Panduan Meta App Review</span>
+                                <span>{{ __('admin.panduan_meta_app_review') }}</span>
                             </div>
                             <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
                         </a>

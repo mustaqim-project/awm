@@ -2,7 +2,7 @@
 <div x-show="activeTab === 'coa'" class="space-y-6">
     <div class="flex items-center justify-between gap-4 flex-wrap">
         <div>
-            <h2 class="text-[16px] font-bold text-black dark:text-white">Bagan Akun Perkiraan (Chart of Accounts)</h2>
+            <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.bagan_akun_perkiraan_chart_of_accounts') }}</h2>
             <p class="text-[12.5px] text-black/50 dark:text-white/50">
                 Struktur klasifikasi kode akun pembukuan resmi platform Cooca untuk pengelompokan debit dan kredit.
             </p>
@@ -11,7 +11,7 @@
             <button type="button" @click="openCreateAccount()"
                 class="h-9.5 px-4 rounded-[12px] text-[12.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                 <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>Tambah Akun Baru</span>
+                <span>{{ __('admin.tambah_akun_baru') }}</span>
             </button>
         @endif
     </div>
@@ -80,7 +80,7 @@
                             @if(Auth::guard('admin')->user()?->hasPermission('admin.finance.manage'))
                                 <button type="button" @click="openEditAccount(@js($acc))"
                                     class="w-7 h-7 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
-                                    title="Ubah Akun">
+                                    title="{{ __('admin.ubah_akun') }}">
                                     <i data-lucide="pencil" class="w-3 h-3"></i>
                                 </button>
 
@@ -99,7 +99,7 @@
                     </div>
                 @empty
                     <div class="p-6 text-center text-black/40 dark:text-white/40 text-[12px]">
-                        Belum ada akun terdaftar pada kategori {{ $typeTitle }}.
+                        {{ __('admin.belum_ada_akun_terdaftar_pada_kategori') }}
                     </div>
                 @endforelse
             </div>

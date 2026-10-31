@@ -25,7 +25,7 @@
                 <span class="w-8 h-8 rounded-[10px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] flex items-center justify-center text-white shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="wand-2" class="w-4 h-4"></i>
                 </span>
-                <span>Inisiasi Brief Kreatif &amp; Visual Produk</span>
+                <span>{{ __('ai.inisiasi_brief_kreatif_visual_produk') }}</span>
             </h1>
             <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
                 Pilih produk dari katalog bisnis Anda, tentukan channel pemasaran sasaran, dan pratinjau rancangan prompt sebelum eksekusi render.
@@ -51,9 +51,7 @@
             </button>
 
             <a href="{{ route('ai-studio.index') }}"
-                class="px-3.5 py-2 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/70 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-all">
-                Batal
-            </a>
+                class="px-3.5 py-2 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/70 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-all">{{ __('common.cancel') }}</a>
         </div>
     </div>
 
@@ -65,7 +63,7 @@
                     <i data-lucide="alert-circle" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Kredit Bulanan AI Studio Anda Telah Habis (0 Kredit)</h4>
+                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('ai.kredit_bulanan_ai_studio_anda_telah') }}</h4>
                     <p class="text-[11px] sm:text-xs text-black/60 dark:text-white/60">
                         Top up kredit sekarang via QRIS / Virtual Account untuk mulai membuat variasi visual katalog baru.
                     </p>
@@ -226,7 +224,7 @@
                             Catatan Khusus / Deskripsi Tambahan
                         </label>
                         <textarea id="customNotes" name="custom_notes" x-model="customNotes" rows="3" maxlength="1000"
-                            placeholder="Contoh: Tambahkan pencahayaan sore keemasan dari jendela kayu, meja marmer putih dengan taburan biji kopi segar di sekitarnya."
+                            placeholder="{{ __('ai.contoh_tambahkan_pencahayaan_sore_keemasan_dari') }}"
                             class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                     </div>
                 </div>
@@ -296,16 +294,14 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
                             <i data-lucide="package" class="w-4 h-4 text-[#34C759]"></i>
-                            <span>3. Objek Produk / Layanan</span>
+                            <span>{{ __('ai.3_objek_produk_layanan') }}</span>
                         </h3>
 
                         <!-- Tab Switcher: Katalog vs Upload Sendiri -->
                         <div class="flex p-0.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-semibold">
                             <button type="button" @click="productTab = 'catalog'"
                                 class="px-2.5 py-1 rounded-[8px] transition-all"
-                                :class="productTab === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
-                                Katalog Bisnis
-                            </button>
+                                :class="productTab === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">{{ __('ai.katalog_bisnis') }}</button>
                             <button type="button" @click="productTab = 'upload'"
                                 class="px-2.5 py-1 rounded-[8px] transition-all"
                                 :class="productTab === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black'">
@@ -361,13 +357,13 @@
                             <div x-show="customProductPreview" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3" style="display: none;">
                                 <img :src="customProductPreview" alt="Preview Objek" class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
                                 <div class="flex-1 min-w-0">
-                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="customProductName || 'Foto Objek Produk'">Foto Objek Produk</h5>
+                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="customProductName || 'Foto Objek Produk'">{{ __('ai.foto_objek_produk') }}</h5>
                                     <p class="text-[10px] text-[#34C759] font-semibold flex items-center gap-1 mt-0.5">
                                         <i data-lucide="check-circle" class="w-3 h-3"></i>
                                         <span>Siap diintegrasikan ke komposisi AI</span>
                                     </p>
                                 </div>
-                                <button type="button" @click="clearCustomProduct()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="Hapus Gambar">
+                                <button type="button" @click="clearCustomProduct()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="{{ __('community.hapus_gambar') }}">
                                     <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -429,7 +425,7 @@
                                 </div>
                                 <button type="button" @click="clearInspiration()"
                                     class="p-1.5 rounded-full text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-black/5 transition-colors"
-                                    title="Hapus Referensi">
+                                    title="{{ __('ai.hapus_referensi') }}">
                                     <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -441,7 +437,7 @@
                                 <a href="{{ route('ai-studio.inspiration.index') }}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] text-xs font-semibold text-black/80 dark:text-white transition-all">
                                     <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                                    <span>Pilih di Galeri Inspirasi (197 Template)</span>
+                                    <span>{{ __('ai.pilih_di_galeri_inspirasi_197_template') }}</span>
                                 </a>
                             </div>
                         @endif
@@ -473,7 +469,7 @@
                                         <span>Gaya &amp; lighting akan diaplikasikan ke produk Anda</span>
                                     </p>
                                 </div>
-                                <button type="button" @click="clearCustomReference()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="Hapus Gambar">
+                                <button type="button" @click="clearCustomReference()" class="p-1.5 rounded-full text-black/40 hover:text-red-500 hover:bg-black/5" title="{{ __('community.hapus_gambar') }}">
                                     <i data-lucide="x" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -499,9 +495,7 @@
 
                         <!-- Secondary Button: Simpan Draf Saja -->
                         <button type="submit"
-                            class="w-full py-2.5 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
-                            Simpan Sebagai Draf Proyek
-                        </button>
+                            class="w-full py-2.5 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">{{ __('ai.simpan_sebagai_draf_proyek') }}</button>
                     </div>
                 </div>
 
@@ -668,7 +662,7 @@ function aiStudioCreateProject() {
                 this.promptModalOpen = true;
                 this.$nextTick(() => lucide.createIcons());
             } catch (err) {
-                alert('Terjadi kesalahan: ' + err.message);
+                alert('{{ __('ai.terjadi_kesalahan_err_message') }}
             } finally {
                 this.compilingPrompt = false;
             }

@@ -11,7 +11,7 @@
                     <i data-lucide="credit-card" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h3 class="text-[16px] font-bold text-black dark:text-white">Catat Pembayaran Piutang (AR)</h3>
+                    <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.catat_pembayaran_piutang_ar') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50 font-mono" x-text="selectedAr ? (selectedAr.invoice_number + ' - ' + selectedAr.client_name) : ''"></p>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                     Catatan Pembayaran
                 </label>
-                <textarea name="notes" rows="2" placeholder="Pelunasan tahap 1 / pembayaran lunas invoice..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.pelunasan_tahap_1_pembayaran_lunas_invoice') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759] resize-none"></textarea>
             </div>
 
@@ -117,13 +117,11 @@
             {{-- Buttons --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showPayArModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] transition-all shadow-sm shadow-[#34C759]/25 cursor-pointer flex items-center gap-2">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Simpan &amp; Jurnal Pelunasan</span>
+                    <span>{{ __('admin.simpan_jurnal_pelunasan') }}</span>
                 </button>
             </div>
         </form>

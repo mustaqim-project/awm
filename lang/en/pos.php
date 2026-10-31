@@ -1741,4 +1741,9 @@ return [
     'belum_ada_data_belum_ada_data' => 'No existing data : no existing data }}',
     'belum_ada_transaksi_pembayaran_yang_selesai' => 'No existing transaction payment yang complete pada periode tanggal dan filter yang',
     'komposisi_saluran_pembayaran' => 'Komposisi Saluran Payment',
+    'printer_testing' => 'Printer Testing',
+    'drawer_testing' => 'Cash Drawer Testing',
+    'payment_channel_composition' => 'Payment Channel Composition',
+    'no_completed_payment_transactions_desc' => 'No completed payment transactions for the selected date range and filter.',
+    'check_history' => 'Check History',
 ];

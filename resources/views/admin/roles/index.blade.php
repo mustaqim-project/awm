@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Hak Akses & Peran Admin - Platform RBAC',
+    'title' => __('admin.hak_akses_peran_admin_platform_rbac'),
     'headerTitle' => 'Manajemen Peran & Hak Akses Platform',
     'headerSubtitle' => 'Atur hak akses granular, peran staf administrator, dan audit izin operasional platform COOCA',
 ])
@@ -158,7 +158,7 @@
 
         <div class="rounded-[18px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-4 sm:p-5 flex flex-col justify-between shadow-xs">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50 text-[12px] font-medium">
-                <span>Staf Administrator</span>
+                <span>{{ __('admin.staf_administrator') }}</span>
                 <i data-lucide="users" class="w-4 h-4 text-[#34C759]"></i>
             </div>
             <div class="mt-3 flex items-baseline justify-between">
@@ -209,7 +209,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                 class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-2 cursor-pointer">
                 <i data-lucide="users" class="w-4 h-4 text-[#34C759]"></i>
-                <span>Staf Administrator</span>
+                <span>{{ __('admin.staf_administrator') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[11px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] tabular-nums">{{ $admins->count() }}</span>
             </button>
 
@@ -304,7 +304,7 @@
                             @if(! $isPreset)
                                 <button type="button" @click="openDeleteRole(@js($role))"
                                     class="h-9 px-3 rounded-[10px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] font-bold text-[12px] flex items-center justify-center transition-all cursor-pointer"
-                                    title="Hapus Peran Kustom">
+                                    title="{{ __('admin.hapus_peran_kustom') }}">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 </button>
                             @endif
@@ -313,7 +313,7 @@
                                 @click="openEditRole(@js($role), '{{ route('admin.roles.update', $role) }}', @js($rolePermSlugs))"
                                 class="w-full h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 font-bold text-[12px] flex items-center justify-center gap-1.5">
                                 <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                <span>Lihat Rincian Izin</span>
+                                <span>{{ __('admin.lihat_rincian_izin') }}</span>
                             </button>
                         @endif
                     </div>
@@ -329,7 +329,7 @@
         <div class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 overflow-hidden shadow-xs">
             <div class="px-5 py-4 border-b border-black/5 dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h3 class="text-[15px] font-bold text-black dark:text-white">Daftar Akun Administrator Platform</h3>
+                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.daftar_akun_administrator_platform') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50">Seluruh staf internal yang memiliki akses ke Admin Center ini.</p>
                 </div>
                 <div class="text-[12px] font-semibold text-black/60 dark:text-white/60">
@@ -398,7 +398,7 @@
                                             @click="openChangeAdminRole(@js($adm), '{{ route('admin.roles.admins.role', $adm) }}', '{{ $adm->role }}')"
                                             class="h-8 px-3 rounded-[9px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer">
                                             <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
-                                            <span>Ubah Peran</span>
+                                            <span>{{ __('admin.ubah_peran') }}</span>
                                         </button>
                                     @else
                                         <span class="text-[12px] text-black/30 dark:text-white/30 italic">Terkunci</span>
@@ -538,7 +538,7 @@
 
                             <div class="relative w-full sm:w-64">
                                 <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
-                                <input type="text" x-model="searchPermission" placeholder="Cari nama atau slug izin..."
+                                <input type="text" x-model="searchPermission" placeholder="{{ __('admin.cari_nama_atau_slug_izin') }}"
                                     class="w-full h-8.5 pl-8 pr-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                             </div>
                         </div>
@@ -595,9 +595,7 @@
                 {{-- Modal Footer --}}
                 <div class="px-6 py-4 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-3 shrink-0 bg-black/[0.01] dark:bg-white/[0.01]">
                     <button type="button" @click="showRoleModal = false"
-                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                        Batal
-                    </button>
+                        class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                     @if(Auth::guard('admin')->user()?->hasPermission('admin.roles.manage'))
                         <button type="submit"
                             class="h-10 px-6 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
@@ -622,7 +620,7 @@
             
             <div class="px-6 py-4.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
                 <div>
-                    <h3 class="text-[17px] font-bold text-black dark:text-white">Ubah Peran Staf Administrator</h3>
+                    <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.ubah_peran_staf_administrator') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50" x-text="selectedAdmin ? selectedAdmin.name + ' (' + selectedAdmin.email + ')' : ''"></p>
                 </div>
                 <button type="button" @click="showMemberModal = false" class="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-black/40">
@@ -655,14 +653,12 @@
 
                 <div class="pt-3 border-t border-black/5 dark:border-white/10 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showMemberModal = false"
-                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5">
-                        Batal
-                    </button>
+                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
                     @if(Auth::guard('admin')->user()?->hasPermission('admin.roles.manage'))
                         <button type="submit"
                             class="h-9.5 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-[13px] shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Simpan Peran</span>
+                            <span>{{ __('admin.simpan_peran') }}</span>
                         </button>
                     @endif
                 </div>
@@ -685,7 +681,7 @@
             </div>
 
             <div>
-                <h3 class="text-[17px] font-bold text-black dark:text-white">Hapus Peran Kustom?</h3>
+                <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.hapus_peran_kustom_2') }}</h3>
                 <p class="text-[12.5px] text-black/60 dark:text-white/60 mt-1 leading-relaxed">
                     Apakah Anda yakin ingin menghapus peran <strong class="text-black dark:text-white" x-text="deleteTargetRole?.name"></strong>?
                     Tindakan ini tidak dapat dibatalkan.
@@ -694,9 +690,7 @@
 
             <div class="pt-2 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showDeleteModal = false"
-                    class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5">
-                    Batal
-                </button>
+                    class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.roles.manage'))
                     <form :action="'/admin/roles/' + deleteTargetRole?.id" method="POST">
                         @csrf
@@ -704,7 +698,7 @@
                         <button type="submit"
                             class="h-9.5 px-5 rounded-[10px] bg-[#FF3B30] hover:bg-[#E02D23] text-white font-bold text-[13px] shadow-sm transition-all flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            <span>Ya, Hapus Peran</span>
+                            <span>{{ __('admin.ya_hapus_peran') }}</span>
                         </button>
                     </form>
                 @endif

@@ -2,7 +2,7 @@
 <div x-show="activeTab === 'ledger'" class="space-y-4">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-            <h2 class="text-[16px] font-bold text-black dark:text-white">Buku Besar Akun (General Ledger)</h2>
+            <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.buku_besar_akun_general_ledger') }}</h2>
             <p class="text-[12.5px] text-black/50 dark:text-white/50">
                 Riwayat mutasi kronologis dan kalkulasi saldo berjalan (running balance) per akun perkiraan.
             </p>
@@ -107,7 +107,7 @@
                         @empty
                             <tr>
                                 <td colspan="7" class="px-5 py-10 text-center font-sans text-black/40 dark:text-white/40">
-                                    Belum ada mutasi untuk akun ini pada periode yang dipilih.
+                                    {{ __('admin.belum_ada_mutasi_untuk_akun_ini') }}
                                 </td>
                             </tr>
                         @endforelse

@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Upload Template Excel Baru - Admin Console',
+    'title' => __('admin.upload_template_excel_baru_admin_console'),
     'headerTitle' => 'Upload Template Excel Baru',
     'headerSubtitle' => 'Unggah file spreadsheet asli (.xlsx/.xls/.csv) dan atur informasi publikasi untuk calon prospek UMKM',
 ])
@@ -11,7 +11,7 @@
             <a href="{{ route('admin.templates.index') }}"
                 class="inline-flex items-center gap-2 text-[13px] font-medium text-black/60 dark:text-white/60 hover:text-[#007AFF] dark:hover:text-[#007AFF] transition-colors active:scale-[0.98]">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="1.8"></i>
-                <span>Kembali ke Daftar Template</span>
+                <span>{{ __('admin.kembali_ke_daftar_template') }}</span>
             </a>
         </div>
 
@@ -107,14 +107,14 @@
                     <div class="sm:col-span-2">
                         <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75 mb-1.5">Nama Template *</label>
                         <input type="text" name="name" x-model="name" @blur="generateSlug()" required
-                            placeholder="Contoh: Template Laporan Arus Kas Bulanan UMKM"
+                            placeholder="{{ __('admin.contoh_template_laporan_arus_kas_bulanan') }}"
                             class="w-full h-11 sm:h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition-all">
                     </div>
 
                     <div>
                         <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75 mb-1.5">URL Slug *</label>
                         <input type="text" name="slug" x-model="slug" required
-                            placeholder="laporan-arus-kas-bulanan"
+                            placeholder="{{ __('admin.laporan_arus_kas_bulanan') }}"
                             class="w-full h-11 sm:h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] text-black dark:text-white font-mono placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition-all">
                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Akan diakses di:
                             <code class="font-mono text-black/60 dark:text-white/60">/template/<span x-text="slug || 'slug-template'"></span></code></p>
@@ -134,14 +134,14 @@
                     <div class="sm:col-span-2">
                         <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75 mb-1.5">Deskripsi Singkat</label>
                         <textarea name="description" rows="2"
-                            placeholder="Jelaskan secara ringkas peruntukan template dan jenis usaha sasaran..."
+                            placeholder="{{ __('admin.jelaskan_secara_ringkas_peruntukan_template_dan') }}"
                             class="w-full p-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition-all leading-relaxed">{{ old('description') }}</textarea>
                     </div>
 
                     <div class="sm:col-span-2">
                         <label class="block text-[13px] font-semibold text-black/75 dark:text-white/75 mb-1.5">Fitur Unggulan (Highlights)</label>
                         <textarea name="highlights" rows="4"
-                            placeholder="Satu poin per baris, contoh:&#10;Perhitungan otomatis kas masuk dan keluar&#10;Laporan laba rugi format standar perbankan&#10;Siap dicetak atau disalin"
+                            placeholder="{{ __('admin.satu_poin_per_baris_contoh_10') }}"
                             class="w-full p-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition-all leading-relaxed">{{ old('highlights') }}</textarea>
                         <p class="text-[12px] text-black/45 dark:text-white/45 mt-1">Pisahkan tiap poin dengan Enter. Tampil dengan tanda centang di halaman publik.</p>
                     </div>
@@ -169,14 +169,12 @@
             <!-- Action Buttons (Section 9.4 Concise Action Labels) -->
             <div class="flex items-center justify-end gap-3 pt-2">
                 <a href="{{ route('admin.templates.index') }}"
-                    class="h-11 sm:h-10 px-5 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white/70 text-[13px] font-medium flex items-center justify-center transition-colors active:scale-[0.98]">
-                    Batal
-                </a>
+                    class="h-11 sm:h-10 px-5 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white/70 text-[13px] font-medium flex items-center justify-center transition-colors active:scale-[0.98]">{{ __('common.cancel') }}</a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.create'))
 <button type="submit"
                     class="h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all">
                     <i data-lucide="upload" class="w-4 h-4" stroke-width="1.8"></i>
-                    <span>Simpan</span>
+                    <span>{{ __('common.save') }}</span>
                 </button>
 @endif
             </div>

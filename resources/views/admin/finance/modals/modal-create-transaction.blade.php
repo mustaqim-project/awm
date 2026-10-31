@@ -12,7 +12,7 @@
         
         <div class="px-6 py-4 border-b border-black/5 dark:border-white/5 flex items-center justify-between">
             <div>
-                <h3 class="text-[16px] font-bold text-black dark:text-white">Catat Transaksi Kas Platform</h3>
+                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.catat_transaksi_kas_platform') }}</h3>
                 <p class="text-[11.5px] text-black/50 dark:text-white/50">Mencatat mutasi kas dan menjurnal otomatis ke buku besar</p>
             </div>
             <button type="button" @click="showCreateModal = false"
@@ -84,7 +84,7 @@
                 <label class="block text-[12px] font-bold text-black/70 dark:text-white/70 mb-1">
                     Judul / Uraian Transaksi <span class="text-[#FF3B30]">*</span>
                 </label>
-                <input type="text" name="title" required placeholder="Contoh: Pembayaran Server VPS Hostinger Oktober"
+                <input type="text" name="title" required placeholder="{{ __('admin.contoh_pembayaran_server_vps_hostinger_oktober') }}"
                     class="w-full h-10 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
 
@@ -121,7 +121,7 @@
                 <label class="block text-[12px] font-bold text-black/70 dark:text-white/70 mb-1">
                     Catatan Internal (Opsional)
                 </label>
-                <textarea name="notes" rows="2" placeholder="Catatan nomor invoice, persetujuan direksi, atau nomor referensi..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.catatan_nomor_invoice_persetujuan_direksi_atau') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF] resize-none"></textarea>
             </div>
 
@@ -146,7 +146,7 @@
                             <img :src="createImagePreview" alt="Preview" class="w-10 h-10 rounded-[8px] object-cover border border-black/10 dark:border-white/10">
                             <span class="text-[12px] font-semibold text-black dark:text-white truncate">Berkas gambar terpilih</span>
                         </div>
-                        <button type="button" @click="createImagePreview = null" class="text-[11px] font-bold text-[#FF3B30] hover:underline px-2">Batal</button>
+                        <button type="button" @click="createImagePreview = null" class="text-[11px] font-bold text-[#FF3B30] hover:underline px-2">{{ __('common.cancel') }}</button>
                     </div>
                 </template>
             </div>
@@ -154,13 +154,9 @@
             {{-- Footer Tombol Aksi --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showCreateModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
-                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                    Simpan &amp; Jurnal Otomatis
-                </button>
+                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">{{ __('admin.simpan_jurnal_otomatis') }}</button>
             </div>
         </form>
     </div>

@@ -144,9 +144,7 @@
             {{-- Actions --}}
             <div class="pt-2 flex items-center justify-end gap-3 border-t border-black/5 dark:border-white/5">
                 <button type="button" @click="showEditModal = false"
-                    class="px-4 py-2 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-[13px] font-medium text-black/70 dark:text-white/70 transition-colors">
-                    Batal
-                </button>
+                    class="px-4 py-2 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-[13px] font-medium text-black/70 dark:text-white/70 transition-colors">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="px-5 py-2.5 rounded-[12px] bg-[#0284c7] hover:bg-[#0369a1] text-white text-[13.5px] font-semibold shadow-lg shadow-[#0284c7]/20 transition-all flex items-center gap-2">
                     <i data-lucide="save" class="w-4 h-4"></i> Simpan Perubahan

@@ -57,7 +57,7 @@
             @if(\App\Support\Context::hasPermission('pos.terminal'))
                 <a href="{{ route('pos.terminal') }}" class="min-h-[48px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto">
                     <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                    <span>Buka Terminal Kasir</span>
+                    <span>{{ __('pos.buka_terminal_kasir') }}</span>
                 </a>
             @endif
         </x-slot:actions>
@@ -384,18 +384,18 @@
                 <button type="button"
                     @click="confirmReprint('{{ route('pos.receipt', $o->id) }}?reprint=1', {{ (int)$o->print_count }})"
                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/15 flex items-center gap-1"
-                    title="Cetak Salinan (Ke-{{ $o->print_count }})">
+                    title="{{ __('pos.cetak_salinan_ke_o_print_count') }}">
                     <span>Re-Print ({{ $o->print_count }}x)</span>
                 </button>
                 @else
                 <a href="{{ route('pos.receipt', $o->id) }}" target="_blank"
                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] flex items-center">
-                    Struk
+                    {{ __('pos.receipt') }}
                 </a>
                 @endif
                 <button type="button" @click="viewDetail('{{ $o->id }}')"
                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                    Detail
+                    {{ __('common.detail') }}
                 </button>
                 @if($o->status === 'completed')
                     @if(\App\Support\Context::hasPermission('pos.supervisor_pin') || \App\Support\Context::hasPermission('pos.orders'))
@@ -415,7 +415,7 @@
         </div>
         @empty
         <div class="p-8 text-center text-[13px] text-black/40 dark:text-white/40">
-            Belum ada transaksi POS yang tercatat.
+            {{ __('pos.belum_ada_transaksi_pos_yang_tercatat') }}
         </div>
         @endforelse
 

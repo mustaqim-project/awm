@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Kelola Bisnis (Tenants) - Admin Console',
+    'title' => __('admin.kelola_bisnis_tenants_admin_console'),
     'headerTitle' => 'Manajemen Tenant Bisnis UMKM',
     'headerSubtitle' => 'Kelola seluruh workspace bisnis yang beroperasi di platform Cooca',
 ])
@@ -115,7 +115,7 @@
                         class="w-4 h-4 text-black/35 dark:text-white/35 absolute left-3.5 top-1/2 -translate-y-1/2"
                         stroke-width="1.5"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama bisnis, slug, email, telepon..."
+                        placeholder="{{ __('admin.cari_nama_bisnis_slug_email_telepon') }}"
                         class="w-full h-10 pl-10 pr-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.06] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
@@ -136,7 +136,7 @@
                         <a href="{{ route('admin.businesses.index') }}"
                             class="h-10 px-3 rounded-[12px] text-[12px] font-bold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors inline-flex items-center gap-1.5">
                             <i data-lucide="x" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Reset Filter</span>
+                            <span>{{ __('common.reset') }}</span>
                         </a>
                     @endif
                 </div>
@@ -154,7 +154,7 @@
                                     @change="toggleSelectAll($event)"
                                     :checked="isAllSelected()"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
-                                    title="Pilih Semua di Halaman Ini">
+                                    title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
                             </th>
                             <th class="px-5 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Bisnis &amp; Identitas</th>
                             <th class="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Paket Langganan</th>
@@ -229,8 +229,8 @@
                                         @if(Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
                                         <a href="{{ route('admin.businesses.show', $biz->id) }}"
                                             class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1"
-                                            title="Lihat Detail Workspace">
-                                            <span>Detail</span>
+                                            title="{{ __('admin.lihat_detail_workspace') }}">
+                                            <span>{{ __('common.detail') }}</span>
                                             <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                         </a>
                                         @endif
@@ -240,9 +240,9 @@
                                             @csrf
                                             <button type="submit"
                                                 class="h-8 px-2.5 rounded-[10px] text-[12px] font-bold text-[#FF9500] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer"
-                                                title="Masuk ke Workspace (Cek Bug)">
+                                                title="{{ __('admin.masuk_ke_workspace_cek_bug') }}">
                                                 <i data-lucide="log-in" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                                <span>Masuk</span>
+                                                <span>{{ __('admin.masuk') }}</span>
                                             </button>
                                         </form>
                                         @endif
@@ -272,7 +272,7 @@
                                     <div class="w-12 h-12 mx-auto rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/30 dark:text-white/30 mb-2.5">
                                         <i data-lucide="building" class="w-6 h-6" stroke-width="1.5"></i>
                                     </div>
-                                    <p class="text-[15px] font-bold text-black dark:text-white">Tidak ada data bisnis ditemukan</p>
+                                    <p class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.tidak_ada_data_bisnis_ditemukan') }}</p>
                                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">Coba sesuaikan kata kunci pencarian atau reset filter.</p>
                                 </td>
                             </tr>
@@ -328,9 +328,7 @@
 
                 <!-- Cancel Selection -->
                 <button type="button" @click="selectedIds = []"
-                    class="h-9 px-3 rounded-[12px] text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                    Batal
-                </button>
+                    class="h-9 px-3 rounded-[12px] text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
             </div>
         </div>
 
@@ -345,7 +343,7 @@
                             <i data-lucide="alert-triangle" class="w-5 h-5" stroke-width="2"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white">Suspend Masal Tenant Bisnis</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.suspend_masal_tenant_bisnis') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
                                 <span class="font-bold text-[#FF3B30]" x-text="`${selectedIds.length} bisnis`"></span> akan dibekukan sekaligus dan transaksi publiknya dinonaktifkan.
                             </p>
@@ -370,13 +368,11 @@
 
                         <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
                             <button type="button" @click="showBulkSuspendModal = false"
-                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                                Batal
-                            </button>
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
                             <button type="submit"
                                 class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm cursor-pointer inline-flex items-center gap-1.5">
                                 <i data-lucide="ban" class="w-4 h-4"></i>
-                                <span>Konfirmasi Suspend Masal</span>
+                                <span>{{ __('admin.konfirmasi_suspend_masal') }}</span>
                             </button>
                         </div>
                     </form>
@@ -394,7 +390,7 @@
                             <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white">Tangguhkan Bisnis?</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.tangguhkan_bisnis') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50">
                                 Bisnis <strong class="text-black dark:text-white" x-text="suspendBizName"></strong> akan dibekukan dan notifikasi resmi dikirimkan via email ke pemilik bisnis.
                             </p>
@@ -413,13 +409,9 @@
 
                         <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
                             <button type="button" @click="showSuspendModal = false"
-                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                                Batal
-                            </button>
+                                class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
                             <button type="submit"
-                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm cursor-pointer">
-                                Konfirmasi Suspend
-                            </button>
+                                class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] transition shadow-sm cursor-pointer">{{ __('admin.konfirmasi_suspend') }}</button>
                         </div>
                     </form>
                 </div>

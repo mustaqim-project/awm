@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Buat Event Komunitas Baru - Cooca Admin',
+    'title' => __('admin.buat_event_komunitas_baru_cooca_admin'),
     'headerTitle' => 'Buat Event Komunitas',
     'headerSubtitle' => 'Publikasikan agenda seminar bisnis, meetup, dan workshop kasir untuk komunitas owner',
 ])
@@ -10,7 +10,7 @@
     <div class="flex items-center justify-between">
         <a href="{{ route('admin.events.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-black/60 dark:text-white/60 hover:text-[#007AFF] transition">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali ke Daftar Event</span>
+            <span>{{ __('admin.kembali_ke_daftar_event') }}</span>
         </a>
     </div>
 
@@ -48,7 +48,7 @@
                             Judul Agenda Event <span class="text-[#FF3B30]">*</span>
                         </label>
                         <input type="text" name="title" required value="{{ old('title') }}"
-                            placeholder="Contoh: Workshop Optimasi Omset Kasir &amp; Strategi Margin UMKM 2026"
+                            placeholder="{{ __('admin.contoh_workshop_optimasi_omset_kasir_strategi') }}"
                             class="w-full h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.1] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
                         @error('title') <p class="text-[11px] text-[#FF3B30] mt-1">{{ $message }}</p> @enderror
                     </div>
@@ -58,7 +58,7 @@
                             Deskripsi Lengkap &amp; Rangkaian Agenda <span class="text-[#FF3B30]">*</span>
                         </label>
                         <textarea name="description" required rows="4"
-                            placeholder="Jelaskan detail materi, narasumber, manfaat bagi pemilik usaha, serta fasilitas yang didapatkan..."
+                            placeholder="{{ __('admin.jelaskan_detail_materi_narasumber_manfaat_bagi') }}"
                             class="w-full p-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.1] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] resize-y">{{ old('description') }}</textarea>
                         @error('description') <p class="text-[11px] text-[#FF3B30] mt-1">{{ $message }}</p> @enderror
                     </div>
@@ -174,7 +174,7 @@
                     <label class="block text-[12px] font-bold text-black dark:text-white mb-1">
                         Kuota Maksimal Peserta (Opsional)
                     </label>
-                    <input type="number" name="quota" min="1" value="{{ old('quota') }}" placeholder="Kosongkan jika kuota tidak dibatasi"
+                    <input type="number" name="quota" min="1" value="{{ old('quota') }}" placeholder="{{ __('admin.kosongkan_jika_kuota_tidak_dibatasi') }}"
                         class="w-full sm:w-64 h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.1] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
                     <p class="text-[10px] text-black/45 dark:text-white/45 mt-1">Jumlah kursi/slot maksimal pendaftar.</p>
                 </div>
@@ -209,7 +209,7 @@
                             Alamat Lengkap / Link Webinar
                         </label>
                         <textarea name="location_address" rows="2"
-                            placeholder="Alamat jalan lengkap venue atau tautan link meeting online..."
+                            placeholder="{{ __('admin.alamat_jalan_lengkap_venue_atau_tautan') }}"
                             class="w-full p-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.1] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] resize-none">{{ old('location_address') }}</textarea>
                     </div>
 
@@ -247,14 +247,10 @@
             <!-- Submit Button -->
             <div class="flex items-center justify-end gap-3 pt-2">
                 <a href="{{ route('admin.events.index') }}"
-                    class="px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
-                    Batal
-                </a>
+                    class="px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">{{ __('common.cancel') }}</a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.events.create'))
 <button type="submit"
-                    class="px-6 py-2.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] shadow-sm shadow-[#007AFF]/25 transition cursor-pointer active:scale-[0.98]">
-                    Simpan &amp; Publikasikan Event
-                </button>
+                    class="px-6 py-2.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] shadow-sm shadow-[#007AFF]/25 transition cursor-pointer active:scale-[0.98]">{{ __('admin.simpan_publikasikan_event') }}</button>
 @endif
             </div>
         </form>

@@ -88,9 +88,7 @@
                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]">
                     <i data-lucide="sparkles" class="w-4 h-4" stroke-width="2"></i>
                 </span>
-                <h1 class="text-xl sm:text-2xl font-bold text-black dark:text-white tracking-tight">
-                    Early Adopter &amp; Program Harga Khusus
-                </h1>
+                <h1 class="text-xl sm:text-2xl font-bold text-black dark:text-white tracking-tight">{{ __('admin.early_adopter_program_harga_khusus') }}</h1>
             </div>
             <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 mt-1">
                 Kelola program harga khusus, batas kuota pendaftaran bertahap (batch), proteksi penguncian harga pelanggan lama, dan eskalasi tahunan terukur (maks. 10%).
@@ -186,7 +184,7 @@
                 <button type="button" @click="showEditBasePricesModal = true; refreshIcons()"
                     class="h-8 px-3 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-2xs flex items-center gap-1.5 transition active:scale-[0.98] shrink-0 cursor-pointer">
                     <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                    <span>Ubah Harga Normal &amp; Promo</span>
+                    <span>{{ __('admin.ubah_harga_normal_promo') }}</span>
                 </button>
             @endif
         </div>
@@ -262,7 +260,7 @@
         <a href="{{ route('admin.pricing-programs.index', ['tab' => 'customers']) }}"
             class="px-3.5 py-2 rounded-[12px] text-xs font-semibold transition flex items-center gap-1.5 shrink-0 {{ $tab === 'customers' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.05]' }}">
             <i data-lucide="users" class="w-3.5 h-3.5"></i>
-            <span>Pelanggan per Batch</span>
+            <span>{{ __('admin.pelanggan_per_batch') }}</span>
             <span class="px-1.5 py-0.2 rounded-full text-[10px] {{ $tab === 'customers' ? 'bg-white/20 text-white' : 'bg-black/[0.06] dark:bg-white/[0.1] text-black/70 dark:text-white/70' }}">
                 {{ $totalEarlyAdopterCustomers }}
             </span>
@@ -282,7 +280,7 @@
         <a href="{{ route('admin.pricing-programs.index', ['tab' => 'logs']) }}"
             class="px-3.5 py-2 rounded-[12px] text-xs font-semibold transition flex items-center gap-1.5 shrink-0 {{ $tab === 'logs' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.05]' }}">
             <i data-lucide="history" class="w-3.5 h-3.5"></i>
-            <span>Riwayat &amp; Audit Log Harga</span>
+            <span>{{ __('admin.riwayat_audit_log_harga') }}</span>
         </a>
     </div>
 
@@ -320,7 +318,7 @@
 
                                 <button type="button" @click="openEditProgram(@js($program))"
                                     class="h-8 px-2.5 rounded-[10px] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black/70 dark:text-white/70 text-xs font-medium transition"
-                                    title="Edit Program">
+                                    title="{{ __('admin.edit_program') }}">
                                     <i data-lucide="settings" class="w-3.5 h-3.5"></i>
                                 </button>
 
@@ -339,7 +337,7 @@
                     <!-- Batches Table / Cards -->
                     @if ($program->batches->isEmpty())
                         <div class="py-8 text-center text-xs text-black/40 dark:text-white/40">
-                            Belum ada batch pada program ini. Klik "Tambah Batch" untuk menentukan kuota dan harga khusus.
+                            {{ __('admin.belum_ada_batch_pada_program_ini') }} harga khusus.
                         </div>
                     @else
                         <div class="overflow-x-auto">
@@ -439,7 +437,7 @@
                                                     @if(Auth::guard('admin')->user()?->hasPermission('admin.pricing_programs.manage'))
                                                         <button type="button" @click="openEditBatch(@js($batch))"
                                                             class="p-1 rounded-[6px] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition"
-                                                            title="Edit Konfigurasi Batch">
+                                                            title="{{ __('admin.edit_konfigurasi_batch') }}">
                                                             <i data-lucide="edit" class="w-3.5 h-3.5"></i>
                                                         </button>
 
@@ -461,7 +459,7 @@
             @empty
                 <div class="p-12 text-center rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs space-y-3">
                     <i data-lucide="folder-plus" class="w-10 h-10 text-black/30 dark:text-white/30 mx-auto"></i>
-                    <h3 class="text-base font-bold text-black dark:text-white">Belum Ada Program Early Adopter</h3>
+                    <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.belum_ada_program_early_adopter') }}</h3>
                     <p class="text-xs text-black/60 dark:text-white/60 max-w-md mx-auto">
                         Mulai dengan membuat program pendaftaran berharga khusus (misal Early Adopter UMKM 2026) untuk memberikan promosi kuota terbatas dan harga terkunci.
                     </p>
@@ -490,7 +488,7 @@
                     <div class="relative flex-1 min-w-[200px]">
                         <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-2.5"></i>
                         <input type="text" name="search" value="{{ request('search') }}"
-                            placeholder="Cari nama usaha atau email..."
+                            placeholder="{{ __('admin.cari_nama_usaha_atau_email') }}"
                             class="w-full pl-9 pr-3 py-1.5 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                     </div>
 
@@ -504,9 +502,7 @@
                         @endforeach
                     </select>
 
-                    <button type="submit" class="h-8 px-3 rounded-[10px] bg-[#007AFF] text-white text-xs font-semibold">
-                        Filter
-                    </button>
+                    <button type="submit" class="h-8 px-3 rounded-[10px] bg-[#007AFF] text-white text-xs font-semibold">{{ __('common.filter') }}</button>
                     @if(request('search') || request('batch_id'))
                         <a href="{{ route('admin.pricing-programs.index', ['tab' => 'customers']) }}" class="h-8 px-2.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-xs flex items-center">
                             Reset
@@ -577,7 +573,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8" class="py-8 text-center text-xs text-black/40 dark:text-white/40">
-                                        Belum ada pelanggan dengan harga Early Adopter terkunci pada filter ini.
+                                        {{ __('admin.belum_ada_pelanggan_dengan_harga_early') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -602,7 +598,7 @@
             <!-- Action Cockpit -->
             <div class="p-5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div class="space-y-1">
-                    <h3 class="text-base font-bold text-black dark:text-white">Eksekusi Eskalasi Harga Tahunan Otomatis</h3>
+                    <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.eksekusi_eskalasi_harga_tahunan_otomatis') }}</h3>
                     <p class="text-xs text-black/60 dark:text-white/60">
                         Scheduler berjalan harian pada pukul 01:00 WIB. Anda juga dapat menjalankan simulasi atau mengeksekusi manual untuk pelanggan yang sudah jatuh tempo hari ini.
                     </p>
@@ -612,7 +608,7 @@
                     <a href="{{ route('admin.pricing-programs.simulate-escalation') }}"
                         class="h-9 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-xs font-semibold flex items-center gap-1.5 transition">
                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                        <span>Simulasi Hari Ini</span>
+                        <span>{{ __('admin.simulasi_hari_ini') }}</span>
                     </a>
 
                     @if(Auth::guard('admin')->user()?->hasPermission('admin.pricing_programs.manage'))
@@ -632,9 +628,7 @@
             <!-- Upcoming Escalations List (Next 90 Days) -->
             <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs overflow-hidden">
                 <div class="p-4 border-b border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-black/60 dark:text-white/60">
-                        Timeline Eskalasi 90 Hari Mendatang
-                    </h4>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-black/60 dark:text-white/60">{{ __('admin.timeline_eskalasi_90_hari_mendatang') }}</h4>
                     <span class="text-xs text-black/50 dark:text-white/50">
                         Total {{ $upcomingEscalations->count() }} pelanggan
                     </span>
@@ -760,7 +754,7 @@
                             @empty
                                 <tr>
                                     <td colspan="8" class="py-8 text-center text-xs text-black/40 dark:text-white/40">
-                                        Belum ada riwayat perubahan harga khusus tercatat.
+                                        {{ __('admin.belum_ada_riwayat_perubahan_harga_khusus') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -795,7 +789,7 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-black dark:text-white mb-1">Nama Program</label>
-                    <input type="text" name="name" required placeholder="Contoh: Program Early Adopter UMKM Juara 2026"
+                    <input type="text" name="name" required placeholder="{{ __('admin.contoh_program_early_adopter_umkm_juara') }}"
                         class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                 </div>
 
@@ -818,12 +812,8 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showProgramModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
-                        Simpan Program
-                    </button>
+                    <button type="button" @click="showProgramModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">{{ __('common.cancel') }}</button>
+                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">{{ __('admin.simpan_program') }}</button>
                 </div>
             </form>
         </div>
@@ -833,7 +823,7 @@
     <div x-show="showEditProgramModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
         <div @click.away="showEditProgramModal = false" class="w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-5">
             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                <h3 class="text-base font-bold text-black dark:text-white">Edit Program</h3>
+                <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.edit_program_2') }}</h3>
                 <button type="button" @click="showEditProgramModal = false" class="p-1 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
@@ -861,9 +851,7 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showEditProgramModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">
-                        Batal
-                    </button>
+                    <button type="button" @click="showEditProgramModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">{{ __('common.cancel') }}</button>
                     <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
                         Perbarui Program
                     </button>
@@ -877,7 +865,7 @@
         <div @click.away="showBatchModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-5 my-8">
             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                 <div>
-                    <h3 class="text-base font-bold text-black dark:text-white">Tambah Batch Kuota &amp; Harga Khusus</h3>
+                    <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.tambah_batch_kuota_harga_khusus') }}</h3>
                     <p class="text-xs text-black/50 dark:text-white/50">Admin mengonfigurasi nominal harga, kuota, dan batasan kenaikan tahunan (maks. 10%).</p>
                 </div>
                 <button type="button" @click="showBatchModal = false" class="p-1 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50">
@@ -890,7 +878,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1">Nama Batch</label>
-                        <input type="text" name="name" x-model="currentBatch.name" required placeholder="Contoh: Batch 1 - 1000 Pelanggan Pertama"
+                        <input type="text" name="name" x-model="currentBatch.name" required placeholder="{{ __('admin.contoh_batch_1_1000_pelanggan_pertama') }}"
                             class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                     </div>
 
@@ -1078,12 +1066,8 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
-                        Simpan Batch
-                    </button>
+                    <button type="button" @click="showBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">{{ __('common.cancel') }}</button>
+                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">{{ __('admin.simpan_batch') }}</button>
                 </div>
             </form>
         </div>
@@ -1093,7 +1077,7 @@
     <div x-show="showEditBatchModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
         <div @click.away="showEditBatchModal = false" class="w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl p-6 space-y-5 my-8">
             <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                <h3 class="text-base font-bold text-black dark:text-white">Edit Konfigurasi Batch #<span x-text="currentBatch.batch_number"></span></h3>
+                <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.edit_konfigurasi_batch_2') }}<span x-text="currentBatch.batch_number"></span></h3>
                 <button type="button" @click="showEditBatchModal = false" class="p-1 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
@@ -1272,9 +1256,7 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showEditBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">
-                        Batal
-                    </button>
+                    <button type="button" @click="showEditBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">{{ __('common.cancel') }}</button>
                     <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
                         Perbarui Batch
                     </button>
@@ -1313,12 +1295,8 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showNextBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">
-                        Simpan Tautan Batch
-                    </button>
+                    <button type="button" @click="showNextBatchModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70">{{ __('common.cancel') }}</button>
+                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-xs font-semibold shadow-xs">{{ __('admin.simpan_tautan_batch') }}</button>
                 </div>
             </form>
         </div>
@@ -1332,7 +1310,7 @@
                     <span class="w-7 h-7 rounded-[8px] bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
                         <i data-lucide="edit" class="w-4 h-4"></i>
                     </span>
-                    <h3 class="text-base font-bold text-black dark:text-white">Ubah Harga Normal &amp; Promo Tahunan</h3>
+                    <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.ubah_harga_normal_promo_tahunan') }}</h3>
                 </div>
                 <button type="button" @click="showEditBasePricesModal = false" class="p-1 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-black/50 dark:text-white/50 cursor-pointer">
                     <i data-lucide="x" class="w-4 h-4"></i>
@@ -1400,18 +1378,14 @@
                 <div>
                     <label class="block text-xs font-semibold text-black dark:text-white mb-1">Label / Teks Badge Promo Tahunan</label>
                     <input type="text" name="annual_discount_badge" value="{{ $basePrices['annual_discount_badge'] }}" required maxlength="50"
-                        placeholder="Contoh: Hemat 2 Bulan"
+                        placeholder="{{ __('admin.contoh_hemat_2_bulan') }}"
                         class="w-full px-3 py-2 text-xs rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden">
                     <p class="text-[11px] text-slate-400 mt-1">Ditampilkan pada switcher bulanan/tahunan di /pricing dan /billing/limits.</p>
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-                    <button type="button" @click="showEditBasePricesModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70 cursor-pointer">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-xs cursor-pointer">
-                        Simpan Perubahan Harga Normal
-                    </button>
+                    <button type="button" @click="showEditBasePricesModal = false" class="px-4 py-2 rounded-[10px] text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/10 text-black/70 dark:text-white/70 cursor-pointer">{{ __('common.cancel') }}</button>
+                    <button type="submit" class="px-4 py-2 rounded-[10px] bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-xs cursor-pointer">{{ __('admin.simpan_perubahan_harga_normal') }}</button>
                 </div>
             </form>
         </div>

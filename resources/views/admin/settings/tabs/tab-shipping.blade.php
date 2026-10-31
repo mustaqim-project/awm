@@ -180,7 +180,7 @@
                             <button type="submit"
                                 class="h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold inline-flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] transition-all cursor-pointer">
                                 <i data-lucide="save" class="w-4 h-4"></i>
-                                <span>Simpan Konfigurasi Logistik</span>
+                                <span>{{ __('admin.simpan_konfigurasi_logistik') }}</span>
                             </button>
 
 

@@ -1,0 +1,4202 @@
+{
+  "translations": {
+    "total_files": 66,
+    "file_stats": [
+      {
+        "file": "admin.php",
+        "id_keys": 875,
+        "en_keys": 875,
+        "common_keys": 875,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "ai.php",
+        "id_keys": 690,
+        "en_keys": 690,
+        "common_keys": 690,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 4,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "analytics.php",
+        "id_keys": 57,
+        "en_keys": 57,
+        "common_keys": 57,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "approvals.php",
+        "id_keys": 116,
+        "en_keys": 116,
+        "common_keys": 116,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "audit.php",
+        "id_keys": 95,
+        "en_keys": 95,
+        "common_keys": 95,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "auth.php",
+        "id_keys": 292,
+        "en_keys": 292,
+        "common_keys": 292,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "billing.php",
+        "id_keys": 716,
+        "en_keys": 716,
+        "common_keys": 716,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "calculator.php",
+        "id_keys": 184,
+        "en_keys": 184,
+        "common_keys": 184,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "common.php",
+        "id_keys": 120,
+        "en_keys": 120,
+        "common_keys": 120,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "community.php",
+        "id_keys": 37,
+        "en_keys": 37,
+        "common_keys": 37,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "crm.php",
+        "id_keys": 96,
+        "en_keys": 96,
+        "common_keys": 96,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "customer.php",
+        "id_keys": 107,
+        "en_keys": 107,
+        "common_keys": 107,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "customers.php",
+        "id_keys": 111,
+        "en_keys": 111,
+        "common_keys": 111,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "dashboard.php",
+        "id_keys": 150,
+        "en_keys": 150,
+        "common_keys": 150,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "docs.php",
+        "id_keys": 72,
+        "en_keys": 72,
+        "common_keys": 72,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "documents.php",
+        "id_keys": 5,
+        "en_keys": 5,
+        "common_keys": 5,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "emails.php",
+        "id_keys": 17,
+        "en_keys": 17,
+        "common_keys": 17,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "errors.php",
+        "id_keys": 25,
+        "en_keys": 25,
+        "common_keys": 25,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "exceptions.php",
+        "id_keys": 22,
+        "en_keys": 22,
+        "common_keys": 22,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "feedback.php",
+        "id_keys": 64,
+        "en_keys": 64,
+        "common_keys": 64,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "finance.php",
+        "id_keys": 940,
+        "en_keys": 940,
+        "common_keys": 940,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "hrm.php",
+        "id_keys": 890,
+        "en_keys": 890,
+        "common_keys": 890,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "import.php",
+        "id_keys": 47,
+        "en_keys": 47,
+        "common_keys": 47,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "inventory.php",
+        "id_keys": 202,
+        "en_keys": 202,
+        "common_keys": 202,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "labor_machines.php",
+        "id_keys": 20,
+        "en_keys": 20,
+        "common_keys": 20,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "landing_page.php",
+        "id_keys": 86,
+        "en_keys": 86,
+        "common_keys": 86,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "marketplace.php",
+        "id_keys": 399,
+        "en_keys": 399,
+        "common_keys": 399,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "master_data.php",
+        "id_keys": 14,
+        "en_keys": 14,
+        "common_keys": 14,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "materials.php",
+        "id_keys": 121,
+        "en_keys": 121,
+        "common_keys": 121,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "mcp.php",
+        "id_keys": 411,
+        "en_keys": 411,
+        "common_keys": 411,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "messages.php",
+        "id_keys": 19,
+        "en_keys": 19,
+        "common_keys": 19,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "navigation.php",
+        "id_keys": 204,
+        "en_keys": 204,
+        "common_keys": 204,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "notifications.php",
+        "id_keys": 8,
+        "en_keys": 8,
+        "common_keys": 8,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "portal.php",
+        "id_keys": 229,
+        "en_keys": 229,
+        "common_keys": 229,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "pos.php",
+        "id_keys": 1740,
+        "en_keys": 1740,
+        "common_keys": 1740,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "printer.php",
+        "id_keys": 12,
+        "en_keys": 12,
+        "common_keys": 12,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "products.php",
+        "id_keys": 396,
+        "en_keys": 396,
+        "common_keys": 396,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_blog.php",
+        "id_keys": 84,
+        "en_keys": 84,
+        "common_keys": 84,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_bos.php",
+        "id_keys": 152,
+        "en_keys": 152,
+        "common_keys": 152,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_calculators.php",
+        "id_keys": 164,
+        "en_keys": 164,
+        "common_keys": 164,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_commercial.php",
+        "id_keys": 219,
+        "en_keys": 219,
+        "common_keys": 219,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_contact.php",
+        "id_keys": 55,
+        "en_keys": 55,
+        "common_keys": 55,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_content.php",
+        "id_keys": 143,
+        "en_keys": 143,
+        "common_keys": 143,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_discovery.php",
+        "id_keys": 54,
+        "en_keys": 54,
+        "common_keys": 54,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_erp.php",
+        "id_keys": 255,
+        "en_keys": 255,
+        "common_keys": 255,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_home.php",
+        "id_keys": 125,
+        "en_keys": 125,
+        "common_keys": 125,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_marketing.php",
+        "id_keys": 352,
+        "en_keys": 352,
+        "common_keys": 352,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_marketplace.php",
+        "id_keys": 257,
+        "en_keys": 257,
+        "common_keys": 257,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_omnichannel.php",
+        "id_keys": 144,
+        "en_keys": 144,
+        "common_keys": 144,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_resources.php",
+        "id_keys": 95,
+        "en_keys": 95,
+        "common_keys": 95,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_solutions.php",
+        "id_keys": 200,
+        "en_keys": 200,
+        "common_keys": 200,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "public_templates.php",
+        "id_keys": 17,
+        "en_keys": 17,
+        "common_keys": 17,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "purchasing.php",
+        "id_keys": 411,
+        "en_keys": 411,
+        "common_keys": 411,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 4,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "qr_order.php",
+        "id_keys": 47,
+        "en_keys": 47,
+        "common_keys": 47,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "quick_actions.php",
+        "id_keys": 119,
+        "en_keys": 119,
+        "common_keys": 119,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "roles.php",
+        "id_keys": 103,
+        "en_keys": 103,
+        "common_keys": 103,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "sales.php",
+        "id_keys": 765,
+        "en_keys": 765,
+        "common_keys": 765,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "services.php",
+        "id_keys": 98,
+        "en_keys": 98,
+        "common_keys": 98,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "settings.php",
+        "id_keys": 406,
+        "en_keys": 406,
+        "common_keys": 406,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "simulator.php",
+        "id_keys": 80,
+        "en_keys": 80,
+        "common_keys": 80,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 4,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "social_media.php",
+        "id_keys": 587,
+        "en_keys": 587,
+        "common_keys": 587,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "storefront.php",
+        "id_keys": 1578,
+        "en_keys": 1578,
+        "common_keys": 1578,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 4,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "tax.php",
+        "id_keys": 247,
+        "en_keys": 247,
+        "common_keys": 247,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "validation.php",
+        "id_keys": 41,
+        "en_keys": 41,
+        "common_keys": 41,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 4,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "warehouse.php",
+        "id_keys": 289,
+        "en_keys": 289,
+        "common_keys": 289,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 3,
+        "parity_pct": 100.0
+      },
+      {
+        "file": "whatsapp.php",
+        "id_keys": 392,
+        "en_keys": 392,
+        "common_keys": 392,
+        "missing_in_en": 0,
+        "missing_in_id": 0,
+        "max_depth": 2,
+        "parity_pct": 100.0
+      }
+    ],
+    "total_id_keys": 17068,
+    "total_en_keys": 17068,
+    "total_common_keys": 17068,
+    "total_missing_in_en": 0,
+    "total_missing_in_id": 0,
+    "overall_parity_pct": 100.0,
+    "sample_missing_in_en": [],
+    "sample_missing_in_id": []
+  },
+  "views_issues": {
+    "submodule_summary": {
+      "root": {
+        "total_files": 2,
+        "clean_files": 2,
+        "files_with_issues": 0,
+        "total_lines": 3020,
+        "total_i18n_calls": 339,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "calculator.blade.php",
+            "lines": 1665,
+            "i18n_calls": 178,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "dashboard.blade.php",
+            "lines": 1355,
+            "i18n_calls": 161,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "ai": {
+        "total_files": 18,
+        "clean_files": 17,
+        "files_with_issues": 1,
+        "total_lines": 9751,
+        "total_i18n_calls": 677,
+        "total_issues": 17,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 15,
+          "4. Forms, Labels, & Hints": 1,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_title": 7,
+          "raw_attr_aria-label": 2,
+          "raw_attr_placeholder": 1,
+          "raw_button_label": 6,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "ai/actions.blade.php",
+            "lines": 850,
+            "i18n_calls": 69,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/history.blade.php",
+            "lines": 107,
+            "i18n_calls": 14,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/index.blade.php",
+            "lines": 1069,
+            "i18n_calls": 142,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/lobby.blade.php",
+            "lines": 347,
+            "i18n_calls": 44,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/office.blade.php",
+            "lines": 717,
+            "i18n_calls": 92,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/providers.blade.php",
+            "lines": 443,
+            "i18n_calls": 48,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/offices/executive.blade.php",
+            "lines": 370,
+            "i18n_calls": 52,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/offices/growth.blade.php",
+            "lines": 433,
+            "i18n_calls": 59,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/offices/operations.blade.php",
+            "lines": 400,
+            "i18n_calls": 61,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/agent_inspector_hud.blade.php",
+            "lines": 169,
+            "i18n_calls": 16,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/consultation_modal.blade.php",
+            "lines": 193,
+            "i18n_calls": 35,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/office_navigation.blade.php",
+            "lines": 111,
+            "i18n_calls": 11,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/office_script.blade.php",
+            "lines": 432,
+            "i18n_calls": 10,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/virtual_office_canvas.blade.php",
+            "lines": 3875,
+            "i18n_calls": 24,
+            "issues": 17,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                7
+              ],
+              [
+                "raw_attr_aria-label",
+                2
+              ],
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_button_label",
+                6
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "ai/partials/desks/executive_desks.blade.php",
+            "lines": 61,
+            "i18n_calls": 0,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/desks/growth_desks.blade.php",
+            "lines": 78,
+            "i18n_calls": 0,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/desks/lobby_desks.blade.php",
+            "lines": 50,
+            "i18n_calls": 0,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "ai/partials/desks/operations_desks.blade.php",
+            "lines": 46,
+            "i18n_calls": 0,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "ai-studio": {
+        "total_files": 8,
+        "clean_files": 0,
+        "files_with_issues": 8,
+        "total_lines": 3182,
+        "total_i18n_calls": 0,
+        "total_issues": 69,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 4,
+          "7. Buttons & Action Links": 40,
+          "6. Error Lists & Summary": 1,
+          "3. Headers, H1, & Subtitles": 20,
+          "1. Page Title & Meta Tags": 1,
+          "9. Tables, Badges, & Empty": 3
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 4,
+          "raw_attr_title": 5,
+          "validation_errors_raw": 1,
+          "raw_button_label": 33,
+          "raw_heading_h1": 3,
+          "raw_heading_h4": 8,
+          "raw_heading_h3": 8,
+          "raw_heading_h5": 1,
+          "extends_title_raw": 1,
+          "empty_state_hardcoded": 3,
+          "raw_attr_alt": 2
+        },
+        "file_details": [
+          {
+            "file": "ai-studio/create.blade.php",
+            "lines": 695,
+            "i18n_calls": 0,
+            "issues": 13,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "validation_errors_raw",
+                1
+              ],
+              [
+                "raw_button_label",
+                4
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ],
+              [
+                "raw_heading_h5",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/credit-history.blade.php",
+            "lines": 179,
+            "i18n_calls": 0,
+            "issues": 5,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                1
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/index.blade.php",
+            "lines": 429,
+            "i18n_calls": 0,
+            "issues": 15,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_attr_title",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                7
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/prompt-preview.blade.php",
+            "lines": 119,
+            "i18n_calls": 0,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/show.blade.php",
+            "lines": 766,
+            "i18n_calls": 0,
+            "issues": 16,
+            "issue_types": [
+              [
+                "raw_attr_alt",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_button_label",
+                8
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ],
+              [
+                "raw_heading_h4",
+                4
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/inspiration/index.blade.php",
+            "lines": 255,
+            "i18n_calls": 0,
+            "issues": 6,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_attr_title",
+                1
+              ],
+              [
+                "raw_button_label",
+                3
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/inspiration/show.blade.php",
+            "lines": 232,
+            "i18n_calls": 0,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_button_label",
+                4
+              ]
+            ]
+          },
+          {
+            "file": "ai-studio/partials/topup-modal.blade.php",
+            "lines": 507,
+            "i18n_calls": 0,
+            "issues": 8,
+            "issue_types": [
+              [
+                "raw_attr_alt",
+                1
+              ],
+              [
+                "raw_button_label",
+                5
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "analytics": {
+        "total_files": 1,
+        "clean_files": 1,
+        "files_with_issues": 0,
+        "total_lines": 573,
+        "total_i18n_calls": 60,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "analytics/index.blade.php",
+            "lines": 573,
+            "i18n_calls": 60,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "approvals": {
+        "total_files": 3,
+        "clean_files": 3,
+        "files_with_issues": 0,
+        "total_lines": 1095,
+        "total_i18n_calls": 153,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "approvals/history.blade.php",
+            "lines": 192,
+            "i18n_calls": 25,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "approvals/inbox.blade.php",
+            "lines": 381,
+            "i18n_calls": 35,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "approvals/rules.blade.php",
+            "lines": 522,
+            "i18n_calls": 93,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "billing": {
+        "total_files": 5,
+        "clean_files": 4,
+        "files_with_issues": 1,
+        "total_lines": 6154,
+        "total_i18n_calls": 734,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 2
+        },
+        "issues_by_type": {
+          "raw_attr_alt": 2
+        },
+        "file_details": [
+          {
+            "file": "billing/checkout.blade.php",
+            "lines": 1092,
+            "i18n_calls": 156,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "billing/history.blade.php",
+            "lines": 445,
+            "i18n_calls": 59,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "billing/invoice.blade.php",
+            "lines": 1014,
+            "i18n_calls": 65,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "billing/limits.blade.php",
+            "lines": 2696,
+            "i18n_calls": 315,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "billing/payment.blade.php",
+            "lines": 907,
+            "i18n_calls": 139,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_attr_alt",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "community": {
+        "total_files": 3,
+        "clean_files": 0,
+        "files_with_issues": 3,
+        "total_lines": 2222,
+        "total_i18n_calls": 0,
+        "total_issues": 48,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 3,
+          "7. Buttons & Action Links": 24,
+          "4. Forms, Labels, & Hints": 5,
+          "9. Tables, Badges, & Empty": 7,
+          "3. Headers, H1, & Subtitles": 9
+        },
+        "issues_by_type": {
+          "extends_title_raw": 3,
+          "raw_attr_aria-label": 2,
+          "raw_attr_placeholder": 5,
+          "empty_state_hardcoded": 7,
+          "raw_button_label": 18,
+          "raw_heading_h3": 4,
+          "raw_heading_h5": 2,
+          "raw_attr_alt": 1,
+          "raw_heading_h2": 1,
+          "raw_heading_h4": 2,
+          "raw_attr_title": 3
+        },
+        "file_details": [
+          {
+            "file": "community/events.blade.php",
+            "lines": 642,
+            "i18n_calls": 0,
+            "issues": 16,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_aria-label",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                3
+              ],
+              [
+                "raw_button_label",
+                7
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ],
+              [
+                "raw_heading_h5",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "community/event_payment.blade.php",
+            "lines": 301,
+            "i18n_calls": 0,
+            "issues": 7,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_alt",
+                1
+              ],
+              [
+                "raw_button_label",
+                2
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "community/index.blade.php",
+            "lines": 1279,
+            "i18n_calls": 0,
+            "issues": 25,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "raw_attr_placeholder",
+                4
+              ],
+              [
+                "raw_attr_aria-label",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                4
+              ],
+              [
+                "raw_button_label",
+                9
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ],
+              [
+                "raw_heading_h5",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "crm": {
+        "total_files": 2,
+        "clean_files": 1,
+        "files_with_issues": 1,
+        "total_lines": 1132,
+        "total_i18n_calls": 118,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 2
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 2
+        },
+        "file_details": [
+          {
+            "file": "crm/members.blade.php",
+            "lines": 765,
+            "i18n_calls": 68,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "crm/vouchers.blade.php",
+            "lines": 367,
+            "i18n_calls": 50,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "customers": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1506,
+        "total_i18n_calls": 132,
+        "total_issues": 11,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 6,
+          "6. Error Lists & Summary": 4,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_title": 2,
+          "validation_errors_raw": 4,
+          "raw_button_label": 4,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "customers/index.blade.php",
+            "lines": 1506,
+            "i18n_calls": 132,
+            "issues": 11,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "validation_errors_raw",
+                4
+              ],
+              [
+                "raw_button_label",
+                4
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "docs": {
+        "total_files": 2,
+        "clean_files": 0,
+        "files_with_issues": 2,
+        "total_lines": 2587,
+        "total_i18n_calls": 0,
+        "total_issues": 72,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 1,
+          "4. Forms, Labels, & Hints": 1,
+          "7. Buttons & Action Links": 52,
+          "3. Headers, H1, & Subtitles": 18
+        },
+        "issues_by_type": {
+          "extends_title_raw": 1,
+          "raw_attr_placeholder": 1,
+          "raw_button_label": 52,
+          "raw_heading_h1": 1,
+          "raw_heading_h2": 10,
+          "raw_heading_h3": 6,
+          "raw_heading_h4": 1
+        },
+        "file_details": [
+          {
+            "file": "docs/index.blade.php",
+            "lines": 1014,
+            "i18n_calls": 0,
+            "issues": 36,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_button_label",
+                21
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h2",
+                9
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "docs/partials/sec_ai.blade.php",
+            "lines": 1573,
+            "i18n_calls": 0,
+            "issues": 36,
+            "issue_types": [
+              [
+                "raw_button_label",
+                31
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "feedback": {
+        "total_files": 3,
+        "clean_files": 3,
+        "files_with_issues": 0,
+        "total_lines": 561,
+        "total_i18n_calls": 96,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "feedback/create.blade.php",
+            "lines": 218,
+            "i18n_calls": 42,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "feedback/index.blade.php",
+            "lines": 116,
+            "i18n_calls": 24,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "feedback/show.blade.php",
+            "lines": 227,
+            "i18n_calls": 30,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "finance": {
+        "total_files": 16,
+        "clean_files": 13,
+        "files_with_issues": 3,
+        "total_lines": 8011,
+        "total_i18n_calls": 1113,
+        "total_issues": 9,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 9
+        },
+        "issues_by_type": {
+          "raw_button_label": 6,
+          "raw_attr_aria-label": 1,
+          "raw_attr_alt": 2
+        },
+        "file_details": [
+          {
+            "file": "finance/expenses.blade.php",
+            "lines": 731,
+            "i18n_calls": 80,
+            "issues": 6,
+            "issue_types": [
+              [
+                "raw_button_label",
+                6
+              ]
+            ]
+          },
+          {
+            "file": "finance/journals.blade.php",
+            "lines": 245,
+            "i18n_calls": 37,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/payables.blade.php",
+            "lines": 685,
+            "i18n_calls": 99,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/receivables.blade.php",
+            "lines": 743,
+            "i18n_calls": 106,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/accounting/balance-sheet.blade.php",
+            "lines": 634,
+            "i18n_calls": 80,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/accounting/coa.blade.php",
+            "lines": 801,
+            "i18n_calls": 121,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/accounting/general-ledger.blade.php",
+            "lines": 211,
+            "i18n_calls": 28,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/accounting/reconciliation.blade.php",
+            "lines": 284,
+            "i18n_calls": 43,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/accounting/trial-balance.blade.php",
+            "lines": 191,
+            "i18n_calls": 28,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/cash-bank/index.blade.php",
+            "lines": 1055,
+            "i18n_calls": 146,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/cash-bank/ledger.blade.php",
+            "lines": 314,
+            "i18n_calls": 53,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/edc-terminals/index.blade.php",
+            "lines": 324,
+            "i18n_calls": 44,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_attr_aria-label",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "finance/external-reconciliation/index.blade.php",
+            "lines": 585,
+            "i18n_calls": 76,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/payout-accounts/index.blade.php",
+            "lines": 278,
+            "i18n_calls": 32,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/settlements/index.blade.php",
+            "lines": 613,
+            "i18n_calls": 93,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "finance/settlements/show.blade.php",
+            "lines": 317,
+            "i18n_calls": 47,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_attr_alt",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "hrm": {
+        "total_files": 4,
+        "clean_files": 4,
+        "files_with_issues": 0,
+        "total_lines": 7353,
+        "total_i18n_calls": 1053,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "hrm/index.blade.php",
+            "lines": 5705,
+            "i18n_calls": 825,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "hrm/payroll/create.blade.php",
+            "lines": 415,
+            "i18n_calls": 53,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "hrm/payroll/payslip.blade.php",
+            "lines": 403,
+            "i18n_calls": 58,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "hrm/payroll/show.blade.php",
+            "lines": 830,
+            "i18n_calls": 117,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "import": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 2195,
+        "total_i18n_calls": 0,
+        "total_issues": 62,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 43,
+          "6. Error Lists & Summary": 8,
+          "9. Tables, Badges, & Empty": 4,
+          "3. Headers, H1, & Subtitles": 6
+        },
+        "issues_by_type": {
+          "extends_title_raw": 1,
+          "raw_attr_title": 18,
+          "validation_errors_raw": 8,
+          "empty_state_hardcoded": 4,
+          "raw_button_label": 25,
+          "raw_heading_h1": 1,
+          "raw_heading_h3": 4,
+          "raw_heading_h2": 1
+        },
+        "file_details": [
+          {
+            "file": "import/index.blade.php",
+            "lines": 2195,
+            "i18n_calls": 0,
+            "issues": 62,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                18
+              ],
+              [
+                "validation_errors_raw",
+                8
+              ],
+              [
+                "empty_state_hardcoded",
+                4
+              ],
+              [
+                "raw_button_label",
+                25
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                4
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "inventory": {
+        "total_files": 4,
+        "clean_files": 1,
+        "files_with_issues": 3,
+        "total_lines": 2022,
+        "total_i18n_calls": 154,
+        "total_issues": 33,
+        "issues_by_domain": {
+          "9. Tables, Badges, & Empty": 5,
+          "1. Page Title & Meta Tags": 2,
+          "4. Forms, Labels, & Hints": 2,
+          "7. Buttons & Action Links": 20,
+          "3. Headers, H1, & Subtitles": 4
+        },
+        "issues_by_type": {
+          "empty_state_hardcoded": 5,
+          "extends_title_raw": 2,
+          "raw_attr_placeholder": 2,
+          "raw_attr_title": 8,
+          "raw_button_label": 11,
+          "raw_heading_h1": 2,
+          "raw_heading_h3": 2,
+          "raw_attr_aria-label": 1
+        },
+        "file_details": [
+          {
+            "file": "inventory/movements.blade.php",
+            "lines": 355,
+            "i18n_calls": 41,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "inventory/opname.blade.php",
+            "lines": 811,
+            "i18n_calls": 106,
+            "issues": 1,
+            "issue_types": [
+              [
+                "empty_state_hardcoded",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "inventory/stocks.blade.php",
+            "lines": 451,
+            "i18n_calls": 5,
+            "issues": 17,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                2
+              ],
+              [
+                "raw_attr_title",
+                5
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                5
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "inventory/transfers.blade.php",
+            "lines": 405,
+            "i18n_calls": 2,
+            "issues": 15,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "raw_attr_aria-label",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                6
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "invoices": {
+        "total_files": 5,
+        "clean_files": 4,
+        "files_with_issues": 1,
+        "total_lines": 2784,
+        "total_i18n_calls": 369,
+        "total_issues": 1,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 1
+        },
+        "issues_by_type": {
+          "raw_button_label": 1
+        },
+        "file_details": [
+          {
+            "file": "invoices/create.blade.php",
+            "lines": 498,
+            "i18n_calls": 69,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "invoices/edit.blade.php",
+            "lines": 440,
+            "i18n_calls": 62,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "invoices/index.blade.php",
+            "lines": 438,
+            "i18n_calls": 75,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "invoices/print.blade.php",
+            "lines": 491,
+            "i18n_calls": 48,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "invoices/show.blade.php",
+            "lines": 917,
+            "i18n_calls": 115,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "labor-machines": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1293,
+        "total_i18n_calls": 4,
+        "total_issues": 32,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 3,
+          "7. Buttons & Action Links": 22,
+          "9. Tables, Badges, & Empty": 4,
+          "3. Headers, H1, & Subtitles": 3
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 3,
+          "raw_attr_title": 4,
+          "raw_attr_aria-label": 4,
+          "empty_state_hardcoded": 4,
+          "raw_button_label": 14,
+          "raw_heading_h2": 1,
+          "raw_heading_h3": 2
+        },
+        "file_details": [
+          {
+            "file": "labor-machines/index.blade.php",
+            "lines": 1293,
+            "i18n_calls": 4,
+            "issues": 32,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                3
+              ],
+              [
+                "raw_attr_title",
+                4
+              ],
+              [
+                "raw_attr_aria-label",
+                4
+              ],
+              [
+                "empty_state_hardcoded",
+                4
+              ],
+              [
+                "raw_button_label",
+                14
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "landing_page": {
+        "total_files": 2,
+        "clean_files": 0,
+        "files_with_issues": 2,
+        "total_lines": 4102,
+        "total_i18n_calls": 0,
+        "total_issues": 96,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 2,
+          "7. Buttons & Action Links": 41,
+          "4. Forms, Labels, & Hints": 35,
+          "6. Error Lists & Summary": 1,
+          "9. Tables, Badges, & Empty": 5,
+          "3. Headers, H1, & Subtitles": 12
+        },
+        "issues_by_type": {
+          "extends_title_raw": 2,
+          "raw_attr_title": 9,
+          "raw_attr_placeholder": 35,
+          "raw_attr_alt": 1,
+          "raw_attr_aria-label": 4,
+          "validation_errors_raw": 1,
+          "empty_state_hardcoded": 5,
+          "raw_button_label": 27,
+          "raw_heading_h3": 5,
+          "raw_heading_h2": 7
+        },
+        "file_details": [
+          {
+            "file": "landing_page/edit.blade.php",
+            "lines": 3334,
+            "i18n_calls": 0,
+            "issues": 80,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                9
+              ],
+              [
+                "raw_attr_placeholder",
+                32
+              ],
+              [
+                "raw_attr_alt",
+                1
+              ],
+              [
+                "raw_attr_aria-label",
+                3
+              ],
+              [
+                "validation_errors_raw",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                5
+              ],
+              [
+                "raw_button_label",
+                17
+              ],
+              [
+                "raw_heading_h3",
+                4
+              ],
+              [
+                "raw_heading_h2",
+                7
+              ]
+            ]
+          },
+          {
+            "file": "landing_page/popup.blade.php",
+            "lines": 768,
+            "i18n_calls": 0,
+            "issues": 16,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                3
+              ],
+              [
+                "raw_attr_aria-label",
+                1
+              ],
+              [
+                "raw_button_label",
+                10
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "marketplace": {
+        "total_files": 6,
+        "clean_files": 1,
+        "files_with_issues": 5,
+        "total_lines": 5175,
+        "total_i18n_calls": 385,
+        "total_issues": 35,
+        "issues_by_domain": {
+          "6. Error Lists & Summary": 1,
+          "9. Tables, Badges, & Empty": 2,
+          "7. Buttons & Action Links": 30,
+          "3. Headers, H1, & Subtitles": 2
+        },
+        "issues_by_type": {
+          "validation_errors_raw": 1,
+          "empty_state_hardcoded": 2,
+          "raw_button_label": 11,
+          "raw_heading_h3": 1,
+          "raw_attr_title": 19,
+          "raw_heading_h2": 1
+        },
+        "file_details": [
+          {
+            "file": "marketplace/chat.blade.php",
+            "lines": 350,
+            "i18n_calls": 16,
+            "issues": 1,
+            "issue_types": [
+              [
+                "validation_errors_raw",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "marketplace/index.blade.php",
+            "lines": 586,
+            "i18n_calls": 56,
+            "issues": 8,
+            "issue_types": [
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                5
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "marketplace/logs.blade.php",
+            "lines": 311,
+            "i18n_calls": 37,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "marketplace/orders.blade.php",
+            "lines": 835,
+            "i18n_calls": 39,
+            "issues": 8,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "raw_button_label",
+                5
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "marketplace/products.blade.php",
+            "lines": 2296,
+            "i18n_calls": 237,
+            "issues": 17,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                17
+              ]
+            ]
+          },
+          {
+            "file": "marketplace/shipping_label.blade.php",
+            "lines": 797,
+            "i18n_calls": 0,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "master-data": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1188,
+        "total_i18n_calls": 0,
+        "total_issues": 28,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 7,
+          "7. Buttons & Action Links": 18,
+          "9. Tables, Badges, & Empty": 2,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 7,
+          "raw_attr_title": 3,
+          "raw_attr_aria-label": 3,
+          "empty_state_hardcoded": 2,
+          "raw_button_label": 12,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "master-data/index.blade.php",
+            "lines": 1188,
+            "i18n_calls": 0,
+            "issues": 28,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                7
+              ],
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "raw_attr_aria-label",
+                3
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                12
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "materials": {
+        "total_files": 1,
+        "clean_files": 1,
+        "files_with_issues": 0,
+        "total_lines": 1261,
+        "total_i18n_calls": 150,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "materials/index.blade.php",
+            "lines": 1261,
+            "i18n_calls": 150,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "mcp": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 130,
+        "total_i18n_calls": 0,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 1,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_button_label": 1,
+          "raw_heading_h1": 1
+        },
+        "file_details": [
+          {
+            "file": "mcp/oauth/consent.blade.php",
+            "lines": 130,
+            "i18n_calls": 0,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "portal": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 2547,
+        "total_i18n_calls": 247,
+        "total_issues": 1,
+        "issues_by_domain": {
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "portal/index.blade.php",
+            "lines": 2547,
+            "i18n_calls": 247,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "pos": {
+        "total_files": 29,
+        "clean_files": 23,
+        "files_with_issues": 6,
+        "total_lines": 15934,
+        "total_i18n_calls": 1675,
+        "total_issues": 30,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 14,
+          "9. Tables, Badges, & Empty": 7,
+          "6. Error Lists & Summary": 1,
+          "4. Forms, Labels, & Hints": 4,
+          "5. Dev / Test Alerts": 3,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_title": 5,
+          "empty_state_hardcoded": 7,
+          "raw_button_label": 5,
+          "raw_attr_aria-label": 2,
+          "validation_errors_raw": 1,
+          "raw_attr_placeholder": 4,
+          "raw_attr_alt": 2,
+          "dev_bypass_hardcoded": 3,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "pos/kitchen.blade.php",
+            "lines": 476,
+            "i18n_calls": 35,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/orders.blade.php",
+            "lines": 792,
+            "i18n_calls": 68,
+            "issues": 5,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                1
+              ],
+              [
+                "raw_button_label",
+                3
+              ]
+            ]
+          },
+          {
+            "file": "pos/prep_sheet.blade.php",
+            "lines": 375,
+            "i18n_calls": 59,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/qr-card.blade.php",
+            "lines": 164,
+            "i18n_calls": 13,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/receipt.blade.php",
+            "lines": 564,
+            "i18n_calls": 58,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports.blade.php",
+            "lines": 83,
+            "i18n_calls": 20,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/shifts.blade.php",
+            "lines": 1010,
+            "i18n_calls": 131,
+            "issues": 7,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "raw_attr_aria-label",
+                2
+              ],
+              [
+                "validation_errors_raw",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "pos/tables.blade.php",
+            "lines": 752,
+            "i18n_calls": 99,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "pos/terminal.blade.php",
+            "lines": 7158,
+            "i18n_calls": 601,
+            "issues": 9,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "raw_attr_alt",
+                2
+              ],
+              [
+                "dev_bypass_hardcoded",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "pos/printers/index.blade.php",
+            "lines": 1082,
+            "i18n_calls": 135,
+            "issues": 5,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                3
+              ],
+              [
+                "dev_bypass_hardcoded",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "pos/reports/print_summary.blade.php",
+            "lines": 551,
+            "i18n_calls": 70,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/partials/filter_bar.blade.php",
+            "lines": 189,
+            "i18n_calls": 36,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/partials/kpi_cards.blade.php",
+            "lines": 111,
+            "i18n_calls": 14,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/partials/order_detail_modal.blade.php",
+            "lines": 539,
+            "i18n_calls": 69,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/cashiers.blade.php",
+            "lines": 66,
+            "i18n_calls": 12,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/categories.blade.php",
+            "lines": 65,
+            "i18n_calls": 12,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/channels.blade.php",
+            "lines": 393,
+            "i18n_calls": 44,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/customers.blade.php",
+            "lines": 71,
+            "i18n_calls": 13,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/discounts.blade.php",
+            "lines": 92,
+            "i18n_calls": 17,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/hourly.blade.php",
+            "lines": 44,
+            "i18n_calls": 5,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/outlets.blade.php",
+            "lines": 65,
+            "i18n_calls": 12,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/overview.blade.php",
+            "lines": 241,
+            "i18n_calls": 25,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/payments.blade.php",
+            "lines": 345,
+            "i18n_calls": 11,
+            "issues": 3,
+            "issue_types": [
+              [
+                "empty_state_hardcoded",
+                2
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "pos/reports/tabs/products.blade.php",
+            "lines": 77,
+            "i18n_calls": 15,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/profitability.blade.php",
+            "lines": 100,
+            "i18n_calls": 13,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/refunds.blade.php",
+            "lines": 63,
+            "i18n_calls": 14,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/shifts.blade.php",
+            "lines": 128,
+            "i18n_calls": 22,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/transactions.blade.php",
+            "lines": 225,
+            "i18n_calls": 30,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "pos/reports/tabs/voids.blade.php",
+            "lines": 113,
+            "i18n_calls": 22,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "products": {
+        "total_files": 3,
+        "clean_files": 1,
+        "files_with_issues": 2,
+        "total_lines": 5252,
+        "total_i18n_calls": 488,
+        "total_issues": 14,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 7,
+          "3. Headers, H1, & Subtitles": 4,
+          "4. Forms, Labels, & Hints": 1,
+          "9. Tables, Badges, & Empty": 1
+        },
+        "issues_by_type": {
+          "extends_title_raw": 1,
+          "raw_attr_title": 4,
+          "raw_button_label": 3,
+          "raw_heading_h3": 2,
+          "raw_attr_placeholder": 1,
+          "empty_state_hardcoded": 1,
+          "raw_heading_h4": 2
+        },
+        "file_details": [
+          {
+            "file": "products/bom.blade.php",
+            "lines": 439,
+            "i18n_calls": 54,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "products/index.blade.php",
+            "lines": 3445,
+            "i18n_calls": 333,
+            "issues": 8,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "raw_button_label",
+                2
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "products/modifiers.blade.php",
+            "lines": 1368,
+            "i18n_calls": 101,
+            "issues": 6,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "raw_attr_title",
+                1
+              ],
+              [
+                "empty_state_hardcoded",
+                1
+              ],
+              [
+                "raw_button_label",
+                1
+              ],
+              [
+                "raw_heading_h4",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "profile": {
+        "total_files": 2,
+        "clean_files": 0,
+        "files_with_issues": 2,
+        "total_lines": 386,
+        "total_i18n_calls": 0,
+        "total_issues": 18,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 2,
+          "4. Forms, Labels, & Hints": 3,
+          "7. Buttons & Action Links": 8,
+          "3. Headers, H1, & Subtitles": 5
+        },
+        "issues_by_type": {
+          "extends_title_raw": 2,
+          "raw_attr_placeholder": 3,
+          "raw_button_label": 8,
+          "raw_heading_h1": 1,
+          "raw_heading_h2": 4
+        },
+        "file_details": [
+          {
+            "file": "profile/edit.blade.php",
+            "lines": 309,
+            "i18n_calls": 0,
+            "issues": 14,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                3
+              ],
+              [
+                "raw_button_label",
+                5
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h2",
+                4
+              ]
+            ]
+          },
+          {
+            "file": "profile/verify-contact.blade.php",
+            "lines": 77,
+            "i18n_calls": 0,
+            "issues": 4,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_button_label",
+                3
+              ]
+            ]
+          }
+        ]
+      },
+      "profitability": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 283,
+        "total_i18n_calls": 0,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 1,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_button_label": 1,
+          "raw_heading_h2": 1
+        },
+        "file_details": [
+          {
+            "file": "profitability/index.blade.php",
+            "lines": 283,
+            "i18n_calls": 0,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "purchase-orders": {
+        "total_files": 4,
+        "clean_files": 2,
+        "files_with_issues": 2,
+        "total_lines": 1930,
+        "total_i18n_calls": 174,
+        "total_issues": 3,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 3
+        },
+        "issues_by_type": {
+          "raw_attr_title": 1,
+          "raw_button_label": 2
+        },
+        "file_details": [
+          {
+            "file": "purchase-orders/create.blade.php",
+            "lines": 440,
+            "i18n_calls": 51,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "purchase-orders/index.blade.php",
+            "lines": 573,
+            "i18n_calls": 74,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchase-orders/print.blade.php",
+            "lines": 481,
+            "i18n_calls": 0,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "purchase-orders/show.blade.php",
+            "lines": 436,
+            "i18n_calls": 49,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "purchasing": {
+        "total_files": 6,
+        "clean_files": 5,
+        "files_with_issues": 1,
+        "total_lines": 1316,
+        "total_i18n_calls": 157,
+        "total_issues": 3,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 2,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_button_label": 2,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "purchasing/bills/index.blade.php",
+            "lines": 244,
+            "i18n_calls": 34,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchasing/bills/show.blade.php",
+            "lines": 225,
+            "i18n_calls": 34,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchasing/receipts/create.blade.php",
+            "lines": 228,
+            "i18n_calls": 29,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchasing/returns/create.blade.php",
+            "lines": 185,
+            "i18n_calls": 13,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchasing/returns/index.blade.php",
+            "lines": 192,
+            "i18n_calls": 26,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "purchasing/returns/show.blade.php",
+            "lines": 242,
+            "i18n_calls": 21,
+            "issues": 3,
+            "issue_types": [
+              [
+                "raw_button_label",
+                2
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "quotations": {
+        "total_files": 4,
+        "clean_files": 0,
+        "files_with_issues": 4,
+        "total_lines": 1327,
+        "total_i18n_calls": 135,
+        "total_issues": 25,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 3,
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 20,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 3,
+          "extends_title_raw": 1,
+          "raw_button_label": 11,
+          "raw_heading_h1": 1,
+          "raw_attr_title": 6,
+          "raw_attr_aria-label": 3
+        },
+        "file_details": [
+          {
+            "file": "quotations/create.blade.php",
+            "lines": 285,
+            "i18n_calls": 37,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "quotations/edit.blade.php",
+            "lines": 348,
+            "i18n_calls": 29,
+            "issues": 7,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                2
+              ],
+              [
+                "raw_button_label",
+                3
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "quotations/index.blade.php",
+            "lines": 352,
+            "i18n_calls": 35,
+            "issues": 13,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                6
+              ],
+              [
+                "raw_attr_aria-label",
+                3
+              ],
+              [
+                "raw_button_label",
+                4
+              ]
+            ]
+          },
+          {
+            "file": "quotations/show.blade.php",
+            "lines": 342,
+            "i18n_calls": 34,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_button_label",
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "reports": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 890,
+        "total_i18n_calls": 0,
+        "total_issues": 10,
+        "issues_by_domain": {
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 7,
+          "3. Headers, H1, & Subtitles": 2
+        },
+        "issues_by_type": {
+          "extends_title_raw": 1,
+          "raw_attr_title": 1,
+          "raw_button_label": 6,
+          "raw_heading_h3": 2
+        },
+        "file_details": [
+          {
+            "file": "reports/index.blade.php",
+            "lines": 890,
+            "i18n_calls": 0,
+            "issues": 10,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_title",
+                1
+              ],
+              [
+                "raw_button_label",
+                6
+              ],
+              [
+                "raw_heading_h3",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "roles": {
+        "total_files": 1,
+        "clean_files": 1,
+        "files_with_issues": 0,
+        "total_lines": 1048,
+        "total_i18n_calls": 115,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "roles/index.blade.php",
+            "lines": 1048,
+            "i18n_calls": 115,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "sales": {
+        "total_files": 5,
+        "clean_files": 1,
+        "files_with_issues": 4,
+        "total_lines": 2524,
+        "total_i18n_calls": 255,
+        "total_issues": 25,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 4,
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 18,
+          "3. Headers, H1, & Subtitles": 2
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 4,
+          "extends_title_raw": 1,
+          "raw_button_label": 10,
+          "raw_heading_h1": 1,
+          "raw_heading_h2": 1,
+          "raw_attr_title": 5,
+          "raw_attr_aria-label": 3
+        },
+        "file_details": [
+          {
+            "file": "sales/returns/create.blade.php",
+            "lines": 592,
+            "i18n_calls": 60,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "sales/returns/edit.blade.php",
+            "lines": 314,
+            "i18n_calls": 20,
+            "issues": 9,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                2
+              ],
+              [
+                "raw_button_label",
+                4
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "sales/returns/index.blade.php",
+            "lines": 404,
+            "i18n_calls": 43,
+            "issues": 10,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                5
+              ],
+              [
+                "raw_attr_aria-label",
+                3
+              ],
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "sales/returns/print.blade.php",
+            "lines": 526,
+            "i18n_calls": 59,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "sales/returns/show.blade.php",
+            "lines": 688,
+            "i18n_calls": 73,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_button_label",
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "sales-orders": {
+        "total_files": 4,
+        "clean_files": 0,
+        "files_with_issues": 4,
+        "total_lines": 1829,
+        "total_i18n_calls": 170,
+        "total_issues": 20,
+        "issues_by_domain": {
+          "4. Forms, Labels, & Hints": 3,
+          "1. Page Title & Meta Tags": 1,
+          "7. Buttons & Action Links": 15,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_placeholder": 3,
+          "extends_title_raw": 1,
+          "raw_button_label": 7,
+          "raw_heading_h1": 1,
+          "raw_attr_title": 5,
+          "raw_attr_aria-label": 3
+        },
+        "file_details": [
+          {
+            "file": "sales-orders/create.blade.php",
+            "lines": 611,
+            "i18n_calls": 57,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_attr_placeholder",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "sales-orders/edit.blade.php",
+            "lines": 352,
+            "i18n_calls": 27,
+            "issues": 5,
+            "issue_types": [
+              [
+                "extends_title_raw",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                2
+              ],
+              [
+                "raw_button_label",
+                1
+              ],
+              [
+                "raw_heading_h1",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "sales-orders/index.blade.php",
+            "lines": 405,
+            "i18n_calls": 39,
+            "issues": 10,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                5
+              ],
+              [
+                "raw_attr_aria-label",
+                3
+              ],
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "sales-orders/show.blade.php",
+            "lines": 461,
+            "i18n_calls": 47,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_button_label",
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "security": {
+        "total_files": 2,
+        "clean_files": 2,
+        "files_with_issues": 0,
+        "total_lines": 775,
+        "total_i18n_calls": 97,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "security/audit-logs/index.blade.php",
+            "lines": 654,
+            "i18n_calls": 77,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "security/audit-logs/show.blade.php",
+            "lines": 121,
+            "i18n_calls": 20,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "services": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1252,
+        "total_i18n_calls": 109,
+        "total_issues": 5,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 5
+        },
+        "issues_by_type": {
+          "raw_attr_title": 3,
+          "raw_button_label": 2
+        },
+        "file_details": [
+          {
+            "file": "services/index.blade.php",
+            "lines": 1252,
+            "i18n_calls": 109,
+            "issues": 5,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                3
+              ],
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "settings": {
+        "total_files": 5,
+        "clean_files": 1,
+        "files_with_issues": 4,
+        "total_lines": 8655,
+        "total_i18n_calls": 912,
+        "total_issues": 19,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 7,
+          "4. Forms, Labels, & Hints": 2,
+          "6. Error Lists & Summary": 2,
+          "3. Headers, H1, & Subtitles": 5,
+          "9. Tables, Badges, & Empty": 3
+        },
+        "issues_by_type": {
+          "raw_attr_alt": 1,
+          "raw_attr_placeholder": 2,
+          "validation_errors_raw": 2,
+          "raw_button_label": 6,
+          "raw_heading_h3": 3,
+          "raw_heading_h4": 2,
+          "empty_state_hardcoded": 3
+        },
+        "file_details": [
+          {
+            "file": "settings/index.blade.php",
+            "lines": 4151,
+            "i18n_calls": 359,
+            "issues": 13,
+            "issue_types": [
+              [
+                "raw_attr_alt",
+                1
+              ],
+              [
+                "raw_attr_placeholder",
+                2
+              ],
+              [
+                "validation_errors_raw",
+                2
+              ],
+              [
+                "raw_button_label",
+                4
+              ],
+              [
+                "raw_heading_h3",
+                3
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "settings/roles.blade.php",
+            "lines": 1,
+            "i18n_calls": 0,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "settings/integrations/mcp.blade.php",
+            "lines": 3363,
+            "i18n_calls": 420,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "settings/integrations/social_media.blade.php",
+            "lines": 361,
+            "i18n_calls": 29,
+            "issues": 4,
+            "issue_types": [
+              [
+                "empty_state_hardcoded",
+                3
+              ],
+              [
+                "raw_heading_h4",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "settings/integrations/whatsapp.blade.php",
+            "lines": 779,
+            "i18n_calls": 104,
+            "issues": 1,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "simulator": {
+        "total_files": 1,
+        "clean_files": 1,
+        "files_with_issues": 0,
+        "total_lines": 826,
+        "total_i18n_calls": 71,
+        "total_issues": 0,
+        "issues_by_domain": {},
+        "issues_by_type": {},
+        "file_details": [
+          {
+            "file": "simulator/index.blade.php",
+            "lines": 826,
+            "i18n_calls": 71,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "social_media": {
+        "total_files": 5,
+        "clean_files": 1,
+        "files_with_issues": 4,
+        "total_lines": 6494,
+        "total_i18n_calls": 509,
+        "total_issues": 45,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 29,
+          "4. Forms, Labels, & Hints": 1,
+          "6. Error Lists & Summary": 2,
+          "9. Tables, Badges, & Empty": 10,
+          "3. Headers, H1, & Subtitles": 3
+        },
+        "issues_by_type": {
+          "raw_attr_title": 7,
+          "raw_attr_aria-label": 6,
+          "raw_attr_placeholder": 1,
+          "validation_errors_raw": 2,
+          "empty_state_hardcoded": 10,
+          "raw_button_label": 16,
+          "raw_heading_h4": 3
+        },
+        "file_details": [
+          {
+            "file": "social_media/calendar.blade.php",
+            "lines": 308,
+            "i18n_calls": 29,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "social_media/inbox.blade.php",
+            "lines": 1793,
+            "i18n_calls": 49,
+            "issues": 34,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                5
+              ],
+              [
+                "raw_attr_aria-label",
+                4
+              ],
+              [
+                "raw_attr_placeholder",
+                1
+              ],
+              [
+                "validation_errors_raw",
+                2
+              ],
+              [
+                "empty_state_hardcoded",
+                6
+              ],
+              [
+                "raw_button_label",
+                13
+              ],
+              [
+                "raw_heading_h4",
+                3
+              ]
+            ]
+          },
+          {
+            "file": "social_media/index.blade.php",
+            "lines": 492,
+            "i18n_calls": 61,
+            "issues": 4,
+            "issue_types": [
+              [
+                "empty_state_hardcoded",
+                3
+              ],
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "social_media/insights.blade.php",
+            "lines": 1412,
+            "i18n_calls": 146,
+            "issues": 3,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "empty_state_hardcoded",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "social_media/posts.blade.php",
+            "lines": 2489,
+            "i18n_calls": 224,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_attr_aria-label",
+                2
+              ],
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "storefront": {
+        "total_files": 12,
+        "clean_files": 10,
+        "files_with_issues": 2,
+        "total_lines": 4896,
+        "total_i18n_calls": 589,
+        "total_issues": 4,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 2,
+          "3. Headers, H1, & Subtitles": 1,
+          "5. Dev / Test Alerts": 1
+        },
+        "issues_by_type": {
+          "raw_button_label": 2,
+          "raw_heading_h2": 1,
+          "dev_bypass_hardcoded": 1
+        },
+        "file_details": [
+          {
+            "file": "storefront/settings.blade.php",
+            "lines": 402,
+            "i18n_calls": 47,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/orders/index.blade.php",
+            "lines": 566,
+            "i18n_calls": 62,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                1
+              ],
+              [
+                "raw_heading_h2",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "storefront/orders/shipping_label.blade.php",
+            "lines": 421,
+            "i18n_calls": 26,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/orders/show.blade.php",
+            "lines": 1295,
+            "i18n_calls": 160,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/partials/navigation.blade.php",
+            "lines": 111,
+            "i18n_calls": 9,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/reservations/index.blade.php",
+            "lines": 786,
+            "i18n_calls": 110,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/shipping/index.blade.php",
+            "lines": 628,
+            "i18n_calls": 62,
+            "issues": 2,
+            "issue_types": [
+              [
+                "dev_bypass_hardcoded",
+                1
+              ],
+              [
+                "raw_button_label",
+                1
+              ]
+            ]
+          },
+          {
+            "file": "storefront/tabs/tab-features.blade.php",
+            "lines": 130,
+            "i18n_calls": 21,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/tabs/tab-fulfillment.blade.php",
+            "lines": 76,
+            "i18n_calls": 9,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/tabs/tab-general.blade.php",
+            "lines": 112,
+            "i18n_calls": 19,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/tabs/tab-payment-settlement.blade.php",
+            "lines": 216,
+            "i18n_calls": 37,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "storefront/tabs/tab-schedule.blade.php",
+            "lines": 153,
+            "i18n_calls": 27,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "suppliers": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1353,
+        "total_i18n_calls": 100,
+        "total_issues": 11,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 6,
+          "6. Error Lists & Summary": 4,
+          "3. Headers, H1, & Subtitles": 1
+        },
+        "issues_by_type": {
+          "raw_attr_title": 2,
+          "validation_errors_raw": 4,
+          "raw_button_label": 4,
+          "raw_heading_h3": 1
+        },
+        "file_details": [
+          {
+            "file": "suppliers/index.blade.php",
+            "lines": 1353,
+            "i18n_calls": 100,
+            "issues": 11,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ],
+              [
+                "validation_errors_raw",
+                4
+              ],
+              [
+                "raw_button_label",
+                4
+              ],
+              [
+                "raw_heading_h3",
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "tax": {
+        "total_files": 1,
+        "clean_files": 0,
+        "files_with_issues": 1,
+        "total_lines": 1398,
+        "total_i18n_calls": 177,
+        "total_issues": 4,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 4
+        },
+        "issues_by_type": {
+          "raw_attr_aria-label": 4
+        },
+        "file_details": [
+          {
+            "file": "tax/index.blade.php",
+            "lines": 1398,
+            "i18n_calls": 177,
+            "issues": 4,
+            "issue_types": [
+              [
+                "raw_attr_aria-label",
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "warehouse": {
+        "total_files": 2,
+        "clean_files": 1,
+        "files_with_issues": 1,
+        "total_lines": 3711,
+        "total_i18n_calls": 382,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 2
+        },
+        "issues_by_type": {
+          "raw_attr_title": 2
+        },
+        "file_details": [
+          {
+            "file": "warehouse/index.blade.php",
+            "lines": 1812,
+            "i18n_calls": 178,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_attr_title",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "warehouse/show.blade.php",
+            "lines": 1899,
+            "i18n_calls": 204,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      },
+      "whatsapp": {
+        "total_files": 4,
+        "clean_files": 3,
+        "files_with_issues": 1,
+        "total_lines": 2901,
+        "total_i18n_calls": 368,
+        "total_issues": 2,
+        "issues_by_domain": {
+          "7. Buttons & Action Links": 2
+        },
+        "issues_by_type": {
+          "raw_button_label": 2
+        },
+        "file_details": [
+          {
+            "file": "whatsapp/broadcast.blade.php",
+            "lines": 1003,
+            "i18n_calls": 146,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "whatsapp/broadcast_detail.blade.php",
+            "lines": 434,
+            "i18n_calls": 48,
+            "issues": 0,
+            "issue_types": []
+          },
+          {
+            "file": "whatsapp/index.blade.php",
+            "lines": 937,
+            "i18n_calls": 111,
+            "issues": 2,
+            "issue_types": [
+              [
+                "raw_button_label",
+                2
+              ]
+            ]
+          },
+          {
+            "file": "whatsapp/logs.blade.php",
+            "lines": 527,
+            "i18n_calls": 63,
+            "issues": 0,
+            "issue_types": []
+          }
+        ]
+      }
+    },
+    "total_domain_counts": {
+      "7. Buttons & Action Links": 476,
+      "4. Forms, Labels, & Hints": 81,
+      "3. Headers, H1, & Subtitles": 107,
+      "6. Error Lists & Summary": 24,
+      "1. Page Title & Meta Tags": 17,
+      "9. Tables, Badges, & Empty": 53,
+      "5. Dev / Test Alerts": 4
+    },
+    "total_type_counts": {
+      "raw_attr_title": 119,
+      "raw_attr_aria-label": 38,
+      "raw_attr_placeholder": 81,
+      "raw_button_label": 308,
+      "raw_heading_h3": 46,
+      "validation_errors_raw": 24,
+      "raw_heading_h1": 12,
+      "raw_heading_h4": 18,
+      "raw_heading_h5": 3,
+      "extends_title_raw": 17,
+      "empty_state_hardcoded": 53,
+      "raw_attr_alt": 11,
+      "raw_heading_h2": 28,
+      "dev_bypass_hardcoded": 4
+    }
+  },
+  "patterns": {
+    "total_alpine_x_data": 203,
+    "files_with_alpine": 126,
+    "translation_prefixes_top30": [
+      [
+        "pos",
+        1636
+      ],
+      [
+        "finance",
+        1041
+      ],
+      [
+        "hrm",
+        1022
+      ],
+      [
+        "sales",
+        926
+      ],
+      [
+        "billing",
+        734
+      ],
+      [
+        "ai",
+        668
+      ],
+      [
+        "storefront",
+        587
+      ],
+      [
+        "social_media",
+        547
+      ],
+      [
+        "products",
+        488
+      ],
+      [
+        "whatsapp",
+        463
+      ],
+      [
+        "purchasing",
+        425
+      ],
+      [
+        "mcp",
+        420
+      ],
+      [
+        "marketplace",
+        385
+      ],
+      [
+        "warehouse",
+        368
+      ],
+      [
+        "settings",
+        348
+      ],
+      [
+        "portal",
+        250
+      ],
+      [
+        "common",
+        205
+      ],
+      [
+        "calculator",
+        177
+      ],
+      [
+        "tax",
+        177
+      ],
+      [
+        "inventory",
+        163
+      ],
+      [
+        "dashboard",
+        162
+      ],
+      [
+        "materials",
+        150
+      ],
+      [
+        "approvals",
+        147
+      ],
+      [
+        "customers",
+        117
+      ],
+      [
+        "crm",
+        112
+      ],
+      [
+        "roles",
+        112
+      ],
+      [
+        "services",
+        109
+      ],
+      [
+        "audit",
+        96
+      ],
+      [
+        "feedback",
+        95
+      ],
+      [
+        "simulator",
+        71
+      ]
+    ],
+    "formatting_helpers": {
+      "number_format": 949,
+      "date_formatting": 270,
+      "formatRupiah": 153
+    },
+    "total_files_with_complex_ui": 142,
+    "sample_complex_files": [
+      [
+        "calculator.blade.php",
+        [
+          "charting",
+          "alpine_modal_dialogs",
+          "complex_table",
+          "js_template_literals"
+        ]
+      ],
+      [
+        "dashboard.blade.php",
+        [
+          "canvas_3d_or_graph",
+          "charting",
+          "complex_table"
+        ]
+      ],
+      [
+        "ai/actions.blade.php",
+        [
+          "alpine_modal_dialogs",
+          "complex_table",
+          "js_template_literals"
+        ]
+      ],
+      [
+        "ai/history.blade.php",
+        [
+          "complex_table"
+        ]
+      ],
+      [
+        "ai/index.blade.php",
+        [
+          "canvas_3d_or_graph",
+          "charting",
+          "alpine_modal_dialogs",
+          "complex_table",
+          "js_template_literals"
+        ]
+      ],
+      [
+        "ai/office.blade.php",
+        [
+          "charting",
+          "alpine_modal_dialogs"
+        ]
+      ],
+      [
+        "ai/offices/executive.blade.php",
+        [
+          "charting"
+        ]
+      ],
+      [
+        "ai/partials/agent_inspector_hud.blade.php",
+        [
+          "js_template_literals"
+        ]
+      ],
+      [
+        "ai/partials/consultation_modal.blade.php",
+        [
+          "alpine_modal_dialogs"
+        ]
+      ],
+      [
+        "ai/partials/office_script.blade.php",
+        [
+          "charting"
+        ]
+      ],
+      [
+        "ai/partials/virtual_office_canvas.blade.php",
+        [
+          "charting",
+          "alpine_modal_dialogs",
+          "js_template_literals"
+        ]
+      ],
+      [
+        "ai-studio/credit-history.blade.php",
+        [
+          "complex_table"
+        ]
+      ],
+      [
+        "ai-studio/partials/topup-modal.blade.php",
+        [
+          "js_template_literals"
+        ]
+      ],
+      [
+        "analytics/index.blade.php",
+        [
+          "canvas_3d_or_graph",
+          "charting",
+          "complex_table"
+        ]
+      ],
+      [
+        "approvals/history.blade.php",
+        [
+          "complex_table"
+        ]
+      ]
+    ]
+  }
+}

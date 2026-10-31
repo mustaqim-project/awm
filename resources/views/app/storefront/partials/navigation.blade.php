@@ -52,8 +52,8 @@
         </div>
     </div>
 
-    {{-- Apple HIG Segmented Control Bar --}}
-    <div class="w-full overflow-x-auto no-scrollbar py-0.5">
+    {{-- Legacy Segmented Control Bar Migrated to Dual Sidebar Navigation --}}
+    <div class="hidden" style="display: none !important;" aria-hidden="true">
         <div class="inline-flex p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[14px] border border-black/[0.04] dark:border-white/[0.06] gap-1 min-w-max">
             {{-- Tab 1: Website CMS --}}
             <a href="{{ route('landing-page.edit') }}"

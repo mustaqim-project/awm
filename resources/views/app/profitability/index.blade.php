@@ -83,7 +83,7 @@
             <a href="{{ route('calculator.index') }}"
                 class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('calculator*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
                 <i data-lucide="calculator" class="w-4 h-4 {{ request()->routeIs('calculator*') ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}"></i>
-                <span>Kalkulator HPP &amp; Harga</span>
+                <span>{{ __('labor_machines.kalkulator_hpp_harga') }}</span>
             </a>
 
             @if((\App\Support\Context::hasPermission('labor_machines.view') || \App\Support\Context::hasPermission('costing.manage')) && (request()->routeIs('labor-machines.*') || (\App\Support\Context::business()?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true)))
@@ -117,7 +117,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
                     </svg>
                 </div>
-                <h2 class="text-[14px] font-semibold text-black dark:text-white">Parameter Biaya &amp; Penjualan</h2>
+                <h2 class="text-[14px] font-semibold text-black dark:text-white">{{ __('finance.parameter_biaya_penjualan') }}</h2>
             </div>
 
             <!-- Fixed Cost -->

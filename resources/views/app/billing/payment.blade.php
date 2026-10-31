@@ -665,11 +665,11 @@
                                 @endphp
 
                                 <template x-if="qrUrl">
-                                    <img :src="qrUrl" alt="QRIS Code" class="w-60 h-60 object-contain rounded-lg">
+                                    <img :src="qrUrl" alt="{{ __('admin.qris_code') }}" class="w-60 h-60 object-contain rounded-lg">
                                 </template>
                                 <template x-if="!qrUrl">
                                     @if ($qrSrc)
-                                        <img src="{{ $qrSrc }}" alt="QRIS Code" class="w-60 h-60 object-contain rounded-lg">
+                                        <img src="{{ $qrSrc }}" alt="{{ __('admin.qris_code') }}" class="w-60 h-60 object-contain rounded-lg">
                                     @else
                                         <div class="w-60 h-60 flex flex-col items-center justify-center text-center p-4">
                                             <i data-lucide="qr-code" class="w-24 h-24 text-black/20 mx-auto" aria-hidden="true"></i>

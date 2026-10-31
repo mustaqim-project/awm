@@ -2,7 +2,7 @@
 <div x-show="activeTab === 'trial_balance'" class="space-y-4">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-            <h2 class="text-[16px] font-bold text-black dark:text-white">Neraca Saldo (Trial Balance)</h2>
+            <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.neraca_saldo_trial_balance') }}</h2>
             <p class="text-[12.5px] text-black/50 dark:text-white/50">
                 Pemeriksaan kepatuhan prinsip pembukuan berpasangan (Double-Entry). Total saldo akhir Debit wajib sama dengan Kredit.
             </p>
@@ -18,7 +18,7 @@
                 <a href="{{ route('admin.finance.export', array_merge(request()->query(), ['tab' => 'trial_balance'])) }}"
                     class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-all flex items-center gap-1.5">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                    <span>Ekspor Neraca Saldo</span>
+                    <span>{{ __('admin.ekspor_neraca_saldo') }}</span>
                 </a>
             @endif
         </div>

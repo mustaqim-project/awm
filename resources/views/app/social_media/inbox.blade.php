@@ -23,9 +23,10 @@
                 @else
                     <a href="{{ route('cooca-ai.providers') }}"
                         class="flex items-center gap-2 px-3 py-1.5 rounded-[12px] bg-amber-500/10 border border-amber-500/30 text-[12px] font-bold text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 transition-all shadow-xs"
-                        title="Klik untuk menyetel konfigurasi AI">
+                        title="{{ __('social_media.klik_untuk_menyetel_konfigurasi_ai') }}">
                         <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
                         <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-600"></i>
+                        <span>{{ __('social_media.ai_not_configured') }} &bull; {{ __('social_media.setup_now') }}</span>
                         <span>AI Belum Dikonfigurasi</span>
                         <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-600 text-white">Setup Sekarang</span>
                     </a>
@@ -34,7 +35,7 @@
                 {{-- Tombol Sinkronisasi Data Meta (Facebook & Instagram) --}}
                 <button type="button" @click="syncMetaInbox()" :disabled="isSyncingMeta"
                     class="min-h-[44px] sm:min-h-0 sm:h-9 px-3.5 sm:px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#1877F2] hover:bg-[#166FE5] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50 cursor-pointer"
-                    title="Tarik percakapan dan komentar terbaru dari Facebook Page & Instagram">
+                    title="{{ __('social_media.tarik_percakapan_dan_komentar_terbaru_dari') }}">
                     <i data-lucide="refresh-cw" class="w-4 h-4" :class="{'animate-spin': isSyncingMeta}"></i>
                     <span x-text="isSyncingMeta ? 'Menyinkronkan...' : 'Sinkronkan Data Meta'">Sinkronkan Data Meta</span>
                 </button>
@@ -57,7 +58,7 @@
 
         <x-module-tabs module="communication" />
 
-        {{-- Banner Peringatan Wajib Setting AI jika belum ada konfigurasi AI aktif --}}
+        {{-- Banner Peringatan Wajib Setting AI jika {{ __('social_media.belum_ada_konfigurasi_ai_aktif') }}
         @if(!$hasAiConfig)
             <div class="rounded-[20px] bg-gradient-to-r from-amber-500/10 via-rose-500/5 to-indigo-500/10 border border-amber-500/30 p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
                 <div class="flex items-start gap-3.5">
@@ -66,7 +67,7 @@
                     </div>
                     <div class="space-y-1">
                         <div class="flex items-center gap-2">
-                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Asisten &amp; Balasan AI Inbox Belum Dapat Digunakan</h4>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">{{ __('social_media.asisten_balasan_ai_inbox_belum_dapat') }}</h4>
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-200 font-mono">Wajib Setting AI</span>
                         </div>
                         <p class="text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
@@ -78,7 +79,7 @@
                     <a href="{{ route('cooca-ai.providers') }}"
                         class="min-h-[44px] px-4 py-2.5 rounded-[12px] text-xs font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95 shadow-sm active:scale-95 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i data-lucide="settings-2" class="w-4 h-4"></i>
-                        <span>Setting AI di Cooca AI</span>
+                        <span>{{ __('social_media.setting_ai_di_cooca_ai') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -295,7 +296,7 @@
                                 @if($hasMetaConnected)
                                     Akun Meta Anda sudah terhubung aktif. Klik tombol <strong>Sinkronkan Data Meta</strong> untuk menarik percakapan &amp; komentar pelanggan terbaru secara langsung.
                                 @else
-                                    Belum ada percakapan masuk. Hubungkan akun Facebook Page atau Instagram Anda untuk mulai menerima pesan dari calon pembeli.
+                                    {{ __('social_media.belum_ada_percakapan_masuk_hubungkan_akun') }}uk mulai menerima pesan dari calon pembeli.
                                 @endif
                             </p>
                         </div>
@@ -310,7 +311,7 @@
                                 <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] text-[11.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs active:scale-95 transition">
                                     <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                    <span>Hubungkan Akun Meta</span>
+                                    <span>{{ __('social_media.hubungkan_akun_meta') }}</span>
                                 </a>
                             @endif
                         </div>
@@ -323,7 +324,7 @@
             <!-- ============================================================== -->
             <div class="lg:col-span-5 xl:col-span-5.5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm flex flex-col h-full overflow-hidden">
                 
-                {{-- Empty State saat belum ada percakapan aktif yang dipilih --}}
+                {{-- Empty State saat {{ __('social_media.belum_ada_percakapan_aktif_yang_dipilih') }}
                 <div x-show="!activeThread" class="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-4 bg-black/[0.01] dark:bg-white/[0.01]">
                     <div class="w-16 h-16 rounded-[22px] bg-gradient-to-br from-[#007AFF]/10 via-[#AF52DE]/10 to-[#34C759]/10 border border-black/5 dark:border-white/10 flex items-center justify-center text-[#007AFF] shadow-xs">
                         <i data-lucide="message-square" class="w-8 h-8"></i>
@@ -343,13 +344,13 @@
                             <button type="button" @click="syncMetaInbox()" :disabled="isSyncingMeta"
                                 class="px-4 py-2 rounded-[12px] text-[12.5px] font-semibold text-white bg-[#1877F2] hover:bg-[#166FE5] shadow-xs active:scale-95 transition flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5" :class="{'animate-spin': isSyncingMeta}"></i>
-                                <span>Tarik Data Terbaru dari Meta</span>
+                                <span>{{ __('social_media.tarik_data_terbaru_dari_meta') }}</span>
                             </button>
                         @else
                             <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
                                 class="px-4 py-2 rounded-[12px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs active:scale-95 transition flex items-center gap-1.5">
                                 <i data-lucide="link" class="w-3.5 h-3.5"></i>
-                                <span>Hubungkan Akun Media Sosial</span>
+                                <span>{{ __('social_media.hubungkan_akun_media_sosial') }}</span>
                             </a>
                         @endif
                     </div>
@@ -471,7 +472,7 @@
                             {{-- Tombol Buka Matriks DO's & DON'Ts AI Inbox --}}
                             <button type="button" @click="openAiRulesModal = true; fetchCustomRules()"
                                 class="min-h-[32px] px-2.5 py-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 font-semibold text-[11px] transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer border border-black/5 dark:border-white/5"
-                                title="Buka tabel input & kontrol instruksi apa yang boleh (DO's) dan dilarang (DON'Ts) dilakukan AI">
+                                title="{{ __('social_media.buka_tabel_input_kontrol_instruksi_apa') }}">
                                 <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i>
                                 <span class="hidden sm:inline">Aturan AI (DO &amp; DON'T)</span>
                             </button>
@@ -489,7 +490,7 @@
                                 </button>
                             @else
                                 <a href="{{ route('cooca-ai.providers') }}"
-                                    class="min-h-[32px] px-3 py-1 rounded-[10px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0" title="Atur Provider AI untuk membuka fitur ini">
+                                    class="min-h-[32px] px-3 py-1 rounded-[10px] bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold text-[11.5px] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer shrink-0" title="{{ __('social_media.atur_provider_ai_untuk_membuka_fitur') }}">
                                     <i data-lucide="lock" class="w-3.5 h-3.5"></i>
                                     <span>Setting AI Dulu</span>
                                 </a>
@@ -552,13 +553,13 @@
             <!-- ============================================================== -->
             <div class="lg:col-span-3 xl:col-span-3 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-sm flex flex-col h-full overflow-y-auto p-4 space-y-5">
                 
-                {{-- Empty State CRM saat belum ada percakapan aktif --}}
+                {{-- Empty State CRM saat {{ __('social_media.belum_ada_percakapan_aktif') }}
                 <div x-show="!activeThread" class="flex-1 flex flex-col items-center justify-center p-6 text-center space-y-3 text-black/40 dark:text-white/40">
                     <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 dark:text-white/40">
                         <i data-lucide="user" class="w-6 h-6"></i>
                     </div>
                     <div class="space-y-1 max-w-xs">
-                        <h4 class="text-[13px] font-bold text-black/70 dark:text-white/70">Detail Kontak CRM</h4>
+                        <h4 class="text-[13px] font-bold text-black/70 dark:text-white/70">{{ __('social_media.detail_kontak_crm') }}</h4>
                         <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">
                             Profil pelanggan, kontak, label penanda, dan riwayat catatan internal tim akan ditampilkan saat percakapan dipilih.
                         </p>
@@ -587,7 +588,7 @@
                     <div class="space-y-2">
                         <div class="flex items-center justify-between text-[12px]">
                             <span class="font-bold text-black/75 dark:text-white/75">{{ __('social_media.crm_about') }}</span>
-                            <a href="{{ route('customers.index') }}" class="text-[#007AFF] font-bold hover:underline text-[11px]">Edit</a>
+                            <a href="{{ route('customers.index') }}" class="text-[#007AFF] font-bold hover:underline text-[11px]">{{ __('common.edit') }}</a>
                         </div>
                         <div class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-[12px] space-y-1.5">
                             <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-medium">
@@ -634,13 +635,9 @@
                             <span class="text-[10.5px] font-semibold text-black/50 dark:text-white/50">{{ __('social_media.crm_suggested_labels') }}:</span>
                             <div class="flex flex-wrap gap-1.5">
                                 <button type="button" @click="addSuggestedLabel('Pelanggan baru')"
-                                    class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/20 transition-colors cursor-pointer">
-                                    Pelanggan baru
-                                </button>
+                                    class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/20 transition-colors cursor-pointer">{{ __('social_media.pelanggan_baru') }}</button>
                                 <button type="button" @click="addSuggestedLabel('Tanggal Hari Ini (' + new Date().toLocaleDateString('id-ID', {day: '2-digit', month: '2-digit'}) + ')')"
-                                    class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] transition-colors cursor-pointer">
-                                    Tanggal Hari Ini
-                                </button>
+                                    class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-medium bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] transition-colors cursor-pointer">{{ __('social_media.tanggal_hari_ini') }}</button>
                                 <button type="button" @click="addSuggestedLabel('Prospek Hangat')"
                                     class="px-2 py-0.5 rounded-[8px] text-[10.5px] font-bold bg-[#007AFF]/12 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors cursor-pointer">
                                     Prospek Hangat
@@ -726,7 +723,7 @@
                                 <p class="text-[11px] text-black/50 dark:text-white/50">Pilih produk resmi toko untuk dikirim ke chat pelanggan</p>
                             </div>
                         </div>
-                        <button type="button" @click="openProductModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                        <button type="button" @click="openProductModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="{{ __('common.close_modal') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -753,7 +750,7 @@
                             </div>
                         @empty
                             <div class="p-6 text-center text-[12px] text-black/50 dark:text-white/50">
-                                Belum ada katalog produk di toko Anda.
+                                {{ __('social_media.belum_ada_katalog_produk_di_toko') }}
                             </div>
                         @endforelse
                     </div>
@@ -799,7 +796,7 @@
                             </div>
                             <h4 id="quick-replies-modal-title" class="text-[14px] font-bold text-black dark:text-white">{{ __('social_media.quick_replies_title') }}</h4>
                         </div>
-                        <button type="button" @click="openQuickRepliesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                        <button type="button" @click="openQuickRepliesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="{{ __('common.close_modal') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -872,7 +869,7 @@
                                 </p>
                             </div>
                         </div>
-                        <button type="button" @click="openAiRulesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="Tutup modal">
+                        <button type="button" @click="openAiRulesModal = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition active:scale-95" aria-label="{{ __('common.close_modal') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -883,14 +880,14 @@
                         :class="activeRulesTab === 'custom' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                         class="flex-1 py-2 px-3 rounded-[9px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                         <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span>Input &amp; Kelola Aturan Toko</span>
+                        <span>{{ __('social_media.tab_input_manage_rules') }}</span>
                         <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF]" x-text="customRules.length">0</span>
                     </button>
                     <button type="button" @click="activeRulesTab = 'system'"
                         :class="activeRulesTab === 'system' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                         class="flex-1 py-2 px-3 rounded-[9px] transition-all flex items-center justify-center gap-2 cursor-pointer">
                         <i data-lucide="shield-alert" class="w-4 h-4 text-emerald-500"></i>
-                        <span>Aturan Standar Sistem (Baku)</span>
+                        <span>{{ __('social_media.aturan_standar_sistem_baku') }}</span>
                     </button>
                 </div>
 
@@ -957,7 +954,7 @@
                                         Kalimat Instruksi Aturan:
                                     </label>
                                     <textarea x-model="newRuleInstruction" rows="2"
-                                        placeholder="Tulis aturan toko Anda... Contoh: Selalu tawarkan voucher GAJIAN10 untuk belanja di atas Rp 100.000, ATAU: Dilarang menjanjikan pengiriman instan di atas pukul 16:00."
+                                        placeholder="{{ __('social_media.tulis_aturan_toko_anda_contoh_selalu') }}"
                                         class="w-full p-3 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:ring-2 focus:ring-[#007AFF] outline-none resize-none"></textarea>
                                 </div>
 
@@ -974,7 +971,7 @@
                                         <template x-if="isSavingRule">
                                             <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
                                         </template>
-                                        <span x-text="isSavingRule ? 'Menyimpan...' : 'Simpan Aturan ke AI'">Simpan Aturan ke AI</span>
+                                        <span x-text="isSavingRule ? 'Menyimpan...' : 'Simpan Aturan ke AI'">{{ __('social_media.simpan_aturan_ke_ai') }}</span>
                                     </button>
                                 </div>
                             </form>
@@ -984,7 +981,7 @@
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <h4 class="font-extrabold text-[13px] text-black dark:text-white flex items-center gap-2">
-                                    <span>Tabel Daftar Aturan Khusus Toko Anda</span>
+                                    <span>{{ __('social_media.tabel_daftar_aturan_khusus_toko_anda') }}</span>
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70" x-text="customRules.length + ' Aturan'"></span>
                                 </h4>
                                 <button type="button" @click="fetchCustomRules()" class="text-[11px] text-[#007AFF] hover:underline flex items-center gap-1">
@@ -1005,7 +1002,7 @@
                                 <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
                                     <i data-lucide="shield" class="w-5 h-5"></i>
                                 </div>
-                                <div class="font-bold text-black dark:text-white text-xs">Belum Ada Aturan Kustom Khusus Toko</div>
+                                <div class="font-bold text-black dark:text-white text-xs">{{ __('social_media.belum_ada_aturan_kustom_khusus_toko') }}</div>
                                 <p class="text-[11px] text-black/50 dark:text-white/50 max-w-md mx-auto">
                                     Gunakan formulir di atas untuk menambahkan aturan pertama Anda. Saat ini AI hanya berpedoman pada Aturan Standar Sistem (Matriks Baku).
                                 </p>
@@ -1068,8 +1065,8 @@
                                                 <td class="p-3 align-middle text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                                     <button type="button" @click="deleteCustomRule(rule)"
                                                         class="w-7 h-7 rounded-[8px] flex items-center justify-center text-rose-500 hover:bg-rose-500/10 transition cursor-pointer mx-auto"
-                                                        title="Hapus aturan ini"
-                                                        aria-label="Hapus aturan ini">
+                                                        title="{{ __('social_media.hapus_aturan_ini') }}"
+                                                        aria-label="{{ __('social_media.hapus_aturan_ini_2') }}">
                                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                                     </button>
                                                 </td>
@@ -1173,7 +1170,7 @@
                         <div class="flex items-center justify-between text-[11px] pt-1">
                             <span class="text-black/50 dark:text-white/50">Ingin membaca batasan otoritas untuk Kasir POS, Gudang, dan Keuangan?</span>
                             <a href="{{ route('docs.index') }}#sec-ai" target="_blank" class="font-bold text-[#007AFF] hover:underline flex items-center gap-1">
-                                <span>Buku Panduan POV Owner</span>
+                                <span>{{ __('social_media.buku_panduan_pov_owner') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -1186,9 +1183,7 @@
                         Perubahan aturan langsung tersimpan dan aktif secara instan.
                     </span>
                     <button type="button" @click="openAiRulesModal = false"
-                        class="min-h-[44px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">
-                        Selesai &amp; Tutup
-                    </button>
+                        class="min-h-[44px] px-5 rounded-[12px] bg-black text-white dark:bg-white dark:text-black font-bold text-[12px] hover:opacity-90 active:scale-95 transition cursor-pointer">{{ __('social_media.selesai_tutup') }}</button>
                 </div>
             </div>
         </div>
@@ -1456,7 +1451,7 @@
                     } catch (err) {
                         console.error(err);
                         if (window.AppAlert) {
-                            window.AppAlert.error('Terjadi kesalahan saat mengirim balasan.');
+                            window.AppAlert.error('{{ __('social_media.terjadi_kesalahan_saat_mengirim_balasan') }}
                         }
                     } finally {
                         this.isSending = false;
@@ -1679,7 +1674,7 @@
                     } catch (e) {
                         console.error('Failed to save rule:', e);
                         if (window.AppAlert) {
-                            AppAlert.error('Terjadi kesalahan saat menyimpan aturan.');
+                            AppAlert.error('{{ __('social_media.terjadi_kesalahan_saat_menyimpan_aturan') }}
                         }
                     } finally {
                         this.isSavingRule = false;

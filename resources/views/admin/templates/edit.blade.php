@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Edit Template Excel - Admin Console',
+    'title' => __('admin.edit_template_excel_admin_console'),
     'headerTitle' => 'Edit Template Excel',
     'headerSubtitle' => 'Perbarui rincian metadata atau unggah berkas spreadsheet pengganti',
 ])
@@ -11,7 +11,7 @@
             <a href="{{ route('admin.templates.index') }}"
                 class="inline-flex items-center gap-2 text-[13px] font-medium text-black/60 dark:text-white/60 hover:text-[#007AFF] dark:hover:text-[#007AFF] transition-colors active:scale-[0.98]">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="1.8"></i>
-                <span>Kembali ke Daftar Template</span>
+                <span>{{ __('admin.kembali_ke_daftar_template') }}</span>
             </a>
         </div>
 
@@ -60,7 +60,7 @@
                     <a href="{{ route('admin.templates.download', $template) }}"
                         class="h-9 px-3.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[#007AFF] text-[12px] font-semibold inline-flex items-center gap-1.5 transition-colors active:scale-[0.98] shrink-0">
                         <i data-lucide="download" class="w-3.5 h-3.5" stroke-width="1.8"></i>
-                        <span>Unduh Berkas</span>
+                        <span>{{ __('admin.unduh_berkas') }}</span>
                     </a>
                 </div>
 
@@ -179,14 +179,12 @@
             <!-- Action Buttons (Section 9.4 Concise Action Labels) -->
             <div class="flex items-center justify-end gap-3 pt-2">
                 <a href="{{ route('admin.templates.index') }}"
-                    class="h-11 sm:h-10 px-5 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white/70 text-[13px] font-medium flex items-center justify-center transition-colors active:scale-[0.98]">
-                    Batal
-                </a>
+                    class="h-11 sm:h-10 px-5 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white/70 text-[13px] font-medium flex items-center justify-center transition-colors active:scale-[0.98]">{{ __('common.cancel') }}</a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.edit'))
 <button type="submit"
                     class="h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all">
                     <i data-lucide="check" class="w-4 h-4" stroke-width="1.8"></i>
-                    <span>Simpan</span>
+                    <span>{{ __('common.save') }}</span>
                 </button>
 @endif
             </div>

@@ -891,4 +891,7 @@ return [
     'filter_moderasi_kata_komunitas' => 'Filter & Moderasi Kata Komunitas',
     'tambah_kata_filter_massal' => 'Tambah Kata Filter Massal',
     'ubah_aturan_kata' => 'Ubah Aturan Kata',
+    'business_proof' => 'Bukti Usaha',
+    'outgoing_transfer_proof' => 'Bukti Transfer Keluar',
+    'payment_proof' => 'Bukti Bayar',
 ];

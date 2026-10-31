@@ -401,8 +401,8 @@
                                         :class="category === 'internet_phone' ? 'bg-[#32ADE6] text-white shadow-md shadow-[#32ADE6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="wifi" class="w-4 h-4 mb-1.5" :class="category === 'internet_phone' ? 'text-white' : 'text-[#32ADE6]'"></i>
-                                        <span class="text-[12px] font-bold">Internet & Pulsa</span>
-                                        <span class="text-[10px] opacity-70">Wi-Fi toko, kuota kasir</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_internet_phone') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_internet_phone_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'supplies'"
@@ -417,16 +417,16 @@
                                         :class="category === 'salaries' ? 'bg-[#34C759] text-white shadow-md shadow-[#34C759]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="users" class="w-4 h-4 mb-1.5" :class="category === 'salaries' ? 'text-white' : 'text-[#34C759]'"></i>
-                                        <span class="text-[12px] font-bold">Gaji & Upah</span>
-                                        <span class="text-[10px] opacity-70">Gaji staf, upah harian</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_salaries') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_salaries_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'consumption'"
                                         :class="category === 'consumption' ? 'bg-[#FF2D55] text-white shadow-md shadow-[#FF2D55]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="utensils" class="w-4 h-4 mb-1.5" :class="category === 'consumption' ? 'text-white' : 'text-[#FF2D55]'"></i>
-                                        <span class="text-[12px] font-bold">Konsumsi Staf</span>
-                                        <span class="text-[10px] opacity-70">Makan siang, snack rapat</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_consumption') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_consumption_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'logistics'"
@@ -465,8 +465,8 @@
                                         :class="category === 'taxes_legal' ? 'bg-[#8E8E93] text-white shadow-md shadow-[#8E8E93]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="scale" class="w-4 h-4 mb-1.5" :class="category === 'taxes_legal' ? 'text-white' : 'text-[#8E8E93]'"></i>
-                                        <span class="text-[12px] font-bold">Pajak & Retribusi</span>
-                                        <span class="text-[10px] opacity-70">Pajak daerah, retribusi</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_taxes_legal') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_taxes_legal_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'bank_admin'"
@@ -481,16 +481,16 @@
                                         :class="category === 'cash_advance' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="hand-coins" class="w-4 h-4 mb-1.5" :class="category === 'cash_advance' ? 'text-white' : 'text-[#FF9500]'"></i>
-                                        <span class="text-[12px] font-bold">Kasbon Karyawan</span>
-                                        <span class="text-[10px] opacity-70">Talangan kasbon sementara</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_cash_advance') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_cash_advance_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'other'"
                                         :class="category === 'other' ? 'bg-[#8E8E93] text-white shadow-md shadow-[#8E8E93]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="more-horizontal" class="w-4 h-4 mb-1.5" :class="category === 'other' ? 'text-white' : 'text-[#8E8E93]'"></i>
-                                        <span class="text-[12px] font-bold">Lain-lain / Others</span>
-                                        <span class="text-[10px] opacity-70">Wajib isi rincian detail</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_other') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_other_desc') }}</span>
                                     </button>
                                 </div>
                             </div>

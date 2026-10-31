@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Kelola Pengguna - Admin Console',
+    'title' => __('admin.kelola_pengguna_admin_console'),
     'headerTitle' => 'Manajemen Pengguna & Ekspor Data',
     'headerSubtitle' => 'Kelola seluruh pengguna terdaftar, pantau metode login, dan unduh data pengguna ke format CSV',
 ])
@@ -16,7 +16,7 @@
                         class="w-4 h-4 text-black/35 dark:text-white/35 absolute left-3 top-1/2 -translate-y-1/2"
                         stroke-width="1.5"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama atau email pengguna..."
+                        placeholder="{{ __('admin.cari_nama_atau_email_pengguna') }}"
                         class="w-full h-9 pl-9 pr-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
             </form>
@@ -25,7 +25,7 @@
                 <a href="{{ route('admin.users.export') }}"
                     class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shrink-0">
                     <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]" stroke-width="1.5"></i>
-                    <span>Ekspor CSV (Email & Nama)</span>
+                    <span>{{ __('admin.ekspor_csv_email_nama') }}</span>
                 </a>
             @endif
         </div>
@@ -98,7 +98,7 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"
-                                                title="Hapus User">
+                                                title="{{ __('admin.hapus_user') }}">
                                                 <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> Hapus
                                             </button>
                                         </form>
@@ -112,7 +112,7 @@
                                 <td colspan="6" class="px-4 py-10 text-center">
                                     <i data-lucide="users" class="w-12 h-12 mx-auto text-black/20 dark:text-white/20"
                                         stroke-width="1.5"></i>
-                                    <p class="text-[15px] font-semibold text-black dark:text-white mt-3">Tidak ada data
+                                    <p class="text-[15px] font-semibold text-black dark:text-white mt-3">{{ __('admin.tidak_ada_data') }}
                                         pengguna</p>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">Tidak ditemukan data
                                         pengguna yang sesuai.</p>

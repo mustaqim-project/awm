@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Katalog Produk & Model HPP',
+    'title' => __('products.katalog_produk_model_hpp'),
     'headerTitle' => 'Katalog Produk & Model HPP',
     'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',
 ])
@@ -804,7 +804,7 @@
             <!-- Export Excel -->
             <a href="{{ route('products.export') }}"
                 class="h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 min-w-[44px]"
-                title="Export seluruh katalog produk ke file Excel (.xlsx)">
+                title="{{ __('products.export_seluruh_katalog_produk_ke_file') }}">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
                 <span>Export Excel</span>
             </a>
@@ -813,7 +813,7 @@
                 <!-- Import Excel -->
                 <a href="{{ route('import.index', ['tab' => 'products']) }}"
                     class="h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 min-w-[44px]"
-                    title="Import data produk massal dari file Excel / CSV">
+                    title="{{ __('products.import_data_produk_massal_dari_file') }}">
                     <i data-lucide="upload" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
                     <span>{{ __('products.btn_import') }}</span>
                 </a>
@@ -955,7 +955,7 @@
                                     :checked="isAllProductsSelected()"
                                     @change="toggleSelectAllProducts($event)"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
-                                    title="Pilih Semua Produk">
+                                    title="{{ __('products.pilih_semua_produk') }}">
                             </th>
                             <x-table-sort-th :col="1" type="string" :title="__('products.th_product_name_barcode')" class="whitespace-nowrap min-w-[280px]" />
                             <x-table-sort-th :col="2" type="string" :title="__('products.th_category')" class="whitespace-nowrap min-w-[170px]" />
@@ -1720,7 +1720,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
                                                 <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">Harga Grosir Bertingkat</h3>
+                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">{{ __('products.harga_grosir_bertingkat') }}</h3>
                                             </div>
                                             <span class="text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full">Otomatis POS</span>
                                         </div>
@@ -2368,7 +2368,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center gap-2">
                                                 <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">Harga Grosir Bertingkat</h3>
+                                                <h3 class="text-[14px] font-bold text-black dark:text-white tracking-tight">{{ __('products.harga_grosir_bertingkat') }}</h3>
                                             </div>
                                             <span class="text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full">Otomatis POS</span>
                                         </div>
@@ -3429,15 +3429,13 @@
                         @click="submitBulkProduct('delete', 'Hapus Produk Terpilih?', `Hapus ${selectedProductIds.length} produk terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')"
                         class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#FF453A] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
                         <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
-                        <span>Hapus</span>
+                        <span>{{ __('common.delete') }}</span>
                     </button>
                 @endif
 
                 <!-- Cancel Selection -->
                 <button type="button" @click="selectedProductIds = []"
-                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
             </div>
         </div>
 

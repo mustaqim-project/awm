@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Kotak Masuk (Inbox) - COOCA Admin')
+@section('title', __('admin.title_kotak_masuk_inbox_cooca_admin'))
 
 @section('content')
 <div class="space-y-4 max-w-[1400px] w-full min-w-0 mx-auto pb-24 lg:pb-10" x-data="adminInboxHub()" x-init="init()">
@@ -11,7 +11,7 @@
                 <i data-lucide="inbox" class="w-5 h-5"></i>
             </div>
             <div class="min-w-0">
-                <h1 class="text-[19px] sm:text-[22px] font-bold text-[#111827] dark:text-white tracking-tight truncate">Kotak Masuk (Inbox)</h1>
+                <h1 class="text-[19px] sm:text-[22px] font-bold text-[#111827] dark:text-white tracking-tight truncate">{{ __('admin.kotak_masuk_inbox') }}</h1>
                 <p class="text-[12.5px] text-[#6B7280] dark:text-[#9CA3AF] truncate">Pusat percakapan omnichannel: Messenger, Instagram Direct, WhatsApp, dan Komentar</p>
             </div>
         </div>
@@ -19,7 +19,7 @@
         <div class="flex items-center gap-2 flex-wrap">
             {{-- Auto-Sync Status Indicator & Trigger Button --}}
             <button type="button" @click="syncMessages(true)" :disabled="isSyncing"
-                title="Otomatis sinkron setiap 10 detik. Klik untuk sinkronisasi manual sekarang."
+                title="{{ __('admin.otomatis_sinkron_setiap_10_detik_klik') }}"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-[#1F2937] dark:text-white bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-2 shadow-xs cursor-pointer">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -31,7 +31,7 @@
             <button type="button" @click="openAiSettings = true"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-semibold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all flex items-center gap-1.5 shadow-xs">
                 <i data-lucide="bot" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
-                <span>Kelola AI Chatbot & Pedoman</span>
+                <span>{{ __('admin.kelola_ai_chatbot_pedoman') }}</span>
                 <span x-show="aiConfig.enabled" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">ON</span>
                 <span x-show="!aiConfig.enabled" class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-400">OFF</span>
             </button>
@@ -43,7 +43,7 @@
             <a href="{{ route('admin.social-media.index') }}"
                 class="min-h-[36px] px-3.5 rounded-[10px] text-[12.5px] font-medium text-[#4B5563] dark:text-[#9CA3AF] bg-white dark:bg-[#1C1C1E] border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] transition-all flex items-center gap-1.5">
                 <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                <span>Kelola Akun Platform</span>
+                <span>{{ __('admin.kelola_akun_platform') }}</span>
             </a>
         </div>
     </div>
@@ -56,7 +56,7 @@
             <button type="button" @click="setChannel('all')"
                 :class="currentChannel === 'all' ? 'bg-[#E7F3FF] text-[#1877F2] font-semibold dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'"
                 class="px-4 py-1.5 rounded-[10px] text-[13.5px] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0">
-                <span>Semua pesan</span>
+                <span>{{ __('admin.semua_pesan') }}</span>
                 <span x-show="(counts.all || 0) > 0" x-text="counts.all" class="text-[11px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10 font-bold"></span>
             </button>
 
@@ -117,7 +117,7 @@
                         <div class="relative flex-1 min-w-0">
                             <i data-lucide="search" class="w-4 h-4 text-[#9CA3AF] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                             <input type="text" x-model="searchKeyword" @input.debounce.300ms="filterThreads()"
-                                placeholder="Cari"
+                                placeholder="{{ __('admin.cari') }}"
                                 class="w-full h-9 pl-9 pr-3 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-[#1877F2] transition-colors">
                             <button type="button" x-show="searchKeyword" @click="searchKeyword = ''; filterThreads()"
                                 class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white">
@@ -130,7 +130,7 @@
                             <button type="button" @click="openManage = !openManage"
                                 class="h-9 px-3 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[13px] font-medium text-[#1F2937] dark:text-white hover:bg-[#F9FAFB] dark:hover:bg-white/[0.04] flex items-center gap-1.5 transition-colors shrink-0">
                                 <i data-lucide="layers" class="w-4 h-4 text-[#4B5563] dark:text-[#9CA3AF]"></i>
-                                <span>Kelola</span>
+                                <span>{{ __('admin.kelola') }}</span>
                             </button>
 
                             {{-- Dropdown Kelola --}}
@@ -147,28 +147,28 @@
                                 <button type="button" @click="markAllAsRead(); openManage = false"
                                     class="w-full text-left px-3 py-2 text-[#1F2937] dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2">
                                     <i data-lucide="check-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                                    <span>Tandai Semua Sudah Dibaca</span>
+                                    <span>{{ __('admin.tandai_semua_sudah_dibaca') }}</span>
                                 </button>
                                 <button type="button" @click="openAiSettings = true; openManage = false"
                                     class="w-full text-left px-3 py-2 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-950/20 flex items-center gap-2 font-medium">
                                     <i data-lucide="bot" class="w-3.5 h-3.5 text-purple-600"></i>
-                                    <span>Kelola AI Chatbot & Pedoman</span>
+                                    <span>{{ __('admin.kelola_ai_chatbot_pedoman') }}</span>
                                 </button>
                                 <button type="button" @click="openMetaSettings = true; openManage = false"
                                     class="w-full text-left px-3 py-2 text-[#1877F2] dark:text-[#64D2FF] hover:bg-[#E7F3FF]/60 dark:hover:bg-[#1877F2]/10 flex items-center gap-2 font-medium">
                                     <i data-lucide="key" class="w-3.5 h-3.5 text-[#1877F2]"></i>
-                                    <span>Pengaturan Kredensial Meta & Webhook</span>
+                                    <span>{{ __('admin.pengaturan_kredensial_meta_webhook') }}</span>
                                 </button>
                                 <div class="my-1 border-t border-[#E5E7EB] dark:border-white/10"></div>
                                 <a href="{{ route('admin.social-media.index') }}"
                                     class="block px-3 py-2 text-[#1F2937] dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2">
                                     <i data-lucide="settings" class="w-3.5 h-3.5 text-[#6B7280]"></i>
-                                    <span>Kelola Saluran & Akun Meta</span>
+                                    <span>{{ __('admin.kelola_saluran_akun_meta') }}</span>
                                 </a>
                                 <a href="{{ route('admin.whatsapp.index') }}"
                                     class="block px-3 py-2 text-[#1F2937] dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] flex items-center gap-2">
                                     <i data-lucide="message-circle" class="w-3.5 h-3.5 text-[#25D366]"></i>
-                                    <span>Kelola WhatsApp Gateway</span>
+                                    <span>{{ __('admin.kelola_whatsapp_gateway') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -180,15 +180,13 @@
                             {{-- Semua --}}
                             <button type="button" @click="resetFilters()"
                                 :class="(currentStatus === 'all' && currentTag === 'all') ? 'bg-[#1877F2] text-white font-semibold border-[#1877F2] shadow-2xs' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
-                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap">
-                                Semua
-                            </button>
+                                class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap">{{ __('common.all') }}</button>
 
                             {{-- Belum Dibaca --}}
                             <button type="button" @click="setStatus('unread')"
                                 :class="currentStatus === 'unread' ? 'bg-[#1877F2] text-white font-semibold border-[#1877F2] shadow-2xs' : 'bg-white dark:bg-[#2C2C2E] text-[#374151] dark:text-[#D1D5DB] border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6]'"
                                 class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
-                                <span>Belum Dibaca</span>
+                                <span>{{ __('admin.belum_dibaca') }}</span>
                                 <template x-if="counts.unread > 0">
                                     <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold"
                                         :class="currentStatus === 'unread' ? 'bg-white text-[#1877F2]' : 'bg-[#1877F2]/10 text-[#1877F2]'"
@@ -230,7 +228,7 @@
                             <button type="button" @click="setTag('tindak_lanjut')"
                                 :class="currentTag === 'tindak_lanjut' ? 'bg-indigo-100 text-indigo-900 border-indigo-300 font-semibold dark:bg-indigo-900/60 dark:text-indigo-200' : 'bg-white dark:bg-[#2C2C2E] text-indigo-800 dark:text-indigo-300 border-indigo-200/70 hover:bg-indigo-50/50'"
                                 class="px-2.5 py-1 rounded-[8px] text-[11.5px] border transition-colors whitespace-nowrap flex items-center gap-1">
-                                <span>⏳ Tindak Lanjut</span>
+                                <span>{{ __('admin.tindak_lanjut') }}</span>
                                 <template x-if="counts.tag_tindak_lanjut > 0">
                                     <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-200" x-text="counts.tag_tindak_lanjut"></span>
                                 </template>
@@ -240,7 +238,7 @@
                         {{-- Filter Lanjutan Dropdown Trigger --}}
                         <div class="relative shrink-0">
                             <button type="button" @click="openFilterMore = !openFilterMore"
-                                title="Filter Tambahan (Komplain, VIP, Balasan Iklan)"
+                                title="{{ __('admin.filter_tambahan_komplain_vip_balasan_iklan') }}"
                                 class="w-7 h-7 rounded-[8px] text-[#4B5563] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white hover:bg-[#F3F4F6] dark:hover:bg-white/5 border border-transparent hover:border-[#E5E7EB] flex items-center justify-center transition-colors">
                                 <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
                             </button>
@@ -265,9 +263,7 @@
                                 </button>
                                 <div class="border-t border-[#E5E7EB] dark:border-white/10 pt-1 mt-1">
                                     <button type="button" @click="resetFilters(); openFilterMore = false"
-                                        class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-gray-100 text-gray-700 font-medium">
-                                        Bersihkan Semua Filter
-                                    </button>
+                                        class="w-full text-left px-2.5 py-1.5 rounded-[8px] hover:bg-gray-100 text-gray-700 font-medium">{{ __('admin.bersihkan_semua_filter') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -321,16 +317,14 @@
                         </div>
 
                         {{-- Headings from screenshot --}}
-                        <h3 class="text-[14.5px] font-bold text-[#111827] dark:text-white mt-2">Tidak ada pesan</h3>
+                        <h3 class="text-[14.5px] font-bold text-[#111827] dark:text-white mt-2">{{ __('admin.tidak_ada_pesan') }}</h3>
                         <p class="text-[12.5px] text-[#6B7280] dark:text-[#9CA3AF] max-w-[240px] mt-1 leading-relaxed">
                             Pesan yang dikirim ke Halaman Anda akan ditampilkan di sini.
                         </p>
 
                         <div class="mt-4 flex items-center gap-2">
                             <button type="button" @click="resetFilters()"
-                                class="px-3 py-1.5 rounded-[8px] text-[12px] font-medium text-[#1877F2] bg-[#E7F3FF] hover:bg-[#DBEAFE] transition-colors">
-                                Reset Filter
-                            </button>
+                                class="px-3 py-1.5 rounded-[8px] text-[12px] font-medium text-[#1877F2] bg-[#E7F3FF] hover:bg-[#DBEAFE] transition-colors">{{ __('common.reset') }}</button>
                             <button type="button" @click="syncMessages()"
                                 class="px-3 py-1.5 rounded-[8px] text-[12px] font-medium text-[#374151] dark:text-white border border-[#E5E7EB] dark:border-white/10 hover:bg-[#F3F4F6] transition-colors flex items-center gap-1">
                                 <i data-lucide="refresh-cw" class="w-3 h-3"></i>
@@ -384,13 +378,13 @@
                                             {{-- Badges row (Status + Tags with Soft Colors) --}}
                                             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
                                                 <template x-if="t.is_human_takeover">
-                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="Percakapan di-takeover human agent">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="{{ __('admin.percakapan_di_takeover_human_agent') }}">
                                                         <i data-lucide="user-check" class="w-2.5 h-2.5"></i>
                                                         <span>Human</span>
                                                     </span>
                                                 </template>
                                                 <template x-if="!t.is_human_takeover">
-                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="AI Auto-Pilot aktif">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="{{ __('admin.ai_auto_pilot_aktif') }}">
                                                         <i data-lucide="bot" class="w-2.5 h-2.5"></i>
                                                         <span>AI Auto</span>
                                                     </span>
@@ -441,13 +435,13 @@
                                             {{-- Badges row (Status + Tags with Soft Colors) --}}
                                             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
                                                 <template x-if="t.is_human_takeover">
-                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="Percakapan di-takeover human agent">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40 flex items-center gap-0.5" title="{{ __('admin.percakapan_di_takeover_human_agent') }}">
                                                         <i data-lucide="user-check" class="w-2.5 h-2.5"></i>
                                                         <span>Human</span>
                                                     </span>
                                                 </template>
                                                 <template x-if="!t.is_human_takeover">
-                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="AI Auto-Pilot aktif">
+                                                    <span class="text-[9.5px] px-1.5 py-0.5 rounded-[4px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-400 border border-purple-200 dark:border-purple-800/40 flex items-center gap-0.5" title="{{ __('admin.ai_auto_pilot_aktif') }}">
                                                         <i data-lucide="bot" class="w-2.5 h-2.5"></i>
                                                         <span>AI Auto</span>
                                                     </span>
@@ -542,7 +536,7 @@
                                                 <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border"
                                                     :class="getTagBadgeClass(tg)">
                                                     <span x-text="formatTagLabel(tg)"></span>
-                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75" title="Hapus tag">×</button>
+                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75" title="{{ __('admin.hapus_tag') }}">×</button>
                                                 </span>
                                             </template>
                                         </div>
@@ -586,7 +580,7 @@
                                     {{-- Tag Dropdown Button --}}
                                     <div class="relative" x-data="{ openTagDrop: false, customTagVal: '' }">
                                         <button type="button" @click="openTagDrop = !openTagDrop"
-                                            title="Kelola Tag & Kategori"
+                                            title="{{ __('admin.kelola_tag_kategori') }}"
                                             class="h-8 px-2.5 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 text-[12px] font-medium flex items-center gap-1.5 transition-colors">
                                             <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
                                             <span class="hidden sm:inline">Tag</span>
@@ -636,7 +630,7 @@
                                     <button type="button" title="Bintang / Prioritas" @click="toggleThreadTag(selectedThread, 'prioritas')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
                                         <i data-lucide="star" class="w-4 h-4" :class="(selectedThread.tags || []).includes('prioritas') || selectedThread.status === 'priority' ? 'fill-amber-400 text-amber-500' : ''"></i>
                                     </button>
-                                    <button type="button" title="Tandai Belum Dibaca" @click="updateThreadStatus('unread')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
+                                    <button type="button" title="{{ __('admin.tandai_belum_dibaca') }}" @click="updateThreadStatus('unread')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
                                         <i data-lucide="mail" class="w-4 h-4"></i>
                                     </button>
                                     <button type="button" title="Tandai Selesai" @click="updateThreadStatus('resolved')" class="w-8 h-8 rounded-[8px] border border-[#E5E7EB] dark:border-white/10 text-[#4B5563] dark:text-[#9CA3AF] hover:bg-gray-50 dark:hover:bg-white/5 flex items-center justify-center transition-colors">
@@ -688,7 +682,7 @@
                                                     <span>·</span>
                                                     <button type="button" @click="openPrivateDmModal(getParentComment(selectedThread))" class="font-semibold text-emerald-600 hover:underline flex items-center gap-1">
                                                         <i data-lucide="send" class="w-3 h-3"></i>
-                                                        <span>Kirim Pesan</span>
+                                                        <span>{{ __('admin.kirim_pesan') }}</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -711,12 +705,12 @@
                                         <span>Sub-Balasan (<span x-text="getThreadReplies(selectedThread).length"></span>)</span>
                                     </div>
 
-                                    {{-- KONDISI JIKA BELUM ADA BALASAN SAMA SEKALI --}}
+                                    {{-- KONDISI JIKA {{ __('admin.belum_ada_balasan_sama_sekali') }}
                                     <div x-show="getThreadReplies(selectedThread).length === 0" 
                                          class="p-3.5 rounded-[14px] bg-amber-50/60 dark:bg-amber-950/20 border border-dashed border-amber-300/80 dark:border-amber-900/40 text-[12px] flex items-center justify-between gap-3">
                                         <div class="flex items-center gap-2 text-amber-800 dark:text-amber-300">
                                             <i data-lucide="info" class="w-4 h-4 shrink-0 text-amber-600"></i>
-                                            <span>Belum ada balasan dari Cooca Official untuk komentar ini.</span>
+                                            <span>{{ __('admin.belum_ada_balasan_dari_cooca_official') }}</span>
                                         </div>
                                         <button type="button" @click="startReplyComment(getParentComment(selectedThread))"
                                                 class="px-3 py-1 rounded-[8px] bg-[#1877F2] hover:bg-[#166FE5] text-white text-[11.5px] font-semibold flex items-center gap-1 shrink-0 transition-colors">
@@ -794,7 +788,7 @@
                                                                     </button>
                                                                     <span>·</span>
                                                                     <button type="button" @click="openPrivateDmModal(reply)" class="font-semibold text-emerald-600 hover:underline flex items-center gap-1">
-                                                                        <span>Kirim Pesan</span>
+                                                                        <span>{{ __('admin.kirim_pesan') }}</span>
                                                                         <i data-lucide="send" class="w-2.5 h-2.5"></i>
                                                                     </button>
                                                                 </div>
@@ -902,7 +896,7 @@
                                                 <span class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.2 rounded-[5px] font-medium border whitespace-nowrap shrink-0"
                                                     :class="getTagBadgeClass(tg)">
                                                     <span x-text="formatTagLabel(tg)"></span>
-                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
+                                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="{{ __('admin.hapus_tag') }}">×</button>
                                                 </span>
                                             </template>
                                         </div>
@@ -935,7 +929,7 @@
                                     {{-- Tag Dropdown Button --}}
                                     <div class="relative shrink-0" x-data="{ openDmTagDrop: false, customDmTagVal: '' }">
                                         <button type="button" @click="openDmTagDrop = !openDmTagDrop"
-                                            title="Kelola Tag & Kategori"
+                                            title="{{ __('admin.kelola_tag_kategori') }}"
                                             class="h-8 px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
                                             <i data-lucide="tag" class="w-3.5 h-3.5 text-[#1877F2]"></i>
                                             <span class="hidden sm:inline">Tag</span>
@@ -985,7 +979,7 @@
                                     {{-- Status Switcher Dropdown --}}
                                     <div class="relative shrink-0" x-data="{ openStatus: false }">
                                         <button type="button" @click="openStatus = !openStatus"
-                                            title="Ubah Status Percakapan"
+                                            title="{{ __('admin.ubah_status_percakapan') }}"
                                             class="h-8 px-2 sm:px-2.5 rounded-[8px] border border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E] text-[12px] font-medium text-[#374151] dark:text-white hover:bg-[#F9FAFB] flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0">
                                             <span class="w-2 h-2 rounded-full shrink-0" :class="selectedThread.is_unread ? 'bg-[#1877F2]' : 'bg-[#34C759]'"></span>
                                             <span class="hidden md:inline" x-text="formatStatusLabel(selectedThread.status)"></span>
@@ -997,12 +991,12 @@
                                             <button type="button" @click="updateThreadStatus('unread'); openStatus = false"
                                                 class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
                                                 <span class="w-2 h-2 rounded-full bg-[#1877F2]"></span>
-                                                <span>Tandai Belum Dibaca</span>
+                                                <span>{{ __('admin.tandai_belum_dibaca_2') }}</span>
                                             </button>
                                             <button type="button" @click="updateThreadStatus('read'); openStatus = false"
                                                 class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
                                                 <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                                                <span>Tandai Sudah Dibaca</span>
+                                                <span>{{ __('admin.tandai_sudah_dibaca') }}</span>
                                             </button>
                                             <button type="button" @click="updateThreadStatus('priority'); openStatus = false"
                                                 class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
@@ -1017,7 +1011,7 @@
                                             <button type="button" @click="updateThreadStatus('followup'); openStatus = false"
                                                 class="w-full text-left px-3 py-1.5 hover:bg-[#F3F4F6] dark:hover:bg-white/5 flex items-center gap-2">
                                                 <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
-                                                <span>Perlu Tindak Lanjut</span>
+                                                <span>{{ __('admin.perlu_tindak_lanjut') }}</span>
                                             </button>
                                         </div>
                                     </div>
@@ -1026,7 +1020,7 @@
                                     <button type="button" @click="showRightSidebar = !showRightSidebar"
                                         :class="showRightSidebar ? 'bg-[#1877F2]/10 text-[#1877F2] border-[#1877F2]/30 dark:bg-[#1877F2]/20 dark:text-[#64D2FF]' : 'text-slate-500 hover:text-slate-800 dark:hover:text-white border-[#D1D5DB] dark:border-white/15 bg-white dark:bg-[#2C2C2E]'"
                                         class="h-8 w-8 rounded-[8px] border flex items-center justify-center transition-colors shrink-0 cursor-pointer"
-                                        title="Tampilkan / Sembunyikan Panel Profil Pelanggan">
+                                        title="{{ __('admin.tampilkan_sembunyikan_panel_profil_pelanggan') }}">
                                         <i data-lucide="panel-right" class="w-3.5 h-3.5"></i>
                                     </button>
                                 </div>
@@ -1122,7 +1116,7 @@
                                 {{-- Quick Responses Pills & AI Assistant Trigger --}}
                                 <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar scrollbar-none pb-1">
                                     <button type="button" @click="generateAiReplyForCurrent()" :disabled="isGeneratingAi"
-                                        title="Bantu Susun Balasan Cerdas dengan AI berdasarkan percakapan pelanggan dan Pedoman Kerja"
+                                        title="{{ __('admin.bantu_susun_balasan_cerdas_dengan_ai') }}"
                                         class="px-3 py-1 rounded-full text-[11.5px] font-semibold bg-purple-100 dark:bg-purple-950/60 hover:bg-purple-200 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 flex items-center gap-1.5 transition-all whitespace-nowrap shadow-xs shrink-0">
                                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isGeneratingAi ? 'animate-spin' : ''"></i>
                                         <span x-text="isGeneratingAi ? 'AI sedang berpikir...' : 'Bantu Jawab dengan AI'"></span>
@@ -1134,15 +1128,13 @@
                                         Sapaan Ramah
                                     </button>
                                     <button type="button" @click="insertTemplate('Halo Kak, mohon informasikan nomor handphone / email akun Cooca Anda agar dapat kami cek segera ya.')"
-                                        class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                                        Minta Info Akun
-                                    </button>
+                                        class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">{{ __('admin.minta_info_akun') }}</button>
                                     <button type="button" @click="insertTemplate('Terima kasih atas masukannya Kak! Masukan ini telah kami teruskan ke tim teknis Cooca.')"
                                         class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
                                         Respons Masukan
                                     </button>
                                     <button type="button" @click="insertClosingTemplate()"
-                                        title="Sisipkan pesan penutup ramah sebelum mengakhiri sesi percakapan"
+                                        title="{{ __('admin.sisipkan_pesan_penutup_ramah_sebelum_mengakhiri') }}"
                                         class="px-2.5 py-1 rounded-full text-[11px] bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40 transition-colors whitespace-nowrap flex items-center gap-1 font-medium shadow-xs">
                                         <i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
                                         <span>Akhiri Sesi (Pesan Penutup)</span>
@@ -1186,7 +1178,7 @@
                 
                 {{-- Post Media Preview Banner (Soft flat surface, no gradient) --}}
                 <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 relative">
-                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="Tutup Panel">
+                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 z-10 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="{{ __('admin.tutup_panel') }}">
                         <i data-lucide="x" class="w-3.5 h-3.5"></i>
                     </button>
                     <div class="rounded-[12px] overflow-hidden border border-[#E5E7EB] dark:border-white/10 shadow-xs aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
@@ -1240,7 +1232,7 @@
 
                         {{-- AI Auto-Tag Trigger Button --}}
                         <button type="button" @click="autoTagWithAi(selectedThread)" :disabled="isAnalyzingAiTags"
-                            title="AI menganalisa isi percakapan dan database untuk mengklasifikasikan apakah prospek, pelanggan, atau komplain"
+                            title="{{ __('admin.ai_menganalisa_isi_percakapan_dan_database') }}"
                             class="w-full py-1.5 px-2.5 rounded-[8px] bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer">
                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isAnalyzingAiTags ? 'animate-spin' : ''"></i>
                             <span x-text="isAnalyzingAiTags ? 'AI Menganalisa Percakapan...' : 'Analisa & Klasifikasi Tag AI'"></span>
@@ -1270,10 +1262,10 @@
                                 <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-[6px] font-medium border"
                                     :class="getTagBadgeClass(tg)">
                                     <span x-text="formatTagLabel(tg)"></span>
-                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
+                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="{{ __('admin.hapus_tag') }}">×</button>
                                 </span>
                             </template>
-                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">Belum ada tag. Pilih tag di bawah:</span>
+                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">{{ __('admin.belum_ada_tag_pilih_tag_di') }}</span>
                         </div>
 
                         {{-- Quick Tag Toggle Buttons --}}
@@ -1315,7 +1307,7 @@
                 
                 {{-- Customer Profile Header Banner --}}
                 <div class="p-4 border-b border-[#E5E7EB] dark:border-white/10 bg-slate-50/50 dark:bg-black/10 text-center flex flex-col items-center relative">
-                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="Tutup Panel">
+                    <button type="button" @click="showRightSidebar = false" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/90 dark:bg-black/60 border border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-800 dark:hover:text-white flex items-center justify-center transition-colors shadow-2xs" title="{{ __('admin.tutup_panel') }}">
                         <i data-lucide="x" class="w-3.5 h-3.5"></i>
                     </button>
                     <div class="w-16 h-16 rounded-full bg-[#F1F5F9] dark:bg-[#27272A] border-2 border-[#E2E8F0] dark:border-white/10 flex items-center justify-center font-bold text-[20px] text-[#334155] dark:text-[#F1F5F9] mb-2.5 shadow-xs">
@@ -1382,7 +1374,7 @@
 
                         {{-- AI Auto-Tag Trigger Button --}}
                         <button type="button" @click="autoTagWithAi(selectedThread)" :disabled="isAnalyzingAiTags"
-                            title="AI menganalisa isi percakapan dan database untuk mengklasifikasikan apakah prospek, pelanggan, atau komplain"
+                            title="{{ __('admin.ai_menganalisa_isi_percakapan_dan_database') }}"
                             class="w-full py-1.5 px-2.5 rounded-[8px] bg-purple-100 hover:bg-purple-200 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all shadow-2xs cursor-pointer">
                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" :class="isAnalyzingAiTags ? 'animate-spin' : ''"></i>
                             <span x-text="isAnalyzingAiTags ? 'AI Menganalisa Percakapan...' : 'Analisa & Klasifikasi Tag AI'"></span>
@@ -1412,10 +1404,10 @@
                                 <span class="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-[6px] font-medium border"
                                     :class="getTagBadgeClass(tg)">
                                     <span x-text="formatTagLabel(tg)"></span>
-                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="Hapus tag">×</button>
+                                    <button type="button" @click.stop="removeThreadTag(selectedThread, tg)" class="hover:opacity-75 font-bold" title="{{ __('admin.hapus_tag') }}">×</button>
                                 </span>
                             </template>
-                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">Belum ada tag. Pilih tag di bawah:</span>
+                            <span x-show="!(selectedThread.tags || []).length" class="text-[11px] text-[#9CA3AF] italic">{{ __('admin.belum_ada_tag_pilih_tag_di') }}</span>
                         </div>
 
                         {{-- Quick Tag Toggle Buttons --}}
@@ -1474,7 +1466,7 @@
                     <button type="button" @click="directToDmOnly(activePrivateDm)"
                             class="px-2.5 py-1.5 rounded-[8px] bg-white dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-[11.5px] font-medium text-[#1877F2] flex items-center gap-1.5 transition-colors">
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                        <span class="hidden sm:inline">Buka di Ruang DM</span>
+                        <span class="hidden sm:inline">{{ __('admin.buka_di_ruang_dm') }}</span>
                     </button>
                     <button type="button" @click="activePrivateDm = null" class="w-8 h-8 rounded-[8px] text-gray-400 hover:text-gray-600 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-white/10 flex items-center justify-center transition-colors">
                         <i data-lucide="x" class="w-5 h-5"></i>
@@ -1508,7 +1500,7 @@
                     <div class="w-14 h-14 rounded-2xl bg-[#E7F3FF] dark:bg-[#1877F2]/20 text-[#1877F2] flex items-center justify-center mb-2.5">
                         <i data-lucide="messages-square" class="w-7 h-7"></i>
                     </div>
-                    <h4 class="text-[14px] font-bold text-gray-900 dark:text-white">Belum Ada Riwayat Pesan Pribadi</h4>
+                    <h4 class="text-[14px] font-bold text-gray-900 dark:text-white">{{ __('admin.belum_ada_riwayat_pesan_pribadi') }}</h4>
                     <p class="text-[12px] text-gray-500 dark:text-gray-400 max-w-sm mt-1 leading-relaxed">
                         Ini adalah pesan privat pertama ke <strong x-text="'@' + (activePrivateDm?.customer_name || activePrivateDm?.from_name || 'pengguna')"></strong>. Balasan Anda akan terkirim langsung ke inbox Instagram DM / Messenger resmi mereka.
                     </p>
@@ -1603,13 +1595,9 @@
                         Sapaan Ramah
                     </button>
                     <button type="button" @click="privateDmText = 'Halo Kak, mohon informasikan nomor handphone / email akun Cooca Anda agar dapat kami bantu cek lebih lanjut ya.'"
-                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                        Minta Info Akun
-                    </button>
+                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">{{ __('admin.minta_info_akun') }}</button>
                     <button type="button" @click="privateDmText = 'Halo Kak, untuk informasi paket dan konsultasi gratis implementasi COOCA, bisa kirimkan detail bisnis Anda disini ya!'"
-                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">
-                        Konsultasi Paket
-                    </button>
+                            class="px-2.5 py-1 rounded-full text-[11px] bg-[#F3F4F6] dark:bg-white/5 hover:bg-[#E5E7EB] text-[#374151] dark:text-[#D1D5DB] transition-colors whitespace-nowrap">{{ __('admin.konsultasi_paket') }}</button>
                 </div>
 
                 {{-- Textarea & Action Bar --}}
@@ -1654,7 +1642,7 @@
                         <i data-lucide="key" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h2 class="text-[17px] font-bold text-[#111827] dark:text-white">Pengaturan Kredensial Meta & Webhook</h2>
+                        <h2 class="text-[17px] font-bold text-[#111827] dark:text-white">{{ __('admin.pengaturan_kredensial_meta_webhook') }}</h2>
                         <p class="text-[12.5px] text-[#6B7280] dark:text-[#9CA3AF]">Integrasi 1 Token & 1 Webhook untuk Messenger, Instagram, Komentar, dan WhatsApp</p>
                     </div>
                 </div>
@@ -1694,7 +1682,7 @@
                         System User Access Token (Meta) <span class="text-rose-500">*</span>
                     </label>
                     <input type="password" name="meta_system_user_token" value="{{ $metaSettings['meta_system_user_token'] ?? '' }}"
-                        placeholder="EAA... (Token Pengguna Sistem Meta)"
+                        placeholder="{{ __('admin.eaa_token_pengguna_sistem_meta') }}"
                         class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:border-[#1877F2] focus:outline-hidden">
                     <p class="text-[11px] text-[#6B7280] dark:text-[#9CA3AF]">
                         Token dari Pengaturan Bisnis Meta (Business Settings) > System Users dengan izin yang sudah Anda miliki (<code>pages_messaging</code>, <code>instagram_manage_messages</code>, dll).
@@ -1750,13 +1738,11 @@
 
                 <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E5E7EB] dark:border-white/10">
                     <button type="button" @click="openMetaSettings = false"
-                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                        Batal
-                    </button>
+                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                     <button type="submit"
                         class="h-9.5 px-5 rounded-[10px] bg-[#1877F2] hover:bg-[#166FE5] text-white text-[13px] font-bold shadow-sm transition-all flex items-center gap-1.5">
                         <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Simpan Kredensial</span>
+                        <span>{{ __('admin.simpan_kredensial') }}</span>
                     </button>
                 </div>
             </form>
@@ -1781,7 +1767,7 @@
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-2">
-                            <h2 class="text-[16px] font-bold text-[#111827] dark:text-white truncate">Kelola AI Chatbot & Pedoman Kerja</h2>
+                            <h2 class="text-[16px] font-bold text-[#111827] dark:text-white truncate">{{ __('admin.kelola_ai_chatbot_pedoman_kerja') }}</h2>
                             <span x-show="aiConfig.enabled" class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">Aktif</span>
                             <span x-show="!aiConfig.enabled" class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-slate-200 text-slate-600 dark:bg-white/10 dark:text-slate-400">Non-Aktif</span>
                         </div>
@@ -1802,14 +1788,14 @@
                     :class="aiActiveTab === 'status' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
                     class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
                     <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
-                    <span>Status & Mode Operasi</span>
+                    <span>{{ __('admin.status_mode_operasi') }}</span>
                 </button>
 
                 <button type="button" @click="aiActiveTab = 'info'"
                     :class="aiActiveTab === 'info' ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border-purple-200 dark:border-purple-800/40' : 'text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-white border-transparent'"
                     class="px-3.5 py-1.5 rounded-[10px] border text-[12.5px] flex items-center gap-1.5 transition-all whitespace-nowrap">
                     <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                    <span>Informasi Sistem (Knowledge Base)</span>
+                    <span>{{ __('admin.informasi_sistem_knowledge_base') }}</span>
                 </button>
 
                 <button type="button" @click="aiActiveTab = 'dos_donts'"
@@ -1889,7 +1875,7 @@
                                             <i x-show="aiConfig.mode === 'auto_pilot'" data-lucide="check" class="w-3.5 h-3.5"></i>
                                         </div>
                                     </div>
-                                    <h4 class="font-bold text-[14px] text-[#111827] dark:text-white">Mode Auto-Pilot (Balasan Otomatis)</h4>
+                                    <h4 class="font-bold text-[14px] text-[#111827] dark:text-white">{{ __('admin.mode_auto_pilot_balasan_otomatis') }}</h4>
                                     <p class="text-[12px] text-[#6B7280] dark:text-[#9CA3AF] mt-1 leading-relaxed">
                                         AI membalas pesan masuk pelanggan secara otomatis seketika pesan diterima melalui webhook/polling pada saluran yang Anda beri izin di bawah.
                                     </p>
@@ -2011,7 +1997,7 @@
                         </div>
                         <div class="flex items-center gap-2 flex-wrap shrink-0">
                             <button type="button" @click="syncUserGuidesDocumentation()" :disabled="isLoadingGuides"
-                                title="Muat seluruh 39 berkas panduan dari folder docs/user-guides langsung ke AI Knowledge Base"
+                                title="{{ __('admin.muat_seluruh_39_berkas_panduan_dari') }}"
                                 class="px-2.5 py-1 rounded-[8px] bg-purple-600 hover:bg-purple-700 text-white text-[11.5px] font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer">
                                 <i data-lucide="book-open" class="w-3.5 h-3.5" :class="isLoadingGuides ? 'animate-spin' : ''"></i>
                                 <span x-text="isLoadingGuides ? 'Menyinkronkan...' : '📥 Sinkronkan docs/user-guides (39 Berkas)'"></span>
@@ -2031,7 +2017,7 @@
                             <span class="text-[11px] text-[#6B7280]" x-text="(aiConfig.system_info || '').length + ' karakter'"></span>
                         </div>
                         <textarea x-model="aiConfig.system_info" rows="16"
-                            placeholder="Tulis profil bisnis, daftar produk, rincian harga, panduan registrasi, dan jam kerja..."
+                            placeholder="{{ __('admin.tulis_profil_bisnis_daftar_produk_rincian') }}"
                             class="w-full p-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[12.5px] leading-relaxed font-mono text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500 resize-y transition-colors"></textarea>
                     </div>
                 </div>
@@ -2048,7 +2034,7 @@
                             <div class="flex items-center justify-between pb-2 border-b border-emerald-100 dark:border-emerald-950/40">
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                    <h4 class="font-bold text-[13.5px] text-emerald-900 dark:text-emerald-300">DO'S (Wajib Dilakukan)</h4>
+                                    <h4 class="font-bold text-[13.5px] text-emerald-900 dark:text-emerald-300">{{ __('admin.do_s_wajib_dilakukan') }}</h4>
                                 </div>
                                 <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400" x-text="(aiConfig.dos || []).length + ' Aturan'"></span>
                             </div>
@@ -2061,7 +2047,7 @@
                                             <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0 mt-0.5">✓</span>
                                             <span class="text-emerald-950 dark:text-emerald-200 leading-snug" x-text="item"></span>
                                         </div>
-                                        <button type="button" @click="removeDoItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="Hapus aturan">
+                                        <button type="button" @click="removeDoItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="{{ __('admin.hapus_aturan') }}">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </div>
@@ -2098,7 +2084,7 @@
                                             <span class="text-rose-600 dark:text-rose-400 font-bold shrink-0 mt-0.5">✕</span>
                                             <span class="text-rose-950 dark:text-rose-200 leading-snug" x-text="item"></span>
                                         </div>
-                                        <button type="button" @click="removeDontItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="Hapus larangan">
+                                        <button type="button" @click="removeDontItem(idx)" class="text-gray-400 hover:text-rose-600 shrink-0 p-0.5" title="{{ __('admin.hapus_larangan') }}">
                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </div>
@@ -2127,7 +2113,7 @@
                         </label>
                         <div class="flex items-center gap-2">
                             <input type="text" x-model="aiTestMessage" @keydown.enter.prevent="runAiTest()"
-                                placeholder="Ketik pesan simulasi (misal: 'Halo, harga paket Pro berapa ya? Bisa minta diskon?')..."
+                                placeholder="{{ __('admin.ketik_pesan_simulasi_misal_halo_harga') }}"
                                 class="flex-1 h-11 px-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500">
                             <button type="button" @click="runAiTest()" :disabled="!aiTestMessage.trim() || isTestingAi"
                                 class="h-11 px-5 rounded-[12px] bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-[13px] font-bold flex items-center gap-2 shadow-sm transition-all shrink-0">
@@ -2160,9 +2146,7 @@
                                 Mematuhi Aturan Do's & Pantangan Don'ts
                             </span>
                             <button type="button" @click="insertTemplate(aiTestResult.reply); openAiSettings = false"
-                                class="text-purple-600 dark:text-purple-400 font-semibold hover:underline">
-                                Pakai Jawaban Ini di Composer Chat →
-                            </button>
+                                class="text-purple-600 dark:text-purple-400 font-semibold hover:underline">{{ __('admin.pakai_jawaban_ini_di_composer_chat') }}</button>
                         </div>
                     </div>
                 </div>
@@ -2177,9 +2161,7 @@
 
                 <div class="flex items-center gap-2.5 ml-auto">
                     <button type="button" @click="openAiSettings = false"
-                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                        Tutup
-                    </button>
+                        class="h-9.5 px-4 rounded-[10px] text-[13px] font-medium text-[#4B5563] dark:text-[#9CA3AF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.close') }}</button>
                     <button type="button" @click="saveAiSettings()" :disabled="isSavingAi"
                         class="h-9.5 px-5 rounded-[10px] bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-[13px] font-bold shadow-sm transition-all flex items-center gap-2">
                         <i data-lucide="check" class="w-4 h-4" :class="isSavingAi ? 'animate-spin' : ''"></i>
@@ -2883,7 +2865,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim pesan DM.');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan saat mengirim pesan DM: ' + err.message);
+                alert('{{ __('admin.terjadi_kesalahan_saat_mengirim_pesan_dm') }}
             } finally {
                 this.isSendingDm = false;
             }
@@ -2969,7 +2951,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim balasan komentar.');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
             } finally {
                 this.isSending = false;
             }
@@ -3035,7 +3017,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim balasan.');
                 }
             } catch (err) {
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
             } finally {
                 this.isSending = false;
             }
@@ -3276,7 +3258,7 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 thread.is_human_takeover = prevStatus;
-                alert('Terjadi kesalahan jaringan: ' + err.message);
+                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
             } finally {
                 setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);
             }
@@ -3457,7 +3439,7 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 console.error('[AdminInboxAi] Error generating reply:', err);
-                alert('Terjadi kesalahan koneksi saat memanggil AI.');
+                alert('{{ __('admin.terjadi_kesalahan_koneksi_saat_memanggil_ai') }}
             } finally {
                 this.isGeneratingAi = false;
                 this.$nextTick(() => {

@@ -356,7 +356,7 @@
                             Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span>
                         </label>
                         <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
-                            placeholder="u.p. Nama PIC Pelanggan"
+                            placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -366,7 +366,7 @@
                             Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
                         </label>
                         <input type="text" name="attachment_info" value="{{ old('attachment_info', '-') }}"
-                            placeholder="Contoh: - atau Berita Acara Kerusakan Barang"
+                            placeholder="{{ __('sales.contoh_atau_berita_acara_kerusakan_barang') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>

@@ -886,7 +886,7 @@ document.addEventListener('alpine:init', () => {
         :subtitle="__('marketplace.products_module_subtitle')">
         <x-slot:actions>
             {{-- Live Feed Status Indicator --}}
-            <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20 shadow-sm" title="Katalog produk tersinkronisasi live dengan saluran Shopee, TikTok Shop & Tokopedia">
+            <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/10 text-[#34C759] border border-[#34C759]/20 shadow-sm" title="{{ __('marketplace.katalog_produk_tersinkronisasi_live_dengan_saluran') }}">
                 <span class="w-2 h-2 rounded-full bg-[#34C759] animate-pulse"></span>
                 <span>Auto-sync Aktif</span>
             </div>
@@ -1248,7 +1248,7 @@ document.addEventListener('alpine:init', () => {
                                     Rp {{ number_format((float)$product->selling_price, 0, ',', '.') }}
                                 </div>
                                 @if($product->base_cost > 0)
-                                    <div class="text-[10.5px] font-mono text-black/40 dark:text-white/40 mt-0.5" title="Harga Pokok Penjualan (HPP)">
+                                    <div class="text-[10.5px] font-mono text-black/40 dark:text-white/40 mt-0.5" title="{{ __('marketplace.harga_pokok_penjualan_hpp') }}">
                                         {{ __('marketplace.base_cost_hpp', ['cost' => number_format((float)$product->base_cost, 0, ',', '.')]) }}
                                     </div>
                                 @else
@@ -1277,14 +1277,14 @@ document.addEventListener('alpine:init', () => {
                                         <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                                 class="font-bold font-mono text-[12.5px] text-[#EE4D2D] hover:underline cursor-pointer tracking-tight"
-                                                title="Klik untuk ubah harga & aturan saluran">
+                                                title="{{ __('marketplace.klik_untuk_ubah_harga_aturan_saluran') }}">
                                                 Rp {{ number_format((float)$shopeeMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                                                 <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $shopeeMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($shopeeMapping->isBelowCost())
-                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                    <span class="text-[#FF3B30]" title="{{ __('marketplace.harga_di_bawah_hpp') }}"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center gap-1.5 mt-0.5">
@@ -1295,7 +1295,7 @@ document.addEventListener('alpine:init', () => {
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
-                                                    title="Tarik produk dari etalase Shopee">
+                                                    title="{{ __('marketplace.tarik_produk_dari_etalase_shopee') }}">
                                                     {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
@@ -1308,7 +1308,7 @@ document.addEventListener('alpine:init', () => {
                                             <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'shopee', 'activate')"
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
-                                                    title="Aktifkan kembali ke etalase Shopee">
+                                                    title="{{ __('marketplace.aktifkan_kembali_ke_etalase_shopee') }}">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
@@ -1323,7 +1323,7 @@ document.addEventListener('alpine:init', () => {
                                     <div class="flex justify-center">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'shopee')"
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
-                                            title="Hubungkan atau Terbitkan ke Shopee">
+                                            title="{{ __('marketplace.hubungkan_atau_terbitkan_ke_shopee') }}">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
                                             <span>{{ __('marketplace.connect') }}</span>
                                         </button>
@@ -1352,14 +1352,14 @@ document.addEventListener('alpine:init', () => {
                                         <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
                                                 class="font-bold font-mono text-[12.5px] text-black dark:text-white hover:underline cursor-pointer tracking-tight"
-                                                title="Klik untuk ubah harga & aturan saluran">
+                                                title="{{ __('marketplace.klik_untuk_ubah_harga_aturan_saluran') }}">
                                                 Rp {{ number_format((float)$tiktokMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                                                 <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $tiktokMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($tiktokMapping->isBelowCost())
-                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                    <span class="text-[#FF3B30]" title="{{ __('marketplace.harga_di_bawah_hpp') }}"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center gap-1.5 mt-0.5">
@@ -1370,7 +1370,7 @@ document.addEventListener('alpine:init', () => {
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
-                                                    title="Tarik produk dari etalase TikTok Shop">
+                                                    title="{{ __('marketplace.tarik_produk_dari_etalase_tiktok_shop') }}">
                                                     {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
@@ -1383,7 +1383,7 @@ document.addEventListener('alpine:init', () => {
                                             <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tiktok_shop', 'activate')"
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
-                                                    title="Aktifkan kembali ke etalase TikTok Shop">
+                                                    title="{{ __('marketplace.aktifkan_kembali_ke_etalase_tiktok_shop') }}">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
@@ -1398,7 +1398,7 @@ document.addEventListener('alpine:init', () => {
                                     <div class="flex justify-center">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'tiktok_shop')"
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
-                                            title="Hubungkan atau Terbitkan ke TikTok Shop">
+                                            title="{{ __('marketplace.hubungkan_atau_terbitkan_ke_tiktok_shop') }}">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
                                             <span>{{ __('marketplace.connect') }}</span>
                                         </button>
@@ -1427,14 +1427,14 @@ document.addEventListener('alpine:init', () => {
                                         <div class="flex flex-col items-center">
                                             <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
                                                 class="font-bold font-mono text-[12.5px] text-[#00AA5B] hover:underline cursor-pointer tracking-tight"
-                                                title="Klik untuk ubah harga & aturan saluran">
+                                                title="{{ __('marketplace.klik_untuk_ubah_harga_aturan_saluran') }}">
                                                 Rp {{ number_format((float)$tokpedMapping->getEffectivePrice(), 0, ',', '.') }}
                                             </button>
                                             <div class="flex items-center gap-1 text-[10.5px] text-black/45 dark:text-white/45 mt-0.5">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                                                 <span class="font-mono">{{ __('marketplace.stock_label') }} {{ $tokpedMapping->getEffectiveStock($product->stock ?? 0) }}</span>
                                                 @if($tokpedMapping->isBelowCost())
-                                                    <span class="text-[#FF3B30]" title="Harga di bawah HPP!"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
+                                                    <span class="text-[#FF3B30]" title="{{ __('marketplace.harga_di_bawah_hpp') }}"><i data-lucide="alert-triangle" class="w-3 h-3"></i></span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center gap-1.5 mt-0.5">
@@ -1445,7 +1445,7 @@ document.addEventListener('alpine:init', () => {
                                                 <span class="text-black/15 dark:text-white/15 text-[8px]">•</span>
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'deactivate')"
                                                     class="text-[10px] text-black/35 dark:text-white/35 hover:text-[#FF3B30] transition-colors cursor-pointer"
-                                                    title="Tarik produk dari etalase Tokopedia">
+                                                    title="{{ __('marketplace.tarik_produk_dari_etalase_tokopedia') }}">
                                                     {{ __('marketplace.deactivate') }}
                                                 </button>
                                             </div>
@@ -1458,7 +1458,7 @@ document.addEventListener('alpine:init', () => {
                                             <div class="flex items-center gap-1.5 mt-1">
                                                 <button type="button" @click="toggleChannelProductDirect('{{ $product->id }}', 'tokopedia', 'activate')"
                                                     class="h-5 px-1.5 rounded-[5px] text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition-all cursor-pointer flex items-center gap-0.5"
-                                                    title="Aktifkan kembali ke etalase Tokopedia">
+                                                    title="{{ __('marketplace.aktifkan_kembali_ke_etalase_tokopedia') }}">
                                                     <i data-lucide="eye" class="w-2.5 h-2.5"></i>
                                                     <span>{{ __('marketplace.activate') }}</span>
                                                 </button>
@@ -1473,7 +1473,7 @@ document.addEventListener('alpine:init', () => {
                                     <div class="flex justify-center">
                                         <button type="button" @click="openMapping('{{ $product->id }}', 'tokopedia')"
                                             class="h-6 px-2 rounded-[6px] text-[10.5px] font-medium text-black/45 dark:text-white/45 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] hover:text-black dark:hover:text-white transition-all inline-flex items-center gap-1 cursor-pointer"
-                                            title="Hubungkan atau Terbitkan ke Tokopedia">
+                                            title="{{ __('marketplace.hubungkan_atau_terbitkan_ke_tokopedia') }}">
                                             <i data-lucide="plus" class="w-3 h-3 opacity-60"></i>
                                             <span>{{ __('marketplace.connect') }}</span>
                                         </button>

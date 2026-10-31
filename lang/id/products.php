@@ -441,4 +441,6 @@ return [
     'gratis_rp_0' => 'Gratis (Rp 0)',
     'wajib_diisi_oleh_pelanggan' => 'Wajib Diisi oleh Pelanggan?',
     'status_opsi' => 'Status Opsi',
+    'unit_list' => 'Daftar Satuan',
+    'conversion' => 'Konversi',
 ];

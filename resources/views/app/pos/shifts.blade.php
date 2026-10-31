@@ -103,7 +103,7 @@
         } catch (e) {
             console.error(e);
             if (window.AppAlert) {
-                window.AppAlert.error('Terjadi kesalahan koneksi printer.');
+                window.AppAlert.error('{{ __('pos.terjadi_kesalahan_koneksi_printer') }}
             }
         } finally {
             this.isPrinting = false;
@@ -279,11 +279,11 @@
                         </td>
                         <td class="px-4 py-3 text-center whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-center gap-1">
-                                <button type="button" @click="printShiftReport('{{ $shift->id }}')" title="Cetak Struk Shift (ESC/POS)" aria-label="Cetak Struk Shift (ESC/POS)" class="w-8 h-8 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                <button type="button" @click="printShiftReport('{{ $shift->id }}')" title="{{ __('pos.cetak_struk_shift_esc_pos') }}" aria-label="{{ __('pos.cetak_struk_shift_esc_pos_2') }}" class="w-8 h-8 rounded-[8px] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-black/60 dark:text-white/60 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
                                     <i data-lucide="printer" class="w-4 h-4"></i>
                                 </button>
                                 @if($shift->status === 'open')
-                                <button type="button" @click="openCloseModal('{{ $shift->id }}', {{ (float) ($shift->opening_cash + $shift->total_cash_sales + $shift->total_cash_in - $shift->total_cash_out) }})" title="Tutup Shift" aria-label="Tutup Shift" class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
+                                <button type="button" @click="openCloseModal('{{ $shift->id }}', {{ (float) ($shift->opening_cash + $shift->total_cash_sales + $shift->total_cash_in - $shift->total_cash_out) }})" title="{{ __('pos.tutup_shift') }}" aria-label="{{ __('pos.tutup_shift_2') }}" class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer">
                                     <i data-lucide="lock" class="w-4 h-4"></i>
                                 </button>
                                 @endif
@@ -295,7 +295,7 @@
                         <td colspan="8" class="py-12 text-center text-black/40 dark:text-white/40">
                             <div class="flex flex-col items-center justify-center">
                                 <i data-lucide="clock" class="w-10 h-10 text-black/20 dark:text-white/20 mb-2"></i>
-                                <p class="text-[14px] font-medium">Belum ada riwayat shift kasir tercatat.</p>
+                                <p class="text-[14px] font-medium">{{ __('pos.belum_ada_riwayat_shift_kasir_tercatat') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -366,7 +366,7 @@
         </div>
         @empty
         <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-            Belum ada riwayat shift kasir tercatat.
+            {{ __('pos.belum_ada_riwayat_shift_kasir_tercatat') }}
         </div>
         @endforelse
 

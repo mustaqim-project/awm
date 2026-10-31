@@ -38,9 +38,7 @@
 
         {{-- Title & Info --}}
         <div class="text-center space-y-1.5">
-            <h1 class="text-lg font-bold text-slate-900 dark:text-white">
-                Hubungkan COOCA dengan ChatGPT
-            </h1>
+            <h1 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('common.hubungkan_cooca_dengan_chatgpt') }}</h1>
             <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                 Aplikasi <strong>ChatGPT</strong> meminta izin untuk mengakses Model Context Protocol (MCP) pada bisnis Anda.
             </p>
@@ -119,7 +117,7 @@
                     name="action"
                     value="approve"
                     class="w-full sm:w-2/3 py-2.5 px-4 rounded-[12px] bg-[#10A37F] hover:bg-[#0E8A6B] text-white font-bold text-xs shadow-sm transition-all active:scale-[0.99] flex items-center justify-center gap-1.5">
-                    <span>Setujui & Hubungkan ke ChatGPT</span>
+                    <span>{{ __('common.setujui_hubungkan_ke_chatgpt') }}</span>
                 </button>
             </div>
         </form>

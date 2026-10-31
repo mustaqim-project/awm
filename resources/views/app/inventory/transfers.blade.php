@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Transfer Stok Antar Outlet',
+    'title' => __('inventory.transfer_stok_antar_outlet'),
     'headerTitle' => 'Transfer Stok Antar Outlet',
     'headerSubtitle' => 'Kirim dan terima barang antar outlet atau gudang pusat dengan pencatatan mutasi otomatis'
 ])
@@ -55,9 +55,7 @@
         {{-- Baris 2: H1 Title + Status Badge + Action Buttons --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">
-                    Transfer Stok Antar Outlet
-                </h1>
+                <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">{{ __('inventory.transfer_stok_antar_outlet') }}</h1>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20">
                     {{ $transfers->total() }} Dokumen
                 </span>
@@ -67,7 +65,7 @@
                 @if(\App\Support\Context::hasPermission('inventory.manage'))
                 <button type="button" @click="showCreateModal = true" class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>Kirim Transfer Baru</span>
+                    <span>{{ __('inventory.kirim_transfer_baru') }}</span>
                 </button>
                 @endif
             </div>
@@ -100,12 +98,12 @@
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] whitespace-nowrap bg-black/[0.015] dark:bg-white/[0.015]">
-                        <x-table-sort-th :col="0" type="string" title="No. Transfer" />
+                        <x-table-sort-th :col="0" type="string" title="{{ __('inventory.no_transfer') }}" />
                         <x-table-sort-th :col="1" type="date" title="Tanggal" />
                         <x-table-sort-th :col="2" type="string" title="Rute (Asal → Tujuan)" />
                         <x-table-sort-th :col="3" type="string" title="Pengirim / Penerima" />
                         <x-table-sort-th :col="4" type="number" title="Item" align="center" />
-                        <x-table-sort-th :col="5" type="string" title="Status" align="center" />
+                        <x-table-sort-th :col="5" type="string" title="{{ __('common.status') }}" align="center" />
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
                 </thead>
@@ -148,7 +146,7 @@
                             <div class="flex items-center justify-end gap-1">
                                 @if($tr->status !== 'received')
                                     @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="Konfirmasi Terima" aria-label="Konfirmasi Terima">
+                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.konfirmasi_terima') }}" aria-label="{{ __('inventory.konfirmasi_terima_2') }}">
                                         <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
                                     <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
@@ -169,7 +167,7 @@
                             <div class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto mb-2.5 text-black/40 dark:text-white/40">
                                 <i data-lucide="arrow-left-right" class="w-6 h-6"></i>
                             </div>
-                            <p class="font-medium">Belum ada transfer stok antar outlet tercatat.</p>
+                            <p class="font-medium">{{ __('inventory.belum_ada_transfer_stok_antar_outlet') }}</p>
                         </td>
                     </tr>
                     @endforelse
@@ -220,7 +218,7 @@
             </div>
         </div>
         @empty
-        <div class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">Belum ada transfer stok antar outlet.</div>
+        <div class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">{{ __('inventory.belum_ada_transfer_stok_antar_outlet_2') }}</div>
         @endforelse
 
         @if($transfers->hasPages())
@@ -269,7 +267,7 @@
                         <div class="w-8 h-8 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-[17px] font-bold text-black dark:text-white">Kirim Transfer Stok Baru</h3>
+                        <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('inventory.kirim_transfer_stok_baru') }}</h3>
                     </div>
                     <button type="button" @click="showCreateModal = false" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition flex items-center justify-center cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
@@ -314,7 +312,7 @@
                             <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Produk yang Ditransfer:</label>
                             <button type="button" @click="addItem()" class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
                                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                                <span>Tambah Produk</span>
+                                <span>{{ __('inventory.tambah_produk') }}</span>
                             </button>
                         </div>
 
@@ -334,12 +332,8 @@
                     </div>
 
                     <div class="flex items-center justify-end gap-2.5 pt-3.5 border-t border-black/[0.06] dark:border-white/[0.08]">
-                        <button type="button" @click="showCreateModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">
-                            Batal
-                        </button>
-                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                            Kirim Transfer
-                        </button>
+                        <button type="button" @click="showCreateModal = false" class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-xl text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                        <button type="submit" class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-xl text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer">{{ __('inventory.kirim_transfer') }}</button>
                     </div>
                 </form>
             </div>
@@ -389,12 +383,8 @@
                 </div>
 
                 <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[14px] font-semibold">
-                    <button type="button" @click="closeReceive()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                        Batal
-                    </button>
-                    <button type="button" @click="submitReceive()" class="min-h-[48px] py-3 text-[#007AFF] dark:text-[#0A84FF] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">
-                        Konfirmasi
-                    </button>
+                    <button type="button" @click="closeReceive()" class="min-h-[48px] py-3 text-black/70 dark:text-white/70 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">{{ __('common.cancel') }}</button>
+                    <button type="button" @click="submitReceive()" class="min-h-[48px] py-3 text-[#007AFF] dark:text-[#0A84FF] font-bold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer flex items-center justify-center">{{ __('common.confirm') }}</button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'CMS Rekening & Pembayaran - Admin Console',
+    'title' => __('admin.cms_rekening_pembayaran_admin_console'),
     'headerTitle' => 'Kelola Rekening & Pembayaran',
     'headerSubtitle' => 'Kelola rekening bank tujuan transfer dan QRIS resmi yang tampil pada alur checkout langganan tenant Cooca',
 ])
@@ -96,7 +96,7 @@
                         class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
                         stroke-width="1.8"></i>
                     <input type="text" name="search" value="{{ $search }}"
-                        placeholder="Cari nama bank, kode, nomor rekening, atas nama..."
+                        placeholder="{{ __('admin.cari_nama_bank_kode_nomor_rekening') }}"
                         class="w-full h-10 pl-10 pr-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] rounded-[12px] text-[16px] md:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 focus:border-[#007AFF] transition">
                 </div>
 
@@ -115,7 +115,7 @@
                     <a href="{{ route('admin.payment-accounts.index') }}"
                         class="h-10 px-3 rounded-[12px] text-[13px] font-medium text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all inline-flex items-center justify-center gap-1.5 shrink-0">
                         <i data-lucide="x" class="w-3.5 h-3.5" stroke-width="2"></i>
-                        <span>Reset Filter</span>
+                        <span>{{ __('common.reset') }}</span>
                     </a>
                 @endif
             </form>
@@ -208,7 +208,7 @@
                                                     data-title="{{ $account->bank_name }}"
                                                     class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#34C759] dark:text-[#30D158] bg-[#34C759]/10 hover:bg-[#34C759]/18 px-2 py-0.5 rounded-[6px] transition">
                                                     <i data-lucide="qr-code" class="w-3 h-3" stroke-width="2"></i>
-                                                    <span>Lihat QR Code</span>
+                                                    <span>{{ __('admin.lihat_qr_code') }}</span>
                                                 </button>
                                             </div>
                                         @endif
@@ -243,7 +243,7 @@
                                     <form method="POST" action="{{ route('admin.payment-accounts.toggle-status', $account) }}">
                                         @csrf
                                         <button type="submit"
-                                            title="Klik untuk mengubah status aktif/nonaktif rekening"
+                                            title="{{ __('admin.klik_untuk_mengubah_status_aktif_nonaktif') }}"
                                             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold border transition-all active:scale-[0.97] {{ $account->is_active ? 'bg-[#34C759]/12 border-[#34C759]/30 text-[#248A3D] dark:text-[#30D158] hover:bg-[#34C759]/20' : 'bg-black/[0.04] dark:bg-white/[0.06] border-black/[0.08] dark:border-white/[0.1] text-black/50 dark:text-white/50 hover:bg-black/[0.08] dark:hover:bg-white/[0.1]' }}">
                                             <span class="w-2 h-2 rounded-full {{ $account->is_active ? 'bg-[#34C759]' : 'bg-black/35 dark:bg-white/35' }}"></span>
                                             <span>{{ $account->is_active ? 'Aktif' : 'Nonaktif' }}</span>
@@ -262,10 +262,10 @@
                                     <div class="flex items-center justify-end gap-1.5">
                                         @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.edit'))
                                         <a href="{{ route('admin.payment-accounts.edit', $account) }}"
-                                            title="Edit Rekening"
+                                            title="{{ __('admin.edit_rekening_2') }}"
                                             class="h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] transition-all inline-flex items-center gap-1 text-[12px] font-semibold">
                                             <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                            <span class="hidden sm:inline">Edit</span>
+                                            <span class="hidden sm:inline">{{ __('common.edit') }}</span>
                                         </a>
                                         @endif
 
@@ -275,7 +275,7 @@
                                             onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menghapus rekening {{ addslashes($account->bank_name) }}? Tindakan ini tidak dapat dibatalkan.', 'Hapus Rekening Pembayaran?', 'danger')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" title="Hapus Rekening"
+                                            <button type="submit" title="{{ __('admin.hapus_rekening') }}"
                                                 class="h-8 w-8 rounded-[8px] bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/18 active:scale-[0.97] transition-all inline-flex items-center justify-center">
                                                 <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
                                             </button>
@@ -299,11 +299,11 @@
                                             <a href="{{ route('admin.payment-accounts.index') }}"
                                                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5">
                                                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                                <span>Tampilkan Semua Rekening</span>
+                                                <span>{{ __('admin.tampilkan_semua_rekening') }}</span>
                                             </a>
                                         </div>
                                     @else
-                                        <p class="text-[16px] font-bold text-black dark:text-white">Belum Ada Rekening Terdaftar</p>
+                                        <p class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.belum_ada_rekening_terdaftar') }}</p>
                                         <p class="text-[13px] text-black/50 dark:text-white/50 mt-1 max-w-md mx-auto">
                                             Daftarkan rekening bank tujuan transfer atau kode QRIS pertama Anda agar tenant UMKM dapat membayar langganan.
                                         </p>
@@ -359,7 +359,7 @@
 
                     <!-- QR Image Frame -->
                     <div class="p-3 bg-white rounded-[16px] border border-black/[0.06] flex items-center justify-center shadow-inner">
-                        <img :src="qrisModalUrl" alt="QRIS Code" class="max-h-72 object-contain rounded-[12px]">
+                        <img :src="qrisModalUrl" alt="{{ __('admin.qris_code') }}" class="max-h-72 object-contain rounded-[12px]">
                     </div>
 
                     <!-- Modal Actions -->
@@ -367,12 +367,10 @@
                         <a :href="qrisModalUrl" target="_blank"
                             class="h-9 px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5" rel="noopener noreferrer">
                             <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Buka Penuh</span>
+                            <span>{{ __('admin.buka_penuh') }}</span>
                         </a>
                         <button type="button" @click="qrisModalUrl = null"
-                            class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">
-                            Tutup
-                        </button>
+                            class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">{{ __('common.close') }}</button>
                     </div>
                 </div>
             </div>

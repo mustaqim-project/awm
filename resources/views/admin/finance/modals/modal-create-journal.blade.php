@@ -129,7 +129,7 @@
                             </div>
 
                             {{-- Catatan Baris Opsional --}}
-                            <input type="text" :name="'lines[' + index + '][notes]'" x-model="line.notes" placeholder="Catatan baris khusus (opsional)..."
+                            <input type="text" :name="'lines[' + index + '][notes]'" x-model="line.notes" placeholder="{{ __('admin.catatan_baris_khusus_opsional') }}"
                                 class="w-full h-7.5 px-2.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/5 text-[11.5px] text-black/70 dark:text-white/70 focus:outline-none">
                         </div>
                     </template>
@@ -161,13 +161,9 @@
             {{-- Footer --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showCreateJournalModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit" :disabled="!isBalanced()"
-                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">
-                    Simpan Jurnal Umum
-                </button>
+                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 cursor-pointer">{{ __('admin.simpan_jurnal_umum') }}</button>
             </div>
         </form>
     </div>

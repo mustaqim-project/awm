@@ -114,4 +114,5 @@ return [
     'export_seluruh_direktori_pelanggan_ke_file' => 'Export seluruh direktori pelanggan ke file Excel (.xlsx)',
     'import_data_pelanggan_massal_dari_file' => 'Import data pelanggan massal dari file Excel',
     'import_pelanggan_via_excel_interac' => 'Import Pelanggan via Excel Interac',
+    'import_customers_via_excel' => 'Import Pelanggan via Excel',
 ];

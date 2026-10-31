@@ -331,14 +331,14 @@
                                 data-active-mobile-subnav="{{ $mTab['is_active'] ? 'true' : 'false' }}"
                                 class="flex items-center justify-between px-3 py-2 rounded-[10px] text-[12.5px] font-medium transition-all {{ $mTab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-xs' : 'text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5' }}">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <span class="w-4 h-4 rounded-full flex items-center justify-center text-[10px] {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">
+                                    <span class="w-4.5 h-4.5 rounded-[5px] flex items-center justify-center text-[10px] font-mono {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60 font-medium' }}">
                                         {{ $idx + 1 }}
                                     </span>
                                     <span class="truncate">{{ $mTab['label'] }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0 ml-1">
                                     @if (!empty($mTab['badge']))
-                                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
+                                        <span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
                                             {{ $mTab['badge'] }}
                                         </span>
                                     @endif

@@ -91,7 +91,7 @@
                             <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
                                 Siapkan endpoint Webhooks untuk mendapatkan notifikasi pesan masuk dan status.
                                 <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/overview/" target="_blank" class="text-[#007AFF] hover:underline font-medium inline-flex items-center gap-0.5" rel="noopener noreferrer">
-                                    <span>Panduan</span>
+                                    <span>{{ __('admin.panduan') }}</span>
                                     <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                                 </a>
                             </p>
@@ -139,7 +139,7 @@
                             <a href="https://business.facebook.com/latest/whatsapp_manager/phone_numbers/?business_id=2409028599628721&tab=phone-numbers&nav_ref=whatsapp_manager&asset_id="
                                 target="_blank"
                                 class="w-full h-8 px-3 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-[11px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
-                                <span>Buka WhatsApp Manager</span>
+                                <span>{{ __('admin.buka_whatsapp_manager') }}</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
@@ -166,7 +166,7 @@
                             <a href="https://business.facebook.com/billing_hub/?business_id=2409028599628721&placement=whatsapp_ads&account_type=whatsapp-business-account"
                                 target="_blank"
                                 class="w-full h-8 px-3 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
-                                <span>Buka Billing Hub Meta</span>
+                                <span>{{ __('admin.buka_billing_hub_meta') }}</span>
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
@@ -351,7 +351,7 @@
                         <button type="submit"
                             class="w-full sm:w-auto h-11 px-6 rounded-[14px] text-[13.5px] font-bold text-white bg-[#25D366] hover:bg-[#20BA5A] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#25D366]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4"></i>
-                            <span>Simpan Pengaturan WhatsApp</span>
+                            <span>{{ __('admin.simpan_pengaturan_whatsapp') }}</span>
                         </button>
 
 
@@ -436,7 +436,7 @@
                                 <i data-lucide="send" class="w-4 h-4"></i>
                             </div>
                             <div>
-                                <h4 class="text-[15px] font-bold text-black dark:text-white">Kirim Pesan &amp; Pengujian Gateway</h4>
+                                <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.kirim_pesan_pengujian_gateway') }}</h4>
                                 <p class="text-[12px] text-black/50 dark:text-white/50">Sekitar 2 menit untuk menyelesaikan tugas penyiapan dan verifikasi jalur live.</p>
                             </div>
                         </div>
@@ -459,7 +459,7 @@
                             <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started#step-5-create-a-system-user-and-generate-a-permanent-access-token"
                                 target="_blank"
                                 class="w-full h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[#007AFF] text-[11px] font-semibold transition flex items-center justify-center gap-1" rel="noopener noreferrer">
-                                <span>Panduan Token System User Meta</span>
+                                <span>{{ __('admin.panduan_token_system_user_meta') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </div>

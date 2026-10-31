@@ -236,7 +236,7 @@
             </div>
             <div class="min-w-0">
                 <div class="flex items-center gap-2">
-                    <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">Hub Pesanan Omnichannel</h2>
+                    <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">{{ __('storefront.hub_pesanan_omnichannel') }}</h2>
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
                         Semua Saluran
                     </span>
@@ -259,7 +259,7 @@
             <a href="{{ route('marketplace-hub.orders') }}"
                 class="h-9 px-3.5 rounded-[11px] text-[12.5px] font-bold transition-all flex items-center gap-1.5 shrink-0 {{ empty(request('channel')) ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/75 dark:text-white/75 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                <span>Semua Marketplace</span>
+                <span>{{ __('marketplace.semua_marketplace') }}</span>
                 <span class="ml-0.5 px-1.5 py-0.2 rounded-full text-[10.5px] {{ empty(request('channel')) ? 'bg-white/20' : 'bg-black/10 dark:bg-white/10' }} font-extrabold">{{ $orders->total() }}</span>
             </a>
 
@@ -332,7 +332,7 @@
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02] text-black/60 dark:text-white/60 font-semibold text-[11.5px] uppercase tracking-wider">
                         <th class="py-3.5 px-3 text-center w-10">
-                            <input type="checkbox" @change="toggleSelectAll()" :checked="pageOrderIds.length > 0 && selectedOrderIds.length === pageOrderIds.length" class="w-4 h-4 rounded border-black/20 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer" title="Pilih Semua di Halaman Ini">
+                            <input type="checkbox" @change="toggleSelectAll()" :checked="pageOrderIds.length > 0 && selectedOrderIds.length === pageOrderIds.length" class="w-4 h-4 rounded border-black/20 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer" title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
                         </th>
                         <th class="py-3.5 px-4 sm:px-6">{{ __('marketplace.th_order_sn_channel') }}</th>
                         <th class="py-3.5 px-4">{{ __('marketplace.th_customer') }}</th>
@@ -494,9 +494,9 @@
                                     </a>
                                     <button type="button" @click="openDetail(@js($orderModalData))"
                                         class="h-8 px-2.5 rounded-[9px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all inline-flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
-                                        title="Lihat Rincian Barang & Pengiriman">
+                                        title="{{ __('marketplace.lihat_rincian_barang_pengiriman') }}">
                                         <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                                        <span>Detail</span>
+                                        <span>{{ __('common.detail') }}</span>
                                     </button>
                                 </div>
                             </td>
@@ -778,7 +778,7 @@
                         <a :href="'{{ url('marketplace-hub/orders') }}/' + selectedOrder?.id + '/shipping-label'" target="_blank"
                             class="min-h-[40px] px-3.5 rounded-[12px] text-[12.5px] font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95">
                             <i data-lucide="printer" class="w-4 h-4"></i>
-                            <span>Cetak Label Pengiriman</span>
+                            <span>{{ __('marketplace.cetak_label_pengiriman') }}</span>
                         </a>
                         <template x-if="selectedOrder?.order_status === 'PAID' || selectedOrder?.order_status === 'READY_TO_SHIP' || selectedOrder?.order_status === 'PENDING'">
                             <button type="button" @click="shipCurrentOrder()" :disabled="shippingInProgress"
@@ -789,9 +789,7 @@
                         </template>
                     </div>
                     <button type="button" @click="detailModal = false"
-                        class="min-h-[40px] px-5 rounded-[12px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">
-                        Tutup
-                    </button>
+                        class="min-h-[40px] px-5 rounded-[12px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] transition-all cursor-pointer active:scale-95">{{ __('common.close') }}</button>
                 </div>
             </div>
         </div>
@@ -825,9 +823,7 @@
                 <span x-text="shippingInProgress ? 'Memproses...' : 'Atur Pengiriman Massal'"></span>
             </button>
             <button type="button" @click="selectedOrderIds = []"
-                class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">
-                Batal
-            </button>
+                class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">{{ __('common.cancel') }}</button>
         </div>
     </div>
 

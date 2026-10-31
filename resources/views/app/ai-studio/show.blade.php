@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div class="space-y-1.5 max-w-sm mx-auto">
-                        <h3 class="text-sm font-bold text-black dark:text-white">Sedang Merender Visual AI...</h3>
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.sedang_merender_visual_ai') }}</h3>
                         <p class="text-xs text-black/60 dark:text-white/60">
                             Mesin AI sedang mengomposisikan objek, pencahayaan, dan detail foto produk. Proses ini biasanya memerlukan waktu 10 hingga 25 detik.
                         </p>
@@ -169,14 +169,14 @@
                             <button type="button" @click="openExportModal()"
                                 class="inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2db24f] text-white text-xs font-bold shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98]">
                                 <i data-lucide="package-plus" class="w-4 h-4"></i>
-                                <span>Simpan ke Katalog Produk</span>
+                                <span>{{ __('ai.simpan_ke_katalog_produk') }}</span>
                             </button>
 
                             <!-- Direct Download -->
                             <a :href="activeImageUrl" download="ai-studio-render.png" target="_blank"
                                 class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                <span>Unduh</span>
+                                <span>{{ __('admin.unduh') }}</span>
                             </a>
                         </div>
 
@@ -192,7 +192,7 @@
                         <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="text-sm font-bold text-red-600 dark:text-red-400">Proses Render Gagal Dijalankan</h4>
+                        <h4 class="text-sm font-bold text-red-600 dark:text-red-400">{{ __('ai.proses_render_gagal_dijalankan') }}</h4>
                         <p class="text-xs text-black/60 dark:text-white/60" x-text="errorMessage || 'Provider AI tidak dapat memproses permintaan.'"></p>
                     </div>
                     <div class="p-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 text-xs text-black/70 dark:text-white/70 max-w-sm mx-auto">
@@ -231,7 +231,7 @@
                 <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-4 space-y-3">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1.5">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                        <span>Riwayat Render Proyek Ini ({{ $project->generations->count() }})</span>
+                        <span>{{ __('ai.render_history_this_project') }} ({{ $project->generations->count() }})</span>
                     </h4>
                     <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
                         @foreach ($project->generations as $gen)
@@ -258,7 +258,7 @@
                 <div class="flex items-center justify-between">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1.5">
                         <i data-lucide="package" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                        <span>Objek Produk / Layanan Terkait</span>
+                        <span>{{ __('ai.objek_produk_layanan_terkait') }}</span>
                     </h4>
                     @if ($attachedProduct)
                         <span class="text-[10px] font-bold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">Katalog Aktif</span>
@@ -285,7 +285,7 @@
                     </div>
                 @elseif ($customProductAsset)
                     <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center gap-3">
-                        <img src="{{ asset('storage/' . $customProductAsset->file_path) }}" alt="Foto Produk"
+                        <img src="{{ asset('storage/' . $customProductAsset->file_path) }}" alt="{{ __('ai.foto_produk') }}"
                             class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
                         <div class="min-w-0 flex-1">
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $customProductAsset->metadata['product_name'] ?? $project->name }}</h5>
@@ -322,7 +322,7 @@
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $referenceItem->title }}</h5>
                             <p class="text-[11px] text-black/50 dark:text-white/50 truncate">Sumber: {{ $referenceItem->source?->name ?? 'Katalog COOCA' }}</p>
                             <a href="{{ route('ai-studio.inspiration.show', $referenceItem->id) }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline">
-                                Lihat Lembar Atribusi &rarr;
+                                {{ __('ai.view_attribution_sheet') }} &rarr;
                             </a>
                         </div>
                     </div>
@@ -347,7 +347,7 @@
                 <div class="flex items-center justify-between">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-1.5">
                         <i data-lucide="terminal" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                        <span>Prompt Aktif (Versi {{ $latestPrompt?->version_number ?? 1 }})</span>
+                        <span>{{ __('ai.active_prompt') }} ({{ __('common.version') }} {{ $latestPrompt?->version_number ?? 1 }})</span>
                     </h4>
                     <button type="button" @click="copyPrompt()"
                         class="text-[11px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
@@ -379,7 +379,7 @@
                         <i data-lucide="package-plus" class="w-4 h-4"></i>
                     </span>
                     <div>
-                        <h3 class="text-sm font-bold text-black dark:text-white">Simpan ke Katalog Produk</h3>
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.simpan_ke_katalog_produk') }}</h3>
                         <p class="text-[11px] text-black/50 dark:text-white/50">Jadikan hasil render foto resmi produk Anda</p>
                     </div>
                 </div>
@@ -392,14 +392,10 @@
             <div class="flex p-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-xs font-semibold">
                 <button type="button" @click="exportMode = 'update'"
                     class="flex-1 py-1.5 rounded-[8px] transition-all"
-                    :class="exportMode === 'update' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">
-                    Perbarui Produk Terkait
-                </button>
+                    :class="exportMode === 'update' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.perbarui_produk_terkait') }}</button>
                 <button type="button" @click="exportMode = 'new'"
                     class="flex-1 py-1.5 rounded-[8px] transition-all"
-                    :class="exportMode === 'new' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">
-                    Buat Produk Baru
-                </button>
+                    :class="exportMode === 'new' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60'">{{ __('ai.buat_produk_baru') }}</button>
             </div>
 
             <!-- Form: Update existing product -->
@@ -436,14 +432,12 @@
             <!-- Modal Footer -->
             <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5 dark:border-white/5">
                 <button type="button" @click="exportModalOpen = false"
-                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5">
-                    Batal
-                </button>
+                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
                 <button type="button" @click="submitExportToCatalog()" :disabled="exporting"
                     class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#34C759] hover:bg-[#2db24f] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
                     <i data-lucide="check" class="w-3.5 h-3.5" x-show="!exporting"></i>
                     <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="exporting" style="display: none;"></i>
-                    <span x-text="exporting ? 'Menyimpan...' : 'Simpan Sekarang'">Simpan Sekarang</span>
+                    <span x-text="exporting ? 'Menyimpan...' : 'Simpan Sekarang'">{{ __('ai.simpan_sekarang') }}</span>
                 </button>
             </div>
         </div>
@@ -484,7 +478,7 @@
             <div class="space-y-1.5">
                 <label class="text-xs font-semibold text-black dark:text-white">Teks Prompt Kustom (Opsional)</label>
                 <textarea x-model="dispatchCustomPrompt" rows="3"
-                    placeholder="Biarkan kosong untuk menggunakan prompt aktif terakhir..."
+                    placeholder="{{ __('ai.biarkan_kosong_untuk_menggunakan_prompt_aktif') }}"
                     class="w-full p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs font-mono text-black dark:text-white"></textarea>
             </div>
 
@@ -506,9 +500,7 @@
             <!-- Footer Actions -->
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5">
                 <button type="button" @click="generationDrawerOpen = false"
-                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">
-                    Batal
-                </button>
+                    class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
                 <button type="button" @click="dispatchNewGeneration()" :disabled="dispatching"
                     class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
                     <i data-lucide="wand-2" class="w-3.5 h-3.5" x-show="!dispatching"></i>

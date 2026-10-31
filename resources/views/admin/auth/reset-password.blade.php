@@ -56,8 +56,7 @@
                 class="inline-flex items-center justify-center w-16 h-16 rounded-[22px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] shadow-[0_8px_24px_rgba(0,122,255,0.35)] mb-2 transition-transform hover:scale-105 duration-200">
                 <i data-lucide="lock-keyhole" class="w-8 h-8 text-white" stroke-width="2"></i>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-black dark:text-white">Kata Sandi Baru
-            </h1>
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-black dark:text-white">{{ __('admin.kata_sandi_baru') }}</h1>
             <p class="text-xs sm:text-sm text-black/55 dark:text-white/55">Perbarui kredensial keamanan akun
                 administrator Anda</p>
         </div>
@@ -113,7 +112,7 @@
                             <i data-lucide="lock" class="w-4 h-4"></i>
                         </div>
                         <input :type="showPass ? 'text' : 'password'" name="password" id="password" required autofocus
-                            placeholder="Minimal 8 karakter kuat"
+                            placeholder="{{ __('admin.minimal_8_karakter_kuat') }}"
                             class="w-full pl-10 pr-11 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm">
                         <button type="button" @click="showPass = !showPass"
                             :aria-label="showPass ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'"
@@ -135,7 +134,7 @@
                             <i data-lucide="check" class="w-4 h-4"></i>
                         </div>
                         <input :type="showPassConfirm ? 'text' : 'password'" name="password_confirmation"
-                            id="password_confirmation" required placeholder="Ulangi kata sandi baru"
+                            id="password_confirmation" required placeholder="{{ __('admin.ulangi_kata_sandi_baru') }}"
                             class="w-full pl-10 pr-11 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[16px] sm:text-sm">
                         <button type="button" @click="showPassConfirm = !showPassConfirm"
                             :aria-label="showPassConfirm ? 'Sembunyikan konfirmasi sandi' : 'Tampilkan konfirmasi sandi'"
@@ -157,7 +156,7 @@
                 <button type="submit"
                     class="w-full min-h-[50px] py-3.5 px-4 rounded-[14px] glow-btn bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-sm sm:text-base shadow-lg shadow-[#007AFF]/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
                     <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    <span>Simpan Kata Sandi Baru &amp; Masuk</span>
+                    <span>{{ __('admin.simpan_kata_sandi_baru_masuk') }}</span>
                 </button>
             </form>
 
@@ -166,7 +165,7 @@
                 <a href="{{ route('admin.login') }}"
                     class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline transition-colors">
                     <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                    <span>Kembali ke Halaman Login</span>
+                    <span>{{ __('admin.kembali_ke_halaman_login') }}</span>
                 </a>
             </div>
         </div>

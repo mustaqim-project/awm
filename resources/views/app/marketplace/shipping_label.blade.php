@@ -517,7 +517,7 @@
             </svg>
             <span>Cetak Label Thermal (100x150)</span>
         </button>
-        <a href="javascript:history.back()">Kembali ke Pesanan</a>
+        <a href="javascript:history.back()">{{ __('marketplace.kembali_ke_pesanan') }}</a>
     </div>
 
     <div class="label-container">

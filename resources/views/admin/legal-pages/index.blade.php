@@ -17,7 +17,7 @@
                 <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
                     <i data-lucide="scale" class="w-4.5 h-4.5" stroke-width="2"></i>
                 </div>
-                <span>Pusat Tata Kelola Dokumen Legalitas &amp; Privasi</span>
+                <span>{{ __('admin.pusat_tata_kelola_dokumen_legalitas_privasi') }}</span>
             </h1>
             <p class="text-[13px] text-black/60 dark:text-white/60">
                 Kelola naskah resmi Kebijakan Privasi (UU PDP No. 27/2022) dan Syarat &amp; Ketentuan Layanan untuk Pemilik Usaha (Owner) dan Pembeli (Customer).
@@ -32,7 +32,7 @@
             </a>
             <a href="https://cooca.id/terms" target="_blank"
                 class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 border border-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer" rel="noopener noreferrer">
-                <span>Preview Syarat Layanan</span>
+                <span>{{ __('admin.preview_syarat_layanan') }}</span>
                 <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
             </a>
         </div>
@@ -144,7 +144,7 @@
                             @csrf
                             <button type="submit"
                                 class="h-9 px-3 rounded-[10px] text-[11.5px] font-bold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
-                                title="Klik untuk mengaktifkan / menonaktifkan tayangan">
+                                title="{{ __('admin.klik_untuk_mengaktifkan_menonaktifkan_tayangan') }}">
                                 {{ $page->is_published ? 'Nonaktifkan' : 'Aktifkan' }}
                             </button>
                         </form>
@@ -157,7 +157,7 @@
                         <a href="{{ route('admin.legal-pages.edit', $page) }}"
                             class="h-9 px-4 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
-                            <span>Edit Dokumen</span>
+                            <span>{{ __('admin.edit_dokumen') }}</span>
                         </a>
 
 
@@ -167,7 +167,7 @@
             </div>
         @empty
             <div class="col-span-2 p-12 text-center rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08]">
-                <p class="text-[14px] text-black/50 dark:text-white/50">Belum ada dokumen legal yang terdaftar. Jalankan seeder LegalPagesSeeder.</p>
+                <p class="text-[14px] text-black/50 dark:text-white/50">{{ __('admin.belum_ada_dokumen_legal_yang_terdaftar') }}</p>
             </div>
         @endforelse
     </div>

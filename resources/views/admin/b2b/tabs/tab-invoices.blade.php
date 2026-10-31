@@ -46,7 +46,7 @@
                             </div>
                             @if($inv->salesOrder)
                                 <div class="mt-1">
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-1.5 py-0.2 rounded" title="Nomor Pesanan SO Rujukan">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono text-[#007AFF] bg-[#007AFF]/10 px-1.5 py-0.2 rounded" title="{{ __('admin.nomor_pesanan_so_rujukan') }}">
                                         SO: {{ $inv->salesOrder->so_number }}
                                     </span>
                                 </div>
@@ -157,7 +157,7 @@
                                         notes: '{{ addslashes($inv->notes ?? '') }}'
                                     }, '{{ route('admin.b2b.invoices.update', $inv) }}')"
                                         class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#0284c7]/15 hover:text-[#0284c7] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
-                                        title="Ubah Faktur">
+                                        title="{{ __('admin.ubah_faktur') }}">
                                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                     </button>
                                 @endif
@@ -166,13 +166,13 @@
                                 @if((float) $inv->balance_due > 0.01 && Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <button type="button" @click="openPayment(@js($inv))"
                                         class="h-8 px-2.5 rounded-[9px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                        title="Catat Pembayaran Masuk">
+                                        title="{{ __('admin.catat_pembayaran_masuk') }}">
                                         <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
-                                        <span>Catat Bayar</span>
+                                        <span>{{ __('admin.catat_bayar') }}</span>
                                     </button>
                                 @endif
 
-                                {{-- Void Faktur jika belum ada pembayaran dan belum void --}}
+                                {{-- Void Faktur jika {{ __('admin.belum_ada_pembayaran_dan_belum_void') }}
                                 @if($inv->status !== 'void' && (float) $inv->paid_amount < 0.01 && Auth::guard('admin')->user()?->hasPermission('admin.b2b.edit'))
                                     <form action="{{ route('admin.b2b.invoices.void', $inv) }}" method="POST" class="inline"
                                         data-confirm="Batalkan (Void) Faktur {{ $inv->invoice_number }}?"
@@ -195,7 +195,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
-                                            title="Hapus Faktur">
+                                            title="{{ __('admin.hapus_faktur') }}">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>

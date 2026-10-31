@@ -103,7 +103,7 @@
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                         Perihal / Judul Invoice <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <input type="text" name="title" required placeholder="Paket Scale 12 Bulan + Setup 5 Cabang"
+                    <input type="text" name="title" required placeholder="{{ __('admin.paket_scale_12_bulan_setup_5') }}"
                         class="w-full h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                     Catatan / Syarat Pembayaran
                 </label>
-                <textarea name="notes" rows="2" placeholder="Term of Payment 14 Hari kerja. Transfer ke Rekening BCA PT Cooca Digital Solusi..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.term_of_payment_14_hari_kerja') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] resize-none"></textarea>
             </div>
 
@@ -176,13 +176,11 @@
             {{-- Buttons --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showCreateArModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer flex items-center gap-2">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Terbitkan &amp; Jurnal Otomatis</span>
+                    <span>{{ __('admin.terbitkan_jurnal_otomatis') }}</span>
                 </button>
             </div>
         </form>

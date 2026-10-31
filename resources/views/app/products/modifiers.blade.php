@@ -660,7 +660,7 @@
                             <!-- Toggle Wajib atau Opsional -->
                             <div class="flex items-center justify-between gap-4">
                                 <div>
-                                    <h4 class="text-[13.5px] font-semibold text-black dark:text-white">Wajib Diisi oleh Pelanggan?</h4>
+                                    <h4 class="text-[13.5px] font-semibold text-black dark:text-white">{{ __('products.wajib_diisi_oleh_pelanggan') }}</h4>
                                     <p class="text-[12px] text-black/50 dark:text-white/50">
                                         <span x-show="groupForm.is_required">{{ __('products.modifiers_rule_single_required_note') }}</span>
                                         <span x-show="!groupForm.is_required">{{ __('products.modifiers_rule_single_optional_note') }}</span>
@@ -751,7 +751,7 @@
                                     <i data-lucide="search" class="w-4 h-4"></i>
                                 </div>
                                 <input type="text" x-model="productSearch"
-                                    placeholder="Cari nama menu atau SKU... (Contoh: Kopi, Espresso, Croissant)"
+                                    placeholder="{{ __('products.cari_nama_menu_atau_sku_contoh') }}"
                                     class="w-full h-10 pl-9 pr-8 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 placeholder:text-black/35 dark:placeholder:text-white/35 transition">
                                 <button type="button" x-show="productSearch.length > 0" @click="productSearch = ''"
                                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition">
@@ -782,7 +782,7 @@
                                     </label>
                                 @empty
                                     <div class="p-6 text-center text-[12.5px] text-black/40 dark:text-white/40">
-                                        Belum ada produk aktif yang terdaftar.
+                                        {{ __('products.belum_ada_produk_aktif_yang_terdaftar') }}
                                     </div>
                                 @endforelse
                             </div>
@@ -887,9 +887,7 @@
                             <div class="flex items-center gap-2 flex-wrap">
                                 <span class="text-[11.5px] text-black/50 dark:text-white/50">Preset Cepat:</span>
                                 <button type="button" @click="optionForm.price_delta = 0"
-                                    class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-medium bg-white dark:bg-[#252528] border border-black/10 dark:border-white/10 hover:border-[#007AFF] text-black dark:text-white transition">
-                                    Gratis (Rp 0)
-                                </button>
+                                    class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-medium bg-white dark:bg-[#252528] border border-black/10 dark:border-white/10 hover:border-[#007AFF] text-black dark:text-white transition">{{ __('products.gratis_rp_0') }}</button>
                                 <button type="button" @click="optionForm.price_delta = 2000"
                                     class="px-2.5 py-1 rounded-[8px] text-[11.5px] font-medium bg-white dark:bg-[#252528] border border-black/10 dark:border-white/10 hover:border-[#007AFF] text-black dark:text-white transition">
                                     +Rp 2.000
@@ -971,7 +969,7 @@
 
                                             <!-- Remove Row -->
                                             <button type="button" @click="removeMaterialRow(idx)"
-                                                class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center shrink-0 transition" title="Hapus Baris">
+                                                class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center shrink-0 transition" title="{{ __('products.hapus_baris') }}">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </div>
@@ -987,7 +985,7 @@
                         <!-- 4. Status Aktif / Nonaktif -->
                         <div class="flex items-center justify-between p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                             <div>
-                                <h4 class="text-[13.5px] font-semibold text-black dark:text-white">Status Opsi</h4>
+                                <h4 class="text-[13.5px] font-semibold text-black dark:text-white">{{ __('products.status_opsi') }}</h4>
                                 <p class="text-[12px] text-black/50 dark:text-white/50">
                                     <span x-show="optionForm.is_active">{{ __('products.status_active') }} (Muncul di layar kasir)</span>
                                     <span x-show="!optionForm.is_active">{{ __('products.status_inactive') }} (Disembunyikan dari kasir)</span>

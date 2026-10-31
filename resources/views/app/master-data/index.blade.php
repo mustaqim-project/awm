@@ -253,7 +253,7 @@
                     class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
                     <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Cakupan</span>
                     <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-[20px] font-semibold text-black dark:text-white">Bisnis</span>
+                        <span class="text-[20px] font-semibold text-black dark:text-white">{{ __('master_data.bisnis') }}</span>
                         <span class="text-[11px] text-black/40 dark:text-white/40">Multi-Lokasi</span>
                     </div>
                 </div>
@@ -272,7 +272,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-                <input type="text" x-model="searchQuery" placeholder="Cari {{ strtolower($title) }}..."
+                <input type="text" x-model="searchQuery" placeholder="{{ __('master_data.cari_strtolower_title') }}"
                     class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-9 pr-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
             </div>
 
@@ -285,23 +285,19 @@
                             :class="filterSource === 'all' ?
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
-                            class="px-3 py-1 rounded-[7px] transition-all">
-                            Semua
-                        </button>
+                            class="px-3 py-1 rounded-[7px] transition-all">{{ __('common.all') }}</button>
                         <button type="button" @click="filterSource = 'business'"
                             :class="filterSource === 'business' ?
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
                             class="px-3 py-1 rounded-[7px] transition-all">
-                            Bisnis
+                            {{ __('common.business') }}
                         </button>
                         <button type="button" @click="filterSource = 'system'"
                             :class="filterSource === 'system' ?
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
-                            class="px-3 py-1 rounded-[7px] transition-all">
-                            Sistem
-                        </button>
+                            class="px-3 py-1 rounded-[7px] transition-all">{{ __('master_data.sistem') }}</button>
                     </div>
 
                     <!-- Tab Segmented Control -->
@@ -312,7 +308,7 @@
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
                             class="px-3.5 py-1 rounded-[7px] transition-all flex items-center gap-1.5">
-                            <span>Daftar Satuan</span>
+                            <span>{{ __('products.unit_list') }}</span>
                             <span class="text-[11px] font-semibold opacity-70 tabular-nums">({{ $items->count() }})</span>
                         </button>
                         <button type="button" @click="activeTab = 'conversions'"
@@ -320,7 +316,7 @@
                                 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                                 'text-black/55 dark:text-white/55'"
                             class="px-3.5 py-1 rounded-[7px] transition-all flex items-center gap-1.5">
-                            <span>Konversi</span>
+                            <span>{{ __('products.conversion') }}</span>
                             <span
                                 class="text-[11px] font-semibold opacity-70 tabular-nums">({{ isset($unitConversions) ? $unitConversions->count() : 0 }})</span>
                         </button>
@@ -449,12 +445,12 @@
                                             ($item->business_id || !in_array($type, ['units'], true)) &&
                                                 \App\Support\Context::hasPermission($managePermission))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit" aria-label="Edit"
+                                                <button type="button" title="{{ __('common.edit') }}" aria-label="{{ __('master_data.edit') }}"
                                                     @click.stop="openEdit(@js(['id' => $item->id, 'code' => $item->code ?? '', 'name' => $item->name ?? '', 'category' => $item->category ?? 'quantity', 'description' => $item->description ?? '', 'marketplace_category_id' => $item->marketplace_category_id ?? '', 'marketplace_category_name' => $item->marketplace_category_name ?? '']))"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus" aria-label="Hapus"
+                                                <button type="button" title="{{ __('common.delete') }}" aria-label="{{ __('master_data.hapus') }}"
                                                     @click.stop="openDelete('{{ route($type . '.destroy', $item->id) }}', '{{ addslashes($item->name ?? $item->code) }}')"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -534,7 +530,7 @@
                                     \App\Support\Context::hasPermission($managePermission))
                                 <button type="button" @click.stop="openEdit(@js(['id' => $item->id, 'code' => $item->code ?? '', 'name' => $item->name ?? '', 'category' => $item->category ?? 'quantity', 'description' => $item->description ?? '', 'marketplace_category_id' => $item->marketplace_category_id ?? '', 'marketplace_category_name' => $item->marketplace_category_name ?? '']))"
                                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center cursor-pointer">
-                                    Edit
+                                    {{ __('common.edit') }}
                                 </button>
                                 <button type="button"
                                     @click.stop="openDelete('{{ route($type . '.destroy', $item->id) }}', '{{ addslashes($item->name ?? $item->code) }}')"
@@ -603,7 +599,7 @@
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                     </svg>
-                                    <span>Simpan Konversi</span>
+                                    <span>{{ __('master_data.simpan_konversi') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -654,7 +650,7 @@
                                         <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                             @if (\App\Support\Context::hasPermission('master_data.units.manage'))
                                                 <div class="flex items-center justify-end">
-                                                    <button type="button" title="Hapus" aria-label="Hapus"
+                                                    <button type="button" title="{{ __('common.delete') }}" aria-label="{{ __('master_data.hapus') }}"
                                                         @click="openDelete('{{ route('unit-conversions.destroy', $conversion->id) }}', 'Konversi 1 {{ $conversion->fromUnit?->code }} ke {{ $conversion->toUnit?->code }}')"
                                                         class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -668,7 +664,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="4" class="py-12 text-center text-black/40 dark:text-white/40">
-                                            Belum ada konversi satuan bisnis terdaftar.</td>
+                                            {{ __('master_data.belum_ada_konversi_satuan_bisnis_terdaftar') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -705,7 +701,7 @@
                         </div>
                     @empty
                         <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                            Belum ada konversi satuan terdaftar.
+                            {{ __('master_data.belum_ada_konversi_satuan_terdaftar') }}
                         </div>
                     @endforelse
                 </div>
@@ -757,7 +753,7 @@
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Nama Lengkap
                                     Satuan <span class="text-[#FF3B30]">*</span></label>
                                 <input name="name" required maxlength="100"
-                                    placeholder="Nama lengkap, contoh: Sak 25kg"
+                                    placeholder="{{ __('master_data.nama_lengkap_contoh_sak_25kg') }}"
                                     class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                             </div>
                             <div>
@@ -850,7 +846,7 @@
                                                 <svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                                 </svg>
-                                                <input type="text" x-model="categorySearchAdd" placeholder="Cari nama atau id kategori..."
+                                                <input type="text" x-model="categorySearchAdd" placeholder="{{ __('master_data.cari_nama_atau_id_kategori') }}"
                                                     class="w-full h-8 pl-8 pr-3 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                                             </div>
 
@@ -897,7 +893,7 @@
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Deskripsi
                                     (Opsional)</label>
-                                <textarea name="description" x-model="addItem.description" maxlength="500" rows="3" placeholder="Deskripsi ringkas penggunaan kategori..."
+                                <textarea name="description" x-model="addItem.description" maxlength="500" rows="3" placeholder="{{ __('master_data.deskripsi_ringkas_penggunaan_kategori') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
                             </div>
                         @endif
@@ -905,12 +901,10 @@
                         <div
                             class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                             <button type="button" @click="showAddModal = false"
-                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition cursor-pointer">
-                                Batal
-                            </button>
+                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="submit"
                                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                                Simpan {{ $type === 'units' ? 'Satuan' : 'Kategori' }}
+                                {{ __('common.save') }} {{ $type === 'units' ? __('products.unit') : __('products.category') }}
                             </button>
                         </div>
                     </form>
@@ -946,7 +940,7 @@
                     <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
                     <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                        <h3 class="text-[17px] font-semibold text-black dark:text-white">Edit {{ $title }}</h3>
+                        <h3 class="text-[17px] font-semibold text-black dark:text-white">{{ __('common.edit') }} {{ $title }}</h3>
                         <button type="button" @click="showEditModal = false"
                             class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition cursor-pointer">✕</button>
                     </div>
@@ -960,14 +954,14 @@
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Kode Satuan <span
                                         class="text-[#FF3B30]">*</span></label>
                                 <input name="code" x-model="editItem.code" required maxlength="30"
-                                    placeholder="Kode satuan"
+                                    placeholder="{{ __('master_data.kode_satuan') }}"
                                     class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                             </div>
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Nama Lengkap
                                     Satuan <span class="text-[#FF3B30]">*</span></label>
                                 <input name="name" x-model="editItem.name" required maxlength="100"
-                                    placeholder="Nama lengkap satuan"
+                                    placeholder="{{ __('master_data.nama_lengkap_satuan') }}"
                                     class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                             </div>
                             <div>
@@ -1061,7 +1055,7 @@
                                                 <svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                                 </svg>
-                                                <input type="text" x-model="categorySearchEdit" placeholder="Cari nama atau id kategori..."
+                                                <input type="text" x-model="categorySearchEdit" placeholder="{{ __('master_data.cari_nama_atau_id_kategori') }}"
                                                     class="w-full h-8 pl-8 pr-3 rounded-[8px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
                                             </div>
 
@@ -1126,13 +1120,9 @@
                         <div
                             class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                             <button type="button" @click="showEditModal = false"
-                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition cursor-pointer">
-                                Batal
-                            </button>
+                                class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="submit"
-                                class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                                Simpan Perubahan
-                            </button>
+                                class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">{{ __('common.save_changes') }}</button>
                         </div>
                     </form>
                 </div>
@@ -1167,13 +1157,9 @@
 
                 <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                     <button type="button" @click="closeDelete()"
-                        class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Batal
-                    </button>
+                        class="py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                     <button type="button" @click="submitDelete()"
-                        class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">
-                        Hapus
-                    </button>
+                        class="py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors">{{ __('common.delete') }}</button>
                 </div>
             </div>
         </template>

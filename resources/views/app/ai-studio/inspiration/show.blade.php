@@ -22,7 +22,7 @@
         <a href="{{ route('ai-studio.inspiration.index') }}"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
             <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>Kembali ke Galeri</span>
+            <span>{{ __('ai.kembali_ke_galeri') }}</span>
         </a>
     </div>
 
@@ -48,7 +48,7 @@
             <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
                 class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-sm font-bold shadow-md shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
                 <i data-lucide="wand-2" class="w-4 h-4"></i>
-                <span>Gunakan Gaya Visual Ini untuk Produk Anda</span>
+                <span>{{ __('ai.gunakan_gaya_visual_ini_untuk_produk') }}</span>
             </a>
         </div>
 
@@ -112,7 +112,7 @@
                         </span>
                         <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
                             class="font-bold text-[#007AFF] hover:underline inline-flex items-center gap-1">
-                            <span>Buka di Kanvas AI Studio</span>
+                            <span>{{ __('ai.buka_di_kanvas_ai_studio') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     </div>
@@ -208,7 +208,7 @@
                         <p class="truncate">
                             <a href="{{ $item->canonical_url ?: '#' }}" target="_blank" rel="noopener noreferrer"
                                 class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
-                                <span>Kunjungi Halaman Asli</span>
+                                <span>{{ __('ai.kunjungi_halaman_asli') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </p>

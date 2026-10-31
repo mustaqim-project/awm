@@ -627,7 +627,7 @@
             <button type="button" @click="tplFilter = 'all'"
                 class="px-3 py-1.5 rounded-[10px] text-[12px] font-semibold transition-all cursor-pointer"
                 :class="tplFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                <span>Semua (10)</span>
+                <span>{{ __('settings.semua_10') }}</span>
             </button>
             <button type="button" @click="tplFilter = 'UTILITY'"
                 class="px-3 py-1.5 rounded-[10px] text-[12px] font-semibold transition-all cursor-pointer flex items-center gap-1.5"

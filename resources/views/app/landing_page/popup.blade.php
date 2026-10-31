@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Pop Up Promo & Pengumuman Website - Cooca',
+    'title' => __('landing_page.pop_up_promo_pengumuman_website_cooca'),
     'headerTitle' => 'Website & Toko Online',
     'headerSubtitle' => 'Kelola jendela pop-up promo, banner pengumuman modal, dan penawaran khusus toko online ' . $business->name,
 ])
@@ -33,7 +33,7 @@
                     <span class="truncate">{{ session('success') }}</span>
                 </div>
                 <a href="{{ $business->public_url }}" target="_blank" rel="noopener" class="text-xs underline hover:no-underline font-semibold shrink-0">
-                    Buka Toko &rarr;
+                    {{ __('storefront.open_store') }} &rarr;
                 </a>
             </div>
         @endif
@@ -104,7 +104,7 @@
                     <button type="button" @click="document.getElementById('popup-cms-form').requestSubmit()"
                         class="min-h-[38px] px-4 rounded-[11px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-2 shadow-xs cursor-pointer">
                         <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Simpan Pengaturan</span>
+                        <span>{{ __('landing_page.simpan_pengaturan') }}</span>
                     </button>
                 @endif
             </div>
@@ -133,7 +133,7 @@
                             <div>
                                 <h3 class="text-[15px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
                                     <i data-lucide="toggle-right" class="w-4 h-4 text-[#007AFF]"></i>
-                                    <span>Status &amp; Visibilitas Pop-Up</span>
+                                    <span>{{ __('landing_page.status_visibilitas_pop_up') }}</span>
                                 </h3>
                                 <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">
                                     Aktifkan jendela modal promo otomatis saat beranda toko online dibuka.
@@ -205,7 +205,7 @@
                             <button type="button" class="w-full flex items-center justify-between text-left cursor-pointer" @click="showSchedule = !showSchedule">
                                 <div class="flex items-center gap-2">
                                     <i data-lucide="calendar" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
-                                    <span class="text-xs font-semibold text-black/80 dark:text-white/80">Jadwal Periode Tayang Otomatis (Opsional)</span>
+                                    <span class="text-xs font-semibold text-black/80 dark:text-white/80">{{ __('landing_page.jadwal_periode_tayang_otomatis_opsional') }}</span>
                                 </div>
                                 <i data-lucide="chevron-down" class="w-4 h-4 text-black/40 transition-transform duration-200" :class="showSchedule ? 'rotate-180' : ''"></i>
                             </button>
@@ -261,7 +261,7 @@
                                     <button type="button" @click="badge = 'PROMO SPESIAL'" 
                                             class="text-[11px] px-2 py-0.5 rounded-[7px] border border-black/5 dark:border-white/5 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/70 dark:text-white/70 transition cursor-pointer">Promo Spesial</button>
                                     <button type="button" @click="badge = 'DISKON HARI INI'" 
-                                            class="text-[11px] px-2 py-0.5 rounded-[7px] border border-black/5 dark:border-white/5 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/70 dark:text-white/70 transition cursor-pointer">Diskon Hari Ini</button>
+                                            class="text-[11px] px-2 py-0.5 rounded-[7px] border border-black/5 dark:border-white/5 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/70 dark:text-white/70 transition cursor-pointer">{{ __('landing_page.diskon_hari_ini') }}</button>
                                     <button type="button" @click="badge = 'PENGUMUMAN'" 
                                             class="text-[11px] px-2 py-0.5 rounded-[7px] border border-black/5 dark:border-white/5 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/70 dark:text-white/70 transition cursor-pointer">Pengumuman</button>
                                     <button type="button" @click="badge = 'PROMO GAJIAN'" 
@@ -282,7 +282,7 @@
                                 <input type="text" 
                                        name="popup_title" 
                                        x-model="title"
-                                       placeholder="Contoh: Diskon 20% Khusus Pelanggan Baru Hari Ini!"
+                                       placeholder="{{ __('landing_page.contoh_diskon_20_khusus_pelanggan_baru') }}"
                                        maxlength="255"
                                        class="w-full h-10 px-3 text-[16px] sm:text-[13.5px] font-semibold rounded-[11px] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white focus:border-[#007AFF] focus:ring-0">
                                 <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">Gunakan judul yang memikat, ringkas, dan langsung to-the-point.</p>
@@ -299,7 +299,7 @@
                                 <textarea name="popup_content" 
                                           x-model="content"
                                           rows="3" 
-                                          placeholder="Tuliskan detail penawaran, kode voucher belanja, jam operasional promo, atau instruksi pemesanan..."
+                                          placeholder="{{ __('landing_page.tuliskan_detail_penawaran_kode_voucher_belanja') }}"
                                           maxlength="3000"
                                           class="w-full p-3 text-[16px] sm:text-[13.5px] rounded-[11px] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white focus:border-[#007AFF] focus:ring-0 leading-relaxed"></textarea>
                             </div>
@@ -379,7 +379,7 @@
                                 <input type="text" 
                                        name="popup_cta_url" 
                                        x-model="ctaUrl"
-                                       placeholder="https://wa.me/... atau /katalog"
+                                       placeholder="{{ __('landing_page.https_wa_me_atau_katalog') }}"
                                        maxlength="500"
                                        class="w-full h-10 px-3 text-[16px] sm:text-[13.5px] rounded-[11px] border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white focus:border-[#007AFF] focus:ring-0">
                             </div>
@@ -397,12 +397,12 @@
                                 <button type="button" @click="ctaText = 'Jelajahi Katalog'; ctaUrl = '/' + businessSlug + '/katalog'"
                                         class="h-7 px-2.5 rounded-[8px] text-[11px] font-medium bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] flex items-center gap-1 transition cursor-pointer">
                                     <i data-lucide="shopping-bag" class="w-3 h-3"></i>
-                                    <span>Katalog Produk</span>
+                                    <span>{{ __('import.katalog_produk') }}</span>
                                 </button>
                                 <button type="button" @click="ctaText = 'Reservasi Online'; ctaUrl = '/' + businessSlug + '/reservasi'"
                                         class="h-7 px-2.5 rounded-[8px] text-[11px] font-medium bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#FF9500] flex items-center gap-1 transition cursor-pointer">
                                     <i data-lucide="calendar" class="w-3 h-3"></i>
-                                    <span>Halaman Reservasi</span>
+                                    <span>{{ __('landing_page.halaman_reservasi') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -418,7 +418,7 @@
                             <button type="submit" 
                                     class="min-h-[42px] px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-semibold text-[13px] transition shadow-xs flex items-center gap-2 cursor-pointer w-full sm:w-auto justify-center">
                                 <i data-lucide="check" class="w-4 h-4"></i>
-                                <span>Simpan Pengaturan Pop-Up</span>
+                                <span>{{ __('landing_page.simpan_pengaturan_pop_up') }}</span>
                             </button>
                         </div>
                     @endif
@@ -567,7 +567,7 @@
                             @click="simulatedModalOpen = true; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
                             class="text-[11.5px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1 cursor-pointer">
                         <i data-lucide="play" class="w-3 h-3"></i>
-                        <span>Uji Buka Pop-Up Ulang</span>
+                        <span>{{ __('landing_page.uji_buka_pop_up_ulang') }}</span>
                     </button>
                 </div>
             </div>
@@ -612,7 +612,7 @@
                     <button type="button" 
                             @click="mobilePreviewOpen = false" 
                             class="absolute top-3 right-3 z-20 min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition active:scale-90 cursor-pointer"
-                            aria-label="Tutup pratinjau">
+                            aria-label="{{ __('landing_page.tutup_pratinjau') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
 
@@ -650,9 +650,7 @@
 
                             <button type="button" 
                                     @click="mobilePreviewOpen = false" 
-                                    class="min-h-[44px] text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 font-medium py-1 flex items-center justify-center w-full text-center cursor-pointer">
-                                Tutup Pratinjau
-                            </button>
+                                    class="min-h-[44px] text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 font-medium py-1 flex items-center justify-center w-full text-center cursor-pointer">{{ __('landing_page.tutup_pratinjau_2') }}</button>
                         </div>
                     </div>
                 </div>
@@ -674,7 +672,7 @@
                     <button type="button" @click="document.getElementById('popup-cms-form').requestSubmit()"
                         class="min-h-[44px] flex-1 px-4 rounded-[12px] bg-[#007AFF] text-white font-semibold text-[13px] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center justify-center gap-2 shadow-sm cursor-pointer">
                         <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Simpan Pengaturan</span>
+                        <span>{{ __('landing_page.simpan_pengaturan') }}</span>
                     </button>
                 </div>
             </div>

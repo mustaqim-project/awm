@@ -46,7 +46,7 @@
                 <a :href="modalImageUrl" target="_blank"
                     class="h-8 px-3 rounded-[8px] bg-white/15 hover:bg-white/25 text-[11px] font-bold text-white flex items-center gap-1.5 cursor-pointer ml-1" rel="noopener noreferrer">
                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                    <span>Buka Penuh</span>
+                    <span>{{ __('admin.buka_penuh') }}</span>
                 </a>
 
                 {{-- Close Button --}}
@@ -63,7 +63,7 @@
                 <iframe :src="modalImageUrl" class="w-full h-[70vh] rounded-[12px] bg-white"></iframe>
             </template>
             <template x-if="modalImageUrl && !modalImageUrl.endsWith('.pdf')">
-                <img :src="modalImageUrl" alt="Bukti Transaksi"
+                <img :src="modalImageUrl" alt="{{ __('admin.bukti_transaksi') }}"
                     :style="`transform: scale(${zoomLevel}) rotate(${rotation}deg); transition: transform 0.2s ease-in-out;`"
                     class="max-h-[70vh] max-w-full object-contain rounded-[8px] shadow-2xl">
             </template>

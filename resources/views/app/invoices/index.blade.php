@@ -342,7 +342,7 @@
                            class="h-8 px-2 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] flex items-center gap-1"
                            title="{{ __('sales.invoices.btn_edit_invoice') }}">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                            <span>Edit</span>
+                            <span>{{ __('common.edit') }}</span>
                         </a>
                     @endif
                     <a href="{{ route('invoices.show', $inv->id) }}"

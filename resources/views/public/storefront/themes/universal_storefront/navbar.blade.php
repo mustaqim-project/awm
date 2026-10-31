@@ -36,7 +36,7 @@
             {{-- Home --}}
             <a href="{{ url('/' . $business->slug) }}"
                 class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug) ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
-                {{ $landingPage->getNavLabel('home', '{{ __('storefront.nav_home') }}') }}
+                {{ $landingPage->getNavLabel('home', __('storefront.nav_home')) }}
             </a>
 
             {{-- Catalog / Produk --}}
@@ -44,7 +44,7 @@
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 {{ request()->is($business->slug . '/katalog*') || request()->is($business->slug . '/produk*') ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
                     <i data-lucide="store" class="w-3.5 h-3.5" style="color: #007AFF;"></i>
-                    <span>{{ $landingPage->getNavLabel('catalog', '{{ __('storefront.katalog_produk_lengkap') }}') }}</span>
+                    <span>{{ $landingPage->getNavLabel('catalog', __('storefront.katalog_produk_lengkap')) }}</span>
                 </a>
             @endif
 
@@ -52,7 +52,7 @@
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
-                    {{ $landingPage->getNavLabel('about', '{{ __('storefront.tentang_toko_kami') }}') }}
+                    {{ $landingPage->getNavLabel('about', __('storefront.tentang_toko_kami')) }}
                 </a>
             @endif
 
@@ -60,7 +60,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/kontak*') ? 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs font-bold' : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white' }}">
-                    {{ $landingPage->getNavLabel('contact', '{{ __('storefront.pusat_bantuan_kontak') }}') }}
+                    {{ $landingPage->getNavLabel('contact', __('storefront.pusat_bantuan_kontak')) }}
                 </a>
             @endif
 

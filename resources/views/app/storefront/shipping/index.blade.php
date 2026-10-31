@@ -3,7 +3,7 @@
 @section('content')
     <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
         x-data="{
-            isTestingRate: false,
+            isTestingRate: false, /* {{ __('storefront.test_rate') }} */
             testPostalCode: '',
             testWeight: 250,
             testValue: 50000,
@@ -425,9 +425,9 @@
                                         <span class="text-xs font-bold text-black dark:text-white"
                                             x-text="item.name"></span>
                                         <span class="text-[11px] text-black/50 dark:text-white/50 flex items-center gap-2">
-                                            <span>Area ID: <code class="font-mono text-[10px]"
+                                            <span>{{ __('storefront.area_id') }}: <code class="font-mono text-[10px]"
                                                     x-text="item.id"></code></span>
-                                            <span x-show="item.postal_code" class="text-black/40">&bull; Kode Pos: <span
+                                            <span x-show="item.postal_code" class="text-black/40">&bull; {{ __('storefront.postal_code') }}: <span
                                                     x-text="item.postal_code"></span></span>
                                         </span>
                                     </button>

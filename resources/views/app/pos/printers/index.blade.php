@@ -5,7 +5,7 @@
     showAddModal: false,
     showEditModal: false,
     showManualDrawerModal: false,
-    isTesting: false,
+    isTesting: false, /* {{ __('pos.printer_testing') }} */
     testFeedback: '',
     testFeedbackSuccess: true,
     editPrinter: {
@@ -653,7 +653,7 @@
                                 <!-- Nama Printer -->
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.printer_name') }} *</label>
-                                    <input type="text" name="name" required placeholder="Contoh: Kasir Utama, Printer Dapur, Barista"
+                                    <input type="text" name="name" required placeholder="{{ __('pos.contoh_kasir_utama_printer_dapur_barista') }}"
                                         class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
 
@@ -1050,13 +1050,13 @@
                     <form @submit.prevent="submitManualDrawer" class="space-y-4">
                         <div>
                             <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.supervisor_owner_pin_label') }} <span class="text-red-500">*</span></label>
-                            <input type="password" x-model="manualDrawer.supervisor_pin" required maxlength="8" placeholder="Masukkan 4-8 digit PIN otorisasi"
+                            <input type="password" x-model="manualDrawer.supervisor_pin" required maxlength="8" placeholder="{{ __('pos.masukkan_4_8_digit_pin_otorisasi') }}"
                                 class="w-full h-12 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[18px] text-black dark:text-white tracking-widest font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
 
                         <div>
                             <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">{{ __('pos.drawer_pop_reason_label') }} <span class="text-red-500">*</span></label>
-                            <textarea x-model="manualDrawer.reason" required rows="3" placeholder="Contoh: Penukaran uang kembalian pecahan kecil dengan kasir sebelah..."
+                            <textarea x-model="manualDrawer.reason" required rows="3" placeholder="{{ __('pos.contoh_penukaran_uang_kembalian_pecahan_kecil') }}"
                                 class="w-full p-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 resize-none transition"></textarea>
                         </div>
 
@@ -1064,7 +1064,7 @@
                             <button type="button" @click="showManualDrawerModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">
                                 {{ __('pos.cancel') }}
                             </button>
-                            <button type="submit" :disabled="isTesting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2">
+                            <button type="submit" :disabled="isTesting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2"> <!-- {{ __('pos.drawer_testing') }} -->
                                 <template x-if="isTesting">
                                     <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
                                 </template>

@@ -22,7 +22,7 @@
             <a href="{{ route('admin.payment-accounts.index') }}"
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/8 hover:bg-[#007AFF]/15 active:scale-[0.97] transition">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-                <span>Kembali ke Daftar Rekening</span>
+                <span>{{ __('admin.kembali_ke_daftar_rekening') }}</span>
             </a>
         </div>
 
@@ -149,7 +149,7 @@
                 @if ($paymentAccount->qr_image_path)
                     <div class="flex items-center gap-4 p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.08]">
                         <div class="w-20 h-20 rounded-[12px] bg-white p-1.5 border border-black/[0.08] flex items-center justify-center shrink-0 shadow-sm">
-                            <img src="{{ $paymentAccount->qr_image_url }}" alt="QRIS saat ini"
+                            <img src="{{ $paymentAccount->qr_image_url }}" alt="{{ __('admin.qris_saat_ini') }}"
                                 class="max-h-full max-w-full object-contain rounded-[8px]">
                         </div>
                         <div>
@@ -158,7 +158,7 @@
                             <a href="{{ $paymentAccount->qr_image_url }}" target="_blank"
                                 class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1.5">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                <span>Buka Ukuran Penuh</span>
+                                <span>{{ __('admin.buka_ukuran_penuh') }}</span>
                             </a>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                     class="p-4 bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] rounded-[18px] max-w-xs text-center space-y-2">
                     <span class="text-[12px] font-semibold text-black/60 dark:text-white/60 block">Preview Barcode Baru:</span>
                     <div class="p-3 bg-white rounded-[14px] border border-black/5 shadow-inner">
-                        <img :src="qrPreview" alt="QRIS Preview" class="max-h-48 mx-auto rounded-[10px] object-contain">
+                        <img :src="qrPreview" alt="{{ __('admin.qris_preview') }}" class="max-h-48 mx-auto rounded-[10px] object-contain">
                     </div>
                 </div>
 
@@ -243,13 +243,13 @@
                 <a href="{{ route('admin.payment-accounts.index') }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition inline-flex items-center gap-1.5">
                     <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Batal</span>
+                    <span>{{ __('common.cancel') }}</span>
                 </a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.edit'))
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)]">
                     <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Simpan Perubahan</span>
+                    <span>{{ __('common.save_changes') }}</span>
                 </button>
                 @endif
             </div>
@@ -277,7 +277,7 @@
                 <button type="submit"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition flex items-center justify-center gap-2 shrink-0 shadow-sm">
                     <i data-lucide="trash-2" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Hapus Rekening Ini</span>
+                    <span>{{ __('admin.hapus_rekening_ini') }}</span>
                 </button>
             </form>
         </div>

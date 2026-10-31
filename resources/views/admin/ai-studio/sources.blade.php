@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Sumber Inspirasi & Lisensi - Admin Console',
+    'title' => __('admin.sumber_inspirasi_lisensi_admin_console'),
     'headerTitle' => 'Sumber Inspirasi Visual & Kebijakan Lisensi',
     'headerSubtitle' => 'Kelola provider feed inspirasi, kredensial API terenkripsi, kuota rate limit, dan kepatuhan hak cipta komersial',
 ])
@@ -30,7 +30,7 @@
             <a href="{{ route('admin.ai-studio.pricing.index') }}"
                 class="px-4 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/80 dark:text-white transition-all">
                 <i data-lucide="coins" class="w-3.5 h-3.5 inline mr-1 text-[#FF9500]"></i>
-                <span>Matriks Harga &amp; Ledger</span>
+                <span>{{ __('admin.matriks_harga_ledger') }}</span>
             </a>
             <button type="button" @click="openCreateSourceModal()"
                 class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
@@ -49,7 +49,7 @@
     @endif
     @if ($errors->any())
         <div class="p-4 rounded-[14px] bg-red-500/10 border border-red-500/20 text-xs text-red-600 dark:text-red-400 space-y-1">
-            <div class="font-bold">Terjadi kesalahan validasi:</div>
+            <div class="font-bold">{{ __('admin.terjadi_kesalahan_validasi') }}</div>
             <ul class="list-disc list-inside">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -86,7 +86,7 @@
                             @csrf
                             <button type="submit"
                                 class="px-2.5 py-1 rounded-full text-[10px] font-bold transition-all {{ $source->is_active ? 'bg-[#34C759]/15 text-[#34C759] hover:bg-[#34C759]/25' : 'bg-black/5 text-black/40 hover:bg-black/10' }}"
-                                title="Klik untuk mengubah status">
+                                title="{{ __('admin.klik_untuk_mengubah_status') }}">
                                 {{ $source->is_active ? 'Aktif' : 'Nonaktif' }}
                             </button>
                         </form>
@@ -163,7 +163,7 @@
                             data-name="{{ $source->name }}"
                             :disabled="syncingSourceId === '{{ $source->id }}'"
                             class="px-2.5 py-1 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[11px] font-bold text-[#34C759] transition-all disabled:opacity-50 flex items-center gap-1"
-                            title="Tarik konten visual & prompt terbaru dari sumber ini">
+                            title="{{ __('admin.tarik_konten_visual_prompt_terbaru_dari') }}">
                             <i data-lucide="refresh-cw" class="w-3 h-3" :class="{ 'animate-spin': syncingSourceId === '{{ $source->id }}' }"></i>
                             <span x-text="syncingSourceId === '{{ $source->id }}' ? 'Menyinkronkan...' : 'Sinkronkan'"></span>
                         </button>
@@ -196,7 +196,7 @@
                         <i data-lucide="key" class="w-4 h-4"></i>
                     </span>
                     <div>
-                        <h3 class="text-sm font-bold text-black dark:text-white">Kelola Kredensial API</h3>
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('admin.kelola_kredensial_api') }}</h3>
                         <p class="text-[11px] text-black/50 dark:text-white/50" x-text="targetSourceName"></p>
                     </div>
                 </div>
@@ -231,13 +231,9 @@
 
                 <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5">
                     <button type="button" @click="credentialsModalOpen = false"
-                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">
-                        Batal
-                    </button>
+                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
                     <button type="submit"
-                        class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm transition-all">
-                        Simpan Kredensial Terenkripsi
-                    </button>
+                        class="px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm transition-all">{{ __('admin.simpan_kredensial_terenkripsi') }}</button>
                 </div>
             </form>
         </div>
@@ -295,9 +291,7 @@
 
                 <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5">
                     <button type="button" @click="policyModalOpen = false"
-                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">
-                        Batal
-                    </button>
+                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
                     <button type="submit"
                         class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-white text-xs font-bold shadow-sm transition-all">
                         Perbarui Kebijakan
@@ -354,9 +348,7 @@
 
                 <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5">
                     <button type="button" @click="createSourceModalOpen = false"
-                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">
-                        Batal
-                    </button>
+                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
                     <button type="submit"
                         class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-white text-xs font-bold shadow-sm transition-all">
                         Daftarkan Sumber

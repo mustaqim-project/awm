@@ -300,7 +300,7 @@
 
                                     <div class="space-y-1">
                                         <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.voucher_name') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <input type="text" name="name" required placeholder="Contoh: Diskon Pembukaan"
+                                        <input type="text" name="name" required placeholder="{{ __('crm.contoh_diskon_pembukaan') }}"
                                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
                                     </div>
                                 </div>
@@ -317,7 +317,7 @@
 
                                     <div class="space-y-1">
                                         <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_value') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <input type="number" name="discount_value" required min="0" step="any" placeholder="Contoh: 10 atau 15000"
+                                        <input type="number" name="discount_value" required min="0" step="any" placeholder="{{ __('crm.contoh_10_atau_15000') }}"
                                             class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] font-mono font-bold text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-hidden">
                                     </div>
                                 </div>

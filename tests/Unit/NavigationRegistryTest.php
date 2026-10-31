@@ -74,7 +74,13 @@ final class NavigationRegistryTest extends TestCase
             'communication',
             'storefront',
             'approvals',
+            'marketplace',
+            'pos',
+            'billing',
+            'feedback',
         ];
+
+        $this->assertCount(15, $all, 'NavigationRegistry must define exactly 15 modules.');
 
         foreach ($expectedKeys as $key) {
             $this->assertArrayHasKey($key, $all);

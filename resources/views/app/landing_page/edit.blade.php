@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Website & Landing Page Bisnis - Cooca',
+    'title' => __('landing_page.website_landing_page_bisnis_cooca'),
     'headerTitle' => 'Website & Landing Page Bisnis',
     'headerSubtitle' => 'Kelola profil digital, katalog produk & layanan, galeri, serta kontak online ' . $business->name,
 ])
@@ -82,7 +82,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span x-text="saving ? 'Menyimpan...' : 'Simpan'">Simpan</span>
+                        <span x-text="saving ? 'Menyimpan...' : '{{ __('common.save') }}'">{{ __('common.save') }}</span>
                     </button>
                 @endif
             </div>
@@ -217,7 +217,7 @@
                                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                         </path>
                                     </svg>
-                                    <span x-text="saving ? 'Menyimpan...' : 'Simpan'">Simpan</span>
+                                    <span x-text="saving ? 'Menyimpan...' : '{{ __('common.save') }}'">{{ __('common.save') }}</span>
                                 </button>
                                 <p class="text-[11px] text-center truncate"
                                     :class="saveError ? 'text-[#FF3B30] font-medium' : 'text-black/50 dark:text-white/50'"
@@ -280,7 +280,7 @@
                                         class="flex items-center gap-2 ml-2 px-3 py-1.5 bg-black/[0.04] dark:bg-white/[0.06] rounded-[10px]">
                                         <input type="color" x-model="form.theme_color"
                                             class="w-6 h-6 rounded-md cursor-pointer bg-transparent border-0 p-0"
-                                            title="Pilih warna kustom">
+                                            title="{{ __('landing_page.pilih_warna_kustom') }}">
                                         <code class="text-[12px] text-[#007AFF] font-mono font-semibold uppercase"
                                             x-text="form.theme_color"></code>
                                     </div>
@@ -472,7 +472,7 @@
                                         <button type="button" @click="openThemeModal(form.theme_preset)"
                                             class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-black/20 text-[12px] font-semibold text-black dark:text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer">
                                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                            <span>Detail &amp; Rekomendasi</span>
+                                            <span>{{ __('landing_page.detail_rekomendasi') }}</span>
                                         </button>
                                         <a :href="`{{ $publicUrl }}?preview=1&preview_theme=${form.theme_preset}`" target="_blank"
                                             class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white hover:bg-[#0071E3] text-[12px] font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer">
@@ -489,7 +489,7 @@
                                         <button type="button" @click="themeFilterCategory = 'all'"
                                             :class="themeFilterCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Semua ({{ $categoryCounts['all'] }})
+                                            {{ __('common.all') }} ({$categoryCounts['all'] })
                                         </button>
                                         <button type="button" @click="themeFilterCategory = 'fnb'"
                                             :class="themeFilterCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
@@ -525,7 +525,7 @@
 
                                     <!-- Search Input -->
                                     <div class="relative w-full md:w-64">
-                                        <input type="text" x-model="themeSearch" placeholder="Cari tema, nama atau industri..."
+                                        <input type="text" x-model="themeSearch" placeholder="{{ __('landing_page.cari_tema_nama_atau_industri') }}"
                                             class="w-full h-8.5 pl-8.5 pr-7 text-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-hidden focus:ring-1 focus:ring-[#007AFF] transition">
                                         <svg class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-black/40 dark:text-white/40 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"/>
@@ -580,9 +580,7 @@
                                                 <div class="flex items-center gap-1.5">
                                                     <span class="font-medium truncate max-w-[90px] font-mono text-[10px]" title="Font Tipografi">{{ $tPreset['font_heading'] }}</span>
                                                     <button type="button" @click.stop="openThemeModal('{{ $tKey }}')"
-                                                        class="px-2 py-0.5 rounded-[6px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-[10px] font-semibold text-[#007AFF] transition">
-                                                        Detail
-                                                    </button>
+                                                        class="px-2 py-0.5 rounded-[6px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-[10px] font-semibold text-[#007AFF] transition">{{ __('common.detail') }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -596,9 +594,7 @@
                             <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-4">
                                 <div>
                                     <div class="flex items-center justify-between">
-                                        <h3 class="text-[14px] font-semibold text-black dark:text-white">
-                                            Pengaturan Halaman &amp; Navigasi Dinamis (Auto-Hide)
-                                        </h3>
+                                        <h3 class="text-[14px] font-semibold text-black dark:text-white">{{ __('landing_page.pengaturan_halaman_navigasi_dinamis_auto_hide') }}</h3>
                                         <span class="text-[11px] font-mono text-[#34C759] dark:text-[#30D158] bg-[#34C759]/10 px-2 py-0.5 rounded-full font-bold">
                                             Auto-Hide Enabled
                                         </span>
@@ -634,7 +630,7 @@
                                             </div>
                                         </div>
                                         <div class="w-full sm:w-60">
-                                            <input type="text" x-model="customLabels.catalog" placeholder="Label Menu (Default: Katalog Produk)"
+                                            <input type="text" x-model="customLabels.catalog" placeholder="{{ __('landing_page.label_menu_default_katalog_produk') }}"
                                                    class="w-full h-8 px-2.5 rounded-[8px] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-800 text-[12px] text-black dark:text-white">
                                         </div>
                                     </div>
@@ -652,7 +648,7 @@
                                             </div>
                                         </div>
                                         <div class="w-full sm:w-60">
-                                            <input type="text" x-model="customLabels.about" placeholder="Label Menu (Default: Tentang Kami)"
+                                            <input type="text" x-model="customLabels.about" placeholder="{{ __('landing_page.label_menu_default_tentang_kami') }}"
                                                    class="w-full h-8 px-2.5 rounded-[8px] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-800 text-[12px] text-black dark:text-white">
                                         </div>
                                     </div>
@@ -688,7 +684,7 @@
                                             </div>
                                         </div>
                                         <div class="w-full sm:w-60">
-                                            <input type="text" x-model="customLabels.contact" placeholder="Label Menu (Default: Kontak &amp; Cabang)"
+                                            <input type="text" x-model="customLabels.contact" placeholder="{{ __('landing_page.label_menu_default_kontak_cabang') }}"
                                                    class="w-full h-8 px-2.5 rounded-[8px] border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-800 text-[12px] text-black dark:text-white">
                                         </div>
                                     </div>
@@ -748,7 +744,7 @@
                                         Badge Pengumuman Singkat
                                     </label>
                                     <input type="text" name="announcement_badge" x-model="form.announcement_badge"
-                                        placeholder="Solusi Terpercaya Sejak 2018"
+                                        placeholder="{{ __('landing_page.solusi_terpercaya_sejak_2018') }}"
                                         class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">Muncul di atas judul besar
                                         sebagai pemikat perhatian pertama.</p>
@@ -785,7 +781,7 @@
                                     Headline Utama (Judul Besar) <span class="text-[#FF3B30]">*</span>
                                 </label>
                                 <input type="text" name="headline" x-model="form.headline"
-                                    placeholder="Solusi Layanan &amp; Produk Terpercaya untuk Kebutuhan Anda"
+                                    placeholder="{{ __('landing_page.solusi_layanan_produk_terpercaya_untuk_kebutuhan') }}"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[14px] font-semibold text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
 
@@ -796,7 +792,7 @@
                                     Subheadline (Deskripsi Lengkap Hero)
                                 </label>
                                 <textarea name="subheadline" x-model="form.subheadline" rows="3"
-                                    placeholder="Kami hadir memberikan solusi terbaik dengan pengerjaan profesional, garansi kepuasan, dan harga terjangkau..."
+                                    placeholder="{{ __('landing_page.kami_hadir_memberikan_solusi_terbaik_dengan') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                             </div>
 
@@ -817,7 +813,7 @@
                                         URL Tujuan Tombol Primer
                                     </label>
                                     <input type="text" name="cta_primary_url" x-model="form.cta_primary_url"
-                                        placeholder="https://wa.me/... atau #kontak"
+                                        placeholder="{{ __('landing_page.https_wa_me_atau_kontak') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition font-mono">
                                 </div>
                                 <div>
@@ -826,7 +822,7 @@
                                         Teks Tombol Sekunder
                                     </label>
                                     <input type="text" name="cta_secondary_text" x-model="form.cta_secondary_text"
-                                        placeholder="Lihat Daftar Layanan &amp; Harga"
+                                        placeholder="{{ __('landing_page.lihat_daftar_layanan_harga') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
                                 <div>
@@ -835,7 +831,7 @@
                                         URL Tujuan Tombol Sekunder
                                     </label>
                                     <input type="text" name="cta_secondary_url" x-model="form.cta_secondary_url"
-                                        placeholder="#layanan atau URL tujuan"
+                                        placeholder="{{ __('landing_page.layanan_atau_url_tujuan') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition font-mono">
                                 </div>
                             </div>
@@ -878,9 +874,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        3. Profil, Cerita &amp; Kredibilitas Bisnis
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.3_profil_cerita_kredibilitas_bisnis') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Bangun kepercayaan
                                         pelanggan melalui transparansi sejarah, reputasi, dan standar kualitas.</p>
                                 </div>
@@ -920,7 +914,7 @@
                                     Judul Bagian Profil / About
                                 </label>
                                 <input type="text" x-model="form.about_title"
-                                    placeholder="Dedikasi Kami untuk Kualitas &amp; Kepuasan Pelanggan"
+                                    placeholder="{{ __('landing_page.dedikasi_kami_untuk_kualitas_kepuasan_pelanggan') }}"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
 
@@ -930,7 +924,7 @@
                                     Cerita / Sejarah / Filosofi Usaha
                                 </label>
                                 <textarea x-model="form.about_story" rows="4"
-                                    placeholder="Ceritakan bagaimana usaha Anda beroperasi, komitmen kualitas, keahlian tim, serta garansi yang diberikan..."
+                                    placeholder="{{ __('landing_page.ceritakan_bagaimana_usaha_anda_beroperasi_komitmen') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                             </div>
 
@@ -951,7 +945,7 @@
                                             placeholder="5.000+"
                                             class="w-full h-9 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-3 text-[16px] sm:text-[15px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] focus:outline-none text-center">
                                         <input type="text" name="stats[clients_label]" value="Pelanggan Puas"
-                                            placeholder="Label Pelanggan"
+                                            placeholder="{{ __('landing_page.label_pelanggan') }}"
                                             class="w-full h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] text-black/70 dark:text-white/70 focus:outline-none text-center">
                                     </div>
                                     <div
@@ -960,7 +954,7 @@
                                             class="text-[10px] text-black/50 dark:text-white/50 uppercase font-semibold">Metrik
                                             2 (Pengalaman)</label>
                                         <input type="text" name="stats[experience]" value="8+ Tahun"
-                                            placeholder="8+ Tahun"
+                                            placeholder="{{ __('landing_page.8_tahun') }}"
                                             class="w-full h-9 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-3 text-[16px] sm:text-[15px] font-bold tabular-nums text-[#007AFF] focus:outline-none text-center">
                                         <input type="text" name="stats[experience_label]"
                                             value="Pengalaman Profesional" placeholder="Label Pengalaman"
@@ -987,9 +981,7 @@
                         <div
                             class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4 transition-colors">
                             <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                                <h3 class="text-[16px] font-semibold text-black dark:text-white">
-                                    4 Pilar Keunggulan Utama Bisnis
-                                </h3>
+                                <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.4_pilar_keunggulan_utama_bisnis') }}</h3>
                                 <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Alasan kuat mengapa calon
                                     pelanggan harus memilih produk atau layanan Anda dibanding kompetitor.</p>
                             </div>
@@ -1032,9 +1024,7 @@
                         <div
                             class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4 transition-colors">
                             <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                                <h3 class="text-[16px] font-semibold text-black dark:text-white">
-                                    Jadwal &amp; Jam Operasional Outlet
-                                </h3>
+                                <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.jadwal_jam_operasional_outlet') }}</h3>
                                 <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Informasikan jam buka harian
                                     agar calon pelanggan tahu waktu terbaik untuk datang atau memesan.</p>
                             </div>
@@ -1077,9 +1067,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        4. Katalog Layanan, Menu &amp; Paket Produk
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.4_katalog_layanan_menu_paket_produk') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Tampilkan daftar
                                         layanan, menu unggulan, atau paket komersial dengan foto dan rincian harga
                                         transparan.</p>
@@ -1099,7 +1087,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M12 4.5v15m7.5-7.5h-15" />
                                         </svg>
-                                        <span>Tambah Layanan</span>
+                                        <span>{{ __('landing_page.tambah_layanan') }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -1144,7 +1132,7 @@
                                     </div>
                                     <a href="{{ route('services.index') }}"
                                         class="shrink-0 h-8 px-3 rounded-[8px] bg-purple-600 hover:bg-purple-700 active:scale-[0.97] text-white text-[12px] font-semibold transition flex items-center gap-1 shadow-xs">
-                                        <span>Kelola Jasa</span>
+                                        <span>{{ __('services.manage_services') }}</span>
                                         <span>&rarr;</span>
                                     </a>
                                 </div>
@@ -1157,7 +1145,7 @@
                                         class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1">Judul
                                         Section Layanan</label>
                                     <input type="text" name="services_title" x-model="form.services_title"
-                                        placeholder="Layanan &amp; Produk Pilihan"
+                                        placeholder="{{ __('landing_page.layanan_produk_pilihan') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
                                 <div>
@@ -1165,7 +1153,7 @@
                                         class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1">Subjudul
                                         / Deskripsi Pengantar</label>
                                     <input type="text" name="services_subtitle" x-model="form.services_subtitle"
-                                        placeholder="Kualitas terbaik dan pelayanan prima untuk setiap pelanggan."
+                                        placeholder="{{ __('landing_page.kualitas_terbaik_dan_pelayanan_prima_untuk') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
                             </div>
@@ -1181,13 +1169,13 @@
                                                 class="w-6 h-6 rounded-full bg-black/[0.06] dark:bg-white/[0.08] text-black/70 dark:text-white/70 flex items-center justify-center text-[11px] font-bold tabular-nums shrink-0"
                                                 x-text="sIdx + 1"></span>
                                             <input type="text" x-model="service.title"
-                                                placeholder="Nama Layanan / Menu / Paket"
+                                                placeholder="{{ __('landing_page.nama_layanan_menu_paket') }}"
                                                 class="flex-1 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] font-semibold text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                                             <input type="text" x-model="service.price" placeholder="Rp 150.000"
                                                 class="w-full sm:w-36 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] font-semibold tabular-nums text-[#34C759] dark:text-[#30D158] focus:outline-none text-right">
                                             <button type="button" @click="removeService(sIdx)"
                                                 class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 flex items-center justify-center transition cursor-pointer"
-                                                title="Hapus Layanan">
+                                                title="{{ __('landing_page.hapus_layanan') }}">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1215,7 +1203,7 @@
                                                 Layanan</label>
                                             <div x-show="service.preview_url || service.image_url"
                                                 class="mb-2 flex items-center gap-2">
-                                                <img :src="service.preview_url || service.image_url" alt="Preview Layanan"
+                                                <img :src="service.preview_url || service.image_url" alt="{{ __('landing_page.preview_layanan') }}"
                                                     class="w-14 h-10 rounded-[6px] object-cover border border-black/5 dark:border-white/10">
                                                 <span class="text-[10px] text-[#007AFF] font-medium"
                                                     x-text="service.preview_url ? 'Foto baru dipilih' : 'Foto tersimpan aktif'"></span>
@@ -1238,7 +1226,7 @@
                                 <!-- Empty State Layanan -->
                                 <div x-show="services.length === 0"
                                     class="p-8 text-center bg-black/[0.02] dark:bg-white/[0.03] rounded-[12px] border border-dashed border-black/10 dark:border-white/10 space-y-1.5">
-                                    <p class="text-[13px] font-semibold text-black dark:text-white">Belum ada item layanan
+                                    <p class="text-[13px] font-semibold text-black dark:text-white">{{ __('landing_page.belum_ada_item_layanan') }}
                                         di katalog</p>
                                     <p class="text-[12px] text-black/50 dark:text-white/50">Klik "Tambah Layanan" di atas
                                         atau pilih template industri untuk mengisi katalog secara otomatis.</p>
@@ -1258,9 +1246,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        5. Sinkronisasi Produk Kasir POS
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.5_sinkronisasi_produk_kasir_pos') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Tampilkan katalog produk
                                         master POS langsung di landing page lengkap dengan tombol pesan instan via WhatsApp.
                                     </p>
@@ -1322,10 +1308,9 @@
                                 @else
                                     <div
                                         class="p-6 text-center bg-black/[0.02] dark:bg-white/[0.03] rounded-[10px] border border-dashed border-black/10 dark:border-white/10">
-                                        <p class="text-[12px] text-black/50 dark:text-white/50">Belum ada produk POS yang
+                                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('landing_page.belum_ada_produk_pos_yang') }}
                                             aktif. Kelola produk di menu <a href="{{ route('products.index') }}"
-                                                class="text-[#007AFF] font-medium hover:underline">Master Data &gt;
-                                                Produk</a>.</p>
+                                                class="text-[#007AFF] font-medium hover:underline">{{ __('common.master_data') }} &gt; {{ __('products.title') }}</a>.</p>
                                     </div>
                                 @endif
                             </div>
@@ -1344,9 +1329,7 @@
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
                                     <div class="flex items-center gap-2">
-                                        <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                            6. Galeri &amp; Suasana Tempat Usaha
-                                        </h2>
+                                        <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.6_galeri_suasana_tempat_usaha') }}</h2>
                                         <span
                                             class="px-2 py-0.5 rounded-full text-[10px] font-semibold tabular-nums bg-black/[0.06] dark:bg-white/[0.08] text-black/70 dark:text-white/70"
                                             x-text="(galleryItems.length + newGalleryUploads.length) + ' / 20 Foto'"></span>
@@ -1390,7 +1373,7 @@
                                         class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1">Deskripsi
                                         / Subtitle Galeri</label>
                                     <textarea name="gallery_subtitle" x-model="form.gallery_subtitle" maxlength="500" rows="2"
-                                        placeholder="Dokumentasi aktivitas, produk unggulan, dan kehangatan pelayanan kami."
+                                        placeholder="{{ __('landing_page.dokumentasi_aktivitas_produk_unggulan_dan_kehangatan') }}"
                                         class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 py-2 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                                 </div>
                             </div>
@@ -1433,7 +1416,7 @@
                                 <!-- Empty State -->
                                 <div x-show="galleryItems.length === 0 && newGalleryUploads.length === 0"
                                     class="p-8 text-center bg-black/[0.02] dark:bg-white/[0.03] rounded-[12px] border border-dashed border-black/10 dark:border-white/10 space-y-1.5">
-                                    <div class="text-[13px] font-semibold text-black dark:text-white">Belum ada foto di
+                                    <div class="text-[13px] font-semibold text-black dark:text-white">{{ __('landing_page.belum_ada_foto_di') }}
                                         galeri</div>
                                     <p class="text-[11px] text-black/50 dark:text-white/50 max-w-md mx-auto">Unggah foto
                                         dokumentasi suasana toko atau terapkan template industri.</p>
@@ -1460,18 +1443,18 @@
                                                         x-text="'#' + (idx + 1)"></span>
                                                     <div class="flex items-center gap-1 pointer-events-auto">
                                                         <button type="button" @click="moveGalleryItem(idx, -1)"
-                                                            :disabled="idx === 0" title="Geser ke kiri"
+                                                            :disabled="idx === 0" title="{{ __('landing_page.geser_ke_kiri') }}"
                                                             class="w-6 h-6 rounded-[4px] bg-white/90 dark:bg-[#2C2C2E]/90 text-black/80 dark:text-white/80 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition">
                                                             <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
                                                         </button>
                                                         <button type="button" @click="moveGalleryItem(idx, 1)"
                                                             :disabled="idx === galleryItems.length - 1"
-                                                            title="Geser ke kanan"
+                                                            title="{{ __('landing_page.geser_ke_kanan') }}"
                                                             class="w-6 h-6 rounded-[4px] bg-white/90 dark:bg-[#2C2C2E]/90 text-black/80 dark:text-white/80 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition">
                                                             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                                                         </button>
                                                         <button type="button" @click="removeGalleryItem(idx)"
-                                                            title="Hapus foto ini"
+                                                            title="{{ __('landing_page.hapus_foto_ini') }}"
                                                             class="w-6 h-6 rounded-[4px] bg-[#FF3B30] text-white flex items-center justify-center shadow-xs transition">
                                                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                                                         </button>
@@ -1503,7 +1486,7 @@
                                                         class="px-1.5 py-0.5 rounded-[4px] bg-[#007AFF] text-[10px] font-semibold text-white shadow-xs">Baru</span>
                                                     <div class="flex items-center gap-1 pointer-events-auto">
                                                         <button type="button" @click="removeNewUpload(nIdx)"
-                                                            title="Batal upload"
+                                                            title="{{ __('landing_page.batal_upload') }}"
                                                             class="w-6 h-6 rounded-[4px] bg-[#FF3B30] text-white flex items-center justify-center shadow transition cursor-pointer">
                                                             ×
                                                         </button>
@@ -1535,9 +1518,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        7. Ulasan &amp; Testimoni Pelanggan
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.7_ulasan_testimoni_pelanggan') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Bukti kepuasan nyata
                                         dari pelanggan yang meningkatkan konversi dan rasa percaya calon pembeli baru.</p>
                                 </div>
@@ -1567,9 +1548,9 @@
                                     <div
                                         class="rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-3.5 space-y-2.5">
                                         <div class="flex items-center gap-2">
-                                            <input type="text" x-model="testi.name" placeholder="Nama Pelanggan"
+                                            <input type="text" x-model="testi.name" placeholder="{{ __('landing_page.nama_pelanggan') }}"
                                                 class="flex-1 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] font-semibold text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                                            <input type="text" x-model="testi.role" placeholder="Kota / Profesi"
+                                            <input type="text" x-model="testi.role" placeholder="{{ __('landing_page.kota_profesi') }}"
                                                 class="flex-1 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] text-black/70 dark:text-white/70 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                                             <span
                                                 class="text-[#FF9500] text-[12px] font-bold font-mono whitespace-nowrap inline-flex items-center gap-1">
@@ -1580,7 +1561,7 @@
                                             </span>
                                             <button type="button" @click="removeTestimonial(tIdx)"
                                                 class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 flex items-center justify-center transition cursor-pointer"
-                                                title="Hapus Ulasan">
+                                                title="{{ __('landing_page.hapus_ulasan') }}">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1588,14 +1569,14 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <textarea x-model="testi.comment" rows="2" placeholder="Ulasan pengalaman pelanggan..."
+                                        <textarea x-model="testi.comment" rows="2" placeholder="{{ __('landing_page.ulasan_pengalaman_pelanggan') }}"
                                             class="w-full bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] p-2.5 text-[16px] sm:text-[12px] text-black/70 dark:text-white/70 focus:outline-none focus:ring-1 focus:ring-[#007AFF] resize-none"></textarea>
                                     </div>
                                 </template>
 
                                 <div x-show="testimonials.length === 0"
                                     class="p-8 text-center bg-black/[0.02] dark:bg-white/[0.03] rounded-[12px] border border-dashed border-black/10 dark:border-white/10 space-y-1.5">
-                                    <p class="text-[13px] font-semibold text-black dark:text-white">Belum ada testimoni
+                                    <p class="text-[13px] font-semibold text-black dark:text-white">{{ __('landing_page.belum_ada_testimoni') }}
                                         pelanggan</p>
                                     <p class="text-[12px] text-black/50 dark:text-white/50">Tambahkan testimoni positif
                                         dari pelanggan setia Anda untuk memperkuat reputasi toko.</p>
@@ -1649,11 +1630,11 @@
                                         <div class="flex items-center gap-2">
                                             <span class="text-[12px] font-bold text-[#007AFF] font-mono shrink-0">Q:</span>
                                             <input type="text" x-model="faq.q"
-                                                placeholder="Pertanyaan (misal: Apakah melayani pesan antar?)"
+                                                placeholder="{{ __('landing_page.pertanyaan_misal_apakah_melayani_pesan_antar') }}"
                                                 class="flex-1 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] font-semibold text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                                             <button type="button" @click="removeFaq(fIdx)"
                                                 class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 flex items-center justify-center transition cursor-pointer"
-                                                title="Hapus FAQ">
+                                                title="{{ __('landing_page.hapus_faq') }}">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -1664,7 +1645,7 @@
                                         <div class="flex items-start gap-2">
                                             <span
                                                 class="text-[12px] font-bold text-black/35 dark:text-white/35 font-mono shrink-0 mt-1.5">A:</span>
-                                            <textarea x-model="faq.a" rows="2" placeholder="Jawaban yang jelas dan ramah..."
+                                            <textarea x-model="faq.a" rows="2" placeholder="{{ __('landing_page.jawaban_yang_jelas_dan_ramah') }}"
                                                 class="flex-1 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] p-2.5 text-[16px] sm:text-[12px] text-black/70 dark:text-white/70 focus:outline-none focus:ring-1 focus:ring-[#007AFF] resize-none"></textarea>
                                         </div>
                                     </div>
@@ -1672,7 +1653,7 @@
 
                                 <div x-show="faqs.length === 0"
                                     class="p-8 text-center bg-black/[0.02] dark:bg-white/[0.03] rounded-[12px] border border-dashed border-black/10 dark:border-white/10 space-y-1.5">
-                                    <p class="text-[13px] font-semibold text-black dark:text-white">Belum ada pertanyaan
+                                    <p class="text-[13px] font-semibold text-black dark:text-white">{{ __('landing_page.belum_ada_pertanyaan') }}
                                         FAQ</p>
                                     <p class="text-[12px] text-black/50 dark:text-white/50">Tambahkan daftar tanya jawab
                                         untuk mempermudah calon pelanggan.</p>
@@ -1692,9 +1673,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        9. Kontak, WhatsApp &amp; Peta Lokasi
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.9_kontak_whatsapp_peta_lokasi') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Hubungkan pelanggan
                                         langsung ke nomor WhatsApp, telepon, email, dan rute navigasi Google Maps.</p>
                                 </div>
@@ -1723,7 +1702,7 @@
                                         Nomor Telepon Kantor / Toko (Opsional)
                                     </label>
                                     <input type="text" name="custom_phone" x-model="form.custom_phone"
-                                        placeholder="021-1234567 atau 081234..."
+                                        placeholder="{{ __('landing_page.021_1234567_atau_081234') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] font-mono text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
 
@@ -1734,7 +1713,7 @@
                                         Email Resmi Usaha (Opsional)
                                     </label>
                                     <input type="email" name="custom_email" x-model="form.custom_email"
-                                        placeholder="kontak@bisnisanda.com"
+                                        placeholder="{{ __('landing_page.kontak_bisnisanda_com') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition mb-3">
 
                                     <label
@@ -1758,7 +1737,7 @@
                                     Pesan Sambutan Otomatis WhatsApp
                                 </label>
                                 <textarea name="whatsapp_welcome_message" x-model="form.whatsapp_welcome_message" rows="2"
-                                    placeholder="Halo, saya melihat website Anda dan ingin bertanya lebih lanjut..."
+                                    placeholder="{{ __('landing_page.halo_saya_melihat_website_anda_dan') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                             </div>
 
@@ -1769,7 +1748,7 @@
                                     Alamat Fisik Toko / Kantor / Workshop
                                 </label>
                                 <textarea name="custom_address" x-model="form.custom_address" rows="2"
-                                    placeholder="Jl. Sudirman No. 123, Kelurahan, Kecamatan, Kota/Kabupaten, Kode Pos"
+                                    placeholder="{{ __('landing_page.jl_sudirman_no_123_kelurahan_kecamatan') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                             </div>
 
@@ -1806,9 +1785,7 @@
                             <div
                                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
                                 <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        10. Tata Letak &amp; Konten Footer
-                                    </h2>
+                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.10_tata_letak_konten_footer') }}</h2>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Atur kolom navigasi,
                                         ringkasan brand, dan hak cipta di bagian bawah website.</p>
                                 </div>
@@ -1859,7 +1836,7 @@
                                     class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Deskripsi
                                     Singkat Footer</label>
                                 <textarea name="footer_description" x-model="form.footer_description" maxlength="1000" rows="3"
-                                    placeholder="Deskripsi ringkas profil usaha untuk ditampilkan di bagian footer..."
+                                    placeholder="{{ __('landing_page.deskripsi_ringkas_profil_usaha_untuk_ditampilkan') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                             </div>
 
@@ -1877,7 +1854,7 @@
                                         class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1">Judul
                                         Kolom Layanan</label>
                                     <input type="text" name="footer_services_title"
-                                        x-model="form.footer_services_title" maxlength="80" placeholder="Layanan Kami"
+                                        x-model="form.footer_services_title" maxlength="80" placeholder="{{ __('landing_page.layanan_kami') }}"
                                         class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 </div>
                                 <div>
@@ -1934,7 +1911,7 @@
                                     Judul Halaman Google (Meta Title)
                                 </label>
                                 <input type="text" name="meta_title" x-model="form.meta_title"
-                                    placeholder="{{ $business->name }} - Layanan &amp; Produk Terpercaya"
+                                    placeholder="{{ __('landing_page.business_name_layanan_produk_terpercaya') }}"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 <div class="flex justify-between text-[11px] text-black/45 dark:text-white/45 mt-1">
                                     <span>Panjang ideal: 50–60 karakter</span>
@@ -1951,7 +1928,7 @@
                                     Deskripsi Google (Meta Description)
                                 </label>
                                 <textarea name="meta_description" x-model="form.meta_description" rows="3"
-                                    placeholder="Deskripsi ringkas bisnis Anda yang tampil di bawah judul pada hasil pencarian Google..."
+                                    placeholder="{{ __('landing_page.deskripsi_ringkas_bisnis_anda_yang_tampil') }}"
                                     class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 py-2.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition resize-none"></textarea>
                                 <div class="flex justify-between text-[11px] text-black/45 dark:text-white/45 mt-1">
                                     <span>Panjang ideal: 120–160 karakter</span>
@@ -2071,8 +2048,7 @@
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
-                            <span x-text="saving ? 'Menyimpan...' : 'Simpan'">Simpan Semua
-                                Perubahan</span>
+                            <span x-text="saving ? 'Menyimpan...' : '{{ __('common.save') }}'">{{ __('landing_page.simpan_semua_perubahan') }}</span>
                         </button>
                     @endif
                 </div>
@@ -2096,7 +2072,7 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span x-text="saving ? 'Menyimpan...' : 'Simpan Perubahan'">Simpan Perubahan</span>
+                        <span x-text="saving ? 'Menyimpan...' : 'Simpan Perubahan'">{{ __('common.save_changes') }}</span>
                     </button>
                 </div>
             </div>
@@ -2263,15 +2239,13 @@
                             <a :href="`{{ $publicUrl }}?preview=1&preview_theme=${selectedThemeForModal?.id}`" target="_blank"
                                class="h-9 px-3.5 rounded-[10px] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-[12px] font-semibold text-black/80 dark:text-white/80 transition flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Test Drive di Tab Baru</span>
+                                <span>{{ __('landing_page.test_drive_di_tab_baru') }}</span>
                             </a>
                         </div>
 
                         <div class="flex items-center gap-2 flex-wrap">
                             <button type="button" @click="showThemeModal = false"
-                                class="h-9 px-3.5 rounded-[10px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">
-                                Batal
-                            </button>
+                                class="h-9 px-3.5 rounded-[10px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="button" @click="applyTheme(selectedThemeForModal?.id, false)"
                                 class="h-9 px-3.5 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[12px] font-semibold transition cursor-pointer">
                                 Terapkan Desain &amp; Palet Saja
@@ -2328,7 +2302,7 @@
                         <div class="flex items-center gap-2">
                             <a :href="previewUrl" target="_blank"
                                 class="min-h-[44px] px-3 rounded-[10px] text-[12px] font-medium text-[#007AFF] hover:bg-[#007AFF]/10 flex items-center gap-1 transition-all">
-                                <span>Buka Tab Baru</span>
+                                <span>{{ __('landing_page.buka_tab_baru') }}</span>
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -2337,10 +2311,10 @@
                             </a>
                             <button type="button" @click="showPreview = false"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition cursor-pointer"
-                                aria-label="Tutup preview"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                                aria-label="{{ __('landing_page.tutup_preview') }}"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
                         </div>
                     </div>
-                    <iframe :src="previewUrl" title="Preview halaman publik bisnis"
+                    <iframe :src="previewUrl" title="{{ __('landing_page.preview_halaman_publik_bisnis') }}"
                         class="w-full h-full border-0 bg-white"></iframe>
                 </div>
             </div>
@@ -2387,16 +2361,14 @@
                             <div class="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-wider mb-1">
                                 Arsitektur Konten Multisektor
                             </div>
-                            <h3 id="modal-presets-title" class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">
-                                Preset 25 Sektor Industri Bisnis Indonesia
-                            </h3>
+                            <h3 id="modal-presets-title" class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('landing_page.preset_25_sektor_industri_bisnis_indonesia') }}</h3>
                             <p class="text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
                                 Pilih sektor bisnis Anda untuk menyelaraskan headline, narasi profil, 4 pilar nilai, katalog layanan, FAQ, dan ulasan secara otomatis.
                             </p>
                         </div>
                         <button type="button" @click="showPresetModal = false"
                             class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition shrink-0 cursor-pointer"
-                            aria-label="Tutup pemilih preset">
+                            aria-label="{{ __('landing_page.tutup_pemilih_preset') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -2407,7 +2379,7 @@
                             <button type="button" @click="presetCategory = 'all'"
                                 :class="presetCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                 class="px-3 py-1.5 rounded-[9px] transition-all">
-                                Semua (25)
+                                {{ __('common.all') }} (25)
                             </button>
                             <button type="button" @click="presetCategory = 'fnb'"
                                 :class="presetCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
@@ -2426,9 +2398,7 @@
                             </button>
                             <button type="button" @click="presetCategory = 'service'"
                                 :class="presetCategory === 'service' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                                class="px-3 py-1.5 rounded-[9px] transition-all">
-                                Jasa &amp; Layanan
-                            </button>
+                                class="px-3 py-1.5 rounded-[9px] transition-all">{{ __('landing_page.jasa_layanan') }}</button>
                             <button type="button" @click="presetCategory = 'trading'"
                                 :class="presetCategory === 'trading' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                 class="px-3 py-1.5 rounded-[9px] transition-all">
@@ -2490,9 +2460,7 @@
                     <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-[12px] text-black/50 dark:text-white/50 bg-black/[0.01] dark:bg-white/[0.01]">
                         <p>Menerapkan template otomatis menyesuaikan headline, 4 pilar nilai, katalog layanan, FAQ, dan ulasan.</p>
                         <button type="button" @click="showPresetModal = false"
-                            class="min-h-[44px] px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 font-medium transition cursor-pointer">
-                            Tutup
-                        </button>
+                            class="min-h-[44px] px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 font-medium transition cursor-pointer">{{ __('common.close') }}</button>
                     </div>
                 </div>
             </div>
@@ -2536,7 +2504,7 @@
                         </h3>
                         <button type="button" @click="showAddUrlModal = false"
                             class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center transition cursor-pointer"
-                            aria-label="Tutup modal tambah URL"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                            aria-label="{{ __('landing_page.tutup_modal_tambah_url') }}"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
                     </div>
                     <div class="space-y-3">
                         <div>
@@ -2554,13 +2522,13 @@
                                 Caption Foto (Opsional)
                             </label>
                             <input type="text" x-model="newCaptionInput"
-                                placeholder="Contoh: Suasana Ruang Tunggu dan Kasir"
+                                placeholder="{{ __('landing_page.contoh_suasana_ruang_tunggu_dan_kasir') }}"
                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/5">
                         <button type="button" @click="showAddUrlModal = false"
-                            class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer">Batal</button>
+                            class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="button" @click="addGalleryByUrl()" :disabled="!newUrlInput.trim()"
                             class="min-h-[44px] px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold disabled:opacity-50 transition cursor-pointer">Tambahkan</button>
                     </div>
@@ -3023,7 +2991,7 @@
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonText: 'Ya, Kosongkan',
-                            cancelButtonText: 'Batal',
+                            cancelButtonText: '{{ __('common.cancel') }}',
                             confirmButtonColor: '#FF3B30',
                             cancelButtonColor: '#007AFF'
                         }).then((result) => {
@@ -3103,7 +3071,7 @@
                             icon: 'question',
                             showCancelButton: true,
                             confirmButtonText: 'Ya, Terapkan',
-                            cancelButtonText: 'Batal',
+                            cancelButtonText: '{{ __('common.cancel') }}',
                             confirmButtonColor: '#007AFF',
                             cancelButtonColor: '#8E8E93'
                         }).then((result) => {
@@ -3237,7 +3205,7 @@
                             if (typeof Swal !== 'undefined') {
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: 'Periksa kembali input data!',
+                                    title: '{{ __('landing_page.periksa_kembali_input_data') }}
                                     text: errorMsg,
                                     confirmButtonColor: '#FF9500'
                                 });

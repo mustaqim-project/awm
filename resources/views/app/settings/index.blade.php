@@ -221,7 +221,7 @@
                         <div
                             class="w-24 h-24 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 flex items-center justify-center overflow-hidden shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
                             <template x-if="logoPreview">
-                                <img :src="logoPreview" alt="Logo Bisnis" class="w-full h-full object-contain p-2">
+                                <img :src="logoPreview" alt="{{ __('settings.logo_bisnis') }}" class="w-full h-full object-contain p-2">
                             </template>
                             <template x-if="!logoPreview">
                                 <div class="text-center p-2 text-black/30 dark:text-white/30">
@@ -399,7 +399,7 @@
                                 class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">{{ __('settings.bank_account_holder') }}</label>
                             <input type="text" id="bank_holder_input" name="bank_account_holder"
                                 value="{{ old('bank_account_holder', $business->bank_account_holder) }}"
-                                placeholder="PT Usaha Bersama"
+                                placeholder="{{ __('settings.pt_usaha_bersama') }}"
                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[15px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
                     </div>
@@ -1358,7 +1358,7 @@
                                 <span class="p-1.5 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF]">
                                     <i data-lucide="layers" class="w-4 h-4"></i>
                                 </span>
-                                <h3 class="text-[16px] font-bold text-black dark:text-white">Profil Skala Operasional (1-Click Preset)</h3>
+                                <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('settings.profil_skala_operasional_1_click_preset') }}</h3>
                                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
                                     One System for Life
                                 </span>
@@ -1414,9 +1414,7 @@
                             </div>
                             <div class="pt-4 mt-3">
                                 <template x-if="currentScaleTier === 'starter'">
-                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-bold flex items-center justify-center cursor-default">
-                                        Profil Aktif
-                                    </button>
+                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] text-[12px] font-bold flex items-center justify-center cursor-default">{{ __('settings.profil_aktif') }}</button>
                                 </template>
                                 <template x-if="currentScaleTier !== 'starter'">
                                     <button type="button" @click="requestApplyTier('starter', 'UMKM Mikro (Starter)')"
@@ -1444,7 +1442,7 @@
                                     </template>
                                 </div>
                                 <div>
-                                    <h4 class="text-[15px] font-bold text-black dark:text-white">Growth (1-3 Cabang)</h4>
+                                    <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('settings.growth_1_3_cabang') }}</h4>
                                     <p class="text-[12px] text-black/55 dark:text-white/55 mt-1 leading-relaxed">
                                         Fokus pada pengawasan operasional, pencegahan kebocoran kas kasir (anti-fraud), dan resep HPP otomatis.
                                     </p>
@@ -1470,9 +1468,7 @@
                             </div>
                             <div class="pt-4 mt-3">
                                 <template x-if="currentScaleTier === 'growth'">
-                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] text-[12px] font-bold flex items-center justify-center cursor-default">
-                                        Profil Aktif
-                                    </button>
+                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] text-[12px] font-bold flex items-center justify-center cursor-default">{{ __('settings.profil_aktif') }}</button>
                                 </template>
                                 <template x-if="currentScaleTier !== 'growth'">
                                     <button type="button" @click="requestApplyTier('growth', 'UMKM Bertumbuh (Growth)')"
@@ -1526,9 +1522,7 @@
                             </div>
                             <div class="pt-4 mt-3">
                                 <template x-if="currentScaleTier === 'corporate'">
-                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#AF52DE]/15 text-[#AF52DE] text-[12px] font-bold flex items-center justify-center cursor-default">
-                                        Profil Aktif
-                                    </button>
+                                    <button type="button" disabled class="min-h-[44px] w-full py-2.5 px-3 rounded-[10px] bg-[#AF52DE]/15 text-[#AF52DE] text-[12px] font-bold flex items-center justify-center cursor-default">{{ __('settings.profil_aktif') }}</button>
                                 </template>
                                 <template x-if="currentScaleTier !== 'corporate'">
                                     <button type="button" @click="requestApplyTier('corporate', 'Perusahaan Skala Besar (Corporate)')"
@@ -1566,7 +1560,7 @@
                             <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
                             <input type="text"
                                    x-model="featureSearch"
-                                   placeholder="Cari parameter fitur..."
+                                   placeholder="{{ __('settings.cari_parameter_fitur') }}"
                                    class="w-full pl-9 pr-8 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#34C759]/30 transition-all">
                             <button type="button"
                                     x-show="featureSearch"
@@ -1646,7 +1640,7 @@
                             <i data-lucide="grid" class="w-4 h-4"></i>
                         </span>
                         <div>
-                            <h3 class="text-[16px] font-bold text-black dark:text-white">Katalog Modul Sistem</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('settings.katalog_modul_sistem') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50">Aktifkan atau nonaktifkan modul sesuai kebutuhan alur kerja bisnis Anda.</p>
                         </div>
                     </div>
@@ -1872,7 +1866,7 @@
                                 <i data-lucide="help-circle" class="w-6 h-6"></i>
                             </span>
                             <div>
-                                <h3 class="text-[17px] font-bold text-black dark:text-white">Terapkan Profil Skala?</h3>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('settings.terapkan_profil_skala') }}</h3>
                                 <p class="text-[12px] text-black/50 dark:text-white/50" x-text="targetTierName"></p>
                             </div>
                         </div>
@@ -1883,9 +1877,7 @@
 
                         <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/5">
                             <button type="button" @click="confirmTierModalOpen = false"
-                                    class="min-h-[44px] px-5 py-2.5 rounded-[12px] bg-black/5 dark:bg-white/10 text-[13px] font-semibold text-black dark:text-white hover:bg-black/10 active:scale-[0.98] transition-all">
-                                Batal
-                            </button>
+                                    class="min-h-[44px] px-5 py-2.5 rounded-[12px] bg-black/5 dark:bg-white/10 text-[13px] font-semibold text-black dark:text-white hover:bg-black/10 active:scale-[0.98] transition-all">{{ __('common.cancel') }}</button>
                             <button type="button" @click="executeApplyTier()" :disabled="applyingTier"
                                     class="min-h-[44px] px-5 py-2.5 rounded-[12px] bg-[#007AFF] text-[13px] font-bold text-white hover:bg-[#007AFF]/90 active:scale-[0.98] transition-all inline-flex items-center gap-2 shadow-sm">
                                 <template x-if="applyingTier">
@@ -3055,9 +3047,9 @@
                     } catch (err) {
                         console.error('Apply tier error:', err);
                         if (window.AppAlert) {
-                            window.AppAlert.toast('error', err.message || 'Terjadi kesalahan sistem.');
+                            window.AppAlert.toast('error', err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
                         } else {
-                            alert(err.message || 'Terjadi kesalahan sistem.');
+                            alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
                         }
                     } finally {
                         this.applyingTier = false;

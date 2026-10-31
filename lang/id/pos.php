@@ -1741,4 +1741,9 @@ return [
     'belum_ada_data_belum_ada_data' => 'Belum ada data\') : \'Belum ada data\' }}',
     'belum_ada_transaksi_pembayaran_yang_selesai' => 'Belum ada transaksi pembayaran yang selesai pada periode tanggal dan filter yang',
     'komposisi_saluran_pembayaran' => 'Komposisi Saluran Pembayaran',
+    'printer_testing' => 'Pengujian Printer',
+    'drawer_testing' => 'Pengujian Laci Uang',
+    'payment_channel_composition' => 'Komposisi Saluran Pembayaran',
+    'no_completed_payment_transactions_desc' => 'Belum ada transaksi pembayaran yang selesai pada periode tanggal dan filter yang dipilih.',
+    'check_history' => 'Cek Riwayat',
 ];

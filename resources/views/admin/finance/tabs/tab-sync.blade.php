@@ -3,7 +3,7 @@
     <div class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 shadow-xs">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-black/5 dark:border-white/5">
             <div>
-                <h2 class="text-[16px] font-bold text-black dark:text-white">Rekonsiliasi Langganan &amp; Pencairan Saldo Merchant</h2>
+                <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.rekonsiliasi_langganan_pencairan_saldo_merchant') }}</h2>
                 <p class="text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">
                     Sinkronisasi data multi-modul secara instan antara sistem tagihan billing SaaS dan transfer pencairan saldo merchant.
                 </p>
@@ -42,7 +42,7 @@
                 <div class="mt-4 pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                     <span class="text-[11px] text-black/45 dark:text-white/45">Aturan: Status Approved</span>
                     <a href="{{ route('admin.subscriptions.index') }}" class="text-[12px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Buka Modul Billing</span>
+                        <span>{{ __('admin.buka_modul_billing') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="mt-4 pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                     <span class="text-[11px] text-black/45 dark:text-white/45">Aturan: Status Completed</span>
                     <a href="{{ route('admin.settlements.index') }}" class="text-[12px] font-bold text-[#AF52DE] hover:underline flex items-center gap-1">
-                        <span>Buka Modul Settlement</span>
+                        <span>{{ __('admin.buka_modul_settlement') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>

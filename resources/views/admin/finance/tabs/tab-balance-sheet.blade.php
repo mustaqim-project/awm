@@ -2,7 +2,7 @@
 <div x-show="activeTab === 'balance_sheet'" class="space-y-6">
     <div class="flex items-center justify-between gap-4">
         <div>
-            <h2 class="text-[16px] font-bold text-black dark:text-white">Laporan Keuangan Platform Resmi</h2>
+            <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.laporan_keuangan_platform_resmi') }}</h2>
             <p class="text-[12.5px] text-black/50 dark:text-white/50">
                 Penyajian Laporan Posisi Keuangan (Neraca) dan Laporan Laba Rugi Komprehensif standar akuntansi korporat.
             </p>
@@ -52,7 +52,7 @@
                             </span>
                         </div>
                     @empty
-                        <div class="py-4 text-center text-black/40 dark:text-white/40 font-sans text-[12px]">Belum ada akun aset</div>
+                        <div class="py-4 text-center text-black/40 dark:text-white/40 font-sans text-[12px]">{{ __('admin.belum_ada_akun_aset') }}</div>
                     @endforelse
                 </div>
             </div>
@@ -85,7 +85,7 @@
                                 </span>
                             </div>
                         @empty
-                            <div class="py-2 text-center text-black/40 dark:text-white/40 font-sans text-[12px]">Belum ada akun kewajiban</div>
+                            <div class="py-2 text-center text-black/40 dark:text-white/40 font-sans text-[12px]">{{ __('admin.belum_ada_akun_kewajiban') }}</div>
                         @endforelse
                         <div class="py-2 flex items-center justify-between font-bold text-black/60 dark:text-white/60 text-[11.5px]">
                             <span>Subtotal Kewajiban:</span>
@@ -141,7 +141,7 @@
     <div class="rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 shadow-xs">
         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/5">
             <div>
-                <h3 class="text-[14px] font-bold text-black dark:text-white uppercase tracking-wider">Laporan Laba Rugi Komprehensif (Income Statement)</h3>
+                <h3 class="text-[14px] font-bold text-black dark:text-white uppercase tracking-wider">{{ __('admin.laporan_laba_rugi_komprehensif_income_statement') }}</h3>
                 <p class="text-[12px] text-black/50 dark:text-white/50">Periode: {{ \Carbon\Carbon::parse($pnlData['startDate'])->format('d M Y') }} s/d {{ \Carbon\Carbon::parse($pnlData['endDate'])->format('d M Y') }}</p>
             </div>
             <span class="text-[13px] font-bold text-[#007AFF] tabular-nums">
@@ -160,7 +160,7 @@
                             <span class="font-bold text-black dark:text-white tabular-nums">Rp {{ number_format($rev['amount'], 0, ',', '.') }}</span>
                         </div>
                     @empty
-                        <div class="py-2 text-black/40 dark:text-white/40 font-sans text-[12px]">Belum ada pendapatan</div>
+                        <div class="py-2 text-black/40 dark:text-white/40 font-sans text-[12px]">{{ __('admin.belum_ada_pendapatan') }}</div>
                     @endforelse
                     <div class="py-2.5 flex items-center justify-between font-bold text-black dark:text-white border-t border-black/10 dark:border-white/10">
                         <span class="font-sans uppercase text-[11px]">Total Pendapatan:</span>
@@ -179,7 +179,7 @@
                             <span class="font-bold text-black dark:text-white tabular-nums">Rp {{ number_format($exp['amount'], 0, ',', '.') }}</span>
                         </div>
                     @empty
-                        <div class="py-2 text-black/40 dark:text-white/40 font-sans text-[12px]">Belum ada beban operasional</div>
+                        <div class="py-2 text-black/40 dark:text-white/40 font-sans text-[12px]">{{ __('admin.belum_ada_beban_operasional') }}</div>
                     @endforelse
                     <div class="py-2.5 flex items-center justify-between font-bold text-black dark:text-white border-t border-black/10 dark:border-white/10">
                         <span class="font-sans uppercase text-[11px]">Total Beban:</span>

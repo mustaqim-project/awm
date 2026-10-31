@@ -289,7 +289,7 @@
                                 <td class="px-3 py-2.5 text-right font-semibold tabular-nums text-black dark:text-white text-[13px]" x-text="formatCurrency(item.quantity * item.unit_price)">
                                 </td>
                                 <td class="px-3 py-2.5 text-center">
-                                    <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center" title="Hapus">
+                                    <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-black/40 hover:text-[#FF3B30] hover:bg-[#FF3B30]/10 disabled:opacity-20 transition-all inline-flex items-center justify-center" title="{{ __('common.delete') }}">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </td>

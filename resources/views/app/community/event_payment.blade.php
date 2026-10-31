@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Pembayaran Tiket ' . $event->title . ' - Cooca',
-    'headerTitle' => 'Pembayaran Tiket Event',
-    'headerSubtitle' => 'Scan QRIS untuk menyelesaikan pembayaran tiket komunitas',
+    'title' => __('community.ticket_payment') . ' ' . $event->title . ' - Cooca',
+    'headerTitle' => __('community.ticket_payment_event'),
+    'headerSubtitle' => __('community.ticket_payment_subtitle'),
 ])
 
 @section('content')
@@ -92,7 +92,7 @@
         <a href="{{ route('community.events.index') }}"
             class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-white transition">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali ke Agenda Event</span>
+            <span>{{ __('community.kembali_ke_agenda_event') }}</span>
         </a>
 
         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold"
@@ -116,9 +116,7 @@
                             QRIS
                         </div>
                         <div>
-                            <h2 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">
-                                QRIS Standar Nasional
-                            </h2>
+                            <h2 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">{{ __('community.qris_standar_nasional') }}</h2>
                             <p class="text-[11px] text-slate-400">
                                 NMID: ID1020304050 • PT Cooca Digital Solusindo
                             </p>
@@ -144,7 +142,7 @@
                         <!-- QR Code Container -->
                         <div class="w-full flex items-center justify-center overflow-hidden rounded-xl bg-white p-2">
                             @if(!empty($registration->gateway_qr_url))
-                                <img src="{{ $registration->gateway_qr_url }}" alt="QRIS Tiket Event" class="w-64 h-64 object-contain">
+                                <img src="{{ $registration->gateway_qr_url }}" alt="{{ __('community.qris_tiket_event') }}" class="w-64 h-64 object-contain">
                             @else
                                 <div class="w-64 h-64 flex items-center justify-center">
                                     {!! $qrisSvg !!}
@@ -194,7 +192,7 @@
                             <button type="submit"
                                 class="w-full sm:w-auto px-4 py-3 rounded-xl text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 border border-emerald-200/80 dark:border-emerald-800/80 transition flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
-                                <span>Simulasi Bayar QRIS Sukses</span>
+                                <span>{{ __('community.simulasi_bayar_qris_sukses') }}</span>
                             </button>
                         </form>
                         @endif
@@ -211,9 +209,7 @@
             <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-slate-200/80 dark:border-white/10 p-5 sm:p-6 shadow-xs space-y-4">
                 <div class="flex items-center gap-2 pb-3 border-b border-slate-100 dark:border-white/5">
                     <i data-lucide="calendar" class="w-4 h-4 text-[#007AFF]"></i>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                        Detail Event Komunitas
-                    </h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('community.detail_event_komunitas') }}</h3>
                 </div>
 
                 @if($event->banner_url)
@@ -270,9 +266,7 @@
 
             <!-- Price Breakdown Card -->
             <div class="bg-white dark:bg-[#1C1C1E] rounded-3xl border border-slate-200/80 dark:border-white/10 p-5 sm:p-6 shadow-xs space-y-4">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    Rincian Pembayaran Tiket
-                </h4>
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('community.rincian_pembayaran_tiket') }}</h4>
 
                 <div class="space-y-2 text-xs border-b border-slate-100 dark:border-white/5 pb-3">
                     <div class="flex items-center justify-between text-slate-600 dark:text-slate-400">

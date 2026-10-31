@@ -303,10 +303,10 @@
                                     :checked="isAllServicesSelected()"
                                     @change="toggleSelectAllServices($event)"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
-                                    title="Pilih Semua Layanan">
+                                    title="{{ __('services.pilih_semua_layanan') }}">
                             </th>
-                            <x-table-sort-th :col="1" type="string" title="Layanan & Kode" class="whitespace-nowrap" />
-                            <x-table-sort-th :col="2" type="string" title="Kategori" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="1" type="string" title="{{ __('services.layanan_kode') }}" class="whitespace-nowrap" />
+                            <x-table-sort-th :col="2" type="string" title="{{ __('services.kategori') }}" class="whitespace-nowrap" />
                             <x-table-sort-th :col="3" type="string" title="Satuan Output" class="whitespace-nowrap" />
                             <x-table-sort-th :col="4" type="number" :title="__('services.table.col_price')" align="right" class="whitespace-nowrap" />
                             <th
@@ -1236,15 +1236,13 @@
                         @click="submitBulkService('delete', 'Hapus Layanan Terpilih?', `Hapus ${selectedServiceIds.length} layanan terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')"
                         class="h-9 px-3 sm:px-3.5 rounded-[12px] text-[12px] sm:text-[12.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#FF453A] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs">
                         <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
-                        <span>Hapus</span>
+                        <span>{{ __('common.delete') }}</span>
                     </button>
                 @endif
 
                 <!-- Cancel Selection -->
                 <button type="button" @click="selectedServiceIds = []"
-                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-9 px-3 rounded-[12px] text-[12px] sm:text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
             </div>
         </div>
 

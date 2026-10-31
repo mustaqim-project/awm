@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Tulis Artikel Baru - Admin Console',
+    'title' => __('admin.tulis_artikel_baru_admin_console'),
     'headerTitle' => 'Tulis Artikel & Panduan Edukasi Baru',
     'headerSubtitle' => 'Publikasikan panduan baru untuk Cluster K (Tutorial cara) atau Cluster O (Edukasi topikal)',
 ])
@@ -18,7 +18,7 @@
             <a href="{{ route('admin.posts.index') }}"
                 class="text-[13px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white inline-flex items-center gap-1.5 transition-colors">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="1.5"></i>
-                <span>Kembali ke Daftar Artikel</span>
+                <span>{{ __('admin.kembali_ke_daftar_artikel') }}</span>
             </a>
         </div>
 
@@ -39,7 +39,7 @@
                                 Judul Artikel <span class="text-[#FF3B30]">*</span>
                             </label>
                             <input type="text" name="title" id="postTitle" value="{{ old('title') }}" required
-                                placeholder="Contoh: Cara Menghitung HPP Usaha Kuliner 2026"
+                                placeholder="{{ __('admin.contoh_cara_menghitung_hpp_usaha_kuliner') }}"
                                 class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[16px] font-medium text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             @error('title')
                                 <span
@@ -55,7 +55,7 @@
                                 <span
                                     class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[12px] font-mono text-black/40 dark:text-white/40">/blog/</span>
                                 <input type="text" name="slug" id="postSlug" value="{{ old('slug') }}"
-                                    placeholder="cara-menghitung-hpp-usaha-kuliner"
+                                    placeholder="{{ __('admin.cara_menghitung_hpp_usaha_kuliner') }}"
                                     class="w-full h-10 pl-16 pr-4 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] font-mono text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
                             @error('slug')
@@ -68,7 +68,7 @@
                             <label class="block text-[13px] font-semibold text-black/80 dark:text-white/80 mb-1.5">
                                 Ringkasan / Excerpt
                             </label>
-                            <textarea name="excerpt" rows="2" placeholder="Ringkasan 1-2 kalimat untuk kartu preview di halaman blog..."
+                            <textarea name="excerpt" rows="2" placeholder="{{ __('admin.ringkasan_1_2_kalimat_untuk_kartu') }}"
                                 class="w-full px-4 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">{{ old('excerpt') }}</textarea>
                             <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Ditampilkan di feed blog utama dan
                                 kartu preview media sosial.</p>
@@ -84,7 +84,7 @@
 
                             <!-- Rich Text Area with TinyMCE -->
                             <div class="rounded-[14px] overflow-hidden border border-black/[0.06] dark:border-white/[0.08]">
-                                <textarea id="post-content" name="content" rows="16" placeholder="Tuliskan isi artikel Anda di sini...">{{ old('content') }}</textarea>
+                                <textarea id="post-content" name="content" rows="16" placeholder="{{ __('admin.tuliskan_isi_artikel_anda_di_sini') }}">{{ old('content') }}</textarea>
                             </div>
                             @error('content')
                                 <span
@@ -108,7 +108,7 @@
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Meta
                                 Title</label>
                             <input type="text" name="meta_title" value="{{ old('meta_title') }}"
-                                placeholder="Biarkan kosong untuk menggunakan judul artikel"
+                                placeholder="{{ __('admin.biarkan_kosong_untuk_menggunakan_judul_artikel') }}"
                                 class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
 
@@ -116,7 +116,7 @@
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Meta
                                 Description</label>
                             <textarea name="meta_description" rows="2"
-                                placeholder="Deskripsi ringkas yang tampil di hasil pencarian Google (maks 155 karakter)"
+                                placeholder="{{ __('admin.deskripsi_ringkas_yang_tampil_di_hasil') }}"
                                 class="w-full px-3.5 py-2 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">{{ old('meta_description') }}</textarea>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                                 <button type="button" onclick="openQuickAddCategory()"
                                     class="text-[11px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                     <i data-lucide="plus" class="w-3 h-3" stroke-width="2"></i>
-                                    <span>Kategori Baru</span>
+                                    <span>{{ __('admin.kategori_baru') }}</span>
                                 </button>
 
                                 @endif
@@ -235,9 +235,7 @@
                                 <span>Terbitkan Artikel</span>
                             </button>
                             <a href="{{ route('admin.posts.index') }}"
-                                class="w-full h-10 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center">
-                                Batal
-                            </a>
+                                class="w-full h-10 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center">{{ __('common.cancel') }}</a>
                         </div>
                     </div>
 
@@ -252,7 +250,7 @@
         <div
             class="w-full max-w-sm rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] space-y-4">
             <div class="flex items-center justify-between pb-2.5 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <h4 class="text-[15px] font-bold text-black dark:text-white">Tambah Kategori Baru</h4>
+                <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.tambah_kategori_baru') }}</h4>
                 <button type="button" onclick="closeQuickAddCategory()"
                     class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 flex items-center justify-center hover:bg-black/[0.1]">
                     <i data-lucide="x" class="w-3.5 h-3.5"></i>
@@ -263,7 +261,7 @@
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Nama Kategori
                         *</label>
-                    <input type="text" id="quickCatName" required placeholder="Contoh: Pajak & Legalitas"
+                    <input type="text" id="quickCatName" required placeholder="{{ __('admin.contoh_pajak_legalitas') }}"
                         class="w-full h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
 
@@ -277,13 +275,9 @@
                 <div
                     class="flex items-center justify-end gap-2 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
                     <button type="button" onclick="closeQuickAddCategory()"
-                        class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08]">
-                        Batal
-                    </button>
+                        class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08]">{{ __('common.cancel') }}</button>
                     <button type="submit" id="quickCatSubmitBtn"
-                        class="h-8 px-3.5 rounded-[8px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98]">
-                        Simpan
-                    </button>
+                        class="h-8 px-3.5 rounded-[8px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98]">{{ __('common.save') }}</button>
                 </div>
             </form>
         </div>
@@ -402,7 +396,7 @@
                         btn.disabled = false;
                         btn.innerText = 'Simpan';
                         console.error(err);
-                        alert('Terjadi kesalahan saat menyimpan kategori.');
+                        alert('{{ __('admin.terjadi_kesalahan_saat_menyimpan_kategori') }}
                     });
             }
         </script>

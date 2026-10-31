@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Edit Surat Penawaran: ' . $quotation->quotation_number,
-    'headerTitle' => 'Edit Surat Penawaran',
-    'headerSubtitle' => 'Perbarui rincian harga, kuantitas item, atau masa berlaku penawaran harga'
+    'title' => __('sales.edit_quotation') . ': ' . $quotation->quotation_number,
+    'headerTitle' => __('sales.edit_quotation'),
+    'headerSubtitle' => __('sales.edit_quotation_subtitle')
 ])
 
 @section('content')
@@ -22,7 +22,7 @@
                 <span class="text-black dark:text-white font-medium">Edit</span>
             </nav>
             <div class="flex items-center gap-2">
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Edit Penawaran: {{ $quotation->quotation_number }}</h1>
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.edit_quotation') }}: {{ $quotation->quotation_number }}</h1>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider
                     @if($quotation->status === 'draft') bg-neutral-500/10 text-neutral-600 dark:text-neutral-400
                     @elseif($quotation->status === 'sent') bg-blue-500/10 text-blue-600 dark:text-blue-400
@@ -37,11 +37,11 @@
 
         <div class="flex items-center gap-2">
             <a href="{{ route('sales.quotations.show', $quotation) }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center">
-                <span>Kembali</span>
+                <span>{{ __('common.back') }}</span>
             </a>
             <button type="submit" form="form-edit-quotation" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Simpan Perubahan</span>
+                <span>{{ __('common.save_changes') }}</span>
             </button>
         </div>
     </header>
@@ -126,7 +126,7 @@
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span></label>
                     <input type="text" name="recipient_name" value="{{ old('recipient_name', $quotation->recipient_name) }}"
-                           placeholder="u.p. Nama PIC Pelanggan"
+                           placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
@@ -244,7 +244,7 @@
                     </div>
                     <div>
                         <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Syarat & Ketentuan Tambahan (Terms & Conditions)</label>
-                        <textarea name="terms_and_conditions" rows="2" placeholder="Ketentuan garansi, SLA pengiriman, atau batas DP..."
+                        <textarea name="terms_and_conditions" rows="2" placeholder="{{ __('sales.ketentuan_garansi_sla_pengiriman_atau_batas') }}"
                                   class="w-full bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] p-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">{{ old('terms_and_conditions', $quotation->terms_and_conditions) }}</textarea>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
             </a>
             <button type="submit" class="h-9 px-6 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Simpan Perubahan</span>
+                <span>{{ __('common.save_changes') }}</span>
             </button>
         </div>
     </form>

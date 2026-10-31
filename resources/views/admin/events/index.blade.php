@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Kelola Event Komunitas - Cooca Admin',
+    'title' => __('admin.kelola_event_komunitas_cooca_admin'),
     'headerTitle' => 'Event Komunitas',
     'headerSubtitle' => 'Manajemen agenda seminar, workshop UMKM, pendaftaran peserta & check-in digital',
 ])
@@ -15,9 +15,7 @@
                     <span>Agenda &amp; Edukasi Komunitas</span>
                 </span>
             </div>
-            <h1 class="text-xl sm:text-2xl font-black text-black dark:text-white tracking-tight">
-                Kelola Event Komunitas
-            </h1>
+            <h1 class="text-xl sm:text-2xl font-black text-black dark:text-white tracking-tight">{{ __('admin.kelola_event_komunitas') }}</h1>
             <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 mt-1 max-w-2xl leading-relaxed">
                 Kelola jadwal meetup, seminar bisnis, workshop kasir POS, pendaftaran peserta, dan pemantauan kehadiran via barcode serta geolokasi GPS.
             </p>
@@ -114,12 +112,10 @@
             @endif
             <div class="relative w-full md:w-64">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari judul, lokasi..."
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="{{ __('admin.cari_judul_lokasi') }}"
                     class="w-full h-9 pl-9 pr-3 rounded-[10px] text-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-hidden focus:border-[#007AFF]">
             </div>
-            <button type="submit" class="px-3 h-9 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[12px] font-semibold transition shrink-0">
-                Filter
-            </button>
+            <button type="submit" class="px-3 h-9 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[12px] font-semibold transition shrink-0">{{ __('common.filter') }}</button>
         </form>
     </div>
 
@@ -250,12 +246,12 @@
                                 <div class="inline-flex items-center gap-1.5">
                                     <a href="{{ route('admin.events.show', $event) }}"
                                         class="px-2.5 py-1.5 rounded-[8px] text-[11px] font-semibold bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition"
-                                        title="Detail & Peserta">
+                                        title="{{ __('admin.detail_peserta') }}">
                                         Peserta &amp; Scan
                                     </a>
                                     <a href="{{ route('admin.events.edit', $event) }}"
                                         class="p-1.5 rounded-[8px] text-black/60 dark:text-white/60 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition"
-                                        title="Edit Event">
+                                        title="{{ __('admin.edit_event_2') }}">
                                         <i data-lucide="pencil" class="w-4 h-4"></i>
                                     </a>
                                     @if(Auth::guard('admin')->user()?->hasPermission('admin.events.delete'))
@@ -265,7 +261,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="p-1.5 rounded-[8px] text-[#FF3B30] hover:bg-[#FF3B30]/10 transition cursor-pointer"
-                                            title="Hapus Event">
+                                            title="{{ __('admin.hapus_event') }}">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                     </form>
@@ -277,7 +273,7 @@
                         <tr>
                             <td colspan="7" class="py-12 text-center text-black/40 dark:text-white/40">
                                 <i data-lucide="calendar-x" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
-                                <p class="font-bold text-[14px]">Belum ada event komunitas.</p>
+                                <p class="font-bold text-[14px]">{{ __('admin.belum_ada_event_komunitas') }}</p>
                                 <p class="text-[12px] mt-0.5">Klik tombol "Buat Event Baru" untuk menambahkan agenda seminar atau meetup.</p>
                             </td>
                         </tr>

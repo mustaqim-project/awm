@@ -211,7 +211,7 @@
                      x-transition:leave-start="opacity-100 scale-100"
                      x-transition:leave-end="opacity-0 scale-95">
                     <div>
-                        <h3 id="purchasing-pin-modal-title" class="text-[16px] font-bold text-black dark:text-white">Otorisasi Supervisor</h3>
+                        <h3 id="purchasing-pin-modal-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('purchasing.otorisasi_supervisor') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">
                             {{ __('purchasing.returns.supervisor_pin_prompt') }}
                         </p>
@@ -225,14 +225,10 @@
 
                     <div class="flex items-center justify-end gap-2 pt-2">
                         <button type="button" @click="showPinModal = false"
-                                class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 cursor-pointer">
-                            Batal
-                        </button>
+                                class="min-h-[44px] h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="button"
                                 @click="if(pinAction === 'approve') document.getElementById('form-approve').submit(); else document.getElementById('form-complete').submit();"
-                                class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition cursor-pointer">
-                            Konfirmasi
-                        </button>
+                                class="min-h-[44px] h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition cursor-pointer">{{ __('common.confirm') }}</button>
                     </div>
                 </div>
             </div>

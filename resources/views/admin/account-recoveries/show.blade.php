@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => "Verifikasi Tiket {$recovery->ticket_number} - Admin Console",
+    'title' => "{{ __('admin.verifikasi_tiket_recovery_ticket_number_admin') }}",
     'headerTitle' => "Verifikasi Pemulihan Akun #{$recovery->ticket_number}",
     'headerSubtitle' => 'Tinjau kecocokan berkas identitas dan bukti usaha sebelum memperbarui akses login akun',
 ])
@@ -26,7 +26,7 @@
                 <a href="{{ route('admin.account-recoveries.index') }}"
                     class="inline-flex items-center gap-1.5 px-3 py-2 min-h-[40px] rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/70 dark:text-white/70 transition-all active:scale-[0.98]">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span>Kembali</span>
+                    <span>{{ __('common.back') }}</span>
                 </a>
                 <div class="h-4 w-px bg-black/10 dark:bg-white/10 hidden sm:block"></div>
                 <div>
@@ -38,7 +38,7 @@
                         <button type="button"
                             @click="navigator.clipboard.writeText('{{ $recovery->ticket_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
                             class="p-1 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                            title="Salin nomor tiket">
+                            title="{{ __('admin.salin_nomor_tiket') }}">
                             <i data-lucide="copy" class="w-3.5 h-3.5" x-show="!copied"></i>
                             <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759]" x-show="copied"
                                 style="display: none;"></i>
@@ -89,7 +89,7 @@
                                 class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                                 <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
                             </div>
-                            <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">Komparasi Data Akun Terdaftar vs Kontak Baru</h3>
+                            <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">{{ __('admin.komparasi_data_akun_terdaftar_vs_kontak') }}</h3>
                         </div>
                         <span class="text-[11.5px] font-medium text-black/60 dark:text-white/60">
                             {{ $recovery->getIssueTypeLabel() }}
@@ -181,7 +181,7 @@
                                 class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center">
                                 <i data-lucide="file-check" class="w-4 h-4"></i>
                             </div>
-                            <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">Meja Uji Bukti Otentik Kepemilikan Akun</h3>
+                            <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">{{ __('admin.meja_uji_bukti_otentik_kepemilikan_akun') }}</h3>
                         </div>
                         <span class="text-[11px] text-black/40 dark:text-white/40">Klik gambar untuk perbesar</span>
                     </div>
@@ -216,7 +216,7 @@
                                     <a href="{{ $recovery->getIdentityCardUrl() }}" target="_blank"
                                         class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                         <i data-lucide="external-link" class="w-3 h-3"></i>
-                                        <span>Buka Resolusi Penuh</span>
+                                        <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                     </a>
                                 </div>
                             @else
@@ -251,14 +251,14 @@
                                             Legalitas Usaha</span>
                                         <a href="{{ $recovery->getBusinessProofUrl() }}" target="_blank"
                                             class="text-[11px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1">
-                                            <span>Buka Dokumen PDF &rarr;</span>
+                                            <span>{{ __('admin.buka_dokumen_pdf_rarr') }}</span>
                                         </a>
                                     </div>
                                     <div class="pt-1">
                                         <a href="{{ $recovery->getBusinessProofUrl() }}" target="_blank" download
                                             class="text-[11px] font-medium text-[#5856D6] hover:underline inline-flex items-center gap-1">
                                             <i data-lucide="download" class="w-3 h-3"></i>
-                                            <span>Unduh Berkas PDF</span>
+                                            <span>{{ __('admin.unduh_berkas_pdf') }}</span>
                                         </a>
                                     </div>
                                 @else
@@ -266,8 +266,8 @@
                                     <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
                                         @click="openImage($el.dataset.url, $el.dataset.title)"
                                         data-url="{{ $recovery->getBusinessProofUrl() }}"
-                                        data-title="Bukti Usaha: {{ $recovery->business_name }}">
-                                        <img src="{{ $recovery->getBusinessProofUrl() }}" alt="Bukti Usaha"
+                                        data-title="{{ __('admin.business_proof') }}">
+                                        <img src="{{ $recovery->getBusinessProofUrl() }}" alt="{{ __('admin.bukti_usaha') }}"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                         <div
                                             class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
@@ -279,7 +279,7 @@
                                         <a href="{{ $recovery->getBusinessProofUrl() }}" target="_blank"
                                             class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                             <i data-lucide="external-link" class="w-3 h-3"></i>
-                                            <span>Buka Resolusi Penuh</span>
+                                            <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                         </a>
                                     </div>
                                 @endif
@@ -320,7 +320,7 @@
                                     <a href="{{ $recovery->getSelfieProofUrl() }}" target="_blank"
                                         class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
                                         <i data-lucide="external-link" class="w-3 h-3"></i>
-                                        <span>Buka Resolusi Penuh</span>
+                                        <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                     </a>
                                 </div>
                             @else
@@ -369,7 +369,7 @@
                             <button type="button" @click="showApproveModal = true"
                                 class="w-full min-h-[50px] py-3.5 px-4 rounded-[14px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
                                 <i data-lucide="check-circle" class="w-4 h-4"></i>
-                                <span>Setujui &amp; Perbarui Akses Akun</span>
+                                <span>{{ __('admin.setujui_perbarui_akses_akun') }}</span>
                             </button>
                             @endif
 
@@ -473,7 +473,7 @@
                                 <i data-lucide="shield-check" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-base text-black dark:text-white">Konfirmasi Persetujuan Pemulihan</h3>
+                                <h3 class="font-bold text-base text-black dark:text-white">{{ __('admin.konfirmasi_persetujuan_pemulihan') }}</h3>
                                 <p class="text-[11px] text-black/50 dark:text-white/50">Sinkronisasi data kredensial login pemilik
                                     bisnis</p>
                             </div>
@@ -506,13 +506,9 @@
 
                             <div class="flex items-center justify-end gap-2.5 pt-2">
                                 <button type="button" @click="showApproveModal = false"
-                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                    Batal
-                                </button>
+                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
-                                    Setujui &amp; Perbarui Akses Akun
-                                </button>
+                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">{{ __('admin.setujui_perbarui_akses_akun') }}</button>
                             </div>
                         </form>
                     </div>
@@ -563,15 +559,13 @@
                                     Alasan Penolakan <span class="text-[#FF3B30]">*</span>:
                                 </label>
                                 <textarea name="rejection_reason" id="rejection_reason" rows="3" required
-                                    placeholder="Contoh: Foto KTP buram dan nama usaha tidak sesuai dengan bukti kepemilikan yang dilampirkan..."
+                                    placeholder="{{ __('admin.contoh_foto_ktp_buram_dan_nama') }}"
                                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:border-[#FF3B30] focus:ring-1 focus:ring-[#FF3B30]"></textarea>
                             </div>
 
                             <div class="flex items-center justify-end gap-2.5 pt-2">
                                 <button type="button" @click="showRejectModal = false"
-                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                    Batal
-                                </button>
+                                    class="min-h-[44px] px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
                                 <button type="submit"
                                     class="min-h-[44px] px-5 py-2 rounded-[12px] bg-[#FF3B30] hover:bg-red-600 text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
                                     Tolak Permohonan

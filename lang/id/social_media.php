@@ -652,5 +652,8 @@ return [
     'buka_tautan_media_asli' => 'Buka tautan media asli',
     'lihat_di_post_studio' => 'Lihat di Post Studio',
     'belum_ada_media_tersinkronisasi' => 'Belum ada media tersinkronisasi',
+    'ai_not_configured' => 'AI Belum Dikonfigurasi',
+    'setup_now' => 'Setup Sekarang',
+    'tab_input_manage_rules' => 'Input & Kelola Aturan Toko',
 ];
 

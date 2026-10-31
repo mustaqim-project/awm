@@ -528,4 +528,5 @@ return [
     'export_seluruh_direktori_pemasok_ke_file' => 'Export seluruh direktori supplier to file Excel (.xlsx)',
     'import_data_pemasok_massal_dari_file' => 'Import data supplier massal dari file Excel',
     'import_pemasok_via_excel_interacti' => 'Import Supplier via Excel Interacti',
+    'import_suppliers_via_excel' => 'Import Suppliers via Excel',
 ];

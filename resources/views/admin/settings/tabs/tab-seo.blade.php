@@ -263,7 +263,7 @@
                         </label>
                         <input type="text" name="seo_meta_keywords"
                             value="{{ old('seo_meta_keywords', $seoMetaKeywords) }}"
-                            placeholder="Cooca, software kasir, aplikasi pembukuan, pos toko"
+                            placeholder="{{ __('admin.cooca_software_kasir_aplikasi_pembukuan_pos') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Pisahkan kata kunci dengan tanda
                             koma.</p>
@@ -275,7 +275,7 @@
                             Author / Penerbit Platform
                         </label>
                         <input type="text" name="seo_author" value="{{ old('seo_author', $seoAuthor) }}"
-                            placeholder="Cooca Indonesia"
+                            placeholder="{{ __('admin.cooca_indonesia') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Nama perusahaan atau pemegang hak
                             cipta portal.</p>
@@ -368,7 +368,7 @@
                             OpenGraph Description (Deskripsi Share Card)
                         </label>
                         <textarea name="seo_og_description" x-model="ogDesc" rows="2"
-                            placeholder="Software kasir, pembukuan, kalkulator bisnis & AI Assistant gratis selamanya untuk UMKM Indonesia."
+                            placeholder="{{ __('admin.software_kasir_pembukuan_kalkulator_bisnis_ai') }}"
                             class="w-full p-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]/50 transition"></textarea>
                     </div>
 
@@ -429,8 +429,7 @@
                         <i data-lucide="shield-alert" class="w-5 h-5" stroke-width="1.8"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Verifikasi Webmaster &amp; Kode
-                            Pelacak Analitik</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.verifikasi_webmaster_kode_pelacak_analitik') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Google Search Console, Bing
                             Webmaster, Google Analytics GA4, dan skrip kustom</p>
                     </div>
@@ -470,7 +469,7 @@
                         </label>
                         <input type="text" name="seo_google_analytics_id"
                             value="{{ old('seo_google_analytics_id', $seoGoogleAnalyticsId) }}"
-                            placeholder="Contoh: G-XXXXXXXXXX atau GTM-XXXXXXX"
+                            placeholder="{{ __('admin.contoh_g_xxxxxxxxxx_atau_gtm_xxxxxxx') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition">
                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Sistem otomatis menyuntikkan
                             gtag.js jika ID GA4 diisi.</p>
@@ -503,7 +502,7 @@
                 <button type="submit"
                     class="w-full sm:w-auto h-12 sm:h-11 px-6 rounded-[14px] text-[13px] sm:text-[14px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="save" class="w-4.5 h-4.5" stroke-width="2"></i>
-                    <span>Simpan Pengaturan SEO</span>
+                    <span>{{ __('admin.simpan_pengaturan_seo') }}</span>
                 </button>
 
                 @endif

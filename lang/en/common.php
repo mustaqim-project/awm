@@ -122,4 +122,11 @@ return array (
   'parts' => 'Items',
   'changes_saved_auto' => 'Changes saved automatically',
   'sub_navigation' => 'Sub Navigation',
+    'view_all' => 'View All',
+    'exit' => 'Exit',
+    'version' => 'Version',
+    'delete_image' => 'Delete Image',
+    'clear_filter' => 'Clear Filter',
+    'testing' => 'Testing',
+    'seconds_short' => 's',
 );

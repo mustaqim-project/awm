@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Penjualan B2B & Faktur - Admin Console',
+    'title' => __('admin.penjualan_b2b_faktur_admin_console'),
     'headerTitle' => 'Penjualan B2B & Faktur Platform',
     'headerSubtitle' => 'Pusat operasional komersial enterprise: Surat Penawaran, Pesanan Penjualan (SO), Faktur Komersial & Retur Penjualan resmi',
 ])
@@ -67,14 +67,14 @@
                     <button type="button" @click="showCreateOrderModal = true"
                         class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#2563eb] hover:bg-[#1d4ed8] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
                         <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>+ Buat Pesanan (SO)</span>
+                        <span>{{ __('admin.buat_pesanan_so') }}</span>
                     </button>
                 </template>
                 <template x-if="activeTab === 'invoices'">
                     <button type="button" @click="showCreateInvoiceModal = true"
                         class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#0284c7] hover:bg-[#0369a1] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer">
                         <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>+ Terbitkan Faktur Langsung</span>
+                        <span>{{ __('admin.terbitkan_faktur_langsung') }}</span>
                     </button>
                 </template>
                 <template x-if="activeTab === 'returns'">
@@ -249,7 +249,7 @@
             {{-- Pencarian --}}
             <div class="relative">
                 <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-3 text-black/40 dark:text-white/40"></i>
-                <input type="text" name="search" value="{{ $search }}" placeholder="No. Dokumen / Nama Klien..."
+                <input type="text" name="search" value="{{ $search }}" placeholder="{{ __('admin.no_dokumen_nama_klien') }}"
                     class="w-full h-9.5 pl-8.5 pr-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
         </div>
@@ -262,7 +262,7 @@
 
             <a href="{{ route('admin.b2b.index') }}"
                 class="h-9.5 w-9.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] text-black/60 dark:text-white/60 flex items-center justify-center transition-all"
-                title="Reset Filter">
+                title="{{ __('common.reset') }}">
                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -283,7 +283,7 @@
             <a href="{{ route('admin.b2b.index', array_merge(request()->query(), ['tab' => 'orders'])) }}"
                 class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer {{ $activeTab === 'orders' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="check-check" class="w-4 h-4 text-[#34C759]"></i>
-                <span>Pesanan Penjualan (SO)</span>
+                <span>{{ __('admin.pesanan_penjualan_so') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] tabular-nums">{{ $kpi['totalOrderCount'] }}</span>
             </a>
 

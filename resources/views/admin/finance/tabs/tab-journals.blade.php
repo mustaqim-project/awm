@@ -95,7 +95,7 @@
                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.05] text-black/40 dark:text-white/40 flex items-center justify-center mx-auto mb-3">
                     <i data-lucide="book-open-check" class="w-6 h-6"></i>
                 </div>
-                <div class="text-[14px] font-bold text-black/70 dark:text-white/70">Belum ada jurnal umum pada periode ini</div>
+                <div class="text-[14px] font-bold text-black/70 dark:text-white/70">{{ __('admin.belum_ada_jurnal_umum_pada_periode') }}</div>
                 <p class="text-[12px] text-black/45 dark:text-white/45 mt-1 max-w-sm mx-auto">
                     Setiap transaksi kas masuk dan keluar yang tercatat otomatis menghasilkan entri jurnal berpasangan di sini.
                 </p>

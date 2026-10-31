@@ -1280,11 +1280,24 @@
     class="h-full bg-[#F2F2F7] dark:bg-[#1E1E1E] text-black dark:text-white antialiased selection:bg-[#007AFF]/20 selection:text-[#007AFF]"
     x-data="{
         sidebarOpen: false,
-        sidebarCollapsed: localStorage.getItem('cooca-sidebar-collapsed') === 'true',
+        sidebarCollapsed: (localStorage.getItem('cooca-sidebar-collapsed') !== null)
+            ? (localStorage.getItem('cooca-sidebar-collapsed') === 'true')
+            : (typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1280),
+        secondarySidebarCollapsed: (localStorage.getItem('cooca-secondary-sidebar-collapsed') !== null)
+            ? (localStorage.getItem('cooca-secondary-sidebar-collapsed') === 'true')
+            : false,
         toggleSidebarCollapse() {
             this.sidebarCollapsed = !this.sidebarCollapsed;
             localStorage.setItem('cooca-sidebar-collapsed', this.sidebarCollapsed);
             window.dispatchEvent(new CustomEvent('sidebar-collapsed-changed', { detail: { collapsed: this.sidebarCollapsed } }));
+            this.$nextTick(() => {
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            });
+        },
+        toggleSecondarySidebarCollapse() {
+            this.secondarySidebarCollapsed = !this.secondarySidebarCollapsed;
+            localStorage.setItem('cooca-secondary-sidebar-collapsed', this.secondarySidebarCollapsed);
+            window.dispatchEvent(new CustomEvent('secondary-sidebar-collapsed-changed', { detail: { collapsed: this.secondarySidebarCollapsed } }));
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             });
@@ -1341,12 +1354,22 @@
         @endif
 
         <!-- Main Content Area (macOS Window Canvas) -->
-        <div :class="sidebarCollapsed ? '{{ $hasSecondaryNav ? 'lg:pl-[336px]' : 'lg:pl-[76px]' }}' : '{{ $hasSecondaryNav ? 'lg:pl-[532px]' : 'lg:pl-[272px]' }}'"
-            class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
+        @if ($hasSecondaryNav)
+            <div :class="{
+                'lg:pl-[532px]': !sidebarCollapsed && !secondarySidebarCollapsed,
+                'lg:pl-[336px]': sidebarCollapsed && !secondarySidebarCollapsed,
+                'lg:pl-[272px]': !sidebarCollapsed && secondarySidebarCollapsed,
+                'lg:pl-[76px]': sidebarCollapsed && secondarySidebarCollapsed
+            }"
+                class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
+        @else
+            <div :class="sidebarCollapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'"
+                class="flex-1 flex flex-col min-h-screen min-w-0 transition-[padding] duration-250 ease-out bg-[#F2F2F7] dark:bg-[#1E1E1E]">
+        @endif
 
             @if ($activeBiz && ! $activeBiz->is_active)
                 <!-- Apple HIG Workspace Suspended Alert Banner -->
-                <div class="sticky top-0 z-[60] bg-gradient-to-r from-[#FF3B30] via-[#FF453A] to-[#D70015] border-b border-[#C4000F] px-4 py-2.5 shadow-md text-white transition-all">
+                <div class="relative z-[36] bg-gradient-to-r from-[#FF3B30] via-[#FF453A] to-[#D70015] border-b border-[#C4000F] px-4 py-2.5 shadow-md text-white transition-all">
                     <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-black/25 text-white tracking-wider uppercase shrink-0">
@@ -1374,7 +1397,7 @@
 
             @if (session()->has('admin_impersonator_id'))
                 <!-- Apple HIG Admin Impersonation Investigation Banner -->
-                <div class="sticky top-0 z-[60] bg-gradient-to-r from-[#FF9500] via-[#FF9F0A] to-[#FF9500] border-b border-[#FF8000] px-4 py-2.5 shadow-md text-white transition-all">
+                <div class="relative z-[36] bg-gradient-to-r from-[#FF9500] via-[#FF9F0A] to-[#FF9500] border-b border-[#FF8000] px-4 py-2.5 shadow-md text-white transition-all">
                     <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-black/25 text-white tracking-wider uppercase shrink-0">
@@ -1406,7 +1429,7 @@
             <!-- Topbar Header (Apple macOS Toolbar Architecture) -->
             @include(
                 'layouts.partials.topbar',
-                compact('activeBiz', 'navEntitlement', 'navUsage', 'isCorePlan'))
+                compact('activeBiz', 'navEntitlement', 'navUsage', 'isCorePlan', 'activeModuleKey', 'activeModuleDef', 'secondaryNavTabs', 'hasSecondaryNav'))
 
             <!-- Main Page Content -->
             <main id="main-content"
@@ -2291,8 +2314,12 @@
             </div>
 
             <!-- Mobile Bottom App Bar (iOS 18 Frosted Tab Bar) -->
-            <div
-                class="fixed inset-x-0 bottom-0 z-40 bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border-t border-black/5 dark:border-white/10 lg:hidden px-4 py-1.5 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+            <div x-show="!sidebarOpen"
+                x-transition:enter="transition-opacity ease-out duration-150"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition-opacity ease-in duration-100"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-x-0 bottom-0 z-30 bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border-t border-black/5 dark:border-white/10 lg:hidden px-4 py-1.5 pb-[calc(0.375rem+env(safe-area-inset-bottom,0px))] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] select-none">
                 <div class="flex items-center justify-around">
                     <!-- 1. Home / Dashboard / Portal -->
                     @php

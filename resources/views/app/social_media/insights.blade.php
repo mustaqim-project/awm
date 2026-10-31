@@ -829,7 +829,7 @@
                                 @if (!empty($item['permalink']))
                                     <a href="{{ $item['permalink'] }}" target="_blank" rel="noopener noreferrer"
                                         class="p-1 rounded-[7px] text-black/40 dark:text-white/40 hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                                        title="Buka tautan media asli">
+                                        title="{{ __('social_media.buka_tautan_media_asli') }}">
                                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                     </a>
                                 @endif
@@ -884,7 +884,7 @@
                                     </span>
                                 </div>
 
-                                <a href="{{ route('social-media.posts.index') }}" class="p-1 rounded-[7px] text-black/40 dark:text-white/40 hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Lihat di Post Studio">
+                                <a href="{{ route('social-media.posts.index') }}" class="p-1 rounded-[7px] text-black/40 dark:text-white/40 hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="{{ __('social_media.lihat_di_post_studio') }}">
                                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                                 </a>
                             </div>
@@ -897,7 +897,7 @@
                         <i data-lucide="image" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <p class="text-[13px] font-semibold text-black/70 dark:text-white/70">Belum ada media tersinkronisasi</p>
+                        <p class="text-[13px] font-semibold text-black/70 dark:text-white/70">{{ __('social_media.belum_ada_media_tersinkronisasi') }}</p>
                         <p class="text-[11.5px] text-black/45 dark:text-white/45 mt-0.5 max-w-sm mx-auto">
                             Klik tombol "Sync Live" di kanan atas untuk menyegarkan media terbaru dari akun media sosial yang telah terhubung.
                         </p>

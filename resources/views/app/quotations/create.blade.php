@@ -80,7 +80,7 @@
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span></label>
                     <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
-                           placeholder="u.p. Nama PIC Pelanggan"
+                           placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 

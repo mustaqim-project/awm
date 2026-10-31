@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Pencairan Saldo Merchant & Upload Bukti Bayar'])
+@extends('layouts.admin', ['title' => __('admin.pencairan_saldo_merchant_upload_bukti_bayar')])
 
 @section('content')
 <div class="space-y-6 pb-16" x-data="adminSettlementHub()">
@@ -13,7 +13,7 @@
                 <span>›</span>
                 <span class="text-black dark:text-white font-medium">Pencairan Merchant</span>
             </nav>
-            <h1 class="text-[22px] font-bold tracking-tight text-black dark:text-white">Pencairan Saldo &amp; Bukti Transfer</h1>
+            <h1 class="text-[22px] font-bold tracking-tight text-black dark:text-white">{{ __('admin.pencairan_saldo_bukti_transfer') }}</h1>
             <p class="text-[13px] text-black/50 dark:text-white/50">Kelola pengajuan pencairan saldo gateway non-tunai (QRIS &amp; VA TriPay) seluruh tenant merchant COOCA</p>
         </div>
         <div class="flex items-center gap-2">
@@ -114,13 +114,11 @@
         <form method="GET" action="{{ route('admin.settlements.index') }}" class="flex items-center gap-2">
             <input type="hidden" name="status" value="{{ $status }}">
             <div class="relative">
-                <input type="text" name="search" value="{{ $search }}" placeholder="Cari no. settlement / toko / bank..."
+                <input type="text" name="search" value="{{ $search }}" placeholder="{{ __('admin.cari_no_settlement_toko_bank') }}"
                     class="w-56 sm:w-64 h-9 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] px-3 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
             <button type="submit"
-                class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white text-xs font-semibold hover:bg-[#0071E3] transition">
-                Filter
-            </button>
+                class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white text-xs font-semibold hover:bg-[#0071E3] transition">{{ __('common.filter') }}</button>
             @if($search || request('date_from'))
                 <a href="{{ route('admin.settlements.index') }}"
                     class="h-9 px-2.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 text-xs font-medium hover:text-black dark:hover:text-white flex items-center justify-center">
@@ -239,7 +237,7 @@
                                             data-notes="{{ $settlement->admin_notes ?? '' }}"
                                             class="h-8 px-3 rounded-[9px] text-[11.5px] font-semibold bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] transition flex items-center gap-1.5 shadow-xs">
                                             <i data-lucide="image" class="w-3.5 h-3.5"></i>
-                                            <span>Lihat Bukti</span>
+                                            <span>{{ __('admin.lihat_bukti') }}</span>
                                         </button>
                                     @elseif($settlement->status === 'pending')
                                         <button type="button"
@@ -251,7 +249,7 @@
                                             data-bank="{{ $settlement->destination_bank }}"
                                             class="h-8 px-3 rounded-[9px] text-[11.5px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white transition flex items-center gap-1.5 shadow-xs">
                                             <i data-lucide="upload-cloud" class="w-3.5 h-3.5"></i>
-                                            <span>Transfer &amp; Upload Bukti</span>
+                                            <span>{{ __('admin.transfer_upload_bukti') }}</span>
                                         </button>
 
                                         <button type="button"
@@ -273,7 +271,7 @@
                             <td colspan="9" class="py-12 text-center text-black/40 dark:text-white/40">
                                 <div class="flex flex-col items-center justify-center gap-2">
                                     <i data-lucide="inbox" class="w-8 h-8 opacity-40"></i>
-                                    <span>Tidak ada data pengajuan pencairan saldo yang sesuai filter.</span>
+                                    <span>{{ __('admin.tidak_ada_data_pengajuan_pencairan_saldo') }}</span>
                                 </div>
                             </td>
                         </tr>
@@ -306,7 +304,7 @@
                         <i data-lucide="upload" class="w-4 h-4"></i>
                     </div>
                     <div>
-                        <h3 class="text-[15px] font-bold text-black dark:text-white">Upload Bukti Transfer Bank</h3>
+                        <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.upload_bukti_transfer_bank') }}</h3>
                         <p class="text-[11.5px] text-black/50 dark:text-white/50" x-text="'Settlement #' + currentSettlementNumber + ' • ' + currentBusinessName"></p>
                     </div>
                 </div>
@@ -353,7 +351,7 @@
 
                         <template x-if="imagePreview">
                             <div class="space-y-2">
-                                <img :src="imagePreview" alt="Preview Bukti Bayar" class="max-h-48 mx-auto rounded-[12px] object-contain shadow-xs border border-black/10">
+                                <img :src="imagePreview" alt="{{ __('admin.preview_bukti_bayar') }}" class="max-h-48 mx-auto rounded-[12px] object-contain shadow-xs border border-black/10">
                                 <div class="text-[11.5px] font-medium text-[#34C759] flex items-center justify-center gap-1">
                                     <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                     <span>Gambar bukti transfer siap diunggah</span>
@@ -373,13 +371,11 @@
                 {{-- Submit Action Buttons --}}
                 <div class="pt-2 flex items-center justify-end gap-2.5">
                     <button type="button" @click="showUploadModal = false"
-                        class="h-10 px-4 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition">
-                        Batal
-                    </button>
+                        class="h-10 px-4 rounded-[12px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/10 transition">{{ __('common.cancel') }}</button>
                     <button type="submit"
                         class="h-10 px-5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB350] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-[0.98]">
                         <i data-lucide="check" class="w-4 h-4"></i>
-                        <span>Konfirmasi Selesai &amp; Kirim Bukti</span>
+                        <span>{{ __('admin.konfirmasi_selesai_kirim_bukti') }}</span>
                     </button>
                 </div>
             </form>
@@ -401,11 +397,11 @@
             
             <div class="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                 <div>
-                    <h3 class="text-[15px] font-bold text-black dark:text-white">Bukti Transfer Pencairan</h3>
+                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.bukti_transfer_pencairan') }}</h3>
                     <p class="text-[11.5px] text-black/50 dark:text-white/50" x-text="'Settlement #' + viewSettlementNumber + ' • ' + viewBusinessName"></p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a :href="viewImageUrl" target="_blank" download title="Unduh Gambar"
+                    <a :href="viewImageUrl" target="_blank" download title="{{ __('admin.unduh_gambar') }}"
                         class="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60" rel="noopener noreferrer">
                         <i data-lucide="download" class="w-4 h-4"></i>
                     </a>
@@ -418,7 +414,7 @@
             <div class="p-6 space-y-4">
                 {{-- Image Display Container --}}
                 <div class="rounded-[18px] bg-black/[0.03] dark:bg-black/40 border border-black/[0.05] dark:border-white/5 p-2 flex items-center justify-center overflow-hidden">
-                    <img :src="viewImageUrl" alt="Bukti Transfer Struk Bank" class="max-h-[380px] w-auto rounded-[12px] object-contain">
+                    <img :src="viewImageUrl" alt="{{ __('admin.bukti_transfer_struk_bank') }}" class="max-h-[380px] w-auto rounded-[12px] object-contain">
                 </div>
 
                 {{-- Transfer Details Bar --}}
@@ -473,19 +469,15 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">Alasan Penolakan *</label>
-                    <textarea name="rejection_reason" rows="3" required placeholder="Contoh: Nomor rekening tidak valid atau nama pemilik tidak sesuai..."
+                    <textarea name="rejection_reason" rows="3" required placeholder="{{ __('admin.contoh_nomor_rekening_tidak_valid_atau') }}"
                         class="w-full rounded-[12px] bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 p-3 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"></textarea>
                 </div>
 
                 <div class="flex items-center justify-end gap-2 pt-2">
                     <button type="button" @click="showRejectModal = false"
-                        class="h-9 px-4 rounded-[10px] text-xs font-medium text-black/70 dark:text-white/70 hover:bg-black/5">
-                        Batal
-                    </button>
+                        class="h-9 px-4 rounded-[10px] text-xs font-medium text-black/70 dark:text-white/70 hover:bg-black/5">{{ __('common.cancel') }}</button>
                     <button type="submit"
-                        class="h-9 px-4 rounded-[10px] bg-[#FF3B30] text-white text-xs font-bold hover:bg-[#E03429] transition">
-                        Konfirmasi Tolak
-                    </button>
+                        class="h-9 px-4 rounded-[10px] bg-[#FF3B30] text-white text-xs font-bold hover:bg-[#E03429] transition">{{ __('admin.konfirmasi_tolak') }}</button>
                 </div>
             </form>
 @endif

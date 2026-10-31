@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Edit Draf Retur: ' . $return->return_number,
-    'headerTitle' => 'Edit Draf Retur Penjualan',
-    'headerSubtitle' => 'Perbarui item retur, jumlah barang, alasan, atau metode pengembalian dana'
+    'title' => __('sales.edit_draft_return') . ': ' . $return->return_number,
+    'headerTitle' => __('sales.edit_draft_return_title'),
+    'headerSubtitle' => __('sales.edit_draft_return_subtitle')
 ])
 
 @section('content')
@@ -22,12 +22,12 @@
                 <span class="text-black dark:text-white font-medium">Edit</span>
             </nav>
             <div class="flex items-center gap-2">
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Edit Retur: {{ $return->return_number }}</h1>
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.edit_return') }}: {{ $return->return_number }}</h1>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider bg-neutral-500/10 text-neutral-600 dark:text-neutral-400">
                     Draft
                 </span>
             </div>
-            <p class="text-[13px] text-black/50 dark:text-white/50">Hanya draf retur yang dapat diedit sebelum disetujui (Approve) atau diselesaikan (Complete)</p>
+            <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('sales.only_draft_return_can_be_edited') }}</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -37,7 +37,7 @@
             <button type="submit" form="form-edit-sales-return" :disabled="getSelectedCount() === 0"
                 class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Simpan Perubahan</span>
+                <span>{{ __('common.save_changes') }}</span>
             </button>
         </div>
     </header>
@@ -64,7 +64,7 @@
         <!-- 1. DOKUMEN ASAL -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4">
             <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                <h2 class="text-[17px] font-semibold text-black dark:text-white">Dokumen Asal Transaksi</h2>
+                <h2 class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.dokumen_asal_transaksi') }}</h2>
                 <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Retur ini terikat pada dokumen transaksi di bawah</p>
             </div>
 
@@ -100,9 +100,9 @@
                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('sales.returns.sec_items_select_desc') }}</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" @click="selectAll()" class="text-[12px] font-medium text-[#007AFF] hover:underline cursor-pointer">Pilih Semua</button>
+                    <button type="button" @click="selectAll()" class="text-[12px] font-medium text-[#007AFF] hover:underline cursor-pointer">{{ __('sales.pilih_semua') }}</button>
                     <span class="text-black/30 dark:text-white/30">&bull;</span>
-                    <button type="button" @click="unselectAll()" class="text-[12px] font-medium text-black/50 dark:text-white/50 hover:underline cursor-pointer">Batal Semua</button>
+                    <button type="button" @click="unselectAll()" class="text-[12px] font-medium text-black/50 dark:text-white/50 hover:underline cursor-pointer">{{ __('sales.batal_semua') }}</button>
                 </div>
             </div>
 
@@ -229,7 +229,7 @@
                         Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span>
                     </label>
                     <input type="text" name="recipient_name" value="{{ old('recipient_name', $return->recipient_name) }}"
-                        placeholder="u.p. Nama PIC Pelanggan"
+                        placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                         class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
@@ -239,7 +239,7 @@
                         Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
                     </label>
                     <input type="text" name="attachment_info" value="{{ old('attachment_info', $return->attachment_info ?? '-') }}"
-                        placeholder="Contoh: - atau Berita Acara Kerusakan Barang"
+                        placeholder="{{ __('sales.contoh_atau_berita_acara_kerusakan_barang') }}"
                         class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
             </div>
@@ -251,9 +251,7 @@
                 {{ __('sales.returns.btn_cancel') }}
             </a>
             <button type="submit" :disabled="getSelectedCount() === 0"
-                class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                Simpan Perubahan
-            </button>
+                class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('common.save_changes') }}</button>
         </div>
     </form>
 </div>

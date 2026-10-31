@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Riwayat Ledger & Kredit AI Studio',
+    'title' => __('ai.riwayat_ledger_kredit_ai_studio'),
     'headerTitle' => 'Ledger Kredit & Mutasi Transaksi AI Studio',
     'headerSubtitle' => 'Transparansi penuh atas setiap reservasi kredit (two-phase hold), pemakaian render, dan pengembalian dana',
 ])
@@ -35,7 +35,7 @@
                 <span class="w-8 h-8 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
                     <i data-lucide="coins" class="w-4 h-4"></i>
                 </span>
-                <span>Ledger &amp; Saldo Kredit AI Studio</span>
+                <span>{{ __('ai.ledger_saldo_kredit_ai_studio') }}</span>
             </h1>
             <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
                 Catatan mutasi kredit immutable dengan mekanisme jaminan refund 100% apabila render visual gagal diproses oleh provider.
@@ -76,7 +76,7 @@
         <div class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <i data-lucide="file-text" class="w-4 h-4 text-[#007AFF]"></i>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-black/70 dark:text-white/70">Daftar Transaksi Ledger</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-black/70 dark:text-white/70">{{ __('ai.daftar_transaksi_ledger') }}</h3>
             </div>
             <span class="text-xs text-black/40 dark:text-white/40">Menampilkan mutasi terbaru</span>
         </div>
@@ -86,7 +86,7 @@
                 <div class="w-12 h-12 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center mx-auto">
                     <i data-lucide="receipt" class="w-6 h-6"></i>
                 </div>
-                <h4 class="text-sm font-bold text-black dark:text-white">Belum Ada Riwayat Transaksi</h4>
+                <h4 class="text-sm font-bold text-black dark:text-white">{{ __('ai.belum_ada_riwayat_transaksi') }}</h4>
                 <p class="text-xs text-black/60 dark:text-white/60 max-w-sm mx-auto">
                     Kredit akan tercatat otomatis saat Anda melakukan top-up, memulai render gambar, atau menerima pengembalian dana.
                 </p>

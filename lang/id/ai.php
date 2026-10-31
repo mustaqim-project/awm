@@ -773,4 +773,7 @@ return [
     'lanjut_generate_visual_produk' => 'Lanjut Generate Visual Produk',
     'menunggu_pembayaran' => 'Menunggu Pembayaran',
     'pembayaran_berhasil' => 'Pembayaran Berhasil!',
+    'render_history_this_project' => 'Riwayat Render Proyek Ini',
+    'view_attribution_sheet' => 'Lihat Lembar Atribusi',
+    'active_prompt' => 'Prompt Aktif',
 ];

@@ -332,4 +332,6 @@ return [
         'not_applied_yet' => 'Haven\'t applied for account recovery yet?',
         'apply_new_link' => 'Create New Application',
     ],
+    'supervisor_bypass' => 'Supervisor Bypass',
+    'resend_in' => 'Resend in',
 ];

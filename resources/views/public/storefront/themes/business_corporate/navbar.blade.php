@@ -37,7 +37,7 @@
         <nav class="hidden lg:flex items-center gap-1 font-medium text-xs">
             <a href="{{ url('/' . $business->slug) }}"
                 class="px-3.5 py-2 rounded-md transition-colors {{ request()->is($business->slug) ? 'bg-slate-800 text-white font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }}">
-                {{ $landingPage->getNavLabel('home', '{{ __('storefront.nav_home') }}') }}
+                {{ $landingPage->getNavLabel('home', __('storefront.nav_home')) }}
             </a>
 
             @if ($landingPage->isPageActive('catalog'))

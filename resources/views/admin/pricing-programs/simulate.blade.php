@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Simulasi Eskalasi Harga Tahunan | Platform Admin')
+@section('title', __('admin.title_simulasi_eskalasi_harga_tahunan_platform'))
 
 @section('content')
 <div class="space-y-6">
@@ -97,7 +97,7 @@
                 <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3 text-slate-400">
                     <i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500"></i>
                 </div>
-                <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Semua Tarif Sudah Terkini</h3>
+                <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">{{ __('admin.semua_tarif_sudah_terkini') }}</h3>
                 <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
                     Tidak ditemukan pelanggan Early Adopter yang jadwal kenaikan tahunannya jatuh tempo untuk hari ini.
                 </p>

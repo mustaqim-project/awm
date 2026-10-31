@@ -33,6 +33,20 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-10-31-375] Transformasi Navigasi Modul: Dari Tab Horizontal Atas Menjadi Apple HIG Dual Sidebar (Secondary Sidebar)
+
+- **Date:** 2026-10-31
+- **Status:** COMPLETED
+- **Module:** UI/UX, Navigation Architecture, Dual Sidebar, Responsive Layout, Multi-Industry & RBAC
+- **Feature:** Transformasi Komprehensif Navigasi Sub-Modul:
+  1. **Dual Sidebar Layout Architecture:** Menghapus ketergantungan tab horizontal atas (`<x-module-tabs />`) dan menggantikannya dengan panel *Secondary Sidebar* berdampingan di sebelah kanan sidebar utama (`resources/views/layouts/partials/secondary-sidebar.blade.php`), mengacu pada hierarki visual Bento Apple HIG (header modul `BAGIAN {MODULE}`, badge jumlah sub-bagian, active blue pill `#007AFF`, dan squircle count badge).
+  2. **Layout & Dynamic Canvas Padding:** Memperbarui `resources/views/layouts/app.blade.php` untuk menampung secondary sidebar secara cerdas (`lg:pl-[532px]` saat secondary sidebar aktif, `lg:pl-[336px]` saat sidebar utama collapsed, dan `lg:pl-[272px]` default), dengan auto-collapse pada layar laptop ringkas.
+  3. **Mobile & Tablet Drawer Sub-Navigation:** Mengintegrasikan daftar submenu ke dalam drawer navigasi mobile sebagai accordion card bertingkat yang rapi tanpa overflow horizontal.
+  4. **Harmonisasi NavigationRegistry (SSOT):** Membersihkan duplikasi definisi dan menyelaraskan sub-rute pemasaran & komunikasi dalam `app/Support/Navigation/NavigationRegistry.php`, menjamin Zero Feature Leakage (multi-industry gating) dan Controller-Level RBAC di ke-15 modul.
+  5. **Verifikasi & Test Suite Komprehensif:** Mengimplementasikan test suite `tests/Feature/DualSidebarNavigationTest.php` dan memperluas `tests/Unit/NavigationRegistryTest.php`, lulus 100% (12 test suites, 81 tests, 1,392 assertions) dan diverifikasi oleh Independent Victory Auditor.
+  6. **Interactive Collapse/Expand (Hide/Show) Secondary Sidebar:** Menambahkan kontrol buka-tutup mandiri untuk Secondary Sidebar via state Alpine `secondarySidebarCollapsed` (tersimpan di `localStorage['cooca-secondary-sidebar-collapsed']`), tombol collapse di header sidebar, tombol toggle di macOS toolbar topbar (`#tour-toggle-secondary-sidebar-btn`), tombol floating edge tab saat collapsed, serta dynamic padding canvas (`lg:pl-[532px]` / `lg:pl-[336px]` / `lg:pl-[272px]` / `lg:pl-[76px]`).
+  7. **Mobile UX & Anti-Overlap Protection:** Menghilangkan tumpang-tindih (overlap) elemen pada perangkat mobile dengan: (a) menyembunyikan Mobile Bottom App Bar secara otomatis saat drawer terbuka (`x-show="!sidebarOpen"`), (b) menyesuaikan z-index mobile bottom bar ke `z-30` di bawah backdrop modal `z-40`/`z-50`, (c) menambahkan padding safe-area iOS `env(safe-area-inset-bottom)`, (d) mengonversi alert banner dari sticky ganda menjadi `relative z-[36]` agar tidak bertabrakan dengan sticky topbar, dan (e) menambahkan badge pill sub-navigasi modul di mobile topbar.
+
 ### [WORK-2026-10-30-374] Hardening Sistem Menyeluruh Pasca Audit: Eliminasi IDOR, Penegakan Entitlement Bahan Baku/Outlet/PO/Invoice, Jurnal Penyeimbang Pembulatan Kasir, PSR-4 Linux Fix & Isolasi Industri
 
 - **Date:** 2026-10-30

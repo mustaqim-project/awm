@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Detail Broadcast: ' . $blast->title)
-
-@section('content')
+@section('title', __('admin.title_detail_broadcast_blast_title_section'))
     @php
         $rate = $blast->total_recipients > 0 ? round(($blast->total_sent / $blast->total_recipients) * 100, 1) : 0;
     @endphp
@@ -51,7 +49,7 @@
                 <a href="{{ route('admin.whatsapp.index') }}?tab=blast"
                     class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold bg-black/[0.05] dark:bg-white/[0.08] text-black dark:text-white hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-all inline-flex items-center gap-2 active:scale-[0.98]">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span>Kembali</span>
+                    <span>{{ __('common.back') }}</span>
                 </a>
             </div>
         </div>
@@ -215,7 +213,7 @@
                                 @if ($blast->media_url)
                                     <a href="{{ $blast->media_url }}" target="_blank" rel="noopener noreferrer"
                                         class="text-[#007AFF] hover:underline font-mono text-[12px] inline-flex items-center gap-1">
-                                        <span>Lihat Gambar</span>
+                                        <span>{{ __('admin.lihat_gambar') }}</span>
                                         <i data-lucide="external-link" class="w-3 h-3"></i>
                                     </a>
                                 @else
@@ -248,8 +246,7 @@
             <div
                 class="p-4 sm:p-6 border-b border-black/[0.06] dark:border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
                 <div>
-                    <h2 class="text-[16px] font-bold text-black dark:text-white">Daftar Status Pengiriman Per Bisnis Owner
-                    </h2>
+                    <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.daftar_status_pengiriman_per_bisnis_owner') }}</h2>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Audit log status penerimaan pesan
                         broadcast untuk setiap nomor WhatsApp terdaftar</p>
                 </div>
@@ -260,7 +257,7 @@
 
             @if ($recipients->isEmpty())
                 <div class="p-10 sm:p-12 text-center text-[13px] text-black/45 dark:text-white/45">
-                    Belum ada data rekaman penerima untuk broadcast ini.
+                    {{ __('admin.belum_ada_data_rekaman_penerima_untuk') }}
                 </div>
             @else
                 {{-- Mobile Card List View (< md) --}}

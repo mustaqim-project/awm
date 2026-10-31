@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Pemulihan Akun - Admin Console',
+    'title' => __('admin.pemulihan_akun_admin_console'),
     'headerTitle' => 'Pusat Verifikasi Pemulihan Akun',
     'headerSubtitle' => 'Verifikasi berkas identitas dan bukti usaha untuk pemulihan akses akun pemilik bisnis',
 ])
@@ -41,7 +41,7 @@
                     </div>
                 @endif
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">Menunggu Review</span>
+                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">{{ __('admin.menunggu_review') }}</span>
                     <div
                         class="w-8 h-8 rounded-full bg-[#FF9500]/10 text-[#FF9500] dark:text-[#FF9F0A] flex items-center justify-center shrink-0">
                         <i data-lucide="clock" class="w-4 h-4" stroke-width="2"></i>
@@ -57,7 +57,7 @@
             <a href="{{ route('admin.account-recoveries.index', ['status' => 'all']) }}"
                 class="p-4 sm:p-5 rounded-[20px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border {{ $status === 'all' ? 'border-[#007AFF] ring-2 ring-[#007AFF]/20' : 'border-black/[0.06] dark:border-white/[0.08]' }} hover:border-[#007AFF]/40 transition-all duration-200 block shadow-sm hover:shadow-md">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">Total Pengajuan</span>
+                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">{{ __('admin.total_pengajuan') }}</span>
                     <div
                         class="w-8 h-8 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center shrink-0">
                         <i data-lucide="inbox" class="w-4 h-4" stroke-width="2"></i>
@@ -73,7 +73,7 @@
             <a href="{{ route('admin.account-recoveries.index', ['status' => 'approved']) }}"
                 class="p-4 sm:p-5 rounded-[20px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border {{ $status === 'approved' ? 'border-[#34C759] ring-2 ring-[#34C759]/20' : 'border-black/[0.06] dark:border-white/[0.08]' }} hover:border-[#34C759]/40 transition-all duration-200 block shadow-sm hover:shadow-md">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">Disetujui Resmi</span>
+                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">{{ __('admin.disetujui_resmi') }}</span>
                     <div
                         class="w-8 h-8 rounded-full bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
                         <i data-lucide="check-circle-2" class="w-4 h-4" stroke-width="2"></i>
@@ -89,7 +89,7 @@
             <a href="{{ route('admin.account-recoveries.index', ['status' => 'rejected']) }}"
                 class="p-4 sm:p-5 rounded-[20px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border {{ $status === 'rejected' ? 'border-[#FF3B30] ring-2 ring-[#FF3B30]/20' : 'border-black/[0.06] dark:border-white/[0.08]' }} hover:border-[#FF3B30]/40 transition-all duration-200 block shadow-sm hover:shadow-md">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">Permohonan Ditolak</span>
+                    <span class="text-xs font-semibold text-black/55 dark:text-white/55">{{ __('admin.permohonan_ditolak') }}</span>
                     <div
                         class="w-8 h-8 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] flex items-center justify-center shrink-0">
                         <i data-lucide="x-circle" class="w-4 h-4" stroke-width="2"></i>
@@ -110,11 +110,11 @@
                 class="inline-flex p-1 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] text-xs font-medium overflow-x-auto no-scrollbar">
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'all', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap transition-all {{ $status === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Semua ({{ $counts['all'] }})
+                    {{ __('common.all') }} ({$counts['all'] })
                 </a>
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'pending', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap flex items-center gap-1.5 transition-all {{ $status === 'pending' ? 'bg-white dark:bg-[#2C2C2E] text-[#FF9500] dark:text-[#FF9F0A] font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    <span>Menunggu Review</span>
+                    <span>{{ __('admin.menunggu_review') }}</span>
                     @if ($counts['pending'] > 0)
                         <span
                             class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#FF9500] dark:text-[#FF9F0A]">{{ $counts['pending'] }}</span>
@@ -137,7 +137,7 @@
                     <i data-lucide="search"
                         class="w-4 h-4 text-black/35 dark:text-white/35 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                     <input type="text" name="search" value="{{ $search }}"
-                        placeholder="Cari tiket, pemohon, email, WA..."
+                        placeholder="{{ __('admin.cari_tiket_pemohon_email_wa') }}"
                         class="w-full pl-9 pr-3.5 py-2 min-h-[40px] rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] transition-all">
                 </div>
                 @if ($search)
@@ -211,7 +211,7 @@
                                         <button type="button"
                                             @click="navigator.clipboard.writeText('{{ $rec->ticket_number }}'); copiedTicket = '{{ $rec->id }}'; setTimeout(() => copiedTicket = null, 2000)"
                                             class="p-1 rounded-[6px] text-black/35 dark:text-white/35 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-                                            title="Salin nomor tiket">
+                                            title="{{ __('admin.salin_nomor_tiket') }}">
                                             <i data-lucide="copy" class="w-3.5 h-3.5"
                                                 x-show="copiedTicket !== '{{ $rec->id }}'"></i>
                                             <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759]"
@@ -265,7 +265,7 @@
                                         <span
                                             class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#FF9500] dark:text-[#FF9F0A]">
                                             <i data-lucide="clock" class="w-3 h-3"></i>
-                                            <span>Menunggu Review</span>
+                                            <span>{{ __('admin.menunggu_review') }}</span>
                                         </span>
                                     @elseif ($rec->status === \App\Models\AccountRecoveryRequest::STATUS_APPROVED)
                                         <span
@@ -292,7 +292,7 @@
                                         </button>
                                         <a href="{{ route('admin.account-recoveries.show', $rec) }}"
                                             class="p-2 min-h-[36px] min-w-[36px] rounded-[10px] text-black/40 dark:text-white/40 hover:text-[#007AFF] dark:hover:text-[#0A84FF] hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex items-center justify-center"
-                                            title="Buka halaman penuh">
+                                            title="{{ __('admin.buka_halaman_penuh') }}">
                                             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                                         </a>
                                     </div>
@@ -409,7 +409,7 @@
                             </button>
                             <a href="{{ route('admin.account-recoveries.show', $rec) }}"
                                 class="min-h-[48px] px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white flex items-center justify-center transition-colors"
-                                title="Buka halaman detail">
+                                title="{{ __('admin.buka_halaman_detail') }}">
                                 <i data-lucide="external-link" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -463,8 +463,7 @@
                                         <!-- Status Pill inside Header -->
                                         <template x-if="selectedRecovery?.status === 'pending'">
                                             <span
-                                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/12 text-[#FF9500] dark:text-[#FF9F0A]">Menunggu
-                                                Review</span>
+                                                class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FF9500]/12 text-[#FF9500] dark:text-[#FF9F0A]">{{ __('admin.menunggu_review') }}</span>
                                         </template>
                                         <template x-if="selectedRecovery?.status === 'approved'">
                                             <span
@@ -488,7 +487,7 @@
                                 <a :href="selectedRecovery?.show_url"
                                     class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/70 dark:text-white/70 transition-colors">
                                     <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                    <span>Buka Halaman Penuh</span>
+                                    <span>{{ __('admin.buka_halaman_penuh_2') }}</span>
                                 </a>
                                 <button type="button" @click="closeInspection()"
                                     class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] dark:hover:bg-white/[0.15] text-black/60 dark:text-white/60 flex items-center justify-center transition-all active:scale-95">
@@ -616,7 +615,7 @@
                                                 <a :href="selectedRecovery.identity_url" target="_blank"
                                                     class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                                     <i data-lucide="external-link" class="w-3 h-3"></i>
-                                                    <span>Buka Resolusi Penuh</span>
+                                                    <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                                 </a>
                                             </div>
                                         </template>
@@ -647,7 +646,7 @@
                                                             PDF Usaha</span>
                                                         <a :href="selectedRecovery.business_url" target="_blank"
                                                             class="text-[10px] font-bold text-[#5856D6] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
-                                                            <span>Buka PDF di Tab Baru &rarr;</span>
+                                                            <span>{{ __('admin.buka_pdf_di_tab_baru_rarr') }}</span>
                                                         </a>
                                                     </div>
                                                 </template>
@@ -656,7 +655,7 @@
                                                     <div>
                                                         <div class="relative group rounded-[12px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/5 cursor-pointer aspect-video"
                                                             @click="openLightbox(selectedRecovery.business_url, 'Bukti Usaha: ' + selectedRecovery.business_name)">
-                                                            <img :src="selectedRecovery.business_url" alt="Bukti Usaha"
+                                                            <img :src="selectedRecovery.business_url" alt="{{ __('admin.bukti_usaha') }}"
                                                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
                                                             <div
                                                                 class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-1.5 backdrop-blur-[2px]">
@@ -667,7 +666,7 @@
                                                         <a :href="selectedRecovery.business_url" target="_blank"
                                                             class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 mt-1" rel="noopener noreferrer">
                                                             <i data-lucide="external-link" class="w-3 h-3"></i>
-                                                            <span>Buka Resolusi Penuh</span>
+                                                            <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                                         </a>
                                                     </div>
                                                 </template>
@@ -705,7 +704,7 @@
                                                 <a :href="selectedRecovery.selfie_url" target="_blank"
                                                     class="text-[11px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1" rel="noopener noreferrer">
                                                     <i data-lucide="external-link" class="w-3 h-3"></i>
-                                                    <span>Buka Resolusi Penuh</span>
+                                                    <span>{{ __('admin.buka_resolusi_penuh') }}</span>
                                                 </a>
                                             </div>
                                         </template>
@@ -725,8 +724,7 @@
                                         class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
                                         <div class="flex items-center gap-2">
                                             <i data-lucide="shield-alert" class="w-4 h-4 text-[#007AFF]"></i>
-                                            <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Tindakan
-                                                Administrator Langsung</h4>
+                                            <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('admin.tindakan_administrator_langsung') }}</h4>
                                         </div>
 
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -758,7 +756,7 @@
                                                     <button type="submit"
                                                         class="w-full min-h-[44px] py-2.5 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
                                                         <i data-lucide="check" class="w-4 h-4"></i>
-                                                        <span>Setujui &amp; Perbarui Akses Akun</span>
+                                                        <span>{{ __('admin.setujui_perbarui_akses_akun') }}</span>
                                                     </button>
                                                 </form>
 @endif
@@ -842,13 +840,11 @@
                             class="sticky bottom-0 z-20 backdrop-blur-xl bg-white/95 dark:bg-[#1C1C1E]/95 border-t border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-3.5 flex items-center justify-between gap-3 shrink-0">
                             <a :href="selectedRecovery?.show_url"
                                 class="sm:hidden text-xs font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1">
-                                <span>Buka Halaman Penuh &rarr;</span>
+                                <span>{{ __('admin.buka_halaman_penuh_rarr') }}</span>
                             </a>
                             <div class="ml-auto">
                                 <button type="button" @click="closeInspection()"
-                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-xs font-semibold text-black dark:text-white transition-colors">
-                                    Tutup
-                                </button>
+                                    class="min-h-[44px] px-5 py-2 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-xs font-semibold text-black dark:text-white transition-colors">{{ __('common.close') }}</button>
                             </div>
                         </div>
                     </div>

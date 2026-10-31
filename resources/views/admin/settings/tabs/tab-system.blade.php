@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <div class="flex items-center gap-2 flex-wrap">
-                            <h2 class="text-[15px] sm:text-[16px] font-bold text-black dark:text-white">Panduan Konfigurasi Google Cloud Console</h2>
+                            <h2 class="text-[15px] sm:text-[16px] font-bold text-black dark:text-white">{{ __('admin.panduan_konfigurasi_google_cloud_console') }}</h2>
                             @if(!empty($googleClientId))
                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25">
                                     <i data-lucide="check-circle-2" class="w-3 h-3" stroke-width="2"></i>
@@ -30,7 +30,7 @@
                 </div>
                 <a href="https://console.cloud.google.com/apis/credentials" target="_blank"
                     class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#5856D6] dark:text-[#5E5CE6] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
-                    <span>Buka Google Console</span>
+                    <span>{{ __('admin.buka_google_console') }}</span>
                     <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                 </a>
             </div>
@@ -144,7 +144,7 @@
                                 <i data-lucide="user-check" class="w-4.5 h-4.5" stroke-width="1.8"></i>
                             </div>
                             <div>
-                                <h4 class="text-[15px] font-bold text-black dark:text-white">Owner Bisnis &amp; Kasir</h4>
+                                <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.owner_bisnis_kasir') }}</h4>
                                 <span class="text-[11px] text-black/50 dark:text-white/50">Otorisasi Level Workspace &amp; POS</span>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                                 <i data-lucide="users" class="w-4.5 h-4.5" stroke-width="1.8"></i>
                             </div>
                             <div>
-                                <h4 class="text-[15px] font-bold text-black dark:text-white">Pelanggan Toko (Customer)</h4>
+                                <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.pelanggan_toko_customer') }}</h4>
                                 <span class="text-[11px] text-black/50 dark:text-white/50">Otorisasi Storefront &amp; Portal Order</span>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                         <i data-lucide="sliders" class="w-5 h-5" stroke-width="1.8"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Pengaturan Umum Platform</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.pengaturan_umum_platform') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Nama aplikasi dan identitas sistem yang tampil di portal publik &amp; admin</p>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
                 <button type="submit"
                     class="w-full sm:w-auto h-12 sm:h-11 px-6 rounded-[14px] text-[13px] sm:text-[14px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="save" class="w-4.5 h-4.5" stroke-width="2"></i>
-                    <span>Simpan</span>
+                    <span>{{ __('common.save') }}</span>
                 </button>
 
                 @endif

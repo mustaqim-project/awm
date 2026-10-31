@@ -85,7 +85,7 @@
                     <a href="{{ route('sales.orders.edit', $salesOrder) }}"
                         class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition flex items-center gap-1.5">
                         <i data-lucide="edit-3" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                        <span>Edit Pesanan</span>
+                        <span>{{ __('sales.edit_pesanan_4') }}</span>
                     </a>
                 @endif
 
@@ -110,7 +110,7 @@
                     <button type="button" @click="promptDelete()"
                         class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="trash-2" class="w-4 h-4 text-[#FF3B30]"></i>
-                        <span>Hapus Draf</span>
+                        <span>{{ __('sales.hapus_draf') }}</span>
                     </button>
 
                     <form id="form-delete-sales-order-show" action="{{ route('sales.orders.destroy', $salesOrder) }}" method="POST" class="hidden">
@@ -444,13 +444,9 @@
 
                         <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="deleteModalOpen = false"
-                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Batal
-                            </button>
+                                class="min-h-[44px] py-3 text-black/60 dark:text-white/60 border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="button" @click="submitDelete()"
-                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Hapus
-                            </button>
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.delete') }}</button>
                         </div>
                     </div>
                 </div>

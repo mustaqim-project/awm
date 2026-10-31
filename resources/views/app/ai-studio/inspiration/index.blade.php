@@ -37,7 +37,7 @@
             <a href="{{ route('ai-studio.index') }}"
                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 transition-all text-xs font-semibold text-black/80 dark:text-white">
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                <span>Kembali ke Studio</span>
+                <span>{{ __('ai.kembali_ke_studio') }}</span>
             </a>
             <a href="{{ route('ai-studio.create') }}"
                 class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-semibold shadow-sm transition-all active:scale-[0.98]">
@@ -53,7 +53,7 @@
     <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
         <a href="{{ route('ai-studio.inspiration.index', array_merge(request()->except('category', 'page'))) }}"
             class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all {{ !request('category') ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25' : 'bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5' }}">
-            Semua Kategori
+            {{ __('common.all_categories') }}
         </a>
         @foreach ($categories as $cat)
             @php
@@ -79,7 +79,7 @@
             <div class="relative flex-1">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari gaya visual, mood, pencahayaan, atau kata kunci..."
+                    placeholder="{{ __('ai.cari_gaya_visual_mood_pencahayaan_atau') }}"
                     class="w-full pl-9 pr-3.5 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
 
@@ -131,15 +131,13 @@
                 <i data-lucide="image-off" class="w-7 h-7"></i>
             </div>
             <div class="space-y-1.5 max-w-md mx-auto">
-                <h3 class="text-base font-bold text-black dark:text-white">Tidak Ada Inspirasi Ditemukan</h3>
+                <h3 class="text-base font-bold text-black dark:text-white">{{ __('ai.tidak_ada_inspirasi_ditemukan') }}</h3>
                 <p class="text-xs sm:text-sm text-black/60 dark:text-white/60">
                     Coba ubah kata kunci pencarian atau pilih kategori lain untuk melihat koleksi inspirasi komersial.
                 </p>
             </div>
             <a href="{{ route('ai-studio.inspiration.index') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] text-xs font-semibold text-white shadow-sm">
-                Lihat Semua Inspirasi
-            </a>
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] text-xs font-semibold text-white shadow-sm">{{ __('ai.lihat_semua_inspirasi') }}</a>
         </div>
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -198,7 +196,7 @@
                                 </a>
                                 <a href="{{ route('ai-studio.inspiration.show', $item->id) }}"
                                     class="p-2 rounded-[10px] bg-white/20 hover:bg-white/30 text-white text-xs font-semibold backdrop-blur-sm transition-all"
-                                    title="Lihat Detail & Atribusi Hak Cipta">
+                                    title="{{ __('ai.lihat_detail_atribusi_hak_cipta') }}">
                                     <i data-lucide="info" class="w-4 h-4"></i>
                                 </a>
                             </div>

@@ -73,7 +73,7 @@
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-2">
-                        <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">Hub Pesanan Omnichannel</h2>
+                        <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">{{ __('storefront.hub_pesanan_omnichannel') }}</h2>
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
                             Semua Saluran
                         </span>
@@ -556,9 +556,7 @@
                     <span>Cetak Label Thermal (Massal)</span>
                 </button>
                 <button type="button" @click="selectedOrderIds = []"
-                    class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">
-                    Batal
-                </button>
+                    class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">{{ __('common.cancel') }}</button>
             </div>
         </div>
 

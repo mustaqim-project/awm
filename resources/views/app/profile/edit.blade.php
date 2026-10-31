@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Profil & Ganti Kata Sandi',
+    'title' => __('settings.profil_ganti_kata_sandi'),
     'headerTitle' => 'Pengaturan Akun & Keamanan',
     'headerSubtitle' => 'Kelola informasi profil pengguna dan perbarui kata sandi akun Anda'
 ])
@@ -20,7 +20,7 @@
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
                 <span class="text-black dark:text-white font-medium">Akun &amp; Profil</span>
             </nav>
-            <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Akun Pengguna &amp; Keamanan</h1>
+            <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('settings.akun_pengguna_keamanan') }}</h1>
             <p class="text-[13px] text-black/50 dark:text-white/50">Kelola identitas akun Anda dan proteksi keamanan autentikasi</p>
         </div>
 
@@ -43,7 +43,7 @@
         </div>
         <form method="POST" action="{{ route('verification.send') }}" class="shrink-0">
             @csrf
-            <button type="submit" class="h-8 px-3 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold transition">Kirim Ulang</button>
+            <button type="submit" class="h-8 px-3 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold transition">{{ __('settings.kirim_ulang') }}</button>
         </form>
     </div>
     @endunless
@@ -98,7 +98,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white">Profil Pengguna</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('settings.profil_pengguna') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Ubah nama identitas dan kontak akun Anda</p>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
-                    <span>Simpan Profil</span>
+                    <span>{{ __('admin.simpan_profil') }}</span>
                 </button>
             </div>
         </div>
@@ -151,7 +151,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white">Ganti Kata Sandi</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('admin.ganti_kata_sandi') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Perbarui kata sandi berkala untuk mengamankan akun</p>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             Kata Sandi Baru <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <input type="password" name="password" required placeholder="Minimal 8 karakter"
+                        <input type="password" name="password" required placeholder="{{ __('admin.minimal_8_karakter') }}"
                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -180,7 +180,7 @@
                         <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             Konfirmasi Kata Sandi Baru <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <input type="password" name="password_confirmation" required placeholder="Ketik ulang kata sandi baru"
+                        <input type="password" name="password_confirmation" required placeholder="{{ __('settings.ketik_ulang_kata_sandi_baru') }}"
                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </form>
@@ -192,7 +192,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
                     </svg>
-                    <span>Ubah Kata Sandi</span>
+                    <span>{{ __('admin.ubah_kata_sandi') }}</span>
                 </button>
             </div>
         </div>
@@ -208,7 +208,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white">Ganti Nomor WhatsApp</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('settings.ganti_nomor_whatsapp') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Verifikasi kepemilikan nomor baru dengan OTP WhatsApp</p>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                     </svg>
-                    <span>Kirim OTP WhatsApp</span>
+                    <span>{{ __('settings.kirim_otp_whatsapp') }}</span>
                 </button>
             </div>
         </div>
@@ -252,7 +252,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white">Ganti Alamat Email</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white">{{ __('settings.ganti_alamat_email') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Perbarui email akun dan kirim tautan verifikasi ke email baru</p>
                     </div>
                 </div>
@@ -276,7 +276,7 @@
                         <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             Alamat Email Baru <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <input type="email" name="email" value="{{ old('email') }}" required placeholder="nama@domain.com"
+                        <input type="email" name="email" value="{{ old('email') }}" required placeholder="{{ __('settings.nama_domain_com') }}"
                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -298,7 +298,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                     </svg>
-                    <span>Ubah &amp; Verifikasi Email</span>
+                    <span>{{ __('settings.ubah_verifikasi_email') }}</span>
                 </button>
             </div>
         </div>

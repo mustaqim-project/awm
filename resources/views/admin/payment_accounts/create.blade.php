@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Tambah Rekening Pembayaran - Admin Console',
+    'title' => __('admin.tambah_rekening_pembayaran_admin_console'),
     'headerTitle' => 'Tambah Rekening Pembayaran',
     'headerSubtitle' => 'Tambahkan metode transfer bank atau QRIS baru untuk pembayaran langganan tenant Cooca',
 ])
@@ -22,7 +22,7 @@
             <a href="{{ route('admin.payment-accounts.index') }}"
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[10px] text-[13px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/8 hover:bg-[#007AFF]/15 active:scale-[0.97] transition">
                 <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-                <span>Kembali ke Daftar Rekening</span>
+                <span>{{ __('admin.kembali_ke_daftar_rekening') }}</span>
             </a>
         </div>
 
@@ -67,7 +67,7 @@
                             Kode Bank / Identifier <span class="text-[#FF3B30] dark:text-[#FF453A]">*</span>
                         </label>
                         <input type="text" name="bank_code" value="{{ old('bank_code') }}" required
-                            placeholder="Contoh: bca, mandiri, bri, qris"
+                            placeholder="{{ __('admin.contoh_bca_mandiri_bri_qris') }}"
                             class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] md:text-[13px] uppercase font-mono text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 focus:border-[#007AFF] transition">
                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Kode unik sistem (otomatis disesuaikan tanpa spasi).</p>
                     </div>
@@ -130,7 +130,7 @@
                         Petunjuk / Panduan Transfer
                     </label>
                     <textarea name="instructions" rows="3"
-                        placeholder="Contoh: Transfer tepat hingga 3 digit terakhir ke rekening BCA resmi Cooca, lalu upload bukti struk transfer."
+                        placeholder="{{ __('admin.contoh_transfer_tepat_hingga_3_digit') }}"
                         class="w-full px-3.5 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] md:text-[13px] leading-relaxed text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 focus:border-[#007AFF] transition">{{ old('instructions') }}</textarea>
                     <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Petunjuk ini akan muncul pada pop-up instruksi bayar yang dibaca oleh tenant.</p>
                 </div>
@@ -163,7 +163,7 @@
                     class="p-4 bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] rounded-[18px] max-w-xs text-center space-y-2">
                     <span class="text-[12px] font-semibold text-black/60 dark:text-white/60 block">Preview QR Code:</span>
                     <div class="p-3 bg-white rounded-[14px] border border-black/5 shadow-inner">
-                        <img :src="qrPreview" alt="QRIS Preview" class="max-h-48 mx-auto rounded-[10px] object-contain">
+                        <img :src="qrPreview" alt="{{ __('admin.qris_preview') }}" class="max-h-48 mx-auto rounded-[10px] object-contain">
                     </div>
                 </div>
 
@@ -226,13 +226,13 @@
                 <a href="{{ route('admin.payment-accounts.index') }}"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition inline-flex items-center gap-1.5">
                     <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Batal</span>
+                    <span>{{ __('common.cancel') }}</span>
                 </a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.payment_accounts.create'))
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)]">
                     <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Simpan Rekening</span>
+                    <span>{{ __('admin.simpan_rekening') }}</span>
                 </button>
                 @endif
             </div>

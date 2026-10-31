@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Profil & Ganti Kata Sandi Administrator - Admin Console',
+    'title' => __('admin.profil_ganti_kata_sandi_administrator_admin'),
     'headerTitle' => 'Profil & Keamanan Akun Admin',
     'headerSubtitle' => 'Kelola identitas akun superadministrator dan perbarui kata sandi akses sistem',
 ])
@@ -57,7 +57,7 @@
                         <i data-lucide="user" class="w-5 h-5" stroke-width="1.8"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Profil Administrator</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.profil_administrator') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Perbarui nama dan email login admin</p>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                         <button type="submit"
                             class="w-full sm:w-auto h-12 sm:h-10 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Simpan Profil</span>
+                            <span>{{ __('admin.simpan_profil') }}</span>
                         </button>
                         @endif
                     </div>
@@ -116,7 +116,7 @@
                         <i data-lucide="key-round" class="w-5 h-5" stroke-width="1.8"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Ganti Kata Sandi</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.ganti_kata_sandi') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Perbarui kata sandi untuk keamanan akses admin</p>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                                 <span x-text="showNew ? 'Sembunyikan' : 'Lihat'"></span>
                             </button>
                         </div>
-                        <input :type="showNew ? 'text' : 'password'" name="password" required placeholder="Minimal 8 karakter"
+                        <input :type="showNew ? 'text' : 'password'" name="password" required placeholder="{{ __('admin.minimal_8_karakter') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] font-mono text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -163,7 +163,7 @@
                                 <span x-text="showConfirm ? 'Sembunyikan' : 'Lihat'"></span>
                             </button>
                         </div>
-                        <input :type="showConfirm ? 'text' : 'password'" name="password_confirmation" required placeholder="Ulangi kata sandi baru"
+                        <input :type="showConfirm ? 'text' : 'password'" name="password_confirmation" required placeholder="{{ __('admin.ulangi_kata_sandi_baru') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] font-mono text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -172,7 +172,7 @@
                         <button type="submit"
                             class="w-full sm:w-auto h-12 sm:h-10 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                             <i data-lucide="shield-check" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Ubah Kata Sandi</span>
+                            <span>{{ __('admin.ubah_kata_sandi') }}</span>
                         </button>
                         @endif
                     </div>

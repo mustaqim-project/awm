@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Komunitas Owner - Cooca',
-    'headerTitle' => 'Komunitas Owner',
-    'headerSubtitle' => 'Wadah diskusi pengusaha UMKM dan agenda event bisnis',
+    'title' => __('community.page_title'),
+    'headerTitle' => __('community.header_title'),
+    'headerSubtitle' => __('community.header_subtitle'),
 ])
 
 @section('content')
@@ -249,7 +249,7 @@
             <button type="button" @click="focusComposer()"
                 class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                 <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
-                <span>Tulis Ide Bisnis</span>
+                <span>{{ __('community.write_business_idea') }}</span>
             </button>
 
             <!-- Storage Quota Widget -->
@@ -316,8 +316,8 @@
                 @if($upcomingEvents->isEmpty())
                     <div class="py-6 rounded-xl border border-dashed border-slate-200 dark:border-white/10 text-center space-y-1">
                         <i data-lucide="calendar-x" class="w-6 h-6 mx-auto text-slate-300 dark:text-slate-600"></i>
-                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Belum ada agenda event mendatang</p>
-                        <p class="text-[11px] text-slate-400 dark:text-slate-500">Event lampau disaring secara otomatis.</p>
+                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">{{ __('community.no_upcoming_events') }}</p>
+                        <p class="text-[11px] text-slate-400 dark:text-slate-500">{{ __('community.past_events_filtered') }}</p>
                     </div>
                 @else
                     <!-- Horizontal Carousel Slider -->
@@ -391,7 +391,7 @@
                                             <a href="{{ route('community.events.payment.show', $userReg) }}"
                                                 class="w-full py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-2xs">
                                                 <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
-                                                <span>Bayar QRIS ({{ $userReg->getFormattedAmountPaid() }})</span>
+                                                <span>{{ __('community.pay_qris') }} ({{ $userReg->getFormattedAmountPaid() }})</span>
                                             </a>
                                         @else
                                             <button type="button" @click="viewTicket('{{ $evt->id }}')"
@@ -432,7 +432,7 @@
                     </div>
                     <a href="{{ route('community.index', ['tab' => $activeTab]) }}"
                         class="px-2.5 py-1 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-indigo-600 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-50 transition shrink-0">
-                        Hapus Filter
+                        {{ __('common.clear_filter') }}
                     </a>
                 </div>
             @endif
@@ -477,8 +477,8 @@
                     @empty
                         <div class="py-12 text-center space-y-2">
                             <i data-lucide="bell-off" class="w-10 h-10 mx-auto text-slate-300 dark:text-slate-600"></i>
-                            <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300">Belum ada notifikasi</h4>
-                            <p class="text-[11px] text-slate-400">Interaksi suka, komentar, dan repost dari owner lain akan muncul di sini.</p>
+                            <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300">{{ __('common.no_notifications') }}</h4>
+                            <p class="text-[11px] text-slate-400">{{ __('community.no_notifications_desc') }}</p>
                         </div>
                     @endforelse
                 </div>
@@ -517,7 +517,7 @@
                                     {{ strtoupper(substr(auth()->user()->name ?? 'O', 0, 1)) }}
                                 </div>
                                 @if($isSubscribed)
-                                    <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center text-[9px] font-black border-2 border-white dark:border-[#1C1C1E]" title="Pelanggan Aktif Cooca">
+                                    <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-slate-900 flex items-center justify-center text-[9px] font-black border-2 border-white dark:border-[#1C1C1E]" title="{{ __('community.active_customer_cooca') }}">
                                         ★
                                     </span>
                                 @endif
@@ -541,7 +541,7 @@
                                 <textarea name="content" required rows="3" maxlength="5000" @input="onInput($event)"
                                     @focus="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('menerbitkan postingan di komunitas'); }"
                                     @click="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('menerbitkan postingan di komunitas'); }"
-                                    placeholder="Apa yang sedang Anda pikirkan untuk bisnis hari ini? Bagikan tips, pertanyaan, atau update toko..."
+                                    placeholder="{{ __('community.composer_placeholder') }}"
                                     class="w-full bg-transparent border-0 p-0 text-[14px] sm:text-[15px] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-0 resize-none leading-relaxed"></textarea>
 
                                 <!-- Live Attached Image Preview -->
@@ -550,7 +550,7 @@
                                     <button type="button"
                                         @click="previewUrl = null; fileSelected = false; $refs.imageInput.value = ''"
                                         class="absolute top-2.5 right-2.5 p-1.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition"
-                                        title="Hapus Gambar">
+                                        title="{{ __('common.delete_image') }}">
                                         <i data-lucide="x" class="w-4 h-4"></i>
                                     </button>
                                 </div>
@@ -650,7 +650,7 @@
                                                     @method('DELETE')
                                                     <button type="submit"
                                                         class="p-1 rounded-full text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition"
-                                                        title="Hapus Postingan">
+                                                        title="{{ __('community.delete_post') }}">
                                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                                     </button>
                                                 </form>
@@ -751,7 +751,7 @@
                                                 </div>
                                             @empty
                                                 <div x-show="clientComments.length === 0" class="text-center py-2 text-xs text-slate-400 italic">
-                                                    Belum ada balasan. Jadilah yang pertama membalas!
+                                                    {{ __('community.no_replies_be_first') }}
                                                 </div>
                                             @endforelse
                                         </div>
@@ -762,7 +762,7 @@
                                             <input type="text" name="content" required maxlength="1000"
                                                 @focus="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('membalas komentar diskusi'); }"
                                                 @click="if(!window.__isSubscribedCommunity) { $el.blur(); promptSubscribe('membalas komentar diskusi'); }"
-                                                placeholder="Tulis balasan Anda..."
+                                                placeholder="{{ __('community.write_reply_placeholder') }}"
                                                 class="flex-1 bg-slate-50 dark:bg-white/[0.05] border border-slate-200 dark:border-white/10 rounded-full px-4 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#007AFF]">
                                             <button type="submit"
                                                 @click="if(!window.__isSubscribedCommunity) { $event.preventDefault(); promptSubscribe('membalas komentar diskusi'); }"
@@ -778,10 +778,10 @@
                         <div class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-12 text-center space-y-2">
                             <i data-lucide="messages-square" class="w-10 h-10 mx-auto text-slate-300 dark:text-slate-600"></i>
                             <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">
-                                {{ $activeTab === 'my_posts' ? 'Anda belum memiliki postingan atau repost' : 'Belum ada postingan komunitas' }}
+                                {{ $activeTab === 'my_posts' ? __('community.no_posts_user') : __('community.no_posts_community') }}
                             </h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                                {{ $activeTab === 'my_posts' ? 'Tuliskan insight bisnis pertama Anda melalui form postingan di atas.' : 'Mulai diskusi pertama Anda bersama ribuan pemilik usaha Cooca.' }}
+                                {{ $activeTab === 'my_posts' ? __('community.no_posts_user_desc') : __('community.no_posts_community_desc') }}
                             </p>
                         </div>
                     @endforelse
@@ -804,7 +804,7 @@
             <form method="GET" action="{{ route('community.index') }}" class="relative">
                 <input type="hidden" name="tab" value="{{ $activeTab }}">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari topik diskusi..."
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="{{ __('community.search_topics_placeholder') }}"
                     class="w-full h-10 pl-9 pr-3.5 rounded-2xl text-xs bg-white dark:bg-[#1C1C1E] border border-slate-200/80 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-[#007AFF] shadow-2xs">
             </form>
 
@@ -817,7 +817,7 @@
                         </span>
                         <div>
                             <h3 class="text-sm font-black text-slate-900 dark:text-white leading-tight">
-                                Tren 24 Jam
+                                {{ __('community.trending_24h') }}
                             </h3>
                             <p class="text-[10px] text-slate-400">Topik terhangat saat ini</p>
                         </div>
@@ -856,7 +856,7 @@
                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
                             <span>Event Paling Dekat</span>
                         </h4>
-                        <a href="{{ route('community.events.index') }}" class="text-[11px] text-[#007AFF] font-bold hover:underline">Semua</a>
+                        <a href="{{ route('community.events.index') }}" class="text-[11px] text-[#007AFF] font-bold hover:underline">{{ __('common.all') }}</a>
                     </div>
                     @php $firstEvt = $upcomingEvents->first(); @endphp
                     <div class="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/10 space-y-2">
@@ -872,7 +872,7 @@
                         </p>
                         <a href="{{ route('community.events.index') }}"
                             class="w-full py-1.5 rounded-lg text-xs font-bold text-white bg-slate-900 dark:bg-white dark:text-slate-900 flex items-center justify-center transition">
-                            Lihat Tiket
+                            {{ __('community.view_ticket') }}
                         </a>
                     </div>
                 </div>
@@ -884,7 +884,7 @@
                 <div class="flex items-center gap-2 text-[10px]">
                     <a href="{{ route('community.events.index') }}" class="hover:underline">Agenda Event</a>
                     <span>·</span>
-                    <a href="{{ route('billing.limits') }}" class="hover:underline">Batas &amp; Kuota</a>
+                    <a href="{{ route('billing.limits') }}" class="hover:underline">{{ __('community.limits_and_quota') }}</a>
                 </div>
             </div>
         </aside>
@@ -936,7 +936,7 @@
                     </div>
                     <button type="button" @click="selectedTicket = null"
                         class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 flex items-center justify-center transition cursor-pointer"
-                        aria-label="Tutup tiket">
+                        aria-label="{{ __('common.close') }}">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -994,7 +994,7 @@
                             <a :href="selectedTicket?.online_meeting_url" target="_blank" rel="noopener noreferrer"
                                 class="w-full py-2 px-3 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-xs cursor-pointer">
                                 <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                <span>Buka Ruang Meeting (Zoom/GMeet)</span>
+                                <span>{{ __('community.open_meeting_room') }}</span>
                             </a>
                         </div>
                     </template>
@@ -1036,7 +1036,7 @@
                 <!-- Self Presensi Check-in Methods (Hanya jika belum hadir) -->
                 <template x-if="!selectedTicket?.is_checked_in">
                     <div class="space-y-2 pt-1">
-                        <h5 class="text-xs font-bold text-slate-900 dark:text-white">Presensi Mandiri di Lokasi:</h5>
+                        <h5 class="text-xs font-bold text-slate-900 dark:text-white">{{ __('community.self_presence_at_location') }}:</h5>
 
                         <!-- Metode 1: GPS Geolocation -->
                         <div class="p-3 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 space-y-1.5">
@@ -1064,7 +1064,7 @@
                                 <span>2. Ketik Kode Venue</span>
                             </span>
                             <div class="flex items-center gap-2">
-                                <input type="text" x-model="barcodeInput" placeholder="Ketik kode (COOCA-EVT-...)"
+                                <input type="text" x-model="barcodeInput" placeholder="{{ __('community.code_placeholder') }}"
                                     class="flex-1 bg-white dark:bg-[#1C1C1E] border border-slate-200 dark:border-white/10 rounded-xl px-3 py-1.5 text-xs text-slate-900 dark:text-white uppercase font-mono">
                                 <button type="button" @click="checkinBarcodeSubmit()" :disabled="barcodeLoading || !barcodeInput"
                                     class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 text-xs font-bold transition disabled:opacity-50 cursor-pointer">
@@ -1095,7 +1095,7 @@
                 <div x-show="selectedTicket?.is_checked_in"></div>
                 <button type="button" @click="selectedTicket = null"
                     class="min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 transition cursor-pointer">
-                    Tutup
+                    {{ __('common.close') }}
                 </button>
             </div>
         </div>

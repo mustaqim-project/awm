@@ -483,7 +483,7 @@
                                                     title="{{ __('social_media.edit_draft_btn') }}"
                                                     aria-label="{{ __('social_media.edit_draft_btn') }}">
                                                     <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
-                                                    <span>Edit</span>
+                                                    <span>{{ __('common.edit') }}</span>
                                                 </button>
                                             @endif
 
@@ -561,7 +561,7 @@
                                 <p class="text-[12.5px] text-black/55 dark:text-white/55" x-text="editingPostId ? 'Perbarui konten draf sebelum menjadwalkan atau mempublikasikan' : '{{ __('social_media.composer_subtitle') }}'"></p>
                             </div>
                         </div>
-                        <button type="button" @click="closeComposer()" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
+                        <button type="button" @click="closeComposer()" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="{{ __('common.close_modal') }}">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -1602,7 +1602,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" @click="postManagerOpen = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="Tutup modal">
+                    <button type="button" @click="postManagerOpen = false" class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer active:scale-95" aria-label="{{ __('common.close_modal') }}">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1719,7 +1719,7 @@
                         </div>
                         <button type="button" @click="postManagerOpen = false"
                                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-5 rounded-[12px] text-[13px] font-semibold text-black/75 dark:text-white/75 bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all cursor-pointer">
-                            <span>Tutup</span>
+                            <span>{{ __('common.close') }}</span>
                         </button>
                     </div>
 

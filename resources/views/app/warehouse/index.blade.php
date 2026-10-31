@@ -506,7 +506,7 @@ function warehouseIndexHub() {
                 </a>
                 <button type="button" @click="showNotice = false"
                         class="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
-                        title="Tutup">
+                        title="{{ __('warehouse.tutup') }}">
                     <i data-lucide="x" class="w-3.5 h-3.5"></i>
                 </button>
             </div>
@@ -706,7 +706,7 @@ function warehouseIndexHub() {
                         </div>
                         <div class="rounded-[10px] bg-slate-50 dark:bg-[#2C2C2E] p-2">
                             <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase">{{ __('warehouse.kpis.stock_asset_value') }}</span>
-                            <span class="text-xs sm:text-sm font-bold tabular-nums text-[#34C759] dark:text-[#30D158] truncate block" title="Rp {{ number_format($loc->total_valuation ?? 0, 0, ',', '.') }}">
+                            <span class="text-xs sm:text-sm font-bold tabular-nums text-[#34C759] dark:text-[#30D158] truncate block" title="{{ __('warehouse.rp_number_format_loc_total_valuation') }}">
                                 {{ ($loc->total_valuation ?? 0) >= 1000000 ? number_format(($loc->total_valuation ?? 0) / 1000000, 1) . 'jt' : number_format(($loc->total_valuation ?? 0) / 1000, 0) . 'rb' }}
                             </span>
                         </div>

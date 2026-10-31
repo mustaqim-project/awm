@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Log Error & Diagnostik Sistem - Admin Console',
+    'title' => __('admin.log_error_diagnostik_sistem_admin_console'),
     'headerTitle' => 'Log Error & Diagnostik Sistem',
     'headerSubtitle' => 'Pemantauan runtime exception, failure stack trace, dan riwayat log aplikasi secara real-time',
 ])
@@ -83,7 +83,7 @@
             </div>
             <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
-                    <h2 class="text-[17px] font-extrabold text-black dark:text-white tracking-tight">Pusat Diagnostik &amp; Log Sistem</h2>
+                    <h2 class="text-[17px] font-extrabold text-black dark:text-white tracking-tight">{{ __('admin.pusat_diagnostik_log_sistem') }}</h2>
                     <span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
                         {{ $selectedFile }}
                     </span>
@@ -106,7 +106,7 @@
             <button type="button" @click="toggleAutoRefresh()"
                 :class="autoRefresh ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/30' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70 border-black/[0.06] dark:border-white/[0.08]'"
                 class="h-10 px-3.5 rounded-[12px] border text-[12.5px] font-semibold flex items-center gap-2 transition-all active:scale-[0.98] cursor-pointer"
-                title="Refresh halaman otomatis setiap 10 detik">
+                title="{{ __('admin.refresh_halaman_otomatis_setiap_10_detik') }}">
                 <span class="w-2 h-2 rounded-full" :class="autoRefresh ? 'bg-[#34C759] animate-ping' : 'bg-black/30 dark:bg-white/30'"></span>
                 <i data-lucide="zap" class="w-4 h-4" stroke-width="2"></i>
                 <span x-text="autoRefresh ? 'Live (10s Aktif)' : 'Live Refresh'"></span>
@@ -115,7 +115,7 @@
             <!-- Refresh Button -->
             <button type="button" onclick="window.location.reload();"
                 class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/70 dark:text-white/70 text-[12.5px] font-semibold flex items-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer"
-                title="Muat ulang halaman">
+                title="{{ __('admin.muat_ulang_halaman') }}">
                 <i data-lucide="refresh-cw" class="w-4 h-4" stroke-width="1.8"></i>
                 <span class="hidden sm:inline">Refresh</span>
             </button>
@@ -124,9 +124,9 @@
             @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.download'))
             <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
                 class="h-10 px-3.5 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] text-[12.5px] font-bold flex items-center gap-1.5 transition-all active:scale-[0.98]"
-                title="Unduh berkas mentah {{ $selectedFile }}">
+                title="{{ __('admin.unduh_berkas_mentah_selectedfile') }}">
                 <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
-                <span>Unduh Log</span>
+                <span>{{ __('admin.unduh_log') }}</span>
             </a>
             @endif
 
@@ -134,7 +134,7 @@
             @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.clear'))
             <button type="button" @click="showClearModal = true"
                 class="h-10 px-3.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] text-[12.5px] font-bold flex items-center gap-1.5 transition-all active:scale-[0.98] cursor-pointer"
-                title="Kosongkan isi berkas log ini">
+                title="{{ __('admin.kosongkan_isi_berkas_log_ini') }}">
                 <i data-lucide="trash-2" class="w-4 h-4" stroke-width="2"></i>
                 <span>Bersihkan</span>
             </button>
@@ -219,7 +219,7 @@
                         <i data-lucide="search" class="w-4 h-4"></i>
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari pesan error, exception class, file, atau stack trace..."
+                        placeholder="{{ __('admin.cari_pesan_error_exception_class_file') }}"
                         class="w-full h-11 pl-10 pr-4 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-black dark:text-white text-[16px] sm:text-[13px] placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
                 </div>
 
@@ -261,7 +261,7 @@
                 <button type="submit"
                     class="h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-1.5 shadow-sm shadow-[#007AFF]/25 transition-all cursor-pointer">
                     <i data-lucide="filter" class="w-4 h-4"></i>
-                    <span>Terapkan Filter</span>
+                    <span>{{ __('admin.terapkan_filter') }}</span>
                 </button>
 
                 @if(request()->hasAny(['search', 'level']))
@@ -372,7 +372,7 @@
                 <div class="w-16 h-16 rounded-full bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158] flex items-center justify-center mx-auto shadow-md shadow-[#34C759]/20">
                     <i data-lucide="shield-check" class="w-8 h-8" stroke-width="2"></i>
                 </div>
-                <h3 class="text-[17px] font-extrabold text-black dark:text-white">Semua Berjalan Normal</h3>
+                <h3 class="text-[17px] font-extrabold text-black dark:text-white">{{ __('admin.semua_berjalan_normal') }}</h3>
                 <p class="text-[13px] text-black/50 dark:text-white/50 max-w-md mx-auto">
                     Tidak ditemukan catatan exception atau log error pada berkas <code class="font-mono font-bold text-black/70 dark:text-white/70">{{ $selectedFile }}</code> yang sesuai dengan kriteria filter saat ini.
                 </p>
@@ -461,13 +461,11 @@
                         <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
                             class="w-full h-11 rounded-[14px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] text-[#007AFF] dark:text-[#0A84FF] font-bold text-[13px] flex items-center justify-center gap-2 transition-all">
                             <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Unduh Salinan Cadangan</span>
+                            <span>{{ __('admin.unduh_salinan_cadangan') }}</span>
                         </a>
 
                         <button type="button" @click="showClearModal = false"
-                            class="w-full h-11 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                            Batal
-                        </button>
+                            class="w-full h-11 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">{{ __('common.cancel') }}</button>
                     </div>
                 </div>
             </div>

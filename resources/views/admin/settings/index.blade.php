@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Pengaturan Platform & Sistem - Admin Console',
+    'title' => __('admin.pengaturan_platform_sistem_admin_console'),
     'headerTitle' => 'Pengaturan Platform & Integrasi',
     'headerSubtitle' => 'Pusat kendali integrasi Google Cloud OAuth, Media Sosial (Meta & TikTok), server email SMTP, dan parameter sistem Cooca',
 ])
@@ -303,12 +303,12 @@
                     class="h-11 sm:h-10 px-4 sm:px-4 rounded-[14px] text-[13px] sm:text-[13.5px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                     <i data-lucide="sliders" class="w-4 h-4 shrink-0"
                         :class="activeTab === 'system' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
-                    <span>OAuth &amp; Sistem</span>
+                    <span>{{ __('admin.oauth_sistem') }}</span>
                     @if (!empty($googleClientId))
                         <i data-lucide="check" class="w-3.5 h-3.5 text-[#34C759] shrink-0" title="OAuth Terkonfigurasi"></i>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -323,7 +323,7 @@
                         :class="activeTab === 'branding' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
                     <span>Branding &amp; Logo</span>
                     @if (!empty($siteLogoLightRaw) || !empty($siteLogoDarkRaw))
-                        <span class="w-2 h-2 rounded-full bg-[#34C759]" title="Logo Kustom Aktif"></span>
+                        <span class="w-2 h-2 rounded-full bg-[#34C759]" title="{{ __('admin.logo_kustom_aktif') }}"></span>
                     @endif
                 </button>
 
@@ -336,7 +336,7 @@
                     class="h-11 sm:h-10 px-4 sm:px-4 rounded-[14px] text-[13px] sm:text-[13.5px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                     <i data-lucide="share-2" class="w-4 h-4 shrink-0"
                         :class="activeTab === 'social_links' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
-                    <span>Medsos Resmi CMS</span>
+                    <span>{{ __('admin.medsos_resmi_cms') }}</span>
                 </button>
 
                 <!-- Tab: SEO & SERP CMS -->
@@ -362,7 +362,7 @@
                     class="h-11 sm:h-10 px-4 sm:px-4 rounded-[14px] text-[13px] sm:text-[13.5px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                     <i data-lucide="credit-card" class="w-4 h-4 shrink-0"
                         :class="activeTab === 'payment' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
-                    <span>Pembayaran (TriPay)</span>
+                    <span>{{ __('admin.pembayaran_tripay') }}</span>
                     @if (!empty($tripayApiKey))
                         <span
                             class="text-[10px] font-bold px-1.5 py-0.2 rounded-md {{ $tripayIsProduction ? 'bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/15 text-[#B25E00] dark:text-[#FF9F0A]' }}">
@@ -372,7 +372,7 @@
                             title="TriPay Terkonfigurasi"></i>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -395,7 +395,7 @@
                             title="WhatsApp Terkonfigurasi"></i>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -416,7 +416,7 @@
                         <span class="w-2 h-2 rounded-full bg-[#007AFF]" title="Sebagian Terkonfigurasi"></span>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -439,7 +439,7 @@
                             title="Biteship Terkonfigurasi"></i>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -458,7 +458,7 @@
                             title="Marketplace Terkonfigurasi"></i>
                     @else
                         <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#FF9500] shrink-0"
-                            title="Belum Dikonfigurasi"></i>
+                            title="{{ __('admin.belum_dikonfigurasi') }}"></i>
                     @endif
                 </button>
 
@@ -471,7 +471,7 @@
                     class="h-11 sm:h-10 px-4 sm:px-4 rounded-[14px] text-[13px] sm:text-[13.5px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                     <i data-lucide="mail-cog" class="w-4 h-4 shrink-0"
                         :class="activeTab === 'smtp' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
-                    <span>Pengaturan SMTP Email</span>
+                    <span>{{ __('admin.pengaturan_smtp_email') }}</span>
                     <span
                         class="text-[10px] font-bold px-1.5 py-0.2 rounded-md bg-black/[0.06] dark:bg-white/[0.08] text-black/60 dark:text-white/60 uppercase">
                         {{ $mailMailer ?? 'SMTP' }}
@@ -484,7 +484,7 @@
 <a href="{{ route('admin.billing-packages.index', 'subscription') }}"
                 class="h-10 px-4 rounded-[14px] text-[12.5px] font-bold text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/10 active:scale-98 transition-all flex items-center gap-1.5 self-start sm:self-auto shrink-0 cursor-pointer">
                 <i data-lucide="layers-3" class="w-4 h-4" stroke-width="1.8"></i>
-                <span>Harga &amp; Paket Billing</span>
+                <span>{{ __('admin.harga_paket_billing') }}</span>
                 <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-black/35 dark:text-white/35"
                     stroke-width="2"></i>
             </a>

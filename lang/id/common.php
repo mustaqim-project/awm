@@ -122,4 +122,11 @@ return array (
   'parts' => 'Bagian',
   'changes_saved_auto' => 'Perubahan tersimpan otomatis',
   'sub_navigation' => 'Sub Navigasi',
+    'view_all' => 'Lihat Semua',
+    'exit' => 'Keluar',
+    'version' => 'Versi',
+    'delete_image' => 'Hapus Gambar',
+    'clear_filter' => 'Hapus Filter',
+    'testing' => 'Pengujian',
+    'seconds_short' => 'dtk',
 );

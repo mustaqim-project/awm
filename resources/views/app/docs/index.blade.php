@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Buku Panduan & Dokumentasi Penggunaan',
+    'title' => __('docs.buku_panduan_dokumentasi_penggunaan'),
     'headerTitle' => 'Pusat Dokumentasi & Panduan Cooca',
     'headerSubtitle' => 'Panduan terpadu pengoperasian seluruh modul ERP, Kasir POS, dan administrasi bisnis Cooca'
 ])
@@ -50,7 +50,7 @@
                     <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#007AFF] to-[#5856D6] text-white flex items-center justify-center shadow-[0_2px_8px_rgba(0,122,255,0.3)]">
                         <i data-lucide="book-open" class="w-5 h-5"></i>
                     </span>
-                    <span>Buku Panduan &amp; Dokumentasi Cooca</span>
+                    <span>{{ __('docs.buku_panduan_dokumentasi_cooca') }}</span>
                 </h1>
                 <p class="text-[13px] sm:text-[14px] text-black/60 dark:text-white/60 leading-relaxed">
                     Panduan praktis pengoperasian seluruh ekosistem Cooca: dari transaksi kasir POS, kalkulasi HPP resep otomatis, manajemen inventori multi-gudang, hingga pembukuan akuntansi dan penggajian.
@@ -62,13 +62,13 @@
                 <button type="button" @click="printGuide()"
                     class="h-9 px-3.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/75 dark:text-white/75 text-[12px] font-semibold flex items-center gap-1.5 transition active:scale-95 cursor-pointer">
                     <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                    <span>Cetak / Simpan PDF</span>
+                    <span>{{ __('docs.cetak_simpan_pdf') }}</span>
                 </button>
                 @if(\App\Support\Context::isOwner())
                     <a href="{{ route('feedback.bugs.create') }}"
                         class="h-9 px-4 rounded-xl bg-[#007AFF] hover:bg-[#0062CC] text-white text-[12px] font-semibold flex items-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-95">
                         <i data-lucide="message-square-plus" class="w-3.5 h-3.5"></i>
-                        <span>Butuh Bantuan Teknis?</span>
+                        <span>{{ __('docs.butuh_bantuan_teknis') }}</span>
                     </a>
                 @endif
             </div>
@@ -79,7 +79,7 @@
             <div class="relative flex items-center">
                 <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-4 pointer-events-none"></i>
                 <input type="text" x-model="searchQuery"
-                    placeholder="Cari topik panduan... (contoh: 'tutup shift kasir', 'resep hpp', 'printer bluetooth', 'stock opname', 'split bill')"
+                    placeholder="{{ __('docs.cari_topik_panduan_contoh_tutup_shift') }}"
                     class="w-full h-11 pl-11 pr-24 rounded-xl bg-black/[0.03] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] sm:text-[14px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-[#007AFF] focus:bg-white dark:focus:bg-[#1C1C1E] transition">
                 <button type="button" x-show="searchQuery" @click="searchQuery = ''"
                     class="absolute right-3 p-1 rounded-md text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white text-xs font-semibold">
@@ -128,7 +128,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-[#007AFF]/12 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
                                 <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Kasir POS &amp; Pembayaran</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.kasir_pos_pembayaran') }}</span>
                         </a>
 
                         <!-- Penjualan B2B & Invoice -->
@@ -148,8 +148,8 @@
                                     <i data-lucide="box" class="w-3.5 h-3.5"></i>
                                 </span>
                                 <div class="flex items-center justify-between flex-1 min-w-0">
-                                    <span class="truncate tracking-tight text-[12px]">3D Virtual Office &amp; AI</span>
-                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">20 Usaha</span>
+                                    <span class="truncate tracking-tight text-[12px]">{{ __('docs.virtual_office_ai') }}</span>
+                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">{{ __('docs.twenty_businesses') }}</span>
                                 </div>
                             </a>
 
@@ -158,7 +158,7 @@
                                 <a href="#sec-ai" @click="if(activeTab !== 'all') activeTab = 'all'"
                                     class="flex items-center gap-2 px-2 py-0.5 rounded-[6px] text-black/65 dark:text-white/65 hover:text-[#AF52DE] hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-                                    <span class="truncate">Tanya AI POS Kasir</span>
+                                    <span class="truncate">{{ __('docs.tanya_ai_pos_kasir') }}</span>
                                 </a>
                                 <a href="#sec-ai" @click="if(activeTab !== 'all') activeTab = 'all'"
                                     class="flex items-center gap-2 px-2 py-0.5 rounded-[6px] text-black/65 dark:text-white/65 hover:text-[#AF52DE] hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition">
@@ -173,7 +173,7 @@
                                 <a href="#sec-ai" @click="if(activeTab !== 'all') activeTab = 'all'"
                                     class="flex items-center gap-2 px-2 py-0.5 rounded-[6px] text-black/65 dark:text-white/65 hover:text-[#AF52DE] hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition">
                                     <span class="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span>
-                                    <span class="truncate font-semibold text-[#AF52DE] dark:text-[#BF5AF2]">Matriks 20 Industri UMKM</span>
+                                    <span class="truncate font-semibold text-[#AF52DE] dark:text-[#BF5AF2]">{{ __('docs.matriks_20_industri_umkm') }}</span>
                                 </a>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-amber-500/15 text-amber-600 dark:bg-amber-400/20 dark:text-amber-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="messages-square" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Komunitas &amp; Event UMKM</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.komunitas_event_umkm') }}</span>
                         </a>
                     </div>
 
@@ -200,7 +200,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A] flex items-center justify-center shrink-0">
                                 <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Stok, Resep &amp; Multi-Gudang</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.stok_resep_multi_gudang') }}</span>
                         </a>
 
                         <!-- Pembelian & Supplier (PO) -->
@@ -234,7 +234,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-emerald-600/15 text-emerald-600 dark:bg-emerald-400/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Otorisasi MAR &amp; Anti-Fraud</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.otorisasi_mar_anti_fraud') }}</span>
                         </a>
                     </div>
 
@@ -250,7 +250,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-sky-500/15 text-sky-500 dark:bg-sky-400/20 dark:text-sky-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="users" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Karyawan &amp; Penggajian</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.karyawan_penggajian') }}</span>
                         </a>
 
                         <!-- Loyalitas & WhatsApp Gateway -->
@@ -275,7 +275,7 @@
                             <span class="w-6 h-6 rounded-[7px] bg-amber-500/15 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Langganan &amp; Kuota Token</span>
+                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.langganan_kuota_token') }}</span>
                         </a>
 
                         <!-- Pintasan Keyboard -->
@@ -327,12 +327,12 @@
                             1
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Onboarding &amp; Setup Awal Usaha</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.onboarding_setup_awal_usaha') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Langkah wajib 5 menit sebelum memulai penjualan</p>
                         </div>
                     </div>
                     <a href="{{ route('settings.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Buka Pengaturan</span>
+                        <span>{{ __('docs.buka_pengaturan') }}</span>
                         <i data-lucide="arrow-right" class="w-3 h-3"></i>
                     </a>
                 </div>
@@ -405,13 +405,13 @@
                             2
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Kasir Modern POS, Pembayaran &amp; Shift</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.kasir_modern_pos_pembayaran_shift') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Pengoperasian harian kasir untuk toko retail maupun resto dine-in</p>
                         </div>
                     </div>
                     @if(\App\Support\Context::hasPermission('pos.terminal'))
                         <a href="{{ route('pos.terminal') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Mesin Kasir</span>
+                            <span>{{ __('docs.buka_mesin_kasir') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -419,7 +419,7 @@
 
                 <!-- POS Step-by-Step Flow Card -->
                 <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-4 shadow-2xs">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">Alur Standar Kasir Sehari-hari</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('docs.alur_standar_kasir_sehari_hari') }}</h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
                         <div class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1">
@@ -441,7 +441,7 @@
                     </div>
 
                     <div class="space-y-3 pt-2 text-xs text-black/70 dark:text-white/70">
-                        <h4 class="font-bold text-black dark:text-white text-sm">Fitur Kasir Unggulan di Cooca:</h4>
+                        <h4 class="font-bold text-black dark:text-white text-sm">{{ __('docs.fitur_kasir_unggulan_di_cooca') }}</h4>
                         <ul class="space-y-2 list-disc list-inside">
                             <li><strong>Split Bill (Bagi Tagihan):</strong> Pelanggan dalam satu meja dapat membayar terpisah per orang atau membagi total tagihan menjadi beberapa pembayaran.</li>
                             <li><strong>Kitchen Display &amp; Tiket Dapur (KDS):</strong> Setelah pesanan disimpan, tiket makanan/minuman otomatis terkirim ke printer dapur dan layar barista.</li>
@@ -479,7 +479,7 @@
                     </div>
                     @if(\App\Support\Context::hasPermission('products.view'))
                         <a href="{{ route('products.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Katalog Produk &amp; Resep</span>
+                            <span>{{ __('docs.buka_katalog_produk_resep') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -541,13 +541,13 @@
                             4
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Pengadaan &amp; Pembelian (PO ke Supplier)</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.pengadaan_pembelian_po_ke_supplier') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Alur standar pengadaan barang, penerimaan surat jalan, dan jatuh tempo hutang dagang</p>
                         </div>
                     </div>
                     @if(\App\Support\Context::hasPermission('purchasing.view'))
                         <a href="{{ route('purchase-orders.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Purchase Orders</span>
+                            <span>{{ __('docs.buka_purchase_orders') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -589,7 +589,7 @@
                     </div>
                     @if(\App\Support\Context::hasPermission('sales.view'))
                         <a href="{{ route('sales.orders.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Pesanan Penjualan</span>
+                            <span>{{ __('docs.buka_pesanan_penjualan') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -624,13 +624,13 @@
                             6
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Keuangan, Pembukuan &amp; Laporan Finansial</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.keuangan_pembukuan_laporan_finansial') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Otomasi jurnal akuntansi tanpa perlu menjadi akuntan bersertifikasi</p>
                         </div>
                     </div>
                     @if(\App\Support\Context::hasPermission('reports.view'))
                         <a href="{{ route('reports.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Laporan Bisnis</span>
+                            <span>{{ __('docs.buka_laporan_bisnis') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -666,13 +666,13 @@
                             7
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Karyawan, Presensi GPS &amp; Penggajian (HRM)</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.karyawan_presensi_gps_penggajian_hrm') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Manajemen kehadiran shift kerja dan slip gaji otomatis</p>
                         </div>
                     </div>
                     @if(\App\Support\Context::hasPermission('users.view'))
                         <a href="{{ route('hrm.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>Buka Data Karyawan</span>
+                            <span>{{ __('docs.buka_data_karyawan') }}</span>
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
                     @endif
@@ -700,7 +700,7 @@
                             8
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">CRM Pelanggan, Poin &amp; Notifikasi WhatsApp</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.crm_pelanggan_poin_notifikasi_whatsapp') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Retensi pelanggan loyal dan katalog toko online digital</p>
                         </div>
                     </div>
@@ -734,12 +734,12 @@
                             9
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Komunitas &amp; Event Jejaring Bisnis Cooca</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.komunitas_event_jejaring_bisnis_cooca') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Wadah berbagi ide, tips omzet, dan tiket barcode workshop offline</p>
                         </div>
                     </div>
                     <a href="{{ route('community.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Buka Komunitas</span>
+                        <span>{{ __('docs.buka_komunitas') }}</span>
                         <i data-lucide="arrow-right" class="w-3 h-3"></i>
                     </a>
                 </div>
@@ -777,7 +777,7 @@
                             10
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Otorisasi (MAR) &amp; Sistem Anti-Fraud</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.otorisasi_mar_sistem_anti_fraud') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Perlindungan bisnis dari kecurangan kasir dan manipulasi laporan</p>
                         </div>
                     </div>
@@ -813,12 +813,12 @@
                             11
                         </span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Langganan, Kuota Fitur &amp; Token AI</h2>
+                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.langganan_kuota_fitur_token_ai') }}</h2>
                             <p class="text-xs text-black/50 dark:text-white/50">Pengelolaan kapasitas bisnis dan aktivasi asisten kecerdasan buatan</p>
                         </div>
                     </div>
                     <a href="{{ route('billing.limits') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>Cek Kuota Fitur</span>
+                        <span>{{ __('docs.cek_kuota_fitur') }}</span>
                         <i data-lucide="arrow-right" class="w-3 h-3"></i>
                     </a>
                 </div>
@@ -987,7 +987,7 @@
             <!-- ===================================================== -->
             <div class="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-black/90 to-black/80 dark:from-white/10 dark:to-white/5 text-white flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
                 <div class="space-y-1 text-center sm:text-left">
-                    <h3 class="text-base sm:text-lg font-bold">Masih Memiliki Pertanyaan atau Mengalami Kendala?</h3>
+                    <h3 class="text-base sm:text-lg font-bold">{{ __('docs.masih_memiliki_pertanyaan_atau_mengalami_kendala') }}</h3>
                     <p class="text-xs text-white/70 max-w-lg">
                         Tim teknis dan konsultan bisnis Cooca siap membantu memastikan kelancaran operasional usaha Anda setiap hari.
                     </p>
@@ -995,9 +995,7 @@
                 <div class="flex items-center gap-3 shrink-0">
                     @if(\App\Support\Context::isOwner())
                         <a href="{{ route('feedback.bugs.create') }}"
-                            class="px-5 py-2.5 rounded-xl bg-white text-black hover:bg-white/90 text-xs font-bold transition active:scale-95 shadow-sm">
-                            Buka Tiket Kendala
-                        </a>
+                            class="px-5 py-2.5 rounded-xl bg-white text-black hover:bg-white/90 text-xs font-bold transition active:scale-95 shadow-sm">{{ __('docs.buka_tiket_kendala') }}</a>
                     @endif
                     <a href="https://wa.me/6281234567890?text=Halo%20Tim%20Cooca,%20saya%20butuh%20panduan%20penggunaan" target="_blank"
                         class="px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">

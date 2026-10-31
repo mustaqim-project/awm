@@ -23,7 +23,7 @@
                 <span class="w-8 h-8 rounded-[10px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] flex items-center justify-center text-white shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="sparkles" class="w-4 h-4"></i>
                 </span>
-                <span>Studio Kreatif &amp; Visual Produk</span>
+                <span>{{ __('ai.studio_kreatif_visual_produk') }}</span>
             </h1>
             <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
                 Rancang materi pemasaran omnichannel berbasis referensi visual legal, analisis visi otomatis, dan perakitan prompt dinamis.
@@ -38,7 +38,7 @@
                 <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
                     <i data-lucide="coins" class="w-3 h-3"></i>
                 </span>
-                <span>Saldo Kredit:</span>
+                <span>{{ __('ai.saldo_kredit') }}</span>
                 <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm" x-text="creditsBalance">{{ number_format($stats['credits_balance']) }}</span>
             </a>
 
@@ -73,7 +73,7 @@
                     <i data-lucide="alert-circle" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Kredit Bulanan AI Studio Anda Telah Habis (0 Kredit)</h4>
+                    <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('ai.kredit_bulanan_ai_studio_anda_telah') }}</h4>
                     <p class="text-[11px] sm:text-xs text-black/60 dark:text-white/60">
                         Top up kredit sekarang via QRIS / Virtual Account untuk melanjutkan render visual katalog produk tanpa hambatan.
                     </p>
@@ -143,7 +143,7 @@
             </div>
             <div class="mt-3 flex items-baseline justify-between">
                 <span class="text-2xl font-bold tracking-tight text-black dark:text-white">{{ number_format($stats['credits_balance']) }}</span>
-                <a href="{{ route('ai-studio.credit-history') }}" class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">Riwayat &rarr;</a>
+                <a href="{{ route('ai-studio.credit-history') }}" class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">{{ __('ai.riwayat_rarr') }}</a>
             </div>
         </div>
     </div>
@@ -166,7 +166,7 @@
         </div>
         <a href="{{ route('ai-studio.inspiration.index') }}"
             class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] bg-black/80 dark:bg-white text-white dark:text-black hover:bg-black dark:hover:bg-white/90 text-xs font-semibold transition-all shadow-sm">
-            <span>Buka Katalog Inspirasi</span>
+            <span>{{ __('ai.buka_katalog_inspirasi') }}</span>
             <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
     </div>
@@ -180,7 +180,7 @@
             <div class="relative flex-1">
                 <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari nama proyek kreatif..."
+                    placeholder="{{ __('ai.cari_nama_proyek_kreatif') }}"
                     class="w-full pl-9 pr-3.5 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
 
@@ -235,7 +235,7 @@
                 <i data-lucide="wand-2" class="w-7 h-7"></i>
             </div>
             <div class="space-y-1.5 max-w-md mx-auto">
-                <h3 class="text-base font-bold text-black dark:text-white">Belum Ada Proyek Visual</h3>
+                <h3 class="text-base font-bold text-black dark:text-white">{{ __('ai.belum_ada_proyek_visual') }}</h3>
                 <p class="text-xs sm:text-sm text-black/60 dark:text-white/60">
                     Mulai proyek visual pertama Anda dengan memilih produk dari katalog COOCA dan menerapkan gaya visual terpopuler.
                 </p>
@@ -244,7 +244,7 @@
                 <a href="{{ route('ai-studio.inspiration.index') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-xs font-semibold text-black dark:text-white hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all">
                     <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                    <span>Cari Referensi Visual</span>
+                    <span>{{ __('ai.cari_referensi_visual') }}</span>
                 </a>
                 <a href="{{ route('ai-studio.create') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-xs font-semibold text-white shadow-sm transition-all">
@@ -279,7 +279,7 @@
                         @else
                             <div class="w-full h-full flex flex-col items-center justify-center text-black/30 dark:text-white/30 gap-2">
                                 <i data-lucide="image" class="w-8 h-8"></i>
-                                <span class="text-[11px] font-medium">Belum ada render</span>
+                                <span class="text-[11px] font-medium">{{ __('ai.belum_ada_render') }}</span>
                             </div>
                         @endif
 
@@ -342,13 +342,13 @@
                                 @if(\App\Support\Context::hasPermission('ai_studio.manage'))
                                 <button type="button" @click="confirmDelete('{{ $project->id }}', '{{ addslashes($project->name) }}')"
                                     class="p-1.5 rounded-[8px] text-black/40 dark:text-white/40 hover:text-red-500 hover:bg-red-500/10 transition-colors"
-                                    title="Hapus Proyek">
+                                    title="{{ __('ai.hapus_proyek') }}">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 </button>
                                 @endif
                                 <a href="{{ route('ai-studio.show', $project->id) }}"
                                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-[8px] bg-[#007AFF]/10 dark:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF] hover:text-white text-xs font-semibold transition-all">
-                                    <span>Buka Canvas</span>
+                                    <span>{{ __('ai.buka_canvas') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3"></i>
                                 </a>
                             </div>
@@ -371,7 +371,7 @@
                 <i data-lucide="alert-triangle" class="w-5 h-5"></i>
             </div>
             <div class="space-y-1">
-                <h3 class="text-sm font-bold text-black dark:text-white">Hapus Proyek AI Studio?</h3>
+                <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.hapus_proyek_ai_studio') }}</h3>
                 <p class="text-xs text-black/60 dark:text-white/60">
                     Proyek <span class="font-semibold text-black dark:text-white" x-text="deleteProjectName"></span> beserta riwayat prompt akan dihapus. Aset render yang telah disimpan ke katalog produk tidak akan terpengaruh.
                 </p>
@@ -380,13 +380,9 @@
                 @csrf
                 @method('DELETE')
                 <button type="button" @click="deleteModalOpen = false"
-                    class="px-3 py-2 rounded-[10px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                    Batal
-                </button>
+                    class="px-3 py-2 rounded-[10px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                 <button type="submit"
-                    class="px-4 py-2 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-sm transition-all">
-                    Ya, Hapus
-                </button>
+                    class="px-4 py-2 rounded-[10px] bg-red-600 hover:bg-red-700 text-white text-xs font-semibold shadow-sm transition-all">{{ __('admin.ya_hapus') }}</button>
             </form>
         </div>
     </div>

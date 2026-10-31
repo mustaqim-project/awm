@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Verifikasi Pembayaran #' . $payment->order_number . ' - Admin Console',
+    'title' => __('admin.verifikasi_pembayaran') . $payment->order_number . ' - Admin Console',
     'headerTitle' => 'Verifikasi Pembayaran Langganan',
     'headerSubtitle' => 'Periksa kesesuaian mutasi bank dan setujui aktivasi lisensi Cooca',
 ])
@@ -19,7 +19,7 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <a href="{{ route('admin.subscriptions.index') }}"
                 class="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1.5 transition">
-                <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="1.5"></i><span>Kembali ke Daftar Langganan</span>
+                <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="1.5"></i><span>{{ __('admin.kembali_ke_daftar_langganan') }}</span>
             </a>
             <span
                 class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $badge['class'] }}"><i
@@ -64,7 +64,7 @@
                     <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
                         <i data-lucide="file-text" class="w-5 h-5 text-[#007AFF] dark:text-[#0A84FF]"
                             stroke-width="1.5"></i>
-                        <span>Rincian Tagihan Sistem</span>
+                        <span>{{ __('admin.rincian_tagihan_sistem') }}</span>
                     </h3>
                     <span
                         class="font-mono text-[12px] text-black/50 dark:text-white/50 font-semibold tabular-nums">#{{ $payment->order_number }}</span>
@@ -124,7 +124,7 @@
                 <div class="border-b border-black/5 dark:border-white/10 pb-3 flex items-center justify-between">
                     <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
                         <i data-lucide="image" class="w-5 h-5 text-[#30B0C7] dark:text-[#40C8E0]" stroke-width="1.5"></i>
-                        <span>Konfirmasi Pengirim &amp; Bukti</span>
+                        <span>{{ __('admin.konfirmasi_pengirim_bukti') }}</span>
                     </h3>
                     <span
                         class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">{{ $payment->proof_uploaded_at ? $payment->proof_uploaded_at->format('d M Y H:i') : 'Belum diunggah' }}</span>
@@ -159,14 +159,13 @@
                             Layar:</span>
                         <div class="p-2 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] text-center overflow-hidden">
                             <a href="{{ $payment->getProofUrl() }}" target="_blank" class="block group"><img
-                                    src="{{ $payment->getProofUrl() }}" alt="Bukti Transfer"
+                                    src="{{ $payment->getProofUrl() }}" alt="{{ __('admin.bukti_transfer') }}"
                                     class="max-h-56 mx-auto object-contain rounded-[10px] group-hover:scale-105 transition-transform"></a>
                         </div>
                         <div class="flex justify-center pt-1">
                             <a href="{{ $payment->getProofUrl() }}" target="_blank"
                                 class="text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1"><i
-                                    data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="1.5"></i><span>Buka Gambar
-                                    Ukuran Penuh</span></a>
+                                    data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="1.5"></i><span>{{ __('admin.buka_gambar_ukuran_penuh') }}</span></a>
                         </div>
                     </div>
                 @else
@@ -193,13 +192,12 @@
                     @if ($canRejectSub)
                     <button type="button" @click="rejectModalOpen = true"
                         class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><i
-                            data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i><span>Tolak Pembayaran</span></button>
+                            data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i><span>{{ __('admin.tolak_pembayaran') }}</span></button>
                     @endif
                     @if ($canApproveSub)
                     <button type="button" @click="approveModalOpen = true"
                         class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]"><i
-                            data-lucide="check" class="w-4 h-4" stroke-width="1.5"></i><span>Setujui &amp; Aktifkan Paket
-                            Core</span></button>
+                            data-lucide="check" class="w-4 h-4" stroke-width="1.5"></i><span>{{ __('admin.setujui_aktifkan_paket_core') }}</span></button>
                     @endif
                 </div>
             </div>
@@ -241,12 +239,12 @@
                             <div class="space-y-1">
                                 <label class="text-[12px] font-medium text-black/50 dark:text-white/50 block">Catatan Admin
                                     (Opsional)</label>
-                                <input type="text" name="admin_notes" placeholder="Contoh: Mutasi BCA terkonfirmasi masuk"
+                                <input type="text" name="admin_notes" placeholder="{{ __('admin.contoh_mutasi_bca_terkonfirmasi_masuk') }}"
                                     class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
                             </div>
                             <div class="flex items-center justify-end gap-2 pt-2">
                                 <button type="button" @click="approveModalOpen = false"
-                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">Batal</button>
+                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
                                     class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)]">Ya,
                                     Setujui &amp; Aktifkan</button>
@@ -278,7 +276,7 @@
                             <h4 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
                                 <i data-lucide="alert-triangle" class="w-5 h-5 text-[#FF3B30] dark:text-[#FF453A]"
                                     stroke-width="1.5"></i>
-                                <span>Tolak Pembayaran</span>
+                                <span>{{ __('admin.tolak_pembayaran') }}</span>
                             </h4>
                             <button type="button" @click="rejectModalOpen = false"
                                 class="p-2 min-h-[44px] min-w-[44px] rounded-[8px] text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center"><i
@@ -290,17 +288,16 @@
                                 <label class="text-[12px] font-semibold text-black/70 dark:text-white/70 block">Alasan Penolakan
                                     <span class="text-[#FF3B30] dark:text-[#FF453A]">*</span></label>
                                 <textarea name="reason" required rows="3"
-                                    placeholder="Contoh: Nominal transfer kurang Rp 200, atau struk buram/tidak terbaca"
+                                    placeholder="{{ __('admin.contoh_nominal_transfer_kurang_rp_200') }}"
                                     class="w-full px-3 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50"></textarea>
                                 <p class="text-[11px] text-black/45 dark:text-white/45">Alasan ini akan ditampilkan ke pemilik
                                     bisnis agar dapat melakukan upload ulang.</p>
                             </div>
                             <div class="flex items-center justify-end gap-2 pt-2">
                                 <button type="button" @click="rejectModalOpen = false"
-                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">Batal</button>
+                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all">Tolak
-                                    Pembayaran</button>
+                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all">{{ __('admin.tolak_pembayaran_2') }}</button>
                             </div>
                         </form>
                     </div>

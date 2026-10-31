@@ -1,7 +1,7 @@
 @extends('layouts.app', [
-    'title' => 'Edit Pesanan Penjualan: ' . $salesOrder->so_number,
-    'headerTitle' => 'Edit Pesanan Penjualan',
-    'headerSubtitle' => 'Perbarui rincian pesanan penjualan, status pengerjaan, dan pengiriman'
+    'title' => __('sales.edit_sales_order') . ': ' . $salesOrder->so_number,
+    'headerTitle' => __('sales.edit_sales_order'),
+    'headerSubtitle' => __('sales.edit_sales_order_subtitle')
 ])
 
 @section('content')
@@ -22,7 +22,7 @@
                 <span class="text-black dark:text-white font-medium">Edit</span>
             </nav>
             <div class="flex items-center gap-2">
-                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Edit Pesanan: {{ $salesOrder->so_number }}</h1>
+                <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('sales.edit_order') }}: {{ $salesOrder->so_number }}</h1>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider
                     @if($salesOrder->status === 'draft') bg-neutral-500/10 text-neutral-600 dark:text-neutral-400
                     @elseif($salesOrder->status === 'confirmed') bg-blue-500/10 text-blue-600 dark:text-blue-400
@@ -41,7 +41,7 @@
             </a>
             <button type="submit" form="form-edit-sales-order" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
                 <i data-lucide="check" class="w-4 h-4"></i>
-                <span>Simpan Perubahan</span>
+                <span>{{ __('common.save_changes') }}</span>
             </button>
         </div>
     </header>
@@ -162,7 +162,7 @@
                         Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span>
                     </label>
                     <input type="text" name="recipient_name" value="{{ old('recipient_name', $salesOrder->recipient_name) }}"
-                           placeholder="u.p. Nama PIC Pelanggan"
+                           placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
@@ -171,7 +171,7 @@
                         Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
                     </label>
                     <input type="text" name="attachment_info" value="{{ old('attachment_info', $salesOrder->attachment_info ?? '-') }}"
-                           placeholder="Contoh: - atau 1 Berkas / Brosur Teknis"
+                           placeholder="{{ __('sales.contoh_atau_1_berkas_brosur_teknis') }}"
                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
             </div>

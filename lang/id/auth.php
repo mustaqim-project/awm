@@ -332,4 +332,6 @@ return [
         'not_applied_yet' => 'Belum mengajukan pemulihan akun?',
         'apply_new_link' => 'Buat Pengajuan Baru',
     ],
+    'supervisor_bypass' => 'Bypass Supervisor',
+    'resend_in' => 'Kirim ulang dalam',
 ];

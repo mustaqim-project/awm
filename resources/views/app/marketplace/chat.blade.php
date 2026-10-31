@@ -326,7 +326,7 @@ function marketplaceChatCockpit(config) {
                     alert(data.error || 'Gagal mengirim pesan.');
                 }
             } catch (e) {
-                alert('Terjadi kesalahan jaringan.');
+                alert('{{ __('marketplace.terjadi_kesalahan_jaringan') }}
             } finally {
                 this.sendingMessage = false;
             }

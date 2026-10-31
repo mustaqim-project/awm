@@ -28,12 +28,12 @@
             <a href="{{ route('admin.feedback.bugs.index') }}"
                 class="px-4 py-2 rounded-[10px] font-bold transition-all flex items-center gap-2 {{ $type === 'bugs' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="bug" class="w-4 h-4 text-[#FF3B30]" stroke-width="2"></i>
-                <span>Laporan Bug</span>
+                <span>{{ __('admin.laporan_bug') }}</span>
             </a>
             <a href="{{ route('admin.feedback.features.index') }}"
                 class="px-4 py-2 rounded-[10px] font-bold transition-all flex items-center gap-2 {{ $type === 'features' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="sparkles" class="w-4 h-4 text-[#007AFF]" stroke-width="2"></i>
-                <span>Request Fitur</span>
+                <span>{{ __('admin.request_fitur') }}</span>
             </a>
         </div>
     </div>
@@ -56,7 +56,7 @@
                 <a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.index' : 'admin.feedback.features.index') }}"
                     class="h-9 px-3 rounded-[10px] text-[12px] font-bold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition-colors inline-flex items-center gap-1.5">
                     <i data-lucide="x" class="w-3.5 h-3.5" stroke-width="2"></i>
-                    <span>Reset Filter</span>
+                    <span>{{ __('common.reset') }}</span>
                 </a>
             @endif
         </form>
@@ -137,7 +137,7 @@
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.feedback.view'))
 <a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.show' : 'admin.feedback.features.show', $item) }}"
                                     class="h-8 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition-all inline-flex items-center gap-1">
-                                    <span>Kelola</span>
+                                    <span>{{ __('admin.kelola') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                 </a>
 @endif
@@ -149,8 +149,8 @@
                                 <div class="w-12 h-12 mx-auto rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] flex items-center justify-center text-black/30 dark:text-white/30 mb-2.5">
                                     <i data-lucide="inbox" class="w-6 h-6" stroke-width="1.5"></i>
                                 </div>
-                                <p class="text-[15px] font-bold text-black dark:text-white">Tidak ada data feedback ditemukan</p>
-                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">Belum ada item pada kategori ini.</p>
+                                <p class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.tidak_ada_data_feedback_ditemukan') }}</p>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-1">{{ __('admin.belum_ada_item_pada_kategori_ini') }}</p>
                             </td>
                         </tr>
                     @endforelse

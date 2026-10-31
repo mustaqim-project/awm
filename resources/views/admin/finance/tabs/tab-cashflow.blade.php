@@ -101,9 +101,9 @@
                                     data-url="{{ $trx->attachment_url }}"
                                     data-title="{{ $trx->title }} ({{ $trx->transaction_number }})"
                                         class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-[11px] font-semibold text-black/70 dark:text-white/70 transition-all cursor-pointer group"
-                                        title="Klik untuk melihat bukti gambar kuitansi/struk">
+                                        title="{{ __('admin.klik_untuk_melihat_bukti_gambar_kuitansi') }}">
                                         <img src="{{ $trx->attachment_url }}" alt="Thumbnail" class="w-4.5 h-4.5 rounded-[4px] object-cover border border-black/10 dark:border-white/10 shrink-0">
-                                        <span class="group-hover:text-[#007AFF]">Lihat Bukti</span>
+                                        <span class="group-hover:text-[#007AFF]">{{ __('admin.lihat_bukti') }}</span>
                                         <i data-lucide="maximize-2" class="w-3 h-3 text-black/40 dark:text-white/40 group-hover:text-[#007AFF]"></i>
                                     </button>
                                 @else
@@ -118,14 +118,14 @@
                                         <button type="button"
                                             @click="openEdit(@js($trx))"
                                             class="w-8 h-8 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer"
-                                            title="Ubah Transaksi">
+                                            title="{{ __('admin.ubah_transaksi') }}">
                                             <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                                         </button>
 
                                         <button type="button"
                                             @click="openDelete(@js($trx))"
                                             class="w-8 h-8 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-[#FF3B30]/15 text-black/60 dark:text-white/60 hover:text-[#FF3B30] flex items-center justify-center transition-all cursor-pointer"
-                                            title="Hapus Transaksi">
+                                            title="{{ __('admin.hapus_transaksi') }}">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     @endif
@@ -138,7 +138,7 @@
                                 <div class="w-12 h-12 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.05] text-black/40 dark:text-white/40 flex items-center justify-center mx-auto mb-3">
                                     <i data-lucide="inbox" class="w-6 h-6"></i>
                                 </div>
-                                <div class="text-[14px] font-bold text-black/70 dark:text-white/70">Belum ada transaksi pada periode ini</div>
+                                <div class="text-[14px] font-bold text-black/70 dark:text-white/70">{{ __('admin.belum_ada_transaksi_pada_periode_ini') }}</div>
                                 <p class="text-[12px] text-black/45 dark:text-white/45 mt-1 max-w-sm mx-auto">
                                     Gunakan tombol "Catat Transaksi" untuk memasukkan transaksi manual atau "Sinkronisasi Otomatis" untuk menarik mutasi billing &amp; settlement.
                                 </p>

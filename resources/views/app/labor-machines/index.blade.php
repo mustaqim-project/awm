@@ -161,7 +161,7 @@
                     class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('calculator*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
                     <i data-lucide="calculator"
                         class="w-4 h-4 {{ request()->routeIs('calculator*') ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40' }}"></i>
-                    <span>Kalkulator HPP &amp; Harga</span>
+                    <span>{{ __('labor_machines.kalkulator_hpp_harga') }}</span>
                 </a>
 
                 @if (
@@ -283,7 +283,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-                <input type="text" x-model="searchQuery" placeholder="Cari posisi tenaga kerja atau nama mesin..."
+                <input type="text" x-model="searchQuery" placeholder="{{ __('labor_machines.cari_posisi_tenaga_kerja_atau_nama') }}"
                     class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-9 pr-3 text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
             </div>
 
@@ -294,9 +294,7 @@
                     :class="activeSection === 'all' ?
                         'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                         'text-black/55 dark:text-white/55'"
-                    class="px-3.5 py-1 rounded-[7px] transition-all">
-                    Semua
-                </button>
+                    class="px-3.5 py-1 rounded-[7px] transition-all">{{ __('common.all') }}</button>
                 <button type="button" @click="activeSection = 'labor'"
                     :class="activeSection === 'labor' ?
                         'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
@@ -330,8 +328,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">Tarif Tenaga Kerja
-                            Langsung (Direct Labor)</h2>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">{{ __('labor_machines.tarif_tenaga_kerja_langsung_direct_labor') }}</h2>
                         <p class="text-[12px] text-black/50 dark:text-white/50">Dikonversi otomatis ke jam produktif
                             (Productive Hours Utilization %)</p>
                     </div>
@@ -412,7 +409,7 @@
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @if (\App\Support\Context::hasPermission('costing.manage'))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit tarif" aria-label="Edit tarif"
+                                                <button type="button" title="{{ __('labor_machines.edit_tarif') }}" aria-label="{{ __('labor_machines.edit_tarif_2') }}"
                                                     @click="openEditLabor(@js([
     'id' => $lr->id,
     'name' => $lr->name,
@@ -426,7 +423,7 @@
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus tarif" aria-label="Hapus tarif"
+                                                <button type="button" title="{{ __('labor_machines.hapus_tarif') }}" aria-label="{{ __('labor_machines.hapus_tarif_2') }}"
                                                     @click="openDelete('{{ route('labor-rates.destroy', $lr->id) }}', '{{ addslashes($lr->name) }}')"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -446,7 +443,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                             </svg>
-                                            <p class="text-[13px] font-medium">Belum ada tarif tenaga kerja terdaftar.</p>
+                                            <p class="text-[13px] font-medium">{{ __('labor_machines.belum_ada_tarif_tenaga_kerja_terdaftar') }}</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -496,7 +493,7 @@
     'is_subcontractor' => $lr->is_subcontractor,
 ]))"
                                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                                    Edit
+                                    {{ __('common.edit') }}
                                 </button>
                                 <button type="button"
                                     @click="openDelete('{{ route('labor-rates.destroy', $lr->id) }}', '{{ addslashes($lr->name) }}')"
@@ -511,7 +508,7 @@
                     </div>
                 @empty
                     <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                        Belum ada tarif tenaga kerja terdaftar.
+                        {{ __('labor_machines.belum_ada_tarif_tenaga_kerja_terdaftar') }}
                     </div>
                 @endforelse
             </div>
@@ -621,7 +618,7 @@
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @if (\App\Support\Context::hasPermission('costing.manage'))
                                             <div class="flex items-center justify-end gap-1">
-                                                <button type="button" title="Edit mesin" aria-label="Edit mesin"
+                                                <button type="button" title="{{ __('labor_machines.edit_mesin') }}" aria-label="{{ __('labor_machines.edit_mesin_2') }}"
                                                     @click="openEditMachine(@js([
     'id' => $m->id,
     'name' => $m->name,
@@ -635,7 +632,7 @@
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
-                                                <button type="button" title="Hapus mesin" aria-label="Hapus mesin"
+                                                <button type="button" title="{{ __('labor_machines.hapus_mesin') }}" aria-label="{{ __('labor_machines.hapus_mesin_2') }}"
                                                     @click="openDelete('{{ route('machines.destroy', $m->id) }}', '{{ addslashes($m->name) }}')"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -655,7 +652,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9a.75.75 0 0 1 .75.75v9a.75.75 0 0 1-.75.75h-9a.75.75 0 0 1-.75-.75v-9a.75.75 0 0 1 .75-.75Z" />
                                             </svg>
-                                            <p class="text-[13px] font-medium">Belum ada mesin atau peralatan produksi
+                                            <p class="text-[13px] font-medium">{{ __('labor_machines.belum_ada_mesin_atau_peralatan_produksi') }}
                                                 terdaftar.</p>
                                         </div>
                                     </td>
@@ -707,7 +704,7 @@
     'maintenance_cost_per_hour' => $m->maintenance_cost_per_hour,
 ]))"
                                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                                    Edit
+                                    {{ __('common.edit') }}
                                 </button>
                                 <button type="button"
                                     @click="openDelete('{{ route('machines.destroy', $m->id) }}', '{{ addslashes($m->name) }}')"
@@ -722,7 +719,7 @@
                     </div>
                 @empty
                     <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
-                        Belum ada mesin atau peralatan produksi terdaftar.
+                        {{ __('labor_machines.belum_ada_mesin_atau_peralatan_produksi') }} terdaftar.
                     </div>
                 @endforelse
             </div>
@@ -841,13 +838,9 @@
                             <div
                                 class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showLaborModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                                    Batal
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                    Simpan Tarif
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('labor_machines.simpan_tarif') }}</button>
                             </div>
                         </form>
                     </div>
@@ -884,8 +877,7 @@
                         <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
                         <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                            <h3 id="modal-edit-labor-title" class="text-[17px] font-semibold text-black dark:text-white">
-                                Edit Tarif Tenaga Kerja</h3>
+                            <h3 id="modal-edit-labor-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('labor_machines.edit_tarif_tenaga_kerja') }}</h3>
                             <button type="button" @click="showEditLaborModal = false"
                                 aria-label="{{ __('common.close') }}"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
@@ -901,7 +893,7 @@
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi
                                     <span class="text-[#FF3B30]">*</span></label>
                                 <input type="text" name="name" x-model="editLabor.name" required
-                                    placeholder="Nama posisi"
+                                    placeholder="{{ __('labor_machines.nama_posisi') }}"
                                     class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
                             </div>
 
@@ -971,13 +963,9 @@
                             <div
                                 class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showEditLaborModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                                    Batal
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                    Simpan Perubahan
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('common.save_changes') }}</button>
                             </div>
                         </form>
                     </div>
@@ -1094,13 +1082,9 @@
                             <div
                                 class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showMachineModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                                    Batal
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                    Simpan Mesin
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('labor_machines.simpan_mesin') }}</button>
                             </div>
                         </form>
                     </div>
@@ -1138,8 +1122,7 @@
 
                         <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
                             <h3 id="modal-edit-machine-title"
-                                class="text-[17px] font-semibold text-black dark:text-white">Edit Mesin &amp; Peralatan
-                            </h3>
+                                class="text-[17px] font-semibold text-black dark:text-white">{{ __('labor_machines.edit_mesin_peralatan') }}</h3>
                             <button type="button" @click="showEditMachineModal = false"
                                 aria-label="{{ __('common.close') }}"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
@@ -1155,7 +1138,7 @@
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin /
                                     Peralatan <span class="text-[#FF3B30]">*</span></label>
                                 <input type="text" name="name" x-model="editMachine.name" required
-                                    placeholder="Nama mesin"
+                                    placeholder="{{ __('labor_machines.nama_mesin') }}"
                                     class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
                             </div>
 
@@ -1219,13 +1202,9 @@
                             <div
                                 class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showEditMachineModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">
-                                    Batal
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                                    Simpan Perubahan
-                                </button>
+                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('common.save_changes') }}</button>
                             </div>
                         </form>
                     </div>
@@ -1270,13 +1249,9 @@
                         <div
                             class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="closeDelete()"
-                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">
-                                Batal
-                            </button>
+                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="button" @click="submitDelete()"
-                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">
-                                Hapus
-                            </button>
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:bg-black/10 dark:active:bg-white/10 transition-colors flex items-center justify-center cursor-pointer">{{ __('common.delete') }}</button>
                         </div>
                     </div>
                 </div>

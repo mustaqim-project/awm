@@ -173,15 +173,15 @@
                             <div class="flex items-center justify-end gap-1">
                                 <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
                                     class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="Unduh PDF"
-                                    aria-label="Unduh PDF">
+                                    title="{{ __('common.download_pdf') }}"
+                                    aria-label="{{ __('sales.unduh_pdf') }}">
                                     <i data-lucide="printer" class="w-4 h-4"></i>
                                 </a>
                                 @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
                                 <a href="{{ route('sales.quotations.edit', $q) }}"
                                     class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="Edit Penawaran"
-                                    aria-label="Edit Penawaran">
+                                    title="{{ __('sales.edit_penawaran_2') }}"
+                                    aria-label="{{ __('sales.edit_penawaran_3') }}">
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </a>
                                 @endif
@@ -194,8 +194,8 @@
                                 @if($q->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
                                 <button type="button" @click="openDelete('{{ route('sales.quotations.destroy', $q) }}', '{{ addslashes($q->quotation_number) }}')"
                                     class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="Hapus Penawaran"
-                                    aria-label="Hapus Penawaran">
+                                    title="{{ __('admin.hapus_penawaran') }}"
+                                    aria-label="{{ __('sales.hapus_penawaran') }}">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                                 @endif
@@ -248,26 +248,26 @@
             <div class="flex items-center gap-1.5 shrink-0">
                 <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
                    class="h-8 px-2 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] flex items-center gap-1"
-                   title="Unduh PDF">
+                   title="{{ __('common.download_pdf') }}">
                     <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
                     <span>PDF</span>
                 </a>
                 @if(\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
                     <a href="{{ route('sales.quotations.edit', $q) }}"
                        class="h-8 px-2 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] flex items-center gap-1"
-                       title="Edit">
+                       title="{{ __('common.edit') }}">
                         <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                        <span>Edit</span>
+                        <span>{{ __('common.edit') }}</span>
                     </a>
                 @endif
                 <a href="{{ route('sales.quotations.show', $q) }}" class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center gap-0.5">
-                    <span>Detail</span>
+                    <span>{{ __('common.detail') }}</span>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </a>
                 @if($q->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
                     <button type="button" @click="openDelete('{{ route('sales.quotations.destroy', $q) }}', '{{ addslashes($q->quotation_number) }}')"
                             class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 flex items-center justify-center"
-                            title="Hapus Penawaran">
+                            title="{{ __('admin.hapus_penawaran') }}">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                 @endif
@@ -330,13 +330,9 @@
 
                     <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                         <button type="button" @click="closeDelete()"
-                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Batal
-                        </button>
+                                class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="button" @click="submitDelete()"
-                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                            Hapus
-                        </button>
+                                class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.delete') }}</button>
                     </div>
                 </div>
             </div>

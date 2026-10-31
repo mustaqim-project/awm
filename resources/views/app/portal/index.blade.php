@@ -1695,9 +1695,7 @@
                             </template>
                         </div>
                         <div>
-                            <h3 id="modal-clock-feedback-title" class="text-base font-bold text-black dark:text-white">
-                                Presensi Berhasil Dicatat
-                            </h3>
+                            <h3 id="modal-clock-feedback-title" class="text-base font-bold text-black dark:text-white">{{ __('common.presensi_berhasil_dicatat') }}</h3>
                             <p class="text-[11px] font-medium text-black/55 dark:text-white/55">
                                 Status kepatuhan terhadap jadwal kerja
                             </p>

@@ -79,6 +79,17 @@ final class DualSidebarNavigationTest extends TestCase
             'type'        => 'warehouse',
             'is_active'   => true,
         ]);
+
+        (new \App\Domain\Accounting\AutoJournalService())->ensureStandardAccounts($this->business);
+
+        CashAccount::create([
+            'business_id'     => $this->business->id,
+            'name'            => 'Kas Utama Toko',
+            'account_number'  => 'CASH-001',
+            'bank_name'       => 'Tunai',
+            'current_balance' => 1000000,
+            'is_active'       => true,
+        ]);
     }
 
     /**
@@ -302,5 +313,117 @@ final class DualSidebarNavigationTest extends TestCase
         // Main content uses single-sidebar padding (76px collapsed, 272px expanded)
         $this->assertStringContainsString('lg:pl-[272px]', $content);
         $this->assertStringNotContainsString('lg:pl-[532px]', $content);
+    }
+
+    /**
+     * Requirement R1/R4: NavigationRegistry defines exactly 15 unique module keys with zero duplicate definitions.
+     */
+    public function test_navigation_registry_contains_exactly_15_unique_modules_without_duplicate_keys(): void
+    {
+        $all = NavigationRegistry::all();
+        $this->assertCount(15, $all, 'NavigationRegistry must have exactly 15 modules.');
+
+        $fileContent = file_get_contents(app_path('Support/Navigation/NavigationRegistry.php'));
+        preg_match_all("/'communication'\s*=>\s*\[/m", $fileContent, $matches);
+        $this->assertCount(1, $matches[0], 'The communication module must only be defined once in NavigationRegistry.');
+    }
+
+    /**
+     * Requirement R1/R2: Layout initializes responsive sidebar collapse logic for small desktop viewports (1024-1279px).
+     */
+    public function test_layout_initializes_responsive_sidebar_collapse_logic_for_small_desktop_viewports(): void
+    {
+        $response = $this->actingAs($this->owner, 'web')->get(route('materials.index'));
+        $response->assertOk();
+        $content = $response->getContent();
+
+        $this->assertStringContainsString('window.innerWidth >= 1024 && window.innerWidth < 1280', $content);
+    }
+
+    /**
+     * Requirement R1/R4: Every one of the 15 modules renders the secondary sidebar on its primary route.
+     */
+    public function test_all_15_modules_render_secondary_sidebar_on_http_request(): void
+    {
+        $primaryRoutes = [
+            'finance'       => 'finance.cash-bank.index',
+            'accounting'    => 'finance.coa.index',
+            'purchasing'    => 'purchase-orders.index',
+            'products'      => 'products.index',
+            'materials'     => 'materials.index',
+            'inventory'     => 'warehouse.index',
+            'sales'         => 'sales.orders.index',
+            'crm'           => 'customers.index',
+            'communication' => 'whatsapp.index',
+            'storefront'    => 'storefront.orders.index',
+            'approvals'     => 'approvals.inbox',
+            'marketplace'   => 'marketplace-hub.index',
+            'pos'           => 'pos.orders.index',
+            'billing'       => 'billing.limits',
+            'feedback'      => 'feedback.bugs.index',
+        ];
+
+        foreach ($primaryRoutes as $moduleKey => $routeName) {
+            $response = $this->actingAs($this->owner, 'web')->get(route($routeName));
+            $this->assertSame(200, $response->status(), "Module {$moduleKey} primary route {$routeName} must return 200 OK.");
+
+            $content = $response->getContent();
+            $this->assertStringContainsString('id="secondary-sidebar"', $content, "Module {$moduleKey} must render secondary sidebar.");
+            $this->assertStringContainsString("data-secondary-sidebar=\"{$moduleKey}\"", $content, "Secondary sidebar must be tagged with data-secondary-sidebar=\"{$moduleKey}\".");
+            $this->assertStringContainsString('lg:pl-[532px]', $content, "Module {$moduleKey} page must have dual sidebar desktop padding lg:pl-[532px].");
+        }
+    }
+
+    /**
+     * Requirement: Secondary sidebar can be collapsed (hidden) and expanded (shown) like primary sidebar.
+     */
+    public function test_secondary_sidebar_can_be_collapsed_and_expanded(): void
+    {
+        $response = $this->actingAs($this->owner, 'web')->get(route('materials.index'));
+        $response->assertOk();
+        $content = $response->getContent();
+
+        // 1. Alpine state management exists for secondary sidebar collapse
+        $this->assertStringContainsString('secondarySidebarCollapsed:', $content);
+        $this->assertStringContainsString('toggleSecondarySidebarCollapse()', $content);
+        $this->assertStringContainsString('cooca-secondary-sidebar-collapsed', $content);
+
+        // 2. Collapse button inside secondary sidebar header
+        $this->assertStringContainsString('@click="toggleSecondarySidebarCollapse()"', $content);
+        $this->assertStringContainsString('title="Sembunyikan Menu Bagian"', $content);
+
+        // 3. Topbar has toggle button for secondary sidebar
+        $this->assertStringContainsString('id="tour-toggle-secondary-sidebar-btn"', $content);
+
+        // 4. Floating edge un-collapse pill exists when collapsed
+        $this->assertStringContainsString('x-show="secondarySidebarCollapsed"', $content);
+
+        // 5. Dynamic canvas padding covers all 4 collapse combinations
+        $this->assertStringContainsString('lg:pl-[532px]', $content);
+        $this->assertStringContainsString('lg:pl-[336px]', $content);
+        $this->assertStringContainsString('lg:pl-[272px]', $content);
+        $this->assertStringContainsString('lg:pl-[76px]', $content);
+    }
+
+    /**
+     * Requirement: Mobile layout prevents visual overlap between bottom app bar, drawers, and banners.
+     */
+    public function test_mobile_layout_prevents_visual_overlap(): void
+    {
+        $response = $this->actingAs($this->owner, 'web')->get(route('materials.index'));
+        $response->assertOk();
+        $content = $response->getContent();
+
+        // 1. Mobile bottom bar hides when sidebar drawer opens to prevent overlap
+        $this->assertStringContainsString('x-show="!sidebarOpen"', $content);
+
+        // 2. Mobile bottom bar safe area padding
+        $this->assertStringContainsString('safe-area-inset-bottom', $content);
+
+        // 3. Mobile topbar shows active sub-navigation pill
+        $this->assertStringContainsString('data-mobile-subnav-trigger="true"', $content);
+
+        // 4. Content has ample bottom padding on mobile
+        $this->assertStringContainsString('pb-36 lg:pb-10', $content);
     }
 }

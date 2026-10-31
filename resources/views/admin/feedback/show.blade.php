@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Kelola Feedback - Admin Console',
+    'title' => __('admin.kelola_feedback_admin_console'),
     'headerTitle' => 'Kelola Feedback & Masukan',
     'headerSubtitle' => $item->title,
 ])
@@ -21,7 +21,7 @@
         <a href="{{ route($type === 'bugs' ? 'admin.feedback.bugs.index' : 'admin.feedback.features.index') }}"
             class="text-[13px] font-bold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1.5 transition">
             <i data-lucide="arrow-left" class="w-4 h-4" stroke-width="2"></i>
-            <span>Kembali ke Daftar Feedback</span>
+            <span>{{ __('admin.kembali_ke_daftar_feedback') }}</span>
         </a>
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold {{ $stClass }}">
             <span class="w-2 h-2 rounded-full bg-current"></span>
@@ -106,7 +106,7 @@
                         <a href="{{ route('admin.feedback.bugs.attachment', $item) }}" target="_blank" rel="noopener noreferrer"
                             class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer">
                             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                            <span>Buka Lampiran</span>
+                            <span>{{ __('admin.buka_lampiran') }}</span>
                         </a>
                     </div>
                 @endif
@@ -118,7 +118,7 @@
                     <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 flex items-center justify-center text-[#5856D6] dark:text-[#5E5CE6]">
                         <i data-lucide="history" class="w-4 h-4" stroke-width="2"></i>
                     </div>
-                    <h2 class="text-[15px] font-bold text-black dark:text-white">Riwayat Progress Penanganan</h2>
+                    <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.riwayat_progress_penanganan') }}</h2>
                 </div>
 
                 <div class="mt-5 space-y-4">
@@ -137,7 +137,7 @@
 
                     @if($item->updates->isEmpty())
                         <div class="text-[13px] text-black/45 dark:text-white/45 py-6 text-center">
-                            Belum ada riwayat update untuk item ini.
+                            {{ __('admin.belum_ada_riwayat_update_untuk_item') }}
                         </div>
                     @endif
                 </div>
@@ -154,7 +154,7 @@
             <div class="pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
                 <h3 class="text-[16px] font-bold text-black dark:text-white flex items-center gap-2">
                     <i data-lucide="check-square" class="w-4.5 h-4.5 text-[#007AFF] dark:text-[#0A84FF]" stroke-width="2"></i>
-                    <span>Tindak Lanjut &amp; Status</span>
+                    <span>{{ __('admin.tindak_lanjut_status') }}</span>
                 </h3>
                 <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Perbarui status progress penanganan feedback ini.</p>
             </div>
@@ -198,7 +198,7 @@
 
             <div>
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Pembaruan (Update Log)</label>
-                <textarea name="comment" rows="3" placeholder="Tuliskan catatan perbaikan atau progres yang dilakukan..."
+                <textarea name="comment" rows="3" placeholder="{{ __('admin.tuliskan_catatan_perbaikan_atau_progres_yang') }}"
                     class="w-full px-3.5 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] leading-relaxed text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
             </div>
 
@@ -211,7 +211,7 @@
             @else
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan Internal Admin</label>
-                    <textarea name="admin_notes" rows="2" placeholder="Catatan arsitektur atau pertimbangan rilis..."
+                    <textarea name="admin_notes" rows="2" placeholder="{{ __('admin.catatan_arsitektur_atau_pertimbangan_rilis') }}"
                         class="w-full px-3.5 py-2.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] leading-relaxed text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">{{ $item->admin_notes }}</textarea>
                 </div>
             @endif
@@ -220,7 +220,7 @@
             <button type="submit"
                 class="w-full h-11 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25">
                 <i data-lucide="save" class="w-4 h-4" stroke-width="2"></i>
-                <span>Simpan Tindak Lanjut</span>
+                <span>{{ __('admin.simpan_tindak_lanjut') }}</span>
             </button>
             @endif
         </form>

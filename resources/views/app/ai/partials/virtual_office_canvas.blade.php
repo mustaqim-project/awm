@@ -165,7 +165,7 @@
                     type="button"
                     @click="cameraMenuOpen = !cameraMenuOpen"
                     class="px-2.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/10"
-                    title="Pilih Sudut Pandang Kamera Ruangan"
+                    title="{{ __('ai.pilih_sudut_pandang_kamera_ruangan') }}"
                 >
                     <i data-lucide="video" class="w-3.5 h-3.5 text-sky-500"></i>
                     <span class="hidden md:inline">Preset Kamera</span>
@@ -369,7 +369,7 @@
                             type="button"
                             @click="sitOrStandPOV()"
                             class="px-2.5 py-1 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold flex items-center gap-1.5 transition cursor-pointer"
-                            title="Duduk di Kursi Terdekat / Berdiri [E]"
+                            title="{{ __('ai.duduk_di_kursi_terdekat_berdiri_e') }}"
                         >
                             <i data-lucide="armchair" class="w-3.5 h-3.5"></i>
                             <span class="hidden sm:inline">Duduk / Berdiri</span>
@@ -383,10 +383,10 @@
                             type="button"
                             @click="exitPOV()"
                             class="px-2.5 py-1 rounded-xl bg-rose-600/90 hover:bg-rose-600 text-white text-[11px] font-bold flex items-center gap-1 transition cursor-pointer shadow-sm"
-                            title="Keluar dari Kontrol Agen [ESC]"
+                            title="{{ __('ai.keluar_dari_kontrol_agen_esc') }}"
                         >
                             <i data-lucide="log-out" class="w-3 h-3"></i>
-                            <span>Keluar</span>
+                            <span>{{ __('common.exit') }}</span>
                             <kbd class="hidden sm:inline-block text-[9px] bg-black/50 px-1 py-0.5 rounded font-mono">ESC</kbd>
                         </button>
                     </div>
@@ -400,7 +400,7 @@
                         @click="set3DCamera('overview')"
                         x-show="!isPOVMode"
                         class="px-2.5 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 dark:bg-black/70 dark:hover:bg-black/85 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium transition flex items-center gap-1.5 shadow-lg cursor-pointer"
-                        title="Reset Kamera ke Tampilan Utama [R]"
+                        title="{{ __('ai.reset_kamera_ke_tampilan_utama_r') }}"
                     >
                         <i data-lucide="rotate-ccw" class="w-3 h-3 text-sky-400"></i>
                         <span class="hidden sm:inline">Reset View</span>
@@ -515,7 +515,7 @@
                             type="button"
                             @click="window.dispatchEvent(new CustomEvent('open-ai-consultation'))"
                             class="px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white cursor-pointer active:scale-95"
-                            title="Buka Konsultasi & Instruksi Tim AI"
+                            title="{{ __('ai.buka_konsultasi_instruksi_tim_ai') }}"
                         >
                             <i data-lucide="sparkles" class="w-4 h-4 text-white"></i>
                             <span>Tanya AI</span>
@@ -1604,7 +1604,7 @@
             
             <!-- 1. AI Office Status Card -->
             <div class="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0f1d33] border border-black/10 dark:border-white/10 shadow-lg space-y-4">
-                <h3 class="font-bold text-sm text-slate-900 dark:text-white tracking-tight">AI Office Status</h3>
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white tracking-tight">{{ __('ai.ai_office_status') }}</h3>
                 
                 <div class="grid grid-cols-4 gap-2 text-center">
                     <!-- Total Agents -->
@@ -1803,7 +1803,7 @@
                         type="button"
                         @click="closeAvatarModal()"
                         class="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer active:scale-95"
-                        aria-label="Tutup modal"
+                        aria-label="{{ __('common.close_modal') }}"
                     >
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
@@ -1941,9 +1941,7 @@
                     type="button"
                     @click="closeAvatarModal()"
                     class="min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer active:scale-95"
-                >
-                    Batal
-                </button>
+                >{{ __('common.cancel') }}</button>
                 <button
                     type="button"
                     @click="saveAvatar()"
@@ -2017,7 +2015,7 @@
                         type="button"
                         @click="closeOrgChartModal()"
                         class="min-w-[44px] min-h-[44px] rounded-full text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center transition cursor-pointer active:scale-95"
-                        aria-label="Tutup modal"
+                        aria-label="{{ __('common.close_modal') }}"
                     >
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
@@ -2032,9 +2030,7 @@
                         @click="orgChartFilter = 'all'"
                         :class="orgChartFilter === 'all' ? 'bg-cyan-500 text-slate-950 font-bold shadow-md' : 'text-slate-300 hover:text-white hover:bg-white/10'"
                         class="px-3 py-1.5 rounded-xl transition cursor-pointer"
-                    >
-                        Semua (18 Personel)
-                    </button>
+                    >{{ __('ai.semua_18_personel') }}</button>
                     <button
                         type="button"
                         @click="orgChartFilter = 'executive'"
@@ -2049,7 +2045,7 @@
                         :class="orgChartFilter === 'operations' ? 'bg-cyan-600 text-white font-bold shadow-md' : 'text-slate-300 hover:text-white hover:bg-white/10'"
                         class="px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1"
                     >
-                        <span>Operasional &amp; Gudang</span>
+                        <span>{{ __('ai.operasional_gudang') }}</span>
                     </button>
                     <button
                         type="button"
@@ -2083,7 +2079,7 @@
                     <input
                         type="text"
                         x-model="orgChartSearch"
-                        placeholder="Cari peran, tugas, atau nama..."
+                        placeholder="{{ __('ai.cari_peran_tugas_atau_nama') }}"
                         class="w-full pl-9 pr-4 py-1.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/50"
                     />
                 </div>
@@ -2157,10 +2153,10 @@
                                     type="button"
                                     @click="focusAgentFromOrgChart(agent.role)"
                                     class="flex-1 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold flex items-center justify-center gap-1 transition cursor-pointer"
-                                    title="Tampilkan lokasi meja agen di denah"
+                                    title="{{ __('ai.tampilkan_lokasi_meja_agen_di_denah') }}"
                                 >
                                     <i data-lucide="crosshair" class="w-3 h-3 text-cyan-300"></i>
-                                    <span>Fokus di Denah</span>
+                                    <span>{{ __('ai.fokus_di_denah') }}</span>
                                 </button>
                                 <button
                                     type="button"
@@ -2174,7 +2170,7 @@
                                     type="button"
                                     @click="openAvatarModal(agent.role); closeOrgChartModal();"
                                     class="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-purple-300 hover:text-white transition cursor-pointer"
-                                    title="Kustomisasi Avatar Karakter Ini"
+                                    title="{{ __('ai.kustomisasi_avatar_karakter_ini') }}"
                                 >
                                     <i data-lucide="palette" class="w-3.5 h-3.5"></i>
                                 </button>
@@ -2194,9 +2190,7 @@
                     type="button"
                     @click="closeOrgChartModal()"
                     class="min-h-[44px] px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition cursor-pointer active:scale-95"
-                >
-                    Tutup
-                </button>
+                >{{ __('common.close') }}</button>
             </div>
         </div>
     </div>

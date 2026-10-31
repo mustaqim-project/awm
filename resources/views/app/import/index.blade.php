@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Unified Data Exchange Hub - COOCA',
+    'title' => __('import.unified_data_exchange_hub_cooca'),
     'headerTitle' => 'Unified Data Exchange Hub',
     'headerSubtitle' => 'Pusat pertukaran data cerdas, spreadsheet template hidup, dan sinkronisasi 12 modul lintas domain bisnis dengan validasi anti-duplikat Apple HIG',
 ])
@@ -97,13 +97,13 @@
                 })
                 .catch(err => {
                     this.materialLoading = false;
-                    AppAlert.error(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 });
         },
 
         async executeMaterialImport() {
             if (!this.materialPreview || !this.materialPreview.rows || this.materialPreview.rows.length === 0) {
-                AppAlert.warning('Tidak ada data bahan baku yang siap diimport.');
+                AppAlert.warning('{{ __('import.tidak_ada_data_bahan_baku_yang') }}
                 return;
             }
 
@@ -112,7 +112,7 @@
                 message: 'Apakah Anda yakin ingin memproses import bahan baku ini ke database bisnis?',
                 type: 'info',
                 confirmText: 'Ya, Proses Import',
-                cancelText: 'Batal'
+                cancelText: '{{ __('common.cancel') }}'
             });
             if (!confirmed) {
                 return;
@@ -143,7 +143,7 @@
                 })
                 .catch(err => {
                     this.materialExecuting = false;
-                    AppAlert.error('Terjadi kesalahan saat mengeksekusi import bahan baku.');
+                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_bahan') }}
                 });
         },
 
@@ -190,13 +190,13 @@
                 })
                 .catch(err => {
                     this.productLoading = false;
-                    AppAlert.error(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 });
         },
 
         async executeProductImport() {
             if (!this.productPreview || !this.productPreview.rows || this.productPreview.rows.length === 0) {
-                AppAlert.warning('Tidak ada data yang siap diimport.');
+                AppAlert.warning('{{ __('import.tidak_ada_data_yang_siap_diimport') }}
                 return;
             }
 
@@ -205,7 +205,7 @@
                 message: 'Apakah Anda yakin ingin memproses import produk ini ke database bisnis?',
                 type: 'info',
                 confirmText: 'Ya, Proses Import',
-                cancelText: 'Batal'
+                cancelText: '{{ __('common.cancel') }}'
             });
             if (!confirmed) {
                 return;
@@ -236,7 +236,7 @@
                 })
                 .catch(err => {
                     this.productExecuting = false;
-                    AppAlert.error('Terjadi kesalahan saat mengeksekusi import.');
+                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import') }}
                 });
         },
 
@@ -283,13 +283,13 @@
                 })
                 .catch(err => {
                     this.recipeLoading = false;
-                    AppAlert.error(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 });
         },
 
         async executeRecipeImport() {
             if (!this.recipePreview || !this.recipePreview.rows || this.recipePreview.rows.length === 0) {
-                AppAlert.warning('Tidak ada data resep yang siap diimport.');
+                AppAlert.warning('{{ __('import.tidak_ada_data_resep_yang_siap') }}
                 return;
             }
 
@@ -298,7 +298,7 @@
                 message: 'Apakah Anda yakin ingin memproses import resep / BOM ini ke database bisnis?',
                 type: 'info',
                 confirmText: 'Ya, Proses Import',
-                cancelText: 'Batal'
+                cancelText: '{{ __('common.cancel') }}'
             });
             if (!confirmed) {
                 return;
@@ -329,7 +329,7 @@
                 })
                 .catch(err => {
                     this.recipeExecuting = false;
-                    AppAlert.error('Terjadi kesalahan saat mengeksekusi import resep.');
+                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_resep') }}
                 });
         },
 
@@ -376,13 +376,13 @@
                 })
                 .catch(err => {
                     this.inventoryLoading = false;
-                    AppAlert.error(err.message || 'Terjadi kesalahan saat mengunggah file.');
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
                 });
         },
 
         async executeInventoryImport() {
             if (!this.inventoryPreview || !this.inventoryPreview.rows || this.inventoryPreview.rows.length === 0) {
-                AppAlert.warning('Tidak ada data saldo stok yang siap diimport.');
+                AppAlert.warning('{{ __('import.tidak_ada_data_saldo_stok_yang') }}
                 return;
             }
 
@@ -391,7 +391,7 @@
                 message: 'Apakah Anda yakin ingin mencatat saldo stok ini ke dalam sistem inventori? Proses ini TIDAK dapat diurungkan.',
                 type: 'danger',
                 confirmText: 'Ya, Catat Saldo Stok',
-                cancelText: 'Batal'
+                cancelText: '{{ __('common.cancel') }}'
             });
             if (!confirmed) {
                 return;
@@ -422,7 +422,7 @@
                 })
                 .catch(err => {
                     this.inventoryExecuting = false;
-                    AppAlert.error('Terjadi kesalahan saat mengeksekusi import saldo stok.');
+                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_saldo') }}
                 });
         }
     }">
@@ -440,7 +440,7 @@
                     <span class="text-black dark:text-white font-medium">Import Massal</span>
                 </nav>
                 <div class="flex items-center gap-2">
-                    <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Import Massal Data Bisnis</h1>
+                    <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('import.import_massal_data_bisnis') }}</h1>
                     <span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20">
                         {{ $business->name }}
                     </span>
@@ -460,7 +460,7 @@
                 <a href="{{ route('products.index') }}"
                     class="h-9 px-3.5 rounded-[10px] text-[12px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center gap-1.5">
                     <svg class="w-3.5 h-3.5 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
-                    <span>Katalog Produk</span>
+                    <span>{{ __('import.katalog_produk') }}</span>
                 </a>
                 @endif
                 @if(\App\Support\Context::hasPermission('inventory.view'))
@@ -488,7 +488,7 @@
                             <span class="text-[12px] text-black/50 dark:text-white/50 font-medium">Cooca Unlimited Suite</span>
                         </div>
 
-                        <h3 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">Import Massal Excel & CSV Terkunci untuk Akun Free</h3>
+                        <h3 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">{{ __('import.import_massal_excel_csv_terkunci_untuk') }}</h3>
                         <p class="text-[13px] text-black/60 dark:text-white/60 leading-relaxed">
                             Fitur Import Bahan, Produk & Resep Massal dirancang untuk memangkas waktu input data ratusan baris menjadi hitungan detik. Anda tetap dapat <strong>mengunduh template Excel</strong> di bawah untuk mempersiapkan data Anda.
                         </p>
@@ -514,7 +514,7 @@
                         <a href="{{ route('billing.limits') }}"
                             class="h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(255,149,0,0.3)]">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
-                            <span>Upgrade ke Pro / Patungan</span>
+                            <span>{{ __('import.upgrade_ke_pro_patungan') }}</span>
                         </a>
                     </div>
                     @endif
@@ -606,8 +606,8 @@
                     <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#30B0C7]/10 text-[#1C8A9E] dark:text-[#40C8E0]">Anggota Tim</span>
                 </div>
                 <div class="text-[20px] font-bold text-black dark:text-white tabular-nums tracking-tight">{{ number_format($totalEmployees) }}</div>
-                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">Karyawan</div>
-                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">Payroll & Presensi</div>
+                <div class="text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('hrm.employees') }}</div>
+                <div class="text-[10px] text-black/40 dark:text-white/40 truncate">{{ __('hrm.payroll_and_attendance') }}</div>
             </a>
         </div>
 
@@ -619,7 +619,7 @@
                 <div>
                     <h2 class="text-[15px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span>
-                        <span>Direktori Pertukaran Data 12 Modul (5 Domain Bisnis)</span>
+                        <span>{{ __('import.direktori_pertukaran_data_12_modul_5') }}</span>
                     </h2>
                     <p class="text-[12px] text-black/55 dark:text-white/55">Semua template Excel terintegrasi dengan validasi dinamis dropdown master tenant Anda.</p>
                 </div>
@@ -722,12 +722,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Kontak, WhatsApp, limit kredit piutang</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/customers/template') }}" title="Unduh Template Excel Pelanggan"
+                                <a href="{{ url('/customers/template') }}" title="{{ __('import.unduh_template_excel_pelanggan') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('customers.index') }}" title="Buka Modul Pelanggan untuk Upload Data"
+                                <a href="{{ route('customers.index') }}" title="{{ __('import.buka_modul_pelanggan_untuk_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -745,12 +745,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Data vendor, bank transfer, tempo hutang</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ url('/suppliers/template') }}" title="Unduh Template Excel Pemasok"
+                                <a href="{{ url('/suppliers/template') }}" title="{{ __('import.unduh_template_excel_pemasok') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('suppliers.index') }}" title="Buka Modul Pemasok untuk Upload Data"
+                                <a href="{{ route('suppliers.index') }}" title="{{ __('import.buka_modul_pemasok_untuk_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -766,7 +766,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-7 h-7 rounded-[8px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center font-bold text-[12px]">02</span>
                             <div>
-                                <h3 class="text-[13px] font-bold text-black dark:text-white">Inventori & Gudang</h3>
+                                <h3 class="text-[13px] font-bold text-black dark:text-white">{{ __('import.inventori_gudang') }}</h3>
                                 <p class="text-[11px] text-black/50 dark:text-white/50">Saldo Awal Dual-SKU & Stock Opname 2-Arah</p>
                             </div>
                         </div>
@@ -807,12 +807,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Lembar hitung fisik, selisih & penyesuaian</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('inventory.opnames.export-blank') }}" title="Unduh Lembar Hitung Blanko"
+                                <a href="{{ route('inventory.opnames.export-blank') }}" title="{{ __('import.unduh_lembar_hitung_blanko') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('inventory.opnames.index') }}" title="Buka Modul Opname untuk Upload Hasil Hitung"
+                                <a href="{{ route('inventory.opnames.index') }}" title="{{ __('import.buka_modul_opname_untuk_upload_hasil') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -848,12 +848,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Hierarki 5 Kategori Akuntansi</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('finance.coa.template') }}" title="Unduh Template Excel COA"
+                                <a href="{{ route('finance.coa.template') }}" title="{{ __('import.unduh_template_excel_coa') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('finance.coa.index') }}" title="Buka COA untuk Upload Data"
+                                <a href="{{ route('finance.coa.index') }}" title="{{ __('import.buka_coa_untuk_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -868,12 +868,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Validasi seimbang Debet = Kredit</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('finance.balance-sheet.opening-template') }}" title="Unduh Template Saldo Awal"
+                                <a href="{{ route('finance.balance-sheet.opening-template') }}" title="{{ __('import.unduh_template_saldo_awal') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('finance.balance-sheet') }}" title="Buka Neraca untuk Upload Saldo Awal"
+                                <a href="{{ route('finance.balance-sheet') }}" title="{{ __('import.buka_neraca_untuk_upload_saldo_awal') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -888,12 +888,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Faktur belum lunas & jatuh tempo</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('finance.receivables.template') }}" title="Unduh Template Piutang"
+                                <a href="{{ route('finance.receivables.template') }}" title="{{ __('import.unduh_template_piutang') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('finance.receivables') }}" title="Buka Piutang untuk Upload Data"
+                                <a href="{{ route('finance.receivables') }}" title="{{ __('import.buka_piutang_untuk_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -908,12 +908,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Tagihan pemasok & termin TOP</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('finance.payables.template') }}" title="Unduh Template Hutang"
+                                <a href="{{ route('finance.payables.template') }}" title="{{ __('import.unduh_template_hutang') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('finance.payables') }}" title="Buka Hutang untuk Upload Data"
+                                <a href="{{ route('finance.payables') }}" title="{{ __('import.buka_hutang_untuk_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -947,12 +947,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">NIK, Jabatan, Gaji Pokok, Tunjangan, Bank</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('hrm.employees.template') }}" title="Unduh Template Excel Karyawan"
+                                <a href="{{ route('hrm.employees.template') }}" title="{{ __('import.unduh_template_excel_karyawan') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('hrm.index') }}" title="Kelola Karyawan & Upload Data"
+                                <a href="{{ route('hrm.index') }}" title="{{ __('import.kelola_karyawan_upload_data') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -970,12 +970,12 @@
                                 <div class="text-[11px] text-black/50 dark:text-white/50 truncate">Solution, ZKTeco, Fingerspot CSV/XLSX</div>
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
-                                <a href="{{ route('hrm.attendance.template') }}" title="Unduh Template Log Mesin"
+                                <a href="{{ route('hrm.attendance.template') }}" title="{{ __('import.unduh_template_log_mesin') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
-                                <a href="{{ route('hrm.index') }}" title="Buka Presensi untuk Upload Log"
+                                <a href="{{ route('hrm.index') }}" title="{{ __('import.buka_presensi_untuk_upload_log') }}"
                                     class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
@@ -1019,11 +1019,9 @@
                                 <a href="{{ route('storefront.orders.export-dispatch') }}"
                                     class="h-8 px-3 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-                                    <span>Unduh Manifest Hari Ini</span>
+                                    <span>{{ __('import.unduh_manifest_hari_ini') }}</span>
                                 </a>
-                                <a href="{{ route('storefront.orders.index') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">
-                                    Buka Pesanan &rarr;
-                                </a>
+                                <a href="{{ route('storefront.orders.index') }}" class="text-[11px] text-black/60 dark:text-white/60 hover:underline">{{ __('import.buka_pesanan_rarr') }}</a>
                             </div>
                         </div>
 
@@ -1092,7 +1090,7 @@
                 :class="activeTab === 'products' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
-                <span>2. Katalog Produk</span>
+                <span>{{ __('import.2_katalog_produk') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[11px] tabular-nums font-mono bg-black/[0.05] dark:bg-white/[0.1]">{{ $totalProducts }}</span>
             </button>
 
@@ -1110,7 +1108,7 @@
                 :class="activeTab === 'inventory' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#AF52DE]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
-                <span>4. Saldo Stok Awal</span>
+                <span>{{ __('import.4_saldo_stok_awal') }}</span>
                 <span class="px-1.5 py-0.2 rounded-full text-[11px] tabular-nums font-mono bg-black/[0.05] dark:bg-white/[0.1]">{{ $totalStocks }}</span>
             </button>
         </div>
@@ -1202,7 +1200,7 @@
                                 </div>
                                 <a href="{{ route('billing.limits') }}"
                                     class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                    <span>Buka Kunci Fitur Import</span>
+                                    <span>{{ __('import.buka_kunci_fitur_import') }}</span>
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                                 </a>
                             </div>
@@ -1248,7 +1246,7 @@
                             class="h-8 px-3 rounded-[8px] text-[12px] font-medium border transition-all flex items-center gap-1.5"
                             :class="materialFilter === 'all' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white border-transparent font-semibold' :
                                 'bg-transparent text-black/60 dark:text-white/60 border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'">
-                            <span>Semua</span>
+                            <span>{{ __('common.all') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="materialPreview ? materialPreview.total_rows : 0"></span>
                         </button>
 
@@ -1364,9 +1362,7 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="materialPreview = null; materialFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
                         @if(\App\Support\Context::hasPermission('materials.create'))
                         <button type="button" @click="executeMaterialImport()" :disabled="materialExecuting || (materialPreview && materialPreview.error_count > 0)"
@@ -1375,7 +1371,7 @@
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" x-show="!materialExecuting"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            <span>Konfirmasi & Eksekusi Import Bahan</span>
+                            <span>{{ __('import.konfirmasi_eksekusi_import_bahan') }}</span>
                         </button>
                         @endif
                     </div>
@@ -1399,7 +1395,7 @@
                             <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF]">BOM Linkable</span>
                         </div>
                         <div>
-                            <h3 class="font-bold text-black dark:text-white text-[15px]">Format Master Katalog Produk</h3>
+                            <h3 class="font-bold text-black dark:text-white text-[15px]">{{ __('import.format_master_katalog_produk') }}</h3>
                             <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed mt-1">
                                 Unduh template resmi Cooca dengan validasi kategori, opsi rumus BOM, satuan jual, dan harga dasar produk jadi.
                             </p>
@@ -1470,7 +1466,7 @@
                                 </div>
                                 <a href="{{ route('billing.limits') }}"
                                     class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                    <span>Buka Kunci Fitur Import</span>
+                                    <span>{{ __('import.buka_kunci_fitur_import') }}</span>
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                                 </a>
                             </div>
@@ -1507,7 +1503,7 @@
                             <span class="w-5 h-5 rounded-full bg-[#007AFF]/15 flex items-center justify-center text-[11px] font-bold">3</span>
                             <span>Preview & Konfirmasi Import Produk</span>
                         </div>
-                        <h3 class="font-semibold text-black dark:text-white text-[15px] mt-0.5">Hasil Analisis Data Produk</h3>
+                        <h3 class="font-semibold text-black dark:text-white text-[15px] mt-0.5">{{ __('import.hasil_analisis_data_produk') }}</h3>
                     </div>
 
                     {{-- Filter segmented pills --}}
@@ -1516,7 +1512,7 @@
                             class="h-8 px-3 rounded-[8px] text-[12px] font-medium border transition-all flex items-center gap-1.5"
                             :class="productFilter === 'all' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white border-transparent font-semibold' :
                                 'bg-transparent text-black/60 dark:text-white/60 border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'">
-                            <span>Semua</span>
+                            <span>{{ __('common.all') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="productPreview ? productPreview.total_rows : 0"></span>
                         </button>
 
@@ -1633,9 +1629,7 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="productPreview = null; productFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
                         @if(\App\Support\Context::hasPermission('products.create'))
                         <button type="button" @click="executeProductImport()" :disabled="productExecuting"
@@ -1644,7 +1638,7 @@
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" x-show="!productExecuting"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            <span>Konfirmasi & Eksekusi Import Produk</span>
+                            <span>{{ __('import.konfirmasi_eksekusi_import_produk') }}</span>
                         </button>
                         @endif
                     </div>
@@ -1739,7 +1733,7 @@
                                 </div>
                                 <a href="{{ route('billing.limits') }}"
                                     class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                    <span>Buka Kunci Fitur Import</span>
+                                    <span>{{ __('import.buka_kunci_fitur_import') }}</span>
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                                 </a>
                             </div>
@@ -1785,7 +1779,7 @@
                             class="h-8 px-3 rounded-[8px] text-[12px] font-medium border transition-all flex items-center gap-1.5"
                             :class="recipeFilter === 'all' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white border-transparent font-semibold' :
                                 'bg-transparent text-black/60 dark:text-white/60 border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'">
-                            <span>Semua</span>
+                            <span>{{ __('common.all') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="recipePreview ? recipePreview.total_rows : 0"></span>
                         </button>
 
@@ -1902,9 +1896,7 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="recipePreview = null; recipeFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
                         @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('costing.manage'))
                         <button type="button" @click="executeRecipeImport()" :disabled="recipeExecuting"
@@ -1913,7 +1905,7 @@
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" x-show="!recipeExecuting"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            <span>Konfirmasi & Eksekusi Import Resep</span>
+                            <span>{{ __('import.konfirmasi_eksekusi_import_resep') }}</span>
                         </button>
                         @endif
                     </div>
@@ -2006,7 +1998,7 @@
                             </div>
                             <a href="{{ route('billing.limits') }}"
                                 class="inline-flex items-center gap-1.5 h-8 px-3.5 rounded-[9px] bg-[#FF9500] text-white font-semibold text-[12px] hover:bg-[#E08500] transition-all">
-                                <span>Buka Kunci Fitur Import</span>
+                                <span>{{ __('import.buka_kunci_fitur_import') }}</span>
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                             </a>
                         </div>
@@ -2049,7 +2041,7 @@
                             class="h-8 px-3 rounded-[8px] text-[12px] font-medium border transition-all flex items-center gap-1.5"
                             :class="inventoryFilter === 'all' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white border-transparent font-semibold' :
                                 'bg-transparent text-black/60 dark:text-white/60 border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'">
-                            <span>Semua</span>
+                            <span>{{ __('common.all') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="inventoryPreview ? inventoryPreview.total_rows : 0"></span>
                         </button>
 
@@ -2067,7 +2059,7 @@
                             :class="inventoryFilter === 'duplicate' ? 'bg-[#FF9500]/15 text-[#B26A00] dark:text-[#FF9F0A] border-[#FF9500]/30 font-semibold' :
                                 'bg-transparent text-[#FF9500] border-black/10 dark:border-white/10 hover:bg-[#FF9500]/5'">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span>
-                            <span>Sudah Ada Stok</span>
+                            <span>{{ __('import.sudah_ada_stok') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="inventoryPreview ? inventoryPreview.duplicate_count : 0"></span>
                         </button>
 
@@ -2076,7 +2068,7 @@
                             :class="inventoryFilter === 'error' ? 'bg-[#FF3B30]/15 text-[#FF3B30] dark:text-[#FF453A] border-[#FF3B30]/30 font-semibold' :
                                 'bg-transparent text-[#FF3B30] border-black/10 dark:border-white/10 hover:bg-[#FF3B30]/5'">
                             <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                            <span>Error / Ditolak</span>
+                            <span>{{ __('import.error_ditolak') }}</span>
                             <span class="font-mono tabular-nums font-bold" x-text="inventoryPreview ? inventoryPreview.error_count : 0"></span>
                         </button>
                     </div>
@@ -2135,13 +2127,13 @@
                                         <template x-if="row.status === 'duplicate'">
                                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#FF9500]/10 text-[#B26A00] dark:text-[#FF9F0A] border border-[#FF9500]/20">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span>
-                                                <span>Sudah Ada Stok</span>
+                                                <span>{{ __('import.sudah_ada_stok') }}</span>
                                             </span>
                                         </template>
                                         <template x-if="row.status === 'error'">
                                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                                                <span>Error / Ditolak</span>
+                                                <span>{{ __('import.error_ditolak') }}</span>
                                             </span>
                                         </template>
                                     </td>
@@ -2173,9 +2165,7 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="inventoryPreview = null; inventoryFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
                         @if(\App\Support\Context::hasPermission('inventory.manage'))
                         <button type="button" @click="executeInventoryImport()" :disabled="inventoryExecuting"
@@ -2184,7 +2174,7 @@
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" x-show="!inventoryExecuting"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
-                            <span>Konfirmasi & Catat Saldo Stok</span>
+                            <span>{{ __('import.konfirmasi_catat_saldo_stok') }}</span>
                         </button>
                         @endif
                     </div>

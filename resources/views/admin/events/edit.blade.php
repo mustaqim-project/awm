@@ -10,7 +10,7 @@
     <div class="flex items-center justify-between">
         <a href="{{ route('admin.events.show', $event) }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-black/60 dark:text-white/60 hover:text-[#007AFF] transition">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Kembali ke Detail Event</span>
+            <span>{{ __('admin.kembali_ke_detail_event') }}</span>
         </a>
     </div>
 
@@ -247,14 +247,10 @@
             <!-- Submit Button -->
             <div class="flex items-center justify-end gap-3 pt-2">
                 <a href="{{ route('admin.events.show', $event) }}"
-                    class="px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">
-                    Batal
-                </a>
+                    class="px-4 py-2.5 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition">{{ __('common.cancel') }}</a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.events.edit'))
 <button type="submit"
-                    class="px-6 py-2.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] shadow-sm shadow-[#007AFF]/25 transition cursor-pointer active:scale-[0.98]">
-                    Simpan Perubahan
-                </button>
+                    class="px-6 py-2.5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] shadow-sm shadow-[#007AFF]/25 transition cursor-pointer active:scale-[0.98]">{{ __('common.save_changes') }}</button>
 @endif
             </div>
         </form>

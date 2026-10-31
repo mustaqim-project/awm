@@ -65,7 +65,7 @@
                         @click="openAddKeyModal()"
                         class="h-9 px-3.5 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
                         <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
-                        <span>+ Hubungkan Kunci API</span>
+                        <span>{{ __('admin.hubungkan_kunci_api') }}</span>
                     </button>
                 </div>
             </template>
@@ -128,7 +128,7 @@
                         <button type="button" @click="openAddKeyModal()"
                             class="px-4 py-2 rounded-[10px] text-[12.5px] font-semibold text-black bg-[#38BDF8] hover:bg-[#0EA5E9] active:scale-[0.98] transition flex items-center gap-1.5 shadow-md shadow-[#38BDF8]/20">
                             <i data-lucide="plus" class="w-4 h-4" stroke-width="2.25"></i>
-                            <span>Hubungkan Kunci API</span>
+                            <span>{{ __('admin.hubungkan_kunci_api_2') }}</span>
                         </button>
                     </div>
                 </div>
@@ -351,9 +351,7 @@
                     <div class="flex items-center gap-1 p-0.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] mr-1.5 shrink-0">
                         <button type="button" @click="purposeFilter = 'all'"
                             class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold transition-all"
-                            :class="purposeFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60'">
-                            Semua
-                        </button>
+                            :class="purposeFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60'">{{ __('common.all') }}</button>
                         <button type="button" @click="purposeFilter = 'chat'"
                             class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold transition-all flex items-center gap-1"
                             :class="purposeFilter === 'chat' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/60 dark:text-white/60'">
@@ -412,7 +410,7 @@
 
                 <!-- Search Input -->
                 <div class="relative w-full sm:w-64">
-                    <input type="text" x-model="keySearch" placeholder="Cari nama, model, endpoint..."
+                    <input type="text" x-model="keySearch" placeholder="{{ __('admin.cari_nama_model_endpoint') }}"
                         class="w-full h-8 pl-8 pr-3 text-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/5 rounded-[8px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                     <div class="absolute left-2.5 top-2 text-black/40 dark:text-white/40">
                         <i data-lucide="search" class="w-3.5 h-3.5"></i>
@@ -503,7 +501,7 @@
                                 <!-- Test Single Key Live Ping -->
                                 <button type="button" @click="testSingleKey(k.id)" :disabled="testingKeyId === k.id"
                                     class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-black/75 dark:text-white/80 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.98] transition flex items-center gap-1 shadow-xs disabled:opacity-50"
-                                    title="Uji koneksi khusus untuk key ini">
+                                    title="{{ __('admin.uji_koneksi_khusus_untuk_key_ini') }}">
                                     <i data-lucide="zap" class="w-3.5 h-3.5 text-[#FF9500]" :class="testingKeyId === k.id ? 'animate-spin' : ''"></i>
                                     <span x-text="testingKeyId === k.id ? 'Menguji...' : 'Uji Ping'"></span>
                                 </button>
@@ -511,9 +509,9 @@
                                 <!-- Edit Key Modal Trigger -->
                                 <button type="button" @click="openEditKeyModal(k)"
                                     class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition flex items-center gap-1"
-                                    title="Edit konfigurasi key ini">
+                                    title="{{ __('admin.edit_konfigurasi_key_ini') }}">
                                     <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
-                                    <span>Edit</span>
+                                    <span>{{ __('common.edit') }}</span>
                                 </button>
 
                                 <!-- Toggle Active Form -->
@@ -533,7 +531,7 @@
                                     onsubmit="return confirm('Hapus API Key ini dari pool platform?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="h-8 w-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center" title="Hapus Kunci">
+                                    <button type="submit" class="h-8 w-8 rounded-[8px] text-black/40 hover:text-[#FF3B30] hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center" title="{{ __('admin.hapus_kunci') }}">
                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                     </button>
                                 </form>
@@ -726,7 +724,7 @@
                     <button type="submit"
                         class="h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center gap-2 shadow-sm shadow-[#007AFF]/25">
                         <i data-lucide="check" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Simpan Konfigurasi Router Gateway</span>
+                        <span>{{ __('admin.simpan_konfigurasi_router_gateway') }}</span>
                     </button>
                 </div>
             </form>
@@ -761,7 +759,7 @@
                             <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://r4g77gv.abc-tunnel.us/v1</td>
                             <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-...</code>. Cocok untuk server private AI, LiteLLM, vLLM, Ollama, proxy Groq.</td>
                             <td class="py-2.5 px-3 text-right">
-                                <button type="button" @click="openAddKeyModal('openai_compatible')" class="text-[#007AFF] font-semibold hover:underline">+ Hubungkan</button>
+                                <button type="button" @click="openAddKeyModal('openai_compatible')" class="text-[#007AFF] font-semibold hover:underline">{{ __('admin.hubungkan') }}</button>
                             </td>
                         </tr>
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
@@ -772,7 +770,7 @@
                             <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.anthropic.com/v1</td>
                             <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-ant-api03-...</code> dari console.anthropic.com. Mendukung Claude 3.7 Sonnet, Claude 3.5 Haiku.</td>
                             <td class="py-2.5 px-3 text-right">
-                                <button type="button" @click="openAddKeyModal('anthropic')" class="text-[#D97706] font-semibold hover:underline">+ Hubungkan</button>
+                                <button type="button" @click="openAddKeyModal('anthropic')" class="text-[#D97706] font-semibold hover:underline">{{ __('admin.hubungkan') }}</button>
                             </td>
                         </tr>
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
@@ -783,7 +781,7 @@
                             <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://generativelanguage.googleapis.com/v1beta</td>
                             <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">AIzaSy...</code> dari Google AI Studio. Mendukung Gemini 2.0 Flash, Gemini 1.5 Pro.</td>
                             <td class="py-2.5 px-3 text-right">
-                                <button type="button" @click="openAddKeyModal('gemini')" class="text-[#8B5CF6] font-semibold hover:underline">+ Hubungkan</button>
+                                <button type="button" @click="openAddKeyModal('gemini')" class="text-[#8B5CF6] font-semibold hover:underline">{{ __('admin.hubungkan') }}</button>
                             </td>
                         </tr>
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
@@ -794,7 +792,7 @@
                             <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://api.openai.com/v1</td>
                             <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-proj-...</code> dari platform.openai.com. Mendukung GPT-4o, GPT-4o-mini, o1, o3-mini.</td>
                             <td class="py-2.5 px-3 text-right">
-                                <button type="button" @click="openAddKeyModal('openai')" class="text-[#10B981] font-semibold hover:underline">+ Hubungkan</button>
+                                <button type="button" @click="openAddKeyModal('openai')" class="text-[#10B981] font-semibold hover:underline">{{ __('admin.hubungkan') }}</button>
                             </td>
                         </tr>
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
@@ -805,7 +803,7 @@
                             <td class="py-2.5 px-3 font-mono text-[#007AFF] text-[11px] select-all">https://openrouter.ai/api/v1</td>
                             <td class="py-2.5 px-3 text-[11px]">Format <code class="font-mono text-[#007AFF]">sk-or-v1-...</code> dari openrouter.ai. Akses ke DeepSeek-R1, Llama 3.3, Qwen, Mistral.</td>
                             <td class="py-2.5 px-3 text-right">
-                                <button type="button" @click="openAddKeyModal('openrouter')" class="text-[#06B6D4] font-semibold hover:underline">+ Hubungkan</button>
+                                <button type="button" @click="openAddKeyModal('openrouter')" class="text-[#06B6D4] font-semibold hover:underline">{{ __('admin.hubungkan') }}</button>
                             </td>
                         </tr>
                     </tbody>
@@ -861,11 +859,11 @@
                 <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-3">
                     <h3 class="text-[15px] font-semibold text-black dark:text-white flex items-center gap-2">
                         <i data-lucide="pie-chart" class="w-4 h-4 text-[#007AFF]" stroke-width="1.5"></i>
-                        <span>Distribusi Konsumsi Token per Fitur (Intent)</span>
+                        <span>{{ __('admin.distribusi_konsumsi_token_per_fitur_intent') }}</span>
                     </h3>
                 </div>
                 @if ($intentBreakdown->isEmpty())
-                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">Belum ada riwayat konsumsi token tercatat.</div>
+                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">{{ __('admin.belum_ada_riwayat_konsumsi_token_tercatat') }}</div>
                 @else
                     <div class="space-y-3">
                         @foreach ($intentBreakdown as $intent)
@@ -900,7 +898,7 @@
                     </h3>
                 </div>
                 @if ($topBusinesses->isEmpty())
-                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">Belum ada data tenant yang menggunakan AI.</div>
+                    <div class="text-[13px] text-black/45 dark:text-white/45 py-8 text-center">{{ __('admin.belum_ada_data_tenant_yang_menggunakan') }}</div>
                 @else
                     <div class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @foreach ($topBusinesses as $index => $top)
@@ -974,8 +972,8 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="px-4 py-10 text-center">
-                                    <p class="text-[15px] font-semibold text-black dark:text-white">Belum ada aktivitas AI</p>
-                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">Belum ada riwayat aktivitas kueri AI tercatat.</p>
+                                    <p class="text-[15px] font-semibold text-black dark:text-white">{{ __('admin.belum_ada_aktivitas_ai') }}</p>
+                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">{{ __('admin.belum_ada_riwayat_aktivitas_kueri_ai') }}</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -1094,13 +1092,11 @@
 
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <button type="button" @click="addKeyModalOpen = false"
-                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
                         <button type="submit"
                             class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
                             <i data-lucide="plus" class="w-4 h-4"></i>
-                            <span>Simpan Kunci ke Gateway</span>
+                            <span>{{ __('admin.simpan_kunci_ke_gateway') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1217,13 +1213,11 @@
 
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <button type="button" @click="editKeyModalOpen = false"
-                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
-                            Batal
-                        </button>
+                            class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
                         <button type="submit"
                             class="h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Simpan Perubahan</span>
+                            <span>{{ __('common.save_changes') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1266,7 +1260,7 @@
                                 class="w-full h-8 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] font-mono text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#AF52DE]">
                         </div>
                         <div class="sm:col-span-6">
-                            <input type="text" x-model="newModel.name" placeholder="Nama Tampilan (opsional)"
+                            <input type="text" x-model="newModel.name" placeholder="{{ __('admin.nama_tampilan_opsional') }}"
                                 class="w-full h-8 px-3 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#AF52DE]">
                         </div>
                     </div>
@@ -1302,11 +1296,9 @@
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
                                 <button type="button" @click="selectActiveModel(m.id)"
-                                    class="text-[11px] font-semibold px-2 py-1 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white transition">
-                                    Pilih
-                                </button>
+                                    class="text-[11px] font-semibold px-2 py-1 rounded-[6px] bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white transition">{{ __('admin.pilih') }}</button>
                                 <button type="button" @click="deleteModel(m.id)"
-                                    class="p-1 rounded text-black/40 hover:text-[#FF3B30] transition" title="Bongkar / Hapus model">
+                                    class="p-1 rounded text-black/40 hover:text-[#FF3B30] transition" title="{{ __('admin.bongkar_hapus_model') }}">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
@@ -1319,7 +1311,7 @@
                     <button type="button" @click="resetModels()" :disabled="isResettingModels"
                         class="text-[11.5px] text-[#FF3B30] hover:underline flex items-center gap-1 disabled:opacity-50">
                         <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-                        <span>Reset ke 13 Model Bawaan</span>
+                        <span>{{ __('admin.reset_ke_13_model_bawaan') }}</span>
                     </button>
                     <button type="button" @click="manageModelsOpen = false"
                         class="h-8 px-4 rounded-[8px] text-[12px] font-semibold text-white bg-black dark:bg-white dark:text-black hover:opacity-90 transition">
@@ -1371,17 +1363,17 @@
 
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">Alasan / Jejak Audit</label>
-                        <textarea name="reason" x-model="reasonText" required rows="2" placeholder="Contoh: Bonus kompensasi migrasi akun / testing"
+                        <textarea name="reason" x-model="reasonText" required rows="2" placeholder="{{ __('admin.contoh_bonus_kompensasi_migrasi_akun_testing') }}"
                             class="w-full px-3 py-2 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
                     </div>
 
                     <div class="pt-2 flex items-center justify-end gap-2">
                         <button type="button" @click="grantModalOpen = false"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Batal</button>
+                            class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                         <button type="submit"
                             class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9A45C6] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm shadow-[#AF52DE]/30">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Kirim Token Sekarang</span>
+                            <span>{{ __('admin.kirim_token_sekarang') }}</span>
                         </button>
                     </div>
                 </form>
@@ -1706,7 +1698,7 @@ function aiEngineConsole(config) {
             } catch (err) {
                 this.modelFeedback.show = true;
                 this.modelFeedback.success = false;
-                this.modelFeedback.message = 'Terjadi kesalahan: ' + err.message;
+                this.modelFeedback.message = '{{ __('admin.terjadi_kesalahan_err_message') }}
             } finally {
                 this.isAddingModel = false;
                 this.$nextTick(() => {

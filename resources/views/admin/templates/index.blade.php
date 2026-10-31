@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'CMS Template Excel - Admin Console',
+    'title' => __('admin.cms_template_excel_admin_console'),
     'headerTitle' => 'CMS Template Excel',
     'headerSubtitle' => 'Kelola berkas spreadsheet Excel gratis untuk materi prospek edukasi UMKM',
 ])
@@ -115,7 +115,7 @@
                         class="w-4 h-4 text-black/35 dark:text-white/35 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
                         stroke-width="1.8"></i>
                     <input type="text" name="search" value="{{ $search }}"
-                        placeholder="Cari nama template, slug, atau deskripsi..."
+                        placeholder="{{ __('admin.cari_nama_template_slug_atau_deskripsi') }}"
                         class="w-full h-11 sm:h-10 pl-10 pr-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 focus:border-[#007AFF] transition-all">
                 </div>
                 <select name="category" onchange="this.form.submit()"
@@ -178,7 +178,7 @@
                                 @csrf
                                 <button type="submit"
                                     class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all active:scale-[0.98] {{ $template->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/25' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50 hover:bg-black/15' }}"
-                                    title="Klik untuk ubah status">
+                                    title="{{ __('admin.klik_untuk_ubah_status') }}">
                                     <span>{{ $template->is_active ? 'Aktif' : 'Draft' }}</span>
                                 </button>
                             </form>
@@ -191,7 +191,7 @@
                                 class="font-mono text-black/45 dark:text-white/45 truncate">/template/{{ $template->slug }}</code>
                             <a href="{{ route('template.show', $template->slug) }}" target="_blank"
                                 class="text-[#007AFF] font-medium hover:underline inline-flex items-center gap-0.5 shrink-0">
-                                <span>Lihat</span>
+                                <span>{{ __('common.view') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -214,12 +214,12 @@
                             <a href="{{ route('admin.templates.download', $template) }}"
                                 class="flex-1 h-10 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[#007AFF] text-[13px] font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all">
                                 <i data-lucide="download" class="w-4 h-4"></i>
-                                <span>Unduh</span>
+                                <span>{{ __('admin.unduh') }}</span>
                             </a>
                             <a href="{{ route('admin.templates.edit', $template) }}"
                                 class="h-10 px-4 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/75 dark:text-white/75 text-[13px] font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                                <span>Edit</span>
+                                <span>{{ __('common.edit') }}</span>
                             </a>
                             @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.delete'))
                             <form action="{{ route('admin.templates.destroy', $template) }}" method="POST"
@@ -229,7 +229,7 @@
                                 @method('DELETE')
                                 <button type="submit"
                                     class="h-10 w-10 rounded-[12px] bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 flex items-center justify-center active:scale-[0.98] transition-all"
-                                    title="Hapus Template">
+                                    title="{{ __('admin.hapus_template') }}">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </form>
@@ -243,7 +243,7 @@
                             class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-black/30 dark:text-white/30">
                             <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
                         </div>
-                        <p class="font-medium text-[14px] text-black/60 dark:text-white/60">Belum ada template Excel yang diunggah.</p>
+                        <p class="font-medium text-[14px] text-black/60 dark:text-white/60">{{ __('admin.belum_ada_template_excel_yang_diunggah') }}</p>
                         <a href="{{ route('admin.templates.create') }}"
                             class="inline-flex items-center gap-2 text-[13px] font-semibold text-[#007AFF] hover:underline">
                             <i data-lucide="upload" class="w-4 h-4"></i>
@@ -288,7 +288,7 @@
                                                         class="text-[11px] text-black/40 dark:text-white/40 font-mono">/template/{{ $template->slug }}</code>
                                                     <a href="{{ route('template.show', $template->slug) }}" target="_blank"
                                                         class="text-[11px] text-[#007AFF] hover:underline inline-flex items-center gap-0.5">
-                                                        <span>Lihat</span>
+                                                        <span>{{ __('common.view') }}</span>
                                                         <i data-lucide="external-link" class="w-3 h-3"></i>
                                                     </a>
                                                 </div>
@@ -336,7 +336,7 @@
                                             @csrf
                                             <button type="submit"
                                                 class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all active:scale-[0.98] {{ $template->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158] hover:bg-[#34C759]/25' : 'bg-black/10 dark:bg-white/10 text-black/45 dark:text-white/45 hover:bg-black/15' }}"
-                                                title="Klik untuk ubah status publikasi">
+                                                title="{{ __('admin.klik_untuk_ubah_status') }}">
                                                 <span>{{ $template->is_active ? 'Aktif' : 'Draft' }}</span>
                                             </button>
                                         </form>
@@ -355,7 +355,7 @@
                                             <!-- Edit -->
                                             <a href="{{ route('admin.templates.edit', $template) }}"
                                                 class="p-2 rounded-[10px] text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 hover:text-[#007AFF] active:scale-[0.98] transition-all"
-                                                title="Edit Template">
+                                                title="{{ __('admin.edit_template') }}">
                                                 <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </a>
 
@@ -367,7 +367,7 @@
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="p-2 rounded-[10px] text-black/60 dark:text-white/60 hover:bg-red-500/10 hover:text-red-500 active:scale-[0.98] transition-all"
-                                                    title="Hapus Template">
+                                                    title="{{ __('admin.hapus_template') }}">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </form>
@@ -381,7 +381,7 @@
                                             class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto mb-3 text-black/30 dark:text-white/30">
                                             <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
                                         </div>
-                                        <p class="font-medium text-[14px]">Belum ada template Excel yang diunggah.</p>
+                                        <p class="font-medium text-[14px]">{{ __('admin.belum_ada_template_excel_yang_diunggah') }}</p>
                                         <a href="{{ route('admin.templates.create') }}"
                                             class="mt-3 inline-flex items-center gap-2 text-[13px] font-semibold text-[#007AFF] hover:underline">
                                             <i data-lucide="upload" class="w-4 h-4"></i>

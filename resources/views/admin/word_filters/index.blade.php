@@ -1,5 +1,4 @@
-@extends('layouts.admin', [
-    'title' => 'Filter & Moderasi Konten Komunitas - Admin Console',
+@extends('layouts.admin', ['title' => __('admin.filter_moderasi_konten_komunitas_admin_console'),
     'headerTitle' => 'Moderasi Kata Terlarang',
     'headerSubtitle' => 'Cegah dan tangkal konten judol, scam, kata kasar, dan pornografi pada postingan & komentar komunitas Cooca',
 ])
@@ -38,7 +37,7 @@
                 </div>
                 <div>
                     <h1 class="text-[19px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">
-                        Filter &amp; Moderasi Kata Komunitas
+                        {{ __('admin.filter_moderasi_kata_komunitas') }}
                     </h1>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
                         Menangkal postingan &amp; komentar bermuatan judi online (judol), penipuan (scam), kata kasar toxic, dan pornografi.
@@ -137,7 +136,7 @@
             <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
                 <a href="{{ route('admin.word-filters.index', ['category' => 'all', 'q' => $search]) }}"
                     class="px-3 py-1.5 rounded-[10px] text-[12px] font-semibold transition-all shrink-0 {{ ($category === 'all' || empty($category)) ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5' }}">
-                    Semua ({{ $stats['total'] }})
+                    {{ __('common.all') }} ({{ $stats['total'] }})
                 </a>
                 <a href="{{ route('admin.word-filters.index', ['category' => 'judol', 'q' => $search]) }}"
                     class="px-3 py-1.5 rounded-[10px] text-[12px] font-semibold transition-all shrink-0 {{ $category === 'judol' ? 'bg-[#FF3B30] text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5' }}">
@@ -161,7 +160,7 @@
             <form method="GET" action="{{ route('admin.word-filters.index') }}" class="relative sm:w-64">
                 <input type="hidden" name="category" value="{{ $category }}">
                 <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-2.5"></i>
-                <input type="text" name="q" value="{{ $search }}" placeholder="Cari kata terlarang..."
+                <input type="text" name="q" value="{{ $search }}" placeholder="{{ __('admin.cari_kata_terlarang') }}"
                     class="w-full pl-9 pr-8 py-2 rounded-[12px] text-[12.5px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                 @if($search)
                     <a href="{{ route('admin.word-filters.index', ['category' => $category]) }}"
@@ -266,7 +265,7 @@
                                     <div class="inline-flex items-center gap-1.5 justify-end">
                                         <button type="button" @click="openEdit(@js($filter))"
                                             class="p-1.5 rounded-[9px] text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition cursor-pointer"
-                                            title="Ubah Aturan">
+                                            title="{{ __('admin.ubah_aturan') }}">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </button>
 
@@ -278,7 +277,7 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="p-1.5 rounded-[9px] text-rose-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
-                                                title="Hapus Aturan">
+                                                title="{{ __('admin.hapus_aturan_2') }}">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
@@ -331,7 +330,7 @@
                     @csrf
                     <div>
                         <label class="block text-xs font-bold text-black/70 dark:text-white/70 mb-1">Kata / Frasa Terlarang</label>
-                        <input type="text" name="word" required placeholder="Contoh: slot gacor, transfer dulu, bokep"
+                        <input type="text" name="word" required placeholder="{{ __('admin.contoh_slot_gacor_transfer_dulu_bokep') }}"
                             class="w-full px-3.5 py-2.5 rounded-[12px] text-xs bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                     </div>
 
@@ -359,19 +358,15 @@
 
                     <div>
                         <label class="block text-xs font-bold text-black/70 dark:text-white/70 mb-1">Catatan / Keterangan (Opsional)</label>
-                        <input type="text" name="description" placeholder="Alasan pencekalan..."
+                        <input type="text" name="description" placeholder="{{ __('admin.alasan_pencekalan') }}"
                             class="w-full px-3.5 py-2.5 rounded-[12px] text-xs bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF]">
                     </div>
 
                     <div class="flex items-center justify-end gap-2.5 pt-2">
                         <button type="button" @click="createOpen = false"
-                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
-                            Batal
-                        </button>
+                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="submit"
-                            class="px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs cursor-pointer">
-                            Simpan Kata
-                        </button>
+                            class="px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs cursor-pointer">{{ __('admin.simpan_kata') }}</button>
                     </div>
                 </form>
                 </div>
@@ -392,7 +387,7 @@
                         <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
                             <i data-lucide="list-plus" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-base font-bold text-black dark:text-white">Tambah Kata Filter Massal</h3>
+                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.tambah_kata_filter_massal') }}</h3>
                     </div>
                     <button type="button" @click="bulkOpen = false" class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white">
                         <i data-lucide="x" class="w-4 h-4"></i>
@@ -442,13 +437,9 @@
 
                     <div class="flex items-center justify-end gap-2.5 pt-2">
                         <button type="button" @click="bulkOpen = false"
-                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
-                            Batal
-                        </button>
+                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="submit"
-                            class="px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-[#34C759] hover:bg-[#30D158] shadow-xs cursor-pointer">
-                            Import Semua Kata
-                        </button>
+                            class="px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-[#34C759] hover:bg-[#30D158] shadow-xs cursor-pointer">{{ __('admin.import_semua_kata') }}</button>
                     </div>
                 </form>
                 </div>
@@ -469,7 +460,7 @@
                         <div class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center">
                             <i data-lucide="pencil" class="w-4 h-4"></i>
                         </div>
-                        <h3 class="text-base font-bold text-black dark:text-white">Ubah Aturan Kata</h3>
+                        <h3 class="text-base font-bold text-black dark:text-white">{{ __('admin.ubah_aturan_kata') }}</h3>
                     </div>
                     <button type="button" @click="editOpen = false" class="text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white">
                         <i data-lucide="x" class="w-4 h-4"></i>
@@ -523,9 +514,7 @@
 
                     <div class="flex items-center justify-end gap-2.5 pt-2">
                         <button type="button" @click="editOpen = false"
-                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
-                            Batal
-                        </button>
+                            class="px-4 py-2 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="submit"
                             class="px-4 py-2 rounded-[12px] text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] shadow-xs cursor-pointer">
                             Perbarui Aturan

@@ -42,7 +42,7 @@
             <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
                 class="min-h-[38px] px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 shadow-sm">
                 <i data-lucide="settings" class="w-4 h-4"></i>
-                <span>Buka Pengaturan Saluran</span>
+                <span>{{ __('social_media.buka_pengaturan_saluran') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
@@ -145,7 +145,7 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun Facebook atau Instagram yang terhubung.</p>
+                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_facebook_atau_instagram') }}</p>
                             @endif
                         </div>
 
@@ -214,7 +214,7 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun TikTok yang terhubung.</p>
+                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_tiktok_yang_terhubung') }}</p>
                             @endif
                         </div>
 
@@ -282,7 +282,7 @@
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun LinkedIn yang terhubung.</p>
+                                <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('social_media.belum_ada_akun_linkedin_yang_terhubung') }}</p>
                             @endif
                         </div>
 

@@ -87,7 +87,7 @@
                 {{-- Preview Thumbnail --}}
                 <div class="md:col-span-4 cursor-pointer group" @click="showProofModal = true">
                     <div class="relative rounded-[16px] overflow-hidden border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] aspect-4/3 flex items-center justify-center">
-                        <img src="{{ $settlement->proof_image_url }}" alt="Bukti Transfer Settlement" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <img src="{{ $settlement->proof_image_url }}" alt="{{ __('finance.bukti_transfer_settlement') }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-semibold gap-1.5">
                             <i data-lucide="maximize-2" class="w-4 h-4"></i>
                             <span>{{ __('finance.click_to_enlarge') }}</span>
@@ -292,7 +292,7 @@
                             </button>
                         </div>
                         <div class="flex-1 overflow-auto flex items-center justify-center bg-black/[0.03] dark:bg-white/[0.03] rounded-[16px] p-2">
-                            <img src="{{ $settlement->proof_image_url }}" alt="Bukti Transfer" class="max-h-[65vh] w-auto object-contain rounded-[12px] shadow-sm">
+                            <img src="{{ $settlement->proof_image_url }}" alt="{{ __('admin.bukti_transfer') }}" class="max-h-[65vh] w-auto object-contain rounded-[12px] shadow-sm">
                         </div>
                         <div class="flex items-center justify-between pt-2">
                             <span class="text-xs text-black/50 dark:text-white/50">{{ __('finance.transferred_at_prefix') }}: {{ $settlement->transferred_at?->translatedFormat('d M Y, H:i') }} WIB</span>

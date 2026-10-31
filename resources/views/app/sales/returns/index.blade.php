@@ -215,15 +215,15 @@
                                     <div class="flex items-center justify-end gap-1">
                                         <a href="{{ route('sales.returns.pdf', $return) }}" target="_blank"
                                             class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                            title="Unduh PDF"
-                                            aria-label="Unduh PDF">
+                                            title="{{ __('common.download_pdf') }}"
+                                            aria-label="{{ __('sales.unduh_pdf') }}">
                                             <i data-lucide="printer" class="w-4 h-4"></i>
                                         </a>
                                         @if ($return->status === 'draft' && (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline')))
                                         <a href="{{ route('sales.returns.edit', $return) }}"
                                             class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                            title="Edit Retur"
-                                            aria-label="Edit Retur">
+                                            title="{{ __('sales.edit_retur_2') }}"
+                                            aria-label="{{ __('sales.edit_retur_3') }}">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
                                         </a>
                                         @endif
@@ -237,8 +237,8 @@
                                         <button type="button"
                                             @click="openDelete('{{ route('sales.returns.destroy', $return) }}', '{{ $return->return_number }}')"
                                             class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                            title="Hapus Retur Penjualan"
-                                            aria-label="Hapus Retur Penjualan">
+                                            title="{{ __('sales.hapus_retur_penjualan') }}"
+                                            aria-label="{{ __('sales.hapus_retur_penjualan_2') }}">
                                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                                         </button>
                                         @endif
@@ -305,14 +305,14 @@
                         </p>
                     </a>
                     <div class="flex items-center gap-1 shrink-0">
-                        <a href="{{ route('sales.returns.show', $return) }}" class="p-1.5 text-[#007AFF]" title="Detail">
+                        <a href="{{ route('sales.returns.show', $return) }}" class="p-1.5 text-[#007AFF]" title="{{ __('sales.detail') }}">
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </a>
                         @if ($return->status === 'draft' && (\App\Support\Context::hasPermission('sales.returns') || \App\Support\Context::hasPermission('sales.pipeline')))
                         <button type="button"
                             @click="openDelete('{{ route('sales.returns.destroy', $return) }}', '{{ $return->return_number }}')"
                             class="p-1.5 text-[#FF3B30] hover:bg-[#FF3B30]/10 rounded-md transition-colors cursor-pointer"
-                            title="Hapus Retur Penjualan">
+                            title="{{ __('sales.hapus_retur_penjualan') }}">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                         @endif
@@ -381,13 +381,9 @@
 
                         <div class="grid grid-cols-2 border-t border-black/10 dark:border-white/10 text-[15px] font-medium">
                             <button type="button" @click="closeDelete()"
-                                    class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Batal
-                            </button>
+                                    class="min-h-[44px] py-3 text-[#007AFF] border-r border-black/10 dark:border-white/10 active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                             <button type="button" @click="submitDelete()"
-                                    class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">
-                                Hapus
-                            </button>
+                                    class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.delete') }}</button>
                         </div>
                     </div>
                 </div>

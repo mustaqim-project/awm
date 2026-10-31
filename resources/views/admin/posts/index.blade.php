@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'CMS Artikel & Edukasi - Admin Console',
+    'title' => __('admin.cms_artikel_edukasi_admin_console'),
     'headerTitle' => 'CMS Artikel & Edukasi UMKM',
     'headerSubtitle' => 'Kelola publikasi artikel blog, taksonomi kategori, dan cluster konten',
 ])
@@ -81,14 +81,14 @@
                 <a href="{{ route('admin.posts.index', ['tab' => 'posts']) }}"
                     class="px-4 py-2 rounded-[10px] text-[13px] font-medium transition-all inline-flex items-center gap-2 {{ $activeTab === 'posts' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                     <i data-lucide="file-text" class="w-4 h-4" stroke-width="1.5"></i>
-                    <span>Semua Artikel</span>
+                    <span>{{ __('admin.semua_artikel') }}</span>
                     <span
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold {{ $activeTab === 'posts' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $totalPosts }}</span>
                 </a>
                 <a href="{{ route('admin.posts.index', ['tab' => 'categories']) }}"
                     class="px-4 py-2 rounded-[10px] text-[13px] font-medium transition-all inline-flex items-center gap-2 {{ $activeTab === 'categories' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                     <i data-lucide="tag" class="w-4 h-4" stroke-width="1.5"></i>
-                    <span>Kategori Post</span>
+                    <span>{{ __('admin.kategori_post') }}</span>
                     <span
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold {{ $activeTab === 'categories' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $totalCategories }}</span>
                 </a>
@@ -111,7 +111,7 @@
                 <button type="button" onclick="openCategoryModal()"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] shrink-0">
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
-                    <span>Tambah Kategori</span>
+                    <span>{{ __('admin.tambah_kategori') }}</span>
                 </button>
             @else
                 <button type="button" onclick="openClusterModal()"
@@ -136,7 +136,7 @@
                             class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2"
                             stroke-width="1.5"></i>
                         <input type="text" name="search" value="{{ request('search') }}"
-                            placeholder="Cari judul artikel, topik, atau kata kunci..."
+                            placeholder="{{ __('admin.cari_judul_artikel_topik_atau_kata') }}"
                             class="w-full h-10 pl-10 pr-4 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
@@ -292,7 +292,7 @@
                                             <a href="{{ route('admin.posts.edit', $post) }}"
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                 <i data-lucide="pencil" class="w-3.5 h-3.5" stroke-width="1.5"></i>
-                                                <span>Edit</span>
+                                                <span>{{ __('common.edit') }}</span>
                                             </a>
                                             @if(Auth::guard('admin')->user()?->hasPermission('admin.posts.delete'))
                                             <form action="{{ route('admin.posts.destroy', $post) }}" method="POST"
@@ -302,7 +302,7 @@
                                                 <button type="submit"
                                                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                     <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i>
-                                                    <span>Hapus</span>
+                                                    <span>{{ __('common.delete') }}</span>
                                                 </button>
                                             </form>
                                             @endif
@@ -350,14 +350,14 @@
                 <div
                     class="p-4 sm:p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Daftar Kategori Artikel</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.daftar_kategori_artikel') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Taksonomi topik artikel yang
                             digunakan untuk filter dan pengelompokan panduan</p>
                     </div>
                     <button type="button" onclick="openCategoryModal()"
                         class="h-9 px-3.5 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-[0_1px_4px_rgba(0,122,255,0.2)]">
                         <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Kategori Baru</span>
+                        <span>{{ __('admin.kategori_baru') }}</span>
                     </button>
                 </div>
 
@@ -429,7 +429,7 @@
                                             <button type="button" onclick='editCategory(@json($category))'
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                 <i data-lucide="pencil" class="w-3.5 h-3.5" stroke-width="1.5"></i>
-                                                <span>Edit</span>
+                                                <span>{{ __('common.edit') }}</span>
                                             </button>
                                             <form action="{{ route('admin.posts.categories.destroy', $category) }}"
                                                 method="POST"
@@ -440,7 +440,7 @@
                                                 <button type="submit"
                                                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                     <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i>
-                                                    <span>Hapus</span>
+                                                    <span>{{ __('common.delete') }}</span>
                                                 </button>
                                             </form>
                                         </div>
@@ -449,7 +449,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6" class="px-5 py-10 text-center text-black/50 dark:text-white/50">
-                                        Belum ada data kategori. Klik tombol "Kategori Baru" untuk menambahkan.
+                                        {{ __('admin.belum_ada_data_kategori_klik_tombol') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -465,7 +465,7 @@
                 <div
                     class="p-4 sm:p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Daftar Cluster Konten</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.daftar_cluster_konten') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Pengelompokan pilar strategi konten
                             (Cluster K untuk panduan cara dan Cluster O untuk edukasi topikal)</p>
                     </div>
@@ -544,7 +544,7 @@
                                             <button type="button" onclick='editCluster(@json($cluster))'
                                                 class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                 <i data-lucide="pencil" class="w-3.5 h-3.5" stroke-width="1.5"></i>
-                                                <span>Edit</span>
+                                                <span>{{ __('common.edit') }}</span>
                                             </button>
                                             @if (!in_array($cluster->code, ['tutorial', 'edukasi']))
                                                 <form action="{{ route('admin.posts.clusters.destroy', $cluster) }}"
@@ -557,7 +557,7 @@
                                                         class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1">
                                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"
                                                             stroke-width="1.5"></i>
-                                                        <span>Hapus</span>
+                                                        <span>{{ __('common.delete') }}</span>
                                                     </button>
                                                 </form>
                                             @endif
@@ -567,7 +567,7 @@
                             @empty
                                 <tr>
                                     <td colspan="6" class="px-5 py-10 text-center text-black/50 dark:text-white/50">
-                                        Belum ada data cluster.
+                                        {{ __('admin.belum_ada_data_cluster') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -585,8 +585,7 @@
         <div
             class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
-                <h3 id="categoryModalTitle" class="text-[16px] font-bold text-black dark:text-white">Tambah Kategori Baru
-                </h3>
+                <h3 id="categoryModalTitle" class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.tambah_kategori_baru') }}</h3>
                 <button type="button" onclick="closeCategoryModal()"
                     class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 flex items-center justify-center hover:bg-black/[0.1]">
                     <i data-lucide="x" class="w-4 h-4"></i>
@@ -602,21 +601,21 @@
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Nama Kategori
                         *</label>
                     <input type="text" id="catName" name="name" required
-                        placeholder="Contoh: Operasional & Stok"
+                        placeholder="{{ __('admin.contoh_operasional_stok') }}"
                         class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
 
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Slug URL
                         (Opsional)</label>
-                    <input type="text" id="catSlug" name="slug" placeholder="operasional-dan-stok"
+                    <input type="text" id="catSlug" name="slug" placeholder="{{ __('admin.operasional_dan_stok') }}"
                         class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
                 </div>
 
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Deskripsi
                         Ringkas</label>
-                    <textarea id="catDesc" name="description" rows="2" placeholder="Deskripsi ringkas fokus kategori ini..."
+                    <textarea id="catDesc" name="description" rows="2" placeholder="{{ __('admin.deskripsi_ringkas_fokus_kategori_ini') }}"
                         class="w-full px-3.5 py-2 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
                 </div>
 
@@ -639,13 +638,9 @@
                 <div
                     class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                     <button type="button" onclick="closeCategoryModal()"
-                        class="h-9 px-4 rounded-[10px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08]">
-                        Batal
-                    </button>
+                        class="h-9 px-4 rounded-[10px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08]">{{ __('common.cancel') }}</button>
                     <button type="submit" id="categorySubmitBtn"
-                        class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm">
-                        Simpan Kategori
-                    </button>
+                        class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm">{{ __('admin.simpan_kategori') }}</button>
                 </div>
             </form>
         </div>
@@ -687,7 +682,7 @@
                 <div>
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Deskripsi
                         Pilar</label>
-                    <textarea id="clusDesc" name="description" rows="2" placeholder="Fungsi pilar konten ini..."
+                    <textarea id="clusDesc" name="description" rows="2" placeholder="{{ __('admin.fungsi_pilar_konten_ini') }}"
                         class="w-full px-3.5 py-2 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
                 </div>
 
@@ -709,13 +704,9 @@
                 <div
                     class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                     <button type="button" onclick="closeClusterModal()"
-                        class="h-9 px-4 rounded-[10px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08]">
-                        Batal
-                    </button>
+                        class="h-9 px-4 rounded-[10px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08]">{{ __('common.cancel') }}</button>
                     <button type="submit" id="clusterSubmitBtn"
-                        class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm">
-                        Simpan Cluster
-                    </button>
+                        class="h-9 px-4 rounded-[10px] text-[12px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm">{{ __('admin.simpan_cluster') }}</button>
                 </div>
             </form>
         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Verifikasi Nomor WhatsApp', 'headerTitle' => 'Verifikasi Nomor WhatsApp', 'headerSubtitle' => 'Masukkan OTP WhatsApp untuk mengonfirmasi pembaruan nomor'])
+@extends('layouts.app', ['title' => __('settings.verifikasi_nomor_whatsapp'), 'headerTitle' => 'Verifikasi Nomor WhatsApp', 'headerSubtitle' => 'Masukkan OTP WhatsApp untuk mengonfirmasi pembaruan nomor'])
 
 @section('content')
     <div class="max-w-[520px] mx-auto py-8" x-data="coocaOtp.boxes({{ (int) ($expiresAt ?? 0) }}, {{ (int) ($resendIn ?? 0) }})">
@@ -55,21 +55,19 @@
                     </div>
                 </div>
                 <button type="submit" :disabled="submitting" :class="submitting ? 'opacity-60 cursor-not-allowed' : ''"
-                    class="w-full h-10 rounded-[10px] bg-[#34C759] hover:bg-[#248A3D] text-white text-[13px] font-semibold transition">Verifikasi
-                    Nomor WhatsApp</button>
+                    class="w-full h-10 rounded-[10px] bg-[#34C759] hover:bg-[#248A3D] text-white text-[13px] font-semibold transition">{{ __('settings.verifikasi_nomor_whatsapp_2') }}</button>
             </form>
             <form method="POST" action="{{ route('profile.contact.verify.resend') }}" class="mt-4 text-center">
                 @csrf
                 <button type="submit" :disabled="cooldown() > 0"
                     :class="cooldown() > 0 ? 'opacity-40 cursor-not-allowed' : ''"
                     class="text-[12px] font-semibold text-[#007AFF] hover:underline">
-                    <span x-show="cooldown() <= 0">Kirim ulang OTP</span>
-                    <span x-show="cooldown() > 0">Kirim ulang dalam <span x-text="cooldown()"></span> dtk</span>
+                    <span x-show="cooldown() <= 0">{{ __('auth.resend_otp') }}</span>
+                    <span x-show="cooldown() > 0">{{ __('auth.resend_in') }} <span x-text="cooldown()"></span> {{ __('common.seconds_short') }}</span>
                 </button>
             </form>
             <a href="{{ route('profile.edit') }}"
-                class="block mt-4 text-center text-[12px] text-black/50 dark:text-white/50 hover:text-[#007AFF]">Kembali ke
-                profil</a>
+                class="block mt-4 text-center text-[12px] text-black/50 dark:text-white/50 hover:text-[#007AFF]">{{ __('settings.kembali_ke_profil') }}</a>
         </div>
     </div>
 

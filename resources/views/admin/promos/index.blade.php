@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Manajemen Kode Promo & Voucher - Admin Console',
+    'title' => __('admin.manajemen_kode_promo_voucher_admin_console'),
     'headerTitle' => 'Kode Promo & Voucher',
     'headerSubtitle' => 'Kelola skema insentif subscription, kode diskon kas, dan pencatatan audit beban promosi platform',
 ])
@@ -55,7 +55,7 @@
                     <i data-lucide="ticket-percent" class="w-6 h-6" stroke-width="1.8"></i>
                 </div>
                 <div>
-                    <h1 class="text-[19px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">Manajemen Promo &amp; Diskon Subscription</h1>
+                    <h1 class="text-[19px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">{{ __('admin.manajemen_promo_diskon_subscription') }}</h1>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Strategi konversi pelanggan baru, retensi tahunan, dan pencatatan subsidi pemasaran terintegrasi.</p>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                         Digunakan <span class="font-bold text-black dark:text-white tabular-nums">{{ $topPromo->used_count }}x</span> ({{ $topPromo->formatted_discount }})
                     </p>
                 @else
-                    <div class="text-[15px] font-bold text-black/40 dark:text-white/40">Belum Ada Data</div>
+                    <div class="text-[15px] font-bold text-black/40 dark:text-white/40">{{ __('admin.belum_ada_data_2') }}</div>
                     <p class="text-[11px] text-black/35 dark:text-white/35 mt-1">Data terisi otomatis saat promo dipakai</p>
                 @endif
             </div>
@@ -176,9 +176,7 @@
                         <i data-lucide="search" class="w-3.5 h-3.5 absolute left-2.5 top-3 text-black/40 dark:text-white/40" stroke-width="1.8"></i>
                     </div>
 
-                    <button type="submit" class="h-9 px-3 rounded-[10px] text-[12.5px] font-semibold bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white transition-all">
-                        Cari
-                    </button>
+                    <button type="submit" class="h-9 px-3 rounded-[10px] text-[12.5px] font-semibold bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 text-black dark:text-white transition-all">{{ __('common.search') }}</button>
                     @if ($search || $status !== 'all')
                         <a href="{{ route('admin.promos.index', ['tab' => $tab]) }}" class="h-9 px-2.5 rounded-[10px] text-[12px] font-medium text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center">
                             Reset
@@ -288,7 +286,7 @@
                                     <td class="py-4 px-4 sm:px-6 text-right">
                                         <div class="inline-flex items-center gap-1">
                                             @if(Auth::guard('admin')->user()?->hasPermission('admin.promos.edit'))
-                                            <button type="button" @click="openEdit({{ \Illuminate\Support\Js::from($promo) }})" class="p-1.5 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-[#007AFF] transition-colors" title="Edit Promo">
+                                            <button type="button" @click="openEdit({{ \Illuminate\Support\Js::from($promo) }})" class="p-1.5 rounded-[8px] hover:bg-black/5 dark:hover:bg-white/10 text-[#007AFF] transition-colors" title="{{ __('admin.edit_promo') }}">
                                                 <i data-lucide="edit-3" class="w-4 h-4" stroke-width="1.8"></i>
                                             </button>
                                             @endif
@@ -297,7 +295,7 @@
                                                 onsubmit="return confirm(this.dataset.confirm)">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="p-1.5 rounded-[8px] hover:bg-red-500/10 text-red-500 transition-colors" title="Hapus Promo">
+                                                <button type="submit" class="p-1.5 rounded-[8px] hover:bg-red-500/10 text-red-500 transition-colors" title="{{ __('admin.hapus_promo') }}">
                                                     <i data-lucide="trash-2" class="w-4 h-4" stroke-width="1.8"></i>
                                                 </button>
                                             </form>
@@ -311,7 +309,7 @@
                                         <div class="w-12 h-12 rounded-[16px] bg-black/5 dark:bg-white/5 mx-auto flex items-center justify-center text-black/30 dark:text-white/30 mb-3">
                                             <i data-lucide="ticket" class="w-6 h-6" stroke-width="1.5"></i>
                                         </div>
-                                        <div class="font-bold text-[15px] text-black dark:text-white">Belum Ada Kode Promo</div>
+                                        <div class="font-bold text-[15px] text-black dark:text-white">{{ __('admin.belum_ada_kode_promo') }}</div>
                                         <p class="text-[12px] mt-1">Gunakan tombol "Sinkronkan 6 Skema Unggulan" atau terbitkan kode promo manual pertama Anda.</p>
                                     </td>
                                 </tr>
@@ -388,7 +386,7 @@
                                         <div class="w-12 h-12 rounded-[16px] bg-black/5 dark:bg-white/5 mx-auto flex items-center justify-center text-black/30 dark:text-white/30 mb-3">
                                             <i data-lucide="receipt" class="w-6 h-6" stroke-width="1.5"></i>
                                         </div>
-                                        <div class="font-bold text-[15px] text-black dark:text-white">Belum Ada Transaksi dengan Promo</div>
+                                        <div class="font-bold text-[15px] text-black dark:text-white">{{ __('admin.belum_ada_transaksi_dengan_promo') }}</div>
                                         <p class="text-[12px] mt-1">Audit keuangan subsidi promosi akan tercatat otomatis setiap tenant menyelesaikan checkout dengan voucher.</p>
                                     </td>
                                 </tr>
@@ -417,7 +415,7 @@
                                 <i data-lucide="ticket-percent" class="w-5 h-5" stroke-width="1.8"></i>
                             </div>
                             <div>
-                                <h3 class="text-[17px] font-bold text-black dark:text-white">Terbitkan Kode Promo Baru</h3>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.terbitkan_kode_promo_baru') }}</h3>
                                 <p class="text-[11.5px] text-black/50 dark:text-white/50">Tentukan nilai potongan, batasan kuota, dan target tier paket</p>
                             </div>
                         </div>
@@ -435,13 +433,13 @@
                             </div>
                             <div>
                                 <label class="block text-[12px] font-bold text-black/70 dark:text-white/70 mb-1">Nama Promo <span class="text-red-500">*</span></label>
-                                <input type="text" name="name" required placeholder="Diskon Awal Tahun 30%" class="w-full h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <input type="text" name="name" required placeholder="{{ __('admin.diskon_awal_tahun_30') }}" class="w-full h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-[12px] font-bold text-black/70 dark:text-white/70 mb-1">Deskripsi &amp; Syarat Ketentuan</label>
-                            <textarea name="description" rows="2" placeholder="Potongan diskon untuk semua paket langganan tahunan..." class="w-full p-3 rounded-[12px] text-[12.5px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
+                            <textarea name="description" rows="2" placeholder="{{ __('admin.potongan_diskon_untuk_semua_paket_langganan') }}" class="w-full p-3 rounded-[12px] text-[12.5px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06]">
@@ -454,7 +452,7 @@
                             </div>
                             <div>
                                 <label class="block text-[11.5px] font-bold text-black/70 dark:text-white/70 mb-1">Nilai Potongan <span class="text-red-500">*</span></label>
-                                <input type="number" step="any" name="discount_value" required placeholder="30 atau 100000" class="w-full h-9 px-3 rounded-[10px] text-[12.5px] bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <input type="number" step="any" name="discount_value" required placeholder="{{ __('admin.30_atau_100000') }}" class="w-full h-9 px-3 rounded-[10px] text-[12.5px] bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             </div>
                             <div>
                                 <label class="block text-[11.5px] font-bold text-black/70 dark:text-white/70 mb-1">Maks. Diskon (Rp)</label>
@@ -517,12 +515,8 @@
                         </div>
 
                         <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-                            <button type="button" @click="createOpen = false" class="px-4 py-2 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                Batal
-                            </button>
-                            <button type="submit" class="px-5 py-2 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-sm transition-all">
-                                Simpan &amp; Terbitkan
-                            </button>
+                            <button type="button" @click="createOpen = false" class="px-4 py-2 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
+                            <button type="submit" class="px-5 py-2 rounded-[12px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white shadow-sm transition-all">{{ __('admin.simpan_terbitkan') }}</button>
                         </div>
                     </form>
                 </div>
@@ -542,7 +536,7 @@
                                 <i data-lucide="edit-3" class="w-5 h-5" stroke-width="1.8"></i>
                             </div>
                             <div>
-                                <h3 class="text-[17px] font-bold text-black dark:text-white">Edit Parameter Promo</h3>
+                                <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.edit_parameter_promo') }}</h3>
                                 <p class="text-[11.5px] text-black/50 dark:text-white/50" x-text="'Ubah konfigurasi untuk kode ' + editData.code"></p>
                             </div>
                         </div>
@@ -643,12 +637,8 @@
                         </div>
 
                         <div class="flex items-center justify-end gap-2.5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-                            <button type="button" @click="editOpen = false" class="px-4 py-2 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                Batal
-                            </button>
-                            <button type="submit" class="px-5 py-2 rounded-[12px] text-[13px] font-semibold bg-[#34C759] hover:bg-[#30D158] text-white shadow-sm transition-all">
-                                Simpan Perubahan
-                            </button>
+                            <button type="button" @click="editOpen = false" class="px-4 py-2 rounded-[12px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
+                            <button type="submit" class="px-5 py-2 rounded-[12px] text-[13px] font-semibold bg-[#34C759] hover:bg-[#30D158] text-white shadow-sm transition-all">{{ __('common.save_changes') }}</button>
                         </div>
                     </form>
                 </div>

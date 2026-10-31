@@ -33,7 +33,7 @@
                 <div class="flex items-center gap-2 self-start sm:self-auto">
                     <a href="{{ route('marketplace-hub.index') }}" target="_blank"
                         class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0 shadow-sm cursor-pointer" rel="noopener noreferrer">
-                        <span>Lihat Panel Merchant</span>
+                        <span>{{ __('admin.lihat_panel_merchant') }}</span>
                         <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                     </a>
                 </div>
@@ -232,7 +232,7 @@
                 <button type="submit"
                     class="h-11 px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-98 text-white font-bold text-[13.5px] shadow-sm flex items-center gap-2 transition-all cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Simpan Pengaturan Marketplace</span>
+                    <span>{{ __('admin.simpan_pengaturan_marketplace') }}</span>
                 </button>
 
                 @endif

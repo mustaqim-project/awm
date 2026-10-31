@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Matriks Harga & Ledger Kredit - Admin Console',
+    'title' => __('admin.matriks_harga_ledger_kredit_admin_console'),
     'headerTitle' => 'Matriks Tarif Model AI & Finansial Ledger',
     'headerSubtitle' => 'Kelola biaya kredit per provider render, pantau peredaran saldo di seluruh tenant, dan berikan hibah kredit',
 ])
@@ -153,7 +153,7 @@
         <div class="lg:col-span-5 rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 space-y-4">
             <h3 class="text-xs font-bold uppercase tracking-wider text-black/70 dark:text-white/70 flex items-center gap-1.5">
                 <i data-lucide="users" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Saldo Kredit Tenant Teratas</span>
+                <span>{{ __('admin.saldo_kredit_tenant_teratas') }}</span>
             </h3>
 
             <div class="divide-y divide-black/5 dark:divide-white/5 max-h-[460px] overflow-y-auto">
@@ -181,7 +181,7 @@
         <div class="lg:col-span-7 rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 space-y-4">
             <h3 class="text-xs font-bold uppercase tracking-wider text-black/70 dark:text-white/70 flex items-center gap-1.5">
                 <i data-lucide="receipt" class="w-4 h-4 text-[#34C759]"></i>
-                <span>Transaksi Ledger Platform Terbaru</span>
+                <span>{{ __('admin.transaksi_ledger_platform_terbaru') }}</span>
             </h3>
 
             <div class="overflow-x-auto">
@@ -295,13 +295,9 @@
 
                 <div class="pt-2 flex items-center justify-end gap-2 border-t border-black/5">
                     <button type="button" @click="grantModalOpen = false"
-                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">
-                        Batal
-                    </button>
+                        class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60">{{ __('common.cancel') }}</button>
                     <button type="submit"
-                        class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-white text-xs font-bold shadow-sm transition-all">
-                        Kirim Hibah Kredit
-                    </button>
+                        class="px-4 py-2 rounded-[10px] bg-[#007AFF] text-white text-xs font-bold shadow-sm transition-all">{{ __('admin.kirim_hibah_kredit') }}</button>
                 </div>
             </form>
         </div>

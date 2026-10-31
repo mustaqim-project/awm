@@ -101,7 +101,7 @@
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                     Catatan Pelunasan
                 </label>
-                <textarea name="notes" rows="2" placeholder="Pelunasan tagihan server via klikBCA Bisnis..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.pelunasan_tagihan_server_via_klikbca_bisnis') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] resize-none"></textarea>
             </div>
 
@@ -117,13 +117,11 @@
             {{-- Buttons --}}
             <div class="pt-3 border-t border-black/5 dark:border-white/5 flex items-center justify-end gap-2.5">
                 <button type="button" @click="showPayApModal = false"
-                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">
-                    Batal
-                </button>
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/5 hover:bg-black/10 transition-colors cursor-pointer">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-sm shadow-[#007AFF]/25 cursor-pointer flex items-center gap-2">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>Simpan &amp; Jurnal Pelunasan</span>
+                    <span>{{ __('admin.simpan_jurnal_pelunasan') }}</span>
                 </button>
             </div>
         </form>

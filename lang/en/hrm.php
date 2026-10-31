@@ -891,5 +891,8 @@ return [
     'placeholder_salary' => '5000000',
     'placeholder_daily_rate' => '150000',
     'placeholder_bank_name' => 'BCA / Mandiri / BRI / BNI',
+    'team_members' => 'Team Members',
+    'employees' => 'Employees',
+    'payroll_and_attendance' => 'Payroll & Attendance',
 ];
 

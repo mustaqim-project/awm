@@ -73,4 +73,12 @@ return [
     'matriks_penerapan_praktis_untuk_20_sektor' => 'Matriks Penerapan Praktis untuk 20 Sektor Industri Sme',
     'tanya_jawab_pemilik_usaha_faq_ai' => 'Tanya Jawab Pemilik Usaha (FAQ AI)',
     'tautan_cepat_direktori_navigasi_fitur_pendukung' => 'Tautan Fast & Direktori Navigation Fitur Pendukung AI',
+    'warehouse_stock' => 'Warehouse Stock',
+    'realtime_monitoring' => 'Real-Time Monitoring',
+    'po_purchase_order' => 'Purchase Order PO',
+    'draft_supplier_restock' => 'Draft Supplier Restock',
+    'profit_report' => 'Profit Report',
+    'balance_profit_loss' => 'Balance Sheet & Profit/Loss',
+    'virtual_office_ai' => '3D Virtual Office & AI',
+    'twenty_businesses' => '20 Businesses',
 ];

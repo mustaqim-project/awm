@@ -1671,4 +1671,6 @@ return [
     'hub_pesanan_omnichannel' => 'Hub Pesanan Omnichannel',
     'testingrate' => 'TestingRate:',
     'area_id_bull_kode' => 'Area ID: &bull; Kode',
+    'area_id' => 'Area ID',
+    'test_rate' => 'Uji Ongkir',
 ];

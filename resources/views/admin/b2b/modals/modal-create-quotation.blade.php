@@ -136,7 +136,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
                                 <div class="sm:col-span-5">
                                     <input type="text" :name="'items[' + idx + '][product_name]'" x-model="it.product_name" required
-                                        placeholder="Nama produk/layanan..."
+                                        placeholder="{{ __('admin.nama_produk_layanan') }}"
                                         class="w-full h-9 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]">
                                 </div>
                                 <div class="sm:col-span-2">
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="sm:col-span-4">
                                     <input type="number" :name="'items[' + idx + '][unit_price]'" x-model="it.unit_price" required min="0"
-                                        placeholder="Harga Satuan (Rp)"
+                                        placeholder="{{ __('admin.harga_satuan_rp') }}"
                                         class="w-full h-9 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#6366f1]">
                                 </div>
                                 <div class="sm:col-span-1 text-right">
@@ -180,16 +180,14 @@
             {{-- Notes --}}
             <div>
                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan / Syarat Ketentuan</label>
-                <textarea name="notes" rows="2" placeholder="Ketentuan garansi, syarat pengiriman, termin pembayaran..."
+                <textarea name="notes" rows="2" placeholder="{{ __('admin.ketentuan_garansi_syarat_pengiriman_termin_pembayaran') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#6366f1]"></textarea>
             </div>
 
             {{-- Action Buttons --}}
             <div class="pt-2 flex items-center justify-end gap-3 border-t border-black/5 dark:border-white/5">
                 <button type="button" @click="showCreateQuotationModal = false"
-                    class="px-4 py-2 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-[13px] font-medium text-black/70 dark:text-white/70 transition-colors">
-                    Batal
-                </button>
+                    class="px-4 py-2 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-[13px] font-medium text-black/70 dark:text-white/70 transition-colors">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="px-5 py-2.5 rounded-[12px] bg-[#6366f1] hover:bg-[#4f46e5] text-white text-[13.5px] font-semibold shadow-lg shadow-[#6366f1]/20 transition-all flex items-center gap-2">
                     <i data-lucide="check" class="w-4 h-4"></i> Terbitkan Penawaran

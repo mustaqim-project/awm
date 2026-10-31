@@ -1671,4 +1671,6 @@ return [
     'hub_pesanan_omnichannel' => 'Hub Order Omnichannel',
     'testingrate' => 'TestingRate:',
     'area_id_bull_kode' => 'Area ID: &bull; Code',
+    'area_id' => 'Area ID',
+    'test_rate' => 'Test Rate',
 ];

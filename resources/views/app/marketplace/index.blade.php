@@ -191,7 +191,7 @@
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="text-[15px] font-bold text-black dark:text-white">1. Shopee Indonesia</h3>
+                            <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('marketplace.1_shopee_indonesia') }}</h3>
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EE4D2D]/15 text-[#EE4D2D] border border-[#EE4D2D]/20">
                                 {{ __('marketplace.shopee_erp_badge') }}
                             </span>
@@ -245,7 +245,7 @@
                         @endforeach
                     </div>
                 @else
-                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun Shopee yang terhubung.</p>
+                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('marketplace.belum_ada_akun_shopee_yang_terhubung') }}</p>
                 @endif
             </div>
 
@@ -255,12 +255,12 @@
                     <a href="{{ route('marketplace-hub.products', ['channel' => 'shopee']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="tag" class="w-3.5 h-3.5"></i>
-                        <span>Atur Produk & Stok</span>
+                        <span>{{ __('marketplace.atur_produk_stok') }}</span>
                     </a>
                     <a href="{{ route('marketplace-hub.orders', ['channel' => 'shopee']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#EE4D2D]"></i>
-                        <span>Pesanan Masuk</span>
+                        <span>{{ __('marketplace.pesanan_masuk') }}</span>
                     </a>
                     <a href="{{ route('marketplace-hub.chat', ['channel' => 'shopee']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
@@ -412,7 +412,7 @@
                         @endforeach
                     </div>
                 @else
-                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">Belum ada akun TikTok Shop atau Tokopedia yang terhubung.</p>
+                    <p class="text-[12px] text-black/45 dark:text-white/45 italic py-1">{{ __('marketplace.belum_ada_akun_tiktok_shop_atau') }}</p>
                 @endif
             </div>
 
@@ -422,17 +422,17 @@
                     <a href="{{ route('marketplace-hub.products', ['channel' => 'tiktok_shop']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-all flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="tag" class="w-3.5 h-3.5"></i>
-                        <span>Produk TikTok</span>
+                        <span>{{ __('marketplace.produk_tiktok') }}</span>
                     </a>
                     <a href="{{ route('marketplace-hub.products', ['channel' => 'tokopedia']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-[#00AA5B] bg-[#00AA5B]/10 hover:bg-[#00AA5B]/20 transition-all flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="tag" class="w-3.5 h-3.5"></i>
-                        <span>Produk Tokopedia</span>
+                        <span>{{ __('marketplace.produk_tokopedia') }}</span>
                     </a>
                     <a href="{{ route('marketplace-hub.orders', ['channel' => 'tiktok_shop']) }}"
                         class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-semibold text-black/75 dark:text-white/75 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-all flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-[#00AA5B]"></i>
-                        <span>Pesanan Masuk</span>
+                        <span>{{ __('marketplace.pesanan_masuk') }}</span>
                     </a>
                     <div class="ml-auto flex items-center gap-2">
                         <span class="text-[11px] text-black/50 dark:text-white/50 hidden sm:inline">Sync Otomatis:</span>

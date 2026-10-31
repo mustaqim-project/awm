@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit ' . $legalPage->title . ' | Cooca Admin CMS')
+@section('title', __('admin.title_edit_legalpage_title_cooca_admin'))
 
 @section('content')
 <div x-data="{ activeTab: 'general' }" class="space-y-6">
@@ -30,11 +30,11 @@
             <a href="{{ route('admin.legal-pages.index') }}"
                 class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer">
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5" stroke-width="2"></i>
-                <span>Kembali</span>
+                <span>{{ __('common.back') }}</span>
             </a>
             <a href="https://cooca.id/{{ $legalPage->slug === 'privacy-policy' ? 'privacy' : 'terms' }}" target="_blank"
                 class="h-10 px-4 rounded-[12px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 border border-[#007AFF]/20 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer">
-                <span>Buka Tayangan Publik</span>
+                <span>{{ __('admin.buka_tayangan_publik') }}</span>
                 <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
             </a>
         </div>
@@ -58,14 +58,14 @@
                 :class="activeTab === 'owner' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] dark:text-[#0A84FF] shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="h-10 px-4 sm:px-5 rounded-[13px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                 <i data-lucide="briefcase" class="w-4 h-4"></i>
-                <span>2. Khusus Pemilik Usaha (Owner UMKM)</span>
+                <span>{{ __('admin.2_khusus_pemilik_usaha_owner_umkm') }}</span>
             </button>
 
             <button type="button" @click="activeTab = 'customer'"
                 :class="activeTab === 'customer' ? 'bg-white dark:bg-[#2C2C2E] text-[#34C759] dark:text-[#30D158] shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="h-10 px-4 sm:px-5 rounded-[13px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-                <span>3. Khusus Pelanggan Toko (Customer)</span>
+                <span>{{ __('admin.3_khusus_pelanggan_toko_customer') }}</span>
             </button>
 
             <button type="button" @click="activeTab = 'seo'"
@@ -98,7 +98,7 @@
             <div class="rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 sm:p-7 space-y-4 shadow-xs">
                 <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div>
-                        <h3 class="text-[16px] font-bold text-[#007AFF] dark:text-[#0A84FF]">Ketentuan Khusus Pemilik Usaha &amp; Mitra UMKM (Owner / Merchant)</h3>
+                        <h3 class="text-[16px] font-bold text-[#007AFF] dark:text-[#0A84FF]">{{ __('admin.ketentuan_khusus_pemilik_usaha_mitra_umkm') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Aturan operasional SaaS, sistem penampungan dana escrow settlement TriPay, etika produk toko, HPP, kuota AI/storage, dan logistik Biteship.</p>
                     </div>
                     <span class="text-[11px] font-mono px-2.5 py-1 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] font-bold">Mitra Merchant</span>
@@ -132,7 +132,7 @@
             <div class="rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 sm:p-7 space-y-5 shadow-xs">
                 <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Informasi Dokumen &amp; Pengaturan SEO</h3>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.informasi_dokumen_pengaturan_seo') }}</h3>
                         <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Judul utama, nomor versi, tanggal berlaku, dan meta tag untuk mesin pencari.</p>
                     </div>
                     <span class="text-[11px] font-mono px-2.5 py-1 rounded-[8px] bg-[#AF52DE]/10 text-[#AF52DE] font-bold">Meta Tag</span>
@@ -169,7 +169,7 @@
                             Meta Title SEO
                         </label>
                         <input type="text" name="meta_title" value="{{ old('meta_title', $legalPage->meta_title) }}"
-                            placeholder="Judul yang tampil pada tab browser & hasil pencarian Google"
+                            placeholder="{{ __('admin.judul_yang_tampil_pada_tab_browser') }}"
                             class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
                 </div>
@@ -216,7 +216,7 @@
 <button type="submit"
                     class="w-full sm:w-auto h-12 sm:h-11 px-7 rounded-[14px] text-[13px] sm:text-[14px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 cursor-pointer">
                     <i data-lucide="save" class="w-4.5 h-4.5" stroke-width="2"></i>
-                    <span>Simpan Dokumen</span>
+                    <span>{{ __('admin.simpan_dokumen') }}</span>
                 </button>
 @endif
             </div>

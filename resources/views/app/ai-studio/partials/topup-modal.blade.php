@@ -148,14 +148,12 @@
 
                     <div class="flex items-center gap-2">
                         <button type="button" @click="closeModal()"
-                            class="px-4 py-2.5 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                            Batal
-                        </button>
+                            class="px-4 py-2.5 rounded-[12px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{{ __('common.cancel') }}</button>
                         <button type="button" @click="submitOrder()" :disabled="submitting"
                             class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 disabled:opacity-50 text-white text-xs font-bold shadow-md shadow-orange-500/20 active:scale-[0.98] transition-all">
                             <i data-lucide="shield-check" class="w-4 h-4" x-show="!submitting"></i>
                             <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="submitting" style="display: none;"></i>
-                            <span x-text="submitting ? 'Memproses Gateway...' : 'Bayar Sekarang'">Bayar Sekarang</span>
+                            <span x-text="submitting ? 'Memproses Gateway...' : 'Bayar Sekarang'">{{ __('ai.bayar_sekarang') }}</span>
                         </button>
                     </div>
                 </div>
@@ -172,7 +170,7 @@
                             <i data-lucide="qr-code" class="w-4 h-4"></i>
                         </span>
                         <div>
-                            <h4 class="text-xs font-bold text-black dark:text-white">Menunggu Pembayaran</h4>
+                            <h4 class="text-xs font-bold text-black dark:text-white">{{ __('ai.menunggu_pembayaran') }}</h4>
                             <span class="text-[10px] text-black/50 dark:text-white/50" x-text="'No. Pesanan: #' + activeOrder?.order_number"></span>
                         </div>
                     </div>
@@ -192,7 +190,7 @@
                 <!-- QRIS Visual Render -->
                 <div x-show="activeOrder?.qr_url" class="space-y-3">
                     <div class="inline-block p-4 rounded-[20px] bg-white border border-black/10 shadow-md">
-                        <img :src="activeOrder?.qr_url" alt="QRIS Dinamis" class="w-56 h-56 mx-auto object-contain">
+                        <img :src="activeOrder?.qr_url" alt="{{ __('ai.qris_dinamis') }}" class="w-56 h-56 mx-auto object-contain">
                     </div>
                     <p class="text-xs text-black/60 dark:text-white/60 max-w-sm mx-auto leading-relaxed">
                         Buka aplikasi <strong>BCA, Livin, BRImo, GoPay, OVO, ShopeePay, DANA</strong> atau aplikasi m-Banking mana pun, lalu scan kode QRIS di atas.
@@ -222,13 +220,11 @@
                 <!-- Fallback Actions -->
                 <div class="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-2">
                     <button type="button" @click="step = 'select'; stopPolling();"
-                        class="text-xs text-black/60 dark:text-white/60 hover:underline">
-                        &larr; Ganti Paket / Metode
-                    </button>
+                        class="text-xs text-black/60 dark:text-white/60 hover:underline">{{ __('ai.larr_ganti_paket_metode') }}</button>
 
                     <a :href="activeOrder?.payment_url" target="_blank"
                         class="text-xs font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1">
-                        <span>Buka Halaman Tagihan Lengkap</span>
+                        <span>{{ __('ai.buka_halaman_tagihan_lengkap') }}</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                 </div>
@@ -243,7 +239,7 @@
                 </div>
 
                 <div class="space-y-1.5 max-w-sm mx-auto">
-                    <h3 class="text-xl font-bold text-black dark:text-white">Pembayaran Berhasil!</h3>
+                    <h3 class="text-xl font-bold text-black dark:text-white">{{ __('ai.pembayaran_berhasil') }}</h3>
                     <p class="text-xs text-black/60 dark:text-white/60 leading-relaxed">
                         Top up kredit telah berhasil diverifikasi oleh sistem. Saldo kredit AI Studio Anda telah ditambahkan secara instan.
                     </p>
@@ -256,9 +252,7 @@
 
                 <div class="pt-3">
                     <button type="button" @click="closeModal()"
-                        class="w-full py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-md shadow-[#007AFF]/25 transition-all">
-                        Lanjut Generate Visual Produk
-                    </button>
+                        class="w-full py-3 rounded-[14px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-md shadow-[#007AFF]/25 transition-all">{{ __('ai.lanjut_generate_visual_produk') }}</button>
                 </div>
             </div>
 

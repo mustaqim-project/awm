@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Laporan & Analitik Bisnis',
+    'title' => __('analytics.laporan_analitik_bisnis'),
     'headerTitle' => 'Laporan & Analitik Finansial',
     'headerSubtitle' => 'Pantau Laba Rugi riil, Arus Kas, Umur Piutang/Hutang, dan Valuasi Stok dari snapshot transaksi'
 ])
@@ -102,21 +102,13 @@
             <!-- Apple-Style Segmented Control for Presets -->
             <div class="inline-flex p-0.5 rounded-[9px] bg-black/[0.06] dark:bg-white/[0.08] text-[13px] font-medium">
                 <button type="submit" name="preset" value="today"
-                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'today' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
-                    Hari Ini
-                </button>
+                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'today' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">{{ __('analytics.hari_ini') }}</button>
                 <button type="submit" name="preset" value="7days"
-                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === '7days' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
-                    7 Hari
-                </button>
+                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === '7days' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">{{ __('analytics.7_hari') }}</button>
                 <button type="submit" name="preset" value="this_month"
-                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'this_month' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
-                    Bulan Ini
-                </button>
+                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'this_month' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">{{ __('analytics.bulan_ini') }}</button>
                 <button type="submit" name="preset" value="this_year"
-                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'this_year' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">
-                    Tahun Ini
-                </button>
+                    class="px-3 py-1 rounded-[7px] transition-all {{ $preset === 'this_year' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' : 'text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white' }}">{{ __('analytics.tahun_ini') }}</button>
             </div>
 
             <!-- Custom Date Range -->
@@ -126,7 +118,7 @@
                 <span class="text-black/40 dark:text-white/40 font-medium">s/d</span>
                 <input type="date" name="end_date" value="{{ $endDate->toDateString() }}"
                     class="h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                <button type="submit" class="h-8 w-8 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 active:scale-[0.97] transition-all flex items-center justify-center" title="Terapkan Filter Tanggal">
+                <button type="submit" class="h-8 w-8 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/70 dark:text-white/70 active:scale-[0.97] transition-all flex items-center justify-center" title="{{ __('analytics.terapkan_filter_tanggal') }}">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
                     </svg>
@@ -205,7 +197,7 @@
                 <svg class="w-4 h-4 text-[#AF52DE]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
                 </svg>
-                <span>4. Valuasi &amp; Perputaran Stok</span>
+                <span>{{ __('analytics.4_valuasi_perputaran_stok') }}</span>
             </button>
             @endif
 
@@ -217,7 +209,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
                 </svg>
-                <span>5. Struktur HPP &amp; Biaya</span>
+                <span>{{ __('analytics.5_struktur_hpp_biaya') }}</span>
             </button>
             @endif
         </div>
@@ -518,7 +510,7 @@
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden space-y-4 p-5">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/5 dark:border-white/10 pb-3">
                 <div>
-                    <h3 class="text-[14px] font-semibold text-black dark:text-white">Analisis Umur Piutang Pelanggan (AR Aging)</h3>
+                    <h3 class="text-[14px] font-semibold text-black dark:text-white">{{ __('analytics.analisis_umur_piutang_pelanggan_ar_aging') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Klasifikasi invoice yang belum dibayar berdasarkan keterlambatan jatuh tempo.</p>
                 </div>
                 <div class="text-left sm:text-right">
@@ -772,7 +764,7 @@
             <!-- Donut Chart Card -->
             <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-[15px] font-semibold text-black dark:text-white mb-0.5">Struktur Biaya Komposit</h3>
+                    <h3 class="text-[15px] font-semibold text-black dark:text-white mb-0.5">{{ __('analytics.struktur_biaya_komposit') }}</h3>
                     <p class="text-[12px] text-black/50 dark:text-white/50">Komposisi total biaya terakumulasi seluruh lini produk</p>
                 </div>
                 <div class="h-56 relative my-4 flex items-center justify-center">
