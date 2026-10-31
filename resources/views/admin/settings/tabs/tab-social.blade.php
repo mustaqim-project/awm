@@ -60,7 +60,7 @@
                         <div class="flex items-center justify-between border-b border-black/[0.04] dark:border-white/[0.06] pb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-[12px] bg-[#1877F2]/10 text-[#1877F2] flex items-center justify-center shrink-0">
-                                    <i data-lucide="facebook" class="w-4.5 h-4.5"></i>
+                                    <svg class="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                                 </div>
                                 <div>
                                     <h3 class="text-[16px] font-bold text-black dark:text-white">Meta Platform (Facebook, Instagram &amp; Threads)</h3>
@@ -150,7 +150,7 @@
                         <div class="flex items-center justify-between border-b border-black/[0.04] dark:border-white/[0.06] pb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-[14px] bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#DD2A7B]/20">
-                                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-2">
@@ -177,7 +177,7 @@
                         <div class="p-4.5 rounded-[18px] bg-gradient-to-r from-[#E1306C]/8 via-[#8134AF]/5 to-transparent border border-[#E1306C]/20 space-y-2.5">
                             <div class="flex items-center gap-2">
                                 <div class="w-7 h-7 rounded-[9px] bg-gradient-to-tr from-[#F58529] to-[#DD2A7B] text-white flex items-center justify-center shrink-0">
-                                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                 </div>
                                 <h4 class="text-[13.5px] font-bold text-black dark:text-white">{{ __('admin.selamat_datang_di_instagram_api') }}</h4>
                             </div>
@@ -422,7 +422,7 @@
                         <div class="flex items-center justify-between border-b border-black/[0.04] dark:border-white/[0.06] pb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-[14px] bg-[#1877F2]/10 text-[#1877F2] flex items-center justify-center shrink-0">
-                                    <i data-lucide="facebook" class="w-5 h-5"></i>
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-2">
@@ -675,7 +675,7 @@
                         <div class="flex items-center justify-between border-b border-black/[0.04] dark:border-white/[0.06] pb-4">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-[12px] bg-[#0A66C2]/15 text-[#0A66C2] flex items-center justify-center shrink-0">
-                                    <i data-lucide="linkedin" class="w-4.5 h-4.5"></i>
+                                    <svg class="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                                 </div>
                                 <div>
                                     <h3 class="text-[16px] font-bold text-black dark:text-white">LinkedIn Developer Platform (Community &amp; Post API)</h3>
@@ -788,7 +788,7 @@
                             <div class="p-3 rounded-[12px] border"
                                 :class="testSocialResult?.meta?.status === 'valid' ? 'bg-[#34C759]/10 border-[#34C759]/30 text-[#248A3D] dark:text-[#30D158]' : (testSocialResult?.meta?.status === 'unconfigured' ? 'bg-[#FF9500]/10 border-[#FF9500]/30 text-[#B25E00] dark:text-[#FF9F0A]' : 'bg-[#FF3B30]/10 border-[#FF3B30]/30 text-[#FF3B30]')">
                                 <div class="font-bold flex items-center gap-1.5 mb-1">
-                                    <i data-lucide="facebook" class="w-4 h-4"></i>
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                                     <span>Meta (FB/Threads)</span>
                                 </div>
                                 <p class="text-[11.5px]" x-text="testSocialResult?.meta?.message"></p>
@@ -798,7 +798,7 @@
                             <div class="p-3 rounded-[12px] border"
                                 :class="testSocialResult?.instagram?.status === 'valid' ? 'bg-[#34C759]/10 border-[#34C759]/30 text-[#248A3D] dark:text-[#30D158]' : (testSocialResult?.instagram?.status === 'unconfigured' ? 'bg-[#FF9500]/10 border-[#FF9500]/30 text-[#B25E00] dark:text-[#FF9F0A]' : 'bg-[#FF3B30]/10 border-[#FF3B30]/30 text-[#FF3B30]')">
                                 <div class="font-bold flex items-center gap-1.5 mb-1">
-                                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                     <span>Instagram (Cooca-IG)</span>
                                 </div>
                                 <p class="text-[11.5px]" x-text="testSocialResult?.instagram?.message"></p>
@@ -818,7 +818,7 @@
                             <div class="p-3 rounded-[12px] border"
                                 :class="testSocialResult?.linkedin?.status === 'valid' ? 'bg-[#34C759]/10 border-[#34C759]/30 text-[#248A3D] dark:text-[#30D158]' : (testSocialResult?.linkedin?.status === 'unconfigured' ? 'bg-[#FF9500]/10 border-[#FF9500]/30 text-[#B25E00] dark:text-[#FF9F0A]' : 'bg-[#FF3B30]/10 border-[#FF3B30]/30 text-[#FF3B30]')">
                                 <div class="font-bold flex items-center gap-1.5 mb-1">
-                                    <i data-lucide="linkedin" class="w-4 h-4"></i>
+                                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                                     <span>LinkedIn Platform</span>
                                 </div>
                                 <p class="text-[11.5px]" x-text="testSocialResult?.linkedin?.message"></p>

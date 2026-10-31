@@ -186,7 +186,7 @@
                         'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-bold border border-black/[0.06] dark:border-white/[0.08]' :
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-semibold hover:bg-black/[0.03] dark:hover:bg-white/[0.04]'"
                     class="h-11 sm:h-10 px-4 sm:px-4 rounded-[14px] text-[13px] sm:text-[13.5px] transition-all flex items-center gap-2 shrink-0 cursor-pointer">
-                    <i data-lucide="mail-cog" class="w-4 h-4 shrink-0"
+                    <i data-lucide="mail" class="w-4 h-4 shrink-0"
                         :class="activeTab === 'smtp' ? 'text-[#007AFF]' : 'text-black/40 dark:text-white/40'"></i>
                     <span>{{ __('admin.pengaturan_smtp_email') }}</span>
                     <span
