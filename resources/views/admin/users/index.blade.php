@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
     'title' => __('admin.kelola_pengguna_admin_console'),
-    'headerTitle' => 'Manajemen Pengguna & Ekspor Data',
-    'headerSubtitle' => 'Kelola seluruh pengguna terdaftar, pantau metode login, dan unduh data pengguna ke format CSV',
+    'headerTitle' => __('admin.manajemen_pengguna_ekspor_data'),
+    'headerSubtitle' => __('admin.kelola_seluruh_pengguna_terdaftar_pantau'),
 ])
 
 @section('content')
@@ -36,18 +36,12 @@
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/10">
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">Nama Pengguna
-                            </th>
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">Alamat Email
-                            </th>
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">Bisnis Aktif
-                            </th>
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">Metode Login
-                            </th>
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">Tanggal
-                                Registrasi</th>
-                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40 text-right">
-                                Aksi</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">{{ __('admin.nama_pengguna') }}</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">{{ __('admin.alamat_email') }}</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">{{ __('admin.bisnis_aktif') }}</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">{{ __('admin.metode_login') }}</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40">{{ __('admin.tanggal_registrasi') }}</th>
+                            <th class="px-4 py-2.5 text-[11px] font-semibold text-black/40 dark:text-white/40 text-right">{{ __('common.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -72,7 +66,7 @@
                                         <span
                                             class="font-medium text-black dark:text-white">{{ $user->activeBusiness->name }}</span>
                                     @else
-                                        <span class="text-black/40 dark:text-white/40 italic">Belum Ada</span>
+                                        <span class="text-black/40 dark:text-white/40 italic">{{ __('admin.belum_ada') }}</span>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3">
@@ -93,13 +87,13 @@
                                 <td class="px-4 py-3 text-right">
                                     @if (Auth::guard('admin')->user()?->hasPermission('admin.users.delete'))
                                         <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                                            onsubmit="return AppAlert.confirmSubmit(event, this, 'Apakah Anda yakin ingin menghapus pengguna {{ addslashes($user->name) }}?', 'Hapus Pengguna?', 'danger')">
+                                            onsubmit="return AppAlert.confirmSubmit(event, this, {{ json_encode(__('admin.konfirmasi_hapus_pengguna_pesan', ['name' => $user->name])) }}, {{ json_encode(__('admin.konfirmasi_hapus_pengguna_judul')) }}, 'danger')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"
                                                 title="{{ __('admin.hapus_user') }}">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> Hapus
+                                                <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> {{ __('common.delete') }}
                                             </button>
                                         </form>
                                     @else
@@ -112,10 +106,8 @@
                                 <td colspan="6" class="px-4 py-10 text-center">
                                     <i data-lucide="users" class="w-12 h-12 mx-auto text-black/20 dark:text-white/20"
                                         stroke-width="1.5"></i>
-                                    <p class="text-[15px] font-semibold text-black dark:text-white mt-3">{{ __('admin.tidak_ada_data') }}
-                                        pengguna</p>
-                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">Tidak ditemukan data
-                                        pengguna yang sesuai.</p>
+                                    <p class="text-[15px] font-semibold text-black dark:text-white mt-3">{{ __('admin.belum_ada_data_pengguna_terdaftar') }}</p>
+                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">{{ __('admin.tidak_ditemukan_data_pengguna_sesuai') }}</p>
                                 </td>
                             </tr>
                         @endforelse

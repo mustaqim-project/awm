@@ -19,7 +19,7 @@
                 <div class="w-8 h-8 rounded-[10px] {{ $legalPage->slug === 'privacy-policy' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#FF9500]/10 text-[#FF9500]' }} flex items-center justify-center shrink-0">
                     <i data-lucide="{{ $legalPage->slug === 'privacy-policy' ? 'shield' : 'file-check' }}" class="w-4.5 h-4.5" stroke-width="2"></i>
                 </div>
-                <span>Edit {{ $legalPage->title }}</span>
+                <span>{{ __('common.edit') }} {{ $legalPage->title }}</span>
             </h1>
             <p class="text-[13px] text-black/60 dark:text-white/60">
                 Perbarui isi naskah klausul hukum, rincian pasal khusus owner vs customer, dan metadata publikasi.

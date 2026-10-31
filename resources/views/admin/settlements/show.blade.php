@@ -14,11 +14,11 @@
             <h1 class="text-[20px] font-bold text-black dark:text-white flex items-center gap-2.5">
                 <span>Settlement #{{ $settlement->settlement_number }}</span>
                 @if($settlement->status === 'completed')
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">Ditransfer</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">{{ __('admin.transferred') }}</span>
                 @elseif($settlement->status === 'pending')
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FBBF24]">Menunggu Transfer</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FBBF24]">{{ __('admin.waiting_transfer') }}</span>
                 @elseif($settlement->status === 'rejected')
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30]">Ditolak</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30]">{{ __('common.rejected') }}</span>
                 @endif
                 @if($settlement->payout_mode === 'auto_h1')
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF]">Auto H+1</span>
@@ -173,7 +173,7 @@
                         <button type="submit"
                             class="h-10 px-6 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold transition active:scale-[0.98] flex items-center gap-2 shadow-sm">
                             <i data-lucide="check-circle" class="w-4 h-4"></i>
-                            Setujui &amp; Kirim Bukti
+                            {{ __('admin.approve_and_send_proof') }}
                         </button>
                     </div>
                 </form>
@@ -252,7 +252,7 @@
     {{-- Allocations Table --}}
     <div class="rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-sm">
         <div class="px-5 py-4 border-b border-black/5 dark:border-white/10">
-            <h2 class="text-[15px] font-bold text-black dark:text-white">Transaksi Pesanan yang Teralokasi ({{ $settlement->allocations->count() }} Item)</h2>
+            <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.allocated_order_transactions') }} ({{ $settlement->allocations->count() }} {{ __('common.items') }})</h2>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">

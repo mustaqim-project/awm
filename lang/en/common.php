@@ -129,4 +129,9 @@ return array (
     'clear_filter' => 'Clear Filter',
     'testing' => 'Testing',
     'seconds_short' => 's',
+    'actions' => 'Actions',
+    'no_data_yet' => 'No data yet',
+    'items' => 'Items',
+    'reset_filter' => 'Reset Filter',
+    'schedule' => 'Schedule',
 );

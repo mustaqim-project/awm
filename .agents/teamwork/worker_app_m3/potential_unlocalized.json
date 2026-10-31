@@ -1,0 +1,5267 @@
+{
+  "resources/views/app/inventory/stocks.blade.php": [
+    {
+      "line": 2,
+      "text": "'title' => __('inventory.inventori_stok_multi_gudang'),",
+      "words": [
+        "stok",
+        "gudang"
+      ],
+      "raw": "'title' => __('inventory.inventori_stok_multi_gudang'),"
+    },
+    {
+      "line": 3,
+      "text": "'headerTitle' => 'Inventori & Stok Multi-Gudang',",
+      "words": [
+        "stok",
+        "gudang"
+      ],
+      "raw": "'headerTitle' => 'Inventori & Stok Multi-Gudang',"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => 'Pantau stok produk di seluruh cabang/outlet & gudang secara real-time dengan sistem kartu stok'",
+      "words": [
+        "stok",
+        "produk",
+        "di",
+        "cabang",
+        "gudang",
+        "dengan",
+        "sistem",
+        "kartu",
+        "stok"
+      ],
+      "raw": "'headerSubtitle' => 'Pantau stok produk di seluruh cabang/outlet & gudang secara real-time dengan sistem kartu stok'"
+    },
+    {
+      "line": 50,
+      "text": "Produk Terdata",
+      "words": [
+        "produk"
+      ],
+      "raw": "{{ $stocks->total() }} Produk Terdata"
+    },
+    {
+      "line": 72,
+      "text": "Pantau pergerakan kuantitas fisik, nilai valuasi HPP, dan peringatan stok menipis di seluruh outlet cabang.",
+      "words": [
+        "dan",
+        "peringatan",
+        "stok",
+        "di",
+        "cabang"
+      ],
+      "raw": "Pantau pergerakan kuantitas fisik, nilai valuasi HPP, dan peringatan stok menipis di seluruh outlet cabang."
+    },
+    {
+      "line": 96,
+      "text": "Total Nilai Aset Inventori",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"text-xs font-semibold text-black/50 dark:text-white/50\">Total Nilai Aset Inventori</span>"
+    },
+    {
+      "line": 103,
+      "text": "Berdasarkan HPP / Biaya Pokok terakhir",
+      "words": [
+        "biaya"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/40 dark:text-white/40 mt-0.5\">Berdasarkan HPP / Biaya Pokok terakhir</p>"
+    },
+    {
+      "line": 110,
+      "text": "Peringatan Stok Minimum",
+      "words": [
+        "peringatan",
+        "stok"
+      ],
+      "raw": "<span class=\"text-xs font-semibold text-black/50 dark:text-white/50\">Peringatan Stok Minimum</span>"
+    },
+    {
+      "line": 117,
+      "text": "Produk",
+      "words": [
+        "produk"
+      ],
+      "raw": "{{ $lowStockCount }} Produk"
+    },
+    {
+      "line": 119,
+      "text": "Kuantitas di bawah batas stok minimum",
+      "words": [
+        "di",
+        "stok"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/40 dark:text-white/40 mt-0.5\">Kuantitas di bawah batas stok minimum</p>"
+    },
+    {
+      "line": 126,
+      "text": "Total Cabang / Outlet",
+      "words": [
+        "total",
+        "cabang"
+      ],
+      "raw": "<span class=\"text-xs font-semibold text-black/50 dark:text-white/50\">Total Cabang / Outlet</span>"
+    },
+    {
+      "line": 133,
+      "text": "Outlet penjualan &amp; gudang logistik",
+      "words": [
+        "gudang"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/40 dark:text-white/40 mt-0.5\">Outlet penjualan &amp; gudang logistik</p>"
+    },
+    {
+      "line": 153,
+      "text": "Semua Lokasi / Outlet",
+      "words": [
+        "semua"
+      ],
+      "raw": "<option value=\"\" class=\"bg-white dark:bg-[#2C2C2E] text-black dark:text-white\">Semua Lokasi / Outlet</option>"
+    },
+    {
+      "line": 368,
+      "text": "Stok Saat Ini:",
+      "words": [
+        "stok",
+        "ini"
+      ],
+      "raw": "<span>Stok Saat Ini: <strong class=\"text-black dark:text-white font-mono tabular-nums\" x-text=\"selectedStock ? selectedStock.quantity : 0\"></strong></span>"
+    },
+    {
+      "line": 373,
+      "text": "Jumlah Stok Fisik Baru *",
+      "words": [
+        "stok"
+      ],
+      "raw": "<label class=\"block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5\">Jumlah Stok Fisik Baru *</label>"
+    },
+    {
+      "line": 379,
+      "text": "Biaya Pokok (HPP) per Unit (Rp)",
+      "words": [
+        "biaya"
+      ],
+      "raw": "<label class=\"block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5\">Biaya Pokok (HPP) per Unit (Rp)</label>"
+    },
+    {
+      "line": 386,
+      "text": "Kode Berita Acara (Alasan Penyesuaian) *",
+      "words": [
+        "kode",
+        "alasan"
+      ],
+      "raw": "Kode Berita Acara (Alasan Penyesuaian) *"
+    },
+    {
+      "line": 392,
+      "text": "Melewati Tanggal Kadaluarsa",
+      "words": [
+        "kadaluarsa"
+      ],
+      "raw": "<option value=\"expired\" class=\"bg-white dark:bg-[#2C2C2E] text-black dark:text-white\">Melewati Tanggal Kadaluarsa</option>"
+    },
+    {
+      "line": 394,
+      "text": "Input Saldo Awal Gudang",
+      "words": [
+        "saldo",
+        "gudang"
+      ],
+      "raw": "<option value=\"initial_balance\" class=\"bg-white dark:bg-[#2C2C2E] text-black dark:text-white\">Input Saldo Awal Gudang</option>"
+    },
+    {
+      "line": 395,
+      "text": "Lainnya (Wajib tulis alasan min. 10 karakter)",
+      "words": [
+        "wajib",
+        "alasan",
+        "karakter"
+      ],
+      "raw": "<option value=\"other\" class=\"bg-white dark:bg-[#2C2C2E] text-black dark:text-white\">Lainnya (Wajib tulis alasan min. 10 karakter)</option>"
+    },
+    {
+      "line": 401,
+      "text": "Keterangan / Catatan Penjelasan *",
+      "words": [
+        "keterangan",
+        "catatan"
+      ],
+      "raw": "Keterangan / Catatan Penjelasan <span x-show=\"reasonCode === 'other'\" class=\"text-[#FF3B30]\">*</span>"
+    },
+    {
+      "line": 404,
+      "text": ":placeholder=\"reasonCode === 'other' ? 'Wajib tulis alasan detail (minimal 10 karakter)...' : 'Misal: Koreksi saldo awal, barang rusak...'\"",
+      "words": [
+        "wajib",
+        "alasan",
+        "detail",
+        "minimal",
+        "karakter",
+        "saldo"
+      ],
+      "raw": ":placeholder=\"reasonCode === 'other' ? 'Wajib tulis alasan detail (minimal 10 karakter)...' : 'Misal: Koreksi saldo awal, barang rusak...'\""
+    },
+    {
+      "line": 418,
+      "text": "Otorisasi Supervisor Diperlukan",
+      "words": [
+        "otorisasi"
+      ],
+      "raw": "<span>Otorisasi Supervisor Diperlukan</span>"
+    },
+    {
+      "line": 421,
+      "text": "Pengurangan stok melebihi batas toleransi (&gt; 10 unit atau nilai &gt; Rp 100.000). Masukkan PIN Supervisor untuk memverifikasi berita acara ini.",
+      "words": [
+        "stok",
+        "atau",
+        "masukkan",
+        "untuk",
+        "ini"
+      ],
+      "raw": "Pengurangan stok melebihi batas toleransi (&gt; 10 unit atau nilai &gt; Rp 100.000). Masukkan PIN Supervisor untuk memverifikasi berita acara ini."
+    }
+  ],
+  "resources/views/app/marketplace/products.blade.php": [
+    {
+      "line": 159,
+      "text": "throw new Error(data.message || data.error || 'Gagal menarik katalog produk dari marketplace.');",
+      "words": [
+        "gagal",
+        "produk",
+        "dari"
+      ],
+      "raw": "throw new Error(data.message || data.error || 'Gagal menarik katalog produk dari marketplace.');"
+    },
+    {
+      "line": 198,
+      "text": "throw new Error(data.message || data.error || 'Gagal sinkronisasi produk massal.');",
+      "words": [
+        "gagal",
+        "produk"
+      ],
+      "raw": "throw new Error(data.message || data.error || 'Gagal sinkronisasi produk massal.');"
+    },
+    {
+      "line": 273,
+      "text": "console.warn('openMapping: Produk tidak ditemukan di data lokal', productOrId);",
+      "words": [
+        "produk",
+        "tidak",
+        "di"
+      ],
+      "raw": "console.warn('openMapping: Produk tidak ditemukan di data lokal', productOrId);"
+    },
+    {
+      "line": 358,
+      "text": "return this.categories.filter(c =>",
+      "words": [
+        "filter"
+      ],
+      "raw": "return this.categories.filter(c =>"
+    },
+    {
+      "line": 444,
+      "text": "AppAlert.toast(data.message || 'Pengaturan SKU & Saluran berhasil disimpan!', 'success');",
+      "words": [
+        "pengaturan",
+        "berhasil"
+      ],
+      "raw": "AppAlert.toast(data.message || 'Pengaturan SKU & Saluran berhasil disimpan!', 'success');"
+    },
+    {
+      "line": 501,
+      "text": "missing.push('\u2022 Foto Produk: Shopee mewajibkan minimal 2 foto produk (saat ini baru ' + this.galleryPhotos.length + ' foto). Silakan tambahkan foto di galeri produk.');",
+      "words": [
+        "produk",
+        "minimal",
+        "produk",
+        "ini",
+        "silakan",
+        "di",
+        "produk"
+      ],
+      "raw": "missing.push('\u2022 Foto Produk: Shopee mewajibkan minimal 2 foto produk (saat ini baru ' + this.galleryPhotos.length + ' foto). Silakan tambahkan foto di galeri produk.');"
+    },
+    {
+      "line": 505,
+      "text": "missing.push('\u2022 Berat Produk: Wajib diisi (minimal 100 gram / 0.1 kg) untuk ongkir kurir Shopee.');",
+      "words": [
+        "produk",
+        "wajib",
+        "diisi",
+        "minimal",
+        "untuk"
+      ],
+      "raw": "missing.push('\u2022 Berat Produk: Wajib diisi (minimal 100 gram / 0.1 kg) untuk ongkir kurir Shopee.');"
+    },
+    {
+      "line": 508,
+      "text": "const msg = 'Data upload ke Shopee belum lengkap:\\n' + missing.join('\\n');",
+      "words": [
+        "ke",
+        "belum",
+        "lengkap"
+      ],
+      "raw": "const msg = 'Data upload ke Shopee belum lengkap:\\n' + missing.join('\\n');"
+    },
+    {
+      "line": 891,
+      "text": "Auto-sync Aktif",
+      "words": [
+        "aktif"
+      ],
+      "raw": "<span>Auto-sync Aktif</span>"
+    },
+    {
+      "line": 2103,
+      "text": "Syarat Foto Shopee Belum Lengkap",
+      "words": [
+        "belum",
+        "lengkap"
+      ],
+      "raw": "<span>Syarat Foto Shopee Belum Lengkap</span>"
+    },
+    {
+      "line": 2106,
+      "text": "Shopee mewajibkan minimal 2 foto produk . Saat ini produk baru memiliki foto. Silakan tambahkan minimal 1 foto lagi di Master Data Produk sebelum menerbitkan.",
+      "words": [
+        "minimal",
+        "produk",
+        "ini",
+        "produk",
+        "silakan",
+        "minimal",
+        "di",
+        "produk",
+        "sebelum"
+      ],
+      "raw": "Shopee mewajibkan <strong>minimal 2 foto produk</strong>. Saat ini produk baru memiliki <span class=\"font-bold font-mono\" x-text=\"galleryPhotos.length\"></span> foto. Silakan tambahkan minimal 1 foto lagi di Master Data Produk sebelum menerbitkan."
+    }
+  ],
+  "resources/views/app/inventory/transfers.blade.php": [
+    {
+      "line": 2,
+      "text": "'title' => __('inventory.transfer_stok_antar_outlet'),",
+      "words": [
+        "transfer",
+        "stok"
+      ],
+      "raw": "'title' => __('inventory.transfer_stok_antar_outlet'),"
+    },
+    {
+      "line": 3,
+      "text": "'headerTitle' => 'Transfer Stok Antar Outlet',",
+      "words": [
+        "transfer",
+        "stok"
+      ],
+      "raw": "'headerTitle' => 'Transfer Stok Antar Outlet',"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => 'Kirim dan terima barang antar outlet atau gudang pusat dengan pencatatan mutasi otomatis'",
+      "words": [
+        "kirim",
+        "dan",
+        "atau",
+        "gudang",
+        "dengan",
+        "otomatis"
+      ],
+      "raw": "'headerSubtitle' => 'Kirim dan terima barang antar outlet atau gudang pusat dengan pencatatan mutasi otomatis'"
+    },
+    {
+      "line": 51,
+      "text": "Transfer Antar Cabang",
+      "words": [
+        "transfer",
+        "cabang"
+      ],
+      "raw": "Transfer Antar Cabang"
+    },
+    {
+      "line": 76,
+      "text": "Kirim dan terima barang antar cabang atau gudang pusat dengan mutasi buku stok otomatis.",
+      "words": [
+        "kirim",
+        "dan",
+        "cabang",
+        "atau",
+        "gudang",
+        "dengan",
+        "stok",
+        "otomatis"
+      ],
+      "raw": "Kirim dan terima barang antar cabang atau gudang pusat dengan mutasi buku stok otomatis."
+    },
+    {
+      "line": 128,
+      "text": "Kirim:",
+      "words": [
+        "kirim"
+      ],
+      "raw": "<div>Kirim: <span class=\"font-semibold text-black dark:text-white\">{{ $tr->creator->name ?? '-' }}</span></div>"
+    },
+    {
+      "line": 132,
+      "text": "Produk",
+      "words": [
+        "produk"
+      ],
+      "raw": "{{ $tr->items->count() }} Produk"
+    },
+    {
+      "line": 141,
+      "text": "Dalam Pengiriman",
+      "words": [
+        "pengiriman"
+      ],
+      "raw": "<span class=\"w-1.5 h-1.5 rounded-full bg-[#FF9500]\"></span> Dalam Pengiriman"
+    },
+    {
+      "line": 200,
+      "text": "\u00b7 produk ditransfer",
+      "words": [
+        "produk"
+      ],
+      "raw": "{{ $tr->transfer_date->format('d/m/Y') }} \u00b7 {{ $tr->items->count() }} produk ditransfer"
+    },
+    {
+      "line": 300,
+      "text": "Tanggal Transfer *",
+      "words": [
+        "transfer"
+      ],
+      "raw": "<label class=\"block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5\">Tanggal Transfer *</label>"
+    },
+    {
+      "line": 304,
+      "text": "Catatan / No. Surat Jalan",
+      "words": [
+        "catatan"
+      ],
+      "raw": "<label class=\"block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5\">Catatan / No. Surat Jalan</label>"
+    },
+    {
+      "line": 312,
+      "text": "Produk yang Ditransfer:",
+      "words": [
+        "produk",
+        "yang"
+      ],
+      "raw": "<label class=\"text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50\">Produk yang Ditransfer:</label>"
+    },
+    {
+      "line": 379,
+      "text": "Konfirmasi Terima?",
+      "words": [
+        "konfirmasi"
+      ],
+      "raw": "<p class=\"text-[17px] font-bold text-black dark:text-white\">Konfirmasi Terima?</p>"
+    },
+    {
+      "line": 381,
+      "text": "Pastikan barang transfer sudah sampai dan dihitung fisik dengan benar di lokasi tujuan.",
+      "words": [
+        "transfer",
+        "sudah",
+        "dan",
+        "dengan",
+        "di"
+      ],
+      "raw": "Pastikan barang transfer <span x-text=\"'#' + receiveTarget.number\" class=\"font-bold text-black dark:text-white tabular-nums\"></span> sudah sampai dan dihitung fisik dengan benar di lokasi tujuan."
+    }
+  ],
+  "resources/views/app/pos/terminal.blade.php": [
+    {
+      "line": 92,
+      "text": ".pos-shell {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-shell {"
+    },
+    {
+      "line": 100,
+      "text": ".pos-main {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-main {"
+    },
+    {
+      "line": 108,
+      "text": ".pos-catalog {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-catalog {"
+    },
+    {
+      "line": 117,
+      "text": ".pos-products {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-products {"
+    },
+    {
+      "line": 126,
+      "text": ".pos-modal-panel {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-modal-panel {"
+    },
+    {
+      "line": 179,
+      "text": ".pos-cart {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart {"
+    },
+    {
+      "line": 191,
+      "text": ".pos-cart-backdrop {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-backdrop {"
+    },
+    {
+      "line": 195,
+      "text": ".pos-cart-bar {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-bar {"
+    },
+    {
+      "line": 199,
+      "text": ".pos-cart-btn-close {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-btn-close {"
+    },
+    {
+      "line": 206,
+      "text": ".pos-cart {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart {"
+    },
+    {
+      "line": 222,
+      "text": ".pos-cart.pos-cart-open {",
+      "words": [
+        "pos",
+        "pos"
+      ],
+      "raw": ".pos-cart.pos-cart-open {"
+    },
+    {
+      "line": 226,
+      "text": ".pos-cart-backdrop {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-backdrop {"
+    },
+    {
+      "line": 231,
+      "text": "backdrop-filter: blur(4px);",
+      "words": [
+        "filter"
+      ],
+      "raw": "backdrop-filter: blur(4px);"
+    },
+    {
+      "line": 232,
+      "text": "-webkit-backdrop-filter: blur(4px);",
+      "words": [
+        "filter"
+      ],
+      "raw": "-webkit-backdrop-filter: blur(4px);"
+    },
+    {
+      "line": 236,
+      "text": ".pos-cart-btn-close {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-btn-close {"
+    },
+    {
+      "line": 240,
+      "text": ".pos-cart-bar {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-cart-bar {"
+    },
+    {
+      "line": 250,
+      "text": "body:has(.pos-cart.pos-cart-open) .pos-cart-bar {",
+      "words": [
+        "pos",
+        "pos",
+        "pos"
+      ],
+      "raw": "body:has(.pos-cart.pos-cart-open) .pos-cart-bar {"
+    },
+    {
+      "line": 257,
+      "text": ".pos-products {",
+      "words": [
+        "pos"
+      ],
+      "raw": ".pos-products {"
+    },
+    {
+      "line": 328,
+      "text": "Order Masuk via QR",
+      "words": [
+        "masuk"
+      ],
+      "raw": "Order Masuk via QR"
+    },
+    {
+      "line": 364,
+      "text": "x-text=\"formatRupiah(latestQrNotification?.total_amount)\">",
+      "words": [
+        "total"
+      ],
+      "raw": "x-text=\"formatRupiah(latestQrNotification?.total_amount)\"></span>"
+    },
+    {
+      "line": 432,
+      "text": "Kasir POS",
+      "words": [
+        "kasir",
+        "pos"
+      ],
+      "raw": "Kasir POS</div>"
+    },
+    {
+      "line": 575,
+      "text": "(\\App\\Support\\Context::hasPermission('pos.tables'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('pos.tables'))"
+    },
+    {
+      "line": 612,
+      "text": ":title=\"posAutoSendKds ? 'Auto KDS Aktif: Order kasir otomatis masuk ke layar dapur tanpa perlu print struk kertas' : 'Auto KDS Nonaktif: Order kasir tidak otomatis diteruskan ke KDS'\">",
+      "words": [
+        "aktif",
+        "kasir",
+        "otomatis",
+        "masuk",
+        "ke",
+        "struk",
+        "nonaktif",
+        "kasir",
+        "tidak",
+        "otomatis",
+        "ke"
+      ],
+      "raw": ":title=\"posAutoSendKds ? 'Auto KDS Aktif: Order kasir otomatis masuk ke layar dapur tanpa perlu print struk kertas' : 'Auto KDS Nonaktif: Order kasir tidak otomatis diteruskan ke KDS'\">"
+    },
+    {
+      "line": 684,
+      "text": ":title=\"isDarkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'\">",
+      "words": [
+        "ke",
+        "ke"
+      ],
+      "raw": ":title=\"isDarkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'\">"
+    },
+    {
+      "line": 888,
+      "text": "(\\App\\Support\\Context::hasPermission('pos.tables'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('pos.tables'))"
+    },
+    {
+      "line": 1444,
+      "text": ":class=\"mobileCartOpen ? 'pos-cart-open' : ''\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":class=\"mobileCartOpen ? 'pos-cart-open' : ''\">"
+    },
+    {
+      "line": 1971,
+      "text": "x-text=\"formatRupiah(subtotal)\">",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "x-text=\"formatRupiah(subtotal)\"></span>"
+    },
+    {
+      "line": 1987,
+      "text": ":max=\"discountType === 'percentage' ? 100 : subtotal\" step=\"any\"",
+      "words": [
+        "subtotal"
+      ],
+      "raw": ":max=\"discountType === 'percentage' ? 100 : subtotal\" step=\"any\""
+    },
+    {
+      "line": 2277,
+      "text": "<button type=\"button\" =\"selectedPayMethod = 'transfer'\"",
+      "words": [
+        "transfer"
+      ],
+      "raw": "<button type=\"button\" @click=\"selectedPayMethod = 'transfer'\""
+    },
+    {
+      "line": 2507,
+      "text": ".outside=\"/* Terkunci: modal tidak dapat ditutup dengan klik luar hingga lunas atau klik Ganti Metode Bayar */\">",
+      "words": [
+        "tidak",
+        "dapat",
+        "dengan",
+        "atau",
+        "metode",
+        "bayar"
+      ],
+      "raw": "@click.outside=\"/* Terkunci: modal tidak dapat ditutup dengan klik luar hingga lunas atau klik Ganti Metode Bayar */\">"
+    },
+    {
+      "line": 2528,
+      "text": "TriPay QRIS",
+      "words": [
+        "qris"
+      ],
+      "raw": "TriPay QRIS"
+    },
+    {
+      "line": 3038,
+      "text": "(\\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 3601,
+      "text": "x-text=\"group.selection_type === 'single' ? 'Pilih 1' : ('Pilih maks ' + group.max_selection)\">",
+      "words": [
+        "pilih",
+        "pilih"
+      ],
+      "raw": "x-text=\"group.selection_type === 'single' ? 'Pilih 1' : ('Pilih maks ' + group.max_selection)\"></span>"
+    },
+    {
+      "line": 3636,
+      "text": "Catatan Item",
+      "words": [
+        "catatan"
+      ],
+      "raw": "<label class=\"block text-xs font-semibold text-black dark:text-white\">Catatan Item"
+    },
+    {
+      "line": 3805,
+      "text": "Riwayat Servis Kendaraan",
+      "words": [
+        "riwayat"
+      ],
+      "raw": "<span class=\"text-[12px] font-bold text-black dark:text-white\">Riwayat Servis Kendaraan</span>"
+    },
+    {
+      "line": 4049,
+      "text": "x-text=\"'Meja ' + (order.pos_table ? order.pos_table.table_number : '-')\">",
+      "words": [
+        "meja",
+        "pos",
+        "pos"
+      ],
+      "raw": "x-text=\"'Meja ' + (order.pos_table ? order.pos_table.table_number : '-')\"></span>"
+    },
+    {
+      "line": 4094,
+      "text": "x-text=\"formatRupiah(item.total_price)\">",
+      "words": [
+        "total"
+      ],
+      "raw": "x-text=\"formatRupiah(item.total_price)\"></span>"
+    },
+    {
+      "line": 4104,
+      "text": "x-text=\"'Catatan: ' + item.notes\">",
+      "words": [
+        "catatan"
+      ],
+      "raw": "x-text=\"'Catatan: ' + item.notes\"></div>"
+    },
+    {
+      "line": 4114,
+      "text": "x-text=\"formatRupiah(order.total_amount)\">",
+      "words": [
+        "total"
+      ],
+      "raw": "x-text=\"formatRupiah(order.total_amount)\"></span>"
+    },
+    {
+      "line": 4227,
+      "text": "(\\App\\Support\\Context::hasPermission('pos.tables'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('pos.tables'))"
+    },
+    {
+      "line": 4290,
+      "text": "x-text=\"'Meja ' + tbl.table_number\">",
+      "words": [
+        "meja"
+      ],
+      "raw": "x-text=\"'Meja ' + tbl.table_number\"></span>"
+    },
+    {
+      "line": 4295,
+      "text": "x-text=\"tbl.status\">",
+      "words": [
+        "status"
+      ],
+      "raw": "x-text=\"tbl.status\"></span>"
+    },
+    {
+      "line": 4404,
+      "text": "x-text=\"rsv.status === 'seated' ? ' ' : (rsv.status === 'confirmed' ? ' ' : ' ')\">",
+      "words": [
+        "status",
+        "status"
+      ],
+      "raw": "x-text=\"rsv.status === 'seated' ? '{{ __('pos.seating_status_seated') }}' : (rsv.status === 'confirmed' ? '{{ __('pos.seating_status_confirmed') }}' : '{{ __('pos.seating_status_pending') }}')\"></span>"
+    },
+    {
+      "line": 4521,
+      "text": "x-text=\"formatRupiah(it.total_price)\">",
+      "words": [
+        "total"
+      ],
+      "raw": "x-text=\"formatRupiah(it.total_price)\"></span>"
+    },
+    {
+      "line": 4557,
+      "text": "x-text=\"formatRupiah(activeTableOrder.total_amount)\">",
+      "words": [
+        "total"
+      ],
+      "raw": "x-text=\"formatRupiah(activeTableOrder.total_amount)\"></span>"
+    },
+    {
+      "line": 4565,
+      "text": "=\"selectedTablePayMethod = 'cash'; tableTenderAmount = activeTableOrder.total_amount\"",
+      "words": [
+        "total"
+      ],
+      "raw": "@click=\"selectedTablePayMethod = 'cash'; tableTenderAmount = activeTableOrder.total_amount\""
+    },
+    {
+      "line": 4570,
+      "text": "=\"selectedTablePayMethod = 'qris'; tableTenderAmount = activeTableOrder.total_amount\"",
+      "words": [
+        "qris",
+        "total"
+      ],
+      "raw": "@click=\"selectedTablePayMethod = 'qris'; tableTenderAmount = activeTableOrder.total_amount\""
+    },
+    {
+      "line": 4575,
+      "text": "=\"selectedTablePayMethod = 'transfer'; tableTenderAmount = activeTableOrder.total_amount\"",
+      "words": [
+        "transfer",
+        "total"
+      ],
+      "raw": "@click=\"selectedTablePayMethod = 'transfer'; tableTenderAmount = activeTableOrder.total_amount\""
+    },
+    {
+      "line": 4580,
+      "text": "=\"selectedTablePayMethod = 'debit'; tableTenderAmount = activeTableOrder.total_amount\"",
+      "words": [
+        "total"
+      ],
+      "raw": "@click=\"selectedTablePayMethod = 'debit'; tableTenderAmount = activeTableOrder.total_amount\""
+    },
+    {
+      "line": 4592,
+      "text": "activeTableOrder.total_amount\"",
+      "words": [
+        "total"
+      ],
+      "raw": "<div x-show=\"tableTenderAmount > activeTableOrder.total_amount\""
+    },
+    {
+      "line": 4618,
+      "text": ":disabled=\"tableTenderAmount < activeTableOrder.total_amount || isProcessing\"",
+      "words": [
+        "total"
+      ],
+      "raw": ":disabled=\"tableTenderAmount < activeTableOrder.total_amount || isProcessing\""
+    },
+    {
+      "line": 4832,
+      "text": "const total = Math.round(this.grandTotal);",
+      "words": [
+        "total"
+      ],
+      "raw": "const total = Math.round(this.grandTotal);"
+    },
+    {
+      "line": 4833,
+      "text": "const base = Math.floor(total / n);",
+      "words": [
+        "total"
+      ],
+      "raw": "const base = Math.floor(total / n);"
+    },
+    {
+      "line": 4834,
+      "text": "const remainder = total - (base * n);",
+      "words": [
+        "total"
+      ],
+      "raw": "const remainder = total - (base * n);"
+    },
+    {
+      "line": 4835,
+      "text": "const methods = ['cash', 'qris', 'transfer', 'edc_debit', 'edc_credit'];",
+      "words": [
+        "qris",
+        "transfer"
+      ],
+      "raw": "const methods = ['cash', 'qris', 'transfer', 'edc_debit', 'edc_credit'];"
+    },
+    {
+      "line": 5119,
+      "text": "'Browser ini belum mendukung scan barcode kamera. Gunakan Chrome/Android terbaru atau scanner USB/Bluetooth.';",
+      "words": [
+        "ini",
+        "belum",
+        "atau"
+      ],
+      "raw": "'Browser ini belum mendukung scan barcode kamera. Gunakan Chrome/Android terbaru atau scanner USB/Bluetooth.';"
+    },
+    {
+      "line": 5126,
+      "text": ".filter(format => supportedFormats.includes(format));",
+      "words": [
+        "filter"
+      ],
+      "raw": ".filter(format => supportedFormats.includes(format));"
+    },
+    {
+      "line": 5203,
+      "text": "this.scannerError = 'Barcode belum terbaca. Posisikan barcode di dalam kotak.';",
+      "words": [
+        "belum",
+        "di"
+      ],
+      "raw": "this.scannerError = 'Barcode belum terbaca. Posisikan barcode di dalam kotak.';"
+    },
+    {
+      "line": 5216,
+      "text": "this.scannerError = 'Barcode ' + value + ' belum terdaftar sebagai produk.';",
+      "words": [
+        "belum",
+        "produk"
+      ],
+      "raw": "this.scannerError = 'Barcode ' + value + ' belum terdaftar sebagai produk.';"
+    },
+    {
+      "line": 5373,
+      "text": "get subtotal() {",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "get subtotal() {"
+    },
+    {
+      "line": 5384,
+      "text": "Math.min(this.subtotal, (this.subtotal * Math.min(100, value)) / 100) :",
+      "words": [
+        "subtotal",
+        "subtotal"
+      ],
+      "raw": "Math.min(this.subtotal, (this.subtotal * Math.min(100, value)) / 100) :"
+    },
+    {
+      "line": 5385,
+      "text": "Math.min(this.subtotal, value);",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "Math.min(this.subtotal, value);"
+    },
+    {
+      "line": 5389,
+      "text": "($business->pos_enable_tax)",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if ($business->pos_enable_tax)"
+    },
+    {
+      "line": 5398,
+      "text": "($business->pos_enable_service_charge)",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if ($business->pos_enable_service_charge)"
+    },
+    {
+      "line": 5421,
+      "text": "return this.customers.filter(c => {",
+      "words": [
+        "filter"
+      ],
+      "raw": "return this.customers.filter(c => {"
+    },
+    {
+      "line": 5514,
+      "text": "if (this.subtotal <= 0) {",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "if (this.subtotal <= 0) {"
+    },
+    {
+      "line": 5529,
+      "text": "subtotal: this.subtotal,",
+      "words": [
+        "subtotal",
+        "subtotal"
+      ],
+      "raw": "subtotal: this.subtotal,"
+    },
+    {
+      "line": 5554,
+      "text": "(this.subtotal > 0 ? (Number(this.discountValue || 0) / this.subtotal) * 100 : 0);",
+      "words": [
+        "subtotal",
+        "subtotal"
+      ],
+      "raw": "(this.subtotal > 0 ? (Number(this.discountValue || 0) / this.subtotal) * 100 : 0);"
+    },
+    {
+      "line": 5604,
+      "text": "if (response.status === 429) {",
+      "words": [
+        "status"
+      ],
+      "raw": "if (response.status === 429) {"
+    },
+    {
+      "line": 5708,
+      "text": "laundry_status: this.laundryStatus || 'received'",
+      "words": [
+        "status"
+      ],
+      "raw": "laundry_status: this.laundryStatus || 'received'"
+    },
+    {
+      "line": 5773,
+      "text": "const statusUrl = \"/pos/orders/\" + orderId + \"/status\";",
+      "words": [
+        "pos",
+        "status"
+      ],
+      "raw": "const statusUrl = \"/pos/orders/\" + orderId + \"/status\";"
+    },
+    {
+      "line": 5802,
+      "text": "const statusUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/status\";",
+      "words": [
+        "pos",
+        "status"
+      ],
+      "raw": "const statusUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/status\";"
+    },
+    {
+      "line": 5834,
+      "text": "const cancelUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/cancel-qris\";",
+      "words": [
+        "pos",
+        "qris"
+      ],
+      "raw": "const cancelUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/cancel-qris\";"
+    },
+    {
+      "line": 5867,
+      "text": "const simUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/simulate-qris\";",
+      "words": [
+        "pos",
+        "qris"
+      ],
+      "raw": "const simUrl = \"/pos/orders/\" + this.activeQrisOrder.id + \"/simulate-qris\";"
+    },
+    {
+      "line": 6113,
+      "text": "pos_auto_send_kds: newStatus",
+      "words": [
+        "pos"
+      ],
+      "raw": "pos_auto_send_kds: newStatus"
+    },
+    {
+      "line": 6221,
+      "text": "reason: 'Manual Pop via Pusat Pengaturan POS'",
+      "words": [
+        "pengaturan",
+        "pos"
+      ],
+      "raw": "reason: 'Manual Pop via Pusat Pengaturan POS'"
+    },
+    {
+      "line": 6756,
+      "text": ".status)) || [];",
+      "words": [
+        "status"
+      ],
+      "raw": ".status)) || [];"
+    },
+    {
+      "line": 6862,
+      "text": "total_amount: tbl.session.total_amount,",
+      "words": [
+        "total",
+        "total"
+      ],
+      "raw": "total_amount: tbl.session.total_amount,"
+    },
+    {
+      "line": 6921,
+      "text": "this.tableTenderAmount = Number(order.total_amount || 0);",
+      "words": [
+        "total"
+      ],
+      "raw": "this.tableTenderAmount = Number(order.total_amount || 0);"
+    },
+    {
+      "line": 7067,
+      "text": ".replace(':total', this.formatRupiah(order.total_amount));",
+      "words": [
+        "total",
+        "total"
+      ],
+      "raw": ".replace(':total', this.formatRupiah(order.total_amount));"
+    },
+    {
+      "line": 7072,
+      "text": "tag: 'pos-qr-order-' + order.id",
+      "words": [
+        "pos"
+      ],
+      "raw": "tag: 'pos-qr-order-' + order.id"
+    }
+  ],
+  "resources/views/app/products/index.blade.php": [
+    {
+      "line": 2,
+      "text": "'title' => __('products.katalog_produk_model_hpp'),",
+      "words": [
+        "produk"
+      ],
+      "raw": "'title' => __('products.katalog_produk_model_hpp'),"
+    },
+    {
+      "line": 3,
+      "text": "'headerTitle' => 'Katalog Produk & Model HPP',",
+      "words": [
+        "produk"
+      ],
+      "raw": "'headerTitle' => 'Katalog Produk & Model HPP',"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',",
+      "words": [
+        "kelola",
+        "produk",
+        "biaya",
+        "harga",
+        "dan"
+      ],
+      "raw": "'headerSubtitle' => 'Kelola produk jadi, kalkulasi biaya (BOM, ABC, Job Order), harga jual, dan saluran etalase',"
+    },
+    {
+      "line": 34,
+      "text": "cancelButtonText: 'Batal'",
+      "words": [
+        "batal"
+      ],
+      "raw": "cancelButtonText: 'Batal'"
+    },
+    {
+      "line": 145,
+      "text": "let total = 0;",
+      "words": [
+        "total"
+      ],
+      "raw": "let total = 0;"
+    },
+    {
+      "line": 149,
+      "text": "total += (prod.cost || 0) * (Number(item.quantity) || 1);",
+      "words": [
+        "total"
+      ],
+      "raw": "total += (prod.cost || 0) * (Number(item.quantity) || 1);"
+    },
+    {
+      "line": 152,
+      "text": "return total;",
+      "words": [
+        "total"
+      ],
+      "raw": "return total;"
+    },
+    {
+      "line": 156,
+      "text": "let total = 0;",
+      "words": [
+        "total"
+      ],
+      "raw": "let total = 0;"
+    },
+    {
+      "line": 160,
+      "text": "total += (prod.price || 0) * (Number(item.quantity) || 1);",
+      "words": [
+        "total"
+      ],
+      "raw": "total += (prod.price || 0) * (Number(item.quantity) || 1);"
+    },
+    {
+      "line": 163,
+      "text": "return total;",
+      "words": [
+        "total"
+      ],
+      "raw": "return total;"
+    },
+    {
+      "line": 179,
+      "text": "if (!res.ok) throw new Error(data.message || 'Gagal memuat harga cabang');",
+      "words": [
+        "gagal",
+        "harga",
+        "cabang"
+      ],
+      "raw": "if (!res.ok) throw new Error(data.message || 'Gagal memuat harga cabang');"
+    },
+    {
+      "line": 194,
+      "text": "text: e.message || 'Fitur Multi-Harga per Cabang memerlukan Paket Premium.',",
+      "words": [
+        "fitur",
+        "harga",
+        "cabang",
+        "paket"
+      ],
+      "raw": "text: e.message || 'Fitur Multi-Harga per Cabang memerlukan Paket Premium.',"
+    },
+    {
+      "line": 202,
+      "text": "toggleAllBranchesAvailability(status) {",
+      "words": [
+        "status"
+      ],
+      "raw": "toggleAllBranchesAvailability(status) {"
+    },
+    {
+      "line": 204,
+      "text": "b.is_available = status;",
+      "words": [
+        "status"
+      ],
+      "raw": "b.is_available = status;"
+    },
+    {
+      "line": 246,
+      "text": "if (!res.ok) throw new Error(data.message || 'Gagal menyimpan harga cabang.');",
+      "words": [
+        "gagal",
+        "harga",
+        "cabang"
+      ],
+      "raw": "if (!res.ok) throw new Error(data.message || 'Gagal menyimpan harga cabang.');"
+    },
+    {
+      "line": 262,
+      "text": "title: 'Gagal Menyimpan',",
+      "words": [
+        "gagal"
+      ],
+      "raw": "title: 'Gagal Menyimpan',"
+    },
+    {
+      "line": 304,
+      "text": "if (!res.ok) throw new Error(data.message || 'Gagal mengubah pengaturan POS.');",
+      "words": [
+        "gagal",
+        "pengaturan",
+        "pos"
+      ],
+      "raw": "if (!res.ok) throw new Error(data.message || 'Gagal mengubah pengaturan POS.');"
+    },
+    {
+      "line": 320,
+      "text": "title: 'Gagal!',",
+      "words": [
+        "gagal"
+      ],
+      "raw": "title: 'Gagal!',"
+    },
+    {
+      "line": 361,
+      "text": "Swal.fire({ icon: 'error', title: 'Maksimal 10 Foto', text: 'Anda dapat mengunggah maksimal 10 foto galeri sekaligus.', confirmButtonColor: '#FF3B30' });",
+      "words": [
+        "maksimal",
+        "anda",
+        "dapat",
+        "maksimal"
+      ],
+      "raw": "Swal.fire({ icon: 'error', title: 'Maksimal 10 Foto', text: 'Anda dapat mengunggah maksimal 10 foto galeri sekaligus.', confirmButtonColor: '#FF3B30' });"
+    },
+    {
+      "line": 417,
+      "text": "Swal.fire({ icon: 'error', title: 'Maksimal 10 Foto', text: 'Anda dapat mengunggah maksimal 10 foto galeri sekaligus.', confirmButtonColor: '#FF3B30' });",
+      "words": [
+        "maksimal",
+        "anda",
+        "dapat",
+        "maksimal"
+      ],
+      "raw": "Swal.fire({ icon: 'error', title: 'Maksimal 10 Foto', text: 'Anda dapat mengunggah maksimal 10 foto galeri sekaligus.', confirmButtonColor: '#FF3B30' });"
+    },
+    {
+      "line": 475,
+      "text": "'show_in_pos' => (bool) ($editProduct->show_in_pos ?? true),",
+      "words": [
+        "pos",
+        "pos"
+      ],
+      "raw": "'show_in_pos' => (bool) ($editProduct->show_in_pos ?? true),"
+    },
+    {
+      "line": 498,
+      "text": "show_in_pos: ,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: {{ $p->show_in_pos ?? true ? 'true' : 'false' }},"
+    },
+    {
+      "line": 512,
+      "text": "show_in_pos: true,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: true,"
+    },
+    {
+      "line": 541,
+      "text": "if (!res.ok) throw new Error(data.message || 'Gagal mengubah pengaturan.');",
+      "words": [
+        "gagal",
+        "pengaturan"
+      ],
+      "raw": "if (!res.ok) throw new Error(data.message || 'Gagal mengubah pengaturan.');"
+    },
+    {
+      "line": 560,
+      "text": "title: err.message || 'Gagal memperbarui status.',",
+      "words": [
+        "gagal",
+        "memperbarui",
+        "status"
+      ],
+      "raw": "title: err.message || 'Gagal memperbarui status.',"
+    },
+    {
+      "line": 583,
+      "text": "show_in_pos: currentToggle ? currentToggle.show_in_pos : p.show_in_pos,",
+      "words": [
+        "pos",
+        "pos",
+        "pos"
+      ],
+      "raw": "show_in_pos: currentToggle ? currentToggle.show_in_pos : p.show_in_pos,"
+    },
+    {
+      "line": 617,
+      "text": "if (!res.ok) throw new Error(data.message || 'Gagal menambahkan kategori.');",
+      "words": [
+        "gagal",
+        "kategori"
+      ],
+      "raw": "if (!res.ok) throw new Error(data.message || 'Gagal menambahkan kategori.');"
+    },
+    {
+      "line": 620,
+      "text": "if (this.quickAddTarget === 'edit') {",
+      "words": [
+        "edit"
+      ],
+      "raw": "if (this.quickAddTarget === 'edit') {"
+    },
+    {
+      "line": 633,
+      "text": "title: 'Kategori baru berhasil ditambahkan.',",
+      "words": [
+        "kategori",
+        "berhasil"
+      ],
+      "raw": "title: 'Kategori baru berhasil ditambahkan.',"
+    },
+    {
+      "line": 670,
+      "text": "if (this.quickAddTarget === 'edit') {",
+      "words": [
+        "edit"
+      ],
+      "raw": "if (this.quickAddTarget === 'edit') {"
+    },
+    {
+      "line": 684,
+      "text": "title: 'Satuan baru berhasil ditambahkan.',",
+      "words": [
+        "berhasil"
+      ],
+      "raw": "title: 'Satuan baru berhasil ditambahkan.',"
+    },
+    {
+      "line": 716,
+      "text": "this.productScannerError = 'Browser ini belum mendukung scan barcode kamera. Gunakan Chrome/Android terbaru atau input barcode manual.';",
+      "words": [
+        "ini",
+        "belum",
+        "atau"
+      ],
+      "raw": "this.productScannerError = 'Browser ini belum mendukung scan barcode kamera. Gunakan Chrome/Android terbaru atau input barcode manual.';"
+    },
+    {
+      "line": 746,
+      "text": "this.productScannerError = 'Barcode belum terbaca. Posisikan barcode di dalam kotak.';",
+      "words": [
+        "belum",
+        "di"
+      ],
+      "raw": "this.productScannerError = 'Barcode belum terbaca. Posisikan barcode di dalam kotak.';"
+    },
+    {
+      "line": 754,
+      "text": "if (this.productScannerTarget === 'edit') {",
+      "words": [
+        "edit"
+      ],
+      "raw": "if (this.productScannerTarget === 'edit') {"
+    },
+    {
+      "line": 772,
+      "text": "if (error?.name === 'NotFoundError') return 'Kamera tidak ditemukan pada perangkat ini.';",
+      "words": [
+        "tidak",
+        "pada",
+        "ini"
+      ],
+      "raw": "if (error?.name === 'NotFoundError') return 'Kamera tidak ditemukan pada perangkat ini.';"
+    },
+    {
+      "line": 773,
+      "text": "if (error?.name === 'NotReadableError') return 'Kamera sedang digunakan aplikasi lain.';",
+      "words": [
+        "sedang",
+        "aplikasi"
+      ],
+      "raw": "if (error?.name === 'NotReadableError') return 'Kamera sedang digunakan aplikasi lain.';"
+    },
+    {
+      "line": 775,
+      "text": "return 'Kamera tidak dapat dibuka. Periksa izin kamera lalu coba lagi.';",
+      "words": [
+        "tidak",
+        "dapat"
+      ],
+      "raw": "return 'Kamera tidak dapat dibuka. Periksa izin kamera lalu coba lagi.';"
+    },
+    {
+      "line": 796,
+      "text": ":title=\"__('products.toggle_pos_images_title')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('products.toggle_pos_images_title')\">"
+    },
+    {
+      "line": 1065,
+      "text": "=\"toggleProductField(' ', 'show_in_pos')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "@click=\"toggleProductField('{{ $prod->id }}', 'show_in_pos')\""
+    },
+    {
+      "line": 1066,
+      "text": ":disabled=\"productToggles[' ']?.loading === 'show_in_pos'\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":disabled=\"productToggles['{{ $prod->id }}']?.loading === 'show_in_pos'\""
+    },
+    {
+      "line": 1067,
+      "text": ":class=\"productToggles[' ']?.show_in_pos ?",
+      "words": [
+        "pos"
+      ],
+      "raw": ":class=\"productToggles['{{ $prod->id }}']?.show_in_pos ?"
+    },
+    {
+      "line": 1071,
+      "text": ":title=\"__('products.channel_pos_title')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('products.channel_pos_title')\">"
+    },
+    {
+      "line": 1112,
+      "text": ":title=\"__('products.channel_status_title')\">",
+      "words": [
+        "status"
+      ],
+      "raw": ":title=\"__('products.channel_status_title')\">"
+    },
+    {
+      "line": 1122,
+      "text": ":class=\"productToggles[' ']?.show_in_pos ?",
+      "words": [
+        "pos"
+      ],
+      "raw": ":class=\"productToggles['{{ $prod->id }}']?.show_in_pos ?"
+    },
+    {
+      "line": 1169,
+      "text": "title=\" - Atur Harga Khusus per Cabang\"",
+      "words": [
+        "harga",
+        "cabang"
+      ],
+      "raw": "title=\"{{ __('products.btn_branch') }} - Atur Harga Khusus per Cabang\""
+    },
+    {
+      "line": 1195,
+      "text": "show_in_pos: ,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: {{ $prod->show_in_pos ?? true ? 'true' : 'false' }},"
+    },
+    {
+      "line": 1262,
+      "text": "Pilih Semua di Halaman Ini",
+      "words": [
+        "pilih",
+        "semua",
+        "di",
+        "halaman",
+        "ini"
+      ],
+      "raw": "<span>Pilih Semua di Halaman Ini</span>"
+    },
+    {
+      "line": 1346,
+      "text": "show_in_pos: ,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: {{ $prod->show_in_pos ?? true ? 'true' : 'false' }},"
+    },
+    {
+      "line": 1404,
+      "text": ":disabled=\"productToggles[' ']?.loading === 'show_in_pos'\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":disabled=\"productToggles['{{ $prod->id }}']?.loading === 'show_in_pos'\""
+    },
+    {
+      "line": 1405,
+      "text": ":class=\"productToggles[' ']?.show_in_pos ?",
+      "words": [
+        "pos"
+      ],
+      "raw": ":class=\"productToggles['{{ $prod->id }}']?.show_in_pos ?"
+    },
+    {
+      "line": 1725,
+      "text": "Otomatis POS",
+      "words": [
+        "otomatis",
+        "pos"
+      ],
+      "raw": "<span class=\"text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full\">Otomatis POS</span>"
+    },
+    {
+      "line": 1728,
+      "text": "Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu.",
+      "words": [
+        "harga",
+        "otomatis",
+        "di",
+        "kasir",
+        "pos",
+        "minimal"
+      ],
+      "raw": "Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu."
+    },
+    {
+      "line": 1737,
+      "text": "Harga Satuan Grosir",
+      "words": [
+        "harga"
+      ],
+      "raw": "<label class=\"block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]\">Harga Satuan Grosir</label>"
+    },
+    {
+      "line": 2183,
+      "text": "=\"quickAddTarget = 'edit'; showAddUnitModal = true\"",
+      "words": [
+        "edit"
+      ],
+      "raw": "@click=\"quickAddTarget = 'edit'; showAddUnitModal = true\""
+    },
+    {
+      "line": 2202,
+      "text": "=\"quickAddTarget = 'edit'; showAddCategoryModal = true\"",
+      "words": [
+        "edit"
+      ],
+      "raw": "@click=\"quickAddTarget = 'edit'; showAddCategoryModal = true\""
+    },
+    {
+      "line": 2226,
+      "text": "<button type=\"button\" =\"requestProductScanner('edit')\"",
+      "words": [
+        "edit"
+      ],
+      "raw": "<button type=\"button\" @click=\"requestProductScanner('edit')\""
+    },
+    {
+      "line": 2373,
+      "text": "Otomatis POS",
+      "words": [
+        "otomatis",
+        "pos"
+      ],
+      "raw": "<span class=\"text-[10px] font-bold uppercase tracking-wider text-[#34C759] bg-[#34C759]/15 px-2 py-0.5 rounded-full\">Otomatis POS</span>"
+    },
+    {
+      "line": 2376,
+      "text": "Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu.",
+      "words": [
+        "harga",
+        "otomatis",
+        "di",
+        "kasir",
+        "pos",
+        "minimal"
+      ],
+      "raw": "Berikan potongan harga satuan secara otomatis di kasir POS ketika pembelian mencapai kuantitas minimal tertentu."
+    },
+    {
+      "line": 2385,
+      "text": "Harga Satuan Grosir",
+      "words": [
+        "harga"
+      ],
+      "raw": "<label class=\"block font-medium text-black/70 dark:text-white/70 mb-1 text-[11px]\">Harga Satuan Grosir</label>"
+    },
+    {
+      "line": 2551,
+      "text": "x-model=\"editProduct.show_in_pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "x-model=\"editProduct.show_in_pos\""
+    },
+    {
+      "line": 3132,
+      "text": "x-text=\"'Kode: ' + (branch.location_code || '-')\">",
+      "words": [
+        "kode"
+      ],
+      "raw": "x-text=\"'Kode: ' + (branch.location_code || '-')\"></p>"
+    },
+    {
+      "line": 3326,
+      "text": "=\"submitBulkProduct('activate', 'Aktifkan Produk Terpilih?', `Aktifkan ${selectedProductIds.length} produk terpilih sekaligus?`, 'question')\"",
+      "words": [
+        "produk",
+        "produk"
+      ],
+      "raw": "@click=\"submitBulkProduct('activate', 'Aktifkan Produk Terpilih?', `Aktifkan ${selectedProductIds.length} produk terpilih sekaligus?`, 'question')\""
+    },
+    {
+      "line": 3334,
+      "text": "=\"submitBulkProduct('deactivate', 'Nonaktifkan Produk Terpilih?', `Nonaktifkan ${selectedProductIds.length} produk terpilih? Produk tidak akan aktif di transaksi baru.`, 'warning')\"",
+      "words": [
+        "produk",
+        "produk",
+        "produk",
+        "tidak",
+        "akan",
+        "aktif",
+        "di",
+        "transaksi"
+      ],
+      "raw": "@click=\"submitBulkProduct('deactivate', 'Nonaktifkan Produk Terpilih?', `Nonaktifkan ${selectedProductIds.length} produk terpilih? Produk tidak akan aktif di transaksi baru.`, 'warning')\""
+    },
+    {
+      "line": 3367,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('show_website', 'Tampilkan di Web?', 'Tampilkan produk di etalase website publik?')\"",
+      "words": [
+        "di",
+        "produk",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('show_website', 'Tampilkan di Web?', 'Tampilkan produk di etalase website publik?')\""
+    },
+    {
+      "line": 3371,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan produk dari etalase website publik?')\"",
+      "words": [
+        "dari",
+        "produk",
+        "dari"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan produk dari etalase website publik?')\""
+    },
+    {
+      "line": 3380,
+      "text": "Kasir POS",
+      "words": [
+        "kasir",
+        "pos"
+      ],
+      "raw": "<div class=\"font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]\">Kasir POS</div>"
+    },
+    {
+      "line": 3382,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan produk di kasir POS?')\"",
+      "words": [
+        "pos",
+        "di",
+        "kasir",
+        "pos",
+        "produk",
+        "di",
+        "kasir",
+        "pos"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan produk di kasir POS?')\""
+    },
+    {
+      "line": 3386,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan produk dari kasir POS?')\"",
+      "words": [
+        "pos",
+        "dari",
+        "kasir",
+        "pos",
+        "produk",
+        "dari",
+        "kasir",
+        "pos"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan produk dari kasir POS?')\""
+    },
+    {
+      "line": 3397,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan produk di pemilihan faktur/SO?')\"",
+      "words": [
+        "di",
+        "produk",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan produk di pemilihan faktur/SO?')\""
+    },
+    {
+      "line": 3401,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan produk dari pemilihan faktur/SO?')\"",
+      "words": [
+        "dari",
+        "produk",
+        "dari"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan produk dari pemilihan faktur/SO?')\""
+    },
+    {
+      "line": 3410,
+      "text": "Harga di Web",
+      "words": [
+        "harga",
+        "di"
+      ],
+      "raw": "<div class=\"font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]\">Harga di Web</div>"
+    },
+    {
+      "line": 3412,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka harga produk di etalase web?')\"",
+      "words": [
+        "harga",
+        "di",
+        "harga",
+        "produk",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka harga produk di etalase web?')\""
+    },
+    {
+      "line": 3416,
+      "text": "<button type=\"button\" =\"open = false; submitBulkProduct('hide_price_web', 'Sembunyikan Harga di Web?', 'Sembunyikan angka harga (hubungi admin)?')\"",
+      "words": [
+        "harga",
+        "di",
+        "harga"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkProduct('hide_price_web', 'Sembunyikan Harga di Web?', 'Sembunyikan angka harga (hubungi admin)?')\""
+    },
+    {
+      "line": 3429,
+      "text": "=\"submitBulkProduct('delete', 'Hapus Produk Terpilih?', `Hapus ${selectedProductIds.length} produk terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')\"",
+      "words": [
+        "hapus",
+        "produk",
+        "hapus",
+        "produk",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "@click=\"submitBulkProduct('delete', 'Hapus Produk Terpilih?', `Hapus ${selectedProductIds.length} produk terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')\""
+    }
+  ],
+  "resources/views/app/marketplace/index.blade.php": [
+    {
+      "line": 51,
+      "text": "AppAlert.toast(data.message || 'Gagal mengubah status', 'error');",
+      "words": [
+        "gagal",
+        "status"
+      ],
+      "raw": "AppAlert.toast(data.message || 'Gagal mengubah status', 'error');"
+    },
+    {
+      "line": 56,
+      "text": "AppAlert.toast('Kesalahan jaringan saat mengubah status', 'error');",
+      "words": [
+        "kesalahan",
+        "status"
+      ],
+      "raw": "AppAlert.toast('Kesalahan jaringan saat mengubah status', 'error');"
+    },
+    {
+      "line": 97,
+      "text": "Auto-sync Aktif",
+      "words": [
+        "aktif"
+      ],
+      "raw": "<span>Auto-sync Aktif</span>"
+    },
+    {
+      "line": 271,
+      "text": "Sync Otomatis:",
+      "words": [
+        "otomatis"
+      ],
+      "raw": "<span class=\"text-[11px] text-black/50 dark:text-white/50 hidden sm:inline\">Sync Otomatis:</span>"
+    },
+    {
+      "line": 284,
+      "text": "Hubungkan akun Shopee Open Platform Anda untuk mengelola seluruh operasional toko online langsung dari COOCA ERP. Sistem mendukung 9 modul resmi: Manajemen Toko, Katalog & Multi-Harga, Media Library, Diskon & Promosi, Sinkronisasi Pesanan, Logistik & Cetak Resi, Kategori Toko, Retur/Refund, dan Customer Service Live Chat.",
+      "words": [
+        "hubungkan",
+        "akun",
+        "anda",
+        "untuk",
+        "langsung",
+        "dari",
+        "sistem",
+        "resmi",
+        "harga",
+        "diskon",
+        "pesanan",
+        "kategori",
+        "dan"
+      ],
+      "raw": "Hubungkan akun <strong>Shopee Open Platform</strong> Anda untuk mengelola seluruh operasional toko online langsung dari COOCA ERP. Sistem mendukung 9 modul resmi: Manajemen Toko, Katalog & Multi-Harga, Media Library, Diskon & Promosi, Sinkronisasi Pesanan, Logistik & Cetak Resi, Kategori Toko, Retur/Refund, dan Customer Service Live Chat."
+    },
+    {
+      "line": 438,
+      "text": "Sync Otomatis:",
+      "words": [
+        "otomatis"
+      ],
+      "raw": "<span class=\"text-[11px] text-black/50 dark:text-white/50 hidden sm:inline\">Sync Otomatis:</span>"
+    }
+  ],
+  "resources/views/app/marketplace/orders.blade.php": [
+    {
+      "line": 28,
+      "text": "if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');",
+      "words": [
+        "pilih",
+        "pesanan"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');"
+    },
+    {
+      "line": 56,
+      "text": "if (!confirm(`Atur pengiriman untuk ${this.selectedOrderIds.length} pesanan terpilih ke kurir?`)) return;",
+      "words": [
+        "pengiriman",
+        "untuk",
+        "pesanan",
+        "ke"
+      ],
+      "raw": "if (!confirm(`Atur pengiriman untuk ${this.selectedOrderIds.length} pesanan terpilih ke kurir?`)) return;"
+    },
+    {
+      "line": 76,
+      "text": "if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman massal.', 'error');",
+      "words": [
+        "gagal",
+        "pengiriman"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman massal.', 'error');"
+    },
+    {
+      "line": 79,
+      "text": "if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat memproses pengiriman.', 'error');",
+      "words": [
+        "kesalahan",
+        "pengiriman"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat memproses pengiriman.', 'error');"
+    },
+    {
+      "line": 86,
+      "text": "if (!confirm(`Atur pengiriman pesanan ${this.selectedOrder.external_order_sn} ke kurir?`)) return;",
+      "words": [
+        "pengiriman",
+        "pesanan",
+        "ke"
+      ],
+      "raw": "if (!confirm(`Atur pengiriman pesanan ${this.selectedOrder.external_order_sn} ke kurir?`)) return;"
+    },
+    {
+      "line": 105,
+      "text": "if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman.', 'error');",
+      "words": [
+        "gagal",
+        "pengiriman"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast(data.error || 'Gagal mengatur pengiriman.', 'error');"
+    },
+    {
+      "line": 108,
+      "text": "if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat mengatur pengiriman.', 'error');",
+      "words": [
+        "kesalahan",
+        "pengiriman"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast('Kesalahan jaringan saat mengatur pengiriman.', 'error');"
+    },
+    {
+      "line": 147,
+      "text": "AppAlert.toast(data.message || 'Pesanan berhasil ditarik!', 'success');",
+      "words": [
+        "pesanan",
+        "berhasil"
+      ],
+      "raw": "AppAlert.toast(data.message || 'Pesanan berhasil ditarik!', 'success');"
+    },
+    {
+      "line": 153,
+      "text": "AppAlert.toast(data.message || 'Gagal menarik pesanan.', 'error');",
+      "words": [
+        "gagal",
+        "pesanan"
+      ],
+      "raw": "AppAlert.toast(data.message || 'Gagal menarik pesanan.', 'error');"
+    },
+    {
+      "line": 158,
+      "text": "AppAlert.toast('Kesalahan jaringan saat menarik pesanan.', 'error');",
+      "words": [
+        "kesalahan",
+        "pesanan"
+      ],
+      "raw": "AppAlert.toast('Kesalahan jaringan saat menarik pesanan.', 'error');"
+    },
+    {
+      "line": 241,
+      "text": "Semua Saluran",
+      "words": [
+        "semua"
+      ],
+      "raw": "Semua Saluran"
+    },
+    {
+      "line": 314,
+      "text": "->filled('channel') || request()->filled('status'))",
+      "words": [
+        "status"
+      ],
+      "raw": "@if(request()->filled('channel') || request()->filled('status'))"
+    },
+    {
+      "line": 352,
+      "text": "$addrParts = array_filter([",
+      "words": [
+        "filter"
+      ],
+      "raw": "$addrParts = array_filter(["
+    },
+    {
+      "line": 375,
+      "text": "'recipient_address' => $recipientAddress ?: 'Sesuai pesanan di sistem marketplace',",
+      "words": [
+        "pesanan",
+        "di",
+        "sistem"
+      ],
+      "raw": "'recipient_address' => $recipientAddress ?: 'Sesuai pesanan di sistem marketplace',"
+    },
+    {
+      "line": 376,
+      "text": "'total_amount' => (float) $order->total_amount,",
+      "words": [
+        "total",
+        "total"
+      ],
+      "raw": "'total_amount' => (float) $order->total_amount,"
+    },
+    {
+      "line": 378,
+      "text": "'order_status' => strtoupper((string) $order->order_status),",
+      "words": [
+        "status",
+        "status"
+      ],
+      "raw": "'order_status' => strtoupper((string) $order->order_status),"
+    },
+    {
+      "line": 463,
+      "text": "$statusClass = match(strtolower($order->order_status)) {",
+      "words": [
+        "status"
+      ],
+      "raw": "$statusClass = match(strtolower($order->order_status)) {"
+    },
+    {
+      "line": 630,
+      "text": "aria-labelledby=\"order-detail-modal-title\">",
+      "words": [
+        "detail"
+      ],
+      "raw": "aria-labelledby=\"order-detail-modal-title\">"
+    },
+    {
+      "line": 681,
+      "text": "Rincian Produk Dipesan",
+      "words": [
+        "produk"
+      ],
+      "raw": "<span>Rincian Produk Dipesan</span>"
+    },
+    {
+      "line": 714,
+      "text": "Tidak ada rincian item atau belum disinkronkan dari marketplace.",
+      "words": [
+        "tidak",
+        "atau",
+        "belum",
+        "dari"
+      ],
+      "raw": "Tidak ada rincian item atau belum disinkronkan dari marketplace."
+    },
+    {
+      "line": 723,
+      "text": "Pengiriman & Logistik",
+      "words": [
+        "pengiriman"
+      ],
+      "raw": "<span>Pengiriman & Logistik</span>"
+    },
+    {
+      "line": 736,
+      "text": "Nomor Resi / AWB:",
+      "words": [
+        "nomor"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-black/45 dark:text-white/45 block mb-0.5\">Nomor Resi / AWB:</span>"
+    },
+    {
+      "line": 749,
+      "text": "Penerima & Alamat Tujuan:",
+      "words": [
+        "alamat"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-black/45 dark:text-white/45 block mb-0.5\">Penerima & Alamat Tujuan:</span>"
+    },
+    {
+      "line": 759,
+      "text": "Total Belanja Pembeli:",
+      "words": [
+        "total"
+      ],
+      "raw": "<span>Total Belanja Pembeli:</span>"
+    },
+    {
+      "line": 764,
+      "text": "Potongan Admin / Layanan Channel:",
+      "words": [
+        "layanan"
+      ],
+      "raw": "<span>Potongan Admin / Layanan Channel:</span>"
+    },
+    {
+      "line": 812,
+      "text": "Pesanan Terpilih",
+      "words": [
+        "pesanan"
+      ],
+      "raw": "<span><strong x-text=\"selectedOrderIds.length\"></strong> Pesanan Terpilih</span>"
+    }
+  ],
+  "resources/views/app/pos/shifts.blade.php": [
+    {
+      "line": 96,
+      "text": "window.AppAlert.success(data.message || 'Struk laporan shift berhasil dicetak.');",
+      "words": [
+        "struk",
+        "laporan",
+        "berhasil"
+      ],
+      "raw": "window.AppAlert.success(data.message || 'Struk laporan shift berhasil dicetak.');"
+    },
+    {
+      "line": 100,
+      "text": "window.AppAlert.error(data.message || 'Gagal mencetak laporan shift.');",
+      "words": [
+        "gagal",
+        "laporan"
+      ],
+      "raw": "window.AppAlert.error(data.message || 'Gagal mencetak laporan shift.');"
+    },
+    {
+      "line": 116,
+      "text": "module=\"pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "module=\"pos\""
+    },
+    {
+      "line": 117,
+      "text": ":title=\"__('pos.shifts_title')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('pos.shifts_title')\""
+    },
+    {
+      "line": 118,
+      "text": ":subtitle=\"__('pos.shifts_subtitle')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":subtitle=\"__('pos.shifts_subtitle')\">"
+    },
+    {
+      "line": 127,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('pos.terminal') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 187,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('finance.cash_bank') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 347,
+      "text": "Penjualan Tunai",
+      "words": [
+        "tunai"
+      ],
+      "raw": "<span class=\"text-black/40 dark:text-white/40 block\">Penjualan Tunai</span>"
+    },
+    {
+      "line": 351,
+      "text": "Buka",
+      "words": [
+        "buka"
+      ],
+      "raw": "<span class=\"text-black/40 dark:text-white/40 block\">Buka</span>"
+    },
+    {
+      "line": 383,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('pos.terminal') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 391,
+      "text": "aria-labelledby=\"pos-open-shift-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-open-shift-title\">"
+    },
+    {
+      "line": 586,
+      "text": "aria-labelledby=\"pos-close-shift-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-close-shift-title\">"
+    },
+    {
+      "line": 765,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('finance.cash_bank') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 773,
+      "text": "aria-labelledby=\"pos-cash-movement-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-cash-movement-title\">"
+    },
+    {
+      "line": 921,
+      "text": "aria-labelledby=\"pos-detail-shift-title\">",
+      "words": [
+        "pos",
+        "detail"
+      ],
+      "raw": "aria-labelledby=\"pos-detail-shift-title\">"
+    }
+  ],
+  "resources/views/app/products/modifiers.blade.php": [
+    {
+      "line": 121,
+      "text": "Total Grup Pilihan",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"text-[12px] font-medium text-black/50 dark:text-white/50\">Total Grup Pilihan</span>"
+    },
+    {
+      "line": 137,
+      "text": "Total Opsi Pilihan",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"text-[12px] font-medium text-black/50 dark:text-white/50\">Total Opsi Pilihan</span>"
+    },
+    {
+      "line": 146,
+      "text": "Opsi Siap Kasir",
+      "words": [
+        "kasir"
+      ],
+      "raw": "<span class=\"text-[11.5px] font-semibold text-[#AF52DE] dark:text-[#BF5AF2]\">Opsi Siap Kasir</span>"
+    },
+    {
+      "line": 162,
+      "text": "Dari Menu",
+      "words": [
+        "dari"
+      ],
+      "raw": "<span class=\"text-[11.5px] font-semibold text-[#34C759] dark:text-[#30D158]\">Dari {{ $products->count() }} Menu</span>"
+    },
+    {
+      "line": 252,
+      "text": "Harus Pilih 1",
+      "words": [
+        "pilih"
+      ],
+      "raw": "Harus Pilih 1"
+    },
+    {
+      "line": 254,
+      "text": "Maksimal 1 Opsi",
+      "words": [
+        "maksimal"
+      ],
+      "raw": "Maksimal 1 Opsi"
+    },
+    {
+      "line": 602,
+      "text": "Aturan Pemilihan Pelanggan *",
+      "words": [
+        "pelanggan"
+      ],
+      "raw": "Aturan Pemilihan Pelanggan <span class=\"text-[#FF3B30]\">*</span>"
+    },
+    {
+      "line": 618,
+      "text": "Pilih tepat 1 opsi",
+      "words": [
+        "pilih"
+      ],
+      "raw": "<p class=\"text-[11.5px] text-black/50 dark:text-white/50\">Pilih tepat 1 opsi</p>"
+    },
+    {
+      "line": 627,
+      "text": "Cocok untuk Ukuran Cup, Suhu Minuman, atau Level Pedas.",
+      "words": [
+        "untuk",
+        "atau"
+      ],
+      "raw": "Cocok untuk Ukuran Cup, Suhu Minuman, atau Level Pedas."
+    },
+    {
+      "line": 643,
+      "text": "Bisa pilih banyak (Add-on)",
+      "words": [
+        "bisa",
+        "pilih"
+      ],
+      "raw": "<p class=\"text-[11.5px] text-black/50 dark:text-white/50\">Bisa pilih banyak (Add-on)</p>"
+    },
+    {
+      "line": 652,
+      "text": "Cocok untuk Extra Topping, Saus Tambahan, atau Side Dish.",
+      "words": [
+        "untuk",
+        "atau"
+      ],
+      "raw": "Cocok untuk Extra Topping, Saus Tambahan, atau Side Dish."
+    },
+    {
+      "line": 682,
+      "text": "Minimal Pilihan (Min)",
+      "words": [
+        "minimal"
+      ],
+      "raw": "Minimal Pilihan (Min)"
+    },
+    {
+      "line": 689,
+      "text": "Maksimal Pilihan yang Diizinkan (Max)",
+      "words": [
+        "maksimal",
+        "yang"
+      ],
+      "raw": "Maksimal Pilihan yang Diizinkan (Max)"
+    },
+    {
+      "line": 696,
+      "text": "Batas Cepat:",
+      "words": [
+        "cepat"
+      ],
+      "raw": "<span>Batas Cepat:</span>"
+    },
+    {
+      "line": 888,
+      "text": "Preset Cepat:",
+      "words": [
+        "cepat"
+      ],
+      "raw": "<span class=\"text-[11.5px] text-black/50 dark:text-white/50\">Preset Cepat:</span>"
+    },
+    {
+      "line": 990,
+      "text": "(Muncul di layar kasir)",
+      "words": [
+        "di",
+        "kasir"
+      ],
+      "raw": "<span x-show=\"optionForm.is_active\">{{ __('products.status_active') }} (Muncul di layar kasir)</span>"
+    },
+    {
+      "line": 991,
+      "text": "(Disembunyikan dari kasir)",
+      "words": [
+        "dari",
+        "kasir"
+      ],
+      "raw": "<span x-show=\"!optionForm.is_active\">{{ __('products.status_inactive') }} (Disembunyikan dari kasir)</span>"
+    },
+    {
+      "line": 1131,
+      "text": "return this.productsNameMap[id] || 'Produk #' + id;",
+      "words": [
+        "produk"
+      ],
+      "raw": "return this.productsNameMap[id] || 'Produk #' + id;"
+    },
+    {
+      "line": 1191,
+      "text": ".filter(([id, searchStr]) => searchStr.includes(q))",
+      "words": [
+        "filter"
+      ],
+      "raw": ".filter(([id, searchStr]) => searchStr.includes(q))"
+    },
+    {
+      "line": 1204,
+      "text": ".filter(([id, searchStr]) => searchStr.includes(q))",
+      "words": [
+        "filter"
+      ],
+      "raw": ".filter(([id, searchStr]) => searchStr.includes(q))"
+    }
+  ],
+  "resources/views/app/pos/orders.blade.php": [
+    {
+      "line": 31,
+      "text": "message: 'Cetak Ulang (Re-Print) Bill ini? Tindakan ini akan dicatat dalam Jejak Audit sebagai Salinan / Cetakan ke-' + (printCount + 1) + '.',",
+      "words": [
+        "ini",
+        "ini",
+        "akan",
+        "ke"
+      ],
+      "raw": "message: 'Cetak Ulang (Re-Print) Bill ini? Tindakan ini akan dicatat dalam Jejak Audit sebagai Salinan / Cetakan ke-' + (printCount + 1) + '.',"
+    },
+    {
+      "line": 34,
+      "text": "cancelText: 'Batal'",
+      "words": [
+        "batal"
+      ],
+      "raw": "cancelText: 'Batal'"
+    },
+    {
+      "line": 48,
+      "text": "window.COOCA_POS_ORDERS = );",
+      "words": [
+        "pos"
+      ],
+      "raw": "window.COOCA_POS_ORDERS = @json($orders->items());"
+    },
+    {
+      "line": 53,
+      "text": "module=\"pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "module=\"pos\""
+    },
+    {
+      "line": 54,
+      "text": ":title=\"__('pos.orders_title')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('pos.orders_title')\""
+    },
+    {
+      "line": 55,
+      "text": ":subtitle=\"__('pos.orders_subtitle')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":subtitle=\"__('pos.orders_subtitle')\">"
+    },
+    {
+      "line": 145,
+      "text": "->hasAny(['search', 'status', 'date']))",
+      "words": [
+        "status"
+      ],
+      "raw": "@if(request()->hasAny(['search', 'status', 'date']))"
+    },
+    {
+      "line": 301,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('pos.supervisor_pin') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 309,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('sales.returns') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 357,
+      "text": "Meja",
+      "words": [
+        "meja"
+      ],
+      "raw": "Meja {{ $o->table_or_reference }}"
+    },
+    {
+      "line": 401,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('pos.supervisor_pin') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 407,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('sales.returns') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 438,
+      "text": "aria-labelledby=\"pos-order-detail-title\">",
+      "words": [
+        "pos",
+        "detail"
+      ],
+      "raw": "aria-labelledby=\"pos-order-detail-title\">"
+    },
+    {
+      "line": 468,
+      "text": "x-text=\"'Detail Transaksi #' + (selectedOrder ? selectedOrder.order_number : '')\">",
+      "words": [
+        "detail",
+        "transaksi"
+      ],
+      "raw": "x-text=\"'Detail Transaksi #' + (selectedOrder ? selectedOrder.order_number : '')\"></h3>"
+    },
+    {
+      "line": 470,
+      "text": "x-text=\"selectedOrder ? (selectedOrder.order_date + ' \u2022 Status: ' + selectedOrder.status) : ''\">",
+      "words": [
+        "status",
+        "status"
+      ],
+      "raw": "x-text=\"selectedOrder ? (selectedOrder.order_date + ' \u2022 Status: ' + selectedOrder.status) : ''\"></div>"
+    },
+    {
+      "line": 494,
+      "text": "Tipe Pesanan:",
+      "words": [
+        "pesanan"
+      ],
+      "raw": "<div><span class=\"text-black/50 dark:text-white/50\">Tipe Pesanan:</span> <span class=\"font-semibold uppercase text-black dark:text-white\" x-text=\"selectedOrder.order_type || 'Dine-In'\"></span></div>"
+    },
+    {
+      "line": 505,
+      "text": "Layanan Bengkel &amp; SPK",
+      "words": [
+        "layanan"
+      ],
+      "raw": "<span>Layanan Bengkel &amp; SPK</span>"
+    },
+    {
+      "line": 515,
+      "text": "Keluhan / Catatan:",
+      "words": [
+        "catatan"
+      ],
+      "raw": "<span class=\"text-black/50 dark:text-white/50\">Keluhan / Catatan:</span>"
+    },
+    {
+      "line": 529,
+      "text": "Layanan Laundry Kiloan",
+      "words": [
+        "layanan"
+      ],
+      "raw": "<span>Layanan Laundry Kiloan</span>"
+    },
+    {
+      "line": 535,
+      "text": "Status:",
+      "words": [
+        "status"
+      ],
+      "raw": "<div><span class=\"text-black/50 dark:text-white/50\">Status:</span> <span class=\"font-bold uppercase text-[#34C759]\" x-text=\"selectedOrder.laundry_status || 'received'\"></span></div>"
+    },
+    {
+      "line": 592,
+      "text": "Subtotal:",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "<span>Subtotal:</span>"
+    },
+    {
+      "line": 596,
+      "text": "Total HPP / Modal:",
+      "words": [
+        "total"
+      ],
+      "raw": "<span>Total HPP / Modal:</span>"
+    },
+    {
+      "line": 630,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('pos.supervisor_pin') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 637,
+      "text": "aria-labelledby=\"pos-void-dialog-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-void-dialog-title\">"
+    },
+    {
+      "line": 709,
+      "text": "|| \\App\\Support\\Context::hasPermission('pos.orders'))",
+      "words": [
+        "pos"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('sales.returns') || \\App\\Support\\Context::hasPermission('pos.orders'))"
+    },
+    {
+      "line": 716,
+      "text": "aria-labelledby=\"pos-refund-dialog-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-refund-dialog-title\">"
+    }
+  ],
+  "resources/views/app/pos/printers/index.blade.php": [
+    {
+      "line": 205,
+      "text": "module=\"pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "module=\"pos\""
+    },
+    {
+      "line": 206,
+      "text": ":title=\"__('pos.printers_title')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('pos.printers_title')\""
+    },
+    {
+      "line": 207,
+      "text": ":subtitle=\"__('pos.printers_subtitle')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":subtitle=\"__('pos.printers_subtitle')\">"
+    },
+    {
+      "line": 327,
+      "text": "Total: Printer",
+      "words": [
+        "total"
+      ],
+      "raw": "Total: <span class=\"font-bold text-black dark:text-white tabular-nums\">{{ $printers->count() }}</span> Printer"
+    },
+    {
+      "line": 607,
+      "text": "aria-labelledby=\"pos-add-printer-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-add-printer-title\">"
+    },
+    {
+      "line": 682,
+      "text": "Local POS Agent (Bridge 9898)",
+      "words": [
+        "pos"
+      ],
+      "raw": "<option value=\"agent\">Local POS Agent (Bridge 9898)</option>"
+    },
+    {
+      "line": 689,
+      "text": "80mm (Standar Kasir POS / 48 Kolom)",
+      "words": [
+        "kasir",
+        "pos"
+      ],
+      "raw": "<option value=\"80mm\">80mm (Standar Kasir POS / 48 Kolom)</option>"
+    },
+    {
+      "line": 699,
+      "text": "Alamat IP LAN / Wi-Fi *",
+      "words": [
+        "alamat"
+      ],
+      "raw": "<span x-show=\"connType === 'lan' || connType === 'wifi'\">Alamat IP LAN / Wi-Fi *</span>"
+    },
+    {
+      "line": 700,
+      "text": "Nama Share Printer Windows *",
+      "words": [
+        "nama"
+      ],
+      "raw": "<span x-show=\"connType === 'windows'\">Nama Share Printer Windows *</span>"
+    },
+    {
+      "line": 720,
+      "text": "Jadikan sebagai printer kasir utama (Default)",
+      "words": [
+        "kasir"
+      ],
+      "raw": "Jadikan sebagai printer kasir utama (Default)"
+    },
+    {
+      "line": 813,
+      "text": "aria-labelledby=\"pos-edit-printer-title\">",
+      "words": [
+        "pos",
+        "edit"
+      ],
+      "raw": "aria-labelledby=\"pos-edit-printer-title\">"
+    },
+    {
+      "line": 889,
+      "text": "Local POS Agent (Bridge 9898)",
+      "words": [
+        "pos"
+      ],
+      "raw": "<option value=\"agent\">Local POS Agent (Bridge 9898)</option>"
+    },
+    {
+      "line": 896,
+      "text": "80mm (Standar POS / 48 Kolom)",
+      "words": [
+        "pos"
+      ],
+      "raw": "<option value=\"80mm\">80mm (Standar POS / 48 Kolom)</option>"
+    },
+    {
+      "line": 921,
+      "text": "Jadikan sebagai printer kasir utama (Default)",
+      "words": [
+        "kasir"
+      ],
+      "raw": "Jadikan sebagai printer kasir utama (Default)"
+    },
+    {
+      "line": 1004,
+      "text": "aria-labelledby=\"pos-manual-drawer-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-manual-drawer-title\">"
+    }
+  ],
+  "resources/views/app/pos/reports/tabs/payments.blade.php": [
+    {
+      "line": 17,
+      "text": "'label_type' => 'Tunai',",
+      "words": [
+        "tunai"
+      ],
+      "raw": "'label_type' => 'Tunai',"
+    },
+    {
+      "line": 19,
+      "text": "'qris', 'qris_dynamic' => [",
+      "words": [
+        "qris",
+        "qris"
+      ],
+      "raw": "'qris', 'qris_dynamic' => ["
+    },
+    {
+      "line": 24,
+      "text": "'label_type' => 'QRIS Digital',",
+      "words": [
+        "qris"
+      ],
+      "raw": "'label_type' => 'QRIS Digital',"
+    },
+    {
+      "line": 38,
+      "text": "'label_type' => 'Kartu Kredit',",
+      "words": [
+        "kartu"
+      ],
+      "raw": "'label_type' => 'Kartu Kredit',"
+    },
+    {
+      "line": 40,
+      "text": "'transfer' => [",
+      "words": [
+        "transfer"
+      ],
+      "raw": "'transfer' => ["
+    },
+    {
+      "line": 45,
+      "text": "'label_type' => 'Transfer Bank',",
+      "words": [
+        "transfer"
+      ],
+      "raw": "'label_type' => 'Transfer Bank',"
+    },
+    {
+      "line": 89,
+      "text": "Dari total transaksi",
+      "words": [
+        "dari",
+        "total",
+        "transaksi"
+      ],
+      "raw": "<span>Dari {{ number_format($totalTx, 0, ',', '.') }} total transaksi</span>"
+    },
+    {
+      "line": 107,
+      "text": "% rata-rata biaya MDR",
+      "words": [
+        "biaya"
+      ],
+      "raw": "{{ $totalGross > 0 ? number_format(($totalFee / $totalGross) * 100, 2) : 0 }}% rata-rata biaya MDR"
+    },
+    {
+      "line": 133,
+      "text": "Metode Terpopuler",
+      "words": [
+        "metode"
+      ],
+      "raw": "<span class=\"text-[12px] font-medium text-black/55 dark:text-white/55\">Metode Terpopuler</span>"
+    },
+    {
+      "line": 144,
+      "text": "% dari omzet ( tx)",
+      "words": [
+        "dari"
+      ],
+      "raw": "{{ number_format($topMethod->share ?? $topMethod->contribution_percent ?? 0, 1) }}% dari omzet ({{ number_format($topMethod->count ?? $topMethod->tx_count ?? 0, 0, ',', '.') }} tx)"
+    },
+    {
+      "line": 146,
+      "text": "Tidak ada transaksi pada periode ini",
+      "words": [
+        "tidak",
+        "transaksi",
+        "pada",
+        "ini"
+      ],
+      "raw": "Tidak ada transaksi pada periode ini"
+    },
+    {
+      "line": 159,
+      "text": "Proporsi perolehan omzet kasir berdasarkan metode pembayaran",
+      "words": [
+        "kasir",
+        "metode",
+        "pembayaran"
+      ],
+      "raw": "<p class=\"text-[12px] text-black/50 dark:text-white/50\">Proporsi perolehan omzet kasir berdasarkan metode pembayaran</p>"
+    },
+    {
+      "line": 294,
+      "text": "Silakan sesuaikan tanggal atau preset filter di atas.",
+      "words": [
+        "silakan",
+        "atau",
+        "filter",
+        "di"
+      ],
+      "raw": "{{ __('pos.no_completed_payment_transactions_desc') }} Silakan sesuaikan tanggal atau preset filter di atas."
+    },
+    {
+      "line": 307,
+      "text": "TOTAL PENERIMAAN KASIR",
+      "words": [
+        "total",
+        "kasir"
+      ],
+      "raw": "TOTAL PENERIMAAN KASIR"
+    },
+    {
+      "line": 337,
+      "text": "Panduan Rekonsiliasi & Settlement Finansial",
+      "words": [
+        "panduan"
+      ],
+      "raw": "<div class=\"font-bold text-black dark:text-white text-[13px]\">Panduan Rekonsiliasi & Settlement Finansial</div>"
+    },
+    {
+      "line": 339,
+      "text": "\u2022 Penerimaan Tunai (Cash): Masuk langsung ke laci kasir dan diverifikasi saat tutup kasir di tab Rekonsiliasi Shift .",
+      "words": [
+        "tunai",
+        "masuk",
+        "langsung",
+        "ke",
+        "kasir",
+        "dan",
+        "tutup",
+        "kasir",
+        "di"
+      ],
+      "raw": "\u2022 <strong>Penerimaan Tunai (Cash):</strong> Masuk langsung ke laci kasir dan diverifikasi saat tutup kasir di tab <a href=\"{{ route('pos.reports.index', array_merge(request()->query(), ['tab' => 'shifts'])) }}\" class=\"text-[#007AFF] font-semibold hover:underline\">Rekonsiliasi Shift</a>.<br>"
+    },
+    {
+      "line": 340,
+      "text": "\u2022 Penerimaan Non-Tunai (QRIS, EDC, Transfer): Dicatat dengan potongan estimasi biaya MDR. Dana masuk ke rekening penampungan/gateway dan otomatis dicatat pada modul Settlement Kas & Bank .",
+      "words": [
+        "tunai",
+        "qris",
+        "transfer",
+        "dengan",
+        "biaya",
+        "masuk",
+        "ke",
+        "dan",
+        "otomatis",
+        "pada"
+      ],
+      "raw": "\u2022 <strong>Penerimaan Non-Tunai (QRIS, EDC, Transfer):</strong> Dicatat dengan potongan estimasi biaya MDR. Dana masuk ke rekening penampungan/gateway dan otomatis dicatat pada modul <a href=\"{{ route('finance.settlements.index') }}\" class=\"text-[#007AFF] font-semibold hover:underline\">Settlement Kas & Bank</a>."
+    }
+  ],
+  "resources/views/app/warehouse/index.blade.php": [
+    {
+      "line": 186,
+      "text": "async (pos) => {",
+      "words": [
+        "pos"
+      ],
+      "raw": "async (pos) => {"
+    },
+    {
+      "line": 972,
+      "text": "'pos_sale' => ['label' => __('inventory.movement_types.pos_sale'), 'pill' => 'bg-[#007AFF]/12 text-[#007AFF]'],",
+      "words": [
+        "pos",
+        "pos"
+      ],
+      "raw": "'pos_sale'       => ['label' => __('inventory.movement_types.pos_sale'), 'pill' => 'bg-[#007AFF]/12 text-[#007AFF]'],"
+    },
+    {
+      "line": 1006,
+      "text": "'pos_sale' => ['label' => __('inventory.movement_types.pos_sale'), 'pill' => 'bg-[#007AFF]/12 text-[#007AFF]'],",
+      "words": [
+        "pos",
+        "pos"
+      ],
+      "raw": "'pos_sale'       => ['label' => __('inventory.movement_types.pos_sale'), 'pill' => 'bg-[#007AFF]/12 text-[#007AFF]'],"
+    },
+    {
+      "line": 1602,
+      "text": "<button type=\"button\" =\"selectBiteshipArea('edit', item)\"",
+      "words": [
+        "edit"
+      ],
+      "raw": "<button type=\"button\" @click=\"selectBiteshipArea('edit', item)\""
+    }
+  ],
+  "resources/views/app/storefront/orders/index.blade.php": [
+    {
+      "line": 21,
+      "text": "if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');",
+      "words": [
+        "pilih",
+        "pesanan"
+      ],
+      "raw": "if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');"
+    },
+    {
+      "line": 78,
+      "text": "Semua Saluran",
+      "words": [
+        "semua"
+      ],
+      "raw": "Semua Saluran"
+    },
+    {
+      "line": 298,
+      "text": "($order->status === 'proof_submitted')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($order->status === 'proof_submitted')"
+    },
+    {
+      "line": 460,
+      "text": "($order->status === 'proof_submitted')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($order->status === 'proof_submitted')"
+    },
+    {
+      "line": 550,
+      "text": "Pesanan Terpilih",
+      "words": [
+        "pesanan"
+      ],
+      "raw": "<span><strong x-text=\"selectedOrderIds.length\"></strong> Pesanan Terpilih</span>"
+    }
+  ],
+  "resources/views/app/storefront/shipping/index.blade.php": [
+    {
+      "line": 18,
+      "text": "'warehouse' => 'Gudang',",
+      "words": [
+        "gudang"
+      ],
+      "raw": "'warehouse' => 'Gudang',"
+    },
+    {
+      "line": 19,
+      "text": "'branch' => 'Cabang',",
+      "words": [
+        "cabang"
+      ],
+      "raw": "'branch' => 'Cabang',"
+    },
+    {
+      "line": 118,
+      "text": "alert('Fitur GPS tidak didukung oleh browser Anda.');",
+      "words": [
+        "fitur",
+        "tidak",
+        "anda"
+      ],
+      "raw": "alert('Fitur GPS tidak didukung oleh browser Anda.');"
+    },
+    {
+      "line": 129,
+      "text": "alert('Gagal mengambil koordinat: ' + err.message);",
+      "words": [
+        "gagal"
+      ],
+      "raw": "alert('Gagal mengambil koordinat: ' + err.message);"
+    },
+    {
+      "line": 137,
+      "text": "this.testError = 'Masukkan kode pos tujuan yang valid (minimal 4-5 digit).';",
+      "words": [
+        "masukkan",
+        "kode",
+        "pos",
+        "yang",
+        "minimal",
+        "digit"
+      ],
+      "raw": "this.testError = 'Masukkan kode pos tujuan yang valid (minimal 4-5 digit).';"
+    },
+    {
+      "line": 163,
+      "text": "this.testError = data.message || 'Tidak ada kurir yang menjangkau rute tersebut.';",
+      "words": [
+        "tidak",
+        "yang"
+      ],
+      "raw": "this.testError = data.message || 'Tidak ada kurir yang menjangkau rute tersebut.';"
+    }
+  ],
+  "resources/views/app/pos/tables.blade.php": [
+    {
+      "line": 86,
+      "text": "module=\"pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "module=\"pos\""
+    },
+    {
+      "line": 87,
+      "text": ":title=\"__('pos.tables_title')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":title=\"__('pos.tables_title')\""
+    },
+    {
+      "line": 88,
+      "text": ":subtitle=\"__('pos.tables_subtitle')\">",
+      "words": [
+        "pos"
+      ],
+      "raw": ":subtitle=\"__('pos.tables_subtitle')\">"
+    },
+    {
+      "line": 247,
+      "text": "$isOccupied = in_array($table->status, [",
+      "words": [
+        "status"
+      ],
+      "raw": "$isOccupied = in_array($table->status, ["
+    },
+    {
+      "line": 248,
+      "text": "\\App\\Models\\PosTable::STATUS_OCCUPIED,",
+      "words": [
+        "status"
+      ],
+      "raw": "\\App\\Models\\PosTable::STATUS_OCCUPIED,"
+    },
+    {
+      "line": 249,
+      "text": "\\App\\Models\\PosTable::STATUS_ORDERING,",
+      "words": [
+        "status"
+      ],
+      "raw": "\\App\\Models\\PosTable::STATUS_ORDERING,"
+    },
+    {
+      "line": 250,
+      "text": "\\App\\Models\\PosTable::STATUS_PREPARING,",
+      "words": [
+        "status"
+      ],
+      "raw": "\\App\\Models\\PosTable::STATUS_PREPARING,"
+    },
+    {
+      "line": 251,
+      "text": "\\App\\Models\\PosTable::STATUS_SERVING,",
+      "words": [
+        "status"
+      ],
+      "raw": "\\App\\Models\\PosTable::STATUS_SERVING,"
+    },
+    {
+      "line": 252,
+      "text": "\\App\\Models\\PosTable::STATUS_WAITING_PAYMENT,",
+      "words": [
+        "status"
+      ],
+      "raw": "\\App\\Models\\PosTable::STATUS_WAITING_PAYMENT,"
+    },
+    {
+      "line": 408,
+      "text": "aria-labelledby=\"pos-add-table-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-add-table-title\">"
+    },
+    {
+      "line": 507,
+      "text": "Kartu Akrilik Siap Cetak:",
+      "words": [
+        "kartu"
+      ],
+      "raw": "<span><strong>Kartu Akrilik Siap Cetak:</strong> {{ __('pos.acrylic_card_print_desc') }}</span>"
+    },
+    {
+      "line": 550,
+      "text": "aria-labelledby=\"pos-edit-table-title\">",
+      "words": [
+        "pos",
+        "edit"
+      ],
+      "raw": "aria-labelledby=\"pos-edit-table-title\">"
+    },
+    {
+      "line": 694,
+      "text": "aria-labelledby=\"pos-regen-qr-title\">",
+      "words": [
+        "pos"
+      ],
+      "raw": "aria-labelledby=\"pos-regen-qr-title\">"
+    }
+  ],
+  "resources/views/app/marketplace/chat.blade.php": [
+    {
+      "line": 265,
+      "text": "return this.conversations.filter(c => {",
+      "words": [
+        "filter"
+      ],
+      "raw": "return this.conversations.filter(c => {"
+    },
+    {
+      "line": 295,
+      "text": "console.error(\"Gagal memuat pesan:\", e);",
+      "words": [
+        "gagal"
+      ],
+      "raw": "console.error(\"Gagal memuat pesan:\", e);"
+    },
+    {
+      "line": 326,
+      "text": "alert(data.error || 'Gagal mengirim pesan.');",
+      "words": [
+        "gagal"
+      ],
+      "raw": "alert(data.error || 'Gagal mengirim pesan.');"
+    },
+    {
+      "line": 345,
+      "text": "return isNaN(d) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });",
+      "words": [
+        "digit",
+        "digit"
+      ],
+      "raw": "return isNaN(d) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });"
+    }
+  ],
+  "resources/views/app/marketplace/shipping_label.blade.php": [
+    {
+      "line": 21,
+      "text": "Label Pengiriman Resmi -",
+      "words": [
+        "pengiriman",
+        "resmi"
+      ],
+      "raw": "<title>Label Pengiriman Resmi {{ $pageChannelName }} - {{ $business->name }}</title>"
+    },
+    {
+      "line": 47,
+      "text": "backdrop-filter: blur(12px);",
+      "words": [
+        "filter"
+      ],
+      "raw": "backdrop-filter: blur(12px);"
+    },
+    {
+      "line": 154,
+      "text": "filter: contrast(160%) brightness(85%);",
+      "words": [
+        "filter"
+      ],
+      "raw": "filter: contrast(160%) brightness(85%);"
+    },
+    {
+      "line": 608,
+      "text": "Pesanan Toko Online Resmi",
+      "words": [
+        "pesanan",
+        "resmi"
+      ],
+      "raw": "<div class=\"shopee-brand-sub\">Pesanan Toko Online Resmi</div>"
+    },
+    {
+      "line": 625,
+      "text": "Mode Pengujian Sandbox",
+      "words": [
+        "pengujian"
+      ],
+      "raw": "<div class=\"carrier-service-sub\">Mode Pengujian Sandbox</div>"
+    },
+    {
+      "line": 627,
+      "text": "Layanan Ekspedisi Resmi",
+      "words": [
+        "layanan",
+        "resmi"
+      ],
+      "raw": "<div class=\"carrier-service-sub\">Layanan Ekspedisi Resmi</div>"
+    },
+    {
+      "line": 641,
+      "text": "No. Pesanan:",
+      "words": [
+        "pesanan"
+      ],
+      "raw": "<span>No. Pesanan: <strong>{{ $orderSn }}</strong></span>"
+    },
+    {
+      "line": 654,
+      "text": "Kota / Hub Tujuan",
+      "words": [
+        "kota"
+      ],
+      "raw": "<span class=\"routing-label\">Kota / Hub Tujuan</span>"
+    },
+    {
+      "line": 662,
+      "text": "Kode Pos / Area",
+      "words": [
+        "kode",
+        "pos"
+      ],
+      "raw": "<span class=\"routing-label\">Kode Pos / Area</span>"
+    },
+    {
+      "line": 683,
+      "text": "Pengirim (Dari):",
+      "words": [
+        "dari"
+      ],
+      "raw": "<span class=\"address-badge\">Pengirim (Dari):</span>"
+    },
+    {
+      "line": 700,
+      "text": "Nama Produk / SKU",
+      "words": [
+        "nama",
+        "produk"
+      ],
+      "raw": "<th>Nama Produk / SKU</th>"
+    },
+    {
+      "line": 720,
+      "text": "1x Paket Pesanan",
+      "words": [
+        "paket",
+        "pesanan"
+      ],
+      "raw": "<td colspan=\"4\" style=\"text-align: center; padding: 4px; color: #4b5563;\">1x Paket Pesanan {{ $channelLabel }}</td>"
+    },
+    {
+      "line": 726,
+      "text": "+ produk lainnya dalam paket ini...",
+      "words": [
+        "produk",
+        "paket",
+        "ini"
+      ],
+      "raw": "+ {{ count($items) - 4 }} produk lainnya dalam paket ini..."
+    },
+    {
+      "line": 734,
+      "text": "Total Jumlah Barang: Pcs",
+      "words": [
+        "total"
+      ],
+      "raw": "<span>Total Jumlah Barang: <strong>{{ $totalQty }} Pcs</strong></span>"
+    },
+    {
+      "line": 735,
+      "text": "Wajib video unboxing untuk klaim komplain",
+      "words": [
+        "wajib",
+        "untuk"
+      ],
+      "raw": "<span>Wajib video unboxing untuk klaim komplain</span>"
+    },
+    {
+      "line": 747,
+      "text": "COD (BAYAR DI TEMPAT)",
+      "words": [
+        "bayar",
+        "di"
+      ],
+      "raw": "<div class=\"cod-title-main\">COD (BAYAR DI TEMPAT)</div>"
+    },
+    {
+      "line": 749,
+      "text": "Tagih tunai ke pembeli sebelum paket diserahkan",
+      "words": [
+        "tunai",
+        "ke",
+        "sebelum",
+        "paket"
+      ],
+      "raw": "<div class=\"cod-instruction-sub\">Tagih tunai ke pembeli sebelum paket diserahkan</div>"
+    },
+    {
+      "line": 752,
+      "text": "Pembeli telah membayar lunas secara online",
+      "words": [
+        "telah"
+      ],
+      "raw": "<div class=\"cod-instruction-sub\">Pembeli telah membayar lunas secara online</div>"
+    },
+    {
+      "line": 753,
+      "text": "KURIR TIDAK MENAGIH BIAYA APAPUN",
+      "words": [
+        "tidak",
+        "biaya"
+      ],
+      "raw": "<div style=\"font-size: 7.5px; font-weight: 800; margin-top: 1px; color: #EE4D2D;\">KURIR TIDAK MENAGIH BIAYA APAPUN</div>"
+    },
+    {
+      "line": 761,
+      "text": "Tanda Tangan & Nama Terang",
+      "words": [
+        "nama"
+      ],
+      "raw": "<div class=\"signature-sub\">Tanda Tangan & Nama Terang</div>"
+    }
+  ],
+  "resources/views/app/quotations/index.blade.php": [
+    {
+      "line": 104,
+      "text": "|| request('status'))",
+      "words": [
+        "status"
+      ],
+      "raw": "@if(request('search') || request('status'))"
+    },
+    {
+      "line": 325,
+      "text": "Hapus Surat Penawaran?",
+      "words": [
+        "hapus"
+      ],
+      "raw": "<p id=\"quotation-delete-dialog-title\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Surat Penawaran?</p>"
+    },
+    {
+      "line": 327,
+      "text": "Apakah Anda yakin ingin menghapus draf surat penawaran ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf surat penawaran <span class=\"font-medium text-black dark:text-white\" x-text=\"deleteTarget.name\"></span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/suppliers/index.blade.php": [
+    {
+      "line": 18,
+      "text": "email: '',",
+      "words": [
+        "email"
+      ],
+      "raw": "email: '',"
+    },
+    {
+      "line": 32,
+      "text": "email: sup.email || '',",
+      "words": [
+        "email",
+        "email"
+      ],
+      "raw": "email: sup.email || '',"
+    },
+    {
+      "line": 104,
+      "text": "alert(res.message || 'Gagal menganalisis file.');",
+      "words": [
+        "gagal"
+      ],
+      "raw": "alert(res.message || 'Gagal menganalisis file.');"
+    },
+    {
+      "line": 129,
+      "text": "AppAlert.warning('Tidak ada baris data pemasok yang siap diimport dengan strategi saat ini.');",
+      "words": [
+        "tidak",
+        "pemasok",
+        "yang",
+        "dengan",
+        "ini"
+      ],
+      "raw": "AppAlert.warning('Tidak ada baris data pemasok yang siap diimport dengan strategi saat ini.');"
+    },
+    {
+      "line": 131,
+      "text": "alert('Tidak ada baris data pemasok yang siap diimport.');",
+      "words": [
+        "tidak",
+        "pemasok",
+        "yang"
+      ],
+      "raw": "alert('Tidak ada baris data pemasok yang siap diimport.');"
+    },
+    {
+      "line": 138,
+      "text": "title: 'Import Pemasok?',",
+      "words": [
+        "pemasok"
+      ],
+      "raw": "title: 'Import Pemasok?',"
+    },
+    {
+      "line": 139,
+      "text": "message: 'Apakah Anda yakin ingin memproses ' + totalToProcess + ' data pemasok ke database bisnis?',",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "pemasok",
+        "ke",
+        "bisnis"
+      ],
+      "raw": "message: 'Apakah Anda yakin ingin memproses ' + totalToProcess + ' data pemasok ke database bisnis?',"
+    },
+    {
+      "line": 141,
+      "text": "confirmText: 'Ya, Proses Import',",
+      "words": [
+        "proses"
+      ],
+      "raw": "confirmText: 'Ya, Proses Import',"
+    },
+    {
+      "line": 142,
+      "text": "cancelText: 'Batal'",
+      "words": [
+        "batal"
+      ],
+      "raw": "cancelText: 'Batal'"
+    },
+    {
+      "line": 146,
+      "text": "if (!confirm('Apakah Anda yakin ingin memproses import pemasok ini?')) return;",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "pemasok",
+        "ini"
+      ],
+      "raw": "if (!confirm('Apakah Anda yakin ingin memproses import pemasok ini?')) return;"
+    },
+    {
+      "line": 173,
+      "text": "AppAlert.error(res.message || 'Gagal mengeksekusi import pemasok.');",
+      "words": [
+        "gagal",
+        "pemasok"
+      ],
+      "raw": "AppAlert.error(res.message || 'Gagal mengeksekusi import pemasok.');"
+    },
+    {
+      "line": 175,
+      "text": "alert(res.message || 'Gagal mengeksekusi import pemasok.');",
+      "words": [
+        "gagal",
+        "pemasok"
+      ],
+      "raw": "alert(res.message || 'Gagal mengeksekusi import pemasok.');"
+    },
+    {
+      "line": 453,
+      "text": "($supplier->email)",
+      "words": [
+        "email"
+      ],
+      "raw": "@if ($supplier->email)"
+    },
+    {
+      "line": 463,
+      "text": "(!$supplier->email && !$supplier->address)",
+      "words": [
+        "email"
+      ],
+      "raw": "@if (!$supplier->email && !$supplier->address)"
+    },
+    {
+      "line": 600,
+      "text": "($supplier->email)",
+      "words": [
+        "email"
+      ],
+      "raw": "@if ($supplier->email)"
+    },
+    {
+      "line": 747,
+      "text": "<input type=\"email\" name=\"email\" placeholder=\" \"",
+      "words": [
+        "email",
+        "email"
+      ],
+      "raw": "<input type=\"email\" name=\"email\" placeholder=\"{{ __('purchasing.supplier.placeholders.email') }}\""
+    },
+    {
+      "line": 840,
+      "text": "aria-labelledby=\"modal-edit-supplier-title\">",
+      "words": [
+        "edit"
+      ],
+      "raw": "aria-labelledby=\"modal-edit-supplier-title\">"
+    },
+    {
+      "line": 927,
+      "text": "<input type=\"email\" name=\"email\" x-model=\"editSupplier.email\"",
+      "words": [
+        "email",
+        "email",
+        "email"
+      ],
+      "raw": "<input type=\"email\" name=\"email\" x-model=\"editSupplier.email\""
+    },
+    {
+      "line": 1116,
+      "text": "Validasi otomatis anti-duplikat sebelum data masuk ke sistem direktori pengadaan",
+      "words": [
+        "otomatis",
+        "sebelum",
+        "masuk",
+        "ke",
+        "sistem"
+      ],
+      "raw": "<p class=\"text-[12px] text-black/50 dark:text-white/50\">Validasi otomatis anti-duplikat sebelum data masuk ke sistem direktori pengadaan</p>"
+    },
+    {
+      "line": 1143,
+      "text": "Langkah 1: Unduh Format Template Pemasok",
+      "words": [
+        "unduh",
+        "pemasok"
+      ],
+      "raw": "<span>Langkah 1: Unduh Format Template Pemasok</span>"
+    },
+    {
+      "line": 1145,
+      "text": "Gunakan format template resmi Cooca dengan validasi syarat pembayaran (TOP) & info rekening vendor.",
+      "words": [
+        "resmi",
+        "dengan",
+        "pembayaran"
+      ],
+      "raw": "<p class=\"text-[12px] text-black/60 dark:text-white/60\">Gunakan format template resmi Cooca dengan validasi syarat pembayaran (TOP) & info rekening vendor.</p>"
+    },
+    {
+      "line": 1158,
+      "text": "Langkah 2: Unggah Berkas Excel Pemasok",
+      "words": [
+        "unggah",
+        "pemasok"
+      ],
+      "raw": "<span>Langkah 2: Unggah Berkas Excel Pemasok</span>"
+    },
+    {
+      "line": 1160,
+      "text": "Maksimal 10 MB (.xlsx, .csv)",
+      "words": [
+        "maksimal"
+      ],
+      "raw": "<span class=\"text-[11px] text-black/40 dark:text-white/40\">Maksimal 10 MB (.xlsx, .csv)</span>"
+    },
+    {
+      "line": 1173,
+      "text": "Mendukung format .XLSX, .XLS, atau .CSV resmi (Maksimal 10 MB)",
+      "words": [
+        "atau",
+        "resmi",
+        "maksimal"
+      ],
+      "raw": "<div class=\"text-[12px] text-black/50 dark:text-white/50\">Mendukung format .XLSX, .XLS, atau .CSV resmi (Maksimal 10 MB)</div>"
+    },
+    {
+      "line": 1177,
+      "text": "Template Resmi Cooca Sudah Dilengkapi Dropdown Syarat Pembayaran (TOP)",
+      "words": [
+        "resmi",
+        "sudah",
+        "pembayaran"
+      ],
+      "raw": "<span>Template Resmi Cooca Sudah Dilengkapi Dropdown Syarat Pembayaran (TOP)</span>"
+    },
+    {
+      "line": 1187,
+      "text": "Hijau (Wajib)",
+      "words": [
+        "wajib"
+      ],
+      "raw": "<span>Hijau (Wajib)</span>"
+    },
+    {
+      "line": 1189,
+      "text": "Nama Pemasok wajib diisi. Tidak boleh kosong.",
+      "words": [
+        "nama",
+        "pemasok",
+        "wajib",
+        "diisi",
+        "tidak"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/60 dark:text-white/60\">Nama Pemasok wajib diisi. Tidak boleh kosong.</p>"
+    },
+    {
+      "line": 1203,
+      "text": "Kontak Person, Telepon/WA, Email, Info Bank, Alamat, Catatan.",
+      "words": [
+        "kontak",
+        "telepon",
+        "email",
+        "alamat",
+        "catatan"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/60 dark:text-white/60\">Kontak Person, Telepon/WA, Email, Info Bank, Alamat, Catatan.</p>"
+    },
+    {
+      "line": 1214,
+      "text": "Total Baris",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider\">Total Baris</span>"
+    },
+    {
+      "line": 1226,
+      "text": "Tidak Valid / Error",
+      "words": [
+        "tidak"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider\">Tidak Valid / Error</span>"
+    },
+    {
+      "line": 1278,
+      "text": "Status",
+      "words": [
+        "status"
+      ],
+      "raw": "<th class=\"py-2.5 px-3 w-14 text-center\">Status</th>"
+    },
+    {
+      "line": 1279,
+      "text": "Nama Pemasok",
+      "words": [
+        "nama",
+        "pemasok"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Nama Pemasok</th>"
+    },
+    {
+      "line": 1280,
+      "text": "Kontak Person",
+      "words": [
+        "kontak"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Kontak Person</th>"
+    },
+    {
+      "line": 1281,
+      "text": "Telepon / HP",
+      "words": [
+        "telepon"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Telepon / HP</th>"
+    },
+    {
+      "line": 1282,
+      "text": "Email",
+      "words": [
+        "email"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Email</th>"
+    },
+    {
+      "line": 1285,
+      "text": "Keterangan / Diagnostik",
+      "words": [
+        "keterangan"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Keterangan / Diagnostik</th>"
+    }
+  ],
+  "resources/views/app/customers/index.blade.php": [
+    {
+      "line": 40,
+      "text": "email: '',",
+      "words": [
+        "email"
+      ],
+      "raw": "email: '',"
+    },
+    {
+      "line": 66,
+      "text": "email: c.email || '',",
+      "words": [
+        "email",
+        "email"
+      ],
+      "raw": "email: c.email || '',"
+    },
+    {
+      "line": 132,
+      "text": "alert(res.message || 'Gagal menganalisis file.');",
+      "words": [
+        "gagal"
+      ],
+      "raw": "alert(res.message || 'Gagal menganalisis file.');"
+    },
+    {
+      "line": 157,
+      "text": "AppAlert.warning('Tidak ada baris data yang siap diimport dengan strategi saat ini.');",
+      "words": [
+        "tidak",
+        "yang",
+        "dengan",
+        "ini"
+      ],
+      "raw": "AppAlert.warning('Tidak ada baris data yang siap diimport dengan strategi saat ini.');"
+    },
+    {
+      "line": 159,
+      "text": "alert('Tidak ada baris data yang siap diimport.');",
+      "words": [
+        "tidak",
+        "yang"
+      ],
+      "raw": "alert('Tidak ada baris data yang siap diimport.');"
+    },
+    {
+      "line": 166,
+      "text": "title: 'Import Pelanggan?',",
+      "words": [
+        "pelanggan"
+      ],
+      "raw": "title: 'Import Pelanggan?',"
+    },
+    {
+      "line": 167,
+      "text": "message: 'Apakah Anda yakin ingin memproses ' + totalToProcess + ' data pelanggan ke database bisnis?',",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "pelanggan",
+        "ke",
+        "bisnis"
+      ],
+      "raw": "message: 'Apakah Anda yakin ingin memproses ' + totalToProcess + ' data pelanggan ke database bisnis?',"
+    },
+    {
+      "line": 169,
+      "text": "confirmText: 'Ya, Proses Import',",
+      "words": [
+        "proses"
+      ],
+      "raw": "confirmText: 'Ya, Proses Import',"
+    },
+    {
+      "line": 170,
+      "text": "cancelText: 'Batal'",
+      "words": [
+        "batal"
+      ],
+      "raw": "cancelText: 'Batal'"
+    },
+    {
+      "line": 174,
+      "text": "if (!confirm('Apakah Anda yakin ingin memproses import pelanggan ini?')) return;",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "pelanggan",
+        "ini"
+      ],
+      "raw": "if (!confirm('Apakah Anda yakin ingin memproses import pelanggan ini?')) return;"
+    },
+    {
+      "line": 201,
+      "text": "AppAlert.error(res.message || 'Gagal mengeksekusi import pelanggan.');",
+      "words": [
+        "gagal",
+        "pelanggan"
+      ],
+      "raw": "AppAlert.error(res.message || 'Gagal mengeksekusi import pelanggan.');"
+    },
+    {
+      "line": 203,
+      "text": "alert(res.message || 'Gagal mengeksekusi import pelanggan.');",
+      "words": [
+        "gagal",
+        "pelanggan"
+      ],
+      "raw": "alert(res.message || 'Gagal mengeksekusi import pelanggan.');"
+    },
+    {
+      "line": 490,
+      "text": "($c->email)",
+      "words": [
+        "email"
+      ],
+      "raw": "@if ($c->email)"
+    },
+    {
+      "line": 526,
+      "text": "(\\App\\Support\\Context::hasPermission('customers.edit'))",
+      "words": [
+        "edit"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('customers.edit'))"
+    },
+    {
+      "line": 672,
+      "text": "(\\App\\Support\\Context::hasPermission('customers.edit'))",
+      "words": [
+        "edit"
+      ],
+      "raw": "@if (\\App\\Support\\Context::hasPermission('customers.edit'))"
+    },
+    {
+      "line": 879,
+      "text": "<input type=\"email\" name=\"email\" placeholder=\" \"",
+      "words": [
+        "email",
+        "email"
+      ],
+      "raw": "<input type=\"email\" name=\"email\" placeholder=\"{{ __('customers.email_placeholder') }}\""
+    },
+    {
+      "line": 1044,
+      "text": "<input type=\"email\" name=\"email\" x-model=\"editCustomer.email\"",
+      "words": [
+        "email",
+        "email",
+        "email"
+      ],
+      "raw": "<input type=\"email\" name=\"email\" x-model=\"editCustomer.email\""
+    },
+    {
+      "line": 1200,
+      "text": "<a :href=\"'https://wa.me/' + (selectedCustomer.phone || '').replace(/[^0-9]/g, '').replace(/^0/, '62') + '?text=' + encodeURIComponent('Halo *' + selectedCustomer.name + '*, kami dari * * menginformasikan bahwa Anda memiliki saldo tagihan/kasbon aktif sebesar *Rp ' + formatCurrency(selectedCustomer.current_credit_balance || 0) + '*. Pembayaran dapat ditransfer atau diselesaikan di kasir toko. Terima kasih.')\"",
+      "words": [
+        "dari",
+        "anda",
+        "saldo",
+        "aktif",
+        "pembayaran",
+        "dapat",
+        "atau",
+        "di",
+        "kasir"
+      ],
+      "raw": "<a :href=\"'https://wa.me/' + (selectedCustomer.phone || '').replace(/[^0-9]/g, '').replace(/^0/, '62') + '?text=' + encodeURIComponent('Halo *' + selectedCustomer.name + '*, kami dari *{{ $business->name }}* menginformasikan bahwa Anda memiliki saldo tagihan/kasbon aktif sebesar *Rp ' + formatCurrency(selectedCustomer.current_credit_balance || 0) + '*. Pembayaran dapat ditransfer atau diselesaikan di kasir toko. Terima kasih.')\""
+    },
+    {
+      "line": 1270,
+      "text": "Validasi otomatis anti-duplikat sebelum data masuk ke sistem buku besar CRM",
+      "words": [
+        "otomatis",
+        "sebelum",
+        "masuk",
+        "ke",
+        "sistem"
+      ],
+      "raw": "<p class=\"text-[12px] text-black/50 dark:text-white/50\">Validasi otomatis anti-duplikat sebelum data masuk ke sistem buku besar CRM</p>"
+    },
+    {
+      "line": 1297,
+      "text": "Langkah 1: Unduh Format Template Excel",
+      "words": [
+        "unduh"
+      ],
+      "raw": "<span>Langkah 1: Unduh Format Template Excel</span>"
+    },
+    {
+      "line": 1299,
+      "text": "Gunakan format template resmi Cooca yang dilengkapi validasi dropdown tier & limit piutang.",
+      "words": [
+        "resmi",
+        "yang"
+      ],
+      "raw": "<p class=\"text-[12px] text-black/60 dark:text-white/60\">Gunakan format template resmi Cooca yang dilengkapi validasi dropdown tier & limit piutang.</p>"
+    },
+    {
+      "line": 1312,
+      "text": "Langkah 2: Unggah Berkas Excel Pelanggan",
+      "words": [
+        "unggah",
+        "pelanggan"
+      ],
+      "raw": "<span>Langkah 2: Unggah Berkas Excel Pelanggan</span>"
+    },
+    {
+      "line": 1314,
+      "text": "Maksimal 10 MB (.xlsx, .csv)",
+      "words": [
+        "maksimal"
+      ],
+      "raw": "<span class=\"text-[11px] text-black/40 dark:text-white/40\">Maksimal 10 MB (.xlsx, .csv)</span>"
+    },
+    {
+      "line": 1327,
+      "text": "Mendukung format .XLSX, .XLS, atau .CSV resmi (Maksimal 10 MB)",
+      "words": [
+        "atau",
+        "resmi",
+        "maksimal"
+      ],
+      "raw": "<div class=\"text-[12px] text-black/50 dark:text-white/50\">Mendukung format .XLSX, .XLS, atau .CSV resmi (Maksimal 10 MB)</div>"
+    },
+    {
+      "line": 1331,
+      "text": "Template Resmi Cooca Sudah Dilengkapi Dropdown Tier",
+      "words": [
+        "resmi",
+        "sudah"
+      ],
+      "raw": "<span>Template Resmi Cooca Sudah Dilengkapi Dropdown Tier</span>"
+    },
+    {
+      "line": 1341,
+      "text": "Hijau (Wajib)",
+      "words": [
+        "wajib"
+      ],
+      "raw": "<span>Hijau (Wajib)</span>"
+    },
+    {
+      "line": 1343,
+      "text": "Nama Pelanggan wajib diisi. Tidak boleh kosong.",
+      "words": [
+        "nama",
+        "pelanggan",
+        "wajib",
+        "diisi",
+        "tidak"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/60 dark:text-white/60\">Nama Pelanggan wajib diisi. Tidak boleh kosong.</p>"
+    },
+    {
+      "line": 1350,
+      "text": "Tier Pelanggan (Retail, Gold, VIP) & Syarat Bayar (TOP).",
+      "words": [
+        "pelanggan",
+        "bayar"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/60 dark:text-white/60\">Tier Pelanggan (Retail, Gold, VIP) & Syarat Bayar (TOP).</p>"
+    },
+    {
+      "line": 1357,
+      "text": "Kode/ID, No WA, Email, Limit Kredit, Alamat, Catatan.",
+      "words": [
+        "kode",
+        "email",
+        "alamat",
+        "catatan"
+      ],
+      "raw": "<p class=\"text-[11px] text-black/60 dark:text-white/60\">Kode/ID, No WA, Email, Limit Kredit, Alamat, Catatan.</p>"
+    },
+    {
+      "line": 1368,
+      "text": "Total Baris",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider\">Total Baris</span>"
+    },
+    {
+      "line": 1380,
+      "text": "Tidak Valid / Error",
+      "words": [
+        "tidak"
+      ],
+      "raw": "<span class=\"text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider\">Tidak Valid / Error</span>"
+    },
+    {
+      "line": 1432,
+      "text": "Status",
+      "words": [
+        "status"
+      ],
+      "raw": "<th class=\"py-2.5 px-3 w-14 text-center\">Status</th>"
+    },
+    {
+      "line": 1433,
+      "text": "Nama Pelanggan",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Nama Pelanggan</th>"
+    },
+    {
+      "line": 1434,
+      "text": "Kode / ID",
+      "words": [
+        "kode"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Kode / ID</th>"
+    },
+    {
+      "line": 1436,
+      "text": "Email",
+      "words": [
+        "email"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Email</th>"
+    },
+    {
+      "line": 1439,
+      "text": "Keterangan / Diagnostik",
+      "words": [
+        "keterangan"
+      ],
+      "raw": "<th class=\"py-2.5 px-3\">Keterangan / Diagnostik</th>"
+    }
+  ],
+  "resources/views/app/sales/returns/index.blade.php": [
+    {
+      "line": 9,
+      "text": "$totalReturnsCount = $returns->total();",
+      "words": [
+        "total"
+      ],
+      "raw": "$totalReturnsCount = $returns->total();"
+    },
+    {
+      "line": 10,
+      "text": "$draftReturns = $returns->filter(fn($r) => $r->status === 'draft');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$draftReturns = $returns->filter(fn($r) => $r->status === 'draft');"
+    },
+    {
+      "line": 11,
+      "text": "$approvedReturns = $returns->filter(fn($r) => $r->status === 'approved');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$approvedReturns = $returns->filter(fn($r) => $r->status === 'approved');"
+    },
+    {
+      "line": 12,
+      "text": "$completedReturns = $returns->filter(fn($r) => $r->status === 'completed');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$completedReturns = $returns->filter(fn($r) => $r->status === 'completed');"
+    },
+    {
+      "line": 13,
+      "text": "$pageTotalAmount = $returns->sum('total_amount');",
+      "words": [
+        "total"
+      ],
+      "raw": "$pageTotalAmount = $returns->sum('total_amount');"
+    },
+    {
+      "line": 197,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 285,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 376,
+      "text": "Hapus Retur Penjualan?",
+      "words": [
+        "hapus"
+      ],
+      "raw": "<p id=\"return-delete-dialog-title\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Retur Penjualan?</p>"
+    },
+    {
+      "line": 378,
+      "text": "Apakah Anda yakin ingin menghapus draf retur ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf retur <span class=\"font-medium text-black dark:text-white\" x-text=\"deleteTarget.name\"></span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/sales-orders/index.blade.php": [
+    {
+      "line": 9,
+      "text": "$totalCount = $salesOrders->total();",
+      "words": [
+        "total"
+      ],
+      "raw": "$totalCount = $salesOrders->total();"
+    },
+    {
+      "line": 10,
+      "text": "$confirmedOrders = $salesOrders->filter(fn($so) => $so->status === 'confirmed');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$confirmedOrders = $salesOrders->filter(fn($so) => $so->status === 'confirmed');"
+    },
+    {
+      "line": 11,
+      "text": "$partialOrders = $salesOrders->filter(fn($so) => $so->status === 'partially_fulfilled');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$partialOrders = $salesOrders->filter(fn($so) => $so->status === 'partially_fulfilled');"
+    },
+    {
+      "line": 12,
+      "text": "$fulfilledOrders = $salesOrders->filter(fn($so) => $so->status === 'fulfilled');",
+      "words": [
+        "filter",
+        "status"
+      ],
+      "raw": "$fulfilledOrders = $salesOrders->filter(fn($so) => $so->status === 'fulfilled');"
+    },
+    {
+      "line": 13,
+      "text": "$currentStatus = request('status', '');",
+      "words": [
+        "status"
+      ],
+      "raw": "$currentStatus = request('status', '');"
+    },
+    {
+      "line": 200,
+      "text": "($so->status === 'fulfilled')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($so->status === 'fulfilled')"
+    },
+    {
+      "line": 291,
+      "text": "($so->status === 'fulfilled')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($so->status === 'fulfilled')"
+    },
+    {
+      "line": 377,
+      "text": "Hapus Pesanan Penjualan?",
+      "words": [
+        "hapus",
+        "pesanan"
+      ],
+      "raw": "<p id=\"so-delete-dialog-title\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Pesanan Penjualan?</p>"
+    },
+    {
+      "line": 379,
+      "text": "Apakah Anda yakin ingin menghapus draf pesanan ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "pesanan",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf pesanan <span class=\"font-medium text-black dark:text-white\" x-text=\"deleteTarget.name\"></span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/sales/returns/edit.blade.php": [
+    {
+      "line": 3,
+      "text": "'headerTitle' => __('sales.edit_draft_return_title'),",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerTitle' => __('sales.edit_draft_return_title'),"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => __('sales.edit_draft_return_subtitle')",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerSubtitle' => __('sales.edit_draft_return_subtitle')"
+    },
+    {
+      "line": 22,
+      "text": "Edit",
+      "words": [
+        "edit"
+      ],
+      "raw": "<span class=\"text-black dark:text-white font-medium\">Edit</span>"
+    },
+    {
+      "line": 68,
+      "text": "Retur ini terikat pada dokumen transaksi di bawah",
+      "words": [
+        "ini",
+        "pada",
+        "transaksi",
+        "di"
+      ],
+      "raw": "<p class=\"text-[13px] text-black/50 dark:text-white/50 mt-0.5\">Retur ini terikat pada dokumen transaksi di bawah</p>"
+    },
+    {
+      "line": 83,
+      "text": "Pelanggan:",
+      "words": [
+        "pelanggan"
+      ],
+      "raw": "Pelanggan: <strong class=\"text-black dark:text-white\">{{ $return->customer?->name ?? 'Pelanggan Umum' }}</strong>"
+    },
+    {
+      "line": 84,
+      "text": "&bull; Tanggal Transaksi:",
+      "words": [
+        "transaksi"
+      ],
+      "raw": "&bull; Tanggal Transaksi: {{ $return->invoice?->invoice_date?->format('d M Y') ?? $return->posOrder?->order_date ?? '-' }}"
+    },
+    {
+      "line": 113,
+      "text": "Pilih",
+      "words": [
+        "pilih"
+      ],
+      "raw": "<th class=\"py-2.5 px-3 w-10 text-center\">Pilih</th>"
+    },
+    {
+      "line": 180,
+      "text": "Total Nilai Retur:",
+      "words": [
+        "total"
+      ],
+      "raw": "<span class=\"font-semibold text-black/60 dark:text-white/60\">Total Nilai Retur:</span>"
+    },
+    {
+      "line": 219,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span>"
+    },
+    {
+      "line": 229,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span>"
+    },
+    {
+      "line": 306,
+      "text": ".filter(it => it.selected)",
+      "words": [
+        "filter"
+      ],
+      "raw": ".filter(it => it.selected)"
+    }
+  ],
+  "resources/views/app/quotations/edit.blade.php": [
+    {
+      "line": 3,
+      "text": "'headerTitle' => __('sales.edit_quotation'),",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerTitle' => __('sales.edit_quotation'),"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => __('sales.edit_quotation_subtitle')",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerSubtitle' => __('sales.edit_quotation_subtitle')"
+    },
+    {
+      "line": 22,
+      "text": "Edit",
+      "words": [
+        "edit"
+      ],
+      "raw": "<span class=\"text-black dark:text-white font-medium\">Edit</span>"
+    },
+    {
+      "line": 35,
+      "text": "Sesuaikan item atau syarat penawaran sebelum dikirim atau dikonversi ke pesanan",
+      "words": [
+        "atau",
+        "sebelum",
+        "atau",
+        "ke",
+        "pesanan"
+      ],
+      "raw": "<p class=\"text-[13px] text-black/50 dark:text-white/50\">Sesuaikan item atau syarat penawaran sebelum dikirim atau dikonversi ke pesanan</p>"
+    },
+    {
+      "line": 54,
+      "text": "Terdapat kesalahan pengisian formulir",
+      "words": [
+        "kesalahan"
+      ],
+      "raw": "<span>Terdapat kesalahan pengisian formulir</span>"
+    },
+    {
+      "line": 95,
+      "text": "Status Penawaran",
+      "words": [
+        "status"
+      ],
+      "raw": "<label class=\"block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1\">Status Penawaran</label>"
+    },
+    {
+      "line": 99,
+      "text": "Accepted (Disetujui Klien)",
+      "words": [
+        "disetujui"
+      ],
+      "raw": "<option value=\"accepted\" {{ old('status', $quotation->status) == 'accepted' ? 'selected' : '' }}>Accepted (Disetujui Klien)</option>"
+    },
+    {
+      "line": 100,
+      "text": "Rejected / Declined (Ditolak)",
+      "words": [
+        "ditolak"
+      ],
+      "raw": "<option value=\"rejected\" {{ in_array(old('status', $quotation->status), ['rejected', 'declined']) ? 'selected' : '' }}>Rejected / Declined (Ditolak)</option>"
+    },
+    {
+      "line": 102,
+      "text": "Converted (Telah Jadi SO)",
+      "words": [
+        "telah"
+      ],
+      "raw": "<option value=\"converted\" selected>Converted (Telah Jadi SO)</option>"
+    },
+    {
+      "line": 120,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "<label class=\"block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1\">Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span></label>"
+    },
+    {
+      "line": 127,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "<label class=\"block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1\">Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span></label>"
+    },
+    {
+      "line": 303,
+      "text": "subtotal: ,",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "subtotal: {{ (float) $quotation->subtotal }},"
+    }
+  ],
+  "resources/views/app/sales-orders/edit.blade.php": [
+    {
+      "line": 3,
+      "text": "'headerTitle' => __('sales.edit_sales_order'),",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerTitle' => __('sales.edit_sales_order'),"
+    },
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => __('sales.edit_sales_order_subtitle')",
+      "words": [
+        "edit"
+      ],
+      "raw": "'headerSubtitle' => __('sales.edit_sales_order_subtitle')"
+    },
+    {
+      "line": 22,
+      "text": "Edit",
+      "words": [
+        "edit"
+      ],
+      "raw": "<span class=\"text-black dark:text-white font-medium\">Edit</span>"
+    },
+    {
+      "line": 35,
+      "text": "Sesuaikan item pesanan, alamat kirim, atau diskon sebelum tagihan ditagihkan",
+      "words": [
+        "pesanan",
+        "alamat",
+        "kirim",
+        "atau",
+        "diskon",
+        "sebelum"
+      ],
+      "raw": "<p class=\"text-[13px] text-black/50 dark:text-white/50\">Sesuaikan item pesanan, alamat kirim, atau diskon sebelum tagihan ditagihkan</p>"
+    },
+    {
+      "line": 100,
+      "text": "Status Pesanan",
+      "words": [
+        "status",
+        "pesanan"
+      ],
+      "raw": "Status Pesanan"
+    },
+    {
+      "line": 105,
+      "text": "Processing (Sedang Diproses)",
+      "words": [
+        "sedang"
+      ],
+      "raw": "<option value=\"processing\" {{ old('status', $salesOrder->status) == 'processing' ? 'selected' : '' }}>Processing (Sedang Diproses)</option>"
+    },
+    {
+      "line": 153,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span>"
+    },
+    {
+      "line": 162,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span>"
+    },
+    {
+      "line": 307,
+      "text": "subtotal: ,",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "subtotal: {{ (float) $salesOrder->subtotal }},"
+    }
+  ],
+  "resources/views/app/services/index.blade.php": [
+    {
+      "line": 34,
+      "text": "cancelButtonText: 'Batal'",
+      "words": [
+        "batal"
+      ],
+      "raw": "cancelButtonText: 'Batal'"
+    },
+    {
+      "line": 61,
+      "text": "show_in_pos: true,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: true,"
+    },
+    {
+      "line": 77,
+      "text": "show_in_pos: ,",
+      "words": [
+        "pos"
+      ],
+      "raw": "show_in_pos: {{ $editService ? ($editService->show_in_pos ? 'true' : 'false') : 'true' }},"
+    },
+    {
+      "line": 117,
+      "text": "show_in_pos: item.show_in_pos !== undefined ? Boolean(item.show_in_pos) : true,",
+      "words": [
+        "pos",
+        "pos",
+        "pos"
+      ],
+      "raw": "show_in_pos: item.show_in_pos !== undefined ? Boolean(item.show_in_pos) : true,"
+    },
+    {
+      "line": 184,
+      "text": "['label' => 'Produk', 'url' => route('products.index')],",
+      "words": [
+        "produk"
+      ],
+      "raw": "['label' => 'Produk', 'url' => route('products.index')],"
+    },
+    {
+      "line": 374,
+      "text": "|| \\App\\Support\\Context::hasPermission('products.edit'))",
+      "words": [
+        "edit"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('products.manage') || \\App\\Support\\Context::hasPermission('products.edit'))"
+    },
+    {
+      "line": 432,
+      "text": "Pilih Semua di Halaman Ini",
+      "words": [
+        "pilih",
+        "semua",
+        "di",
+        "halaman",
+        "ini"
+      ],
+      "raw": "<span>Pilih Semua di Halaman Ini</span>"
+    },
+    {
+      "line": 488,
+      "text": "|| \\App\\Support\\Context::hasPermission('products.edit'))",
+      "words": [
+        "edit"
+      ],
+      "raw": "@if(\\App\\Support\\Context::hasPermission('products.manage') || \\App\\Support\\Context::hasPermission('products.edit'))"
+    },
+    {
+      "line": 682,
+      "text": "x-model=\"addForm.show_in_pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "x-model=\"addForm.show_in_pos\""
+    },
+    {
+      "line": 905,
+      "text": "x-model=\"editForm.show_in_pos\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "x-model=\"editForm.show_in_pos\""
+    },
+    {
+      "line": 1133,
+      "text": "=\"submitBulkService('activate', 'Aktifkan Layanan Terpilih?', `Aktifkan ${selectedServiceIds.length} layanan terpilih sekaligus?`, 'question')\"",
+      "words": [
+        "layanan",
+        "layanan"
+      ],
+      "raw": "@click=\"submitBulkService('activate', 'Aktifkan Layanan Terpilih?', `Aktifkan ${selectedServiceIds.length} layanan terpilih sekaligus?`, 'question')\""
+    },
+    {
+      "line": 1141,
+      "text": "=\"submitBulkService('deactivate', 'Nonaktifkan Layanan Terpilih?', `Nonaktifkan ${selectedServiceIds.length} layanan terpilih? Layanan tidak akan aktif di transaksi baru.`, 'warning')\"",
+      "words": [
+        "layanan",
+        "layanan",
+        "layanan",
+        "tidak",
+        "akan",
+        "aktif",
+        "di",
+        "transaksi"
+      ],
+      "raw": "@click=\"submitBulkService('deactivate', 'Nonaktifkan Layanan Terpilih?', `Nonaktifkan ${selectedServiceIds.length} layanan terpilih? Layanan tidak akan aktif di transaksi baru.`, 'warning')\""
+    },
+    {
+      "line": 1174,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('show_website', 'Tampilkan di Web?', 'Tampilkan layanan di etalase website publik?')\"",
+      "words": [
+        "di",
+        "layanan",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('show_website', 'Tampilkan di Web?', 'Tampilkan layanan di etalase website publik?')\""
+    },
+    {
+      "line": 1178,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan layanan dari etalase website publik?')\"",
+      "words": [
+        "dari",
+        "layanan",
+        "dari"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('hide_website', 'Sembunyikan dari Web?', 'Sembunyikan layanan dari etalase website publik?')\""
+    },
+    {
+      "line": 1187,
+      "text": "Kasir POS",
+      "words": [
+        "kasir",
+        "pos"
+      ],
+      "raw": "<div class=\"font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]\">Kasir POS</div>"
+    },
+    {
+      "line": 1189,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan layanan di kasir POS?')\"",
+      "words": [
+        "pos",
+        "di",
+        "kasir",
+        "pos",
+        "layanan",
+        "di",
+        "kasir",
+        "pos"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('show_pos', 'Tampilkan di Kasir POS?', 'Tampilkan layanan di kasir POS?')\""
+    },
+    {
+      "line": 1193,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan layanan dari kasir POS?')\"",
+      "words": [
+        "pos",
+        "dari",
+        "kasir",
+        "pos",
+        "layanan",
+        "dari",
+        "kasir",
+        "pos"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('hide_pos', 'Sembunyikan dari Kasir POS?', 'Sembunyikan layanan dari kasir POS?')\""
+    },
+    {
+      "line": 1204,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan layanan di pemilihan faktur/SO?')\"",
+      "words": [
+        "di",
+        "layanan",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('show_sales_order', 'Tampilkan di Faktur SO?', 'Tampilkan layanan di pemilihan faktur/SO?')\""
+    },
+    {
+      "line": 1208,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan layanan dari pemilihan faktur/SO?')\"",
+      "words": [
+        "dari",
+        "layanan",
+        "dari"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('hide_sales_order', 'Sembunyikan dari Faktur SO?', 'Sembunyikan layanan dari pemilihan faktur/SO?')\""
+    },
+    {
+      "line": 1217,
+      "text": "Harga di Web",
+      "words": [
+        "harga",
+        "di"
+      ],
+      "raw": "<div class=\"font-semibold text-black dark:text-white px-1 py-0.5 text-[11.5px]\">Harga di Web</div>"
+    },
+    {
+      "line": 1219,
+      "text": "<button type=\"button\" =\"open = false; submitBulkService('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka tarif layanan di etalase web?')\"",
+      "words": [
+        "harga",
+        "di",
+        "layanan",
+        "di"
+      ],
+      "raw": "<button type=\"button\" @click=\"open = false; submitBulkService('show_price_web', 'Tampilkan Harga di Web?', 'Tampilkan angka tarif layanan di etalase web?')\""
+    },
+    {
+      "line": 1236,
+      "text": "=\"submitBulkService('delete', 'Hapus Layanan Terpilih?', `Hapus ${selectedServiceIds.length} layanan terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')\"",
+      "words": [
+        "hapus",
+        "layanan",
+        "hapus",
+        "layanan",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "@click=\"submitBulkService('delete', 'Hapus Layanan Terpilih?', `Hapus ${selectedServiceIds.length} layanan terpilih secara permanen? Tindakan ini tidak dapat dibatalkan.`, 'error')\""
+    }
+  ],
+  "resources/views/app/sales/returns/show.blade.php": [
+    {
+      "line": 50,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 72,
+      "text": "($return->status === 'draft')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'draft')"
+    },
+    {
+      "line": 143,
+      "text": "($business->email) Email:",
+      "words": [
+        "email",
+        "email"
+      ],
+      "raw": "@if ($business->email) Email: {{ $business->email }} @endif"
+    },
+    {
+      "line": 193,
+      "text": "(in_array($return->status, ['approved', 'completed']))",
+      "words": [
+        "status"
+      ],
+      "raw": "@if (in_array($return->status, ['approved', 'completed']))"
+    },
+    {
+      "line": 212,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 232,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 364,
+      "text": "($return->status === 'completed')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($return->status === 'completed')"
+    },
+    {
+      "line": 617,
+      "text": "Hapus Retur Penjualan?",
+      "words": [
+        "hapus"
+      ],
+      "raw": "<p id=\"return-delete-confirm-dialog-title\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Retur Penjualan?</p>"
+    },
+    {
+      "line": 619,
+      "text": "Apakah Anda yakin ingin menghapus draf retur ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf retur <span class=\"font-medium text-black dark:text-white\">{{ $return->return_number }}</span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/sales-orders/show.blade.php": [
+    {
+      "line": 44,
+      "text": "($salesOrder->status === 'fulfilled')",
+      "words": [
+        "status"
+      ],
+      "raw": "@if ($salesOrder->status === 'fulfilled')"
+    },
+    {
+      "line": 439,
+      "text": "Hapus Pesanan Penjualan?",
+      "words": [
+        "hapus",
+        "pesanan"
+      ],
+      "raw": "<p id=\"so-delete-confirm-dialog-title\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Pesanan Penjualan?</p>"
+    },
+    {
+      "line": 441,
+      "text": "Apakah Anda yakin ingin menghapus draf pesanan ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "pesanan",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf pesanan <span class=\"font-medium text-black dark:text-white\">{{ $salesOrder->so_number }}</span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/quotations/show.blade.php": [
+    {
+      "line": 321,
+      "text": "Hapus Draf Penawaran?",
+      "words": [
+        "hapus"
+      ],
+      "raw": "<p id=\"quotation-delete-dialog-title-show\" class=\"text-[17px] font-semibold text-black dark:text-white\">Hapus Draf Penawaran?</p>"
+    },
+    {
+      "line": 323,
+      "text": "Apakah Anda yakin ingin menghapus draf surat penawaran ? Tindakan ini tidak dapat dibatalkan.",
+      "words": [
+        "apakah",
+        "anda",
+        "yakin",
+        "ingin",
+        "menghapus",
+        "ini",
+        "tidak",
+        "dapat"
+      ],
+      "raw": "Apakah Anda yakin ingin menghapus draf surat penawaran <span class=\"font-medium text-black dark:text-white\">{{ $quotation->quotation_number }}</span>? Tindakan ini tidak dapat dibatalkan."
+    }
+  ],
+  "resources/views/app/purchasing/returns/show.blade.php": [
+    {
+      "line": 4,
+      "text": "'headerSubtitle' => __('purchasing.returns.detail_subtitle')",
+      "words": [
+        "detail"
+      ],
+      "raw": "'headerSubtitle' => __('purchasing.returns.detail_subtitle')"
+    },
+    {
+      "line": 147,
+      "text": "Produk",
+      "words": [
+        "produk"
+      ],
+      "raw": "<span class=\"ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400\">Produk</span>"
+    },
+    {
+      "line": 175,
+      "text": "Subtotal: Rp",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "<span class=\"font-semibold text-black dark:text-white\">Subtotal: Rp {{ number_format($item->subtotal ?? 0, 0, ',', '.') }}</span>"
+    }
+  ],
+  "resources/views/app/sales/returns/create.blade.php": [
+    {
+      "line": 86,
+      "text": "<button type=\"button\" =\"setSourceType('pos_order')\"",
+      "words": [
+        "pos"
+      ],
+      "raw": "<button type=\"button\" @click=\"setSourceType('pos_order')\""
+    },
+    {
+      "line": 87,
+      "text": ":class=\"sourceType === 'pos_order' ?",
+      "words": [
+        "pos"
+      ],
+      "raw": ":class=\"sourceType === 'pos_order' ?"
+    },
+    {
+      "line": 140,
+      "text": ":required=\"sourceType === 'pos_order'\"",
+      "words": [
+        "pos"
+      ],
+      "raw": ":required=\"sourceType === 'pos_order'\""
+    },
+    {
+      "line": 346,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span>"
+    },
+    {
+      "line": 356,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span>"
+    },
+    {
+      "line": 447,
+      "text": "window.RETURN_POS_ORDERS_DATA = ;",
+      "words": [
+        "pos"
+      ],
+      "raw": "window.RETURN_POS_ORDERS_DATA = {!! json_encode($posOrdersData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!};"
+    },
+    {
+      "line": 450,
+      "text": "window.RETURN_PREFILL_POS = ;",
+      "words": [
+        "pos"
+      ],
+      "raw": "window.RETURN_PREFILL_POS = @json($prefillPosOrderId);"
+    },
+    {
+      "line": 456,
+      "text": "posOrders: window.RETURN_POS_ORDERS_DATA || [],",
+      "words": [
+        "pos"
+      ],
+      "raw": "posOrders: window.RETURN_POS_ORDERS_DATA || [],"
+    },
+    {
+      "line": 458,
+      "text": "selectedPosOrderId: window.RETURN_PREFILL_POS || '',",
+      "words": [
+        "pos"
+      ],
+      "raw": "selectedPosOrderId: window.RETURN_PREFILL_POS || '',"
+    }
+  ],
+  "resources/views/app/purchase-orders/print.blade.php": [
+    {
+      "line": 117,
+      "text": "(Format A4 Resmi)",
+      "words": [
+        "resmi"
+      ],
+      "raw": "(Format A4 Resmi)</span>"
+    },
+    {
+      "line": 151,
+      "text": "Klik \"Download PDF Langsung\" untuk mengunduh berkas .pdf resmi tanpa",
+      "words": [
+        "langsung",
+        "untuk",
+        "resmi"
+      ],
+      "raw": "<span>Klik <strong>\"Download PDF Langsung\"</strong> untuk mengunduh berkas <code>.pdf</code> resmi tanpa"
+    },
+    {
+      "line": 174,
+      "text": "($business->email)",
+      "words": [
+        "email"
+      ],
+      "raw": "@if ($business->email)"
+    },
+    {
+      "line": 175,
+      "text": "Email:",
+      "words": [
+        "email"
+      ],
+      "raw": "Email: {{ $business->email }}"
+    },
+    {
+      "line": 198,
+      "text": "STATUS: <span",
+      "words": [
+        "status"
+      ],
+      "raw": "STATUS: <span"
+    },
+    {
+      "line": 217,
+      "text": "Kontak:",
+      "words": [
+        "kontak"
+      ],
+      "raw": "<div class=\"text-black/70 tabular-nums\">Kontak:"
+    },
+    {
+      "line": 229,
+      "text": "Kontak:",
+      "words": [
+        "kontak"
+      ],
+      "raw": "<div class=\"text-black/70 tabular-nums\">Kontak:"
+    },
+    {
+      "line": 244,
+      "text": "Target Pengiriman:",
+      "words": [
+        "pengiriman"
+      ],
+      "raw": "<span class=\"text-black/50\">Target Pengiriman:</span>"
+    },
+    {
+      "line": 266,
+      "text": "Harga Satuan",
+      "words": [
+        "harga"
+      ],
+      "raw": "<th class=\"py-2 px-2.5 font-bold text-right w-28 whitespace-nowrap\">Harga Satuan</th>"
+    },
+    {
+      "line": 277,
+      "text": "Kode:",
+      "words": [
+        "kode"
+      ],
+      "raw": "<div class=\"text-[10px] text-black/50 tabular-nums mt-0.5\">Kode:"
+    },
+    {
+      "line": 312,
+      "text": "Syarat & Ketentuan Pengiriman:",
+      "words": [
+        "pengiriman"
+      ],
+      "raw": "<div class=\"font-bold text-black mb-0.5\">Syarat & Ketentuan Pengiriman:</div>"
+    },
+    {
+      "line": 320,
+      "text": "Catatan:",
+      "words": [
+        "catatan"
+      ],
+      "raw": "<div class=\"font-bold text-black mb-0.5\">Catatan:</div>"
+    },
+    {
+      "line": 329,
+      "text": "Subtotal Item:",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "<span>Subtotal Item:</span>"
+    },
+    {
+      "line": 338,
+      "text": "Potongan Diskon:",
+      "words": [
+        "diskon"
+      ],
+      "raw": "<span>Potongan Diskon:</span>"
+    },
+    {
+      "line": 358,
+      "text": "Total Nilai PO:",
+      "words": [
+        "total"
+      ],
+      "raw": "<span>Total Nilai PO:</span>"
+    },
+    {
+      "line": 381,
+      "text": "Disetujui & Dikonfirmasi Oleh,",
+      "words": [
+        "disetujui"
+      ],
+      "raw": "<div class=\"text-black/60\">Disetujui & Dikonfirmasi Oleh,</div>"
+    },
+    {
+      "line": 445,
+      "text": "Berhasil Diunduh!",
+      "words": [
+        "berhasil"
+      ],
+      "raw": "<span>Berhasil Diunduh!</span>"
+    }
+  ],
+  "resources/views/app/sales-orders/create.blade.php": [
+    {
+      "line": 165,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span>"
+    },
+    {
+      "line": 175,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span>"
+    },
+    {
+      "line": 501,
+      "text": "subtotal: 0,",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "subtotal: 0,"
+    }
+  ],
+  "resources/views/app/quotations/create.blade.php": [
+    {
+      "line": 74,
+      "text": "Nama Penandatangan (Default)",
+      "words": [
+        "nama"
+      ],
+      "raw": "<label class=\"block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1\">Nama Penandatangan <span class=\"text-black/40 dark:text-white/40 font-normal\">(Default)</span></label>"
+    },
+    {
+      "line": 81,
+      "text": "Nama Penerima (u.p. PIC Pelanggan)",
+      "words": [
+        "nama",
+        "pelanggan"
+      ],
+      "raw": "<label class=\"block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1\">Nama Penerima <span class=\"text-black/40 dark:text-white/40 font-normal\">(u.p. PIC Pelanggan)</span></label>"
+    },
+    {
+      "line": 243,
+      "text": "subtotal: 0,",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "subtotal: 0,"
+    }
+  ],
+  "resources/views/app/purchase-orders/create.blade.php": [
+    {
+      "line": 65,
+      "text": "get subtotal() {",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "get subtotal() {"
+    },
+    {
+      "line": 71,
+      "text": "return (parseFloat(this.discountValue) || 0) / 100 * this.subtotal;",
+      "words": [
+        "subtotal"
+      ],
+      "raw": "return (parseFloat(this.discountValue) || 0) / 100 * this.subtotal;"
+    }
+  ],
+  "resources/views/app/invoices/index.blade.php": [
+    {
+      "line": 149,
+      "text": "|| request('status'))",
+      "words": [
+        "status"
+      ],
+      "raw": "@if(request('search') || request('status'))"
+    },
+    {
+      "line": 217,
+      "text": "$style = $statusStyles[$inv->status] ?? $statusStyles['draft'];",
+      "words": [
+        "status"
+      ],
+      "raw": "$style = $statusStyles[$inv->status] ?? $statusStyles['draft'];"
+    },
+    {
+      "line": 310,
+      "text": "$style = $statusStyles[$inv->status] ?? $statusStyles['draft'];",
+      "words": [
+        "status"
+      ],
+      "raw": "$style = $statusStyles[$inv->status] ?? $statusStyles['draft'];"
+    }
+  ]
+}

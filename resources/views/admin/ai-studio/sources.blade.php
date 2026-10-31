@@ -165,7 +165,7 @@
                             class="px-2.5 py-1 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[11px] font-bold text-[#34C759] transition-all disabled:opacity-50 flex items-center gap-1"
                             title="{{ __('admin.tarik_konten_visual_prompt_terbaru_dari') }}">
                             <i data-lucide="refresh-cw" class="w-3 h-3" :class="{ 'animate-spin': syncingSourceId === '{{ $source->id }}' }"></i>
-                            <span x-text="syncingSourceId === '{{ $source->id }}' ? 'Menyinkronkan...' : 'Sinkronkan'"></span>
+                            <span :x-text="syncingSourceId === '{{ $source->id }}' ? @json(__('admin.menyinkronkan')) : @json(__('admin.sinkronkan'))"></span>
                         </button>
                         <button type="button" @click="openEditSourceModal($el.dataset.id, $el.dataset.name, $el.dataset.driver, parseInt($el.dataset.freq), parseInt($el.dataset.limit))"
                             data-id="{{ $source->id }}"
@@ -174,7 +174,7 @@
                             data-freq="{{ $source->fetch_frequency_minutes }}"
                             data-limit="{{ $source->rate_limit_per_minute }}"
                             class="px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[11px] font-semibold text-black/70 dark:text-white/70 transition-all">
-                            Edit
+                            {{ __('common.edit') }}
                         </button>
                     </div>
                 </div>

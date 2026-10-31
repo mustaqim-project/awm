@@ -158,7 +158,13 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     URL Sandbox API
                                 </label>
-                                <input type="url" name="tripay_sandbox_url" value="{{ old('tripay_sandbox_url', $tripaySandboxUrl ?? 'https://tripay.co.id/api-sandbox/') }}"
+                                <input type="url"
+                                    name="tripay_sandbox_url"
+                                    value="{{ old(
+                                        'tripay_sandbox_url',
+                                        $tripaySandboxUrl
+                                            ?? 'https://tripay.co.id/api-sandbox/'
+                                    ) }}"
                                     class="w-full h-11 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] rounded-[12px] text-[16px] sm:text-[12.5px] text-black dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                             </div>
 
@@ -179,7 +185,7 @@
                             class="w-full sm:w-auto h-11 px-4.5 rounded-[14px] text-[13px] font-bold text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
                             <i data-lucide="loader-2" x-show="testingTripay" class="w-4 h-4 animate-spin text-[#007AFF]"></i>
                             <i data-lucide="zap" x-show="!testingTripay" class="w-4 h-4 text-[#FF9500]"></i>
-                            <span x-text="testingTripay ? 'Menguji Koneksi...' : 'Uji Koneksi Gateway'"></span>
+                            <span x-text="testingTripay{{ __('admin.testing_connection') ? '' : '' }} ? {{ Js::from(__('admin.testing_connection')) }} : {{ Js::from(__('admin.test_gateway_connection')) }}"></span>
                         </button>
 
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.billing'))

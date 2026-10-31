@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Detail Event: ' . $event->title . ' - Cooca Admin',
+    'title' => __('admin.event_detail') . ': ' . $event->title . ' - Cooca Admin',
     'headerTitle' => 'Detail & Presensi Event',
     'headerSubtitle' => 'Pemantauan pendaftar, check-in barcode scanner, dan rekapitulasi kehadiran peserta',
 ])

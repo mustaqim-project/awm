@@ -10,33 +10,33 @@
             <div class="flex items-center gap-2 text-xs font-medium text-slate-400 mb-1">
                 <a href="{{ route('admin.pricing-programs.index', ['tab' => 'schedule']) }}" class="hover:text-blue-600 transition-colors flex items-center gap-1">
                     <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                    Kembali ke Jadwal Kenaikan
+                    <span>{{ __('admin.kembali_ke_jadwal_kenaikan') }}</span>
                 </a>
                 <span>/</span>
-                <span class="text-slate-600 dark:text-slate-300">Simulasi Eskalasi</span>
+                <span class="text-slate-600 dark:text-slate-300">{{ __('admin.simulasi_eskalasi') }}</span>
             </div>
             <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5">
                 <span class="p-2 bg-amber-500/10 text-amber-600 rounded-xl">
                     <i data-lucide="calculator" class="w-6 h-6"></i>
                 </span>
-                Simulasi Eskalasi Harga Tahunan
+                <span>{{ __('admin.simulasi_eskalasi_harga_tahunan') }}</span>
             </h1>
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                Pratinjau dampak penyesuaian tarif tahunan terhadap pelanggan Early Adopter yang jatuh tempo hari ini.
+                {{ __('admin.pratinjau_dampak_penyesuaian_tarif_tahunan_terhadap') }}
             </p>
         </div>
 
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.pricing-programs.index', ['tab' => 'schedule']) }}" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all flex items-center gap-1.5">
                 <i data-lucide="x" class="w-4 h-4"></i>
-                Batal
+                <span>{{ __('common.cancel') }}</span>
             </a>
             @if($count > 0)
-                <form action="{{ route('admin.pricing-programs.run-escalation') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengeksekusi penyesuaian tarif untuk {{ $count }} pelanggan ini secara permanen?')">
+                <form action="{{ route('admin.pricing-programs.run-escalation') }}" method="POST" onsubmit="return confirm({{ json_encode(__('admin.konfirmasi_eksekusi_penyesuaian_tarif', ['count' => $count])) }})">
                     @csrf
                     <button type="submit" class="px-4 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-500/20 transition-all flex items-center gap-1.5">
                         <i data-lucide="play" class="w-4 h-4"></i>
-                        Eksekusi Kenaikan Real ({{ $count }} Pelanggan)
+                        <span>{{ __('admin.eksekusi_kenaikan_real', ['count' => $count]) }}</span>
                     </button>
                 </form>
             @endif
@@ -87,9 +87,9 @@
         <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
                 <i data-lucide="list" class="w-4 h-4 text-slate-400"></i>
-                Rincian Pelanggan & Rekalkulasi Tarif
+                <span>{{ __('admin.rincian_pelanggan_rekalkulasi_tarif') }}</span>
             </h2>
-            <span class="text-xs text-slate-400 tabular-nums">Menampilkan {{ count($subscriptions) }} data simulasi</span>
+            <span class="text-xs text-slate-400 tabular-nums">{{ __('admin.menampilkan_count_data_simulasi', ['count' => count($subscriptions)]) }}</span>
         </div>
 
         @if(empty($subscriptions))

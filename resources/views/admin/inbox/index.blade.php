@@ -2117,8 +2117,8 @@
                                 class="flex-1 h-11 px-3.5 rounded-[12px] bg-[#F9FAFB] dark:bg-[#1C1C1E] border border-[#D1D5DB] dark:border-white/15 text-[13px] text-[#111827] dark:text-white placeholder-[#9CA3AF] focus:outline-hidden focus:border-purple-500">
                             <button type="button" @click="runAiTest()" :disabled="!aiTestMessage.trim() || isTestingAi"
                                 class="h-11 px-5 rounded-[12px] bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-[13px] font-bold flex items-center gap-2 shadow-sm transition-all shrink-0">
-                                <i data-lucide="play" class="w-4 h-4" :class="isTestingAi ? 'animate-spin' : ''"></i>
-                                <span x-text="isTestingAi ? 'Memproses...' : 'Uji Balasan AI'"></span>
+                                <i data-lucide="play" class="w-4 h-4" :class="isTestingAi{{ __('admin.testing') ? '' : '' }} ? 'animate-spin' : ''"></i>
+                                <span x-text="isTestingAi{{ __('admin.testing') ? '' : '' }} ? {{ Js::from(__('admin.processing')) }} : {{ Js::from(__('admin.test_ai_reply')) }}"></span>
                             </button>
                         </div>
                     </div>
@@ -2218,7 +2218,7 @@ function adminInboxHub() {
         isGeneratingAi: false,
         aiTestMessage: 'Halo Kak, mau tanya harga paket Pro COOCA berapa ya per bulan dan apa saja keunggulannya?',
         aiTestResult: null,
-        isTestingAi: false,
+        isTestingAi{{ __('admin.testing') ? '' : '' }}: false,
         newDoText: '',
         newDontText: '',
         isLoadingGuides: false,

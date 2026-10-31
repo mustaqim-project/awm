@@ -958,4 +958,5 @@ return [
     'cat_other_desc' => 'Must fill details',
     'cat_internet_phone' => 'Internet & Phone',
     'cat_internet_phone_desc' => 'Store Wi-Fi, cashier data',
+    'payment' => 'Payment',
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
     'title' => __('inventory.inventori_stok_multi_gudang'),
-    'headerTitle' => 'Inventori & Stok Multi-Gudang',
-    'headerSubtitle' => 'Pantau stok produk di seluruh cabang/outlet & gudang secara real-time dengan sistem kartu stok'
+    'headerTitle' => __('inventory.inventori_stok_multi_gudang'),
+    'headerSubtitle' => __('inventory.stocks_header_subtitle'),
 ])
 
 @section('content')
@@ -47,7 +47,7 @@
             <div class="flex items-center gap-3">
                 <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">{{ __('inventory.inventori_stok_real_time') }}</h1>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20">
-                    {{ $stocks->total() }} Produk Terdata
+                    {{ $stocks->total() }} {{ __('inventory.produk_terdata') }}
                 </span>
             </div>
 
@@ -69,7 +69,7 @@
 
         {{-- Baris 3: Subtitle Faktual Ringkas (10-15 Kata) --}}
         <p class="mt-2 text-sm text-black/60 dark:text-white/60 max-w-3xl leading-relaxed">
-            Pantau pergerakan kuantitas fisik, nilai valuasi HPP, dan peringatan stok menipis di seluruh outlet cabang.
+            {{ __('inventory.stocks_header_subtitle_desc') }}
         </p>
     </div>
 
@@ -93,44 +93,44 @@
         <!-- Tile 1: Nilai Aset (System Green for Valuation) -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 flex flex-col justify-between shadow-xs">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-black/50 dark:text-white/50">Total Nilai Aset Inventori</span>
+                <span class="text-xs font-semibold text-black/50 dark:text-white/50">{{ __('inventory.kpi_total_asset_value') }}</span>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">HPP</span>
             </div>
             <div class="mt-3">
                 <div class="text-[26px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] tracking-tight">
                     Rp {{ number_format($totalValuation, 0, ',', '.') }}
                 </div>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Berdasarkan HPP / Biaya Pokok terakhir</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('inventory.kpi_based_on_last_cost') }}</p>
             </div>
         </div>
 
         <!-- Tile 2: Peringatan Stok Minimum (System Orange Warning) -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 flex flex-col justify-between shadow-xs">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-black/50 dark:text-white/50">Peringatan Stok Minimum</span>
+                <span class="text-xs font-semibold text-black/50 dark:text-white/50">{{ __('inventory.kpi_min_stock_alert') }}</span>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $lowStockCount > 0 ? 'bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]' : 'bg-black/5 dark:bg-white/8 text-black/50 dark:text-white/50' }}">
-                    {{ $lowStockCount > 0 ? 'Perlu Restock' : 'Aman' }}
+                    {{ $lowStockCount > 0 ? __('inventory.need_restock') : __('inventory.safe') }}
                 </span>
             </div>
             <div class="mt-3">
                 <div class="text-[26px] font-bold tabular-nums {{ $lowStockCount > 0 ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-black dark:text-white' }} tracking-tight">
-                    {{ $lowStockCount }} Produk
+                    {{ $lowStockCount }} {{ __('inventory.products_count') }}
                 </div>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Kuantitas di bawah batas stok minimum</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('inventory.qty_below_min_stock') }}</p>
             </div>
         </div>
 
         <!-- Tile 3: Total Cabang / Gudang (System Blue) -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 flex flex-col justify-between shadow-xs">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-black/50 dark:text-white/50">Total Cabang / Outlet</span>
+                <span class="text-xs font-semibold text-black/50 dark:text-white/50">{{ __('inventory.total_branches_outlets') }}</span>
                 <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#007AFF]/12 text-[#007AFF]">Lokasi</span>
             </div>
             <div class="mt-3">
                 <div class="text-[26px] font-bold tabular-nums text-black dark:text-white tracking-tight">
-                    {{ $locations->count() }} Lokasi
+                    {{ $locations->count() }} {{ __('inventory.locations_count') }}
                 </div>
-                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">Outlet penjualan &amp; gudang logistik</p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('inventory.outlets_and_warehouses') }}</p>
             </div>
         </div>
     </div>
@@ -150,7 +150,7 @@
             <!-- Location Dropdown -->
             <div class="sm:col-span-4">
                 <select name="location_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                    <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Semua Lokasi / Outlet</option>
+                    <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.all_locations_outlets') }}</option>
                     @foreach($locations as $loc)
                         <option value="{{ $loc->id }}" {{ request('location_id') === $loc->id ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">
                             {{ $loc->name }} ({{ strtoupper($loc->type ?? 'Outlet') }})
@@ -365,47 +365,47 @@
                         <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5 flex items-center gap-1.5">
                             <span x-text="selectedStock ? selectedStock.location.name : ''"></span>
                             <span class="text-black/30 dark:text-white/30">•</span>
-                            <span>Stok Saat Ini: <strong class="text-black dark:text-white font-mono tabular-nums" x-text="selectedStock ? selectedStock.quantity : 0"></strong></span>
+                            <span>{{ __('inventory.current_stock_label') }} <strong class="text-black dark:text-white font-mono tabular-nums" x-text="selectedStock ? selectedStock.quantity : 0"></strong></span>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Jumlah Stok Fisik Baru *</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.new_physical_stock_qty') }}</label>
                         <input type="number" step="any" name="new_quantity" x-model.number="newQuantity" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
                     <div>
-                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Biaya Pokok (HPP) per Unit (Rp)</label>
+                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.unit_cost_hpp') }}</label>
                         <input type="number" name="unit_cost" x-model.number="unitCost"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[14px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
 
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                            Kode Berita Acara (Alasan Penyesuaian) *
+                            {{ __('inventory.reason_code_label') }}
                         </label>
                         <select name="reason_code" x-model="reasonCode" required
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Selisih Hitung Rutin (Stock Opname)</option>
-                            <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Barang Rusak / Cacat Fisik / Basi</option>
-                            <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Melewati Tanggal Kadaluarsa</option>
-                            <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Kehilangan / Dugaan Pencurian</option>
-                            <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Input Saldo Awal Gudang</option>
-                            <option value="other" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">Lainnya (Wajib tulis alasan min. 10 karakter)</option>
+                            <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_opname_variance') }}</option>
+                            <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_damaged') }}</option>
+                            <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_expired') }}</option>
+                            <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_theft_loss') }}</option>
+                            <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_initial_balance') }}</option>
+                            <option value="other" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_other') }}</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
-                            Keterangan / Catatan Penjelasan <span x-show="reasonCode === 'other'" class="text-[#FF3B30]">*</span>
+                            {{ __('inventory.notes_explanation_label') }} <span x-show="reasonCode === 'other'" class="text-[#FF3B30]">*</span>
                         </label>
                         <input type="text" name="notes" x-model="notes"
-                            :placeholder="reasonCode === 'other' ? 'Wajib tulis alasan detail (minimal 10 karakter)...' : 'Misal: Koreksi saldo awal, barang rusak...'"
+                            :placeholder="reasonCode === 'other' ? @json(__('inventory.alasan_detail_placeholder')) : @json(__('inventory.alasan_default_placeholder'))"
                             :required="reasonCode === 'other'"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         <p x-show="reasonCode === 'other'" class="text-[11px] text-amber-600 dark:text-amber-400 mt-1">
-                            * Alasan "Lainnya" mewajibkan catatan penjelasan minimal 10 karakter untuk audit trail.
+                            {{ __('inventory.notes_other_requirement') }}
                         </p>
                     </div>
 
@@ -415,14 +415,14 @@
                         class="p-4 rounded-xl bg-red-500/10 dark:bg-red-500/15 border border-red-500/25 dark:border-red-500/35 space-y-2.5">
                         <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-[12px]">
                             <i data-lucide="shield-alert" class="w-4 h-4 shrink-0 text-red-500"></i>
-                            <span>Otorisasi Supervisor Diperlukan</span>
+                            <span>{{ __('inventory.supervisor_auth_required') }}</span>
                         </div>
                         <p class="text-[11px] text-red-700 dark:text-red-300 leading-relaxed">
-                            Pengurangan stok melebihi batas toleransi (&gt; 10 unit atau nilai &gt; Rp 100.000). Masukkan PIN Supervisor untuk memverifikasi berita acara ini.
+                            {{ __('inventory.shrinkage_tolerance_notice') }}
                         </p>
                         <div>
                             <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">
-                                PIN Supervisor <span class="text-[#FF3B30]">*</span>
+                                {{ __('inventory.supervisor_pin_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <input type="password" name="supervisor_pin" maxlength="10" placeholder="{{ __('inventory.masukkan_pin_supervisor') }}"
                                 :required="(Number(newQuantity) - Number(selectedStock?.quantity || 0)) < 0 && (Math.abs(Number(newQuantity) - Number(selectedStock?.quantity || 0)) > 10 || Math.abs((Number(newQuantity) - Number(selectedStock?.quantity || 0)) * Number(unitCost || 0)) > 100000)"

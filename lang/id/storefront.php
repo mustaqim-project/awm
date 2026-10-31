@@ -1673,4 +1673,10 @@ return [
     'area_id_bull_kode' => 'Area ID: &bull; Kode',
     'area_id' => 'Area ID',
     'test_rate' => 'Uji Ongkir',
+    'postal_code' => 'Kode Pos',
+    'select_order_first' => 'Pilih pesanan terlebih dahulu.',
+    'all_channels' => 'Semua Saluran',
+    'omnichannel_control_desc' => 'Pusat kendali & cetak label resi lintas Toko Online COOCA, Shopee, TikTok Shop, dan Tokopedia',
+    'orders_selected' => 'Pesanan Terpilih',
+    'print_mass_labels' => 'Cetak Label Thermal (Massal)',
 ];

@@ -1,6 +1,6 @@
 @extends('layouts.admin', [
-    'title' => 'Database Leads & Pengunduh - Admin Console',
-    'headerTitle' => 'Database Leads Pengunduh Template',
+    'title' => __('admin.leads_database_title'),
+    'headerTitle' => __('admin.leads_header_title'),
     'headerSubtitle' => 'Daftar calon pengguna UMKM yang telah mengunduh spreadsheet template gratis untuk follow-up sales & marketing Cooca',
 ])
 
@@ -63,7 +63,7 @@
                     $topTemplate = $templatesCount->sortByDesc('count')->first();
                 @endphp
                 <div class="text-[17px] font-bold text-black dark:text-white truncate">
-                    {{ $topTemplate ? $topTemplate->template_name : 'Belum Ada Data' }}
+                    {{ $topTemplate ? $topTemplate->template_name : __('common.no_data_yet') }}
                 </div>
                 <div class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mt-1.5">
                     <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-[#5856D6] dark:text-[#5E5CE6]" stroke-width="2"></i>
@@ -88,7 +88,7 @@
                         class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
                         stroke-width="1.8"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama prospek, nomor WhatsApp, nama usaha, atau email..."
+                        placeholder="{{ __('admin.search_leads_placeholder') }}"
                         class="w-full h-10 pl-10 pr-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] rounded-[12px] text-[16px] md:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 focus:border-[#007AFF] transition">
                 </div>
 
@@ -116,7 +116,7 @@
                     <a href="{{ route('admin.leads.index') }}"
                         class="h-10 px-3 rounded-[12px] text-[13px] font-medium text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all inline-flex items-center justify-center gap-1.5 shrink-0">
                         <i data-lucide="x" class="w-3.5 h-3.5" stroke-width="2"></i>
-                        <span>Reset Filter</span>
+                        <span>{{ __('common.reset_filter') }}</span>
                     </a>
                 @endif
             </form>
@@ -220,7 +220,7 @@
                                 <!-- Follow Up Button -->
                                 <td class="px-5 py-3.5 text-right">
                                     <a href="{{ $lead->whatsapp_url }}" target="_blank" rel="noopener"
-                                        title="Kirim pesan follow-up otomatis ke WhatsApp calon pengguna"
+                                        title="{{ __('admin.send_whatsapp_followup_tooltip') }}"
                                         class="h-9 px-3.5 rounded-[10px] text-[12px] font-semibold text-[#248A3D] dark:text-[#30D158] bg-[#34C759]/12 hover:bg-[#34C759]/20 border border-[#34C759]/25 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 shadow-sm">
                                         <i data-lucide="message-circle" class="w-4 h-4" stroke-width="2"></i>
                                         <span>Chat WhatsApp</span>
@@ -233,12 +233,12 @@
                                     <div class="w-14 h-14 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.05] text-black/30 dark:text-white/30 flex items-center justify-center mx-auto mb-3">
                                         <i data-lucide="users" class="w-7 h-7" stroke-width="1.5"></i>
                                     </div>
-                                    <p class="text-[16px] font-bold text-black dark:text-white">Belum Ada Data Prospek</p>
+                                    <p class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.no_leads_data') }}</p>
                                     <p class="text-[13px] text-black/50 dark:text-white/50 mt-1 max-w-md mx-auto">
                                         @if(request('search') || request('template'))
                                             Tidak ditemukan prospek dengan kata kunci atau filter yang Anda pilih. Coba sesuaikan filter pencarian.
                                         @else
-                                            Belum ada pengunjung yang mengunduh spreadsheet template gratis dari halaman unduhan.
+                                            {{ __('admin.no_leads_desc') }}
                                         @endif
                                     </p>
                                     @if(request('search') || request('template'))
@@ -246,7 +246,7 @@
                                             <a href="{{ route('admin.leads.index') }}"
                                                 class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1.5">
                                                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5" stroke-width="2"></i>
-                                                <span>Tampilkan Semua Prospek</span>
+                                                <span>{{ __('admin.show_all_leads') }}</span>
                                             </a>
                                         </div>
                                     @endif

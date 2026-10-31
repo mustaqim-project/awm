@@ -4695,7 +4695,7 @@
 
                 // Supervisor PIN authorization state
                 maxCashierDiscountPercent: {{ (float) ($business->pos_max_cashier_discount_percent ?? 0) }},
-                canBypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' : 'false' }}, /* {{ __('auth.supervisor_bypass') }} */
+                canBypassSupervisor{{ __('auth.supervisor_bypass') ? '' : '' }}: {{ $canBypassSupervisor ?? false ? 'true' : 'false' }},
                 supervisorApprovedForOrder: false,
                 showSupervisorPinModal: false,
                 supervisorPinInput: '',

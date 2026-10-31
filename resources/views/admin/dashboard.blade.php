@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Dashboard - Admin Console',
+    'title' => __('admin.dashboard_title'),
     'headerTitle' => 'Statistik & Ringkasan Platform SaaS',
     'headerSubtitle' => 'Pantau pertumbuhan tenant UMKM, arus pendapatan MRR, langganan Core, dan konsumsi token AI',
 ])
@@ -72,7 +72,7 @@
             <a href="{{ route('admin.subscriptions.index') }}"
                 class="flex-1 sm:flex-none h-12 sm:h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[13px] font-bold transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-md shadow-[#007AFF]/25">
                 <i data-lucide="check-circle-2" class="w-4 h-4" stroke-width="2"></i>
-                <span>Buka Antrean Approval</span>
+                <span>{{ __('admin.open_approval_queue') }}</span>
             </a>
         </div>
     </div>
@@ -190,7 +190,7 @@
                 </div>
             </div>
             <a href="{{ route('admin.businesses.index') }}" class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 pt-1.5 border-t border-black/[0.04] dark:border-white/[0.06] truncate active:scale-95 transition-all">
-                <span>Kelola Tenant</span>
+                <span>{{ __('admin.manage_tenants') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5" stroke-width="1.8"></i>
             </a>
         </div>
@@ -234,7 +234,7 @@
                 </div>
             </div>
             <a href="{{ route('admin.users.index') }}" class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1 pt-1.5 border-t border-black/[0.04] dark:border-white/[0.06] truncate active:scale-95 transition-all">
-                <span>Daftar User</span>
+                <span>{{ __('admin.user_list') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5" stroke-width="1.8"></i>
             </a>
         </div>
@@ -256,7 +256,7 @@
                 </div>
             </div>
             <a href="#adminEcosystemActivityChart" class="text-[12px] font-semibold text-[#FF9500] dark:text-[#FF9F0A] hover:underline inline-flex items-center gap-1 pt-1.5 border-t border-black/[0.04] dark:border-white/[0.06] truncate active:scale-95 transition-all">
-                <span>Lihat Aktivitas</span>
+                <span>{{ __('admin.view_activity') }}</span>
                 <i data-lucide="arrow-down" class="w-3.5 h-3.5" stroke-width="1.8"></i>
             </a>
         </div>
@@ -405,7 +405,7 @@
                     </div>
                 @else
                     <div class="p-6 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.05] text-center text-[12px] text-black/40 dark:text-white/40">
-                        Belum ada riwayat callback webhook tercatat di sistem.
+                        {{ __('admin.no_webhook_history') }}
                     </div>
                 @endif
             </div>
@@ -513,7 +513,7 @@
             <div class="lg:col-span-6 rounded-[22px] sm:rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div>
-                        <h3 class="text-[14px] sm:text-[15px] font-bold text-black dark:text-white">Arus Pembayaran Billing Bulanan</h3>
+                        <h3 class="text-[14px] sm:text-[15px] font-bold text-black dark:text-white">{{ __('admin.monthly_billing_payment_flow') }}</h3>
                         <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Total penerimaan transfer paket Core yang disetujui (Approved)</p>
                     </div>
                     <span class="text-[11px] font-mono text-[#34C759] font-bold hidden sm:inline tabular-nums">IDR</span>
@@ -534,7 +534,7 @@
             <div class="lg:col-span-6 rounded-[22px] sm:rounded-[24px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                     <div>
-                        <h3 class="text-[14px] sm:text-[15px] font-bold text-black dark:text-white">Volume &amp; Aktivitas Fitur Ekosistem</h3>
+                        <h3 class="text-[14px] sm:text-[15px] font-bold text-black dark:text-white">{{ __('admin.ecosystem_feature_volume_activity') }}</h3>
                         <p class="text-[11px] text-black/50 dark:text-white/50 mt-0.5">Perbandingan pemanfaatan fitur utama oleh para pemilik usaha UMKM</p>
                     </div>
                 </div>
@@ -561,7 +561,7 @@
                 <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 flex items-center justify-center text-[#007AFF] dark:text-[#0A84FF]">
                     <i data-lucide="command" class="w-4 h-4" stroke-width="1.8"></i>
                 </div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Pusat Aksi Cepat Administrator</h3>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.administrator_quick_action_center') }}</h3>
             </div>
             <span class="text-[12px] text-black/45 dark:text-white/45 hidden sm:inline">Pintas operasi harian platform</span>
         </div>
@@ -570,7 +570,7 @@
             <a href="{{ route('admin.businesses.index') }}"
                 class="h-12 px-3.5 sm:px-4 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center gap-2.5 text-black dark:text-white font-semibold text-[13px] min-w-0">
                 <i data-lucide="building-2" class="w-4.5 h-4.5 text-[#007AFF] dark:text-[#0A84FF] shrink-0" stroke-width="1.8"></i>
-                <span class="truncate">Kelola Tenant</span>
+                <span class="truncate">{{ __('admin.manage_tenants') }}</span>
             </a>
 
             @if($pendingSubscriptionsCount > 0 && isset($pendingSubscriptions) && $pendingSubscriptions->isNotEmpty())
@@ -603,7 +603,7 @@
             <a href="{{ route('admin.billing-packages.index', 'subscription') }}"
                 class="h-12 px-3.5 sm:px-4 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center gap-2.5 text-black dark:text-white font-semibold text-[13px] min-w-0">
                 <i data-lucide="layers-3" class="w-4.5 h-4.5 text-[#AF52DE] dark:text-[#BF5AF2] shrink-0" stroke-width="1.8"></i>
-                <span class="truncate">Paket &amp; Harga</span>
+                <span class="truncate">{{ __('admin.packages_and_pricing') }}</span>
             </a>
 
             <a href="{{ route('admin.users.export') }}"
@@ -628,7 +628,7 @@
                         <h3 class="text-[14px] font-bold text-black dark:text-white">Pengguna Terbaru Terdaftar</h3>
                     </div>
                     <a href="{{ route('admin.users.index') }}" class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1">
-                        <span>Lihat Semua</span>
+                        <span>{{ __('admin.view_all') }}</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5" stroke-width="1.8"></i>
                     </a>
                 </div>
@@ -645,7 +645,7 @@
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($recentUsers as $user)
-                            <tr @click="openUser(@js($user))" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer" title="Klik baris untuk membuka detail pop-up">
+                            <tr @click="openUser(@js($user))" class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer" title="{{ __('admin.click_row_popup_tooltip') }}">
                                 <td class="px-5 sm:px-6 py-3.5">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#007AFF]/20 to-[#5856D6]/20 flex items-center justify-center text-[11px] font-bold text-[#007AFF] dark:text-[#0A84FF] shrink-0">
@@ -661,7 +661,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3.5 text-black/70 dark:text-white/70 truncate max-w-[200px]">
-                                    {{ $user->activeBusiness?->name ?? 'Belum ada workspace' }}
+                                    {{ $user->activeBusiness?->name ?? __('admin.no_workspace_yet') }}
                                 </td>
                                 <td class="px-5 sm:px-6 py-3.5 text-right whitespace-nowrap">
                                     @if($user->google_id)
@@ -680,7 +680,7 @@
                             @empty
                             <tr>
                                 <td colspan="3" class="px-5 py-8 text-center text-[13px] text-black/45 dark:text-white/45">
-                                    Belum ada data pengguna terdaftar.
+                                    {{ __('admin.no_registered_users') }}
                                 </td>
                             </tr>
                             @endforelse
@@ -704,13 +704,13 @@
                             </div>
                             <button type="button" class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 text-[11px] font-semibold shrink-0 flex items-center gap-1">
                                 <i data-lucide="eye" class="w-3 h-3"></i>
-                                <span>Detail</span>
+                                <span>{{ __('common.detail') }}</span>
                             </button>
                         </div>
                         <div class="flex items-center justify-between gap-2 text-[11px] pt-1 border-t border-black/[0.03] dark:border-white/[0.04]">
                             <span class="text-black/50 dark:text-white/50 truncate flex items-center gap-1">
                                 <i data-lucide="building-2" class="w-3 h-3 text-black/30 dark:text-white/30 shrink-0"></i>
-                                <span class="truncate">{{ $user->activeBusiness?->name ?? 'Belum ada workspace' }}</span>
+                                <span class="truncate">{{ $user->activeBusiness?->name ?? __('admin.no_workspace_yet') }}</span>
                             </span>
                             <div class="shrink-0">
                                 @if($user->google_id)
@@ -729,7 +729,7 @@
                     </div>
                     @empty
                     <div class="p-6 text-center text-[13px] text-black/45 dark:text-white/45">
-                        Belum ada data pengguna terdaftar.
+                        {{ __('admin.no_registered_users') }}
                     </div>
                     @endforelse
                 </div>
@@ -749,10 +749,10 @@
                         <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 flex items-center justify-center text-[#34C759] dark:text-[#30D158]">
                             <i data-lucide="store" class="w-4 h-4" stroke-width="1.8"></i>
                         </div>
-                        <h3 class="text-[14px] font-bold text-black dark:text-white">Tenant Bisnis Terbaru</h3>
+                        <h3 class="text-[14px] font-bold text-black dark:text-white">{{ __('admin.latest_business_tenants') }}</h3>
                     </div>
                     <a href="{{ route('admin.businesses.index') }}" class="text-[12px] font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline flex items-center gap-1">
-                        <span>Lihat Semua</span>
+                        <span>{{ __('admin.view_all') }}</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5" stroke-width="1.8"></i>
                     </a>
                 </div>
@@ -770,7 +770,7 @@
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($recentBusinesses as $biz)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
-                                <td class="px-5 py-3.5 cursor-pointer" @click="openBusiness(@js($biz))" title="Buka Detail Pop-up">
+                                <td class="px-5 py-3.5 cursor-pointer" @click="openBusiness(@js($biz))" title="{{ __('admin.open_popup_detail') }}">
                                     <div class="font-bold text-black dark:text-white truncate flex items-center gap-1.5">
                                         <span>{{ $biz->name }}</span>
                                     </div>
@@ -791,13 +791,13 @@
                                     <div class="flex items-center justify-end gap-1.5">
                                         <button type="button" @click="openBusiness(@js($biz))"
                                             class="h-7 px-2.5 rounded-[8px] text-[12px] font-bold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF]/20 active:scale-95 transition-all inline-flex items-center gap-1 cursor-pointer"
-                                            title="Buka pop-up modal detail tenant">
+                                            title="{{ __('admin.open_tenant_modal_tooltip') }}">
                                             <i data-lucide="eye" class="w-3 h-3" stroke-width="2"></i>
                                             <span>Pop-up</span>
                                         </button>
                                         <a href="{{ route('admin.businesses.show', $biz->id) }}"
                                             class="h-7 px-2 rounded-[8px] text-[12px] font-medium text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition-all inline-flex items-center gap-0.5"
-                                            title="Buka halaman penuh">
+                                            title="{{ __('admin.open_full_page') }}">
                                             <i data-lucide="arrow-right" class="w-3 h-3" stroke-width="2"></i>
                                         </a>
                                     </div>
@@ -806,7 +806,7 @@
                             @empty
                             <tr>
                                 <td colspan="3" class="px-5 py-8 text-center text-[13px] text-black/45 dark:text-white/45">
-                                    Belum ada tenant bisnis terdaftar.
+                                    {{ __('admin.no_registered_business_tenants') }}
                                 </td>
                             </tr>
                             @endforelse
@@ -843,14 +843,14 @@
                             </button>
                             <a href="{{ route('admin.businesses.show', $biz->id) }}"
                                 class="h-8 px-3 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 text-[12px] font-semibold active:scale-95 transition-all flex items-center gap-1">
-                                <span>Halaman Penuh</span>
+                                <span>{{ __('admin.full_page') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
                     </div>
                     @empty
                     <div class="p-6 text-center text-[13px] text-black/45 dark:text-white/45">
-                        Belum ada tenant bisnis terdaftar.
+                        {{ __('admin.no_registered_business_tenants') }}
                     </div>
                     @endforelse
                 </div>
@@ -905,7 +905,7 @@
                         </div>
                         <button type="button" @click="showBusinessModal = false"
                             class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                            aria-label="Tutup">
+                            aria-label="{{ __('common.close') }}">
                             <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                         </button>
                     </div>
@@ -953,11 +953,11 @@
                         <a :href="'/admin/businesses/' + selectedBusiness?.id"
                             class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
                             <i data-lucide="building-2" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Buka Halaman Lengkap Tenant</span>
+                            <span>{{ __('admin.open_complete_tenant_page') }}</span>
                         </a>
                         <button type="button" @click="showBusinessModal = false"
                             class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                            Tutup
+                            {{ __('common.close') }}
                         </button>
                     </div>
                 </div>
@@ -1006,7 +1006,7 @@
                         </div>
                         <button type="button" @click="showUserModal = false"
                             class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                            aria-label="Tutup">
+                            aria-label="{{ __('common.close') }}">
                             <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                         </button>
                     </div>
@@ -1016,7 +1016,7 @@
                         <div class="p-3.5 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] space-y-2.5">
                             <div class="flex justify-between items-center">
                                 <span class="text-black/50 dark:text-white/50">Workspace Aktif</span>
-                                <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || 'Belum ada workspace'"></span>
+                                <span class="font-bold text-black dark:text-white truncate max-w-[200px]" x-text="selectedUser?.active_business?.name || selectedUser?.activeBusiness?.name || @json(__('admin.no_workspace_yet'))"></span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-black/50 dark:text-white/50">Terdaftar Sejak</span>
@@ -1060,11 +1060,11 @@
                         <a href="{{ route('admin.users.index') }}"
                             class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
                             <i data-lucide="users" class="w-4 h-4" stroke-width="2"></i>
-                            <span>Kelola Pengguna di Basis Data</span>
+                            <span>{{ __('admin.manage_users_in_database') }}</span>
                         </a>
                         <button type="button" @click="showUserModal = false"
                             class="w-full sm:w-auto h-12 px-5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                            Tutup
+                            {{ __('common.close') }}
                         </button>
                     </div>
                 </div>
@@ -1107,13 +1107,13 @@
                             <i data-lucide="receipt" class="w-5 h-5" stroke-width="2"></i>
                         </div>
                         <div>
-                            <h3 id="approval-modal-title" class="text-[17px] font-bold text-black dark:text-white">Verifikasi Bukti Transfer Langganan</h3>
+                            <h3 id="approval-modal-title" class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.verify_subscription_transfer_proof') }}</h3>
                             <p class="text-[12px] text-black/50 dark:text-white/50">Tinjau, setujui, atau tolak aktivasi paket Core seketika</p>
                         </div>
                     </div>
                     <button type="button" @click="showApprovalModal = false"
                         class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                        aria-label="Tutup">
+                        aria-label="{{ __('common.close') }}">
                         <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                     </button>
                 </div>
@@ -1176,7 +1176,7 @@
                                 </button>
                                 <a :href="'/storage/' + selectedPayment.payment_proof_path" target="_blank"
                                     class="h-9 px-2.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/60 dark:text-white/60 text-[12px] font-medium flex items-center gap-1 transition-all shrink-0"
-                                    title="Buka tab baru" rel="noopener noreferrer">
+                                    title="{{ __('admin.open_new_tab') }}" rel="noopener noreferrer">
                                     <i data-lucide="external-link" class="w-3.5 h-3.5" stroke-width="2"></i>
                                 </a>
                             </div>
@@ -1209,7 +1209,7 @@
                             </label>
                             <input type="text" name="admin_notes" value="Disetujui via Quick Approval Dashboard"
                                 class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white text-[16px] sm:text-[13px] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all"
-                                placeholder="Tuliskan catatan verifikasi...">
+                                placeholder="{{ __('admin.verification_notes_placeholder') }}">
                         </div>
 
                         <div class="grid grid-cols-2 gap-2.5 pt-1">
@@ -1222,7 +1222,7 @@
                             <a :href="'/admin/subscriptions/' + selectedPayment?.id"
                                 class="col-span-2 sm:col-span-1 h-12 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#007AFF]/25 transition-all">
                                 <i data-lucide="file-search" class="w-4.5 h-4.5" stroke-width="2"></i>
-                                <span>Verifikasi Lengkap</span>
+                                <span>{{ __('admin.complete_verification') }}</span>
                             </a>
                         </div>
                     </form>
@@ -1238,7 +1238,7 @@
                             </label>
                             <textarea name="reason" required rows="2"
                                 class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-[#FF3B30]/30 dark:border-[#FF453A]/30 text-black dark:text-white text-[16px] sm:text-[13px] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/40 transition-all"
-                                placeholder="Contoh: Bukti transfer buram, mutasi rekening belum masuk, atau nominal transfer tidak sesuai..."></textarea>
+                                placeholder="{{ __('admin.rejection_reason_example_placeholder') }}"></textarea>
                             <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Alasan ini akan disimpan di riwayat transaksi untuk transparansi.</p>
                         </div>
 
@@ -1246,13 +1246,13 @@
                             <button type="submit"
                                 class="col-span-2 sm:col-span-1 h-12 px-4 rounded-[14px] bg-[#FF3B30] hover:bg-[#E02D23] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-md shadow-[#FF3B30]/25 transition-all cursor-pointer">
                                 <i data-lucide="x-circle" class="w-4.5 h-4.5" stroke-width="2"></i>
-                                <span>Tolak Pembayaran Ini</span>
+                                <span>{{ __('admin.reject_this_payment') }}</span>
                             </button>
 
                             <a :href="'/admin/subscriptions/' + selectedPayment?.id"
                                 class="col-span-2 sm:col-span-1 h-12 px-4 rounded-[14px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black/80 dark:text-white/80 font-bold text-[13px] flex items-center justify-center gap-2 transition-all">
                                 <i data-lucide="file-search" class="w-4.5 h-4.5" stroke-width="2"></i>
-                                <span>Lihat Rincian</span>
+                                <span>{{ __('admin.view_details') }}</span>
                             </a>
                         </div>
                     </form>
@@ -1268,7 +1268,7 @@
                 <!-- Footer button -->
                 <button type="button" @click="showApprovalModal = false"
                     class="w-full h-12 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                    Tutup Dialog
+                    {{ __('admin.close_dialog') }}
                 </button>
             </div>
         </div>
@@ -1310,20 +1310,20 @@
                             <i data-lucide="image" class="w-5 h-5" stroke-width="2"></i>
                         </div>
                         <div>
-                            <h3 id="proof-lightbox-title" class="text-[16px] font-bold text-black dark:text-white">Peninjauan Bukti Pembayaran</h3>
+                            <h3 id="proof-lightbox-title" class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.payment_proof_review') }}</h3>
                             <p class="text-[11px] text-[#8E8E93] dark:text-[#98989D]">Struk transfer pembayaran langganan Core</p>
                         </div>
                     </div>
                     <button type="button" @click="proofModalOpen = false"
                         class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all cursor-pointer"
-                        aria-label="Tutup">
+                        aria-label="{{ __('common.close') }}">
                         <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                     </button>
                 </div>
 
                 <!-- Image Display with Container -->
                 <div class="rounded-[18px] overflow-hidden bg-black/5 dark:bg-white/5 border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-center min-h-[220px] max-h-[60vh] p-2">
-                    <img :src="previewProofUrl" alt="Bukti Transfer Pembayaran" class="max-h-[56vh] w-auto max-w-full object-contain rounded-[12px] shadow-xs">
+                    <img :src="previewProofUrl" alt="{{ __('admin.payment_transfer_proof_alt') }}" class="max-h-[56vh] w-auto max-w-full object-contain rounded-[12px] shadow-xs">
                 </div>
 
                 <!-- Footer Actions (Min 48px height on mobile) -->
@@ -1331,11 +1331,11 @@
                     <a :href="previewProofUrl" target="_blank"
                         class="w-full sm:flex-1 h-12 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white font-bold text-[13px] flex items-center justify-center gap-2 shadow-xs shadow-[#007AFF]/25 transition-all" rel="noopener noreferrer">
                         <i data-lucide="external-link" class="w-4 h-4" stroke-width="2"></i>
-                        <span>Buka Tab Terpisah / Unduh Struk</span>
+                        <span>{{ __('admin.open_separate_tab_download_receipt') }}</span>
                     </a>
                     <button type="button" @click="proofModalOpen = false"
                         class="w-full sm:w-auto h-12 px-6 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all cursor-pointer">
-                        Tutup
+                        {{ __('common.close') }}
                     </button>
                 </div>
             </div>

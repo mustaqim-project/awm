@@ -343,7 +343,7 @@
                     <!-- Nama Penandatangan -->
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Nama Penandatangan <span class="text-black/40 dark:text-white/40 font-normal">(Default)</span>
+                            {{ __('sales.sender_name_default') }}
                         </label>
                         <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
                             placeholder="{{ auth()->user()?->name ?: $business->name }}"
@@ -353,7 +353,7 @@
                     <!-- Nama Penerima -->
                     <div>
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span>
+                            {{ __('sales.recipient_name_pic') }}
                         </label>
                         <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
                             placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
@@ -363,7 +363,7 @@
                     <!-- Lampiran Nota Retur -->
                     <div class="sm:col-span-2">
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                            Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span>
+                            {{ __('sales.attachment_default') }}
                         </label>
                         <input type="text" name="attachment_info" value="{{ old('attachment_info', '-') }}"
                             placeholder="{{ __('sales.contoh_atau_berita_acara_kerusakan_barang') }}"

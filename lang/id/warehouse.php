@@ -10,6 +10,7 @@ return [
     'detail_header' => 'Detail Gudang: :name',
     'detail_subtitle' => 'Pantau stok aktual, riwayat penerimaan barang dari PO, dan mutasi kartu stok lokasi ini.',
     'no_address' => 'Belum ada alamat terdaftar',
+    'quick_adjust' => 'Sesuaikan Stok',
 
     'breadcrumbs' => [
         'dashboard' => 'Dashboard',

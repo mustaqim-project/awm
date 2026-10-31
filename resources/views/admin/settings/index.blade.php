@@ -33,7 +33,7 @@
         showShopeePartnerKey: false,
         showTikTokAppSecret: false,
         showTokopediaClientSecret: false,
-        testingMarketplace: false,
+        testingMarketplace{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingmarketplace') }}
         testMarketplaceResult: null,
         testMarketplaceConfig(provider) {
             this.testingMarketplace = true;
@@ -102,7 +102,7 @@
                 }
             });
         },
-        testingSocial: false,
+        testingSocial{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingsocial') }}
         testSocialResult: null,
         testSocialMediaConfig() {
             this.testingSocial = true;
@@ -121,18 +121,19 @@
                     if (data.success) {
                         this.testSocialResult = data.data;
                         if (window.AppAlert) {
-                            AppAlert.success('Pengujian kredensial media sosial selesai.');
+                            AppAlert.success(@json(__('admin.pengujian_kredensial_media_sosial_selesai')));
                         }
                     }
                 })
                 .catch(e => {
                     this.testingSocial = false;
                     if (window.AppAlert) {
-                        AppAlert.error('Gagal menjalankan pengujian: ' + (e.message || e));
+                        AppAlert.error(@json(__('admin.gagal_menjalankan_pengujian'))
+                            + ': ' + (e.message || e));
                     }
                 });
         },
-        testingTripay: false,
+        testingTripay{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingtripay') }}
         testTripayResult: null,
         testTripayConfig() {
             this.testingTripay = true;
@@ -158,11 +159,11 @@
                 .catch(e => {
                     this.testingTripay = false;
                     if (window.AppAlert) {
-                        AppAlert.error('Gagal menguji koneksi TriPay: ' + (e.message || e));
+                        AppAlert.error(@json(__('admin.gagal_menguji_tripay')) + ': ' + (e.message || e));
                     }
                 });
         },
-        testingWa: false,
+        testingWa{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingwa') }}
         testWaResult: null,
         testWhatsAppConfig() {
             this.testingWa = true;
@@ -188,11 +189,11 @@
                 .catch(e => {
                     this.testingWa = false;
                     if (window.AppAlert) {
-                        AppAlert.error('Gagal menguji Meta WhatsApp: ' + (e.message || e));
+                        AppAlert.error(@json(__('admin.gagal_menguji_whatsapp')) + ': ' + (e.message || e));
                     }
                 });
         },
-        testingIg: false,
+        testingIg{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingig') }}
         testIgResult: null,
         testInstagramConfig() {
             this.testingIg = true;
@@ -218,11 +219,11 @@
                 .catch(e => {
                     this.testingIg = false;
                     if (window.AppAlert) {
-                        AppAlert.error('Gagal menguji Instagram API: ' + (e.message || e));
+                        AppAlert.error(@json(__('admin.gagal_menguji_instagram')) + ': ' + (e.message || e));
                     }
                 });
         },
-        testingBiteship: false,
+        testingBiteship{{ __('admin.testing') ? '' : '' }}: false, // {{ __('admin.testingbiteship') }}
         testBiteshipResult: null,
         testBiteshipConfig() {
             this.testingBiteship = true;
@@ -248,7 +249,7 @@
                 .catch(e => {
                     this.testingBiteship = false;
                     if (window.AppAlert) {
-                        AppAlert.error('Gagal menguji koneksi Biteship: ' + (e.message || e));
+                        AppAlert.error(@json(__('admin.gagal_menguji_biteship')) + ': ' + (e.message || e));
                     }
                 });
         },

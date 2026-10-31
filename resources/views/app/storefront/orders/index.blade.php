@@ -18,7 +18,7 @@
             },
             printMassLabels() {
                 if (this.selectedOrderIds.length === 0) {
-                    if (window.AppAlert) AppAlert.toast('Pilih pesanan terlebih dahulu.', 'warning');
+                    if (window.AppAlert) AppAlert.toast(@json(__('storefront.select_order_first')), 'warning');
                     return;
                 }
                 const form = document.createElement('form');
@@ -75,11 +75,11 @@
                     <div class="flex items-center gap-2">
                         <h2 class="text-[13.5px] font-bold text-black dark:text-white leading-tight">{{ __('storefront.hub_pesanan_omnichannel') }}</h2>
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                            Semua Saluran
+                            {{ __('storefront.all_channels') }}
                         </span>
                     </div>
                     <p class="text-[11.5px] text-black/50 dark:text-white/50 truncate">
-                        Pusat kendali & cetak label resi lintas Toko Online COOCA, Shopee, TikTok Shop, dan Tokopedia
+                        {{ __('storefront.omnichannel_control_desc') }}
                     </p>
                 </div>
             </div>
@@ -547,13 +547,13 @@
             <div class="pointer-events-auto bg-black/90 dark:bg-white/95 text-white dark:text-black backdrop-blur-xl px-5 py-3 rounded-[22px] shadow-2xl flex flex-wrap items-center gap-3 border border-white/10 dark:border-black/10">
                 <div class="flex items-center gap-2 text-[13px] font-semibold">
                     <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
-                    <span><strong x-text="selectedOrderIds.length"></strong> Pesanan Terpilih</span>
+                    <span><strong x-text="selectedOrderIds.length"></strong> {{ __('storefront.orders_selected') }}</span>
                 </div>
                 <div class="h-4 w-px bg-white/20 dark:bg-black/20"></div>
                 <button type="button" @click="printMassLabels()"
                     class="h-9 px-4 rounded-[12px] text-[13px] font-bold bg-[#007AFF] hover:bg-[#0071E3] text-white flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-md transition">
                     <i data-lucide="printer" class="w-4 h-4"></i>
-                    <span>Cetak Label Thermal (Massal)</span>
+                    <span>{{ __('storefront.print_mass_labels') }}</span>
                 </button>
                 <button type="button" @click="selectedOrderIds = []"
                     class="h-9 px-3 rounded-[12px] text-[12px] font-medium text-white/70 dark:text-black/70 hover:text-white dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 transition cursor-pointer">{{ __('common.cancel') }}</button>

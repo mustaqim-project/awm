@@ -614,9 +614,9 @@
                         x-transition:leave-end="opacity-0 scale-95">
 
                         <div class="px-4 pt-5 pb-4">
-                            <p id="return-delete-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Retur Penjualan?</p>
+                            <p id="return-delete-confirm-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.confirm_delete_return_title') }}?</p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                                Apakah Anda yakin ingin menghapus draf retur <span class="font-medium text-black dark:text-white">{{ $return->return_number }}</span>? Tindakan ini tidak dapat dibatalkan.
+                                {{ __('sales.confirm_delete_return_msg') }} <span class="font-medium text-black dark:text-white">{{ $return->return_number }}</span>? {{ __('sales.action_cannot_be_undone') }}
                             </p>
                         </div>
 

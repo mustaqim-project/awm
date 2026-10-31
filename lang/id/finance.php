@@ -958,4 +958,5 @@ return [
     'cat_other_desc' => 'Wajib isi rincian detail',
     'cat_internet_phone' => 'Internet & Pulsa',
     'cat_internet_phone_desc' => 'Wi-Fi toko, kuota kasir',
+    'payment' => 'Pembayaran',
 ];

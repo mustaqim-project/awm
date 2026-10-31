@@ -18,7 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Label Pengiriman Resmi {{ $pageChannelName }} - {{ $business->name }}</title>
+    <title>{{ __('marketplace.official_shipping_label') }} {{ $pageChannelName }} - {{ $business->name }}</title>
     <style>
         @page {
             size: 100mm 150mm;
@@ -605,7 +605,7 @@
                                     <img src="{{ asset('assets/image/cooca-logo-landscape.png') }}" alt="COOCA" class="cooca-official-img" />
                                     <span class="cooca-brand-pill">STOREFRONT</span>
                                 </div>
-                                <div class="shopee-brand-sub">Pesanan Toko Online Resmi</div>
+                                <div class="shopee-brand-sub">{{ __('marketplace.official_storefront_order') }}</div>
                             @else
                                 <!-- Official Shopee Vector Logo (Default) -->
                                 <svg class="shopee-official-logo" viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg">
@@ -622,9 +622,9 @@
                                 {{ $cleanCarrier }}
                             </div>
                             @if($isSandboxCarrier)
-                                <div class="carrier-service-sub">Mode Pengujian Sandbox</div>
+                                <div class="carrier-service-sub">{{ __('marketplace.sandbox_testing_mode') }}</div>
                             @else
-                                <div class="carrier-service-sub">Layanan Ekspedisi Resmi</div>
+                                <div class="carrier-service-sub">{{ __('marketplace.official_carrier_service') }}</div>
                             @endif
                         </div>
                     </div>
@@ -638,11 +638,11 @@
                         </div>
                         <div class="tracking-number-text">{{ $trackingNo }}</div>
                         <div class="order-meta-row">
-                            <span>No. Pesanan: <strong>{{ $orderSn }}</strong></span>
+                            <span>{{ __('marketplace.order_number_colon') }} <strong>{{ $orderSn }}</strong></span>
                             <span>•</span>
-                            <span>Berat: <strong>{{ $weightKg }} Kg</strong></span>
+                            <span>{{ __('marketplace.weight_colon') }} <strong>{{ $weightKg }} Kg</strong></span>
                             <span>•</span>
-                            <span>Tgl: {{ $order->placed_at ? $order->placed_at->format('d/m/Y') : date('d/m/Y') }}</span>
+                            <span>{{ __('marketplace.date_colon') }} {{ $order->placed_at ? $order->placed_at->format('d/m/Y') : date('d/m/Y') }}</span>
                         </div>
                     </div>
 
@@ -651,15 +651,15 @@
                     <!-- ============================================== -->
                     <div class="routing-grid">
                         <div class="routing-cell">
-                            <span class="routing-label">Kota / Hub Tujuan</span>
+                            <span class="routing-label">{{ __('marketplace.dest_city_hub') }}</span>
                             <span class="routing-value">{{ $city }}</span>
                         </div>
                         <div class="routing-cell">
-                            <span class="routing-label">Kecamatan / Drop Point</span>
+                            <span class="routing-label">{{ __('marketplace.dest_district_point') }}</span>
                             <span class="routing-value">{{ $district }}</span>
                         </div>
                         <div class="routing-cell">
-                            <span class="routing-label">Kode Pos / Area</span>
+                            <span class="routing-label">{{ __('marketplace.dest_zipcode_area') }}</span>
                             <span class="routing-value">{{ $zipcode }}</span>
                         </div>
                     </div>
@@ -670,7 +670,7 @@
                     <div class="address-grid">
                         <!-- Penerima -->
                         <div class="address-col recipient">
-                            <span class="address-badge">Penerima (Kepada):</span>
+                            <span class="address-badge">{{ __('marketplace.recipient_to') }}</span>
                             <div class="person-name">{{ $order->buyer_name }}</div>
                             <div class="person-phone">{{ $order->buyer_phone ?: '-' }}</div>
                             <div class="address-full-text">
@@ -680,7 +680,7 @@
 
                         <!-- Pengirim -->
                         <div class="address-col">
-                            <span class="address-badge">Pengirim (Dari):</span>
+                            <span class="address-badge">{{ __('marketplace.sender_from') }}</span>
                             <div class="sender-store">{{ $order->account->shop_name ?? $business->name }}</div>
                             <div class="person-phone">{{ $business->phone ?: '-' }}</div>
                             <div class="address-full-text">
@@ -697,9 +697,9 @@
                             <thead>
                                 <tr>
                                     <th style="width: 14px; text-align: center;">#</th>
-                                    <th>Nama Produk / SKU</th>
-                                    <th style="width: 50px;">Variasi</th>
-                                    <th style="width: 25px; text-align: center;">Qty</th>
+                                    <th>{{ __('marketplace.product_sku_name') }}</th>
+                                    <th style="width: 50px;">{{ __('marketplace.variation') }}</th>
+                                    <th style="width: 25px; text-align: center;">{{ __('marketplace.qty') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -707,7 +707,7 @@
                                     <tr>
                                         <td style="text-align: center; font-weight: 800;">{{ $itemIdx + 1 }}</td>
                                         <td>
-                                            <div class="item-title-box">{{ $it['item_name'] ?? ($it['name'] ?? 'Paket Produk') }}</div>
+                                             <div class="item-title-box">{{ $it['item_name'] ?? ($it['name'] ?? 'Paket Produk') }}</div>
                                             @if(!empty($it['sku']))
                                                 <div class="item-sku-text">SKU: {{ $it['sku'] }}</div>
                                             @endif
@@ -731,8 +731,8 @@
                         </table>
 
                         <div class="items-footer-bar">
-                            <span>Total Jumlah Barang: <strong>{{ $totalQty }} Pcs</strong></span>
-                            <span>Wajib video unboxing untuk klaim komplain</span>
+                            <span>{{ __('marketplace.total_items_qty') }} <strong>{{ $totalQty }} Pcs</strong></span>
+                            <span>{{ __('marketplace.unboxing_video_notice') }}</span>
                         </div>
                     </div>
                 </div>
@@ -744,21 +744,21 @@
                     <!-- COD / NON-COD Box -->
                     <div class="cod-box-wrapper {{ $isCod ? 'is-cod' : '' }}">
                         @if($isCod)
-                            <div class="cod-title-main">COD (BAYAR DI TEMPAT)</div>
+                            <div class="cod-title-main">{{ __('marketplace.cod_title') }}</div>
                             <div class="cod-amount-text">Rp {{ number_format((float) $order->total_amount, 0, ',', '.') }}</div>
-                            <div class="cod-instruction-sub">Tagih tunai ke pembeli sebelum paket diserahkan</div>
+                            <div class="cod-instruction-sub">{{ __('marketplace.cod_cash_instruction') }}</div>
                         @else
-                            <div class="cod-title-main">NON-COD (LUNAS)</div>
-                            <div class="cod-instruction-sub">Pembeli telah membayar lunas secara online</div>
-                            <div style="font-size: 7.5px; font-weight: 800; margin-top: 1px; color: #EE4D2D;">KURIR TIDAK MENAGIH BIAYA APAPUN</div>
+                            <div class="cod-title-main">{{ __('marketplace.non_cod_title') }}</div>
+                            <div class="cod-instruction-sub">{{ __('marketplace.non_cod_paid_instruction') }}</div>
+                            <div style="font-size: 7.5px; font-weight: 800; margin-top: 1px; color: #EE4D2D;">{{ __('marketplace.courier_no_collect_notice') }}</div>
                         @endif
                     </div>
 
                     <!-- Bukti Tanda Terima Kurir -->
                     <div class="signature-box-wrapper">
-                        <div class="signature-title">Bukti Penerimaan:</div>
+                        <div class="signature-title">{{ __('marketplace.delivery_proof_title') }}</div>
                         <div class="signature-line"></div>
-                        <div class="signature-sub">Tanda Tangan & Nama Terang</div>
+                        <div class="signature-sub">{{ __('marketplace.signature_and_name') }}</div>
                     </div>
                 </div>
             </div>

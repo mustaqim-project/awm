@@ -71,21 +71,21 @@
                 </div>
 
                 <div class="sm:col-span-2">
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penandatangan <span class="text-black/40 dark:text-white/40 font-normal">(Default)</span></label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.sender_name_default') }}</label>
                     <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
                            placeholder="{{ auth()->user()?->name ?: $business->name }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div class="sm:col-span-2">
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Nama Penerima <span class="text-black/40 dark:text-white/40 font-normal">(u.p. PIC Pelanggan)</span></label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.recipient_name_pic') }}</label>
                     <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
                            placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div class="sm:col-span-2 lg:col-span-4">
-                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">Lampiran <span class="text-black/40 dark:text-white/40 font-normal">(Default: -)</span></label>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.attachment_default') }}</label>
                     <input type="text" name="attachment_info" value="{{ old('attachment_info', '-') }}"
                            placeholder="-"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">

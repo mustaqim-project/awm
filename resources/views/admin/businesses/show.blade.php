@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
-    'title' => 'Detail Workspace: ' . $business->name . ' - Admin Console',
+    'title' => __('admin.detail_workspace') . ': ' . $business->name . ' - Admin Console',
     'headerTitle' => 'Workspace: ' . $business->name,
-    'headerSubtitle' => 'Detail lengkap profil tenant, kuota sumber daya, pengguna, dan status langganan',
+    'headerSubtitle' => __('admin.detail_lengkap_profil_tenant_kuota'),
 ])
 
 @section('content')
@@ -18,7 +18,7 @@
                 {{-- Gate Impersonasi: Masuk ke Workspace Bisnis untuk Cek Bug --}}
                 @if (Auth::guard('admin')->user()?->hasPermission('admin.businesses.impersonate') || Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
                     <form method="POST" action="{{ route('admin.businesses.impersonate', $business->id) }}"
-                        onsubmit="return AppAlert.confirmSubmit(event, this, 'Masuk ke workspace {{ addslashes($business->name) }} untuk investigasi bugs dan diagnosa sistem?', 'Masuk ke Workspace Bisnis?', 'info')">
+                        onsubmit="return AppAlert.confirmSubmit(event, this, {{ json_encode(__('admin.konfirmasi_masuk_workspace_pesan', ['name' => $business->name])) }}, {{ json_encode(__('admin.konfirmasi_masuk_workspace_judul')) }}, 'info')">
                         @csrf
                         <button type="submit"
                             class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#FF9500]/25 cursor-pointer"

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Tests\TestCase;
 
 final class LandingPageResponsiveHeroTest extends TestCase
@@ -30,69 +31,62 @@ final class LandingPageResponsiveHeroTest extends TestCase
         $response->assertSee('pb-[calc(5rem+env(safe-area-inset-bottom,0px))]', false);
     }
 
-    public function test_hero_content_has_responsive_typography_and_side_by_side_ctas(): void
+    public function test_hero_content_has_responsive_typography_and_clean_trust_reassurance(): void
     {
-        $response = $this->get(route('landing'));
+        // 1. Default state: unverified social proof is hidden, clean factual trust badge is displayed
+        Config::set('marketing.social_proof.show', false);
 
+        $response = $this->get(route('landing'));
         $response->assertStatus(200);
+
         // Eyebrow overline kicker
         $response->assertSee('Business Operating System &amp; Omnichannel ERP', false);
         // Headline
-        $response->assertSee('Satu Sistem Operasi untuk Seluruh', false);
-        $response->assertSee('Denyut Bisnis Anda.', false);
+        $response->assertSee('Aplikasi Kasir UMKM: Kasir, Stok &amp; Pembukuan dalam Satu Sistem Cepat', false);
         // Responsive headline scale
         $response->assertSee('text-2xl xs:text-3xl sm:text-5xl', false);
         // Left-aligned layout on mobile & desktop
         $response->assertSee('text-left flex flex-col items-start', false);
-        // Compact side-by-side action buttons (left-aligned)
-        $response->assertSee('flex flex-row items-center justify-start gap-2 sm:gap-3.5', false);
+        // Compact action button
         $response->assertSee('Mulai Coba Gratis');
-        // Social proof
-        $response->assertSee('10.000+');
-        $response->assertSee('4.9 /');
-        // Reassurance checkpoints
-        $response->assertSee('100% Gratis Selamanya');
-        $response->assertSee('Tanpa Kartu Kredit');
-        $response->assertSee('Siap 2 Menit');
+
+        // Verified factual trust badge (Single clean reassurance, zero duplicate)
+        $response->assertSee('Gratis untuk mulai');
+        $response->assertSee('Tanpa kartu kredit');
+        $response->assertSee('Data milik Anda 100%');
+        $response->assertSee('Dibuat untuk UMKM Indonesia');
+        // Redundant second reassurance row must NOT be duplicated when social proof is off
+        $response->assertDontSee('Gratis Selamanya (s.d.');
+
+        // 2. When social proof is explicitly enabled
+        Config::set('marketing.social_proof.show', true);
+        Config::set('marketing.social_proof.user_count', '10.000+');
+        Config::set('marketing.social_proof.rating_value', '4.9');
+
+        $responseWithProof = $this->get(route('landing'));
+        $responseWithProof->assertStatus(200);
+        $responseWithProof->assertSee('10.000+');
+        $responseWithProof->assertSee('4.9 / 5.0');
+        $responseWithProof->assertSee('Tanpa Kartu Kredit');
+        $responseWithProof->assertSee('Siap 2 Menit');
     }
 
-    public function test_hero_cockpit_and_floating_cards_are_rendered_without_being_hidden_on_mobile(): void
+    public function test_hero_interactive_3d_neon_hub_is_rendered_without_being_hidden_on_mobile(): void
     {
         $response = $this->get(route('landing'));
 
         $response->assertStatus(200);
-        // Top-Right Floating Card (Revenue / Resi) - visible on mobile, scaled on desktop
-        $response->assertSee('Total Pendapatan');
-        $response->assertSee('Rp 128.4j');
-        $response->assertSee('+8.4% bulan ini');
-        // Bottom-Left Floating Card (Bisnis Aktif / SKU Sync) - visible on mobile, scaled on desktop
-        $response->assertSee('Bisnis Aktif');
-        $response->assertSee('12 Unit');
-        $response->assertSee('All Online');
-        // Cockpit Top Bar & URL
-        $response->assertSee('https://cooca.id/app/dashboard', false);
-        $response->assertSee('Keuangan');
-        $response->assertSee('Marketplace');
-        // Slide 1 elements: 4 metrics, Spline chart, Auto-Journal
-        $response->assertSee('Total Omset');
-        $response->assertSee('Lisensi POS');
-        $response->assertSee('Tenant Aktif');
-        $response->assertSee('Laba Bersih');
-        $response->assertSee('chartGradientHero', false);
-        $response->assertSee('Kasir POS #TRX-2049', false);
-        $response->assertSee('+Rp 21.600', false);
-        // Slide 2 elements: Marketplace & Shipping Hub
-        $response->assertSee('Pesanan MP');
-        $response->assertSee('Live SKU');
-        $response->assertSee('Pick Up');
-        $response->assertSee('Hemat Ongkir');
-        $response->assertSee('#SHP-8821', false);
-        $response->assertSee('Cetak Label Thermal', false);
-        $response->assertSee('Resi WA Otomatis', false);
 
-        // Mobile Clean Executive Cockpit assertions
-        $response->assertSee('Executive Cockpit', false);
-        $response->assertSee('grid-cols-2 sm:grid-cols-4', false);
-        $response->assertSee('h-16 xs:h-20 sm:h-24 lg:h-28', false);
+        // Central Ecosystem Core
+        $response->assertSee('COOCA', false);
+        $response->assertSee('hero-holo-beam', false);
+
+        // Ecosystem Hub Nodes
+        $response->assertSee('Operasional');
+        $response->assertSee('Social Media');
+        $response->assertSee('WhatsApp');
+        $response->assertSee('POS');
+        $response->assertSee('Content Automation');
+        $response->assertSee('Customer');
     }
 }

@@ -4,7 +4,7 @@
         <div>
             <h3 class="text-[15px] font-bold text-black dark:text-white flex items-center gap-2">
                 <i data-lucide="check-check" class="w-4 h-4 text-[#34C759]"></i>
-                <span>Daftar Pesanan Penjualan (Sales Orders / SO)</span>
+                <span>{{ __('admin.daftar_pesanan_penjualan_sales_orders_so') }}</span>
             </h3>
             <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
                 Konfirmasi perjanjian pemenuhan pesanan B2B resmi, rujukan nomor penawaran, reservasi stok, dan penerbitan faktur penagihan komersial.
@@ -14,7 +14,7 @@
             <button type="button" @click="showCreateOrderModal = true"
                 class="h-9 px-3.5 rounded-[11px] bg-[#2563eb] hover:bg-[#1d4ed8] active:scale-[0.98] text-white text-[12px] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0">
                 <i data-lucide="plus" class="w-4 h-4"></i>
-                <span>+ Buat Pesanan (SO)</span>
+                <span>{{ __('admin.buat_pesanan_so') }}</span>
             </button>
         @endif
     </div>
@@ -46,7 +46,7 @@
                             </div>
                             @if($o->invoices->count() > 0)
                                 <div class="mt-1">
-                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-[#0284c7] bg-[#0284c7]/12 px-1.5 py-0.2 rounded" title="Faktur Penjualan Telah Diterbitkan">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-mono font-semibold text-[#0284c7] bg-[#0284c7]/12 px-1.5 py-0.2 rounded" title="{{ __('admin.faktur_penjualan_telah_diterbitkan') }}">
                                         <i data-lucide="receipt" class="w-2.5 h-2.5"></i>
                                         {{ $o->invoices->count() }}x Faktur
                                     </span>
@@ -137,7 +137,7 @@
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('admin.b2b.orders.pdf', $o) }}" target="_blank"
                                     class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#34C759]/10 hover:text-[#248A3D] text-black/70 dark:text-white/70 text-[11.5px] font-bold transition-all inline-flex items-center gap-1"
-                                    title="Unduh / Cetak Konfirmasi Pesanan SO Resmi PDF (A4)" rel="noopener noreferrer">
+                                    title="{{ __('admin.unduh_cetak_konfirmasi_pesanan_so_resmi') }}" rel="noopener noreferrer">
                                     <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
                                     <span>PDF</span>
                                 </a>
@@ -152,7 +152,7 @@
                                         notes: '{{ addslashes($o->notes ?? '') }}'
                                     }, '{{ route('admin.b2b.orders.update', $o) }}')"
                                         class="h-8 w-8 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#2563eb]/15 hover:text-[#2563eb] text-black/70 dark:text-white/70 transition-all inline-flex items-center justify-center cursor-pointer"
-                                        title="Ubah Pesanan">
+                                        title="{{ __('admin.ubah_pesanan') }}">
                                         <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                     </button>
                                 @endif
@@ -160,28 +160,28 @@
                                 {{-- Terbitkan Faktur dari SO --}}
                                 @if(Auth::guard('admin')->user()?->hasPermission('admin.b2b.manage'))
                                     <form action="{{ route('admin.b2b.orders.generate-invoice', $o) }}" method="POST" class="inline"
-                                        data-confirm="Terbitkan Faktur Penjualan (Invoice) dari Pesanan SO {{ $o->so_number }}?"
+                                        data-confirm="{{ __('admin.terbitkan_faktur_dari_so_konfirmasi', ['number' => $o->so_number]) }}"
                                         onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         <button type="submit"
                                             class="h-8 px-2.5 rounded-[9px] bg-[#0284c7] hover:bg-[#0369a1] active:scale-[0.98] text-white text-[11.5px] font-bold transition-all shadow-xs cursor-pointer inline-flex items-center gap-1"
-                                            title="Terbitkan Faktur Penagihan Komersial">
+                                            title="{{ __('admin.terbitkan_faktur_penagihan_komersial') }}">
                                             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
-                                            <span>Buat Faktur</span>
+                                            <span>{{ __('admin.buat_faktur') }}</span>
                                         </button>
                                     </form>
                                 @endif
 
-                                {{-- Hapus Pesanan jika belum ada faktur aktif --}}
+                                {{-- Delete SO if no active invoices --}}
                                 @if(!$o->invoices()->where('status', '!=', 'void')->exists() && Auth::guard('admin')->user()?->hasPermission('admin.b2b.delete'))
                                     <form action="{{ route('admin.b2b.orders.destroy', $o) }}" method="POST" class="inline"
-                                        data-confirm="Hapus Pesanan Penjualan {{ $o->so_number }}?"
+                                        data-confirm="{{ __('admin.hapus_pesanan_penjualan_konfirmasi', ['number' => $o->so_number]) }}"
                                         onsubmit="return confirm(this.dataset.confirm);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                             class="h-8 w-8 rounded-[9px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] transition-all inline-flex items-center justify-center cursor-pointer"
-                                            title="Hapus Pesanan">
+                                            title="{{ __('admin.hapus_pesanan') }}">
                                             <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                                         </button>
                                     </form>

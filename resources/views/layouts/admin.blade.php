@@ -633,7 +633,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="layers-3" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Paket &amp; Harga</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_plans_pricing') }}</span>
                             </div>
                         </a>
                     @endif
@@ -646,7 +646,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="ticket-percent" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kode Promo &amp; Voucher</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_vouchers') }}</span>
                             </div>
                         </a>
                     @endif
@@ -659,7 +659,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="sparkles" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Early Adopter &amp; Harga</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_early_adopters') }}</span>
                             </div>
                         </a>
                     @endif
@@ -694,7 +694,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="inbox" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Kotak Masuk (Inbox)</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_feedback_inbox') }}</span>
                             </div>
                             @if ($adminUnreadInboxCount > 0)
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold shadow-xs tabular-nums shrink-0 ml-2 {{ $isActive ? 'bg-white text-[#007AFF]' : 'bg-[#007AFF] text-white' }}">
@@ -773,7 +773,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="calendar" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Event Komunitas UMKM</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_community_events') }}</span>
                             </div>
                         </a>
                     @endif
@@ -886,7 +886,7 @@
                                 <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                     <i data-lucide="sliders" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                                 </div>
-                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Pengaturan Sistem</span>
+                                <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">{{ __('admin.nav_system_settings') }}</span>
                             </div>
                         </a>
                     @endif
@@ -911,7 +911,8 @@
         <div class="p-3 border-t border-black/[0.04] dark:border-white/[0.06]">
             <a href="{{ route('admin.profile.index') }}"
                 class="flex items-center justify-between gap-2.5 p-2 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.06] hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.99] transition-all group"
-                title="Kelola Profil & Ganti Kata Sandi">
+                title="{{ __('admin.manage_profile_tooltip') }}">
+
                 <div class="flex items-center gap-2.5 min-w-0 flex-1">
                     <div
                         class="w-8 h-8 rounded-[9px] bg-[#007AFF]/15 text-[#007AFF] dark:text-[#0A84FF] font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
@@ -941,7 +942,8 @@
         <div class="flex items-center gap-3 min-w-0 py-1">
             <button @click="sidebarOpen = true"
                 class="lg:hidden w-10 h-10 -ml-1 rounded-[10px] text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center shrink-0 cursor-pointer"
-                aria-label="Buka navigasi">
+                aria-label="{{ __('admin.open_nav') }}">
+
                 <i data-lucide="menu" class="w-5 h-5" stroke-width="2"></i>
             </button>
             <div class="min-w-0 flex flex-col justify-center">
@@ -962,7 +964,7 @@
                 class="hidden md:flex items-center justify-between gap-2 px-3.5 h-9 w-64 lg:w-80 rounded-full bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 text-black/55 dark:text-white/55 hover:text-black dark:hover:text-white transition-all cursor-pointer text-[12.5px] group">
                 <div class="flex items-center gap-2 truncate">
                     <i data-lucide="search" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors shrink-0"></i>
-                    <span class="truncate text-black/55 dark:text-white/55 text-[12px]">Cari menu, produk, atau transaksi (Ctrl+K)...</span>
+                    <span class="truncate text-black/55 dark:text-white/55 text-[12px]">{{ __('admin.search_placeholder') }}</span>
                 </div>
                 <kbd class="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded-[5px] bg-black/[0.06] dark:bg-white/[0.1] text-[10px] font-semibold text-black/60 dark:text-white/60 font-mono tracking-tight shrink-0 shadow-2xs">
                     Ctrl K
@@ -972,7 +974,8 @@
             <!-- Mobile Search Trigger Button (< md) -->
             <button type="button" @click="openSpotlight()"
                 class="md:hidden w-9 h-9 rounded-full text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 flex items-center justify-center transition-all cursor-pointer shrink-0"
-                title="Cari menu, produk, atau transaksi (Ctrl+K)" aria-label="Cari">
+                title="{{ __('admin.search_shortcut_tooltip') }}" aria-label="{{ __('common.search') }}">
+
                 <i data-lucide="search" class="w-4 h-4"></i>
             </button>
 
@@ -1014,7 +1017,7 @@
                             :class="theme === 'light' ? 'bg-[#FF9500]/10 text-[#FF9500] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="sun" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                                <span>Terang</span>
+                                <span>{{ __('admin.theme_light') }}</span>
                             </div>
                             <span x-show="theme === 'light'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                         </button>
@@ -1023,7 +1026,7 @@
                             :class="theme === 'dark' ? 'bg-[#5856D6]/10 text-[#5856D6] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="moon" class="w-3.5 h-3.5 text-[#5856D6]"></i>
-                                <span>Gelap</span>
+                                <span>{{ __('admin.theme_dark') }}</span>
                             </div>
                             <span x-show="theme === 'dark'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                         </button>
@@ -1032,7 +1035,7 @@
                             :class="theme === 'system' ? 'bg-[#007AFF]/10 text-[#007AFF] font-semibold' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="monitor" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                                <span>Sistem</span>
+                                <span>{{ __('admin.theme_system') }}</span>
                             </div>
                             <span x-show="theme === 'system'"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                         </button>
@@ -1058,7 +1061,7 @@
                             {{ Auth::guard('admin')->user()->name ?? 'Agung Mustaqim' }}
                         </div>
                         <div class="text-[11px] font-medium text-black/50 dark:text-white/50 truncate leading-tight">
-                            Cooca Indonesia
+                            Cooca {{ __('admin.brand_indonesia') }}
                         </div>
                     </div>
                     <i data-lucide="chevron-down"
@@ -1102,14 +1105,14 @@
                         <a href="{{ route('admin.profile.index') }}" @click="profileDropdownOpen = false"
                             class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2.5 transition active:scale-[0.98]">
                             <i data-lucide="user" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
-                            <span class="font-medium">Profil Administrator</span>
+                            <span class="font-medium">{{ __('admin.admin_profile') }}</span>
                         </a>
 
                         @if (Auth::guard('admin')->user()?->hasPermission('admin.settings.view'))
                             <a href="{{ route('admin.settings.index') }}" @click="profileDropdownOpen = false"
                                 class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2.5 transition active:scale-[0.98]">
                                 <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
-                                <span class="font-medium">Pengaturan Sistem</span>
+                                <span class="font-medium">{{ __('admin.nav_system_settings') }}</span>
                             </a>
                         @endif
 
@@ -1117,9 +1120,9 @@
                             class="w-full px-2.5 py-2 rounded-[8px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center justify-between gap-2.5 transition active:scale-[0.98]">
                             <div class="flex items-center gap-2.5 min-w-0">
                                 <i data-lucide="external-link" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
-                                <span class="font-medium truncate">Website Publik</span>
+                                <span class="font-medium truncate">{{ __('admin.public_website') }}</span>
                             </div>
-                            <span class="text-[10px] text-black/40 dark:text-white/40">Tab Baru</span>
+                            <span class="text-[10px] text-black/40 dark:text-white/40">{{ __('admin.new_tab') }}</span>
                         </a>
                     </div>
 
@@ -1131,7 +1134,7 @@
                         <button type="submit"
                             class="w-full px-2.5 py-2 rounded-[8px] text-[#FF3B30] dark:text-[#FF453A] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/15 flex items-center gap-2.5 transition active:scale-[0.98] font-semibold text-left cursor-pointer">
                             <i data-lucide="log-out" class="w-4 h-4 shrink-0"></i>
-                            <span>Keluar (Logout)</span>
+                            <span>{{ __('admin.logout') }}</span>
                         </button>
                     </form>
                 </div>
@@ -1165,7 +1168,7 @@
                     <div class="p-3.5 flex items-center gap-3">
                         <i data-lucide="search" class="w-5 h-5 text-[#007AFF] shrink-0" stroke-width="2"></i>
                         <input type="text" id="admin-spotlight-input" x-model="searchQuery"
-                            placeholder="Ketik untuk mencari modul sistem..."
+                            placeholder="{{ __('admin.spotlight_placeholder') }}"
                             class="w-full bg-transparent border-none outline-none text-black dark:text-white text-[15px] placeholder-black/40 dark:placeholder-white/40 font-medium">
                         <button type="button" @click="spotlightOpen = false"
                             class="px-2 py-1 rounded-[8px] text-[11px] font-semibold text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/10">
@@ -1274,7 +1277,7 @@
                 class="flex flex-col items-center justify-center min-w-[50px] h-12 rounded-[14px] transition-all {{ request()->routeIs('admin.dashboard') ? 'text-[#007AFF] font-bold' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"
                     stroke-width="{{ request()->routeIs('admin.dashboard') ? '2.5' : '1.8' }}"></i>
-                <span class="text-[10px] tracking-tight mt-0.5">Beranda</span>
+                <span class="text-[10px] tracking-tight mt-0.5">{{ __('admin.nav_home') }}</span>
             </a>
             @endif
 
@@ -1284,14 +1287,14 @@
                 class="flex flex-col items-center justify-center min-w-[50px] h-12 rounded-[14px] transition-all {{ request()->routeIs('admin.businesses.*') ? 'text-[#007AFF] font-bold' : 'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white' }}">
                 <i data-lucide="building-2" class="w-5 h-5"
                     stroke-width="{{ request()->routeIs('admin.businesses.*') ? '2.5' : '1.8' }}"></i>
-                <span class="text-[10px] tracking-tight mt-0.5">Bisnis</span>
+                <span class="text-[10px] tracking-tight mt-0.5">{{ __('admin.bottom_nav_businesses') }}</span>
             </a>
             @endif
 
             <!-- Center Action Button: Elevated Center Trigger (Aksi Cepat Admin) -->
             @if($currentAdmin?->hasAnyPermission(['admin.businesses.view', 'admin.subscriptions.view', 'admin.finance.view', 'admin.users.view', 'admin.whatsapp.view', 'admin.social_media.view', 'admin.ai_tokens.view', 'admin.settings.view']))
             <button type="button" @click="quickActionOpen = true; $nextTick(() => lucide.createIcons())"
-                aria-label="Aksi Cepat Admin"
+                aria-label="{{ __('admin.quick_actions_button') }}"
                 class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#007AFF] to-[#0051D5] -mt-6 flex items-center justify-center text-white shadow-lg shadow-[#007AFF]/40 ring-4 ring-[#F4F4F7] dark:ring-[#161618] active:scale-95 transition-all cursor-pointer">
                 <i data-lucide="sparkles" class="w-5 h-5 text-white" stroke-width="2.2"></i>
             </button>
@@ -1312,7 +1315,7 @@
             @endif
 
             <!-- Item 5: Menu Drawer Trigger -->
-            <button type="button" @click="sidebarOpen = true" aria-label="Buka Menu Navigasi Lengkap"
+            <button type="button" @click="sidebarOpen = true" aria-label="{{ __('admin.open_full_menu') }}"
                 class="flex flex-col items-center justify-center min-w-[50px] h-12 rounded-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white active:scale-95 transition-all">
                 <i data-lucide="menu" class="w-5 h-5" stroke-width="1.8"></i>
                 <span class="text-[10px] tracking-tight mt-0.5">Menu</span>
@@ -1350,14 +1353,14 @@
                             <i data-lucide="sparkles" class="w-5 h-5" stroke-width="2"></i>
                         </div>
                         <div>
-                            <h3 id="quick-action-title" class="text-[15px] font-bold text-black dark:text-white">Pusat
-                                Aksi Cepat Admin</h3>
+                            <h3 id="quick-action-title" class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.quick_actions_title') }}</h3>
                             <p class="text-[11px] text-black/50 dark:text-white/50">Pintas manajemen platform Cooca</p>
                         </div>
                     </div>
                     <button type="button" @click="quickActionOpen = false"
                         class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white flex items-center justify-center active:scale-95 transition-all"
-                        aria-label="Tutup">
+                        aria-label="{{ __('common.close') }}">
+
                         <i data-lucide="x" class="w-4 h-4" stroke-width="2"></i>
                     </button>
                 </div>
@@ -1372,8 +1375,8 @@
                             <i data-lucide="building-2" class="w-4.5 h-4.5" stroke-width="1.8"></i>
                         </div>
                         <div>
-                            <div class="text-[13px] font-bold text-black dark:text-white">Semua Tenant</div>
-                            <div class="text-[10px] text-black/50 dark:text-white/50">Kelola workspace UMKM</div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">{{ __('admin.all_tenants') }}</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50">{{ __('admin.all_tenants_desc') }}</div>
                         </div>
                     </a>
                     @endif
@@ -1392,8 +1395,8 @@
                             </span>
                         @endif
                         <div>
-                            <div class="text-[13px] font-bold text-black dark:text-white">Approval Billing</div>
-                            <div class="text-[10px] text-black/50 dark:text-white/50">Verifikasi bukti transfer</div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">{{ __('admin.approval_billing') }}</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50">{{ __('admin.approval_billing_desc') }}</div>
                         </div>
                     </a>
                     @endif
@@ -1434,8 +1437,8 @@
                             <i data-lucide="users" class="w-4.5 h-4.5" stroke-width="1.8"></i>
                         </div>
                         <div>
-                            <div class="text-[13px] font-bold text-black dark:text-white">Basis Pengguna</div>
-                            <div class="text-[10px] text-black/50 dark:text-white/50">Akun owner &amp; kasir</div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">{{ __('admin.user_base') }}</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50">{{ __('admin.user_base_desc') }}</div>
                         </div>
                     </a>
                     @endif
@@ -1480,8 +1483,8 @@
                             <i data-lucide="sparkles" class="w-4.5 h-4.5" stroke-width="1.8"></i>
                         </div>
                         <div>
-                            <div class="text-[13px] font-bold text-black dark:text-white">Token AI Global</div>
-                            <div class="text-[10px] text-black/50 dark:text-white/50">Monitoring kuota AI</div>
+                            <div class="text-[13px] font-bold text-black dark:text-white">{{ __('admin.ai_token_global') }}</div>
+                            <div class="text-[10px] text-black/50 dark:text-white/50">{{ __('admin.ai_token_global_desc') }}</div>
                         </div>
                     </a>
                     @endif
@@ -1519,7 +1522,7 @@
                 <!-- Footer button -->
                 <button type="button" @click="quickActionOpen = false"
                     class="w-full h-12 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 font-semibold text-[13px] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all">
-                    Tutup Menu Aksi
+                    {{ __('admin.close_actions_menu') }}
                 </button>
             </div>
         </div>

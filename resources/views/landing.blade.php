@@ -269,8 +269,25 @@
                                     <span class="text-xs text-slate-400 font-medium">{{ __('public_home.hero_social_proof_count', ['users' => $socialProofUsers]) }}</span>
                                 </div>
                             </div>
+
+                            <!-- Reassurance Checkpoints (Displayed with Social Proof) -->
+                            <div
+                                class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-4 sm:gap-x-5 gap-y-1.5 text-xs text-slate-300">
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+                                    <span>{{ __('public_home.reassurance_free', ['limit' => $tierLimits['free']['pos'] ?? 30]) }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+                                    <span>{{ __('public_home.reassurance_no_card') }}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+                                    <span>{{ __('public_home.reassurance_ready') }}</span>
+                                </div>
+                            </div>
                         @else
-                            <!-- Factual Trust Badge (Default Verified State) -->
+                            <!-- Factual Trust Badge (Default Verified State - Clean Single Reassurance) -->
                             <div class="pt-0.5 sm:pt-1 inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11.5px] sm:text-xs text-slate-300 backdrop-blur-sm shadow-xs">
                                 <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
                                     <i data-lucide="shield-check" class="w-4 h-4 shrink-0 text-emerald-400"></i>
@@ -284,23 +301,6 @@
                                 <span class="text-[#00C2FF] font-medium">{{ __('public_home.trust_badge_made_for') }}</span>
                             </div>
                         @endif
-
-                        <!-- Reassurance Checkpoints (Left-Aligned on Mobile & Desktop) -->
-                        <div
-                            class="pt-0.5 sm:pt-1 flex flex-wrap items-center justify-start gap-x-4 sm:gap-x-5 gap-y-1.5 text-xs text-slate-300">
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>{{ __('public_home.reassurance_free', ['limit' => $tierLimits['free']['pos'] ?? 30]) }}</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>{{ __('public_home.reassurance_no_card') }}</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>{{ __('public_home.reassurance_ready') }}</span>
-                            </div>
-                        </div>
 
                     </div>
 

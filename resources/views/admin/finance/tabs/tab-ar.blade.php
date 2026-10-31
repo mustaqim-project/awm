@@ -215,7 +215,7 @@
                                 @if($ar->payments->count() > 0)
                                     <button type="button" @click="openHistory = !openHistory"
                                         class="text-[10.5px] text-[#007AFF] hover:underline font-semibold mt-0.5 inline-flex items-center gap-1 cursor-pointer">
-                                        <span>{{ $ar->payments->count() }}x Pembayaran</span>
+                                        <span>{{ $ar->payments->count() }}x {{ __('finance.payment') }}</span>
                                         <i data-lucide="chevron-down" class="w-3 h-3 transition-transform" :class="openHistory ? 'rotate-180' : ''"></i>
                                     </button>
                                 @endif

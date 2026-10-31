@@ -50,7 +50,7 @@
                 <div class="text-2xl sm:text-3xl font-bold tracking-tight tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">
                     {{ number_format($counts['pending'], 0, ',', '.') }}
                 </div>
-                <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Permohonan perlu verifikasi berkas</p>
+                <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('admin.permohonan_perlu_verifikasi_berkas') }}</p>
             </a>
 
             <!-- 2. Total Pengajuan -->
@@ -66,7 +66,7 @@
                 <div class="text-2xl sm:text-3xl font-bold tracking-tight tabular-nums text-black dark:text-white">
                     {{ number_format($counts['all'], 0, ',', '.') }}
                 </div>
-                <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">Seluruh tiket historis tercatat</p>
+                <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('admin.seluruh_tiket_historis_tercatat') }}</p>
             </a>
 
             <!-- 3. Disetujui Resmi -->
@@ -82,7 +82,7 @@
                 <div class="text-2xl sm:text-3xl font-bold tracking-tight tabular-nums text-[#34C759] dark:text-[#30D158]">
                     {{ number_format($counts['approved'], 0, ',', '.') }}
                 </div>
-                <p class="text-[11px] text-[#34C759]/80 mt-1">Akses akun berhasil dipulihkan</p>
+                <p class="text-[11px] text-[#34C759]/80 mt-1">{{ __('admin.akses_akun_berhasil_dipulihkan') }}</p>
             </a>
 
             <!-- 4. Permohonan Ditolak -->
@@ -98,7 +98,7 @@
                 <div class="text-2xl sm:text-3xl font-bold tracking-tight tabular-nums text-[#FF3B30] dark:text-[#FF453A]">
                     {{ number_format($counts['rejected'], 0, ',', '.') }}
                 </div>
-                <p class="text-[11px] text-[#FF3B30]/80 mt-1">Dokumen tidak memenuhi syarat</p>
+                <p class="text-[11px] text-[#FF3B30]/80 mt-1">{{ __('admin.dokumen_tidak_memenuhi_syarat') }}</p>
             </a>
         </div>
 
@@ -110,7 +110,7 @@
                 class="inline-flex p-1 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] text-xs font-medium overflow-x-auto no-scrollbar">
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'all', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap transition-all {{ $status === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    {{ __('common.all') }} ({$counts['all'] })
+                    {{ __('common.all') }} ({{ $counts['all'] }})
                 </a>
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'pending', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap flex items-center gap-1.5 transition-all {{ $status === 'pending' ? 'bg-white dark:bg-[#2C2C2E] text-[#FF9500] dark:text-[#FF9F0A] font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
@@ -122,11 +122,11 @@
                 </a>
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'approved', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap transition-all {{ $status === 'approved' ? 'bg-white dark:bg-[#2C2C2E] text-[#34C759] dark:text-[#30D158] font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Disetujui ({{ $counts['approved'] }})
+                    {{ __('admin.disetujui_count', ['count' => $counts['approved']]) }}
                 </a>
                 <a href="{{ route('admin.account-recoveries.index', ['status' => 'rejected', 'search' => $search]) }}"
                     class="px-3.5 py-1.5 rounded-[10px] whitespace-nowrap transition-all {{ $status === 'rejected' ? 'bg-white dark:bg-[#2C2C2E] text-[#FF3B30] dark:text-[#FF453A] font-semibold shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                    Ditolak ({{ $counts['rejected'] }})
+                    {{ __('admin.ditolak_count', ['count' => $counts['rejected']]) }}
                 </a>
             </div>
 
@@ -583,10 +583,9 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="file-check" class="w-4 h-4 text-[#5856D6]"></i>
-                                        <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">Meja Uji Bukti Otentik
-                                            Kepemilikan Akun</h4>
+                                        <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white">{{ __('admin.meja_uji_bukti_otentik_kepemilikan_akun') }}</h4>
                                     </div>
-                                    <span class="text-[11px] text-black/40 dark:text-white/40">Klik dokumen untuk perbesar</span>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('admin.klik_dokumen_untuk_perbesar') }}</span>
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">

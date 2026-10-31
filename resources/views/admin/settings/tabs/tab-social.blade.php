@@ -307,7 +307,7 @@
                                     class="h-9 px-3.5 rounded-[11px] text-[12px] font-bold text-[#E1306C] bg-[#E1306C]/10 hover:bg-[#E1306C]/20 active:scale-98 transition-all flex items-center gap-1.5 shrink-0 cursor-pointer disabled:opacity-50">
                                     <i data-lucide="loader-2" x-show="testingIg" class="w-3.5 h-3.5 animate-spin"></i>
                                     <i data-lucide="refresh-cw" x-show="!testingIg" class="w-3.5 h-3.5"></i>
-                                    <span x-text="testingIg ? 'Memeriksa...' : 'Cek Status Instagram'"></span>
+                                    <span x-text="testingIg{{ __('admin.checking') ? '' : '' }} ? {{ Js::from(__('admin.checking')) }} : {{ Js::from(__('admin.check_instagram_status')) }}"></span>
                                 </button>
                             </div>
                         @endif
@@ -759,7 +759,7 @@
                             class="w-full sm:w-auto h-11 px-4.5 rounded-[14px] text-[13px] font-bold text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
                             <i data-lucide="loader-2" x-show="testingSocial" class="w-4 h-4 animate-spin text-[#007AFF]"></i>
                             <i data-lucide="zap" x-show="!testingSocial" class="w-4 h-4 text-[#FF9500]"></i>
-                            <span x-text="testingSocial ? 'Menguji Kredensial...' : 'Uji Validitas Kredensial'"></span>
+                            <span x-text="testingSocial{{ __('admin.testing_credentials') ? '' : '' }} ? {{ Js::from(__('admin.testing_credentials')) }} : {{ Js::from(__('admin.test_credentials_validity')) }}"></span>
                         </button>
 
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.update'))

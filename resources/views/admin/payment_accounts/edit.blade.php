@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Edit Rekening ' . $paymentAccount->bank_name . ' - Admin Console',
+    'title' => __('admin.edit_account') . ' ' . $paymentAccount->bank_name . ' - Admin Console',
     'headerTitle' => 'Edit Rekening Pembayaran',
     'headerSubtitle' => 'Perbarui data nomor rekening, instruksi transfer, atau gambar QRIS untuk tenant Cooca',
 ])

@@ -323,10 +323,10 @@ function marketplaceChatCockpit(config) {
                     this.newMessage = '';
                     this.scrollToBottom();
                 } else {
-                    alert(data.error || 'Gagal mengirim pesan.');
+                    alert(data.error || @json(__('marketplace.failed_send_message')));
                 }
             } catch (e) {
-                alert('{{ __('marketplace.terjadi_kesalahan_jaringan') }}
+                alert(@json(__('marketplace.terjadi_kesalahan_jaringan')));
             } finally {
                 this.sendingMessage = false;
             }

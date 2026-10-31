@@ -27,8 +27,8 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Admin Views Batch 1: Core, Tenant Ops, B2B, Settings & AI | 48 files in `resources/views/admin` (dashboard, auth, roles, users, profile, pricing, subscriptions, billing, b2b, settings, tokens) + register keys in `lang/{id,en}/admin.php` | none | IN_PROGRESS (d449d94c-ebd0-4456-9b2f-e92511e539c1) |
-| M2 | Admin Views Batch 2: Finance, Marketing, CMS & Channels | 38 files in `resources/views/admin` (finance, posts, events, templates, accounts, settlements, legal, feedback, inbox, whatsapp, social) + register keys in `lang/{id,en}/admin.php` | M1 | PLANNED |
+| M1 | Admin Views Batch 1: Core, Tenant Ops, B2B, Settings & AI | 48 files in `resources/views/admin` (dashboard, auth, roles, users, profile, pricing, subscriptions, billing, b2b, settings, tokens) + register keys in `lang/{id,en}/admin.php` | none | DONE (44 views remediated, 0 issues, 1015 keys) |
+| M2 | Admin Views Batch 2: Finance, Marketing, CMS & Channels | 38 files in `resources/views/admin` (finance, posts, events, templates, accounts, settlements, legal, feedback, inbox, whatsapp, social) + register keys in `lang/{id,en}/admin.php` | M1 | IN_PROGRESS (2e8610a1-a6d4-462c-b2e0-c41004b00da0) |
 | M3 | App Views Batch 1: Commerce, Trade, Purchasing & CRM | 39 dirty files in `resources/views/app` (pos, inventory, storefront, marketplace, products, warehouse, sales, so, quotes, purchasing, customers, suppliers, crm) + register keys in domain lang files | none | IN_PROGRESS (266c7b7e-e030-4d18-a3bc-3f4a61dd1a0e) |
 | M4 | App Views Batch 2: Finance, Settings, AI Suite & Social | 31 dirty files in `resources/views/app` (finance, billing, tax, settings, profile, master-data, labor-machines, ai, ai-studio, social_media, whatsapp) + register keys in domain lang files | none | PLANNED |
 | M5 | App Views Batch 3: Heavy Builders, Docs, Import & Community | 8 heavy files in `resources/views/app` (landing_page, docs, import, community) + register keys in domain lang files | none | PLANNED |

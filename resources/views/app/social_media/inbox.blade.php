@@ -26,9 +26,8 @@
                         title="{{ __('social_media.klik_untuk_menyetel_konfigurasi_ai') }}">
                         <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
                         <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-600"></i>
-                        <span>{{ __('social_media.ai_not_configured') }} &bull; {{ __('social_media.setup_now') }}</span>
-                        <span>AI Belum Dikonfigurasi</span>
-                        <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-600 text-white">Setup Sekarang</span>
+                        <span>{{ __('social_media.ai_not_configured') }}</span>
+                        <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-600 text-white">{{ __('social_media.setup_now') }}</span>
                     </a>
                 @endif
 

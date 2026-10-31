@@ -10,6 +10,7 @@ return [
     'detail_header' => 'Warehouse Details: :name',
     'detail_subtitle' => 'Monitor current inventory, goods receipt history from PO, and stock card movements for this location.',
     'no_address' => 'No registered address yet',
+    'quick_adjust' => 'Adjust Stock',
 
     'breadcrumbs' => [
         'dashboard' => 'Dashboard',

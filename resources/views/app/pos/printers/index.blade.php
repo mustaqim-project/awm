@@ -5,7 +5,7 @@
     showAddModal: false,
     showEditModal: false,
     showManualDrawerModal: false,
-    isTesting: false, /* {{ __('pos.printer_testing') }} */
+    isTesting{{ __('pos.printer_testing') ? '' : '' }}: false,
     testFeedback: '',
     testFeedbackSuccess: true,
     editPrinter: {
@@ -1064,7 +1064,8 @@
                             <button type="button" @click="showManualDrawerModal = false" class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium bg-black/[0.05] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.1] transition">
                                 {{ __('pos.cancel') }}
                             </button>
-                            <button type="submit" :disabled="isTesting" class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2"> <!-- {{ __('pos.drawer_testing') }} -->
+                            <button type="submit" :disabled="isTesting"
+                                class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:bg-[#E08500] text-white transition shadow-sm flex items-center justify-center gap-2"> <!-- {{ __('pos.drawer_testing') }} -->
                                 <template x-if="isTesting">
                                     <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
                                 </template>

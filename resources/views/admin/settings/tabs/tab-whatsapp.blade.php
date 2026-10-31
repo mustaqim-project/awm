@@ -342,7 +342,7 @@
                             class="w-full sm:w-auto h-11 px-4.5 rounded-[14px] text-[13px] font-bold text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
                             <i data-lucide="loader-2" x-show="testingWa" class="w-4 h-4 animate-spin text-[#25D366]"></i>
                             <i data-lucide="zap" x-show="!testingWa" class="w-4 h-4 text-[#25D366]"></i>
-                            <span x-text="testingWa ? 'Menguji API Meta...' : 'Uji Validitas Meta Cloud API'"></span>
+                            <span x-text="testingWa{{ __('admin.testing_meta_api') ? '' : '' }} ? {{ Js::from(__('admin.testing_meta_api')) }} : {{ Js::from(__('admin.test_meta_cloud_api_validity')) }}"></span>
                         </button>
 
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.settings.update'))

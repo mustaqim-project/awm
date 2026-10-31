@@ -374,9 +374,9 @@
                          class="w-full max-w-[320px] rounded-[18px] bg-white/90 dark:bg-[#2C2C2E]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden transition-all text-center">
 
                         <div class="px-4 pt-5 pb-4">
-                            <p id="so-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">Hapus Pesanan Penjualan?</p>
+                            <p id="so-delete-dialog-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('sales.confirm_delete_so_title') }}?</p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1 leading-snug">
-                                Apakah Anda yakin ingin menghapus draf pesanan <span class="font-medium text-black dark:text-white" x-text="deleteTarget.name"></span>? Tindakan ini tidak dapat dibatalkan.
+                                {{ __('sales.confirm_delete_so_msg') }} <span class="font-medium text-black dark:text-white" x-text="deleteTarget.name"></span>? {{ __('sales.action_cannot_be_undone') }}
                             </p>
                         </div>
 

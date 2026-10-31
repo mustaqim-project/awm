@@ -129,4 +129,9 @@ return array (
     'clear_filter' => 'Hapus Filter',
     'testing' => 'Pengujian',
     'seconds_short' => 'dtk',
+    'actions' => 'Aksi',
+    'no_data_yet' => 'Belum ada data',
+    'items' => 'Item',
+    'reset_filter' => 'Reset Filter',
+    'schedule' => 'Jadwalkan',
 );

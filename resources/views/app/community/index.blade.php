@@ -308,7 +308,7 @@
                         @endif
                         <a href="{{ route('community.events.index') }}"
                             class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline ml-1">
-                            Semua
+                            {{ __('common.all') }}
                         </a>
                     </div>
                 </div>

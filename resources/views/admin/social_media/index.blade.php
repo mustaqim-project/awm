@@ -32,7 +32,7 @@
                 <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}"
                     class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold text-black dark:text-white bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm">
                     <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
-                    <span>Pengaturan Terpadu</span>
+                    <span>{{ __('social_media.unified_settings') }}</span>
                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-70"></i>
                 </a>
             </div>
@@ -84,7 +84,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="min-h-[40px] px-4 rounded-[11px] text-[13px] transition-all flex items-center gap-2 shrink-0">
                 <i data-lucide="layout-grid" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Kelola Konten Platform</span>
+                <span>{{ __('social_media.manage_platform_content') }}</span>
                 @if ($platformPosts->total() > 0)
                     <span
                         class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#007AFF]/15 text-[#007AFF]">{{ $platformPosts->total() }}</span>
@@ -105,7 +105,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="min-h-[40px] px-4 rounded-[11px] text-[13px] transition-all flex items-center gap-2 shrink-0">
                 <i data-lucide="message-square" class="w-4 h-4 text-[#AF52DE]"></i>
-                <span>Kotak Masuk Interaksi</span>
+                <span>{{ __('social_media.interaction_inbox') }}</span>
                 @if ($platformComments->total() > 0)
                     <span
                         class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#AF52DE]/15 text-[#AF52DE]">{{ $platformComments->total() }}</span>
@@ -116,7 +116,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="min-h-[40px] px-4 rounded-[11px] text-[13px] transition-all flex items-center gap-2 shrink-0">
                 <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Status Provider &amp; Integrasi</span>
+                <span>{{ __('social_media.provider_integration_status') }}</span>
             </button>
             <button type="button" @click="activeTab = 'merchants'"
                 :class="activeTab === 'merchants' ?
@@ -132,7 +132,7 @@
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                 class="min-h-[40px] px-4 rounded-[11px] text-[13px] transition-all flex items-center gap-2 shrink-0">
                 <i data-lucide="shield-alert" class="w-4 h-4 text-[#FF9500]"></i>
-                <span>Panduan Meta App Review</span>
+                <span>{{ __('social_media.meta_app_review_guide') }}</span>
             </button>
         </div>
 
@@ -194,7 +194,7 @@
                     <div class="flex items-center justify-between">
                         <h4 class="text-[13px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
                             <i data-lucide="radio" class="w-4 h-4 text-[#007AFF]"></i>
-                            <span>Status Koneksi Saluran Resmi Platform</span>
+                            <span>{{ __('social_media.official_channel_connection_status') }}</span>
                         </h4>
                         <span class="text-[11.5px] text-black/50 dark:text-white/50">Admin dapat menghubungkan akun resmi secara langsung</span>
                     </div>
@@ -221,7 +221,7 @@
                             <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px]">
                                 <span class="text-black/50 dark:text-white/50">{{ $platform['instagram_account_type'] ?: 'Media Creator' }}</span>
                                 <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="text-[#007AFF] font-bold hover:underline inline-flex items-center gap-0.5">
-                                    <span>Pengaturan</span>
+                                    <span>{{ __('common.settings') }}</span>
                                     <i data-lucide="chevron-right" class="w-3 h-3"></i>
                                 </a>
                             </div>
@@ -248,7 +248,7 @@
                             <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px]">
                                 <span class="text-black/50 dark:text-white/50">Graph API {{ $platform['graph_version'] }}</span>
                                 <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="text-[#007AFF] font-bold hover:underline inline-flex items-center gap-0.5">
-                                    <span>Pengaturan</span>
+                                    <span>{{ __('common.settings') }}</span>
                                     <i data-lucide="chevron-right" class="w-3 h-3"></i>
                                 </a>
                             </div>
@@ -297,7 +297,7 @@
                                 @elseif (!empty($platform['tiktok_client_key']))
                                     <a href="{{ route('admin.social-media.tiktok.connect') }}" class="w-full min-h-[30px] rounded-[8px] bg-black dark:bg-white text-white dark:text-black font-bold text-[11.5px] inline-flex items-center justify-center gap-1.5 hover:opacity-90 active:scale-[0.98] transition-all">
                                         <i data-lucide="link" class="w-3.5 h-3.5"></i>
-                                        <span>Hubungkan TikTok</span>
+                                        <span>{{ __('social_media.connect_tiktok') }}</span>
                                     </a>
                                 @else
                                     <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="text-[#007AFF] font-bold hover:underline inline-flex items-center gap-0.5">
@@ -351,7 +351,7 @@
                                 @elseif (!empty($platform['linkedin_client_id']))
                                     <a href="{{ route('admin.social-media.linkedin.connect') }}" class="w-full min-h-[30px] rounded-[8px] bg-[#0A66C2] text-white font-bold text-[11.5px] inline-flex items-center justify-center gap-1.5 hover:bg-[#084e96] active:scale-[0.98] transition-all shadow-xs">
                                         <i data-lucide="link" class="w-3.5 h-3.5"></i>
-                                        <span>Hubungkan LinkedIn</span>
+                                        <span>{{ __('social_media.connect_linkedin') }}</span>
                                     </a>
                                 @else
                                     <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="text-[#007AFF] font-bold hover:underline inline-flex items-center gap-0.5">
@@ -371,8 +371,7 @@
                 <div
                     class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div>
-                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">Riwayat
-                            Postingan Resmi Platform</h3>
+                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('social_media.official_platform_posts_history') }}</h3>
                         <p class="text-[12px] sm:text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">Daftar konten yang
                             dipublikasikan atau dijadwalkan oleh Administrator untuk akun Cooca</p>
                     </div>
@@ -395,7 +394,7 @@
                     <div class="sm:col-span-5 relative">
                         <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                         <input type="text" name="search" value="{{ $filters['search'] ?? '' }}"
-                            placeholder="Cari teks caption atau ID..."
+                            placeholder="{{ __('social_media.search_caption_or_id_placeholder') }}"
                             class="w-full h-[36px] pl-9 pr-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all">
                     </div>
 
@@ -427,12 +426,12 @@
 
                     {{-- Action Filter Buttons (Icon Only) --}}
                     <div class="sm:col-span-1 flex items-center gap-1.5 justify-end">
-                        <button type="submit" title="Terapkan Filter"
+                        <button type="submit" title="{{ __('social_media.apply_filter_tooltip') }}"
                             class="w-[36px] h-[36px] rounded-[10px] bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:opacity-90 active:scale-95 transition-all shadow-sm shrink-0">
                             <i data-lucide="filter" class="w-3.5 h-3.5"></i>
                         </button>
                         @if(!empty($filters['search']) || (!empty($filters['status']) && $filters['status'] !== 'all') || (!empty($filters['channel']) && $filters['channel'] !== 'all'))
-                            <a href="{{ route('admin.social-media.index', ['tab' => 'posts']) }}" title="Reset Filter"
+                            <a href="{{ route('admin.social-media.index', ['tab' => 'posts']) }}" title="{{ __('social_media.reset_filter_tooltip') }}"
                                 class="w-[36px] h-[36px] rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center hover:bg-black/10 dark:hover:bg-white/15 active:scale-95 transition-all shrink-0">
                                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
                             </a>
@@ -601,7 +600,7 @@
                                                             'error_message' => $t->error_message,
                                                         ])
                                                     ]) }})"
-                                                    title="Lihat Detail Postingan"
+                                                    title="{{ __('social_media.view_post_detail_tooltip') }}"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-black/65 dark:text-white/65 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all">
                                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                                 </button>
@@ -613,7 +612,7 @@
                                                         'content' => $p->content,
                                                         'scheduled_at' => $p->scheduled_at?->format('Y-m-d\TH:i') ?? '',
                                                     ]) }}, '{{ route('admin.social-media.posts.update', $p) }}')"
-                                                    title="Edit Postingan"
+                                                    title="{{ __('social_media.edit_post_tooltip') }}"
                                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 active:scale-95 transition-all">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
@@ -638,7 +637,7 @@
                                                         action="{{ route('admin.social-media.posts.retry', $p) }}"
                                                         class="inline">
                                                         @csrf
-                                                        <button type="submit" title="Coba Kirim Ulang"
+                                                        <button type="submit" title="{{ __('social_media.retry_send_tooltip') }}"
                                                             class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF9500] hover:bg-[#FF9500]/10 active:scale-95 transition-all">
                                                             <i data-lucide="rotate-cw" class="w-4 h-4"></i>
                                                         </button>
@@ -652,7 +651,7 @@
                                                     class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" title="Hapus Postingan"
+                                                    <button type="submit" title="{{ __('social_media.delete_post_tooltip') }}"
                                                         class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-95 transition-all">
                                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                     </button>
@@ -676,7 +675,7 @@
                             <i data-lucide="feather" class="w-6 h-6"></i>
                         </div>
                         <div class="space-y-1">
-                            <h4 class="font-bold text-[15px] text-black dark:text-white">Belum Ada Postingan Resmi Platform
+                            <h4 class="font-bold text-[15px] text-black dark:text-white">{{ __('social_media.no_official_platform_posts') }}
                             </h4>
                             <p class="text-[12.5px] text-black/50 dark:text-white/50 max-w-md mx-auto">Buat konten promosi
                                 atau pengumuman pertama Anda untuk dipublikasikan langsung ke akun Instagram, Facebook Page,
@@ -1002,7 +1001,7 @@
                                     @if (!empty($item['permalink']))
                                         <a href="{{ $item['permalink'] }}" target="_blank" rel="noopener noreferrer"
                                             class="p-1.5 rounded-[8px] text-black/40 dark:text-white/40 hover:text-[#007AFF] dark:hover:text-[#007AFF] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                                            title="Buka di Instagram">
+                                            title="{{ __('social_media.open_in_instagram_tooltip') }}">
                                             <i data-lucide="external-link" class="w-4 h-4"></i>
                                         </a>
                                     @endif
@@ -1014,7 +1013,7 @@
                     <div
                         class="p-10 text-center space-y-2 rounded-[18px] bg-black/[0.015] dark:bg-white/[0.02] border border-dashed border-black/10 dark:border-white/10">
                         <i data-lucide="image" class="w-8 h-8 text-black/30 dark:text-white/30 mx-auto"></i>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">Belum ada media Instagram yang dapat dimuat
+                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('social_media.no_instagram_media_loaded') }}
                             atau token memerlukan izin akses.</p>
                     </div>
                 @endif
@@ -1036,7 +1035,7 @@
                 </div>
                 <a href="{{ route('admin.inbox.index') }}"
                     class="min-h-[38px] px-4 rounded-[11px] text-[12.5px] font-bold text-white bg-[#1877F2] hover:bg-[#166FE5] transition-all flex items-center justify-center gap-1.5 shadow-sm shrink-0">
-                    <span>Buka Kotak Masuk Baru</span>
+                    <span>{{ __('social_media.open_new_inbox') }}</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
@@ -1046,8 +1045,7 @@
                 <div
                     class="flex items-center justify-between gap-4 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div>
-                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">Komentar
-                            &amp; Interaksi Akun Resmi</h3>
+                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('social_media.official_account_comments_interactions') }}</h3>
                         <p class="text-[12px] sm:text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">Kelola dan tanggapi
                             komentar pengunjung pada postingan resmi media sosial Cooca</p>
                     </div>
@@ -1121,7 +1119,7 @@
                     <div
                         class="p-10 text-center space-y-2.5 rounded-[18px] bg-black/[0.015] dark:bg-white/[0.02] border border-dashed border-black/10 dark:border-white/10">
                         <i data-lucide="message-square" class="w-8 h-8 text-black/30 dark:text-white/30 mx-auto"></i>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">Belum ada komentar yang masuk pada
+                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('social_media.no_comments_yet') }}
                             postingan resmi platform.</p>
                     </div>
                 @endif
@@ -1160,7 +1158,7 @@
                     <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}"
                         class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold bg-[#007AFF] hover:bg-[#0071E3] text-white active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shrink-0">
                         <i data-lucide="sliders" class="w-4 h-4"></i>
-                        <span>Buka Pengaturan Media Sosial</span>
+                        <span>{{ __('social_media.open_social_media_settings') }}</span>
                         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-70"></i>
                     </a>
                 </div>
@@ -1221,7 +1219,7 @@
                             Token Instagram</span>
                         <div class="text-[13px] font-bold text-[#248A3D] dark:text-[#30D158] flex items-center gap-1.5">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
-                            <span>{{ !empty($platform['instagram_access_token']) ? 'Tersimpan Terenkripsi' : 'Belum Ada Token' }}</span>
+                            <span>{{ !empty($platform['instagram_access_token']) ? __('social_media.saved_encrypted') : __('social_media.no_token_yet') }}</span>
                         </div>
                     </div>
 
@@ -1258,8 +1256,7 @@
 
                 {{-- Endpoints & Callback URL --}}
                 <div class="space-y-3 pt-2">
-                    <h4 class="text-[13px] font-bold text-black dark:text-white tracking-tight">Endpoint Callback &amp;
-                        Webhook Resmi</h4>
+                    <h4 class="text-[13px] font-bold text-black dark:text-white tracking-tight">{{ __('social_media.official_callback_webhook_endpoint') }}</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         <div
                             class="p-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/[0.06] dark:border-white/[0.08] space-y-1.5">
@@ -1364,8 +1361,7 @@
                 <div
                     class="flex items-center justify-between gap-4 pb-4 border-b border-black/[0.06] dark:border-white/[0.08]">
                     <div>
-                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">Status
-                            Koneksi Media Sosial Merchant</h3>
+                        <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('social_media.merchant_social_media_connection_status') }}</h3>
                         <p class="text-[12px] sm:text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">Daftar
                             toko/merchant yang mengaktifkan integrasi akun Facebook, Instagram, Threads, atau TikTok</p>
                     </div>
@@ -1439,7 +1435,7 @@
                     <div
                         class="p-10 text-center space-y-2.5 rounded-[18px] bg-black/[0.015] dark:bg-white/[0.02] border border-dashed border-black/10 dark:border-white/10">
                         <i data-lucide="users" class="w-8 h-8 text-black/30 dark:text-white/30 mx-auto"></i>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">Belum ada merchant yang mengaktifkan
+                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('social_media.no_merchants_activated') }}
                             integrasi media sosial.</p>
                     </div>
                 @endif
@@ -1503,7 +1499,7 @@
                     </div>
                     <a href="https://developers.facebook.com/docs/app-review" target="_blank" rel="noopener noreferrer"
                         class="px-3 py-1.5 rounded-[9px] bg-[#007AFF] text-white font-bold text-[11.5px] shrink-0 hover:bg-[#0071E3] transition-colors">
-                        Buka Meta Docs
+                        {{ __('social_media.open_meta_docs') }}
                     </a>
                 </div>
             </div>
@@ -1533,13 +1529,13 @@
                                     <i data-lucide="feather" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">Buat Postingan Resmi Cooca</h3>
+                                    <h3 class="text-[17px] sm:text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('social_media.create_official_cooca_post') }}</h3>
                                     <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55">Publikasikan konten resmi platform ke akun media sosial Cooca dengan pratinjau live omnichannel</p>
                                 </div>
                             </div>
                             <button type="button" @click="openCreatePostModal = false"
                                 class="w-9 h-9 rounded-full flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
-                                aria-label="Tutup modal">
+                                aria-label="{{ __('social_media.close_modal') }}">
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
@@ -1732,7 +1728,7 @@
                                                     <span class="w-1.5 h-1.5 rounded-full" :class="postFormat === 'story' ? 'bg-white' : 'bg-transparent'"></span>
                                                 </div>
                                                 <div class="text-[12px] font-bold leading-tight">Story</div>
-                                                <div class="text-[10px] opacity-75 truncate">Tayang 24 Jam</div>
+                                                <div class="text-[10px] opacity-75 truncate">{{ __('social_media.story_24h') }}</div>
                                             </button>
 
                                             {{-- Teks Saja --}}
@@ -1770,12 +1766,12 @@
                                                 <button type="button" @click="mediaSourceTab = 'upload'"
                                                     :class="mediaSourceTab === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60'"
                                                     class="px-2.5 py-1 rounded-[7px] transition-colors cursor-pointer">
-                                                    Unggah Berkas
+                                                    {{ __('social_media.upload_file') }}
                                                 </button>
                                                 <button type="button" @click="mediaSourceTab = 'url'"
                                                     :class="mediaSourceTab === 'url' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60'"
                                                     class="px-2.5 py-1 rounded-[7px] transition-colors cursor-pointer">
-                                                    URL Langsung
+                                                    {{ __('social_media.direct_url') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -2052,12 +2048,12 @@
                                                                 <button type="button" @click="channelTiming[ch] = 'now'"
                                                                     :class="channelTiming[ch] === 'now' ? 'bg-white dark:bg-[#1C1C1E] text-[#007AFF] font-bold shadow-xs' : 'text-black/60 dark:text-white/60'"
                                                                     class="px-2.5 py-0.5 rounded-[6px] transition-colors cursor-pointer">
-                                                                    Langsung
+                                                                    {{ __('social_media.direct_now') }}
                                                                 </button>
                                                                 <button type="button" @click="channelTiming[ch] = 'schedule'"
                                                                     :class="channelTiming[ch] === 'schedule' ? 'bg-white dark:bg-[#1C1C1E] text-[#FF9500] font-bold shadow-xs' : 'text-black/60 dark:text-white/60'"
                                                                     class="px-2.5 py-0.5 rounded-[6px] transition-colors cursor-pointer">
-                                                                    Jadwalkan
+                                                                    {{ __('common.schedule') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -2261,7 +2257,7 @@
                                                                 <div class="w-12 h-12 rounded-[14px] bg-[#FF9500]/10 flex items-center justify-center mx-auto text-[#FF9500]">
                                                                     <i data-lucide="layers" class="w-6 h-6"></i>
                                                                 </div>
-                                                                <div class="text-[11.5px] font-medium text-black/50 dark:text-white/50">Belum ada slide media dipilih</div>
+                                                                <div class="text-[11.5px] font-medium text-black/50 dark:text-white/50">{{ __('social_media.no_media_slide_selected') }}</div>
                                                             </div>
                                                         </template>
                                                     </div>
@@ -2333,7 +2329,7 @@
                             <div class="pt-4 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                                 <button type="button" @click="openCreatePostModal = false"
                                     class="min-h-[42px] px-4 rounded-[11px] text-[13px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
-                                    Batal
+                                    {{ __('common.cancel') }}
                                 </button>
                                 <button type="submit" :disabled="selectedPlatforms.length === 0 || isSubmitting"
                                     class="min-h-[42px] px-5 rounded-[11px] text-[13px] font-bold text-white bg-gradient-to-r from-[#1877F2] to-[#E1306C] hover:opacity-95 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer">
@@ -2400,7 +2396,7 @@
                             class="block text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Isi
                             Balasan Anda</label>
                         <textarea name="message" rows="4" required maxlength="1000"
-                            placeholder="Tuliskan balasan ramah dan solutif sebagai admin resmi Cooca Indonesia..."
+                            placeholder="{{ __('social_media.reply_official_placeholder') }}"
                             class="w-full bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] p-3 text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all"></textarea>
                     </div>
 
@@ -2408,12 +2404,12 @@
                         class="pt-2 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <button type="button" @click="replyModalOpen = false"
                             class="min-h-[40px] px-4 rounded-[11px] text-[12.5px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                            Batal
+                            {{ __('common.cancel') }}
                         </button>
                         <button type="submit"
                             class="min-h-[40px] px-5 rounded-[11px] text-[12.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                            <span>Kirim Balasan</span>
+                            <span>{{ __('social_media.send_reply') }}</span>
                         </button>
                     </div>
                 </form>
@@ -2445,7 +2441,7 @@
                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-[16px] font-bold text-black dark:text-white">Edit Konten Postingan</h3>
+                                    <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('social_media.edit_post_content') }}</h3>
                                     <p class="text-[12px] text-black/50 dark:text-white/50">Perbarui teks narasi atau jadwal penayangan</p>
                                 </div>
                             </div>
@@ -2490,12 +2486,12 @@
                             <div class="pt-2 flex items-center justify-end gap-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                                 <button type="button" @click="editModalOpen = false"
                                     class="min-h-[40px] px-4 rounded-[11px] text-[12.5px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                                    Batal
+                                    {{ __('common.cancel') }}
                                 </button>
                                 <button type="submit"
                                     class="min-h-[40px] px-5 rounded-[11px] text-[12.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                    <span>Simpan Perubahan</span>
+                                    <span>{{ __('common.save_changes') }}</span>
                                 </button>
                             </div>
                         </form>
@@ -2528,7 +2524,7 @@
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-[16px] font-bold text-black dark:text-white">Detail Postingan Platform</h3>
+                                    <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('social_media.platform_post_detail') }}</h3>
                                     <p class="text-[12px] text-black/50 dark:text-white/50" x-text="'ID: #' + (previewPost?.id || '')"></p>
                                 </div>
                             </div>
@@ -2620,7 +2616,7 @@
                         <div class="pt-2 flex items-center justify-end border-t border-black/[0.06] dark:border-white/[0.08]">
                             <button type="button" @click="previewModalOpen = false"
                                 class="min-h-[40px] px-5 rounded-[11px] text-[12.5px] font-semibold text-black dark:text-white bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/15 transition-colors">
-                                Tutup
+                                {{ __('common.close') }}
                             </button>
                         </div>
                     </div>

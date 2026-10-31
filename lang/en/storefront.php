@@ -1673,4 +1673,10 @@ return [
     'area_id_bull_kode' => 'Area ID: &bull; Code',
     'area_id' => 'Area ID',
     'test_rate' => 'Test Rate',
+    'postal_code' => 'Postal Code',
+    'select_order_first' => 'Please select orders first.',
+    'all_channels' => 'All Channels',
+    'omnichannel_control_desc' => 'Command center & shipping label printing across COOCA Online Store, Shopee, TikTok Shop, and Tokopedia',
+    'orders_selected' => 'Orders Selected',
+    'print_mass_labels' => 'Print Thermal Labels (Bulk)',
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
     'title' => __('inventory.transfer_stok_antar_outlet'),
-    'headerTitle' => 'Transfer Stok Antar Outlet',
-    'headerSubtitle' => 'Kirim dan terima barang antar outlet atau gudang pusat dengan pencatatan mutasi otomatis'
+    'headerTitle' => __('inventory.transfer_stok_antar_outlet'),
+    'headerSubtitle' => __('inventory.transfer_stok_antar_outlet_subtitle'),
 ])
 
 @section('content')
@@ -48,7 +48,7 @@
             </span>
             <span class="text-black/20 dark:text-white/20 text-xs">•</span>
             <span class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
-                Transfer Antar Cabang
+                {{ __('inventory.transfer_antar_cabang') }}
             </span>
         </div>
 
@@ -57,7 +57,7 @@
             <div class="flex items-center gap-3">
                 <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-black dark:text-white">{{ __('inventory.transfer_stok_antar_outlet') }}</h1>
                 <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20">
-                    {{ $transfers->total() }} Dokumen
+                    {{ $transfers->total() }} {{ __('inventory.dokumen_count') }}
                 </span>
             </div>
 
@@ -73,7 +73,7 @@
 
         {{-- Baris 3: Subtitle Faktual Ringkas (10-15 Kata) --}}
         <p class="mt-2 text-sm text-black/60 dark:text-white/60 max-w-3xl leading-relaxed">
-            Kirim dan terima barang antar cabang atau gudang pusat dengan mutasi buku stok otomatis.
+            {{ __('inventory.transfer_stok_antar_outlet_subtitle') }}
         </p>
     </div>
 
@@ -99,10 +99,10 @@
                 <thead>
                     <tr class="border-b border-black/[0.06] dark:border-white/[0.08] whitespace-nowrap bg-black/[0.015] dark:bg-white/[0.015]">
                         <x-table-sort-th :col="0" type="string" title="{{ __('inventory.no_transfer') }}" />
-                        <x-table-sort-th :col="1" type="date" title="Tanggal" />
-                        <x-table-sort-th :col="2" type="string" title="Rute (Asal → Tujuan)" />
-                        <x-table-sort-th :col="3" type="string" title="Pengirim / Penerima" />
-                        <x-table-sort-th :col="4" type="number" title="Item" align="center" />
+                        <x-table-sort-th :col="1" type="date" title="{{ __('common.date') }}" />
+                        <x-table-sort-th :col="2" type="string" title="{{ __('inventory.route_source_destination') }}" />
+                        <x-table-sort-th :col="3" type="string" title="{{ __('inventory.sender_receiver') }}" />
+                        <x-table-sort-th :col="4" type="number" title="{{ __('inventory.item_col') }}" align="center" />
                         <x-table-sort-th :col="5" type="string" title="{{ __('common.status') }}" align="center" />
                         <th class="py-3 px-4 text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('common.actions') }}</th>
                     </tr>
@@ -112,33 +112,33 @@
                     <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                         <td class="py-3.5 px-4" data-sort-value="{{ $tr->transfer_number }}">
                             <div class="font-bold text-black dark:text-white tabular-nums text-[13px]">#{{ $tr->transfer_number }}</div>
-                            <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $tr->notes ?? 'Mutasi internal' }}</div>
+                            <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ $tr->notes ?? __('inventory.internal_mutation') }}</div>
                         </td>
                         <td class="py-3.5 px-4 tabular-nums text-black/60 dark:text-white/60" data-sort-value="{{ $tr->transfer_date->format('Y-m-d') }}">
                             {{ $tr->transfer_date->format('d/m/Y') }}
                         </td>
                         <td class="py-3.5 px-4" data-sort-value="{{ strtolower(($tr->sourceLocation->name ?? '') . ' ' . ($tr->destinationLocation->name ?? '')) }}">
                             <div class="font-medium text-black dark:text-white flex items-center gap-1.5">
-                                <span>{{ $tr->sourceLocation->name ?? 'Asal' }}</span>
+                                <span>{{ $tr->sourceLocation->name ?? __('inventory.origin') }}</span>
                                 <span class="text-[#007AFF] font-bold">→</span>
-                                <span>{{ $tr->destinationLocation->name ?? 'Tujuan' }}</span>
+                                <span>{{ $tr->destinationLocation->name ?? __('inventory.destination') }}</span>
                             </div>
                         </td>
                         <td class="py-3.5 px-4 text-black/70 dark:text-white/70 text-[12px]" data-sort-value="{{ strtolower($tr->creator->name ?? '') }}">
-                            <div>Kirim: <span class="font-semibold text-black dark:text-white">{{ $tr->creator->name ?? '-' }}</span></div>
-                            <div class="text-[11px] text-black/45 dark:text-white/45">Terima: {{ $tr->receiver->name ?? 'Belum' }}</div>
+                            <div>{{ __('inventory.sender_label') }}: <span class="font-semibold text-black dark:text-white">{{ $tr->creator->name ?? '-' }}</span></div>
+                            <div class="text-[11px] text-black/45 dark:text-white/45">{{ __('inventory.receiver_label') }}: {{ $tr->receiver->name ?? __('inventory.pending_receiver') }}</div>
                         </td>
                         <td class="py-3.5 px-4 text-center tabular-nums font-bold text-black dark:text-white" data-sort-value="{{ $tr->items->count() }}">
-                            {{ $tr->items->count() }} Produk
+                            {{ $tr->items->count() }} {{ __('inventory.products_count') }}
                         </td>
                         <td class="py-3.5 px-4 text-center" data-sort-value="{{ $tr->status }}">
                             @if($tr->status === 'received')
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> Diterima
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span> {{ __('inventory.received_status') }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FF9500]/12 text-[#B25E00] dark:text-[#FF9F0A]">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> Dalam Pengiriman
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span> {{ __('inventory.in_transit_status') }}
                                 </span>
                             @endif
                         </td>
@@ -154,7 +154,7 @@
                                     </form>
                                     @endif
                                 @else
-                                    <span class="inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="Selesai">
+                                    <span class="inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="{{ __('common.completed') }}">
                                         <i data-lucide="check-check" class="w-4 h-4"></i>
                                     </span>
                                 @endif
@@ -194,17 +194,17 @@
                     <span class="w-2 h-2 rounded-full {{ $tr->status === 'received' ? 'bg-[#34C759]' : 'bg-[#FF9500]' }} shrink-0"></span>
                 </div>
                 <p class="text-[13px] text-black/70 dark:text-white/70 mt-0.5">
-                    {{ $tr->sourceLocation->name ?? 'Asal' }} <span class="text-[#007AFF] font-bold">→</span> {{ $tr->destinationLocation->name ?? 'Tujuan' }}
+                    {{ $tr->sourceLocation->name ?? __('inventory.origin') }} <span class="text-[#007AFF] font-bold">→</span> {{ $tr->destinationLocation->name ?? __('inventory.destination') }}
                 </p>
                 <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5 tabular-nums">
-                    {{ $tr->transfer_date->format('d/m/Y') }} · {{ $tr->items->count() }} produk ditransfer
+                    {{ $tr->transfer_date->format('d/m/Y') }} · {{ $tr->items->count() }} {{ __('inventory.products_transferred') }}
                 </p>
             </div>
             <div class="shrink-0">
                 @if($tr->status !== 'received')
                     @if(\App\Support\Context::hasPermission('inventory.manage'))
                     <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="min-h-[44px] h-10 px-3.5 rounded-xl text-[12px] font-semibold text-white bg-[#007AFF] active:scale-[0.97] transition-all cursor-pointer">
-                        Terima
+                        {{ __('inventory.konfirmasi_terima') }}
                     </button>
                     <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
                         @csrf
@@ -212,7 +212,7 @@
                     @endif
                 @else
                     <span class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                        Selesai
+                        {{ __('common.completed') }}
                     </span>
                 @endif
             </div>
@@ -278,7 +278,7 @@
                     @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Asal (Pengirim) *</label>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.origin') }} *</label>
                             <select name="source_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
@@ -286,7 +286,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Lokasi Tujuan (Penerima) *</label>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.destination') }} *</label>
                             <select name="destination_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $loop->last ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
@@ -297,11 +297,11 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Tanggal Transfer *</label>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.transfer_date_label') }} *</label>
                             <input type="date" name="transfer_date" value="{{ date('Y-m-d') }}" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
                         <div>
-                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Catatan / No. Surat Jalan</label>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.notes_delivery_number_label') }}</label>
                             <input type="text" name="notes" placeholder="Misal: Surat Jalan #SJ-01..." class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                     <!-- Items Row -->
                     <div class="space-y-3 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center justify-between">
-                            <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">Produk yang Ditransfer:</label>
+                            <label class="text-[12px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('inventory.transferred_products_label') }}:</label>
                             <button type="button" @click="addItem()" class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer">
                                 <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('inventory.tambah_produk') }}</span>
@@ -376,9 +376,9 @@
                     <div class="w-12 h-12 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto mb-3">
                         <i data-lucide="package-check" class="w-6 h-6"></i>
                     </div>
-                    <p class="text-[17px] font-bold text-black dark:text-white">Konfirmasi Terima?</p>
+                    <p class="text-[17px] font-bold text-black dark:text-white">{{ __('inventory.confirm_receive_title') }}</p>
                     <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-relaxed">
-                        Pastikan barang transfer <span x-text="'#' + receiveTarget.number" class="font-bold text-black dark:text-white tabular-nums"></span> sudah sampai dan dihitung fisik dengan benar di lokasi tujuan.
+                        {{ __('inventory.confirm_receive_desc') }}
                     </p>
                 </div>
 

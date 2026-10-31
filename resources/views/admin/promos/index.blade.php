@@ -150,11 +150,11 @@
                 <div class="inline-flex p-1 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.06] self-start">
                     <a href="{{ route('admin.promos.index', ['tab' => 'promos', 'status' => $status, 'search' => $search]) }}"
                         class="px-4 py-1.5 rounded-[10px] text-[13px] font-semibold transition-all {{ $tab === 'promos' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Katalog Kode Promo ({{ $promos->total() }})
+                        {{ __('admin.katalog_kode_promo_tab', ['count' => $promos->total()]) }}
                     </a>
                     <a href="{{ route('admin.promos.index', ['tab' => 'usages', 'search' => $search]) }}"
                         class="px-4 py-1.5 rounded-[10px] text-[13px] font-semibold transition-all {{ $tab === 'usages' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
-                        Audit Keuangan &amp; Log Pemakaian ({{ $usages->total() }})
+                        {{ __('admin.audit_keuangan_log_pemakaian_tab', ['count' => $usages->total()]) }}
                     </a>
                 </div>
 

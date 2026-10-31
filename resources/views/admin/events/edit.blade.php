@@ -1,5 +1,5 @@
 @extends('layouts.admin', [
-    'title' => 'Edit Event: ' . $event->title . ' - Cooca Admin',
+    'title' => __('admin.edit_event') . ': ' . $event->title . ' - Cooca Admin',
     'headerTitle' => 'Edit Event Komunitas',
     'headerSubtitle' => 'Perbarui rincian waktu, lokasi, kuota, atau batas pendaftaran event',
 ])

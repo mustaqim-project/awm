@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'WhatsApp Admin Center - Pengingat Langganan & Broadcast Bisnis')
+@section('title', __('admin.wa_page_title'))
 
 @section('content')
     @php
@@ -36,7 +36,7 @@
                     <h1 class="text-[18px] sm:text-[24px] font-bold text-black dark:text-white tracking-tight truncate">
                         WhatsApp Platform Admin Center</h1>
                     <p class="text-[12px] sm:text-[13px] text-black/50 dark:text-white/50 mt-0.5 truncate">Pusat konfigurasi
-                        resmi Meta Tech Provider, gateway OTP keamanan, pengingat langganan, dan pengawasan merchant</p>
+                        {{ __('admin.wa_header_desc') }}</p>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
                     <div
                         class="flex items-center justify-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-[12px] bg-[#34C759]/12 border border-[#34C759]/25 text-[#248A3D] dark:text-[#30D158] text-[12px] font-semibold min-h-[40px] sm:min-h-[44px] min-w-0">
                         <span class="w-2 h-2 rounded-full bg-[#34C759] shrink-0"></span>
-                        <span class="truncate">Meta Resmi Aktif</span>
+                        <span class="truncate">{{ __('admin.wa_status_meta_official_active') }}</span>
                         <span class="text-black/30 dark:text-white/30">|</span>
                         <span class="font-mono truncate"
                             x-text="phone ? (phone.startsWith('+') ? phone : '+' + phone) : 'Online'"></span>
@@ -56,27 +56,27 @@
                     <div
                         class="flex items-center justify-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-[12px] bg-[#FF9500]/12 border border-[#FF9500]/25 text-[#B25E00] dark:text-[#FF9F0A] text-[12px] font-semibold min-h-[40px] sm:min-h-[44px] min-w-0">
                         <span class="w-2 h-2 rounded-full bg-[#FF9500] shrink-0 animate-pulse"></span>
-                        <span class="truncate">Perlu Verifikasi Nomor</span>
+                        <span class="truncate">{{ __('admin.wa_status_need_number_verification') }}</span>
                     </div>
                 </template>
                 <template x-if="status !== 'connected' && (codeVerificationStatus !== 'NOT_VERIFIED' || !phone)">
                     <div
                         class="flex items-center justify-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 text-black/55 dark:text-white/55 text-[12px] font-semibold min-h-[40px] sm:min-h-[44px] min-w-0">
                         <span class="w-2 h-2 rounded-full bg-[#FF9500] shrink-0"></span>
-                        <span class="truncate">Meta Belum Terkonfigurasi</span>
+                        <span class="truncate">{{ __('admin.wa_status_meta_unconfigured') }}</span>
                     </div>
                 </template>
 
                 <button type="button" @click="setTab('blast')"
                     class="min-h-[40px] sm:min-h-[44px] px-3.5 rounded-[12px] text-[12.5px] sm:text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2DB34F] active:scale-[0.98] shadow-sm transition-all inline-flex items-center justify-center gap-2 min-w-0">
                     <i data-lucide="megaphone" class="w-4 h-4 shrink-0"></i>
-                    <span class="truncate">Kirim Siaran (Blast)</span>
+                    <span class="truncate">{{ __('whatsapp.send_broadcast_blast') }}</span>
                 </button>
 
                 <a href="{{ route('admin.settings.index', ['tab' => 'whatsapp']) }}"
                     class="min-h-[40px] sm:min-h-[44px] px-4 rounded-[12px] text-[12.5px] sm:text-[13px] font-semibold bg-[#1877F2] text-white hover:bg-[#166FE5] active:scale-[0.98] shadow-sm transition-all inline-flex items-center justify-center gap-2 min-w-0">
                     <i data-lucide="sliders-horizontal" class="w-4 h-4 shrink-0"></i>
-                    <span class="truncate">Kelola Pengaturan Meta</span>
+                    <span class="truncate">{{ __('whatsapp.manage_meta_settings') }}</span>
                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 shrink-0 opacity-70"></i>
                 </a>
             </div>
@@ -88,7 +88,7 @@
                 class="rounded-[18px] p-4 bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[#C41E17] dark:text-[#FF453A] text-[13px] font-medium shadow-sm">
                 <div class="flex items-center gap-2 mb-1.5 font-bold">
                     <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
-                    <span>Periksa kembali isian formulir:</span>
+                    <span>{{ __('admin.check_form_input_again') }}</span>
                 </div>
                 <ul class="list-disc list-inside space-y-1 text-[12px] opacity-90 pl-1">
                     @foreach ($errors->all() as $err)
@@ -118,7 +118,7 @@
                         <span x-text="status === 'connected' ? 'Meta Resmi' : 'Offline'"></span>
                     </div>
                     <p class="text-[11px] sm:text-[11.5px] text-black/50 dark:text-white/50 mt-0.5 font-mono truncate"
-                        x-text="phone ? '+' + phone : 'Kredensial Belum Lengkap'"></p>
+                        x-text="phone ? '+' + phone : @json(__('admin.wa_credentials_incomplete'))"></p>
                 </div>
             </div>
 
@@ -127,7 +127,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Merchant WABA</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">{{ __('admin.wa_active_merchants') }}</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center shrink-0">
                         <i data-lucide="store" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -137,10 +137,10 @@
                     <div
                         class="text-[18px] sm:text-[24px] font-bold text-black dark:text-white tracking-tight tabular-nums truncate">
                         {{ $activeMerchantsCount }} <span
-                            class="text-[11px] sm:text-[12px] font-medium text-black/45 dark:text-white/45">aktif</span>
+                            class="text-[11px] sm:text-[12px] font-medium text-black/45 dark:text-white/45">{{ __('admin.active_short') }}</span>
                     </div>
                     <p class="text-[11px] sm:text-[11.5px] text-black/50 dark:text-white/50 mt-0.5 truncate tabular-nums">
-                        Total {{ $totalMerchantsCount }} toko terdaftar</p>
+                        {{ __('admin.wa_total_registered_stores', ['count' => $totalMerchantsCount]) }}</p>
                 </div>
             </div>
 
@@ -149,7 +149,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Pengingat Tagihan</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">{{ __('admin.wa_due_reminders') }}</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center shrink-0">
                         <i data-lucide="bell" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -159,11 +159,10 @@
                     <div
                         class="text-[18px] sm:text-[24px] font-bold text-black dark:text-white tracking-tight tabular-nums truncate">
                         {{ $pendingRemindersCount }} <span
-                            class="text-[11px] sm:text-[12px] font-medium text-black/45 dark:text-white/45">pending</span>
+                            class="text-[11px] sm:text-[12px] font-medium text-black/45 dark:text-white/45">{{ __('admin.wa_pending_count', ['count' => '']) }}</span>
                     </div>
                     <p class="text-[11px] sm:text-[11.5px] text-black/50 dark:text-white/50 mt-0.5 truncate tabular-nums">
-                        Total
-                        {{ $totalDueCount }} langganan</p>
+                        {{ __('admin.wa_total_due', ['count' => $totalDueCount]) }}</p>
                 </div>
             </div>
 
@@ -172,7 +171,7 @@
                 class="rounded-[18px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-w-0">
                 <div class="flex items-center justify-between gap-2 min-w-0">
                     <span
-                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">Keberhasilan Kirim</span>
+                        class="text-[11px] sm:text-[12px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider truncate">{{ __('admin.wa_delivery_rate') }}</span>
                     <div
                         class="w-7 h-7 sm:w-8 sm:h-8 rounded-[9px] sm:rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center shrink-0">
                         <i data-lucide="check-check" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -184,7 +183,7 @@
                         {{ $overallSuccessRate }}%
                     </div>
                     <p class="text-[11px] sm:text-[11.5px] text-black/50 dark:text-white/50 mt-0.5 truncate tabular-nums">
-                        {{ number_format($sentRemindersCount + $totalBlastSent) }} pesan terkirim</p>
+                        {{ __('admin.wa_messages_sent', ['count' => number_format($sentRemindersCount + $totalBlastSent)]) }}</p>
                 </div>
             </div>
         </div>
@@ -199,7 +198,7 @@
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                     class="min-h-[42px] sm:min-h-[44px] px-3.5 sm:px-5 rounded-[12px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap active:scale-[0.98]">
                     <i data-lucide="shield-check" class="w-4 h-4 text-[#1877F2]"></i>
-                    <span>Pengaturan Platform Meta</span>
+                    <span>{{ __('whatsapp.meta_platform_settings') }}</span>
                     <template x-if="status === 'connected'">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                     </template>
@@ -211,7 +210,7 @@
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                     class="min-h-[42px] sm:min-h-[44px] px-3.5 sm:px-5 rounded-[12px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap active:scale-[0.98]">
                     <i data-lucide="store" class="w-4 h-4 text-[#34C759]"></i>
-                    <span>Monitoring Merchant</span>
+                    <span>{{ __('admin.wa_tab_merchants') }}</span>
                     @if ($activeMerchantsCount > 0)
                         <span
                             class="px-2 py-0.5 rounded-full bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] text-[11px] font-bold tabular-nums">
@@ -226,7 +225,7 @@
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                     class="min-h-[42px] sm:min-h-[44px] px-3.5 sm:px-5 rounded-[12px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap active:scale-[0.98]">
                     <i data-lucide="bell" class="w-4 h-4 text-[#007AFF]"></i>
-                    <span>Pengingat Langganan</span>
+                    <span>{{ __('admin.wa_tab_reminders') }}</span>
                     @if ($pendingRemindersCount > 0)
                         <span class="px-2 py-0.5 rounded-full bg-[#FF3B30] text-white text-[11px] font-bold tabular-nums">
                             {{ $pendingRemindersCount }}
@@ -240,7 +239,7 @@
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                     class="min-h-[42px] sm:min-h-[44px] px-3.5 sm:px-5 rounded-[12px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap active:scale-[0.98]">
                     <i data-lucide="send" class="w-4 h-4 text-[#FF9500]"></i>
-                    <span>Siaran Platform</span>
+                    <span>{{ __('admin.wa_tab_blast') }}</span>
                 </button>
 
                 <button type="button" @click="setTab('templates')"
@@ -249,7 +248,7 @@
                         'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                     class="min-h-[42px] sm:min-h-[44px] px-3.5 sm:px-5 rounded-[12px] text-[12.5px] sm:text-[13px] transition-all flex items-center gap-2 sm:gap-2.5 shrink-0 whitespace-nowrap active:scale-[0.98]">
                     <i data-lucide="file-text" class="w-4 h-4 text-[#AF52DE]"></i>
-                    <span>Template Notifikasi</span>
+                    <span>{{ __('admin.wa_tab_templates') }}</span>
                 </button>
             </div>
         </div>
@@ -280,7 +279,7 @@
                                     <span
                                         class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25">
                                         <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
-                                        <span>Aktif Terhubung</span>
+                                        <span>{{ __('admin.wa_status_active_connected') }}</span>
                                     </span>
                                 </template>
                                 <template
@@ -288,7 +287,7 @@
                                     <span
                                         class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#FF3B30]/15 text-[#C41E17] dark:text-[#FF453A] border border-[#FF3B30]/25">
                                         <span class="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                                        <span>Perlu Verifikasi Nomor</span>
+                                        <span>{{ __('admin.wa_status_need_number_verification') }}</span>
                                     </span>
                                 </template>
                                 <template
@@ -296,14 +295,12 @@
                                     <span
                                         class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#FF9500]/15 text-[#B25E00] dark:text-[#FF9F0A] border border-[#FF9500]/25">
                                         <span class="w-1.5 h-1.5 rounded-full bg-[#FF9500]"></span>
-                                        <span>Belum Dikonfigurasi</span>
+                                        <span>{{ __('admin.wa_status_unconfigured') }}</span>
                                     </span>
                                 </template>
                             </div>
                             <p class="text-[12.5px] text-black/60 dark:text-white/60 leading-relaxed max-w-2xl">
-                                Kanal resmi Meta WhatsApp Cloud API (Graph API v26.0) tingkat induk (Parent). Digunakan
-                                untuk pengiriman OTP otentikasi login, reset PIN, verifikasi akun, dan Pengingat Tagihan
-                                langganan SaaS.
+                                {{ __('admin.wa_meta_parent_desc') }}
                             </p>
                         </div>
                     </div>
@@ -312,7 +309,7 @@
                         <button type="button" @click="checkStatus()" :disabled="isLoading"
                             class="min-h-[44px] px-4 rounded-[12px] text-[12.5px] font-bold bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 w-full sm:w-auto">
                             <i data-lucide="refresh-cw" class="w-4 h-4" :class="isLoading ? 'animate-spin' : ''"></i>
-                            <span>Cek Status Meta</span>
+                            <span>{{ __('whatsapp.check_meta_status') }}</span>
                         </button>
                     </div>
                 </div>
@@ -322,8 +319,7 @@
                     <div
                         class="p-3.5 sm:p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span
-                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">Nama
-                            Akun Bisnis</span>
+                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">{{ __('admin.wa_label_business_account_name') }}</span>
                         <div class="text-[13.5px] sm:text-[14px] font-bold text-black dark:text-white truncate"
                             x-text="metaVerifyResult?.verified_name || '{{ $waStatus['verified_name'] ?? 'Cooca Platform' }}'">
                             {{ $waStatus['verified_name'] ?? 'Cooca Platform' }}
@@ -333,8 +329,7 @@
                     <div
                         class="p-3.5 sm:p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span
-                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">Nomor
-                            Telepon Bot</span>
+                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">{{ __('admin.wa_label_bot_phone_number') }}</span>
                         <div class="text-[13.5px] sm:text-[14px] font-bold font-mono text-black dark:text-white truncate"
                             x-text="phone ? (phone.startsWith('+') ? phone : '+' + phone) : '{{ $waStatus['display_phone'] ?? '-' }}'">
                             {{ $waStatus['display_phone'] ?? '-' }}
@@ -344,8 +339,7 @@
                     <div
                         class="p-3.5 sm:p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span
-                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">Kualitas
-                            Nomor</span>
+                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">{{ __('admin.wa_label_number_quality') }}</span>
                         <div
                             class="text-[13.5px] sm:text-[14px] font-bold text-[#248A3D] dark:text-[#30D158] flex items-center gap-1.5 truncate">
                             <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
@@ -359,8 +353,7 @@
                     <div
                         class="p-3.5 sm:p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span
-                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">Limit
-                            Kuota Harian</span>
+                            class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider block">{{ __('admin.wa_label_daily_limit') }}</span>
                         <div class="text-[13.5px] sm:text-[14px] font-bold text-black dark:text-white truncate"
                             x-text="metaVerifyResult?.messaging_tier || '{{ $waStatus['messaging_tier'] ?? 'TIER_1K' }}'">
                             {{ $waStatus['messaging_tier'] ?? 'TIER_1K' }}
@@ -381,26 +374,25 @@
                             </div>
                             <div class="min-w-0">
                                 <h3 class="text-[15px] sm:text-[16px] font-bold text-black dark:text-white tracking-tight">
-                                    Tindakan Diperlukan: Verifikasi Kepemilikan Nomor di Meta WhatsApp Manager
+                                    {{ __('whatsapp.action_required_verify_number_meta') }}
                                 </h3>
                                 <p
                                     class="text-[12px] sm:text-[12.5px] text-black/65 dark:text-white/65 mt-1 leading-relaxed max-w-3xl">
-                                    Nomor <strong class="font-mono text-black dark:text-white"
+                                    {{ __('admin.wa_number_verification_notice_p1') }} <strong class="font-mono text-black dark:text-white"
                                         x-text="phone ? (phone.startsWith('+') ? phone : '+' + phone) : '+62 852-8786-4176'"></strong>
-                                    telah terhubung ke WABA <em>Cooca ID</em>, tetapi status registrasi di server Meta masih
+                                    {{ __('admin.wa_number_verification_notice_p2') }}
                                     <span class="font-mono font-bold text-[#D97706] dark:text-[#FFA114]"
                                         x-text="metaStatus + ' / ' + codeVerificationStatus">DISCONNECTED /
-                                        NOT_VERIFIED</span>. Meta Cloud API menolak pengiriman pesan (<code
+                                        NOT_VERIFIED</span>. {{ __('admin.wa_number_verification_notice_p3') }} (<code
                                         class="text-[11px] bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded font-mono">#133010
-                                        Account not registered</code>) hingga verifikasi SMS OTP diselesaikan langsung di
-                                    Meta.
+                                        Account not registered</code>) {{ __('admin.wa_number_verification_notice_p4') }}
                                 </p>
                             </div>
                         </div>
                         <a :href="managerUrl" target="_blank" rel="noopener noreferrer"
                             class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold bg-[#FF9500] hover:bg-[#E08500] text-white active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shrink-0">
                             <i data-lucide="external-link" class="w-4 h-4"></i>
-                            <span>Buka WhatsApp Manager Meta</span>
+                            <span>{{ __('whatsapp.open_meta_wa_manager') }}</span>
                         </a>
                     </div>
 
@@ -409,22 +401,22 @@
                         <div class="flex items-center gap-2">
                             <span
                                 class="w-5 h-5 rounded-full bg-[#FF9500]/20 text-[#D97706] dark:text-[#FFA114] font-bold text-[11px] flex items-center justify-center shrink-0">1</span>
-                            <span>Buka link WhatsApp Manager</span>
+                            <span>{{ __('admin.wa_step1_open_link') }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span
                                 class="w-5 h-5 rounded-full bg-[#FF9500]/20 text-[#D97706] dark:text-[#FFA114] font-bold text-[11px] flex items-center justify-center shrink-0">2</span>
-                            <span>Cari nomor &amp; klik <strong>Verifikasi</strong></span>
+                            <span>{{ __('admin.wa_step2_search_and_verify') }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span
                                 class="w-5 h-5 rounded-full bg-[#FF9500]/20 text-[#D97706] dark:text-[#FFA114] font-bold text-[11px] flex items-center justify-center shrink-0">3</span>
-                            <span>Input 6-digit SMS &amp; PIN 2FA</span>
+                            <span>{{ __('admin.wa_step3_input_otp') }}</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <span
                                 class="w-5 h-5 rounded-full bg-[#FF9500]/20 text-[#D97706] dark:text-[#FFA114] font-bold text-[11px] flex items-center justify-center shrink-0">4</span>
-                            <span>Status aktif &amp; pesan siap terkirim</span>
+                            <span>{{ __('admin.wa_step4_status_active') }}</span>
                         </div>
                     </div>
                 </div>
@@ -451,9 +443,7 @@
                                 </span>
                             </div>
                             <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55 mt-0.5 max-w-2xl">
-                                Seluruh konfigurasi kredensial Meta App ID, Secret, WABA ID, Phone Number ID, Access Token,
-                                Webhook Verify Token, dan Embedded Signup Config ID kini dikelola secara terpusat di
-                                <strong>Pengaturan Platform &amp; Sistem</strong>.
+                                {{ __('admin.wa_central_settings_desc') }}
                             </p>
                         </div>
                     </div>
@@ -461,7 +451,7 @@
                     <a href="{{ route('admin.settings.index', ['tab' => 'whatsapp']) }}"
                         class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-bold bg-[#007AFF] hover:bg-[#0071E3] text-white active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shrink-0">
                         <i data-lucide="sliders" class="w-4 h-4"></i>
-                        <span>Buka Pengaturan WhatsApp Cloud API</span>
+                        <span>{{ __('whatsapp.open_wa_cloud_api_settings') }}</span>
                         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-70"></i>
                     </a>
                 </div>
@@ -473,7 +463,7 @@
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta App ID (META_WA_APP_ID)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ $platformApp['app_id'] ?: 'Belum Dikonfigurasi' }}
+                            {{ $platformApp['app_id'] ?: __('admin.unconfigured') }}
                         </div>
                     </div>
 
@@ -482,7 +472,7 @@
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta App Secret (META_WA_APP_SECRET)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ !empty($platformApp['app_secret']) ? '••••••••••••••••' : 'Belum Dikonfigurasi' }}
+                            {{ !empty($platformApp['app_secret']) ? '••••••••••••••••' : __('admin.unconfigured') }}
                         </div>
                     </div>
 
@@ -491,7 +481,7 @@
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Embedded Signup Config ID (META_WA_CONFIG_ID)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ $platformApp['config_id'] ?: 'Opsional / Default' }}
+                            {{ $platformApp['config_id'] ?: __('admin.optional_default') }}
                         </div>
                     </div>
 
@@ -500,7 +490,7 @@
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                         <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Webhook Verify Token (META_WA_WEBHOOK_VERIFY_TOKEN)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ $platformApp['webhook_verify_token'] ?: 'Belum Dikonfigurasi' }}
+                            {{ $platformApp['webhook_verify_token'] ?: __('admin.unconfigured') }}
                         </div>
                     </div>
 
@@ -529,7 +519,7 @@
                             class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Phone
                             Number ID</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ $metaCreds['phone_number_id'] ?: 'Belum Dikonfigurasi' }}
+                            {{ $metaCreds['phone_number_id'] ?: __('admin.unconfigured') }}
                         </div>
                     </div>
 
@@ -540,7 +530,7 @@
                             class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">WhatsApp
                             Business ID (WABA)</span>
                         <div class="text-[13px] font-mono font-bold text-black dark:text-white truncate">
-                            {{ $metaCreds['waba_id'] ?: 'Belum Dikonfigurasi' }}
+                            {{ $metaCreds['waba_id'] ?: __('admin.unconfigured') }}
                         </div>
                     </div>
 
@@ -550,7 +540,7 @@
                         <span class="text-[10.5px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45 block">Meta System User Permanent Access Token (META_WA_TOKEN)</span>
                         <div class="text-[13px] font-bold text-[#248A3D] dark:text-[#30D158] flex items-center gap-1.5">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
-                            <span>{{ !empty($metaCreds['token']) ? 'Tersimpan Terenkripsi (AES-256)' : 'Belum Ada Token' }}</span>
+                            <span>{{ !empty($metaCreds['token']) ? __('whatsapp.saved_encrypted_aes') : __('whatsapp.no_token_yet') }}</span>
                         </div>
                     </div>
                 </div>
@@ -590,11 +580,10 @@
                         </div>
                         <div>
                             <h3 class="text-[16px] sm:text-[17px] font-bold text-black dark:text-white tracking-tight">
-                                Uji Kirim Pesan &amp; Simulator WhatsApp OTP
+                                {{ __('admin.wa_test_message_and_otp_simulator') }}
                             </h3>
                             <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
-                                Validasi respon gateway Meta Cloud API secara langsung untuk pesan teks biasa atau template
-                                OTP resmi
+                                {{ __('admin.wa_test_message_desc') }}
                             </p>
                         </div>
                     </div>
@@ -608,7 +597,7 @@
                                 'text-black/55 dark:text-white/55 font-medium'"
                             class="min-h-[34px] px-3 rounded-[10px] text-[12px] transition-all flex items-center gap-1.5">
                             <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
-                            <span>Pesan Teks</span>
+                            <span>{{ __('admin.text_message') }}</span>
                         </button>
                         <button type="button" @click="diagnosticMode = 'otp'; if(!otpCode) generateRandomOtp();"
                             :class="diagnosticMode === 'otp' ?
@@ -616,7 +605,7 @@
                                 'text-black/55 dark:text-white/55 font-medium'"
                             class="min-h-[34px] px-3 rounded-[10px] text-[12px] transition-all flex items-center gap-1.5">
                             <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>Kirim WA OTP</span>
+                            <span>{{ __('whatsapp.send_wa_otp') }}</span>
                         </button>
                     </div>
                 </div>
@@ -626,18 +615,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                         <div>
                             <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">Nomor
-                                Ponsel Tujuan</label>
+                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.recipient_phone_number') }}</label>
                             <input x-model="testPhone" type="tel"
-                                placeholder="Contoh: 081234567890 atau 6281234567890"
+                                placeholder="{{ __('whatsapp.phone_example_placeholder') }}"
                                 class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition-all">
                         </div>
 
                         <div>
                             <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">Isi
-                                Pesan Uji Coba</label>
-                            <textarea x-model="testMessage" rows="2" placeholder="Pesan tes..."
+                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.test_message_content') }}</label>
+                            <textarea x-model="testMessage" rows="2" placeholder="{{ __('admin.test_message_placeholder') }}"
                                 class="w-full bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] p-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition-all resize-none"></textarea>
                         </div>
 
@@ -654,7 +641,7 @@
                                 class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#2DB34F] disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 shadow-sm shrink-0">
                                 <i data-lucide="loader-2" class="w-4 h-4 animate-spin" x-show="testLoading"></i>
                                 <i data-lucide="send" class="w-4 h-4" x-show="!testLoading"></i>
-                                <span x-text="testLoading ? 'Mengirim pesan tes...' : 'Kirim Pesan Tes'"></span>
+                                <span x-text="testLoading ? @json(__('admin.sending_test_message')) : @json(__('admin.send_test_message'))"></span>
                             </button>
                         </div>
                     </div>
@@ -666,26 +653,24 @@
                         <div class="space-y-3.5">
                             <div>
                                 <label
-                                    class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">Nomor
-                                    Ponsel Tujuan OTP</label>
+                                    class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.otp_target_phone_number') }}</label>
                                 <input x-model="otpPhone" type="tel"
-                                    placeholder="Contoh: 081234567890 atau 6281234567890"
+                                    placeholder="{{ __('whatsapp.phone_example_placeholder') }}"
                                     class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
                             </div>
 
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
                                     <label
-                                        class="text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55">Kode
-                                        OTP 6-Digit</label>
+                                        class="text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55">{{ __('admin.otp_6digit_code') }}</label>
                                     <button type="button" @click="generateRandomOtp()"
                                         class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-1">
                                         <i data-lucide="refresh-cw" class="w-3 h-3"></i>
-                                        <span>Acak Kode Baru</span>
+                                        <span>{{ __('whatsapp.randomize_new_code') }}</span>
                                     </button>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <input x-model="otpCode" type="text" maxlength="8" placeholder="Contoh: 849201"
+                                    <input x-model="otpCode" type="text" maxlength="8" placeholder="{{ __('admin.otp_code_placeholder') }}"
                                         class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] font-mono font-bold tracking-widest text-[#007AFF] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
                                 </div>
                             </div>
@@ -699,8 +684,7 @@
                                     <span
                                         class="text-[10.5px] font-bold uppercase tracking-wider text-[#007AFF] flex items-center gap-1">
                                         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                                        <span>Preview Template Meta OTP
-                                            ({{ $metaCreds['otp_template'] ?: 'cooca_otp' }})</span>
+                                        <span>{{ __('admin.preview_meta_otp_template') }} ({{ $metaCreds['otp_template'] ?: 'cooca_otp' }})</span>
                                     </span>
                                     <span class="text-[10.5px] font-mono text-black/40 dark:text-white/40">Official
                                         Authentication</span>
@@ -712,19 +696,18 @@
                                         <span>COOCA Authentication Service</span>
                                     </div>
                                     <p class="text-black/75 dark:text-white/75">
-                                        Kode verifikasi masuk COOCA Anda adalah: <strong
+                                        {{ __('admin.cooca_otp_verification_message') }} <strong
                                             class="font-mono text-[14px] text-[#007AFF]"
                                             x-text="otpCode || '------'"></strong>
                                     </p>
                                     <p class="text-[11px] text-black/45 dark:text-white/45">
-                                        Berlaku 10 menit. Demi keamanan akun, jangan berikan kode ini kepada siapa pun.
+                                        {{ __('admin.otp_validity_warning') }}
                                     </p>
                                 </div>
                             </div>
 
                             <p class="text-[11px] text-black/50 dark:text-white/50 italic">
-                                *Pesan dikirimkan menggunakan template resmi yang telah disetujui oleh Meta WhatsApp Cloud
-                                API.
+                                {{ __('admin.otp_template_official_disclaimer') }}
                             </p>
                         </div>
 
@@ -760,20 +743,19 @@
             <div
                 class="p-4 sm:p-6 rounded-[22px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border border-black/[0.06] dark:border-white/[0.08] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full min-w-0">
                 <div class="min-w-0 flex-1">
-                    <h2 class="text-[17px] font-bold text-black dark:text-white">Pengingat Masa Aktif Langganan</h2>
-                    <p class="text-[12px] sm:text-[13px] text-black/55 dark:text-white/55 mt-0.5">Sistem mengirimkan
-                        invoice perpanjangan secara bertahap pada periode H-7, H-3, H-1, dan Hari H</p>
+                    <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('whatsapp.subscription_active_period_reminder') }}</h2>
+                    <p class="text-[12px] sm:text-[13px] text-black/55 dark:text-white/55 mt-0.5">{{ __('admin.wa_reminders_system_desc') }}</p>
                 </div>
                 <div class="flex items-center gap-3">
                     @if(Auth::guard('admin')->user()?->hasPermission('admin.whatsapp.blast'))
 
                     <form method="POST" action="{{ route('admin.whatsapp.reminders.send-all') }}"
-                        onsubmit="return confirm('Apakah Anda yakin ingin mengirimkan SEMUA pengingat langganan yang masih pending ke WhatsApp pemilik bisnis hari ini?');">
+                        onsubmit="return confirm({{ Js::from(__('whatsapp.confirm_send_all_reminders')) }});">
                         @csrf
                         <button type="submit" :disabled="status !== 'connected'"
                             class="min-h-[48px] px-6 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-50 disabled:pointer-events-none text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm transition-all active:scale-[0.98]">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Kirim Semua ({{ $pendingRemindersCount }})</span>
+                            <span>{{ __('whatsapp.send_all') }} ({{ $pendingRemindersCount }})</span>
                         </button>
                     </form>
 
@@ -786,19 +768,19 @@
                 @php
                     $periodConfigs = [
                         'h-7' => [
-                            'label' => 'Periode H-7 (Peringatan Awal)',
+                            'label' => __('admin.wa_period_h7'),
                             'badge' => 'bg-[#007AFF]/15 text-[#007AFF]',
                         ],
                         'h-3' => [
-                            'label' => 'Periode H-3 (Tindak Lanjut)',
+                            'label' => __('admin.wa_period_h3'),
                             'badge' => 'bg-[#FF9500]/15 text-[#FF9500]',
                         ],
                         'h-1' => [
-                            'label' => 'Periode H-1 (Penting / Esok Hari)',
+                            'label' => __('admin.wa_period_h1'),
                             'badge' => 'bg-[#AF52DE]/15 text-[#AF52DE]',
                         ],
                         'hari_h' => [
-                            'label' => 'Hari H (Jatuh Tempo Hari Ini)',
+                            'label' => __('admin.wa_period_hari_h'),
                             'badge' => 'bg-[#FF3B30]/15 text-[#FF3B30]',
                         ],
                     ];
@@ -818,7 +800,7 @@
                                     <h3 class="text-[14px] font-bold text-black dark:text-white">{{ $cfg['label'] }}</h3>
                                 </div>
                                 <span class="text-[12px] font-semibold text-black/45 dark:text-white/45 tabular-nums">
-                                    {{ count($dueData[$periodKey] ?? []) }} Bisnis
+                                    {{ __('admin.businesses_count', ['count' => count($dueData[$periodKey] ?? [])]) }}
                                 </span>
                             </div>
 
@@ -848,20 +830,20 @@
                                                     <span
                                                         class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
                                                         <i data-lucide="check" class="w-3 h-3"></i>
-                                                        <span>Terkirim</span>
+                                                        <span>{{ __('admin.sent') }}</span>
                                                     </span>
                                                 @elseif ($item['phone'])
                                                     <button type="button"
                                                         @click="sendSingleReminder({{ $item['subscription']->id }}, '{{ $periodKey }}')"
                                                         class="min-h-[40px] px-3.5 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                                                         <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                                                        <span>Kirim</span>
+                                                        <span>{{ __('admin.send') }}</span>
                                                     </button>
                                                 @else
                                                     <span
                                                         class="text-[11.5px] font-medium text-[#FF3B30] dark:text-[#FF453A] inline-flex items-center gap-1">
                                                         <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                                                        <span>Tanpa No WA</span>
+                                                        <span>{{ __('admin.no_wa_number') }}</span>
                                                     </span>
                                                 @endif
                                             </div>
@@ -870,7 +852,7 @@
                                 </div>
                             @else
                                 <div class="p-8 text-center text-[12px] text-black/40 dark:text-white/40">
-                                    Tidak ada langganan jatuh tempo pada periode ini.
+                                    {{ __('admin.no_due_subscriptions_in_period') }}
                                 </div>
                             @endif
                         </div>
@@ -884,12 +866,10 @@
                 <div
                     class="px-5 sm:px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                     <div>
-                        <h3 class="text-[15px] font-bold text-black dark:text-white">Audit Log Pengingat Terkirim</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Daftar rekaman riwayat pesan pengingat yang
-                            dieksekusi oleh bot admin</p>
+                        <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.audit_log_reminders_sent') }}</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('admin.audit_log_reminders_desc') }}</p>
                     </div>
-                    <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">Halaman
-                        {{ $recentReminders->currentPage() }} dari {{ $recentReminders->lastPage() }}</span>
+                    <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">{{ __('admin.page_x_of_y', ['current' => $recentReminders->currentPage(), 'last' => $recentReminders->lastPage()]) }}</span>
                 </div>
 
                 {{-- Mobile Card List View (< md) --}}
@@ -933,7 +913,7 @@
                         </div>
                     @empty
                         <div class="p-8 text-center text-[13px] text-black/40 dark:text-white/40">
-                            Belum ada catatan log pengingat.
+                            {{ __('whatsapp.no_reminder_logs') }}
                         </div>
                     @endforelse
                 </div>
@@ -945,15 +925,11 @@
                             <tr
                                 class="border-b border-black/[0.06] dark:border-white/[0.08] text-black/45 dark:text-white/45 bg-black/[0.01] dark:bg-white/[0.02]">
                                 <th class="text-left px-5 sm:px-6 py-3 font-semibold text-[11px] uppercase tracking-wider">
-                                    Nama Bisnis &amp; Owner</th>
-                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">No.
-                                    WhatsApp</th>
-                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">Periode
-                                </th>
-                                <th class="text-center px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">Status
-                                </th>
-                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">Waktu
-                                    Eksekusi</th>
+                                    {{ __('admin.business_name_and_owner') }}</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">{{ __('admin.whatsapp_number') }}</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">{{ __('admin.period') }}</th>
+                                <th class="text-center px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">{{ __('admin.status') }}</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">{{ __('admin.execution_time') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -994,7 +970,7 @@
                                 <tr>
                                     <td colspan="5"
                                         class="p-8 text-center text-[13px] text-black/40 dark:text-white/40">
-                                        Belum ada catatan log pengingat.
+                                        {{ __('whatsapp.no_reminder_logs') }}
                                     </td>
                                 </tr>
                             @endforelse
@@ -1023,9 +999,8 @@
                 <div
                     class="lg:col-span-5 rounded-[22px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-md border border-black/[0.06] dark:border-white/[0.08] shadow-sm p-4 sm:p-6 space-y-5 w-full min-w-0">
                     <div class="min-w-0">
-                        <h2 class="text-[17px] font-bold text-black dark:text-white">Buat Broadcast Pesan Baru</h2>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Kirim pesan informasi pengumuman,
-                            promo, atau rilis fitur baru ke pemilik usaha</p>
+                        <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.create_new_broadcast_message') }}</h2>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('admin.create_broadcast_desc') }}</p>
                     </div>
 
                     {{-- Driver Active Indicator & Warning --}}
@@ -1034,63 +1009,53 @@
                             class="p-3.5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/25 text-[12px] text-[#248A3D] dark:text-[#30D158] space-y-1">
                             <div class="flex items-center gap-1.5 font-bold">
                                 <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                                <span>Gateway Meta WhatsApp Cloud API Resmi</span>
+                                <span>{{ __('admin.official_meta_wa_cloud_gateway') }}</span>
                             </div>
                             <p class="text-[11.5px] text-black/70 dark:text-white/70 leading-relaxed">
-                                Broadcast dikirim melalui server Meta resmi dengan performa maksimal.
+                                {{ __('admin.broadcast_max_performance_desc') }}
                             </p>
                         </div>
                     @else
                         <div
                             class="p-3.5 rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/25 text-[12px] text-[#C41E17] dark:text-[#FF453A]">
-                            <strong>Kanal Broadcast Belum Siap:</strong> Konfigurasi Token dan Phone Number ID Meta di tab
-                            Pengaturan Induk terlebih dahulu.
+                            <strong>{{ __('admin.broadcast_channel_not_ready') }}:</strong> {{ __('admin.broadcast_channel_not_ready_desc') }}
                         </div>
                     @endif
 
                     <form method="POST" action="{{ route('admin.whatsapp.blasts.store') }}" class="space-y-4"
-                        onsubmit="return confirm('Pesan broadcast ini akan dikirimkan ke kontak WhatsApp pemilik bisnis yang terpilih. Lanjutkan pengiriman?');">
+                        onsubmit="return confirm({{ Js::from(__('admin.confirm_send_broadcast_to_selected_owners')) }});">
                         @csrf
 
                         <div>
                             <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">Judul
-                                Broadcast</label>
+                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.broadcast_title') }}</label>
                             <input name="title" required maxlength="255"
-                                placeholder="Contoh: Promo Perpanjangan Langganan Spesial"
+                                placeholder="{{ __('admin.broadcast_title_placeholder') }}"
                                 class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
                         </div>
 
                         <div>
                             <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">Target
-                                Segmen Pemilik Usaha</label>
+                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.target_segment_owners') }}</label>
                             <select name="target_filter"
                                 class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
-                                <option value="all_owners">Semua Bisnis Owner Terdaftar
-                                    ({{ number_format($targetCounts['all_owners']) }} kontak)</option>
-                                <option value="active_subscribers">Pelanggan Paket Aktif
-                                    ({{ number_format($targetCounts['active_subscribers']) }} kontak)</option>
-                                <option value="expiring_soon">Akan Jatuh Tempo Dalam 7 Hari
-                                    ({{ number_format($targetCounts['expiring_soon']) }} kontak)</option>
-                                <option value="free_tier">Paket Gratis / Expired
-                                    ({{ number_format($targetCounts['free_tier']) }} kontak)</option>
+                                <option value="all_owners">{{ __('admin.all_registered_business_owners') }} ({{ number_format($targetCounts['all_owners']) }} {{ __('admin.contacts') }})</option>
+                                <option value="active_subscribers">{{ __('admin.active_plan_subscribers') }} ({{ number_format($targetCounts['active_subscribers']) }} {{ __('admin.contacts') }})</option>
+                                <option value="expiring_soon">{{ __('admin.expiring_in_7_days') }} ({{ number_format($targetCounts['expiring_soon']) }} {{ __('admin.contacts') }})</option>
+                                <option value="free_tier">{{ __('admin.free_or_expired_plan') }} ({{ number_format($targetCounts['free_tier']) }} {{ __('admin.contacts') }})</option>
                             </select>
                         </div>
 
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
                                 <label
-                                    class="text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55">Isi
-                                    Pesan WhatsApp</label>
-                                <span class="text-[11px] text-black/45 dark:text-white/45 font-mono">Maks 3.000
-                                    karakter</span>
+                                    class="text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55">{{ __('admin.wa_message_content') }}</label>
+                                <span class="text-[11px] text-black/45 dark:text-white/45 font-mono">{{ __('admin.max_3000_chars') }}</span>
                             </div>
 
                             {{-- Chip Variabel Interaktif --}}
                             <div class="flex flex-wrap gap-1.5 mb-2">
-                                <span class="text-[11px] text-black/45 dark:text-white/45 self-center mr-1">Klik
-                                    sisipkan:</span>
+                                <span class="text-[11px] text-black/45 dark:text-white/45 self-center mr-1">{{ __('admin.click_to_insert') }}</span>
                                 @foreach (['{owner}', '{bisnis}', '{paket}', '{tanggal_habis}'] as $v)
                                     <button type="button" @click="insertVariableToBlast('{{ $v }}')"
                                         class="px-2 py-0.5 rounded-[8px] text-[11px] font-mono bg-black/[0.05] dark:bg-white/[0.08] text-[#007AFF] hover:bg-[#007AFF]/10 transition-colors">
@@ -1100,14 +1065,13 @@
                             </div>
 
                             <textarea id="blastMessageTextarea" name="message" required maxlength="3000" rows="8" x-model="blastMessage"
-                                placeholder="Tuliskan pesan broadcast di sini... Gunakan format tebal (*kata*) dan miring (_kata_) sesuai format WhatsApp."
+                                placeholder="{{ __('admin.blast_message_placeholder') }}"
                                 class="w-full bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] p-3 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all resize-y"></textarea>
                         </div>
 
                         <div>
                             <label
-                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">URL
-                                Gambar Banner (Opsional)</label>
+                                class="block text-[11px] font-bold uppercase tracking-wider text-black/55 dark:text-white/55 mb-1.5">{{ __('admin.banner_image_url_optional') }}</label>
                             <input name="media_url" type="url" placeholder="https://domain.com/banner-promo.jpg"
                                 class="w-full min-h-[46px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder-black/35 dark:placeholder-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition-all">
                         </div>
@@ -1116,14 +1080,13 @@
                         <div
                             class="p-3.5 rounded-[14px] bg-[#007AFF]/8 border border-[#007AFF]/20 text-[12px] text-[#007AFF] dark:text-[#0A84FF] flex items-start gap-2.5">
                             <i data-lucide="shield-check" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                            <span><strong>Pengiriman Aman:</strong> Pesan dikirim secara bertahap di latar belakang agar
-                                nomor WhatsApp tetap aman dan nyaman.</span>
+                            <span><strong>{{ __('admin.safe_delivery_label') }}:</strong> {{ __('admin.safe_delivery_desc') }}</span>
                         </div>
 
                         <button type="submit" :disabled="status !== 'connected'"
                             class="w-full min-h-[48px] sm:min-h-[50px] rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] disabled:opacity-50 disabled:pointer-events-none text-white text-[14px] font-bold inline-flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Kirim</span>
+                            <span>{{ __('common.send') }}</span>
                         </button>
                     </form>
                 </div>
@@ -1135,13 +1098,10 @@
                         <div
                             class="px-5 sm:px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                             <div>
-                                <h2 class="text-[16px] font-bold text-black dark:text-white">Riwayat Broadcast WhatsApp
-                                </h2>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">Daftar riwayat broadcast promosi
-                                    dan pengumuman yang pernah dikirimkan</p>
+                                <h2 class="text-[16px] font-bold text-black dark:text-white">{{ __('whatsapp.wa_broadcast_history') }}</h2>
+                                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('admin.broadcast_history_desc') }}</p>
                             </div>
-                            <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">Total
-                                {{ $blasts->total() }} Pesan</span>
+                            <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">{{ __('admin.total_messages_count', ['count' => $blasts->total()]) }}</span>
                         </div>
 
                         {{-- Mobile Card List View (< md) --}}
@@ -1187,14 +1147,14 @@
                                         </div>
                                         <a href="{{ route('admin.whatsapp.blasts.show', $b) }}"
                                             class="min-h-[32px] px-3 rounded-[8px] text-[11.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-all inline-flex items-center gap-1">
-                                            <span>Detail</span>
+                                            <span>{{ __('common.detail') }}</span>
                                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                                         </a>
                                     </div>
                                 </div>
                             @empty
                                 <div class="p-10 text-center text-[13px] text-black/40 dark:text-white/40">
-                                    Belum ada siaran broadcast yang dikirimkan.
+                                    {{ __('whatsapp.no_blasts_sent') }}
                                 </div>
                             @endforelse
                         </div>
@@ -1207,18 +1167,18 @@
                                         class="border-b border-black/[0.06] dark:border-white/[0.08] text-black/45 dark:text-white/45 bg-black/[0.01] dark:bg-white/[0.02]">
                                         <th
                                             class="text-left px-5 sm:px-6 py-3 font-semibold text-[11px] uppercase tracking-wider">
-                                            Judul Broadcast</th>
+                                            {{ __('admin.broadcast_title') }}</th>
                                         <th class="text-left px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">
-                                            Target</th>
+                                            {{ __('admin.target') }}</th>
                                         <th
                                             class="text-center px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">
-                                            Keterkiriman</th>
+                                            {{ __('admin.deliverability') }}</th>
                                         <th
                                             class="text-center px-4 py-3 font-semibold text-[11px] uppercase tracking-wider">
                                             Status</th>
                                         <th
                                             class="text-right px-5 sm:px-6 py-3 font-semibold text-[11px] uppercase tracking-wider">
-                                            Aksi</th>
+                                            {{ __('admin.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -1263,7 +1223,7 @@
                                             <td class="px-5 sm:px-6 py-4 text-right">
                                                 <a href="{{ route('admin.whatsapp.blasts.show', $b) }}"
                                                     class="min-h-[36px] px-3 rounded-[10px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 transition-all inline-flex items-center gap-1.5">
-                                                    <span>Detail</span>
+                                                    <span>{{ __('common.detail') }}</span>
                                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                                 </a>
                                             </td>
@@ -1272,7 +1232,7 @@
                                         <tr>
                                             <td colspan="5"
                                                 class="p-10 text-center text-[13px] text-black/40 dark:text-white/40">
-                                                Belum ada siaran broadcast yang dikirimkan.
+                                                {{ __('whatsapp.no_blasts_sent') }}
                                             </td>
                                         </tr>
                                     @endforelse
@@ -1317,41 +1277,40 @@
                             <span class="text-[12px] font-medium text-black/40 dark:text-white/40">WABA:
                                 {{ $metaCreds['waba_id'] ?: '2292844188142290' }}</span>
                         </div>
-                        <h2 class="text-[17px] font-bold text-black dark:text-white">Katalog Template WhatsApp Business
-                        </h2>
-                        <p class="text-[12px] sm:text-[13px] text-black/50 dark:text-white/50 mt-0.5">Template pesan
-                            terdaftar dan terkurasi Meta untuk broadcast, OTP, dan pengingat langganan pelanggan</p>
+                        <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.waba_template_catalog') }}</h2>
+                        <p class="text-[12px] sm:text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('admin.waba_template_catalog_desc') }}</p>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2.5">
                         <button type="button" @click="deployStandardTemplates()" :disabled="standardsDeploying"
                             class="min-h-[42px] px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2DB34F] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm active:scale-[0.98] transition-all disabled:opacity-50">
                             <i data-lucide="cloud-upload" class="w-4 h-4" :class="{ 'animate-bounce': standardsDeploying }"></i>
-                            <span x-text="standardsDeploying ? 'Mengajukan ke Meta...' : 'Ajukan Template Standar ke Meta'">Ajukan Template Standar ke Meta</span>
+                            <span :text="standardsDeploying ? @json(__('whatsapp.submitting_to_meta')) : @json(__('whatsapp.deploy_standard_templates_meta'))">{{ __('whatsapp.deploy_standard_templates_meta') }}</span>
                         </button>
                         <button type="button" @click="seedStandardTemplates()" :disabled="standardsSeeding"
                             class="min-h-[42px] px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/12 text-black dark:text-white text-[13px] font-semibold inline-flex items-center gap-1.5 transition-all disabled:opacity-50">
                             <i data-lucide="database" class="w-4 h-4"></i>
-                            <span>Pasang di Lokal</span>
+                            <span>{{ __('whatsapp.install_locally') }}</span>
                         </button>
                         <button type="button" @click="syncMetaTemplates()" :disabled="templateSyncing"
                             class="min-h-[42px] px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/12 text-black dark:text-white text-[13px] font-semibold inline-flex items-center gap-2 transition-all disabled:opacity-50">
                             <i data-lucide="refresh-cw" class="w-4 h-4" :class="{ 'animate-spin': templateSyncing }"></i>
-                            <span x-text="templateSyncing ? 'Menyinkronkan...' : 'Sinkronkan dari Meta'">Sinkronkan dari Meta</span>
+                            <span :text="templateSyncing ? @json(__('whatsapp.syncing_with_meta')) : @json(__('whatsapp.sync_from_meta'))">{{ __('whatsapp.sync_from_meta') }}</span>
                         </button>
                         @if(Auth::guard('admin')->user()?->hasPermission('admin.whatsapp.templates'))
 
                         <button type="button" @click="purgeNonIdEnTemplates()" :disabled="purgingNonIdEn"
                             class="min-h-[42px] px-3.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] border border-[#FF3B30]/20 text-[13px] font-semibold inline-flex items-center gap-1.5 transition-all disabled:opacity-50"
-                            title="Hapus seluruh template selain Bahasa Indonesia (id) dan Bahasa Inggris (en)">
+                            title="{{ __('whatsapp.purge_non_id_en_tooltip') }}">
+
                             <i data-lucide="trash-2" class="w-4 h-4" :class="{ 'animate-pulse': purgingNonIdEn }"></i>
-                            <span x-text="purgingNonIdEn ? 'Membersihkan...' : 'Hapus Selain ID & EN'">Hapus Selain ID & EN</span>
+                            <span :text="purgingNonIdEn ? @json(__('whatsapp.cleaning_in_progress')) : @json(__('whatsapp.purge_non_id_en'))">{{ __('whatsapp.purge_non_id_en') }}</span>
                         </button>
 
                         <button type="button" @click="openCreateTemplateModal()"
                             class="min-h-[42px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="plus" class="w-4 h-4"></i>
-                            <span>Buat Template Custom</span>
+                            <span>{{ __('admin.create_custom_template') }}</span>
                         </button>
                     </div>
                 </div>
@@ -1362,7 +1321,7 @@
                     <div
                         class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
                         <div>
-                            <div class="text-[11px] font-semibold text-black/45 dark:text-white/45">Total Template</div>
+                            <div class="text-[11px] font-semibold text-black/45 dark:text-white/45">{{ __('admin.total_templates') }}</div>
                             <div class="text-[22px] font-bold text-black dark:text-white font-mono mt-0.5"
                                 x-text="(metaTemplates || []).length">
                                 {{ count($metaTemplates) }}
@@ -1378,7 +1337,7 @@
                     <div
                         class="p-4 rounded-[16px] bg-[#34C759]/[0.05] border border-[#34C759]/20 flex items-center justify-between">
                         <div>
-                            <div class="text-[11px] font-semibold text-[#34C759]">Disetujui (Approved)</div>
+                            <div class="text-[11px] font-semibold text-[#34C759]">{{ __('admin.status_approved_meta') }}</div>
                             <div class="text-[22px] font-bold text-[#34C759] font-mono mt-0.5"
                                 x-text="(metaTemplates || []).filter(t => (t.status || '').toUpperCase() === 'APPROVED').length">
                                 {{ $metaTemplates->filter(fn($t) => strtoupper($t->status) === 'APPROVED')->count() }}
@@ -1394,7 +1353,7 @@
                     <div
                         class="p-4 rounded-[16px] bg-[#FF9500]/[0.05] border border-[#FF9500]/20 flex items-center justify-between">
                         <div>
-                            <div class="text-[11px] font-semibold text-[#FF9500]">Menunggu (Pending)</div>
+                            <div class="text-[11px] font-semibold text-[#FF9500]">{{ __('admin.status_pending_meta') }}</div>
                             <div class="text-[22px] font-bold text-[#FF9500] font-mono mt-0.5"
                                 x-text="(metaTemplates || []).filter(t => (t.status || '').toUpperCase() === 'PENDING').length">
                                 {{ $metaTemplates->filter(fn($t) => strtoupper($t->status) === 'PENDING')->count() }}
@@ -1410,7 +1369,7 @@
                     <div
                         class="p-4 rounded-[16px] bg-[#FF3B30]/[0.05] border border-[#FF3B30]/20 flex items-center justify-between">
                         <div>
-                            <div class="text-[11px] font-semibold text-[#FF3B30]">Ditolak / Masalah</div>
+                            <div class="text-[11px] font-semibold text-[#FF3B30]">{{ __('admin.status_rejected_meta') }}</div>
                             <div class="text-[22px] font-bold text-[#FF3B30] font-mono mt-0.5"
                                 x-text="(metaTemplates || []).filter(t => ['REJECTED', 'PAUSED', 'DISABLED'].includes((t.status || '').toUpperCase())).length">
                                 {{ $metaTemplates->filter(fn($t) => in_array(strtoupper($t->status), ['REJECTED', 'PAUSED', 'DISABLED']))->count() }}
@@ -1434,13 +1393,13 @@
                             </div>
                             <div>
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <h3 class="text-[16px] font-bold text-black dark:text-white">11 Template Standar Resmi Meta (Cooca Anti-Blokir Architecture)</h3>
+                                    <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('admin.meta_standard_templates_title') }}</h3>
                                     <span class="px-2 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25">
                                         Graph API v26.0 Compliant
                                     </span>
                                 </div>
                                 <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5 leading-relaxed">
-                                    Template terkurasi yang wajib digunakan oleh aplikasi kasir POS, faktur penjualan, blast promosi toko, dan OTP keamanan agar terhindar dari pemblokiran Meta (Error 131047 di luar jendela 24 jam).
+                                    {{ __('admin.meta_standard_templates_desc') }}
                                 </p>
                             </div>
                         </div>
@@ -1449,12 +1408,12 @@
                             <button type="button" @click="deployStandardTemplates()" :disabled="standardsDeploying"
                                 class="min-h-[40px] px-3.5 rounded-[11px] bg-[#34C759] hover:bg-[#2DB34F] text-white text-[12.5px] font-bold inline-flex items-center gap-1.5 shadow-sm active:scale-[0.98] transition-all disabled:opacity-50">
                                 <i data-lucide="cloud-upload" class="w-3.5 h-3.5" :class="{ 'animate-bounce': standardsDeploying }"></i>
-                                <span>Ajukan 11 Template ke Meta</span>
+                                <span>{{ __('whatsapp.deploy_11_templates_meta') }}</span>
                             </button>
                             <button type="button" @click="seedStandardTemplates()" :disabled="standardsSeeding"
                                 class="min-h-[40px] px-3 rounded-[11px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 text-black dark:text-white text-[12.5px] font-semibold inline-flex items-center gap-1.5 transition-all disabled:opacity-50">
                                 <i data-lucide="database" class="w-3.5 h-3.5"></i>
-                                <span>Pasang di Database</span>
+                                <span>{{ __('whatsapp.install_in_database') }}</span>
                             </button>
                         </div>
                     </div>
@@ -1618,7 +1577,7 @@
                                 </div>
 
                                 <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
-                                    <span>Bahasa: <strong class="font-mono text-black dark:text-white">ID (Indonesia)</strong></span>
+                                    <span>{{ __('admin.language') }}: <strong class="font-mono text-black dark:text-white">ID (Indonesia)</strong></span>
                                     <span class="text-[10px] font-medium text-[#34C759]">Opt-out Guarded</span>
                                 </div>
                             </div>
@@ -1632,14 +1591,14 @@
                         <button type="button" @click="selectedLangFilter = 'all'"
                             :class="selectedLangFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                             class="px-3 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5 cursor-pointer">
-                            <span>Semua Template</span>
+                            <span>{{ __('whatsapp.all_templates') }}</span>
                             <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-mono bg-black/10 dark:bg-white/10"
                                 x-text="(filteredTemplates || []).length"></span>
                         </button>
                         <button type="button" @click="selectedLangFilter = 'id'"
                             :class="selectedLangFilter === 'id' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
                             class="px-3 py-1.5 rounded-[8px] text-[12px] transition-all flex items-center gap-1.5 cursor-pointer">
-                            <span>🇮🇩 Bahasa Indonesia (id)</span>
+                            <span>🇮🇩 {{ __('whatsapp.indonesian_id') }}</span>
                             <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-mono bg-black/10 dark:bg-white/10"
                                 x-text="(metaTemplates || []).filter(t => (t.language || '').toLowerCase().startsWith('id')).length"></span>
                         </button>
@@ -1654,7 +1613,7 @@
 
                     <div class="text-[12px] text-black/50 dark:text-white/50 flex items-center gap-1.5">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#34C759]"></i>
-                        <span>Standar Bahasa: Hanya <strong>Bahasa Indonesia</strong> & <strong>Bahasa Inggris</strong></span>
+                        <span>{{ __('admin.language_standard_notice') }}</span>
                     </div>
                 </div>
 
@@ -1718,11 +1677,11 @@
                                     <h3 class="text-[14px] font-bold text-black dark:text-white font-mono truncate"
                                         :title="tpl.name" x-text="tpl.name"></h3>
                                     <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="text-[11px] text-black/45 dark:text-white/45 font-mono">Bahasa: <span
+                                        <span class="text-[11px] text-black/45 dark:text-white/45 font-mono">{{ __('admin.language') }}: <span
                                                 class="uppercase font-semibold text-black/70 dark:text-white/70"
                                                 x-text="tpl.language"></span></span>
                                         <span x-show="tpl.quality_score"
-                                            class="text-[11px] text-black/45 dark:text-white/45 font-mono">• Kualitas:
+                                            class="text-[11px] text-black/45 dark:text-white/45 font-mono">• {{ __('admin.quality') }}:
                                             <span class="font-semibold text-[#34C759]"
                                                 x-text="tpl.quality_score"></span></span>
                                     </div>
@@ -1769,7 +1728,7 @@
                                 class="p-2.5 rounded-[10px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[11px] text-[#FF3B30] flex items-start gap-2">
                                 <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i>
                                 <div class="min-w-0 flex-1">
-                                    <div class="font-bold">Alasan Penolakan Meta:</div>
+                                    <div class="font-bold">{{ __('admin.meta_rejection_reason') }}</div>
                                     <div class="text-black/70 dark:text-white/70" x-text="tpl.rejected_reason"></div>
                                 </div>
                             </div>
@@ -1783,7 +1742,7 @@
                                 <button type="button" @click="deleteMetaTemplate(tpl)"
                                     class="inline-flex items-center gap-1 text-[#FF3B30] hover:text-[#D70015] font-semibold p-1 rounded hover:bg-[#FF3B30]/10 transition-colors">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                    <span>Hapus</span>
+                                    <span>{{ __('common.delete') }}</span>
                                 </button>
                             </div>
                         </div>
@@ -1798,20 +1757,19 @@
                         <i data-lucide="file-text" class="w-6 h-6"></i>
                     </div>
                     <div class="max-w-md mx-auto space-y-1">
-                        <h4 class="text-[15px] font-bold text-black dark:text-white">Belum Ada Template Tersinkronkan</h4>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Sinkronkan katalog template resmi dari Meta
-                            Business Manager atau buat template baru yang akan diajukan ke Meta Cloud API v26.0.</p>
+                        <h4 class="text-[15px] font-bold text-black dark:text-white">{{ __('whatsapp.no_templates_synced') }}</h4>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('admin.no_templates_synced_desc') }}</p>
                     </div>
                     <div class="flex items-center justify-center gap-3 pt-2">
                         <button type="button" @click="syncMetaTemplates()" :disabled="templateSyncing"
                             class="min-h-[40px] px-5 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.1] hover:bg-black/10 text-black dark:text-white text-[13px] font-bold inline-flex items-center gap-2 transition-all">
                             <i data-lucide="refresh-cw" class="w-4 h-4" :class="{ 'animate-spin': templateSyncing }"></i>
-                            <span>Sinkronkan Sekarang</span>
+                            <span>{{ __('admin.sync_now') }}</span>
                         </button>
                         <button type="button" @click="openCreateTemplateModal()"
                             class="min-h-[40px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 transition-all">
                             <i data-lucide="plus" class="w-4 h-4"></i>
-                            <span>Buat Template Baru</span>
+                            <span>{{ __('admin.create_new_template') }}</span>
                         </button>
 
                         @endif
@@ -1842,9 +1800,8 @@
                     <div
                         class="px-6 py-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0">
                         <div>
-                            <h3 class="text-[17px] font-bold text-black dark:text-white">Buat Template Pesan Meta</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Template akan langsung diajukan
-                                ke Meta Cloud API v26.0 untuk proses review otomatis</p>
+                            <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('admin.create_meta_message_template') }}</h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('admin.create_meta_template_desc') }}</p>
                         </div>
                         <button type="button" @click="closeCreateTemplateModal()"
                             class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center text-black/60 dark:text-white/60 transition-colors">
@@ -1860,31 +1817,29 @@
                             <div class="space-y-1.5">
                                 <label
                                     class="text-[12px] font-bold text-black dark:text-white flex items-center justify-between">
-                                    <span>Nama Template <span class="text-[#FF3B30]">*</span></span>
-                                    <span class="text-[11px] font-mono text-black/40 dark:text-white/40">Huruf kecil & _
-                                        saja</span>
+                                    <span>{{ __('admin.template_name') }} <span class="text-[#FF3B30]">*</span></span>
+                                    <span class="text-[11px] font-mono text-black/40 dark:text-white/40">{{ __('admin.lowercase_underscore_only') }}</span>
                                 </label>
                                 <input type="text" x-model="newTemplate.name" required
-                                    placeholder="contoh: notifikasi_pesanan_selesai"
+                                    placeholder="{{ __('whatsapp.template_name_example_placeholder') }}"
                                     class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] font-mono text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
-                                <p class="text-[11px] text-black/45 dark:text-white/45">Hanya gunakan huruf kecil (a-z),
-                                    angka (0-9), dan garis bawah (_). Tidak boleh ada spasi.</p>
+                                <p class="text-[11px] text-black/45 dark:text-white/45">{{ __('admin.template_name_hint') }}</p>
                             </div>
 
                             {{-- Kategori & Bahasa --}}
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div class="space-y-1.5">
-                                    <label class="text-[12px] font-bold text-black dark:text-white">Kategori <span
+                                    <label class="text-[12px] font-bold text-black dark:text-white">{{ __('admin.category') }} <span
                                             class="text-[#FF3B30]">*</span></label>
                                     <select x-model="newTemplate.category"
                                         class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
-                                        <option value="UTILITY">UTILITY (Transaksi & Pengingat)</option>
-                                        <option value="MARKETING">MARKETING (Promosi & Diskon)</option>
-                                        <option value="AUTHENTICATION">AUTHENTICATION (Kode OTP)</option>
+                                        <option value="UTILITY">{{ __('admin.category_utility_desc') }}</option>
+                                        <option value="MARKETING">{{ __('admin.category_marketing_desc') }}</option>
+                                        <option value="AUTHENTICATION">{{ __('admin.category_auth_desc') }}</option>
                                     </select>
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="text-[12px] font-bold text-black dark:text-white">Bahasa <span
+                                    <label class="text-[12px] font-bold text-black dark:text-white">{{ __('admin.language') }} <span
                                             class="text-[#FF3B30]">*</span></label>
                                     <select x-model="newTemplate.language"
                                         class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
@@ -1898,32 +1853,29 @@
                             {{-- Header Teks --}}
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between">
-                                    <label class="text-[12px] font-bold text-black dark:text-white">Teks Header
-                                        (Opsional)</label>
+                                    <label class="text-[12px] font-bold text-black dark:text-white">{{ __('admin.header_text_optional') }}</label>
                                     <span class="text-[11px] font-mono text-black/40 dark:text-white/40"
                                         x-text="(newTemplate.header_text || '').length + '/60'"></span>
                                 </div>
                                 <input type="text" x-model="newTemplate.header_text" maxlength="60"
-                                    placeholder="contoh: Halo pelanggan setia"
+                                    placeholder="{{ __('whatsapp.header_text_example_placeholder') }}"
                                     class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                             </div>
 
                             {{-- Body Teks --}}
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between">
-                                    <label class="text-[12px] font-bold text-black dark:text-white">Teks Pesan (Body) <span
-                                            class="text-[#FF3B30]">*</span></label>
+                                    <label class="text-[12px] font-bold text-black dark:text-white">{{ __('admin.message_body_text') }} <span class="text-[#FF3B30]">*</span></label>
                                     <span class="text-[11px] font-mono text-black/40 dark:text-white/40"
                                         x-text="(newTemplate.body_text || '').length + '/1024'"></span>
                                 </div>
                                 <textarea x-model="newTemplate.body_text" rows="5" maxlength="1024" required
-                                    placeholder="Halo @{{ 1 }}, tagihan langganan @{{ 2 }} sebesar Rp @{{ 3 }} akan jatuh tempo pada @{{ 4 }}..."
+                                    placeholder="{{ __('whatsapp.body_text_example_placeholder') }}"
                                     class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] p-3 text-[13px] text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 leading-relaxed resize-y"></textarea>
 
                                 {{-- Quick Insert Placeholder Variables --}}
                                 <div class="flex flex-wrap items-center gap-1.5 pt-1">
-                                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">Sisipkan
-                                        variabel:</span>
+                                    <span class="text-[11px] font-medium text-black/40 dark:text-white/40">{{ __('admin.insert_variable') }}</span>
                                     <button type="button" @click="insertVariableToNewTemplate('@{{ 1 }}')"
                                         class="px-2 py-0.5 rounded-[6px] text-[11px] font-mono font-bold bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors">
                                         + @{{ 1 }}
@@ -1946,13 +1898,12 @@
                             {{-- Footer Teks --}}
                             <div class="space-y-1.5">
                                 <div class="flex items-center justify-between">
-                                    <label class="text-[12px] font-bold text-black dark:text-white">Teks Footer
-                                        (Opsional)</label>
+                                    <label class="text-[12px] font-bold text-black dark:text-white">{{ __('admin.footer_text_optional') }}</label>
                                     <span class="text-[11px] font-mono text-black/40 dark:text-white/40"
                                         x-text="(newTemplate.footer_text || '').length + '/60'"></span>
                                 </div>
                                 <input type="text" x-model="newTemplate.footer_text" maxlength="60"
-                                    placeholder="contoh: Balas STOP untuk berhenti berlangganan"
+                                    placeholder="{{ __('whatsapp.footer_text_example_placeholder') }}"
                                     class="w-full bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[13px] text-black dark:text-white placeholder-black/30 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
                             </div>
                         </div>
@@ -1979,7 +1930,7 @@
                                             <span>Cooca Official</span>
                                             <i data-lucide="check-circle-2" class="w-3 h-3 text-[#34C759]"></i>
                                         </div>
-                                        <div class="text-[10px] text-black/50 dark:text-white/50">Akun Bisnis Resmi</div>
+                                        <div class="text-[10px] text-black/50 dark:text-white/50">{{ __('admin.official_business_account') }}</div>
                                     </div>
                                 </div>
 
@@ -2002,7 +1953,7 @@
                                 </div>
 
                                 <div class="text-[11px] text-black/40 dark:text-white/40 text-center italic">
-                                    Simulasi visual balon pesan WhatsApp pelanggan diperbarui secara langsung.
+                                    {{ __('admin.live_preview_bubble_simulation_desc') }}
                                 </div>
                             </div>
                         </div>
@@ -2013,12 +1964,12 @@
                         class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 shrink-0">
                         <button type="button" @click="closeCreateTemplateModal()"
                             class="min-h-[42px] px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/10 text-black dark:text-white text-[13px] font-semibold transition-colors">
-                            Batal
+                            {{ __('common.cancel') }}
                         </button>
                         <button type="button" @click="createMetaTemplate()" :disabled="templateCreating"
                             class="min-h-[42px] px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm disabled:opacity-50 transition-all">
                             <i data-lucide="send" class="w-4 h-4" :class="{ 'animate-pulse': templateCreating }"></i>
-                            <span x-text="templateCreating ? 'Mengirim ke Meta...' : 'Kirim ke Meta'">Kirim ke Meta</span>
+                            <span :text="templateCreating ? @json(__('whatsapp.sending_to_meta_progress')) : @json(__('whatsapp.send_to_meta'))">{{ __('whatsapp.send_to_meta') }}</span>
                         </button>
                     </div>
 
@@ -2035,12 +1986,11 @@
                 <div
                     class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-black/[0.06] dark:border-white/[0.08] min-w-0">
                     <div class="min-w-0 flex-1">
-                        <h2 class="text-[17px] font-bold text-black dark:text-white">Template Pesan Pengingat Otomatis</h2>
-                        <p class="text-[12px] sm:text-[13px] text-black/50 dark:text-white/50 mt-0.5">Sesuaikan susunan
-                            kalimat dan placeholder variabel dinamis untuk setiap tahapan pengingat</p>
+                        <h2 class="text-[17px] font-bold text-black dark:text-white">{{ __('whatsapp.automated_reminder_message_templates') }}</h2>
+                        <p class="text-[12px] sm:text-[13px] text-black/50 dark:text-white/50 mt-0.5">{{ __('admin.automated_reminder_desc') }}</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-[11px] font-semibold text-black/45 dark:text-white/45">Variabel Didukung:</span>
+                        <span class="text-[11px] font-semibold text-black/45 dark:text-white/45">{{ __('admin.supported_variables') }}</span>
                         @foreach (['{owner}', '{bisnis}', '{paket}', '{tanggal_habis}', '{link_bayar}'] as $tag)
                             <span
                                 class="px-2 py-0.5 rounded-[6px] text-[11px] font-mono bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
@@ -2057,22 +2007,22 @@
                             $templateConfigs = [
                                 'h-7' => [
                                     'name' => 'template_h7',
-                                    'label' => 'Pengingat H-7 (Peringatan Awal 1 Minggu)',
+                                    'label' => __('admin.reminder_h7_label'),
                                     'badge' => 'bg-[#007AFF]/15 text-[#007AFF]',
                                 ],
                                 'h-3' => [
                                     'name' => 'template_h3',
-                                    'label' => 'Pengingat H-3 (Tindak Lanjut 3 Hari)',
+                                    'label' => __('admin.reminder_h3_label'),
                                     'badge' => 'bg-[#FF9500]/15 text-[#FF9500]',
                                 ],
                                 'h-1' => [
                                     'name' => 'template_h1',
-                                    'label' => 'Pengingat H-1 (Peringatan Terakhir Besok)',
+                                    'label' => __('admin.reminder_h1_label'),
                                     'badge' => 'bg-[#AF52DE]/15 text-[#AF52DE]',
                                 ],
                                 'hari_h' => [
                                     'name' => 'template_h0',
-                                    'label' => 'Pengingat Hari H (Jatuh Tempo Hari Ini)',
+                                    'label' => __('admin.reminder_hari_h_label'),
                                     'badge' => 'bg-[#FF3B30]/15 text-[#FF3B30]',
                                 ],
                             ];
@@ -2101,7 +2051,7 @@
                         <button type="submit"
                             class="min-h-[48px] px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold inline-flex items-center gap-2 shadow-sm active:scale-[0.98] transition-all">
                             <i data-lucide="check" class="w-4 h-4"></i>
-                            <span>Simpan</span>
+                            <span>{{ __('common.save') }}</span>
                         </button>
                     </div>
                 </form>
@@ -2124,11 +2074,9 @@
                         <i data-lucide="store" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">Monitoring Akun
-                            WhatsApp Merchant</h2>
+                        <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('whatsapp.monitoring_merchant_wa_accounts') }}</h2>
                         <p class="text-[12px] sm:text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
-                            Pengawasan sentral seluruh akun WhatsApp Business resmi (WABA) merchant yang terhubung melalui
-                            Embedded Signup
+                            {{ __('admin.merchant_wa_oversight_desc') }}
                         </p>
                     </div>
                 </div>
@@ -2136,7 +2084,7 @@
                 <div class="flex items-center gap-2">
                     <span
                         class="px-3.5 py-1.5 rounded-[12px] bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] text-[12px] font-bold border border-[#34C759]/20 tabular-nums">
-                        {{ $activeMerchantsCount }} Akun Aktif
+                        {{ __('admin.active_accounts_count', ['count' => $activeMerchantsCount]) }}
                     </span>
                 </div>
             </div>
@@ -2146,8 +2094,7 @@
                 <div
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-1">
                     <span
-                        class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider block">Total
-                        Merchant</span>
+                        class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider block">{{ __('admin.total_merchants') }}</span>
                     <div class="text-[20px] sm:text-[24px] font-bold text-black dark:text-white tabular-nums">
                         {{ $merchantSummary['total'] ?? 0 }}
                     </div>
@@ -2155,24 +2102,21 @@
                 <div
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-1">
                     <span
-                        class="text-[11px] font-semibold text-[#248A3D] dark:text-[#30D158] uppercase tracking-wider block">Terhubung
-                        Aktif</span>
+                        class="text-[11px] font-semibold text-[#248A3D] dark:text-[#30D158] uppercase tracking-wider block">{{ __('admin.actively_connected') }}</span>
                     <div class="text-[20px] sm:text-[24px] font-bold text-[#248A3D] dark:text-[#30D158] tabular-nums">
                         {{ $merchantSummary['connected'] ?? 0 }}
                     </div>
                 </div>
                 <div
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-1">
-                    <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider block">Akun Mode
-                        Live</span>
+                    <span class="text-[11px] font-semibold text-[#007AFF] uppercase tracking-wider block">{{ __('admin.live_mode_accounts') }}</span>
                     <div class="text-[20px] sm:text-[24px] font-bold text-[#007AFF] tabular-nums">
                         {{ $merchantSummary['live_count'] ?? 0 }}
                     </div>
                 </div>
                 <div
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-1">
-                    <span class="text-[11px] font-semibold text-[#FF9500] uppercase tracking-wider block">Sandbox /
-                        Draft</span>
+                    <span class="text-[11px] font-semibold text-[#FF9500] uppercase tracking-wider block">{{ __('admin.sandbox_draft') }}</span>
                     <div class="text-[20px] sm:text-[24px] font-bold text-[#FF9500] tabular-nums">
                         {{ $merchantSummary['sandbox_count'] ?? 0 }}
                     </div>
@@ -2184,9 +2128,8 @@
                 class="rounded-[22px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-md border border-black/[0.06] dark:border-white/[0.08] shadow-sm overflow-hidden">
                 <div
                     class="p-4 sm:p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
-                    <h3 class="text-[15px] font-bold text-black dark:text-white">Daftar Akun WhatsApp Merchant</h3>
-                    <span class="text-[12px] text-black/50 dark:text-white/50 tabular-nums">Menampilkan
-                        {{ count($merchantSummary['accounts'] ?? []) }} akun</span>
+                    <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('whatsapp.merchant_wa_accounts_list') }}</h3>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 tabular-nums">{{ __('admin.showing_accounts_count', ['count' => count($merchantSummary['accounts'] ?? [])]) }}</span>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -2194,12 +2137,12 @@
                         <thead>
                             <tr
                                 class="bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/[0.06] dark:border-white/[0.08] text-black/50 dark:text-white/50 text-[11px] font-bold uppercase tracking-wider">
-                                <th class="py-3 px-4 sm:px-6">Nama Bisnis &amp; Pemilik</th>
-                                <th class="py-3 px-4">Nomor WhatsApp</th>
+                                <th class="py-3 px-4 sm:px-6">{{ __('admin.business_name_and_owner') }}</th>
+                                <th class="py-3 px-4">{{ __('admin.whatsapp_number') }}</th>
                                 <th class="py-3 px-4">WABA ID / Phone ID</th>
-                                <th class="py-3 px-4 text-center">Status</th>
-                                <th class="py-3 px-4 text-center">Mode</th>
-                                <th class="py-3 px-4 sm:px-6 text-right">Terhubung Sejak</th>
+                                <th class="py-3 px-4 text-center">{{ __('admin.status') }}</th>
+                                <th class="py-3 px-4 text-center">{{ __('admin.mode') }}</th>
+                                <th class="py-3 px-4 sm:px-6 text-right">{{ __('admin.connected_since') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.06] dark:divide-white/[0.08]">
@@ -2218,7 +2161,7 @@
                                             {{ $acc->display_phone_number ?: ($acc->phone_number ? '+' . $acc->phone_number : '-') }}
                                         </div>
                                         <div class="text-[11px] text-black/40 dark:text-white/40">
-                                            {{ $acc->verified_name ?: 'Nama Belum Terverifikasi' }}</div>
+                                            {{ $acc->verified_name ?: __('admin.unverified_name') }}</div>
                                     </td>
                                     <td class="py-3.5 px-4 font-mono text-[11.5px] text-black/70 dark:text-white/70">
                                         <div>WABA: {{ $acc->waba_id ?: '-' }}</div>
@@ -2259,11 +2202,9 @@
                                             class="w-12 h-12 rounded-[16px] bg-black/5 dark:bg-white/10 text-black/40 dark:text-white/40 flex items-center justify-center mx-auto mb-3">
                                             <i data-lucide="store" class="w-6 h-6"></i>
                                         </div>
-                                        <div class="text-[14px] font-bold text-black dark:text-white">Belum Ada Merchant
-                                            Terhubung</div>
+                                        <div class="text-[14px] font-bold text-black dark:text-white">{{ __('whatsapp.no_merchants_yet') }}</div>
                                         <p class="text-[12px] text-black/50 dark:text-white/50 max-w-sm mx-auto mt-1">
-                                            Merchant dapat menghubungkan akun WhatsApp resmi toko mereka secara mandiri
-                                            melalui menu WhatsApp di dashboard pemilik toko.
+                                            {{ __('admin.merchant_self_connect_hint') }}
                                         </p>
                                     </td>
                                 </tr>
@@ -2299,7 +2240,7 @@
                     blastMessage: '',
 
                     testPhone: '',
-                    testMessage: 'Pesan uji coba resmi dari WhatsApp Platform Cooca.',
+                    testMessage: @json(__('admin.wa_test_default_message')),
                     testLoading: false,
                     testResult: '',
                     testOk: false,
@@ -2317,7 +2258,7 @@
 
                     async sendOtpLive() {
                         if (!this.otpPhone.trim()) {
-                            this.otpResult = 'Nomor ponsel tujuan OTP wajib diisi.';
+                            this.otpResult = @json(__('admin.wa_otp_phone_required'));
                             this.otpOk = false;
                             return;
                         }
@@ -2341,11 +2282,11 @@
                             });
                             const data = await response.json();
                             this.otpOk = response.ok && data.success === true;
-                            this.otpResult = data.message || (this.otpOk ? 'OTP berhasil dikirim!' : (data.error ||
-                                'Gagal mengirimkan OTP.'));
+                            this.otpResult = data.message || (this.otpOk ? @json(__('admin.wa_otp_sent_success')) : (data.error ||
+                                @json(__('admin.wa_otp_send_failed'))));
                         } catch (error) {
                             this.otpOk = false;
-                            this.otpResult = 'Terjadi kesalahan jaringan saat mengirimkan kode OTP.';
+                            this.otpResult = @json(__('whatsapp.network_error_sending_otp'));
                         } finally {
                             this.otpLoading = false;
                             this.refreshIcons();
@@ -2383,7 +2324,7 @@
                     copyToClipboard(text, label) {
                         if (!text) return;
                         navigator.clipboard.writeText(text).then(() => {
-                            this.copyToastMessage = label + ' berhasil disalin ke clipboard';
+                            this.copyToastMessage = label + ' ' + @json(__('admin.copied_to_clipboard_suffix'));
                             this.copyToast = true;
                             setTimeout(() => {
                                 this.copyToast = false;
@@ -2395,14 +2336,12 @@
 
                     async verifyMetaCredentials() {
                         if (!this.hasMetaToken && !this.metaToken.trim()) {
-                            this.metaVerifyError =
-                                'Silakan isi Meta Permanent Access Token terlebih dahulu.';
+                            this.metaVerifyError = @json(__('admin.wa_fill_meta_token_first'));
                             this.metaVerifyResult = null;
                             return;
                         }
                         if (!this.metaPhoneId.trim()) {
-                            this.metaVerifyError =
-                                'Phone Number ID Meta wajib diisi terlebih dahulu.';
+                            this.metaVerifyError = @json(__('admin.wa_fill_phone_id_first'));
                             this.metaVerifyResult = null;
                             return;
                         }
@@ -2430,10 +2369,10 @@
                                     this.phone = data.data.display_phone_number;
                                 }
                             } else {
-                                this.metaVerifyError = data.error || 'Gagal memverifikasi akun Meta Graph API.';
+                                this.metaVerifyError = data.error || @json(__('admin.wa_verify_meta_failed'));
                             }
                         } catch (e) {
-                            this.metaVerifyError = 'Kesalahan jaringan saat menghubungi server verifikasi.';
+                            this.metaVerifyError = @json(__('admin.wa_network_error_verifying'));
                         } finally {
                             this.metaVerifyLoading = false;
                             this.refreshIcons();
@@ -2500,7 +2439,7 @@
 
                     async sendTest() {
                         if (!this.testPhone.trim() || !this.testMessage.trim()) {
-                            this.testResult = 'Nomor tujuan dan teks pesan wajib diisi.';
+                            this.testResult = @json(__('admin.wa_test_phone_and_message_required'));
                             this.testOk = false;
                             return;
                         }
@@ -2521,11 +2460,11 @@
                             });
                             const data = await response.json();
                             this.testOk = response.ok && data.success === true;
-                            this.testResult = this.testOk ? 'Pesan uji coba berhasil terkirim ke ponsel penerima!' : (
-                                'Gagal: ' + (data.error || 'Gateway WhatsApp Meta tidak merespons.'));
+                            this.testResult = this.testOk ? @json(__('admin.wa_test_message_sent_success')) : (
+                                @json(__('admin.failed')) + ': ' + (data.error || @json(__('admin.wa_meta_gateway_no_response'))));
                         } catch (error) {
                             this.testOk = false;
-                            this.testResult = 'Terjadi kesalahan jaringan saat mengirimkan pesan.';
+                            this.testResult = @json(__('whatsapp.network_error_sending_message'));
                         } finally {
                             this.testLoading = false;
                             this.refreshIcons();
@@ -2533,7 +2472,7 @@
                     },
 
                     async sendSingleReminder(subscriptionId, type) {
-                        if (!confirm(`Kirimkan pengingat langganan (${type}) sekarang ke nomor owner?`)) return;
+                        if (!confirm(@json(__('admin.confirm_send_single_reminder')) + ' (' + type + ')?')) return;
                         try {
                             const response = await fetch(`/admin/whatsapp/reminders/${subscriptionId}/send`, {
                                 method: 'POST',
@@ -2547,10 +2486,10 @@
                                 })
                             });
                             const data = await response.json();
-                            alert(data.message || 'Proses selesai.');
+                            alert(data.message || @json(__('admin.process_completed')));
                             window.location.reload();
                         } catch (error) {
-                            alert('Gagal mengirim pengingat: Kesalahan jaringan.');
+                            alert(@json(__('admin.send_reminder_network_error')));
                         }
                     },
 
@@ -2647,7 +2586,7 @@
 
                     formatBodyPreview(text) {
                         if (!text)
-                            return '<span class="text-black/35 dark:text-white/35 italic">Ketik isi teks pesan untuk melihat preview...</span>';
+                            return '<span class="text-black/35 dark:text-white/35 italic">' + @json(__('admin.type_text_preview')) + '</span>';
                         const escaped = String(text)
                             .replace(/&/g, '&amp;')
                             .replace(/</g, '&lt;')
@@ -2682,7 +2621,7 @@
                     },
 
                     async deployStandardTemplates() {
-                        if (!confirm('Ajukan seluruh template standar resmi Cooca (7 template) ke Meta Cloud API v26.0 sekarang?')) {
+                        if (!confirm(@json(__('admin.confirm_deploy_standard_templates')))) {
                             return;
                         }
                         this.standardsDeploying = true;
@@ -2703,16 +2642,16 @@
                                 if (data.standards) {
                                     this.standardTemplatesCatalog = data.standards;
                                 }
-                                this.copyToastMessage = data.message || 'Template standar berhasil diajukan ke Meta!';
+                                this.copyToastMessage = data.message || @json(__('admin.standard_templates_deployed_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 4000);
                             } else {
-                                alert(data.message || 'Gagal mengajukan template standar ke Meta.');
+                                alert(data.message || @json(__('admin.standard_templates_deploy_failed')));
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat mengajukan template standar ke Meta.');
+                            alert(@json(__('whatsapp.network_error_deploying_standards')));
                         } finally {
                             this.standardsDeploying = false;
                             this.refreshIcons();
@@ -2738,16 +2677,16 @@
                                 if (data.standards) {
                                     this.standardTemplatesCatalog = data.standards;
                                 }
-                                this.copyToastMessage = data.message || 'Template standar berhasil dipasang di database!';
+                                this.copyToastMessage = data.message || @json(__('admin.standard_templates_seeded_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 3500);
                             } else {
-                                alert(data.message || 'Gagal memasang template standar.');
+                                alert(data.message || @json(__('admin.standard_templates_seed_failed')));
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat mendaftarkan template.');
+                            alert(@json(__('whatsapp.network_error_registering_template')));
                         } finally {
                             this.standardsSeeding = false;
                             this.refreshIcons();
@@ -2770,16 +2709,16 @@
                                 if (data.templates) {
                                     this.metaTemplates = data.templates;
                                 }
-                                this.copyToastMessage = data.message || 'Template berhasil disinkronkan dari Meta!';
+                                this.copyToastMessage = data.message || @json(__('admin.templates_synced_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 3500);
                             } else {
-                                alert(data.message || 'Gagal menyinkronkan template dari Meta.');
+                                alert(data.message || @json(__('admin.templates_sync_failed')));
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat sinkronisasi template.');
+                            alert(@json(__('whatsapp.network_error_syncing_templates')));
                         } finally {
                             this.templateSyncing = false;
                             this.refreshIcons();
@@ -2788,7 +2727,7 @@
 
                     async createMetaTemplate() {
                         if (!this.newTemplate.name.trim() || !this.newTemplate.body_text.trim()) {
-                            alert('Nama template dan teks pesan (body) wajib diisi.');
+                            alert(@json(__('admin.template_name_and_body_required')));
                             return;
                         }
                         this.newTemplate.name = this.newTemplate.name.trim().toLowerCase().replace(/[^a-z0-9_]/g, '_');
@@ -2809,18 +2748,18 @@
                                     this.metaTemplates = data.templates;
                                 }
                                 this.showCreateTemplateModal = false;
-                                this.copyToastMessage = data.message || 'Template berhasil diajukan ke Meta!';
+                                this.copyToastMessage = data.message || @json(__('admin.template_created_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 3500);
                             } else {
                                 const errMsg = data.message || (data.errors ? Object.values(data.errors).flat().join('\n') :
-                                    'Gagal membuat template di Meta.');
+                                    @json(__('admin.template_create_failed')));
                                 alert(errMsg);
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat mengajukan template ke Meta.');
+                            alert(@json(__('whatsapp.network_error_submitting_template')));
                         } finally {
                             this.templateCreating = false;
                             this.refreshIcons();
@@ -2828,7 +2767,7 @@
                     },
 
                     async purgeNonIdEnTemplates() {
-                        if (!confirm('Hapus seluruh template selain Bahasa Indonesia dan Bahasa Inggris dari database dan Meta WABA?')) {
+                        if (!confirm({{ Js::from(__('whatsapp.confirm_purge_non_id_en')) }})) {
                             return;
                         }
                         this.purgingNonIdEn = true;
@@ -2846,16 +2785,16 @@
                                 if (data.templates) {
                                     this.metaTemplates = data.templates;
                                 }
-                                this.copyToastMessage = data.message || 'Template non ID/EN berhasil dihapus.';
+                                this.copyToastMessage = data.message || @json(__('admin.non_id_en_purged_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 3500);
                             } else {
-                                alert(data.message || 'Gagal menghapus template non ID/EN.');
+                                alert(data.message || @json(__('admin.non_id_en_purge_failed')));
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat menghapus template non ID/EN.');
+                            alert(@json(__('whatsapp.network_error_purging_templates')));
                         } finally {
                             this.purgingNonIdEn = false;
                             this.refreshIcons();
@@ -2863,9 +2802,7 @@
                     },
 
                     async deleteMetaTemplate(tpl) {
-                        if (!confirm(
-                                `Hapus template '${tpl.name}' dari Meta Cloud API dan database lokal? Tindakan ini tidak dapat dibatalkan.`
-                            )) {
+                        if (!confirm(@json(__('admin.confirm_delete_meta_template_prefix')) + ' \'' + tpl.name + '\' ' + @json(__('admin.confirm_delete_meta_template_suffix')))) {
                             return;
                         }
                         try {
@@ -2884,16 +2821,16 @@
                                 } else {
                                     this.metaTemplates = this.metaTemplates.filter(t => t.id !== tpl.id);
                                 }
-                                this.copyToastMessage = data.message || 'Template berhasil dihapus.';
+                                this.copyToastMessage = data.message || @json(__('admin.template_deleted_success'));
                                 this.copyToast = true;
                                 setTimeout(() => {
                                     this.copyToast = false;
                                 }, 3000);
                             } else {
-                                alert(data.message || 'Gagal menghapus template pesan.');
+                                alert(data.message || @json(__('admin.template_delete_failed')));
                             }
                         } catch (err) {
-                            alert('Terjadi kesalahan jaringan saat menghapus template.');
+                            alert(@json(__('whatsapp.network_error_deleting_template')));
                         } finally {
                             this.refreshIcons();
                         }

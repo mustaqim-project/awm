@@ -3,7 +3,7 @@
 @section('content')
     <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
         x-data="{
-            isTestingRate: false, /* {{ __('storefront.test_rate') }} */
+            isTestingRate{{ __('storefront.test_rate') ? '' : '' }}: false,
             testPostalCode: '',
             testWeight: 250,
             testValue: 50000,

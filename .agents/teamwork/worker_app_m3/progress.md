@@ -1,0 +1,55 @@
+# Progress Tracker — Milestone 3 (App Views Batch 1)
+
+Last visited: 2026-10-31T03:16:00Z
+
+## Status Overview
+- Current Phase: Investigation & Baseline Setup
+- Target Files: 39 files
+- Current Issues in Scope: 224 issues (Group A: 118, Group B: 106)
+- Progress: 0 / 39 files remediated
+
+## Task Checklist
+- [ ] Group A: Retail & Omnichannel Commerce (19 files)
+  - [ ] `inventory/stocks.blade.php` (17 issues)
+  - [ ] `marketplace/products.blade.php` (17 issues)
+  - [ ] `inventory/transfers.blade.php` (15 issues)
+  - [ ] `pos/terminal.blade.php` (9 issues)
+  - [ ] `products/index.blade.php` (8 issues)
+  - [ ] `marketplace/index.blade.php` (8 issues)
+  - [ ] `marketplace/orders.blade.php` (8 issues)
+  - [ ] `pos/shifts.blade.php` (7 issues)
+  - [ ] `products/modifiers.blade.php` (6 issues)
+  - [ ] `pos/orders.blade.php` (5 issues)
+  - [ ] `pos/printers/index.blade.php` (5 issues)
+  - [ ] `pos/reports/tabs/payments.blade.php` (3 issues)
+  - [ ] `warehouse/index.blade.php` (2 issues)
+  - [ ] `storefront/orders/index.blade.php` (2 issues)
+  - [ ] `storefront/shipping/index.blade.php` (2 issues)
+  - [ ] `pos/tables.blade.php` (1 issue)
+  - [ ] `inventory/opname.blade.php` (1 issue)
+  - [ ] `marketplace/chat.blade.php` (1 issue)
+  - [ ] `marketplace/shipping_label.blade.php` (1 issue)
+- [ ] Group B: B2B Trade, Purchasing & CRM (20 files)
+  - [ ] `quotations/index.blade.php` (13 issues)
+  - [ ] `suppliers/index.blade.php` (11 issues)
+  - [ ] `customers/index.blade.php` (11 issues)
+  - [ ] `sales/returns/index.blade.php` (10 issues)
+  - [ ] `sales-orders/index.blade.php` (10 issues)
+  - [ ] `sales/returns/edit.blade.php` (9 issues)
+  - [ ] `quotations/edit.blade.php` (7 issues)
+  - [ ] `sales-orders/edit.blade.php` (5 issues)
+  - [ ] `services/index.blade.php` (5 issues)
+  - [ ] `sales/returns/show.blade.php` (4 issues)
+  - [ ] `sales-orders/show.blade.php` (4 issues)
+  - [ ] `quotations/show.blade.php` (4 issues)
+  - [ ] `purchasing/returns/show.blade.php` (3 issues)
+  - [ ] `sales/returns/create.blade.php` (2 issues)
+  - [ ] `purchase-orders/print.blade.php` (2 issues)
+  - [ ] `crm/vouchers.blade.php` (2 issues)
+  - [ ] `sales-orders/create.blade.php` (1 issue)
+  - [ ] `quotations/create.blade.php` (1 issue)
+  - [ ] `purchase-orders/create.blade.php` (1 issue)
+  - [ ] `invoices/index.blade.php` (1 issue)
+- [ ] Translation Key Parity Sync (`lang/id/*.php` and `lang/en/*.php`)
+- [ ] Syntax & Tier 3, 4 Verification
+- [ ] Final deep audit confirmation on all 39 target files (0 issues)

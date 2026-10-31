@@ -1,0 +1,36 @@
+{
+  "resources/views/app/pos/terminal.blade.php": [
+    {
+      "domain": "5. Dev / Test Alerts",
+      "line": 4698,
+      "text": "BypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' :",
+      "type": "dev_bypass_hardcoded",
+      "snippet": "BypassSupervisor: {{ $canBypassSupervisor ?? false ? 'true' :"
+    }
+  ],
+  "resources/views/app/pos/printers/index.blade.php": [
+    {
+      "domain": "5. Dev / Test Alerts",
+      "line": 8,
+      "text": "Testing:",
+      "type": "dev_bypass_hardcoded",
+      "snippet": "Testing:"
+    },
+    {
+      "domain": "5. Dev / Test Alerts",
+      "line": 1067,
+      "text": "Testing\" class=\"min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#",
+      "type": "dev_bypass_hardcoded",
+      "snippet": "Testing\" class=\"min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold bg-[#FF9500] hover:"
+    }
+  ],
+  "resources/views/app/storefront/shipping/index.blade.php": [
+    {
+      "domain": "5. Dev / Test Alerts",
+      "line": 6,
+      "text": "TestingRate:",
+      "type": "dev_bypass_hardcoded",
+      "snippet": "TestingRate:"
+    }
+  ]
+}

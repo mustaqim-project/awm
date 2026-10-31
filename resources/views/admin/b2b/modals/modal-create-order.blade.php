@@ -172,7 +172,7 @@
 
             {{-- Notes --}}
             <div>
-                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Instruksi Khusus / Catatan</label>
+                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('admin.instruksi_khusus_catatan') }}</label>
                 <textarea name="notes" rows="2" placeholder="{{ __('admin.instruksi_packing_drop_point_kontak_penerima') }}"
                     class="w-full p-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#2563eb]"></textarea>
             </div>
@@ -183,7 +183,7 @@
                     class="px-4 py-2 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 text-[13px] font-medium text-black/70 dark:text-white/70 transition-colors">{{ __('common.cancel') }}</button>
                 <button type="submit"
                     class="px-5 py-2.5 rounded-[12px] bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-[13.5px] font-semibold shadow-lg shadow-[#2563eb]/20 transition-all flex items-center gap-2">
-                    <i data-lucide="check" class="w-4 h-4"></i> Konfirmasi Pesanan (SO)
+                    <i data-lucide="check" class="w-4 h-4"></i> {{ __('admin.konfirmasi_pesanan_so') }}
                 </button>
             </div>
         </form>
