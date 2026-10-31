@@ -334,4 +334,6 @@ return [
     ],
     'supervisor_bypass' => 'Supervisor Bypass',
     'resend_in' => 'Resend in',
+
+    'resend_otp' => 'Resend OTP Code',
 ];

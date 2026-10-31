@@ -1,0 +1,777 @@
+{
+  "summary": {
+    "total_views": 272,
+    "total_referenced_keys": 10836,
+    "t1_malformed_blade_issues": 0,
+    "t2_missing_id_keys": 76,
+    "t2_missing_en_keys": 76,
+    "t2_unique_missing_keys": 63,
+    "t3_js_quote_issues": 0
+  },
+  "t1_issues": [],
+  "t2_missing_id": [
+    {
+      "key": "billing.cooca_security_guarantee_desc",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 683
+    },
+    {
+      "key": "billing.step_choose_package_subtitle",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 707
+    },
+    {
+      "key": "billing.step_choose_package",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 714
+    },
+    {
+      "key": "common.no_notifications",
+      "file": "resources\\views\\app\\community\\index.blade.php",
+      "line": 480
+    },
+    {
+      "key": "pos.terminal",
+      "file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+      "line": 1517
+    },
+    {
+      "key": "pos.touchscreen_cashier",
+      "file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+      "line": 1519
+    },
+    {
+      "key": "finance.categories",
+      "file": "resources\\views\\app\\finance\\expenses.blade.php",
+      "line": 136
+    },
+    {
+      "key": "finance.categories",
+      "file": "resources\\views\\app\\finance\\expenses.blade.php",
+      "line": 724
+    },
+    {
+      "key": "finance.kpi_ready_import_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 485
+    },
+    {
+      "key": "finance.kpi_duplicate_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 489
+    },
+    {
+      "key": "finance.kpi_error_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 493
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+      "line": 442
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+      "line": 443
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 157
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 158
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 371
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 378
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 594
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 595
+    },
+    {
+      "key": "finance.petty_cash_label",
+      "file": "resources\\views\\app\\finance\\cash-bank\\index.blade.php",
+      "line": 112
+    },
+    {
+      "key": "common.optional",
+      "file": "resources\\views\\app\\finance\\edc-terminals\\index.blade.php",
+      "line": 280
+    },
+    {
+      "key": "common.customer",
+      "file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+      "line": 141
+    },
+    {
+      "key": "common.transactions",
+      "file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+      "line": 243
+    },
+    {
+      "key": "common.back_to_list",
+      "file": "resources\\views\\app\\finance\\settlements\\show.blade.php",
+      "line": 50
+    },
+    {
+      "key": "hrm.tooltip_delete_shift",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2281
+    },
+    {
+      "key": "hrm.tooltip_delete_shift",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2282
+    },
+    {
+      "key": "hrm.label_location",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2336
+    },
+    {
+      "key": "hrm.tooltip_delete_schedule",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2512
+    },
+    {
+      "key": "hrm.tooltip_delete_schedule",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2513
+    },
+    {
+      "key": "common.completed",
+      "file": "resources\\views\\app\\inventory\\transfers.blade.php",
+      "line": 157
+    },
+    {
+      "key": "common.completed",
+      "file": "resources\\views\\app\\inventory\\transfers.blade.php",
+      "line": 215
+    },
+    {
+      "key": "sales.invoices.confirm_delete_draft_desc",
+      "file": "resources\\views\\app\\invoices\\show.blade.php",
+      "line": 763
+    },
+    {
+      "key": "services.manage_services",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1135
+    },
+    {
+      "key": "common.master_data",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1313
+    },
+    {
+      "key": "products.title",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1313
+    },
+    {
+      "key": "storefront.open_store",
+      "file": "resources\\views\\app\\landing_page\\popup.blade.php",
+      "line": 36
+    },
+    {
+      "key": "common.business",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 294
+    },
+    {
+      "key": "products.unit",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 907
+    },
+    {
+      "key": "products.category",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 907
+    },
+    {
+      "key": "pos",
+      "file": "resources\\views\\app\\pos\\terminal.blade.php",
+      "line": 22
+    },
+    {
+      "key": "auth.resend_otp",
+      "file": "resources\\views\\app\\profile\\verify-contact.blade.php",
+      "line": 65
+    },
+    {
+      "key": "purchasing.orders.order_date",
+      "file": "resources\\views\\app\\purchase-orders\\print.blade.php",
+      "line": 236
+    },
+    {
+      "key": "common.other",
+      "file": "resources\\views\\app\\roles\\index.blade.php",
+      "line": 789
+    },
+    {
+      "key": "sales.returns.comp_store_credit",
+      "file": "resources\\views\\app\\sales\\returns\\print.blade.php",
+      "line": 287
+    },
+    {
+      "key": "storefront.reservations.status_confirmed",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 483
+    },
+    {
+      "key": "storefront.reservations.status_seated",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 486
+    },
+    {
+      "key": "storefront.reservations.status_completed",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 489
+    },
+    {
+      "key": "storefront.reservations.status_cancelled",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 492
+    },
+    {
+      "key": "storefront.reservations.status_no_show",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 495
+    },
+    {
+      "key": "storefront.reservations.status_pending",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 498
+    },
+    {
+      "key": "storefront.reservations.guest_count_mobile",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 517
+    },
+    {
+      "key": "storefront.reservations.table_label_short",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 542
+    },
+    {
+      "key": "storefront.reservations.btn_select_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 555
+    },
+    {
+      "key": "storefront.reservations.action_confirm",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 584
+    },
+    {
+      "key": "storefront.reservations.action_seat",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 594
+    },
+    {
+      "key": "storefront.reservations.action_complete",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 604
+    },
+    {
+      "key": "storefront.reservations.btn_open_pos",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 621
+    },
+    {
+      "key": "storefront.reservations.btn_open_pos",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 627
+    },
+    {
+      "key": "storefront.reservations.btn_change_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 635
+    },
+    {
+      "key": "storefront.reservations.btn_cancel_rsv",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 643
+    },
+    {
+      "key": "storefront.reservations.modal_assign_title",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 681
+    },
+    {
+      "key": "storefront.reservations.modal_assign_rsv_label",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 693
+    },
+    {
+      "key": "storefront.reservations.guest_count_mobile",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 695
+    },
+    {
+      "key": "storefront.reservations.modal_assign_select_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 700
+    },
+    {
+      "key": "storefront.reservations.modal_assign_choose_placeholder",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 703
+    },
+    {
+      "key": "storefront.reservations.modal_assign_table_option",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 706
+    },
+    {
+      "key": "storefront.reservations.modal_assign_btn_cancel",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 714
+    },
+    {
+      "key": "storefront.reservations.modal_assign_btn_save",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 716
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_title",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 748
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_desc",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 753
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_peace_of_mind",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 763
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_btn_close",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 769
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_btn_confirm",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 777
+    },
+    {
+      "key": "common.rejected",
+      "file": "resources\\views\\admin\\settlements\\show.blade.php",
+      "line": 21
+    },
+    {
+      "key": "common.settings",
+      "file": "resources\\views\\admin\\social_media\\index.blade.php",
+      "line": 224
+    },
+    {
+      "key": "common.settings",
+      "file": "resources\\views\\admin\\social_media\\index.blade.php",
+      "line": 251
+    }
+  ],
+  "t2_missing_en": [
+    {
+      "key": "billing.cooca_security_guarantee_desc",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 683
+    },
+    {
+      "key": "billing.step_choose_package_subtitle",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 707
+    },
+    {
+      "key": "billing.step_choose_package",
+      "file": "resources\\views\\app\\billing\\checkout.blade.php",
+      "line": 714
+    },
+    {
+      "key": "common.no_notifications",
+      "file": "resources\\views\\app\\community\\index.blade.php",
+      "line": 480
+    },
+    {
+      "key": "pos.terminal",
+      "file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+      "line": 1517
+    },
+    {
+      "key": "pos.touchscreen_cashier",
+      "file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+      "line": 1519
+    },
+    {
+      "key": "finance.categories",
+      "file": "resources\\views\\app\\finance\\expenses.blade.php",
+      "line": 136
+    },
+    {
+      "key": "finance.categories",
+      "file": "resources\\views\\app\\finance\\expenses.blade.php",
+      "line": 724
+    },
+    {
+      "key": "finance.kpi_ready_import_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 485
+    },
+    {
+      "key": "finance.kpi_duplicate_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 489
+    },
+    {
+      "key": "finance.kpi_error_count",
+      "file": "resources\\views\\app\\finance\\receivables.blade.php",
+      "line": 493
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+      "line": 442
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+      "line": 443
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 157
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 158
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 371
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 378
+    },
+    {
+      "key": "finance.col_account_code",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 594
+    },
+    {
+      "key": "finance.col_account_name",
+      "file": "resources\\views\\app\\finance\\accounting\\coa.blade.php",
+      "line": 595
+    },
+    {
+      "key": "finance.petty_cash_label",
+      "file": "resources\\views\\app\\finance\\cash-bank\\index.blade.php",
+      "line": 112
+    },
+    {
+      "key": "common.optional",
+      "file": "resources\\views\\app\\finance\\edc-terminals\\index.blade.php",
+      "line": 280
+    },
+    {
+      "key": "common.customer",
+      "file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+      "line": 141
+    },
+    {
+      "key": "common.transactions",
+      "file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+      "line": 243
+    },
+    {
+      "key": "common.back_to_list",
+      "file": "resources\\views\\app\\finance\\settlements\\show.blade.php",
+      "line": 50
+    },
+    {
+      "key": "hrm.tooltip_delete_shift",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2281
+    },
+    {
+      "key": "hrm.tooltip_delete_shift",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2282
+    },
+    {
+      "key": "hrm.label_location",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2336
+    },
+    {
+      "key": "hrm.tooltip_delete_schedule",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2512
+    },
+    {
+      "key": "hrm.tooltip_delete_schedule",
+      "file": "resources\\views\\app\\hrm\\index.blade.php",
+      "line": 2513
+    },
+    {
+      "key": "common.completed",
+      "file": "resources\\views\\app\\inventory\\transfers.blade.php",
+      "line": 157
+    },
+    {
+      "key": "common.completed",
+      "file": "resources\\views\\app\\inventory\\transfers.blade.php",
+      "line": 215
+    },
+    {
+      "key": "sales.invoices.confirm_delete_draft_desc",
+      "file": "resources\\views\\app\\invoices\\show.blade.php",
+      "line": 763
+    },
+    {
+      "key": "services.manage_services",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1135
+    },
+    {
+      "key": "common.master_data",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1313
+    },
+    {
+      "key": "products.title",
+      "file": "resources\\views\\app\\landing_page\\edit.blade.php",
+      "line": 1313
+    },
+    {
+      "key": "storefront.open_store",
+      "file": "resources\\views\\app\\landing_page\\popup.blade.php",
+      "line": 36
+    },
+    {
+      "key": "common.business",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 294
+    },
+    {
+      "key": "products.unit",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 907
+    },
+    {
+      "key": "products.category",
+      "file": "resources\\views\\app\\master-data\\index.blade.php",
+      "line": 907
+    },
+    {
+      "key": "pos",
+      "file": "resources\\views\\app\\pos\\terminal.blade.php",
+      "line": 22
+    },
+    {
+      "key": "auth.resend_otp",
+      "file": "resources\\views\\app\\profile\\verify-contact.blade.php",
+      "line": 65
+    },
+    {
+      "key": "purchasing.orders.order_date",
+      "file": "resources\\views\\app\\purchase-orders\\print.blade.php",
+      "line": 236
+    },
+    {
+      "key": "common.other",
+      "file": "resources\\views\\app\\roles\\index.blade.php",
+      "line": 789
+    },
+    {
+      "key": "sales.returns.comp_store_credit",
+      "file": "resources\\views\\app\\sales\\returns\\print.blade.php",
+      "line": 287
+    },
+    {
+      "key": "storefront.reservations.status_confirmed",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 483
+    },
+    {
+      "key": "storefront.reservations.status_seated",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 486
+    },
+    {
+      "key": "storefront.reservations.status_completed",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 489
+    },
+    {
+      "key": "storefront.reservations.status_cancelled",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 492
+    },
+    {
+      "key": "storefront.reservations.status_no_show",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 495
+    },
+    {
+      "key": "storefront.reservations.status_pending",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 498
+    },
+    {
+      "key": "storefront.reservations.guest_count_mobile",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 517
+    },
+    {
+      "key": "storefront.reservations.table_label_short",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 542
+    },
+    {
+      "key": "storefront.reservations.btn_select_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 555
+    },
+    {
+      "key": "storefront.reservations.action_confirm",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 584
+    },
+    {
+      "key": "storefront.reservations.action_seat",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 594
+    },
+    {
+      "key": "storefront.reservations.action_complete",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 604
+    },
+    {
+      "key": "storefront.reservations.btn_open_pos",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 621
+    },
+    {
+      "key": "storefront.reservations.btn_open_pos",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 627
+    },
+    {
+      "key": "storefront.reservations.btn_change_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 635
+    },
+    {
+      "key": "storefront.reservations.btn_cancel_rsv",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 643
+    },
+    {
+      "key": "storefront.reservations.modal_assign_title",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 681
+    },
+    {
+      "key": "storefront.reservations.modal_assign_rsv_label",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 693
+    },
+    {
+      "key": "storefront.reservations.guest_count_mobile",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 695
+    },
+    {
+      "key": "storefront.reservations.modal_assign_select_table",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 700
+    },
+    {
+      "key": "storefront.reservations.modal_assign_choose_placeholder",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 703
+    },
+    {
+      "key": "storefront.reservations.modal_assign_table_option",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 706
+    },
+    {
+      "key": "storefront.reservations.modal_assign_btn_cancel",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 714
+    },
+    {
+      "key": "storefront.reservations.modal_assign_btn_save",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 716
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_title",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 748
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_desc",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 753
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_peace_of_mind",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 763
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_btn_close",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 769
+    },
+    {
+      "key": "storefront.reservations.modal_cancel_btn_confirm",
+      "file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+      "line": 777
+    },
+    {
+      "key": "common.rejected",
+      "file": "resources\\views\\admin\\settlements\\show.blade.php",
+      "line": 21
+    },
+    {
+      "key": "common.settings",
+      "file": "resources\\views\\admin\\social_media\\index.blade.php",
+      "line": 224
+    },
+    {
+      "key": "common.settings",
+      "file": "resources\\views\\admin\\social_media\\index.blade.php",
+      "line": 251
+    }
+  ],
+  "t3_js_issues": []
+}

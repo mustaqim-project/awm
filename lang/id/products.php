@@ -443,4 +443,8 @@ return [
     'status_opsi' => 'Status Opsi',
     'unit_list' => 'Daftar Satuan',
     'conversion' => 'Konversi',
+
+    'category' => 'Kategori',
+    'title' => 'Produk',
+    'unit' => 'Satuan',
 ];

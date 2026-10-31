@@ -543,4 +543,23 @@ return [
     'po_print_total_po_value' => 'Total Nilai PO:',
     'po_print_approved_by' => 'Disetujui & Dikonfirmasi Oleh,',
     'po_print_download_success' => 'Berhasil Diunduh!',
+    'po_print_created_by' => 'Dibuat Oleh,',
+    'po_print_purchasing_dept' => '( Bagian Purchasing )',
+    'po_print_sign_stamp' => '( Tanda Tangan & Cap )',
+    'po_print_generating_pdf' => 'Membuat PDF...',
+
+    'orders.order_date' => 'Tanggal Pesanan',
+    'statuses.draft' => 'Draf',
+    'statuses.pending' => 'Menunggu',
+    'statuses.approved' => 'Disetujui',
+    'statuses.rejected' => 'Ditolak',
+    'statuses.ordered' => 'Dipesan',
+    'statuses.partially_received' => 'Diterima Sebagian',
+    'statuses.received' => 'Diterima',
+    'statuses.partially_invoiced' => 'Difakturkan Sebagian',
+    'statuses.fully_invoiced' => 'Selesai Difakturkan',
+    'statuses.completed' => 'Selesai',
+    'statuses.cancelled' => 'Dibatalkan',
+
+    'statuses.' => 'Status',
 ];

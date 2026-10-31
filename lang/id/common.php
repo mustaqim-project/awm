@@ -134,4 +134,16 @@ return array (
     'items' => 'Item',
     'reset_filter' => 'Reset Filter',
     'schedule' => 'Jadwalkan',
+
+    'back_to_list' => 'Kembali ke Daftar',
+    'business' => 'Bisnis',
+    'completed' => 'Selesai',
+    'customer' => 'Pelanggan',
+    'master_data' => 'Data Master',
+    'no_notifications' => 'Belum ada notifikasi baru.',
+    'optional' => 'Opsional',
+    'other' => 'Lainnya',
+    'rejected' => 'Ditolak',
+    'settings' => 'Pengaturan',
+    'transactions' => 'Transaksi',
 );

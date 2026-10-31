@@ -1,0 +1,685 @@
+[
+  {
+    "key": "auth.resend_otp",
+    "domain": "auth",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\profile\\verify-contact.blade.php:65"
+    ],
+    "primary_file": "resources\\views\\app\\profile\\verify-contact.blade.php",
+    "primary_line": 65,
+    "snippet": "<span x-show=\"cooldown() <= 0\">{{ __('auth.resend_otp') }}</span>"
+  },
+  {
+    "key": "billing.cooca_security_guarantee_desc",
+    "domain": "billing",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\billing\\checkout.blade.php:683"
+    ],
+    "primary_file": "resources\\views\\app\\billing\\checkout.blade.php",
+    "primary_line": 683,
+    "snippet": "<strong class=\"text-black dark:text-white\">{{ __('billing.cooca_security_guarantee_title') }}</strong> {{ __('billing.cooca_security_guarantee_desc') }}"
+  },
+  {
+    "key": "billing.step_choose_package",
+    "domain": "billing",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\billing\\checkout.blade.php:714"
+    ],
+    "primary_file": "resources\\views\\app\\billing\\checkout.blade.php",
+    "primary_line": 714,
+    "snippet": "aria-label=\"{{ __('billing.step_choose_package') }}\">"
+  },
+  {
+    "key": "billing.step_choose_package_subtitle",
+    "domain": "billing",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\billing\\checkout.blade.php:707"
+    ],
+    "primary_file": "resources\\views\\app\\billing\\checkout.blade.php",
+    "primary_line": 707,
+    "snippet": "{{ __('billing.step_choose_package_subtitle') }}"
+  },
+  {
+    "key": "common.back_to_list",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\settlements\\show.blade.php:50"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\settlements\\show.blade.php",
+    "primary_line": 50,
+    "snippet": "<span>{{ __('common.back_to_list') }}</span>"
+  },
+  {
+    "key": "common.business",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\master-data\\index.blade.php:294"
+    ],
+    "primary_file": "resources\\views\\app\\master-data\\index.blade.php",
+    "primary_line": 294,
+    "snippet": "{{ __('common.business') }}"
+  },
+  {
+    "key": "common.completed",
+    "domain": "common",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\app\\inventory\\transfers.blade.php:157",
+      "resources\\views\\app\\inventory\\transfers.blade.php:215"
+    ],
+    "primary_file": "resources\\views\\app\\inventory\\transfers.blade.php",
+    "primary_line": 157,
+    "snippet": "<span class=\"inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10\" title=\"{{ __('common.completed') }}\">"
+  },
+  {
+    "key": "common.customer",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\settlements\\index.blade.php:141"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+    "primary_line": 141,
+    "snippet": "<th class=\"py-2.5 px-4\">{{ __('common.customer') }}</th>"
+  },
+  {
+    "key": "common.master_data",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\landing_page\\edit.blade.php:1313"
+    ],
+    "primary_file": "resources\\views\\app\\landing_page\\edit.blade.php",
+    "primary_line": 1313,
+    "snippet": "class=\"text-[#007AFF] font-medium hover:underline\">{{ __('common.master_data') }} &gt; {{ __('products.title') }}</a>.</p>"
+  },
+  {
+    "key": "common.no_notifications",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\community\\index.blade.php:480"
+    ],
+    "primary_file": "resources\\views\\app\\community\\index.blade.php",
+    "primary_line": 480,
+    "snippet": "<h4 class=\"text-xs font-bold text-slate-700 dark:text-slate-300\">{{ __('common.no_notifications') }}</h4>"
+  },
+  {
+    "key": "common.optional",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\edc-terminals\\index.blade.php:280"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\edc-terminals\\index.blade.php",
+    "primary_line": 280,
+    "snippet": "<label class=\"block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5\">{{ __('finance.settlement_account_info_label') }} ({{ __('common.optional') ?? 'Opsional' }})</label>"
+  },
+  {
+    "key": "common.other",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\roles\\index.blade.php:789"
+    ],
+    "primary_file": "resources\\views\\app\\roles\\index.blade.php",
+    "primary_line": 789,
+    "snippet": "{{ $category ?: __('common.other') }}"
+  },
+  {
+    "key": "common.rejected",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\admin\\settlements\\show.blade.php:21"
+    ],
+    "primary_file": "resources\\views\\admin\\settlements\\show.blade.php",
+    "primary_line": 21,
+    "snippet": "<span class=\"px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30]\">{{ __('common.rejected') }}</span>"
+  },
+  {
+    "key": "common.settings",
+    "domain": "common",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\admin\\social_media\\index.blade.php:224",
+      "resources\\views\\admin\\social_media\\index.blade.php:251"
+    ],
+    "primary_file": "resources\\views\\admin\\social_media\\index.blade.php",
+    "primary_line": 224,
+    "snippet": "<span>{{ __('common.settings') }}</span>"
+  },
+  {
+    "key": "common.transactions",
+    "domain": "common",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\settlements\\index.blade.php:243"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\settlements\\index.blade.php",
+    "primary_line": 243,
+    "snippet": "<span class=\"font-bold text-black dark:text-white\" x-text=\"selectedItems.length + ' {{ strtolower(__('common.transactions')) }}'\"></span>"
+  },
+  {
+    "key": "finance.col_account_code",
+    "domain": "finance",
+    "ref_count": 4,
+    "references": [
+      "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php:442",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:157",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:371",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:594"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+    "primary_line": 442,
+    "snippet": "<th class=\"py-2.5 px-3\">{{ __('finance.col_account_code') }}</th>"
+  },
+  {
+    "key": "finance.col_account_name",
+    "domain": "finance",
+    "ref_count": 4,
+    "references": [
+      "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php:443",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:158",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:378",
+      "resources\\views\\app\\finance\\accounting\\coa.blade.php:595"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\accounting\\balance-sheet.blade.php",
+    "primary_line": 443,
+    "snippet": "<th class=\"py-2.5 px-3\">{{ __('finance.col_account_name') }}</th>"
+  },
+  {
+    "key": "finance.kpi_duplicate_count",
+    "domain": "finance",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\receivables.blade.php:489"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\receivables.blade.php",
+    "primary_line": 489,
+    "snippet": "<span class=\"text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider\">{{ __('finance.kpi_duplicate_count') }}</span>"
+  },
+  {
+    "key": "finance.kpi_error_count",
+    "domain": "finance",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\receivables.blade.php:493"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\receivables.blade.php",
+    "primary_line": 493,
+    "snippet": "<span class=\"text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider\">{{ __('finance.kpi_error_count') }}</span>"
+  },
+  {
+    "key": "finance.kpi_ready_import_count",
+    "domain": "finance",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\receivables.blade.php:485"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\receivables.blade.php",
+    "primary_line": 485,
+    "snippet": "<span class=\"text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider\">{{ __('finance.kpi_ready_import_count') }}</span>"
+  },
+  {
+    "key": "finance.petty_cash_label",
+    "domain": "finance",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\finance\\cash-bank\\index.blade.php:112"
+    ],
+    "primary_file": "resources\\views\\app\\finance\\cash-bank\\index.blade.php",
+    "primary_line": 112,
+    "snippet": "'petty_cash' => __('finance.petty_cash_label'),"
+  },
+  {
+    "key": "hrm.label_location",
+    "domain": "hrm",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\hrm\\index.blade.php:2336"
+    ],
+    "primary_file": "resources\\views\\app\\hrm\\index.blade.php",
+    "primary_line": 2336,
+    "snippet": "<span class=\"text-black/55 dark:text-white/55\">{{ __('hrm.label_location') }}</span>"
+  },
+  {
+    "key": "hrm.tooltip_delete_schedule",
+    "domain": "hrm",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\app\\hrm\\index.blade.php:2512",
+      "resources\\views\\app\\hrm\\index.blade.php:2513"
+    ],
+    "primary_file": "resources\\views\\app\\hrm\\index.blade.php",
+    "primary_line": 2512,
+    "snippet": "title=\"{{ __('hrm.tooltip_delete_schedule') ?? 'Hapus Jadwal' }}\""
+  },
+  {
+    "key": "hrm.tooltip_delete_shift",
+    "domain": "hrm",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\app\\hrm\\index.blade.php:2281",
+      "resources\\views\\app\\hrm\\index.blade.php:2282"
+    ],
+    "primary_file": "resources\\views\\app\\hrm\\index.blade.php",
+    "primary_line": 2281,
+    "snippet": "title=\"{{ __('hrm.tooltip_delete_shift') ?? 'Hapus Shift' }}\""
+  },
+  {
+    "key": "pos.terminal",
+    "domain": "pos",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\docs\\partials\\sec_ai.blade.php:1517"
+    ],
+    "primary_file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+    "primary_line": 1517,
+    "snippet": "<span class=\"font-semibold text-black dark:text-white text-[11px]\">{{ __('pos.terminal') }}</span>"
+  },
+  {
+    "key": "pos.touchscreen_cashier",
+    "domain": "pos",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\docs\\partials\\sec_ai.blade.php:1519"
+    ],
+    "primary_file": "resources\\views\\app\\docs\\partials\\sec_ai.blade.php",
+    "primary_line": 1519,
+    "snippet": "<span class=\"text-[10px] text-black/40 dark:text-white/40 mt-1\">{{ __('pos.touchscreen_cashier') ?? 'Layar Sentuh Kasir' }}</span>"
+  },
+  {
+    "key": "products.category",
+    "domain": "products",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\master-data\\index.blade.php:907"
+    ],
+    "primary_file": "resources\\views\\app\\master-data\\index.blade.php",
+    "primary_line": 907,
+    "snippet": "{{ __('common.save') }} {{ $type === 'units' ? __('products.unit') : __('products.category') }}"
+  },
+  {
+    "key": "products.title",
+    "domain": "products",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\landing_page\\edit.blade.php:1313"
+    ],
+    "primary_file": "resources\\views\\app\\landing_page\\edit.blade.php",
+    "primary_line": 1313,
+    "snippet": "class=\"text-[#007AFF] font-medium hover:underline\">{{ __('common.master_data') }} &gt; {{ __('products.title') }}</a>.</p>"
+  },
+  {
+    "key": "products.unit",
+    "domain": "products",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\master-data\\index.blade.php:907"
+    ],
+    "primary_file": "resources\\views\\app\\master-data\\index.blade.php",
+    "primary_line": 907,
+    "snippet": "{{ __('common.save') }} {{ $type === 'units' ? __('products.unit') : __('products.category') }}"
+  },
+  {
+    "key": "purchasing.orders.order_date",
+    "domain": "purchasing",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\purchase-orders\\print.blade.php:236"
+    ],
+    "primary_file": "resources\\views\\app\\purchase-orders\\print.blade.php",
+    "primary_line": 236,
+    "snippet": "<span class=\"text-black/50\">{{ __('purchasing.orders.order_date') }}:</span>"
+  },
+  {
+    "key": "sales.invoices.confirm_delete_draft_desc",
+    "domain": "sales",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\invoices\\show.blade.php:763"
+    ],
+    "primary_file": "resources\\views\\app\\invoices\\show.blade.php",
+    "primary_line": 763,
+    "snippet": "{{ __('sales.invoices.confirm_delete_draft_desc', ['number' => $invoice->invoice_number]) }}"
+  },
+  {
+    "key": "sales.returns.comp_store_credit",
+    "domain": "sales",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\sales\\returns\\print.blade.php:287"
+    ],
+    "primary_file": "resources\\views\\app\\sales\\returns\\print.blade.php",
+    "primary_line": 287,
+    "snippet": "{{ __('sales.returns.comp_store_credit') }}"
+  },
+  {
+    "key": "services.manage_services",
+    "domain": "services",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\landing_page\\edit.blade.php:1135"
+    ],
+    "primary_file": "resources\\views\\app\\landing_page\\edit.blade.php",
+    "primary_line": 1135,
+    "snippet": "<span>{{ __('services.manage_services') }}</span>"
+  },
+  {
+    "key": "storefront.open_store",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\landing_page\\popup.blade.php:36"
+    ],
+    "primary_file": "resources\\views\\app\\landing_page\\popup.blade.php",
+    "primary_line": 36,
+    "snippet": "{{ __('storefront.open_store') }} &rarr;"
+  },
+  {
+    "key": "storefront.reservations.action_complete",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:604"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 604,
+    "snippet": "{{ __('storefront.reservations.action_complete') }}"
+  },
+  {
+    "key": "storefront.reservations.action_confirm",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:584"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 584,
+    "snippet": "{{ __('storefront.reservations.action_confirm') }}"
+  },
+  {
+    "key": "storefront.reservations.action_seat",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:594"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 594,
+    "snippet": "{{ __('storefront.reservations.action_seat') }}"
+  },
+  {
+    "key": "storefront.reservations.btn_cancel_rsv",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:643"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 643,
+    "snippet": "<span>{{ __('storefront.reservations.btn_cancel_rsv') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.btn_change_table",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:635"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 635,
+    "snippet": "<span>{{ __('storefront.reservations.btn_change_table') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.btn_open_pos",
+    "domain": "storefront",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:621",
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:627"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 621,
+    "snippet": "<span>{{ __('storefront.reservations.btn_open_pos') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.btn_select_table",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:555"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 555,
+    "snippet": "<span>{{ __('storefront.reservations.btn_select_table') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.guest_count_mobile",
+    "domain": "storefront",
+    "ref_count": 2,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:517",
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:695"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 517,
+    "snippet": "{{ __('storefront.reservations.guest_count_mobile', ['count' => $rsv->guest_count]) }}"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_btn_cancel",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:714"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 714,
+    "snippet": "class=\"px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer\">{{ __('storefront.reservations.modal_assign_btn_cancel') }}</button>"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_btn_save",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:716"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 716,
+    "snippet": "class=\"px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer\">{{ __('storefront.reservations.modal_assign_btn_save') }}</button>"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_choose_placeholder",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:703"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 703,
+    "snippet": "<option value=\"\">{{ __('storefront.reservations.modal_assign_choose_placeholder') }}</option>"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_rsv_label",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:693"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 693,
+    "snippet": "<span class=\"text-[12px] text-black/50 dark:text-white/50 block\">{{ __('storefront.reservations.modal_assign_rsv_label') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_select_table",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:700"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 700,
+    "snippet": "<label class=\"block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5\">{{ __('storefront.reservations.modal_assign_select_table') }}</label>"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_table_option",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:706"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 706,
+    "snippet": "{{ __('storefront.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}"
+  },
+  {
+    "key": "storefront.reservations.modal_assign_title",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:681"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 681,
+    "snippet": "<h3 class=\"text-base font-bold text-black dark:text-white\">{{ __('storefront.reservations.modal_assign_title') }}</h3>"
+  },
+  {
+    "key": "storefront.reservations.modal_cancel_btn_close",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:769"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 769,
+    "snippet": "{{ __('storefront.reservations.modal_cancel_btn_close') }}"
+  },
+  {
+    "key": "storefront.reservations.modal_cancel_btn_confirm",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:777"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 777,
+    "snippet": "{{ __('storefront.reservations.modal_cancel_btn_confirm') }}"
+  },
+  {
+    "key": "storefront.reservations.modal_cancel_desc",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:753"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 753,
+    "snippet": "e(__('storefront.reservations.modal_cancel_desc', ['code' => ':code', 'name' => ':name']))"
+  },
+  {
+    "key": "storefront.reservations.modal_cancel_peace_of_mind",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:763"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 763,
+    "snippet": "<span>{{ __('storefront.reservations.modal_cancel_peace_of_mind') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.modal_cancel_title",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:748"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 748,
+    "snippet": "<h3 class=\"text-[16px] font-bold text-black dark:text-white tracking-tight\">{{ __('storefront.reservations.modal_cancel_title') }}</h3>"
+  },
+  {
+    "key": "storefront.reservations.status_cancelled",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:492"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 492,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-red-500/15 text-red-600\">{{ __('storefront.reservations.status_cancelled') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.status_completed",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:489"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 489,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70\">{{ __('storefront.reservations.status_completed') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.status_confirmed",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:483"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 483,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]\">{{ __('storefront.reservations.status_confirmed') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.status_no_show",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:495"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 495,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-gray-500/15 text-gray-600\">{{ __('storefront.reservations.status_no_show') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.status_pending",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:498"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 498,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400\">{{ __('storefront.reservations.status_pending') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.status_seated",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:486"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 486,
+    "snippet": "class=\"px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#5856D6]/15 text-[#5856D6]\">{{ __('storefront.reservations.status_seated') }}</span>"
+  },
+  {
+    "key": "storefront.reservations.table_label_short",
+    "domain": "storefront",
+    "ref_count": 1,
+    "references": [
+      "resources\\views\\app\\storefront\\reservations\\index.blade.php:542"
+    ],
+    "primary_file": "resources\\views\\app\\storefront\\reservations\\index.blade.php",
+    "primary_line": 542,
+    "snippet": "<span>{{ __('storefront.reservations.table_label_short', ['num' => $rsv->posTable->table_number, 'name' => $rsv->posTable->name]) }}</span>"
+  }
+]

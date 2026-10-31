@@ -934,4 +934,7 @@ return [
     'confirm_delete_return_title' => 'Delete Sales Return',
     'confirm_delete_return_msg' => 'Are you sure you want to delete draft return',
     'action_cannot_be_undone' => 'This action cannot be undone.',
+
+    'invoices.confirm_delete_draft_desc' => 'Are you sure you want to delete invoice draft :number? This action cannot be undone.',
+    'returns.comp_store_credit' => 'Store Credit Balance',
 ];

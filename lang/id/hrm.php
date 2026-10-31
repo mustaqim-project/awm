@@ -894,5 +894,9 @@ return [
     'team_members' => 'Anggota Tim',
     'employees' => 'Karyawan',
     'payroll_and_attendance' => 'Payroll & Presensi',
+
+    'label_location' => 'Lokasi',
+    'tooltip_delete_schedule' => 'Hapus Jadwal Kerja',
+    'tooltip_delete_shift' => 'Hapus Shift',
 ];
 

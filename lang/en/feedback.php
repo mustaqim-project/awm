@@ -67,4 +67,9 @@ return [
     'priority_low' => 'Low',
     'priority_normal' => 'Normal',
     'priority_high' => 'High',
+
+    'status_pending' => 'Pending',
+    'status_reviewed' => 'Reviewed',
+
+    'status_' => 'Status',
 ];

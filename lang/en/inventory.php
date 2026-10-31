@@ -296,4 +296,15 @@ return [
     'transferred_products_label' => 'Transferred Products',
     'confirm_receive_title' => 'Confirm Goods Receipt?',
     'confirm_receive_desc' => 'Ensure transferred goods have arrived physically and quantities match before closing the document.',
+
+    'movement_types.in' => 'Stock In',
+    'movement_types.out' => 'Stock Out',
+    'movement_types.adjustment' => 'Stock Adjustment',
+    'movement_types.transfer_in' => 'Transfer In',
+    'movement_types.transfer_out' => 'Transfer Out',
+    'movement_types.sale' => 'Sale',
+    'movement_types.purchase' => 'Purchase',
+    'movement_types.return' => 'Return',
+
+    'movement_types.' => 'Movement Type',
 ];

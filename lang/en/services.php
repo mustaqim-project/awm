@@ -128,4 +128,6 @@ return [
     'pilih_semua_layanan' => 'Select All Services',
     'layanan_kode' => 'Services & Code',
     'kategori' => 'Category',
+
+    'manage_services' => 'Manage Services',
 ];

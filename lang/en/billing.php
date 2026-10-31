@@ -796,4 +796,8 @@ return [
     'quota_postpone_reset'       => 'Not Now (Wait for Next Month\'s Reset)',
     'unlimited_quota_manage'     => 'Cooca (∞ Unlimited) - Manage Quota',
     'upgrade_to_cooca'           => 'Free Plan (Solo) - Upgrade to Cooca',
+
+    'cooca_security_guarantee_desc' => 'Transactions protected by industry-standard encryption and Cooca security guarantee.',
+    'step_choose_package' => 'Choose Subscription Package',
+    'step_choose_package_subtitle' => 'Select the package that best fits your business operational needs.',
 ];

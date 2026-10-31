@@ -134,4 +134,16 @@ return array (
     'items' => 'Items',
     'reset_filter' => 'Reset Filter',
     'schedule' => 'Schedule',
+
+    'back_to_list' => 'Back to List',
+    'business' => 'Business',
+    'completed' => 'Completed',
+    'customer' => 'Customer',
+    'master_data' => 'Master Data',
+    'no_notifications' => 'No new notifications.',
+    'optional' => 'Optional',
+    'other' => 'Other',
+    'rejected' => 'Rejected',
+    'settings' => 'Settings',
+    'transactions' => 'Transactions',
 );

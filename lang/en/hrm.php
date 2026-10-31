@@ -894,5 +894,9 @@ return [
     'team_members' => 'Team Members',
     'employees' => 'Employees',
     'payroll_and_attendance' => 'Payroll & Attendance',
+
+    'label_location' => 'Location',
+    'tooltip_delete_schedule' => 'Delete Work Schedule',
+    'tooltip_delete_shift' => 'Delete Shift',
 ];
 

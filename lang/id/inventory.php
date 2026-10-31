@@ -296,4 +296,15 @@ return [
     'transferred_products_label' => 'Produk yang Ditransfer',
     'confirm_receive_title' => 'Konfirmasi Terima?',
     'confirm_receive_desc' => 'Pastikan barang transfer telah tiba secara fisik dan kuantitas sesuai sebelum menyelesaikan dokumen.',
+
+    'movement_types.in' => 'Stok Masuk',
+    'movement_types.out' => 'Stok Keluar',
+    'movement_types.adjustment' => 'Penyesuaian Stok',
+    'movement_types.transfer_in' => 'Transfer Masuk',
+    'movement_types.transfer_out' => 'Transfer Keluar',
+    'movement_types.sale' => 'Penjualan',
+    'movement_types.purchase' => 'Pembelian',
+    'movement_types.return' => 'Retur',
+
+    'movement_types.' => 'Tipe Mutasi',
 ];

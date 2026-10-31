@@ -1757,4 +1757,7 @@ return [
     'print_shift_success' => 'Shift report receipt printed successfully.',
     'print_shift_error' => 'Failed to print shift report.',
     'printer_connection_error' => 'Printer connection error occurred.',
+
+    'terminal' => 'POS Terminal',
+    'touchscreen_cashier' => 'Touchscreen Cashier',
 ];

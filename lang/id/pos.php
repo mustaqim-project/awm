@@ -1757,4 +1757,7 @@ return [
     'print_shift_success' => 'Struk laporan shift berhasil dicetak.',
     'print_shift_error' => 'Gagal mencetak laporan shift.',
     'printer_connection_error' => 'Terjadi kesalahan koneksi printer.',
+
+    'terminal' => 'Terminal POS',
+    'touchscreen_cashier' => 'Kasir Layar Sentuh',
 ];

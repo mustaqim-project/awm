@@ -443,4 +443,8 @@ return [
     'status_opsi' => 'Status Options',
     'unit_list' => 'Unit List',
     'conversion' => 'Conversion',
+
+    'category' => 'Category',
+    'title' => 'Products',
+    'unit' => 'Unit',
 ];

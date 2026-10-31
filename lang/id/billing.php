@@ -814,4 +814,8 @@ return [
     'quota_postpone_reset'       => 'Nanti Saja (Tunggu Reset Bulan Depan)',
     'unlimited_quota_manage'     => 'Cooca (∞ Unlimited) - Kelola Kuota',
     'upgrade_to_cooca'           => 'Paket Free (Solo) - Tingkatkan ke Cooca',
+
+    'cooca_security_guarantee_desc' => 'Transaksi dilindungi enkripsi standar industri dan jaminan keamanan Cooca.',
+    'step_choose_package' => 'Pilih Paket Langganan',
+    'step_choose_package_subtitle' => 'Tentukan paket yang paling sesuai dengan kebutuhan operasional bisnis Anda.',
 ];

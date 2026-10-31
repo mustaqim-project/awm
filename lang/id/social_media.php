@@ -696,5 +696,10 @@ return [
     'create_official_cooca_post' => 'Buat Postingan Resmi Cooca',
     'edit_post_content' => 'Edit Konten Postingan',
     'platform_post_detail' => 'Detail Postingan Platform',
+
+    'format_story' => 'Story',
+    'format_reel' => 'Reel',
+
+    'format_' => 'Format Media',
 ];
 

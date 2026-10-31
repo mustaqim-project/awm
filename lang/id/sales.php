@@ -934,4 +934,7 @@ return [
     'confirm_delete_return_title' => 'Hapus Retur Penjualan',
     'confirm_delete_return_msg' => 'Apakah Anda yakin ingin menghapus draf retur',
     'action_cannot_be_undone' => 'Tindakan ini tidak dapat dibatalkan.',
+
+    'invoices.confirm_delete_draft_desc' => 'Apakah Anda yakin ingin menghapus draf faktur :number? Tindakan ini tidak dapat dibatalkan.',
+    'returns.comp_store_credit' => 'Saldo Kredit Toko',
 ];

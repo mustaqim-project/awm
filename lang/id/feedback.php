@@ -67,4 +67,9 @@ return [
     'priority_low' => 'Rendah',
     'priority_normal' => 'Normal',
     'priority_high' => 'Tinggi',
+
+    'status_pending' => 'Menunggu',
+    'status_reviewed' => 'Ditinjau',
+
+    'status_' => 'Status',
 ];

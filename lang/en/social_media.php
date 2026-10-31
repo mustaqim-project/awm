@@ -696,5 +696,10 @@ return [
     'create_official_cooca_post' => 'Create Official Cooca Post',
     'edit_post_content' => 'Edit Post Content',
     'platform_post_detail' => 'Platform Post Details',
+
+    'format_story' => 'Story',
+    'format_reel' => 'Reel',
+
+    'format_' => 'Media Format',
 ];
 

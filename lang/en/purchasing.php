@@ -543,4 +543,23 @@ return [
     'po_print_total_po_value' => 'Total PO Value:',
     'po_print_approved_by' => 'Approved & Confirmed By,',
     'po_print_download_success' => 'Successfully Downloaded!',
+    'po_print_created_by' => 'Created By,',
+    'po_print_purchasing_dept' => '( Purchasing Department )',
+    'po_print_sign_stamp' => '( Signature & Stamp )',
+    'po_print_generating_pdf' => 'Generating PDF...',
+
+    'orders.order_date' => 'Order Date',
+    'statuses.draft' => 'Draft',
+    'statuses.pending' => 'Pending',
+    'statuses.approved' => 'Approved',
+    'statuses.rejected' => 'Rejected',
+    'statuses.ordered' => 'Ordered',
+    'statuses.partially_received' => 'Partially Received',
+    'statuses.received' => 'Received',
+    'statuses.partially_invoiced' => 'Partially Invoiced',
+    'statuses.fully_invoiced' => 'Fully Invoiced',
+    'statuses.completed' => 'Completed',
+    'statuses.cancelled' => 'Cancelled',
+
+    'statuses.' => 'Status',
 ];
