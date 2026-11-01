@@ -321,9 +321,9 @@
                             class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
                         <div class="min-w-0 flex-1">
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $referenceItem->title }}</h5>
-                            <p class="text-[11px] text-black/50 dark:text-white/50 truncate">Sumber: {{ $referenceItem->source?->name ?? 'Katalog COOCA' }}</p>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 truncate">Konsep: {{ $referenceItem->category?->name ?? 'Visual Estetik' }}</p>
                             <a href="{{ route('ai-studio.inspiration.show', $referenceItem->id) }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline">
-                                {{ __('ai.view_attribution_sheet') }} &rarr;
+                                Lihat Detail Visual &rarr;
                             </a>
                         </div>
                     </div>

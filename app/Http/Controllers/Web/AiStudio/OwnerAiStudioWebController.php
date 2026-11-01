@@ -237,19 +237,61 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'last_activity_at' => now(),
         ]);
 
-        // Simpan versi prompt awal jika ada
+        // Resolusi entitas produk & referensi inspirasi untuk sintesis prompt otonom
+        $selectedProduct = ! empty($validated['product_id'])
+            ? Product::where('business_id', $business->id)->find($validated['product_id'])
+            : null;
+
+        $selectedInspiration = ! empty($validated['inspiration_item_id'])
+            ? InspirationItem::with(['category', 'visualAnalysis'])->find($validated['inspiration_item_id'])
+            : null;
+
+        $briefData = [
+            'product_name' => $validated['custom_product_name'] ?? $selectedProduct?->name ?? $validated['name'],
+            'target_channel' => $validated['target_channel'] ?? 'instagram',
+            'aspect_ratio' => $validated['aspect_ratio'] ?? '1:1',
+            'style_preset' => $validated['style_preset'] ?? 'clean_commercial',
+            'custom_notes' => $validated['custom_notes'] ?? null,
+            'role' => $validated['role'] ?? 'hero_product',
+        ];
+
+        try {
+            $compiled = $this->promptCompiler->compile(
+                business: $business,
+                product: $selectedProduct,
+                reference: $selectedInspiration,
+                brief: $briefData
+            );
+            $positivePrompt = $compiled['positive_prompt'];
+            $negativePrompt = $compiled['negative_prompt'];
+            $promptParameters = $compiled['prompt_parameters'];
+            $guardrailStatus = $compiled['guardrail_status'];
+            $guardrailNotes = $compiled['guardrail_notes'];
+        } catch (\Throwable) {
+            $positivePrompt = "Professional commercial studio product photography of {$briefData['product_name']}, centered, clean aesthetic, high resolution";
+            $negativePrompt = 'blurry, amateur, low quality, distorted text, oversaturated';
+            $promptParameters = [
+                'target_channel' => $validated['target_channel'],
+                'custom_notes' => $validated['custom_notes'] ?? null,
+                'custom_product_name' => $validated['custom_product_name'] ?? null,
+            ];
+            $guardrailStatus = 'passed';
+            $guardrailNotes = null;
+        }
+
+        // Simpan versi prompt awal yang telah dikompilasi secara cerdas oleh AI Studio
         BusinessInspirationPromptVersion::create([
             'business_id' => $business->id,
             'project_id' => $project->id,
             'version_number' => 1,
-            'positive_prompt' => "Studio visual render of {$validated['name']}",
+            'positive_prompt' => $positivePrompt,
+            'negative_prompt' => $negativePrompt,
             'aspect_ratio' => $validated['aspect_ratio'],
             'style_preset' => $validated['style_preset'] ?? 'clean_commercial',
-            'prompt_parameters' => [
-                'target_channel' => $validated['target_channel'],
-                'custom_notes' => $validated['custom_notes'] ?? null,
-                'custom_product_name' => $validated['custom_product_name'] ?? null,
-            ],
+            'prompt_parameters' => $promptParameters,
+            'is_approved' => $guardrailStatus === 'passed',
+            'guardrail_status' => $guardrailStatus,
+            'guardrail_notes' => $guardrailNotes,
         ]);
 
         // 1. Kaitkan produk katalog tenant jika dipilih

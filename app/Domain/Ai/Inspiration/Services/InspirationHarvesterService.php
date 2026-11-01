@@ -6,6 +6,8 @@ namespace App\Domain\Ai\Inspiration\Services;
 
 use App\Domain\Ai\Inspiration\Adapters\CivitaiAdapter;
 use App\Domain\Ai\Inspiration\Adapters\CopasPromptAdapter;
+use App\Domain\Ai\Inspiration\Adapters\GrokImageAdapter;
+use App\Domain\Ai\Inspiration\Adapters\PinterestAdapter;
 use App\Domain\Ai\Inspiration\Contracts\InspirationAdapterInterface;
 use App\Models\AiStudio\InspirationCategory;
 use App\Models\AiStudio\InspirationItem;
@@ -29,11 +31,15 @@ final class InspirationHarvesterService
 
     public function __construct(
         CopasPromptAdapter $copasPromptAdapter,
-        CivitaiAdapter $civitaiAdapter
+        CivitaiAdapter $civitaiAdapter,
+        ?PinterestAdapter $pinterestAdapter = null,
+        ?GrokImageAdapter $grokImageAdapter = null
     ) {
         $this->adapters = [
             'copasprompt' => $copasPromptAdapter,
             'civitai' => $civitaiAdapter,
+            'pinterest' => $pinterestAdapter ?? new PinterestAdapter,
+            'grok' => $grokImageAdapter ?? new GrokImageAdapter,
         ];
     }
 
@@ -169,6 +175,24 @@ final class InspirationHarvesterService
                 'fetch_frequency_minutes' => 60,
                 'rate_limit_per_minute' => 60,
                 'disclaimer' => 'Referensi prompt visual global bersumber dari komunitas terbuka Civitai Open AI.',
+            ],
+            'pinterest' => [
+                'name' => 'Pinterest Commercial Library',
+                'driver_class' => PinterestAdapter::class,
+                'supports_image' => true,
+                'supports_video' => false,
+                'fetch_frequency_minutes' => 60,
+                'rate_limit_per_minute' => 60,
+                'disclaimer' => 'Koleksi template fotografi produk komersial viral Pinterest.',
+            ],
+            'grok' => [
+                'name' => 'Grok Image Studio Library',
+                'driver_class' => GrokImageAdapter::class,
+                'supports_image' => true,
+                'supports_video' => false,
+                'fetch_frequency_minutes' => 60,
+                'rate_limit_per_minute' => 60,
+                'disclaimer' => 'Koleksi gaya generasi visual sinematik Grok & Flux AI.',
             ],
         ];
 
@@ -326,17 +350,20 @@ final class InspirationHarvesterService
             $metaDetails['original_remote_url'] = $remoteImageUrl;
             $metaDetails['local_asset_url'] = $localAssetUrl;
 
+            $vaData = (array) ($data['visual_analysis'] ?? []);
+
             InspirationVisualAnalysis::updateOrCreate(
                 ['inspiration_item_id' => $item->id],
                 [
-                    'composition' => $this->detectComposition($rawPrompt, $tags),
-                    'lighting' => $this->detectLighting($rawPrompt),
-                    'color_mood' => $this->detectColorMood($rawPrompt, $tags),
-                    'visual_hook' => 'Komposisi komersial kontras tinggi dengan fokus tajam produk hero',
-                    'cta_pattern' => 'Bottom overlay / Ruang teks minimalis untuk info harga & WA',
-                    'extracted_style_prompt' => $rawPrompt,
-                    'negative_style_prompt' => (string) ($data['negative_prompt'] ?? 'blurry, low quality, distorted, duplicate, text, watermark'),
-                    'suggested_aspect_ratios' => $suggestedRatios,
+                    'composition' => $vaData['composition'] ?? $this->detectComposition($rawPrompt, $tags),
+                    'lighting' => $vaData['lighting'] ?? $this->detectLighting($rawPrompt),
+                    'color_palette' => $vaData['color_palette'] ?? ['#FFFFFF', '#D4AF37', '#2C2C2C'],
+                    'color_mood' => $vaData['color_mood'] ?? $this->detectColorMood($rawPrompt, $tags),
+                    'visual_hook' => $vaData['visual_hook'] ?? 'Komposisi komersial kontras tinggi dengan fokus tajam produk hero',
+                    'cta_pattern' => $vaData['cta_pattern'] ?? 'Bottom overlay / Ruang teks minimalis untuk info harga & WA',
+                    'extracted_style_prompt' => $vaData['extracted_style_prompt'] ?? $rawPrompt,
+                    'negative_style_prompt' => $vaData['negative_style_prompt'] ?? (string) ($data['negative_prompt'] ?? 'blurry, low quality, distorted, duplicate, text, watermark'),
+                    'suggested_aspect_ratios' => $vaData['suggested_aspect_ratios'] ?? $suggestedRatios,
                     'safety_score' => 99.50,
                     'metadata' => $metaDetails,
                     'analyzed_at' => now(),

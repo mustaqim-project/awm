@@ -11,9 +11,66 @@ use App\Domain\Ai\Studio\Billing\CostQuoteService;
 use App\Models\AiStudio\InspirationItem;
 use App\Models\Business;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class PromptCompilerService
 {
+    /**
+     * Kamus terjemahan cerdas istilah fotografi & e-commerce (Bahasa Indonesia -> Professional Studio English).
+     */
+    protected const STYLE_DICTIONARY = [
+        // Latar Belakang & Permukaan (Background & Podium)
+        'marmer' => 'luxurious white Italian Carrara marble slab with subtle grey veins',
+        'marmer putih' => 'pristine polished white Italian Carrara marble surface with subtle grey veining',
+        'marmer hitam' => 'sleek polished black Marquina marble surface with golden veining',
+        'meja kayu' => 'solid rustic Indonesian teakwood table with rich organic grain texture',
+        'kayu jati' => 'aged solid Indonesian teakwood surface with natural satin finish',
+        'kayu' => 'warm natural organic timber surface with tactile woodgrain',
+        'beton' => 'minimalist raw architectural polished concrete pedestal',
+        'semen' => 'smooth architectural raw concrete slab with industrial aesthetic',
+        'batu' => 'natural textured volcanic stone podium',
+        'batu alam' => 'chiseled natural slate stone slab with organic chipped edges',
+        'travertine' => 'porous beige natural travertine stone pedestal',
+        'pasir' => 'fine warm coastal white sand with soft wind ripples',
+        'pantai' => 'tropical serene coastline with soft-focus ocean sunrise in the background',
+        'kain' => 'draped organic linen textile with soft natural folds',
+        'kain sutra' => 'flowing lustrous silk drapery catching soft specular highlights',
+        'akrilik' => 'crystal-clear transparent reflective acrylic riser',
+        'kaca' => 'smoked mirror glass pedestal with delicate caustic reflections',
+        'hitam doff' => 'sleek obsidian matte-black minimalist background',
+        'hitam' => 'deep dark moody studio backdrop with dramatic contrast',
+        'putih' => 'pure clean high-key minimalist commercial studio cyclorama background',
+        'pastel' => 'soft aesthetic warm pastel gradient studio backdrop',
+        'terakota' => 'warm Mediterranean terracotta stucco wall with architectural arches',
+
+        // Pencahayaan & Suasana (Lighting & Ambiance)
+        'senja' => 'warm golden hour directional sunlight with long soft shadows and amber glow',
+        'sore' => 'golden hour afternoon sunlight with warm amber hues',
+        'pagi' => 'bright crisp natural morning daylight with soft diffused window fill',
+        'siang' => 'crisp clean architectural daylight with vivid contrast',
+        'malam' => 'moody nighttime commercial studio lighting with warm glowing edge lights',
+        'dramatis' => 'dramatic chiaroscuro low-key studio lighting with striking rim highlights',
+        'lembut' => 'soft diffused overhead beauty softbox lighting with zero harsh shadows',
+        'neon' => 'subtle dual-tone cyan and magenta neon edge rim lighting with atmospheric mist',
+
+        // Aksen & Properti Pendukung (Accents & Props)
+        'percikan air' => 'high-speed frozen water splash droplets glistening in mid-air',
+        'splash' => 'dynamic frozen liquid splash with sparkling micro-droplets',
+        'es batu' => 'crystal-clear transparent melting ice cubes with condensation beads',
+        'embun' => 'delicate sparkling condensation dew droplets covering the surface',
+        'uap' => 'soft appetizing aromatic steam wisps rising naturally',
+        'asap' => 'delicate wisps of authentic warm steam rising gracefully',
+        'daun mint' => 'fresh organic bright green mint leaves with dew beads',
+        'daun monstera' => 'tropical organic monstera and palm leaf shadows cast across the set',
+        'bunga' => 'tasteful minimalist dried botanicals and floral accents',
+        'bunga kering' => 'curated dried pampas grass and botanical stems in soft blur',
+        'cabai' => 'scattered vibrant fresh red cayenne chilies and raw shallot slices',
+        'biji kopi' => 'freshly roasted shiny Arabica coffee beans scattered gracefully',
+        'jeruk nipis' => 'fresh sliced juicy lime wedges with glistening pulp',
+        'lemon' => 'fresh sliced yellow lemon with translucent pulp and water spray',
+        'kayu manis' => 'fragrant whole cinnamon sticks and star anise spices',
+    ];
+
     public function __construct(
         protected VisualReferenceAnalyzer $visualAnalyzer = new VisualReferenceAnalyzer,
         protected BusinessAssetAnalyzer $assetAnalyzer = new BusinessAssetAnalyzer,
@@ -22,8 +79,7 @@ class PromptCompilerService
     ) {}
 
     /**
-     * Kompilasi prompt rekayasa cerdas AI Studio yang menggabungkan struktur visual referensi,
-     * identitas produk fisik riil merchant, dan brief kanal media sosial.
+     * Kompilasi prompt rekayasa cerdas AI Studio (Autonomous Prompt Synthesizer).
      *
      * @param array<string, mixed> $brief
      * @return array{
@@ -61,7 +117,7 @@ class PromptCompilerService
         $stylePreset = (string) ($brief['style_preset'] ?? 'minimalist_luxury');
         $aspectRatio = (string) ($brief['aspect_ratio'] ?? '1:1');
         $targetChannel = (string) ($brief['target_channel'] ?? 'instagram');
-        $customNotes = trim((string) ($brief['custom_notes'] ?? ''));
+        $customNotes = trim((string) ($brief['custom_notes'] ?? $brief['custom_prompt'] ?? ''));
 
         // 4. Resolusi Dimensi & Biaya
         $quote = $this->costQuoteService->quote(
@@ -72,22 +128,27 @@ class PromptCompilerService
             enableUpscale: (bool) ($brief['enable_upscale'] ?? false)
         );
 
-        // 5. Susun Positive Prompt Terpadu
-        $positivePrompt = $this->buildPositivePrompt(
+        // 5. Sintesis Cerdas: Parse Instruksi Pengguna (Penggantian Kata, Tambahan, & Pengecualian)
+        $userExclusions = [];
+        $smartDirectives = $this->parseSmartUserDirectives($customNotes, $visual, $asset, $userExclusions);
+
+        // 6. Susun Positive Master Prompt Berbasis AI Autonom
+        $positivePrompt = $this->buildAutonomousMasterPrompt(
             visual: $visual,
             asset: $asset,
             stylePreset: $stylePreset,
             targetChannel: $targetChannel,
-            customNotes: $customNotes
+            customNotes: $customNotes,
+            smartDirectives: $smartDirectives
         );
 
-        // 6. Susun Negative Prompt & Anti-Hallucination Guardrails
-        $negativePrompt = $this->buildNegativePrompt($visual, $asset);
+        // 7. Susun Negative Prompt & Anti-Hallucination Guardrails
+        $negativePrompt = $this->buildNegativePrompt($visual, $asset, $userExclusions);
 
-        // 7. Evaluasi Guardrail Keamanan Konten
+        // 8. Evaluasi Guardrail Keamanan Konten
         [$guardrailStatus, $guardrailNotes] = $this->evaluateGuardrails($positivePrompt, $customNotes);
 
-        // 8. Parameter Teknis Eksekusi Model
+        // 9. Parameter Teknis Eksekusi Model
         $promptParameters = [
             'provider' => $quote['provider'],
             'model_name' => $quote['model_name'],
@@ -101,7 +162,7 @@ class PromptCompilerService
             'safety_tolerance' => 'standard',
         ];
 
-        // 9. Lembar Transparansi untuk Apple HIG Sheet di UI
+        // 10. Lembar Transparansi untuk UI Bento Apple HIG
         $transparencySheet = [
             'inspiration_composition' => $visual['composition'],
             'inspiration_lighting' => $visual['lighting'],
@@ -114,6 +175,8 @@ class PromptCompilerService
             'target_channel' => $targetChannel,
             'estimated_credits' => $quote['credit_cost'],
             'preservation_summary' => $asset['preservation_rules'],
+            'applied_substitutions' => $smartDirectives['substitutions'],
+            'applied_additions' => $smartDirectives['additions'],
         ];
 
         return [
@@ -130,21 +193,127 @@ class PromptCompilerService
     }
 
     /**
-     * Membangun kalimat positive prompt yang menggabungkan subjek nyata, pencahayaan, dan latar belakang.
+     * Parser Bahasa Alami Cerdas untuk Instruksi Pengguna (Penggantian Kata, Tambahan, & Pengecualian).
      *
      * @param array<string, mixed> $visual
      * @param array<string, mixed> $asset
+     * @param array<int, string> $userExclusions
+     * @return array{
+     *     substitutions: array<int, string>,
+     *     additions: array<int, string>,
+     *     environment_override: ?string,
+     *     lighting_override: ?string
+     * }
      */
-    protected function buildPositivePrompt(
+    protected function parseSmartUserDirectives(
+        string $customNotes,
+        array &$visual,
+        array &$asset,
+        array &$userExclusions
+    ): array {
+        $result = [
+            'substitutions' => [],
+            'additions' => [],
+            'environment_override' => null,
+            'lighting_override' => null,
+        ];
+
+        if ($customNotes === '') {
+            return $result;
+        }
+
+        $notesLower = strtolower($customNotes);
+
+        // 1. Pola Penggantian Elemen: "ganti X jadi Y", "ubah X menjadi Y", "replace X with Y"
+        // Contoh: "ganti background jadi marmer putih", "ubah meja jadi semen ekspos", "ganti lampu jadi senja"
+        $replacePattern = '/(?:ganti|ubah|tukar|replace)\s+([a-zA-Z0-9\s]+?)\s+(?:jadi|menjadi|dengan|ke|with)\s+([a-zA-Z0-9\s,]+?)(?=\s*(?:,|\.|$|dan\s|tambah|tanpa))/i';
+        if (preg_match_all($replacePattern, $customNotes, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $rawTarget = trim(strtolower($match[1]));
+                $rawReplacement = trim(strtolower($match[2]));
+
+                $translatedReplacement = $this->translateTerm($rawReplacement);
+
+                // Cek apakah mengganti background / alas / lantai / meja / podium
+                if (str_contains($rawTarget, 'background') || str_contains($rawTarget, 'latar') || str_contains($rawTarget, 'meja') || str_contains($rawTarget, 'alas') || str_contains($rawTarget, 'lantai') || str_contains($rawTarget, 'podium')) {
+                    $result['environment_override'] = "resting on {$translatedReplacement}";
+                    $visual['composition'] = "podium featuring {$translatedReplacement}";
+                    $result['substitutions'][] = "Mengganti {$rawTarget} menjadi {$rawReplacement}";
+                }
+                // Cek apakah mengganti cahaya / suasana / lighting
+                elseif (str_contains($rawTarget, 'cahaya') || str_contains($rawTarget, 'lighting') || str_contains($rawTarget, 'suasana') || str_contains($rawTarget, 'lampu')) {
+                    $result['lighting_override'] = "illuminated by {$translatedReplacement}";
+                    $visual['lighting'] = $translatedReplacement;
+                    $result['substitutions'][] = "Mengubah pencahayaan menjadi {$rawReplacement}";
+                } else {
+                    $result['substitutions'][] = "Mengganti {$rawTarget} dengan {$rawReplacement}";
+                    $result['additions'][] = "accented with {$translatedReplacement}";
+                }
+            }
+        }
+
+        // 2. Pola Penambahan Properti: "tambahkan X", "tambah X", "kasih X", "add X"
+        // Contoh: "tambahkan percikan air segar", "tambahkan es batu", "beri daun mint"
+        $addPattern = '/(?:tambah|tambahkan|beri|kasih|add)\s+([a-zA-Z0-9\s,]+?)(?=\s*(?:,|\.|$|dan\s|ganti|tanpa))/i';
+        if (preg_match_all($addPattern, $customNotes, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $rawItem = trim(strtolower($match[1]));
+                $translatedItem = $this->translateTerm($rawItem);
+                $result['additions'][] = "featuring {$translatedItem}";
+                $asset['accent_elements'][] = $translatedItem;
+            }
+        }
+
+        // 3. Pola Pengecualian / Penghapusan: "tanpa X", "hilangkan X", "jangan ada X", "no X"
+        // Contoh: "tanpa bayangan keras", "hilangkan sendok", "jangan ada watermark"
+        $excludePattern = '/(?:tanpa|hilangkan|hapus|jangan ada|no|without)\s+([a-zA-Z0-9\s,]+?)(?=\s*(?:,|\.|$|dan\s|ganti|tambah))/i';
+        if (preg_match_all($excludePattern, $customNotes, $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $rawExclude = trim(strtolower($match[1]));
+                $translatedExclude = $this->translateTerm($rawExclude);
+                $userExclusions[] = $translatedExclude;
+                $userExclusions[] = $rawExclude;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Menerjemahkan istilah lokal atau bebas ke terminologi fotografi komersial profesional.
+     */
+    protected function translateTerm(string $term): string
+    {
+        $termLower = trim(strtolower($term));
+
+        foreach (self::STYLE_DICTIONARY as $key => $expansion) {
+            if (str_contains($termLower, $key)) {
+                return $expansion;
+            }
+        }
+
+        // Fallback: jika istilah dalam bahasa inggris atau nama umum, format rapi
+        return "authentic {$termLower}";
+    }
+
+    /**
+     * Sintesis Master Positive Prompt Berbasis Rekayasa AI Otonom.
+     *
+     * @param array<string, mixed> $visual
+     * @param array<string, mixed> $asset
+     * @param array<string, mixed> $smartDirectives
+     */
+    protected function buildAutonomousMasterPrompt(
         array $visual,
         array $asset,
         string $stylePreset,
         string $targetChannel,
-        string $customNotes
+        string $customNotes,
+        array $smartDirectives
     ): string {
         $parts = [];
 
-        // 1. Gaya Preset & Tone Awal
+        // 1. Standar Fotografi Komersial Tertinggi (Preset Master Tone)
         $presetTone = match ($stylePreset) {
             'cinematic' => 'Award-winning cinematic advertising photography, shallow depth of field, anamorphic lens flare',
             'editorial' => 'High-fashion editorial commercial photoshoot, avant-garde studio set, Vogue aesthetic',
@@ -154,28 +323,47 @@ class PromptCompilerService
         };
         $parts[] = $presetTone;
 
-        // 2. Subjek Utama: Fisik Produk Riil Merchant
-        $parts[] = "Hero centerpiece featuring authentic {$asset['physical_descriptor']}";
+        // 2. Subjek Utama: Fisik Objek Riil yang Di-upload atau Dipilih Merchant
+        $parts[] = "Hero centerpiece showcasing authentic {$asset['physical_descriptor']}";
 
-        // 3. Tata Letak & Komposisi dari Inspirasi
-        $parts[] = "carefully positioned in {$visual['composition']} arrangement with {$visual['negative_space']} composition";
+        // 3. Tata Letak, Podium & Lingkungan (Memperhitungkan Override Pengguna)
+        if (!empty($smartDirectives['environment_override'])) {
+            $parts[] = $smartDirectives['environment_override'];
+        } else {
+            $parts[] = "carefully positioned in {$visual['composition']} arrangement with {$visual['negative_space']} composition";
+        }
 
-        // 4. Pencahayaan & Suasana Warna
-        $paletteStr = implode(', ', (array) ($visual['color_palette'] ?? []));
-        $parts[] = "illuminated by {$visual['lighting']} lighting, refined {$visual['color_mood']} atmosphere, harmonious color grading ({$paletteStr})";
+        // 4. Pencahayaan & Suasana Warna (Memperhitungkan Override Pengguna)
+        if (!empty($smartDirectives['lighting_override'])) {
+            $parts[] = $smartDirectives['lighting_override'];
+        } else {
+            $paletteStr = implode(', ', (array) ($visual['color_palette'] ?? []));
+            $parts[] = "illuminated by {$visual['lighting']} lighting, refined {$visual['color_mood']} atmosphere, harmonious color grading ({$paletteStr})";
+        }
 
-        // 5. Elemen Aksen Pendukung
-        if (! empty($asset['accent_elements'])) {
-            $accentsStr = implode(', ', array_slice($asset['accent_elements'], 0, 3));
+        // 5. Elemen Aksen Tambahan dari AI & Hasil Parser Pengguna
+        $accentPool = array_unique(array_merge(
+            (array) ($asset['accent_elements'] ?? []),
+            $smartDirectives['additions']
+        ));
+
+        if (!empty($accentPool)) {
+            $accentsStr = implode(', ', array_slice($accentPool, 0, 4));
             $parts[] = "tastefully accented with {$accentsStr}";
         }
 
-        // 6. Catatan Kustom Merchant (jika ada)
-        if ($customNotes !== '') {
-            $parts[] = "special artistic direction: {$customNotes}";
+        // 6. Gaya Spesifik Ekstraksi Template Referensi (jika ada)
+        if (!empty($visual['extracted_style_prompt']) && strlen($visual['extracted_style_prompt']) > 15) {
+            // Bersihkan placeholder generic seperti [Nama Produk]
+            $cleanRefPrompt = str_ireplace(
+                ['[nama produk]', '[product name]', 'product name', 'nama produk'],
+                $asset['product_name'],
+                $visual['extracted_style_prompt']
+            );
+            $parts[] = "artistic visual influence: {$cleanRefPrompt}";
         }
 
-        // 7. Pengoptimalan Kanal Tujuan
+        // 7. Pengoptimalan Kanal Tujuan (Instagram, Shopee, TikTok, dsb)
         $channelEnhancement = match ($targetChannel) {
             'tiktok' => 'optimized for vertical 9:16 smartphone screen, eye-catching visual hook',
             'shopee', 'tokopedia' => 'clean e-commerce hero image, clear crisp product visibility, zero background clutter',
@@ -183,19 +371,20 @@ class PromptCompilerService
         };
         $parts[] = $channelEnhancement;
 
-        // 8. Kualitas Fotografi & Realisme Taktil
-        $parts[] = 'hyper-realistic material textures, 8k resolution, photorealistic masterpiece, professional color science';
+        // 8. Kualitas Fotografi & Realisme Taktil (Camera Science)
+        $parts[] = 'Hasselblad H6D-100c medium format camera, 85mm f/2.8 macro lens, hyper-realistic material textures, razor sharp focus, 8k resolution, commercial advertising masterpiece';
 
         return implode(', ', $parts);
     }
 
     /**
-     * Membangun negative prompt standar anti-distorsi.
+     * Membangun negative prompt standar anti-distorsi dan menyerap pengecualian kustom pengguna.
      *
      * @param array<string, mixed> $visual
      * @param array<string, mixed> $asset
+     * @param array<int, string> $userExclusions
      */
-    protected function buildNegativePrompt(array $visual, array $asset): string
+    protected function buildNegativePrompt(array $visual, array $asset, array $userExclusions = []): string
     {
         $baseNegative = [
             'distorted packaging',
@@ -217,6 +406,13 @@ class PromptCompilerService
 
         if (! empty($visual['negative_style_prompt'])) {
             $baseNegative[] = $visual['negative_style_prompt'];
+        }
+
+        // Gabungkan elemen yang diminta oleh pengguna untuk dihilangkan
+        if (! empty($userExclusions)) {
+            foreach ($userExclusions as $exclusion) {
+                $baseNegative[] = trim($exclusion);
+            }
         }
 
         return implode(', ', array_unique($baseNegative));

@@ -143,15 +143,15 @@
                         <img src="{{ $imgUrl }}" alt="{{ $item->title }}" loading="lazy"
                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
 
-                        <!-- Trend Score & Source Badge -->
+                        <!-- Trend Score & Category Badge -->
                         <div class="absolute top-2.5 left-2.5 flex flex-wrap items-center gap-1.5 pointer-events-none">
                             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/65 text-white backdrop-blur-md">
                                 <i data-lucide="trending-up" class="w-3 h-3 text-[#34C759]"></i>
                                 <span>{{ round($score) }}%</span>
                             </span>
-                            @if ($source)
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/80 dark:bg-black/70 text-black dark:text-white backdrop-blur-md">
-                                    {{ $source->name }}
+                            @if ($item->category)
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/85 dark:bg-black/75 text-black dark:text-white backdrop-blur-md">
+                                    {{ $item->category->name }}
                                 </span>
                             @endif
                         </div>
@@ -206,8 +206,9 @@
 
                         <!-- Card Footer -->
                         <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px]">
-                            <span class="text-black/40 dark:text-white/40 truncate max-w-[130px]">
-                                Oleh {{ $item->author_name ?: 'Kontributor Legal' }}
+                            <span class="text-black/50 dark:text-white/50 truncate max-w-[140px] flex items-center gap-1">
+                                <i data-lucide="sparkles" class="w-3 h-3 text-[#007AFF]"></i>
+                                <span>{{ $analysis?->lighting ?: 'Studio Light' }}</span>
                             </span>
                             <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
                                 class="inline-flex items-center gap-1 font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">

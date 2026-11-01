@@ -147,7 +147,7 @@ class GenerationOrchestrator
         BusinessInspirationProject $project,
         array $options
     ): BusinessInspirationPromptVersion {
-        if (! empty($options['prompt_version_id'])) {
+        if (! empty($options['prompt_version_id']) && empty($options['custom_prompt'])) {
             /** @var BusinessInspirationPromptVersion $existing */
             $existing = BusinessInspirationPromptVersion::query()
                 ->where('business_id', $business->id)
@@ -167,6 +167,19 @@ class GenerationOrchestrator
             if ($customProductAsset !== null && ! empty($customProductAsset->metadata['product_name'])) {
                 $options['product_name'] = $customProductAsset->metadata['product_name'];
             }
+        }
+
+        // Dukung custom uploaded reference style jika diupload langsung
+        if ($reference === null) {
+            $customRefAsset = $project->assets()->where('asset_type', 'reference_style')->first();
+            if ($customRefAsset !== null) {
+                $options['custom_reference_asset'] = $customRefAsset->file_path;
+            }
+        }
+
+        // Petakan custom_prompt dari pengguna menjadi custom_notes untuk diproses compiler otonom
+        if (! empty($options['custom_prompt'])) {
+            $options['custom_notes'] = $options['custom_prompt'];
         }
 
         $compiled = $this->promptCompilerService->compile(

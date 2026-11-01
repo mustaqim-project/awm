@@ -27,13 +27,6 @@
         </div>
     </x-module-header>
 
-        <a href="{{ route('ai-studio.inspiration.index') }}"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
-            <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-            <span>{{ __('ai.kembali_ke_galeri') }}</span>
-        </a>
-    </div>
-
     <!-- Main Bento Grid (2 Columns: Visual Showcase & Specifications) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
@@ -185,42 +178,38 @@
                 @endif
             </div>
 
-            <!-- Legal & Copyright Attribution Bento Card (AC-001) -->
-            <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-3">
+            <!-- Panduan Rekomendasi Pemotretan & Penerapan Produk -->
+            <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
-                        <i data-lucide="shield" class="w-4 h-4 text-[#34C759]"></i>
-                        <span>Lembar Atribusi &amp; Hak Cipta Sah</span>
+                        <i data-lucide="lightbulb" class="w-4 h-4 text-[#FF9500]"></i>
+                        <span>Panduan Rekomendasi Pemotretan Produk</span>
                     </h3>
-                    <span class="text-[11px] font-bold text-[#34C759]">Bebas Royalti</span>
+                    <span class="text-[11px] font-bold text-[#34C759] bg-[#34C759]/10 px-2 py-0.5 rounded-full">Optimal untuk E-Commerce</span>
                 </div>
 
-                <div class="p-4 rounded-[12px] bg-[#34C759]/5 border border-[#34C759]/20 space-y-2 text-xs">
-                    <div class="flex items-start gap-2 text-black/80 dark:text-white/90">
-                        <i data-lucide="check" class="w-4 h-4 text-[#34C759] shrink-0 mt-0.5"></i>
-                        <span>Gambar ini bersumber dari katalog publik resmi <strong>{{ $item->source?->name ?? 'Pexels / CC0 Provider' }}</strong> dengan izin penggunaan komersial tanpa batasan.</span>
+                <div class="p-4 rounded-[12px] bg-[#007AFF]/5 border border-[#007AFF]/15 space-y-2.5 text-xs text-black/80 dark:text-white/90">
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
+                        <span><strong>Subjek Produk Utama</strong>: Tempatkan produk Anda (kemasan botol, pouch, mangkok hidangan, atau pakaian) sebagai fokus sentral di tengah kanvas.</span>
                     </div>
-                    <div class="flex items-start gap-2 text-black/80 dark:text-white/90">
-                        <i data-lucide="check" class="w-4 h-4 text-[#34C759] shrink-0 mt-0.5"></i>
-                        <span>AI Studio COOCA hanya mengabstraksikan elemen tata letak &amp; pencahayaan untuk menghasilkan visual produk asli milik Anda.</span>
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
+                        <span><strong>Pencahayaan &amp; Suasana</strong>: Menggunakan pencahayaan komersial studio terarah untuk menonjolkan tekstur fisik asli bahan dan label produk.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5"></i>
+                        <span><strong>Kustomisasi Otomatis</strong>: Saat membuat visual, Anda dapat mengganti latar belakang, menambahkan properti aksen, atau mengubah suasana warna sesuai preferensi merek.</span>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-                    <div>
-                        <span class="text-black/50 dark:text-white/50">Pembuat / Fotografer:</span>
-                        <p class="font-bold text-black dark:text-white">{{ $item->author_name ?: 'Kontributor Legal Komersial' }}</p>
-                    </div>
-                    <div>
-                        <span class="text-black/50 dark:text-white/50">Tautan Sumber Sah:</span>
-                        <p class="truncate">
-                            <a href="{{ $item->canonical_url ?: '#' }}" target="_blank" rel="noopener noreferrer"
-                                class="font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline inline-flex items-center gap-1">
-                                <span>{{ __('ai.kunjungi_halaman_asli') }}</span>
-                                <i data-lucide="external-link" class="w-3 h-3"></i>
-                            </a>
-                        </p>
-                    </div>
+                <div class="pt-1 flex items-center justify-between">
+                    <span class="text-xs text-black/50 dark:text-white/50">Siap membuat foto produk dengan konsep ini?</span>
+                    <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
+                        class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm transition-all active:scale-[0.98]">
+                        <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+                        <span>Gunakan Konsep Ini</span>
+                    </a>
                 </div>
             </div>
 

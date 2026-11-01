@@ -15,7 +15,7 @@ final class SyncAiInspirationCatalogCommand extends Command
      * @var string
      */
     protected $signature = 'ai-studio:sync-inspiration 
-                            {--source=all : Kode sumber inspirasi (all, copasprompt, civitai)}
+                            {--source=all : Kode sumber inspirasi (all, pinterest, grok, copasprompt, civitai)}
                             {--limit=100 : Batas maksimum item per sumber}
                             {--no-download : Lewati download aset gambar lokal}';
 
@@ -24,7 +24,7 @@ final class SyncAiInspirationCatalogCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Sinkronkan katalog inspirasi visual & download aset poster viral dari CopasPrompt.id dan Civitai ke AI Studio';
+    protected $description = 'Sinkronkan katalog inspirasi visual & download aset komersial dari Pinterest, Grok Image Studio, CopasPrompt.id, dan Civitai ke AI Studio';
 
     /**
      * Execute the console command.

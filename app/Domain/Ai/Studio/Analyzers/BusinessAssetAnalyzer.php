@@ -73,14 +73,47 @@ class BusinessAssetAnalyzer
     {
         $corpus = strtolower("{$productName} {$category} {$description}");
 
+        // Minuman & Kopi (Cup, Gelas, Boba, Latte, Kopi Dingin, Jus, Teh, Mocktail)
+        if (str_contains($corpus, 'cup') || str_contains($corpus, 'gelas') || str_contains($corpus, 'minuman') || str_contains($corpus, 'boba') || str_contains($corpus, 'latte') || str_contains($corpus, 'espresso') || str_contains($corpus, 'kopi') || str_contains($corpus, 'coffee') || str_contains($corpus, 'tea') || str_contains($corpus, 'teh') || str_contains($corpus, 'jus') || str_contains($corpus, 'juice') || str_contains($corpus, 'smoothie') || str_contains($corpus, 'matcha')) {
+            // Jika ada kata pouch/biji/bubuk kopi, arahkan ke kemasan pouch
+            if (str_contains($corpus, 'pouch') || str_contains($corpus, 'biji') || str_contains($corpus, 'beans') || str_contains($corpus, 'bubuk') || str_contains($corpus, 'ground') || str_contains($corpus, 'drip')) {
+                return 'matte kraft or foil stand-up pouch with sealed top and aroma valve';
+            }
+            // Jika ada kata botol, arahkan ke botol minuman
+            if (str_contains($corpus, 'botol') || str_contains($corpus, 'bottle') || str_contains($corpus, 'liter')) {
+                return 'sleek artisanal glass bottle with refreshing chilled condensation and minimalist aesthetic label';
+            }
+            return 'crystal clear beverage cup or artisanal glass with refreshing condensation, floating ice cubes, and appetizing rich liquid texture';
+        }
+
         // Kuliner Makanan Berkuah / Mangkok (Bakso, Soto, Mie, Ramen, Rawon, Sop)
         if (str_contains($corpus, 'bakso') || str_contains($corpus, 'meatball') || str_contains($corpus, 'mie') || str_contains($corpus, 'noodle') || str_contains($corpus, 'soto') || str_contains($corpus, 'rawon') || str_contains($corpus, 'ramen') || str_contains($corpus, 'sop') || str_contains($corpus, 'soup') || str_contains($corpus, 'gulai')) {
             return 'authentic artisanal steaming ceramic bowl with appetizing glistening broth, succulent handcrafted meatballs, and fresh celery and shallot garnishes';
         }
 
-        // Kuliner Makanan Piring / Sajian Utama (Nasi, Ayam, Bebek, Sate, Steak, Gorengan, Kuliner)
-        if (str_contains($corpus, 'nasi') || str_contains($corpus, 'ayam') || str_contains($corpus, 'bebek') || str_contains($corpus, 'sate') || str_contains($corpus, 'steak') || str_contains($corpus, 'rendang') || str_contains($corpus, 'kuliner') || str_contains($corpus, 'makanan') || str_contains($corpus, 'fnb') || str_contains($corpus, 'snack') || str_contains($corpus, 'roti') || str_contains($corpus, 'kue') || str_contains($corpus, 'cake')) {
-            return 'curated artisanal ceramic dining plate with mouthwatering gourmet presentation, authentic golden textures, and vibrant culinary garnishes';
+        // Botol Kosmetik / Serum / Perawatan
+        if (str_contains($corpus, 'botol') || str_contains($corpus, 'bottle') || str_contains($corpus, 'serum') || str_contains($corpus, 'toner') || str_contains($corpus, 'shampoo')) {
+            return 'sleek glass bottle with precision dropper/pump';
+        }
+
+        // Jar Kosmetik / Selai / Pasta
+        if (str_contains($corpus, 'jar') || str_contains($corpus, 'pot') || str_contains($corpus, 'krim') || str_contains($corpus, 'cream') || str_contains($corpus, 'masker') || str_contains($corpus, 'selai') || str_contains($corpus, 'jam')) {
+            return 'minimalist cosmetic jar or gourmet glass jar with metallic cap';
+        }
+
+        // Stand Pouch / Keripik / Camilan
+        if (str_contains($corpus, 'pouch') || str_contains($corpus, 'stand pouch') || str_contains($corpus, 'keripik') || str_contains($corpus, 'chips') || str_contains($corpus, 'camilan') || str_contains($corpus, 'snack')) {
+            return 'matte kraft or premium foil stand-up pouch with clean sealed top';
+        }
+
+        // Kotak / Dus / Gift Box / Hampers
+        if (str_contains($corpus, 'box') || str_contains($corpus, 'kotak') || str_contains($corpus, 'dus') || str_contains($corpus, 'hampers')) {
+            return 'rigid premium gift box with clean embossed corners';
+        }
+
+        // Pakaian / Fashion / Tekstil
+        if (str_contains($corpus, 'kaos') || str_contains($corpus, 't-shirt') || str_contains($corpus, 'baju') || str_contains($corpus, 'hoodie') || str_contains($corpus, 'dress') || str_contains($corpus, 'hijab') || str_contains($corpus, 'gamis')) {
+            return 'folded premium cotton garment with soft natural fabric drape';
         }
 
         // Jasa / Layanan Profesional (Cuci Sepatu, Laundry, Salon, Barbershop, Bengkel, Servis, Cleaning)
@@ -88,28 +121,9 @@ class BusinessAssetAnalyzer
             return 'professional premium service environment with authentic craftsmanship, specialized expert tools, and pristine customer experience setting';
         }
 
-        if (str_contains($corpus, 'botol') || str_contains($corpus, 'bottle') || str_contains($corpus, 'serum') || str_contains($corpus, 'toner') || str_contains($corpus, 'shampoo')) {
-            return 'sleek glass bottle with precision dropper/pump';
-        }
-
-        if (str_contains($corpus, 'jar') || str_contains($corpus, 'pot') || str_contains($corpus, 'krim') || str_contains($corpus, 'cream') || str_contains($corpus, 'masker')) {
-            return 'minimalist cosmetic jar with metallic cap';
-        }
-
-        if (str_contains($corpus, 'pouch') || str_contains($corpus, 'stand pouch') || str_contains($corpus, 'kopi') || str_contains($corpus, 'coffee') || str_contains($corpus, 'keripik')) {
-            return 'matte kraft or foil stand-up pouch with sealed top';
-        }
-
-        if (str_contains($corpus, 'box') || str_contains($corpus, 'kotak') || str_contains($corpus, 'dus') || str_contains($corpus, 'hampers')) {
-            return 'rigid premium gift box with clean embossed corners';
-        }
-
-        if (str_contains($corpus, 'cup') || str_contains($corpus, 'gelas') || str_contains($corpus, 'minuman') || str_contains($corpus, 'boba') || str_contains($corpus, 'latte') || str_contains($corpus, 'tea') || str_contains($corpus, 'jus') || str_contains($corpus, 'juice')) {
-            return 'crystal clear beverage cup with refreshing condensation';
-        }
-
-        if (str_contains($corpus, 'kaos') || str_contains($corpus, 't-shirt') || str_contains($corpus, 'baju') || str_contains($corpus, 'hoodie') || str_contains($corpus, 'dress') || str_contains($corpus, 'hijab') || str_contains($corpus, 'gamis')) {
-            return 'folded premium cotton garment with soft natural fabric drape';
+        // Kuliner Makanan Piring / Sajian Utama (Nasi, Ayam, Bebek, Sate, Steak, Gorengan, Kuliner)
+        if (str_contains($corpus, 'nasi') || str_contains($corpus, 'ayam') || str_contains($corpus, 'bebek') || str_contains($corpus, 'sate') || str_contains($corpus, 'steak') || str_contains($corpus, 'rendang') || str_contains($corpus, 'kuliner') || str_contains($corpus, 'makanan') || str_contains($corpus, 'fnb') || str_contains($corpus, 'roti') || str_contains($corpus, 'kue') || str_contains($corpus, 'cake')) {
+            return 'curated artisanal ceramic dining plate with mouthwatering gourmet presentation, authentic golden textures, and vibrant culinary garnishes';
         }
 
         return 'commercial retail packshot container';
