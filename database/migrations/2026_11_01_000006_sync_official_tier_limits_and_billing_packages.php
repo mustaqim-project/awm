@@ -199,3 +199,4 @@ return new class extends Migration
         // Reversible if needed
     }
 };
+
