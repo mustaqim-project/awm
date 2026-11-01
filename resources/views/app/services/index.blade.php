@@ -6,20 +6,34 @@
     <div class="w-full max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
         selectedServiceIds: [],
         toggleSelectAllServices(e) {
+            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
             if (e.target.checked) {
-                this.selectedServiceIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
+                this.selectedServiceIds = Array.from(new Set([...this.selectedServiceIds, ...pageIds]));
             } else {
-                this.selectedServiceIds = [];
+                this.selectedServiceIds = this.selectedServiceIds.filter(id => !pageIds.includes(id));
             }
         },
         isAllServicesSelected() {
             const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
             return pageIds.length > 0 && pageIds.every(id => this.selectedServiceIds.includes(id));
         },
+        isPartiallyServicesSelected() {
+            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
+            const selectedOnPage = pageIds.filter(id => this.selectedServiceIds.includes(id)).length;
+            return selectedOnPage > 0 && selectedOnPage < pageIds.length;
+        },
         submitBulkService(action, confirmTitle, confirmText, icon = 'question') {
             const form = this.$refs.bulkServiceForm;
             if (!form) return;
             this.$refs.bulkServiceAction.value = action;
+            form.querySelectorAll('input[name="ids[]"]').forEach(el => el.remove());
+            this.selectedServiceIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: confirmTitle,
@@ -320,10 +334,12 @@
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
                                 :class="selectedServiceIds.includes('{{ $item->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
                                 <td class="w-10 px-4 py-3.5 text-center">
-                                    <input type="checkbox"
-                                        value="{{ $item->id }}"
-                                        x-model="selectedServiceIds"
-                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    <label class="flex items-center justify-center cursor-pointer m-0 p-0">
+                                        <input type="checkbox"
+                                            value="{{ $item->id }}"
+                                            x-model="selectedServiceIds"
+                                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    </label>
                                 </td>
                                 <td data-sort-value="{{ strtolower($item->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $item->name }}</div>

@@ -13,15 +13,31 @@
         showBulkSuspendModal: false,
         bulkSuspendReason: '',
         toggleSelectAll(e) {
+            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
             if (e.target.checked) {
-                this.selectedIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
+                this.selectedIds = Array.from(new Set([...this.selectedIds, ...pageIds]));
             } else {
-                this.selectedIds = [];
+                this.selectedIds = this.selectedIds.filter(id => !pageIds.includes(id));
             }
         },
         isAllSelected() {
             const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
             return pageIds.length > 0 && pageIds.every(id => this.selectedIds.includes(id));
+        },
+        isPartiallySelected() {
+            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
+            const selectedOnPage = pageIds.filter(id => this.selectedIds.includes(id)).length;
+            return selectedOnPage > 0 && selectedOnPage < pageIds.length;
+        },
+        syncBulkInputs(form) {
+            form.querySelectorAll('input[name="ids[]"]').forEach(el => el.remove());
+            this.selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
         }
     }">
 
@@ -150,11 +166,13 @@
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02]">
                             <th class="w-10 px-4 py-3.5 text-center">
-                                <input type="checkbox"
-                                    @change="toggleSelectAll($event)"
-                                    :checked="isAllSelected()" x-effect="$el.indeterminate = isPartiallySelected()"
-                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
-                                    title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
+                                <label class="flex items-center justify-center cursor-pointer m-0 p-0" title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
+                                    <input type="checkbox"
+                                        @change="toggleSelectAll($event)"
+                                        :checked="isAllSelected()"
+                                        x-effect="$el.indeterminate = isPartiallySelected()"
+                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                </label>
                             </th>
                             <th class="px-5 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Bisnis &amp; Identitas</th>
                             <th class="px-4 py-3.5 text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Paket Langganan</th>
@@ -169,10 +187,12 @@
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
                                 :class="selectedIds.includes('{{ $biz->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
                                 <td class="w-10 px-4 py-4 text-center">
-                                    <input type="checkbox"
-                                        value="{{ $biz->id }}"
-                                        x-model="selectedIds"
-                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    <label class="flex items-center justify-center cursor-pointer m-0 p-0">
+                                        <input type="checkbox"
+                                            value="{{ $biz->id }}"
+                                            x-model="selectedIds"
+                                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    </label>
                                 </td>
                                 <td class="px-5 py-4">
                                     <div class="font-bold text-black dark:text-white text-[14px]">
@@ -304,7 +324,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <!-- Form Bulk Activate -->
-                <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="inline"
+                <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="inline" @submit="syncBulkInputs($el)"
                     onsubmit="return AppAlert.confirmSubmit(event, this, 'Aktifkan seluruh bisnis terpilih?', 'Aktifkan Masal?', 'info')">
                     @csrf
                     <input type="hidden" name="action" value="activate">
@@ -350,7 +370,7 @@
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="space-y-4">
+                    <form method="POST" action="{{ route('admin.businesses.bulk-status') }}" class="space-y-4" @submit="syncBulkInputs($el)">
                         @csrf
                         <input type="hidden" name="action" value="suspend">
                         <template x-for="id in selectedIds" :key="'susp-' + id">
