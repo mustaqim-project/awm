@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Billing\EarlyAdopterPricingService;
 use App\Domain\Billing\EntitlementService;
+use App\Models\BillingPackage;
 use App\Models\BusinessSubscription;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
@@ -61,7 +62,36 @@ final class PublicPricingController extends Controller
 
         $annualDiscountBadge = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
         $tierLimits = $this->entitlementService->getAllTierLimits();
+        $tierFeatures = $this->entitlementService->getAllTierFeatures();
 
-        return view('public.pricing', compact('pricingData', 'annualDiscountBadge', 'activeBatch', 'tierLimits'));
+        // Dynamically fetch top-up storage & AI token add-on packages configured in admin/billing-packages
+        try {
+            $storagePackage = BillingPackage::where('type', BillingPackage::TYPE_STORAGE)->where('is_active', true)->first();
+            $aiTokenPackage = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->where('is_active', true)->first();
+        } catch (\Throwable) {
+            $storagePackage = null;
+            $aiTokenPackage = null;
+        }
+
+        $storageTopupPrice = $storagePackage ? (float) $storagePackage->price : (float) SystemSetting::get('storage_topup_price', '50000');
+        $storageTopupGb = $storagePackage && $storagePackage->storage_bytes ? (float) round($storagePackage->storage_bytes / 1073741824, 2) : (float) SystemSetting::get('storage_topup_gb', '1');
+
+        $aiTokenTopupPrice = $aiTokenPackage ? (float) $aiTokenPackage->price : (float) SystemSetting::get('ai_token_topup_price', '50000');
+        $aiTokenTopupAmount = $aiTokenPackage && $aiTokenPackage->token_quantity ? (int) $aiTokenPackage->token_quantity : (int) SystemSetting::get('ai_token_topup_amount', '1000000');
+
+        $subscriptionAiTokensMonthly = (int) SystemSetting::get('subscription_ai_tokens_monthly', '10000000');
+
+        return view('public.pricing', compact(
+            'pricingData',
+            'annualDiscountBadge',
+            'activeBatch',
+            'tierLimits',
+            'tierFeatures',
+            'storageTopupPrice',
+            'storageTopupGb',
+            'aiTokenTopupPrice',
+            'aiTokenTopupAmount',
+            'subscriptionAiTokensMonthly'
+        ));
     }
 }

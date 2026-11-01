@@ -943,6 +943,46 @@ final class AdminSettingController extends Controller implements HasMiddleware
             }
         }
 
+        // Synchronize updated subscription tier prices and catalog add-ons with BillingPackage model
+        $packageSyncMap = [
+            'standard-monthly' => isset($validated['subscription_price_standard_monthly']) ? (float) $validated['subscription_price_standard_monthly'] : (isset($validated['subscription_price_monthly']) ? (float) $validated['subscription_price_monthly'] : null),
+            'standard-annual'  => isset($validated['subscription_price_standard_annual']) ? (float) $validated['subscription_price_standard_annual'] : (isset($validated['subscription_price_annual']) ? (float) $validated['subscription_price_annual'] : null),
+            'premium-monthly'  => isset($validated['subscription_price_premium_monthly']) ? (float) $validated['subscription_price_premium_monthly'] : null,
+            'premium-annual'   => isset($validated['subscription_price_premium_annual']) ? (float) $validated['subscription_price_premium_annual'] : null,
+            'prestige-monthly' => isset($validated['subscription_price_prestige_monthly']) ? (float) $validated['subscription_price_prestige_monthly'] : null,
+            'prestige-annual'  => isset($validated['subscription_price_prestige_annual']) ? (float) $validated['subscription_price_prestige_annual'] : null,
+        ];
+
+        foreach ($packageSyncMap as $code => $price) {
+            if ($price !== null) {
+                \App\Models\BillingPackage::where('type', \App\Models\BillingPackage::TYPE_SUBSCRIPTION)
+                    ->where('code', $code)
+                    ->update(['price' => $price]);
+            }
+        }
+
+        if (isset($validated['ai_token_topup_price'])) {
+            \App\Models\BillingPackage::where('type', \App\Models\BillingPackage::TYPE_AI_TOKEN)
+                ->where('code', 'token-1m')
+                ->update([
+                    'price' => (float) $validated['ai_token_topup_price'],
+                    'token_quantity' => isset($validated['ai_token_topup_amount']) ? (int) $validated['ai_token_topup_amount'] : 1000000,
+                ]);
+        }
+
+        if (isset($validated['storage_topup_price'])) {
+            $gb = isset($validated['storage_topup_gb']) ? (float) $validated['storage_topup_gb'] : 1.0;
+            \App\Models\BillingPackage::where('type', \App\Models\BillingPackage::TYPE_STORAGE)
+                ->where('code', 'storage-1gb')
+                ->update([
+                    'price' => (float) $validated['storage_topup_price'],
+                    'storage_bytes' => (int) round($gb * 1073741824),
+                ]);
+        }
+
+        \Illuminate\Support\Facades\Cache::forget('system_settings');
+        \Illuminate\Support\Facades\Cache::forget('billing_all_tier_prices');
+
         return back()->with('success', 'Harga, batas kuota, dan matriks hak akses fitur paket billing Cooca berhasil diperbarui.');
     }
 

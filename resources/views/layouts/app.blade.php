@@ -1282,7 +1282,7 @@
         sidebarOpen: false,
         sidebarCollapsed: (localStorage.getItem('cooca-sidebar-collapsed') !== null)
             ? (localStorage.getItem('cooca-sidebar-collapsed') === 'true')
-            : (typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1280),
+            : (typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1440),
         secondarySidebarCollapsed: (localStorage.getItem('cooca-secondary-sidebar-collapsed') !== null)
             ? (localStorage.getItem('cooca-secondary-sidebar-collapsed') === 'true')
             : false,

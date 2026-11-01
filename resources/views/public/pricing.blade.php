@@ -45,6 +45,10 @@
         $tierFeatures = app(\App\Domain\Billing\EntitlementService::class)->getAllTierFeatures();
     }
     $annualDiscountBadge = $annualDiscountBadge ?? \App\Models\SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
+    $storageTopupPrice = $storageTopupPrice ?? (float) (\App\Models\BillingPackage::where('type', \App\Models\BillingPackage::TYPE_STORAGE)->where('is_active', true)->value('price') ?? \App\Models\SystemSetting::get('storage_topup_price', '50000'));
+    $storageTopupGb = $storageTopupGb ?? (float) \App\Models\SystemSetting::get('storage_topup_gb', '1');
+    $aiTokenTopupPrice = $aiTokenTopupPrice ?? (float) (\App\Models\BillingPackage::where('type', \App\Models\BillingPackage::TYPE_AI_TOKEN)->where('is_active', true)->value('price') ?? \App\Models\SystemSetting::get('ai_token_topup_price', '50000'));
+    $aiTokenTopupAmount = $aiTokenTopupAmount ?? (int) \App\Models\SystemSetting::get('ai_token_topup_amount', '1000000');
 @endphp
     <div x-data="{
         pricingCycle: 'monthly',
@@ -854,7 +858,7 @@
                                 </p>
                             </div>
                             <div class="text-sm font-extrabold text-slate-900 dark:text-white tabular-nums">
-                                Rp 10.000 <span class="text-xs font-normal text-slate-500 dark:text-slate-400">/ 1 GB per
+                                Rp {{ number_format($storageTopupPrice, 0, ',', '.') }} <span class="text-xs font-normal text-slate-500 dark:text-slate-400">/ {{ (int)$storageTopupGb == $storageTopupGb ? (int)$storageTopupGb : $storageTopupGb }} GB per
                                     bulan</span>
                             </div>
                         </div>
@@ -882,7 +886,7 @@
                                 </p>
                             </div>
                             <div class="text-sm font-extrabold text-slate-900 dark:text-white tabular-nums">
-                                Rp 20.000 <span class="text-xs font-normal text-slate-500 dark:text-slate-400">/ 1 juta
+                                Rp {{ number_format($aiTokenTopupPrice, 0, ',', '.') }} <span class="text-xs font-normal text-slate-500 dark:text-slate-400">/ {{ number_format($aiTokenTopupAmount, 0, ',', '.') }}
                                     token</span>
                             </div>
                         </div>
@@ -1239,37 +1243,37 @@
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Jumlah Toko / Cabang</td>
                                         <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['outlet'] ?? 1 }} Toko</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Hingga {{ $tierLimits['standard']['outlet'] ?? 2 }} Cabang</td>
-                                        <td class="p-3 sm:p-4 text-center">Hingga {{ $tierLimits['premium']['outlet'] ?? 5 }} Cabang</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['standard']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['premium']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['prestige']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Pengguna / Kasir Terdaftar</td>
                                         <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['user'] ?? 1 }} Pengguna</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">Multi-User ({{ $tierLimits['standard']['user'] ?? 3 }} Kasir)</td>
-                                        <td class="p-3 sm:p-4 text-center">Multi-User ({{ $tierLimits['premium']['user'] ?? 10 }} Kasir)</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['user'] ?? null) ? 'Multi-User (' . $tierLimits['standard']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['user'] ?? null) ? 'Multi-User (' . $tierLimits['premium']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['user'] ?? null) ? 'Multi-User (' . $tierLimits['prestige']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Kapasitas Produk / Barang</td>
                                         <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['product'] ?? 10 }} Produk</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['product'] ?? null) ? $tierLimits['standard']['product'] . ' Produk' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">Tanpa Batas</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['product'] ?? null) ? number_format($tierLimits['standard']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['product'] ?? null) ? number_format($tierLimits['premium']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['product'] ?? null) ? number_format($tierLimits['prestige']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Batas Transaksi Kasir / bln</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['pos'] ?? 30 }} Transaksi</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['pos'] ?? null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
                                         <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">Tanpa Batas</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">Tanpa Batas</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['pos'] ?? null) ? number_format($tierLimits['premium']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['pos'] ?? null) ? number_format($tierLimits['prestige']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Penyimpanan Cloud Storage</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['storage_gb'] ?? 3 }} GB</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['standard']['storage_gb'] ?? 10 }} GB</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['premium']['storage_gb'] ?? 25 }} GB</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">{{ $tierLimits['prestige']['storage_gb'] ?? 100 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['free']['storage_gb'] ?? 1 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['standard']['storage_gb'] ?? 3 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ $tierLimits['premium']['storage_gb'] ?? 10 }} GB</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ $tierLimits['prestige']['storage_gb'] ?? 30 }} GB</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1308,27 +1312,37 @@
                                         <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
                                                 data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
                                     </tr>
-                                    <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
+                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Dukungan
                                             Penjualan Grosir (Tingkat Harga)</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['free']['branch_pricing']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['free']['branch_pricing'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['standard']['branch_pricing']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['standard']['branch_pricing'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['premium']['branch_pricing']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['premium']['branch_pricing'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['prestige']['branch_pricing']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['prestige']['branch_pricing'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">
                                             Perlindungan Kasir (Supervisor PIN &amp; Anti Void)</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['free']['pos_pin']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['free']['pos_pin'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['standard']['pos_pin']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['standard']['pos_pin'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['premium']['pos_pin']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['premium']['pos_pin'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['prestige']['pos_pin']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['prestige']['pos_pin'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1359,19 +1373,24 @@
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Transfer
                                             Stok Antar Cabang / Gudang</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['free']['transfer_stock']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['free']['transfer_stock'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['standard']['transfer_stock']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['standard']['transfer_stock'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['premium']['transfer_stock']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['premium']['transfer_stock'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['prestige']['transfer_stock']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['prestige']['transfer_stock'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Resep Bahan Baku &amp; Potong Stok (BOM)</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-600 dark:text-slate-400">{{ $tierLimits['free']['recipe'] ?? 3 }} Resep</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ $tierLimits['standard']['recipe'] ?? 20 }} Resep Menu</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">Resep Menu Unlimited</td>
+                                        <td class="p-3 sm:p-4 text-center text-slate-600 dark:text-slate-400">{{ ($tierLimits['free']['recipe'] ?? null) ? $tierLimits['free']['recipe'] . ' Resep' : 'Tidak Ada' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['recipe'] ?? null) ? $tierLimits['standard']['recipe'] . ' Resep Menu' : 'Resep Menu Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">{{ ($tierLimits['premium']['recipe'] ?? null) ? $tierLimits['premium']['recipe'] . ' Resep Menu' : 'Resep Menu Unlimited' }}</td>
                                         <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">BOM Manufaktur Bertingkat</td>
                                     </tr>
                                 </tbody>
@@ -1401,11 +1420,18 @@
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Asisten
                                             Bisnis Cerdas AI</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-300 dark:text-slate-600">-</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold"><i
-                                                data-lucide="check" class="w-4 h-4 mx-auto"></i></td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['free']['ai']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['free']['ai'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['standard']['ai']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['standard']['ai'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['premium']['ai']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['premium']['ai'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
+                                        <td class="p-3 sm:p-4 text-center {{ !empty($tierFeatures['prestige']['ai']) ? 'text-emerald-600 font-bold' : 'text-slate-300 dark:text-slate-600' }}">
+                                            @if(!empty($tierFeatures['prestige']['ai'])) <i data-lucide="check" class="w-4 h-4 mx-auto"></i> @else - @endif
+                                        </td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Jalur

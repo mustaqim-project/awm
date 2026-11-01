@@ -35,25 +35,38 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
         $packages = BillingPackage::where('type', $type)->orderBy('sort_order')->orderBy('name')->get();
         $counts = BillingPackage::select('type', DB::raw('COUNT(*) as total'))->groupBy('type')->pluck('total', 'type');
 
-        // Default 4-Tier pricing shown on the subscription catalog
-        $subscriptionPriceMonthly = SystemSetting::get('subscription_price_monthly', '39000');
-        $subscriptionPriceAnnual = SystemSetting::get('subscription_price_annual', '390000');
+        // Fetch from BillingPackage catalog first to ensure exact single-source consistency with admin settings
+        $pkgStandardMonthly = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'standard-monthly')->value('price');
+        $pkgStandardAnnual = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'standard-annual')->value('price');
+        $pkgPremiumMonthly = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'premium-monthly')->value('price');
+        $pkgPremiumAnnual = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'premium-annual')->value('price');
+        $pkgPrestigeMonthly = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'prestige-monthly')->value('price');
+        $pkgPrestigeAnnual = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)->where('code', 'prestige-annual')->value('price');
+
+        $subscriptionPriceMonthly = SystemSetting::get('subscription_price_monthly', (string) ($pkgStandardMonthly ?? '39000'));
+        $subscriptionPriceAnnual = SystemSetting::get('subscription_price_annual', (string) ($pkgStandardAnnual ?? '390000'));
         $subscriptionAiTokensMonthly = SystemSetting::get('subscription_ai_tokens_monthly', '10000000');
         $subscriptionAnnualDiscountBadge = SystemSetting::get('subscription_annual_discount_badge', 'Hemat 2 Bulan');
 
-        $priceStandardMonthly = SystemSetting::get('subscription_price_standard_monthly', $subscriptionPriceMonthly);
-        $priceStandardAnnual = SystemSetting::get('subscription_price_standard_annual', $subscriptionPriceAnnual);
-        $pricePremiumMonthly = SystemSetting::get('subscription_price_premium_monthly', '89000');
-        $pricePremiumAnnual = SystemSetting::get('subscription_price_premium_annual', '890000');
-        $pricePrestigeMonthly = SystemSetting::get('subscription_price_prestige_monthly', '199000');
-        $pricePrestigeAnnual = SystemSetting::get('subscription_price_prestige_annual', '1990000');
+        $priceStandardMonthly = $pkgStandardMonthly !== null ? (string) (int) $pkgStandardMonthly : SystemSetting::get('subscription_price_standard_monthly', $subscriptionPriceMonthly);
+        $priceStandardAnnual = $pkgStandardAnnual !== null ? (string) (int) $pkgStandardAnnual : SystemSetting::get('subscription_price_standard_annual', $subscriptionPriceAnnual);
+        $pricePremiumMonthly = $pkgPremiumMonthly !== null ? (string) (int) $pkgPremiumMonthly : SystemSetting::get('subscription_price_premium_monthly', '89000');
+        $pricePremiumAnnual = $pkgPremiumAnnual !== null ? (string) (int) $pkgPremiumAnnual : SystemSetting::get('subscription_price_premium_annual', '890000');
+        $pricePrestigeMonthly = $pkgPrestigeMonthly !== null ? (string) (int) $pkgPrestigeMonthly : SystemSetting::get('subscription_price_prestige_monthly', '199000');
+        $pricePrestigeAnnual = $pkgPrestigeAnnual !== null ? (string) (int) $pkgPrestigeAnnual : SystemSetting::get('subscription_price_prestige_annual', '1990000');
 
         // Default top-up pricing for token & storage catalogs
-        $aiTokenTopupPrice = SystemSetting::get('ai_token_topup_price', '50000');
-        $aiTokenTopupAmount = SystemSetting::get('ai_token_topup_amount', '1000000');
+        $pkgAiTokenPrice = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->where('code', 'token-1m')->value('price');
+        $pkgAiTokenAmount = BillingPackage::where('type', BillingPackage::TYPE_AI_TOKEN)->where('code', 'token-1m')->value('token_quantity');
+        $aiTokenTopupPrice = $pkgAiTokenPrice !== null ? (string) (int) $pkgAiTokenPrice : SystemSetting::get('ai_token_topup_price', '50000');
+        $aiTokenTopupAmount = $pkgAiTokenAmount !== null ? (string) (int) $pkgAiTokenAmount : SystemSetting::get('ai_token_topup_amount', '1000000');
+
+        $pkgStoragePrice = BillingPackage::where('type', BillingPackage::TYPE_STORAGE)->where('code', 'storage-1gb')->value('price');
+        $pkgStorageBytes = BillingPackage::where('type', BillingPackage::TYPE_STORAGE)->where('code', 'storage-1gb')->value('storage_bytes');
+        $pkgStorageGb = $pkgStorageBytes ? (int) round($pkgStorageBytes / 1073741824) : null;
+        $storageTopupPrice = $pkgStoragePrice !== null ? (string) (int) $pkgStoragePrice : SystemSetting::get('storage_topup_price', '50000');
+        $storageTopupGb = $pkgStorageGb !== null ? (string) $pkgStorageGb : SystemSetting::get('storage_topup_gb', '1');
         $ownerStorageLimitGb = SystemSetting::get('owner_storage_limit_gb', '3');
-        $storageTopupPrice = SystemSetting::get('storage_topup_price', '50000');
-        $storageTopupGb = SystemSetting::get('storage_topup_gb', '1');
 
         $entitlementService = app(\App\Domain\Billing\EntitlementService::class);
         $tierLimits = $entitlementService->getAllTierLimits();
@@ -96,7 +109,9 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
             $slug = $baseSlug . '-' . $counter++;
         }
 
-        BillingPackage::create($this->packageData($validated, $slug));
+        $package = BillingPackage::create($this->packageData($validated, $slug));
+        $this->syncPackageToSettings($package);
+
         return redirect()->route('admin.billing-packages.index', $type)->with('success', 'Paket billing berhasil dibuat.');
     }
 
@@ -105,13 +120,58 @@ final class AdminBillingPackageController extends Controller implements HasMiddl
         $validated = $this->validatePackage($request, false);
         abort_unless($billingPackage->type === $validated['type'], 422);
         $billingPackage->update($this->packageData($validated, $billingPackage->code));
+        $this->syncPackageToSettings($billingPackage);
+
         return redirect()->route('admin.billing-packages.index', $billingPackage->type)->with('success', 'Paket billing berhasil diperbarui.');
     }
 
     public function toggle(BillingPackage $billingPackage): RedirectResponse
     {
         $billingPackage->update(['is_active' => ! $billingPackage->is_active]);
+        $this->syncPackageToSettings($billingPackage);
+
         return back()->with('success', $billingPackage->is_active ? 'Paket diaktifkan.' : 'Paket dinonaktifkan.');
+    }
+
+    /**
+     * Synchronize modified BillingPackage attributes back to SystemSettings and clear pricing caches.
+     */
+    private function syncPackageToSettings(BillingPackage $billingPackage): void
+    {
+        $codeMap = [
+            'standard-monthly' => ['subscription_price_standard_monthly', 'subscription_price_monthly'],
+            'standard-annual'  => ['subscription_price_standard_annual', 'subscription_price_annual'],
+            'premium-monthly'  => ['subscription_price_premium_monthly'],
+            'premium-annual'   => ['subscription_price_premium_annual'],
+            'prestige-monthly' => ['subscription_price_prestige_monthly'],
+            'prestige-annual'  => ['subscription_price_prestige_annual'],
+        ];
+
+        if (isset($codeMap[$billingPackage->code])) {
+            foreach ($codeMap[$billingPackage->code] as $settingKey) {
+                SystemSetting::set($settingKey, (string) $billingPackage->price, 'billing');
+            }
+        }
+
+        if ($billingPackage->type === BillingPackage::TYPE_AI_TOKEN && ($billingPackage->code === 'token-1m' || Str::contains($billingPackage->code, 'token'))) {
+            SystemSetting::set('ai_token_topup_price', (string) $billingPackage->price, 'billing');
+            if ($billingPackage->token_quantity) {
+                SystemSetting::set('ai_token_topup_amount', (string) $billingPackage->token_quantity, 'billing');
+            }
+        }
+
+        if ($billingPackage->type === BillingPackage::TYPE_STORAGE && ($billingPackage->code === 'storage-1gb' || Str::contains($billingPackage->code, 'storage'))) {
+            SystemSetting::set('storage_topup_price', (string) $billingPackage->price, 'billing');
+            if ($billingPackage->storage_bytes) {
+                $gb = (int) round($billingPackage->storage_bytes / 1073741824);
+                if ($gb > 0) {
+                    SystemSetting::set('storage_topup_gb', (string) $gb, 'billing');
+                }
+            }
+        }
+
+        \Illuminate\Support\Facades\Cache::forget('system_settings');
+        \Illuminate\Support\Facades\Cache::forget('billing_all_tier_prices');
     }
 
     /** @return array<string, mixed> */

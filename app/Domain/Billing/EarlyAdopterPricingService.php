@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Billing;
 
 use App\Models\AuditLog;
+use App\Models\BillingPackage;
 use App\Models\Business;
 use App\Models\BusinessSubscription;
 use App\Models\SubscriptionPayment;
@@ -28,22 +29,53 @@ final class EarlyAdopterPricingService
     {
         $tier = strtolower($tier);
         $isAnnual = $cycle === 'annual';
+        $code = "{$tier}-{$cycle}";
+
+        // 1. Direct SystemSetting check (if explicitly set)
+        $settingKey = match ($tier) {
+            BusinessSubscription::TIER_PRESTIGE => $isAnnual ? 'subscription_price_prestige_annual' : 'subscription_price_prestige_monthly',
+            BusinessSubscription::TIER_PREMIUM  => $isAnnual ? 'subscription_price_premium_annual'  : 'subscription_price_premium_monthly',
+            default                             => $isAnnual ? 'subscription_price_standard_annual' : 'subscription_price_standard_monthly',
+        };
+
+        $settingVal = SystemSetting::get($settingKey);
+
+        // 2. BillingPackage catalog check (from admin/billing-packages)
+        try {
+            $pkgPrice = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)
+                ->where('code', $code)
+                ->where('is_active', true)
+                ->value('price');
+
+            if ($pkgPrice !== null && is_numeric($pkgPrice)) {
+                if ($settingVal !== null && is_numeric($settingVal)) {
+                    return (float) $settingVal;
+                }
+                return (float) $pkgPrice;
+            }
+        } catch (\Throwable) {
+            // DB fallback
+        }
+
+        if ($settingVal !== null && is_numeric($settingVal)) {
+            return (float) $settingVal;
+        }
 
         return match ($tier) {
             BusinessSubscription::TIER_PRESTIGE => (float) (
                 $isAnnual
-                    ? SystemSetting::get('subscription_price_prestige_annual', (string) EntitlementService::PRICE_PRESTIGE_ANNUAL)
-                    : SystemSetting::get('subscription_price_prestige_monthly', (string) EntitlementService::PRICE_PRESTIGE_MONTHLY)
+                    ? EntitlementService::PRICE_PRESTIGE_ANNUAL
+                    : EntitlementService::PRICE_PRESTIGE_MONTHLY
             ),
             BusinessSubscription::TIER_PREMIUM => (float) (
                 $isAnnual
-                    ? SystemSetting::get('subscription_price_premium_annual', (string) EntitlementService::PRICE_PREMIUM_ANNUAL)
-                    : SystemSetting::get('subscription_price_premium_monthly', (string) EntitlementService::PRICE_PREMIUM_MONTHLY)
+                    ? EntitlementService::PRICE_PREMIUM_ANNUAL
+                    : EntitlementService::PRICE_PREMIUM_MONTHLY
             ),
             default => (float) (
                 $isAnnual
-                    ? SystemSetting::get('subscription_price_standard_annual', (string) SystemSetting::get('subscription_price_annual', (string) EntitlementService::PRICE_STANDARD_ANNUAL))
-                    : SystemSetting::get('subscription_price_standard_monthly', (string) SystemSetting::get('subscription_price_monthly', (string) EntitlementService::PRICE_STANDARD_MONTHLY))
+                    ? SystemSetting::get('subscription_price_annual', (string) EntitlementService::PRICE_STANDARD_ANNUAL)
+                    : SystemSetting::get('subscription_price_monthly', (string) EntitlementService::PRICE_STANDARD_MONTHLY)
             ),
         };
     }

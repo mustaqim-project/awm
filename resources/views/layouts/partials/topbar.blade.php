@@ -192,10 +192,10 @@
             <button @click="toggleSecondarySidebarCollapse()" type="button"
                 id="tour-toggle-secondary-sidebar-btn"
                 class="hidden lg:flex items-center justify-center w-8.5 h-8.5 rounded-[8px] text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.06] active:scale-95 shrink-0 transition-all cursor-pointer"
-                :class="secondarySidebarCollapsed ? 'bg-[#007AFF]/10 text-[#007AFF]' : ''"
+                :class="!secondarySidebarCollapsed ? 'bg-[#007AFF]/10 text-[#007AFF]' : ''"
                 :title="secondarySidebarCollapsed ? '{{ __('navigation.expand_secondary_sidebar') }}' : '{{ __('navigation.collapse_secondary_sidebar') }}'"
                 aria-label="{{ __('navigation.toggle_secondary_sidebar') }}">
-                <i :data-lucide="secondarySidebarCollapsed ? 'panel-right-open' : 'panel-right-close'" class="w-4 h-4"></i>
+                <i :data-lucide="secondarySidebarCollapsed ? 'panel-left-open' : 'columns-2'" class="w-4 h-4"></i>
             </button>
         @endif
 
