@@ -69,6 +69,57 @@ class PromptCompilerService
         'jeruk nipis' => 'fresh sliced juicy lime wedges with glistening pulp',
         'lemon' => 'fresh sliced yellow lemon with translucent pulp and water spray',
         'kayu manis' => 'fragrant whole cinnamon sticks and star anise spices',
+
+        // Multi-Industri Khusus: Otomotif & Bengkel
+        'oli' => 'premium synthetic motor engine oil bottle with golden amber liquid reflection',
+        'oli mesin' => 'sleek synthetic motor oil container on metallic cast-iron brake disc rotor',
+        'bengkel' => 'clean modern high-end automotive service bay with polished dark epoxy floor and overhead linear LEDs',
+        'kunci pas' => 'gleaming chrome vanadium mechanic wrenches and precision workshop tools',
+        'velg' => 'matte-black sports racing alloy wheel rim with vivid brake caliper reflection',
+        'cuci mobil' => 'thick luxurious snow foam wash cascade covering glossy vehicle paintwork',
+        'coating' => 'flawless high-gloss nano ceramic coating with ultra-reflective mirror finish and water beading',
+
+        // Multi-Industri Khusus: Jasa, Barbershop & Laundry
+        'barbershop' => 'classic vintage gentleman barbershop station with antique leather chair and warm tungsten bulbs',
+        'gunting' => 'precision German steel barber scissors and textured carbon comb on dark leather mat',
+        'pomade' => 'vintage aluminum pomade tin with glossy amber wax styling pomade texture',
+        'laundry' => 'crisp professionally steam-ironed apparel hanging on minimalist organic wooden hangers with soft rising steam',
+        'handuk' => 'plush organic fluffy white folded towels stacked in natural woven Scandinavian wicker basket',
+        'spa' => 'serene luxury wellness spa set with flickering soy candle, bamboo mat, and black river basalt stones',
+
+        // Multi-Industri Khusus: Apotek & Farmasi Herbal
+        'obat' => 'modern pharmaceutical blister pack capsules on pristine sterile white glass laboratory surface',
+        'botol obat' => 'sleek pharmaceutical amber glass medicine bottle with minimalist white prescription label',
+        'kapsul' => 'golden translucent softgel capsules scattered gracefully near clean glass bottle',
+        'madu' => 'pure golden raw organic honey dripping from wooden dipper into artisanal hexagonal glass jar',
+        'herbal' => 'healing natural botanical herbal ingredients, dried roots, and fresh green leaves on porcelain mortar',
+
+        // Multi-Industri Khusus: Percetakan & Kemasan
+        'kemasan' => 'luxury matte unboxing rigid paper hardbox packaging with gold foil stamped typography',
+        'box' => 'minimalist premium cardboard shipping box with elegant kraft texture and custom brand tape',
+        'paper bag' => 'eco-friendly recycled kraft paper shopping bag with braided handles and letterpress tag',
+        'kartu nama' => 'thick textured cotton letterpress business card mockup with debossed metallic gold typography',
+        'sablon' => 'vivid high-density screen-printed graphic apparel on premium combed cotton backdrop',
+
+        // Multi-Industri Khusus: Furniture & Interior
+        'mebel' => 'handcrafted solid teakwood furniture piece with natural Scandinavian minimalist joinery',
+        'sofa' => 'luxurious deep forest green velvet upholstered armchair in sunlit modern minimalist living room',
+        'interior' => 'warm Japandi modern interior living space with natural wood slats, terrazzo tiles, and soft cove lighting',
+        'anyaman' => 'intricate handmade Indonesian natural rattan and bamboo weave texture with tactile organic detail',
+
+        // Multi-Industri Khusus: Kontraktor & Konstruksi
+        'arsitektur' => 'crisp architectural blueprint drawings, drafting tools, and laser measure on raw architectural concrete desk',
+        'helm proyek' => 'clean white safety hard hat and rolled building blueprint drawings on construction site',
+
+        // Multi-Industri Khusus: Wedding & Event
+        'wedding' => 'breathtaking romantic wedding banquet table setting with ivory white floral roses, crystal glassware, and gold flatware',
+        'pelaminan' => 'luxurious modern rustic wedding stage backdrop with draped chiffon, dried pampas grass, and warm fairy lights',
+        'mahar' => 'hexagonal crystal-clear acrylic wedding ring box cushioned with silk velvet and delicate dried edelweiss flowers',
+
+        // Multi-Industri Khusus: Pertanian & Agro
+        'sayur' => 'fresh vibrant organic hydroponic green butterhead lettuce and heirloom cherry tomatoes with crisp water droplets',
+        'telur' => 'farm-fresh organic brown omega eggs nestled gently in natural golden straw nest inside wire basket',
+        'padi' => 'heavy ripe golden rice grains on the stalk beaded with sparkling morning dew against terraced paddies',
     ];
 
     public function __construct(

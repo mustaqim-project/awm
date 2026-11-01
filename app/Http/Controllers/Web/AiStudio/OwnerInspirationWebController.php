@@ -17,6 +17,26 @@ use Illuminate\View\View;
 final class OwnerInspirationWebController extends Controller implements HasMiddleware
 {
     /**
+     * Taksonomi Sektor Multi-Industri Lengkap COOCA untuk AI Studio.
+     */
+    public const INDUSTRY_SECTORS = [
+        'fnb' => ['label' => 'Kuliner & F&B', 'icon' => 'utensils'],
+        'fashion' => ['label' => 'Fashion & Konveksi', 'icon' => 'shirt'],
+        'beauty' => ['label' => 'Kecantikan & Skincare', 'icon' => 'sparkles'],
+        'automotive' => ['label' => 'Bengkel & Otomotif', 'icon' => 'wrench'],
+        'service' => ['label' => 'Jasa, Salon & Laundry', 'icon' => 'scissors'],
+        'retail' => ['label' => 'Ritel & Toko Kelontong', 'icon' => 'shopping-bag'],
+        'pharmacy' => ['label' => 'Apotek, Farmasi & Herbal', 'icon' => 'pill'],
+        'printing' => ['label' => 'Percetakan & Kemasan', 'icon' => 'printer'],
+        'furniture' => ['label' => 'Furniture & Kerajinan', 'icon' => 'armchair'],
+        'contractor' => ['label' => 'Kontraktor & Bangunan', 'icon' => 'hard-hat'],
+        'event' => ['label' => 'Event & Wedding Organizer', 'icon' => 'calendar-heart'],
+        'distributor' => ['label' => 'Distributor FMCG & Grosir', 'icon' => 'truck'],
+        'agriculture' => ['label' => 'Pertanian & Peternakan', 'icon' => 'sprout'],
+        'general' => ['label' => 'Umum & Multi-Sektor', 'icon' => 'layout-grid'],
+    ];
+
+    /**
      * Daftarkan middleware Controller-Level RBAC.
      */
     public static function middleware(): array
@@ -84,7 +104,18 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             ]);
         }
 
-        return view('app.ai-studio.inspiration.index', compact('items', 'categories', 'business'));
+        $industrySectors = self::INDUSTRY_SECTORS;
+        $recommendedIndustry = $business->getAiStudioIndustryTarget();
+        $recommendedLabel = $business->getAiStudioIndustryLabel();
+
+        return view('app.ai-studio.inspiration.index', compact(
+            'items',
+            'categories',
+            'business',
+            'industrySectors',
+            'recommendedIndustry',
+            'recommendedLabel'
+        ));
     }
 
     /**

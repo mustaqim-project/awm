@@ -58,7 +58,24 @@
     <!-- ========================================== -->
     <!-- 3. SEARCH & ADVANCED FILTER BAR            -->
     <!-- ========================================== -->
-    <div class="rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-3.5 sm:p-4">
+    <div class="rounded-[18px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-3.5 sm:p-4 space-y-3">
+        @if(!empty($recommendedIndustry) && $recommendedIndustry !== 'general' && request('industry') !== $recommendedIndustry)
+            <!-- Smart Tenant Industry Recommendation Banner -->
+            <div class="p-2.5 sm:p-3 rounded-[12px] bg-[#007AFF]/[0.08] dark:bg-[#007AFF]/[0.12] border border-[#007AFF]/20 flex items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2 min-w-0">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF] animate-pulse shrink-0"></span>
+                    <span class="text-black/80 dark:text-white/90 truncate">
+                        Rekomendasi untuk usaha Anda: <strong class="text-[#007AFF] font-bold">{{ $recommendedLabel }}</strong>
+                    </span>
+                </div>
+                <a href="{{ route('ai-studio.inspiration.index', array_merge(request()->except('page'), ['industry' => $recommendedIndustry])) }}"
+                    class="px-3 py-1 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold shrink-0 transition-all inline-flex items-center gap-1">
+                    <span>Lihat Sektor Saya</span>
+                    <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </a>
+            </div>
+        @endif
+
         <form method="GET" action="{{ route('ai-studio.inspiration.index') }}" class="flex flex-col md:flex-row gap-3">
             @if(request('category'))
                 <input type="hidden" name="category" value="{{ request('category') }}">
@@ -72,18 +89,34 @@
                     class="w-full pl-9 pr-3.5 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
             </div>
 
-            <!-- Target Industry Selector -->
-            <div class="w-full md:w-48">
+            <!-- Target Industry Selector (Multi-Industry 20+ Sectors) -->
+            <div class="w-full md:w-56">
                 <select name="industry" onchange="this.form.submit()"
                     class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                    <option value="">Semua Sektor Industri</option>
-                    <option value="fnb" {{ request('industry') === 'fnb' ? 'selected' : '' }}>Kuliner &amp; F&amp;B</option>
-                    <option value="fashion" {{ request('industry') === 'fashion' ? 'selected' : '' }}>Fashion &amp; Tekstil</option>
-                    <option value="beauty" {{ request('industry') === 'beauty' ? 'selected' : '' }}>Skincare &amp; Kosmetik</option>
-                    <option value="electronics" {{ request('industry') === 'electronics' ? 'selected' : '' }}>Elektronik &amp; Gadget</option>
-                    <option value="craft" {{ request('industry') === 'craft' ? 'selected' : '' }}>Kerajinan &amp; Craft</option>
-                    <option value="health" {{ request('industry') === 'health' ? 'selected' : '' }}>Kesehatan &amp; Herbal</option>
-                    <option value="general" {{ request('industry') === 'general' ? 'selected' : '' }}>Umum &amp; Retail</option>
+                    <option value="">Semua Sektor Industri (20+ Usaha)</option>
+                    @php
+                        $sectorsList = $industrySectors ?? [
+                            'fnb' => ['label' => 'Kuliner & F&B'],
+                            'fashion' => ['label' => 'Fashion & Konveksi'],
+                            'beauty' => ['label' => 'Kecantikan & Skincare'],
+                            'automotive' => ['label' => 'Bengkel & Otomotif'],
+                            'service' => ['label' => 'Jasa, Salon & Laundry'],
+                            'retail' => ['label' => 'Ritel & Toko Kelontong'],
+                            'pharmacy' => ['label' => 'Apotek, Farmasi & Herbal'],
+                            'printing' => ['label' => 'Percetakan & Kemasan'],
+                            'furniture' => ['label' => 'Furniture & Kerajinan'],
+                            'contractor' => ['label' => 'Kontraktor & Bangunan'],
+                            'event' => ['label' => 'Event & Wedding Organizer'],
+                            'distributor' => ['label' => 'Distributor FMCG & Grosir'],
+                            'agriculture' => ['label' => 'Pertanian & Peternakan'],
+                            'general' => ['label' => 'Umum & Multi-Sektor'],
+                        ];
+                    @endphp
+                    @foreach($sectorsList as $secCode => $secData)
+                        <option value="{{ $secCode }}" {{ request('industry') === $secCode ? 'selected' : '' }}>
+                            {{ $secData['label'] }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
@@ -108,6 +141,8 @@
                     </a>
                 @endif
             </div>
+        </form>
+    </div>
         </form>
     </div>
 

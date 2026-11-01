@@ -120,10 +120,12 @@ class InspirationItem extends Model
 
         $sourceCode = $this->source?->code ?? 'general';
         $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $this->external_id);
-        $localRelPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.jpg";
 
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localRelPath)) {
-            return "/storage/{$localRelPath}";
+        foreach (['svg', 'jpg', 'png', 'webp'] as $ext) {
+            $localRelPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.{$ext}";
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localRelPath)) {
+                return "/storage/{$localRelPath}";
+            }
         }
 
         return ! empty($url) && str_starts_with($url, '/') ? $url : '/images/ai-studio/placeholder.svg';

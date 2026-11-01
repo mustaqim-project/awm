@@ -885,6 +885,84 @@ class Business extends Model
         return in_array($code, $supported, true);
     }
 
+    /**
+     * Tentukan pemetaan sektor industri AI Studio untuk rekomendasi visual & prompt otomatis.
+     */
+    public function getAiStudioIndustryTarget(): string
+    {
+        if ($this->isFoodIndustry()) {
+            return 'fnb';
+        }
+        if ($this->isWorkshop()) {
+            return 'automotive';
+        }
+        if ($this->isBarbershop() || $this->isLaundry()) {
+            return 'service';
+        }
+        if ($this->isPharmacy()) {
+            return 'pharmacy';
+        }
+        if ($this->isTailorCustom() || str_contains(strtolower((string) $this->template_code), 'garment')) {
+            return 'fashion';
+        }
+        if ($this->isManufacturingSector()) {
+            $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+            if (str_contains($code, 'printing')) {
+                return 'printing';
+            }
+            if (str_contains($code, 'furniture') || str_contains($code, 'craft')) {
+                return 'furniture';
+            }
+            if (str_contains($code, 'cosmetics')) {
+                return 'beauty';
+            }
+            return 'printing';
+        }
+        if ($this->isEventOrganizer()) {
+            return 'event';
+        }
+        if ($this->isRetailSector()) {
+            $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+            if (str_contains($code, 'distributor')) {
+                return 'distributor';
+            }
+            return 'retail';
+        }
+
+        $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
+        if (str_contains($code, 'contractor') || str_contains($code, 'renovasi') || str_contains($code, 'bangunan')) {
+            return 'contractor';
+        }
+        if (str_contains($code, 'agri') || str_contains($code, 'farm') || str_contains($code, 'tani') || str_contains($code, 'ternak')) {
+            return 'agriculture';
+        }
+
+        return 'general';
+    }
+
+    /**
+     * Label representasi sektor industri tenant untuk tampilan antarmuka AI Studio.
+     */
+    public function getAiStudioIndustryLabel(): string
+    {
+        return match ($this->getAiStudioIndustryTarget()) {
+            'fnb' => 'Kuliner & F&B',
+            'fashion' => 'Fashion & Konveksi',
+            'beauty' => 'Kecantikan & Skincare',
+            'automotive' => 'Bengkel & Otomotif',
+            'service' => 'Jasa, Salon & Laundry',
+            'retail' => 'Ritel & Toko Kelontong',
+            'pharmacy' => 'Apotek & Farmasi',
+            'printing' => 'Percetakan & Kemasan',
+            'furniture' => 'Furniture & Kerajinan',
+            'contractor' => 'Kontraktor & Bangunan',
+            'event' => 'Event & Wedding',
+            'distributor' => 'Distributor FMCG & Grosir',
+            'agriculture' => 'Pertanian & Peternakan',
+            default => 'Umum & Multi-Sektor',
+        };
+    }
+
     public function approvalRules(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ApprovalRule::class);
