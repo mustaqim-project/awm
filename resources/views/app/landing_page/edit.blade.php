@@ -3205,7 +3205,7 @@
                             if (typeof Swal !== 'undefined') {
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: '{{ __('landing_page.periksa_kembali_input_data') }}
+                                    title: @js(__('landing_page.periksa_kembali_input_data')),
                                     text: errorMsg,
                                     confirmButtonColor: '#FF9500'
                                 });
