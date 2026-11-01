@@ -1170,6 +1170,13 @@
                                             </button>
                                         @endif
 
+                                        <a href="{{ route('ai-studio.create', ['product_id' => $prod->id]) }}"
+                                            class="w-8 h-8 rounded-[8px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                            title="Studio Foto AI - Buat Foto Produk Profesional"
+                                            aria-label="Studio Foto AI">
+                                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                        </a>
+
                                         @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
                                             <button type="button"
                                                 @click="openEditModal({
@@ -1321,6 +1328,11 @@
                                     {{ __('products.btn_branch') }}
                                 </button>
                             @endif
+                            <a href="{{ route('ai-studio.create', ['product_id' => $prod->id]) }}"
+                                class="h-9 px-3 rounded-[8px] text-[12px] font-semibold text-[#FF9500] bg-[#FF9500]/10 flex items-center min-w-[44px] justify-center gap-1">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                <span>Foto AI</span>
+                            </a>
                             @if (\App\Support\Context::hasPermission('products.edit') || \App\Support\Context::hasPermission('products.manage'))
                                 <button type="button"
                                     @click="openEditModal({

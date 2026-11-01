@@ -1,7 +1,7 @@
 @extends('layouts.app', [
     'title' => $project->name . ' - Canvas Studio AI',
     'headerTitle' => 'Canvas Studio & Output Visual AI',
-    'headerSubtitle' => 'Pantau proses render, sesuaikan variasi prompt, dan simpan hasil visual ke katalog produk',
+    'headerSubtitle' => 'Pantau proses render, sesuaikan variasi prompt, dan simpan hasil visual ke katalog produk atau media sosial',
 ])
 
 @section('content')
@@ -24,7 +24,8 @@
     hasAttachedProduct: {{ $attachedProduct ? 'true' : 'false' }},
     attachedProductId: '{{ $attachedProduct?->id ?? "" }}',
     activeAssetId: '{{ $primaryAsset?->id ?? "" }}',
-    isFavorite: {{ $primaryAsset?->is_selected_favorite ? 'true' : 'false' }}
+    isFavorite: {{ $primaryAsset?->is_selected_favorite ? 'true' : 'false' }},
+    defaultCaption: '{{ addslashes($project->name) }} - Visual resmi dari studio produk kami. Dapatkan penawaran terbaik hari ini! #{{ Str::slug($project->name, "") }} #cooca #bisnisindonesia'
 })">
 
     <!-- ========================================== -->
@@ -32,7 +33,7 @@
     <!-- ========================================== -->
     <x-module-header
         :title="$project->name"
-        subtitle="Pantau proses render, sesuaikan variasi prompt, dan simpan hasil visual ke katalog produk"
+        subtitle="Pantau proses render, sesuaikan variasi prompt, dan simpan hasil visual ke katalog produk atau media sosial"
         :breadcrumbs="[
             ['label' => 'Dashboard', 'url' => route('dashboard')],
             ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
@@ -44,6 +45,7 @@
             <span class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold uppercase tracking-wider bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
                 {{ $project->target_platform ?? 'Instagram' }} ({{ $latestPrompt?->aspect_ratio ?? '1:1' }})
             </span>
+
             <!-- Status Pill -->
             <span class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold"
                 :class="{
@@ -54,6 +56,28 @@
                 }"
                 x-text="statusLabel">
             </span>
+
+            <!-- Saldo Pill -->
+            <div class="px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white/90 flex items-center gap-1.5">
+                <i data-lucide="coins" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF]" x-text="creditsBalance">{{ number_format($creditsBalance) }}</span>
+                <span class="text-[10px] text-black/50 dark:text-white/50">Kredit</span>
+            </div>
+
+            <!-- Top Up Button -->
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
+                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+                <span>Top Up</span>
+            </button>
+
+            <!-- New Generation Button -->
+            <button type="button" @click="generationDrawerOpen = true"
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span>+ Render Variasi Baru</span>
+            </button>
+
             <!-- Back Button -->
             <a href="{{ route('ai-studio.index') }}"
                 class="px-3 py-1.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-xs font-medium text-black/80 dark:text-white/80 transition-all">
@@ -61,6 +85,107 @@
             </a>
         </div>
     </x-module-header>
+
+    <!-- Flash Notifications -->
+    <div x-show="flashMessage" x-transition.opacity
+        class="p-4 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 text-xs font-semibold text-[#34C759] flex items-center justify-between"
+        style="display: none;">
+        <div class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span x-text="flashMessage"></span>
+        </div>
+        <button type="button" @click="flashMessage = ''" class="text-black/40 hover:text-black">
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+        </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. CANVAS MAIN WORKSPACE (2 Columns)      -->
+    <!-- ========================================== -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- LEFT COLUMN: Primary Canvas & Output View (7 Cols) -->
+        <div class="lg:col-span-7 space-y-5">
+
+            <!-- Active Canvas Showcase Card -->
+            <div class="rounded-[20px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-sm">
+
+                <!-- STATE A: Active Rendering In Progress (Shimmer Skeleton & Alpine Poller) -->
+                <div x-show="isRendering" class="space-y-4 py-12 text-center" style="display: none;">
+                    <div class="relative w-48 h-48 mx-auto rounded-[20px] bg-gradient-to-tr from-[#007AFF]/15 via-[#5856D6]/15 to-[#FF2D55]/15 border border-[#007AFF]/20 flex flex-col items-center justify-center overflow-hidden animate-pulse">
+                        <div class="w-12 h-12 rounded-full bg-white/80 dark:bg-[#1C1C1E]/80 shadow-md flex items-center justify-center text-[#007AFF]">
+                            <i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-1.5 max-w-sm mx-auto">
+                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.sedang_merender_visual_ai') }}</h3>
+                        <p class="text-xs text-black/60 dark:text-white/60">
+                            Mesin AI sedang mengomposisikan objek, pencahayaan, dan detail foto produk. Proses ini biasanya memerlukan waktu 10 hingga 25 detik.
+                        </p>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70">
+                        <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
+                        <span>Sinkronisasi Status Otomatis Aktif</span>
+                    </div>
+                </div>
+
+                <!-- STATE B: Completed Generation Output (High-Res Canvas) -->
+                <div x-show="!isRendering && activeImageUrl" class="space-y-4">
+                    <!-- Image Frame -->
+                    <div class="relative rounded-[16px] overflow-hidden bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 group">
+                        <img :src="activeImageUrl" alt="Visual Render"
+                            class="w-full h-auto object-contain max-h-[600px] mx-auto transition-transform duration-300">
+
+                        <!-- Floating Badges Top Left -->
+                        <div class="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 pointer-events-none">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/70 text-white backdrop-blur-md">
+                                <span x-text="activeModelName || 'AI Studio Engine'"></span>
+                            </span>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/70 text-white backdrop-blur-md"
+                                x-text="activeAspectRatio || '1:1'">
+                            </span>
+                        </div>
+
+                        <!-- Favorite Toggle Button Top Right -->
+                        <div class="absolute top-3 right-3">
+                            <button type="button" @click="toggleFavorite()"
+                                class="p-2.5 rounded-full backdrop-blur-md transition-all shadow-md"
+                                :class="isFavorite ? 'bg-amber-500 text-white' : 'bg-black/50 text-white/80 hover:bg-black/70'">
+                                <i data-lucide="star" class="w-4 h-4" :class="{ 'fill-current': isFavorite }"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 1-Click Action Cockpit (Katalog Produk & Media Sosial) -->
+                    <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-black/5 dark:border-white/10">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <!-- AC-010: Simpan ke Katalog Produk Button -->
+                            <button type="button" @click="openExportModal()"
+                                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2db24f] text-white text-xs font-bold shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98]">
+                                <i data-lucide="package-plus" class="w-4 h-4"></i>
+                                <span>Simpan ke Katalog</span>
+                            </button>
+
+                            <!-- Social Media Posting Button -->
+                            <button type="button" @click="openSocialModal()"
+                                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                                <span>Posting ke Media Sosial</span>
+                            </button>
+
+                            <!-- Direct Download -->
+                            <a :href="activeImageUrl" download="ai-studio-render.png" target="_blank"
+                                class="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('admin.unduh') }}</span>
+                            </a>
+                        </div>
+
+                        <div class="text-[11px] text-black/40 dark:text-white/40">
+                            Render ID: <span class="font-mono" x-text="activeGenerationId ? activeGenerationId.substring(0, 8) : '-'"></span>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- STATE C: Generation Failed -->
                 <div x-show="!isRendering && currentStatus === 'failed'" class="p-6 rounded-[16px] bg-red-500/5 border border-red-500/20 text-center space-y-3" style="display: none;">
@@ -250,7 +375,7 @@
             role="dialog" aria-modal="true"
             @keydown.escape.window="exportModalOpen = false"
             style="display: none;">
-            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <!-- Standalone Backdrop -->
             <div x-show="exportModalOpen"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0"
@@ -261,7 +386,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
                 @click="exportModalOpen = false"></div>
 
-            <!-- 2. Centered Scroll & Dialog Container -->
+            <!-- Dialog Container -->
             <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="exportModalOpen = false">
                 <div @click.away="exportModalOpen = false"
                     class="w-full max-w-md rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-5">
@@ -338,7 +463,156 @@
     </template>
 
     <!-- ========================================== -->
-    <!-- 4. DRAWER / MODAL: DISPATCH NEW GENERATION -->
+    <!-- 4. MODAL: POSTING KE MEDIA SOSIAL          -->
+    <!-- ========================================== -->
+    <template x-teleport="body">
+        <div x-show="socialModalOpen" x-cloak
+            class="fixed inset-0 z-[200] overflow-y-auto"
+            role="dialog" aria-modal="true"
+            @keydown.escape.window="socialModalOpen = false"
+            style="display: none;">
+            <!-- Standalone Backdrop -->
+            <div x-show="socialModalOpen"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
+                @click="socialModalOpen = false"></div>
+
+            <!-- Dialog Container -->
+            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="socialModalOpen = false">
+                <div @click.away="socialModalOpen = false"
+                    class="w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </span>
+                            <div>
+                                <h3 class="text-sm font-bold text-black dark:text-white">Posting ke Media Sosial</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">Publikasikan visual render AI langsung atau jadwalkan via kalender otomatis</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="socialModalOpen = false" class="p-1 rounded-full text-black/40 hover:bg-black/5">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- Platform Selection -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-black dark:text-white">Saluran Media Sosial</label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button type="button" @click="socialPlatform = 'instagram'"
+                                class="p-2 rounded-[10px] border text-center transition-all flex flex-col items-center gap-1"
+                                :class="socialPlatform === 'instagram' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                                <span class="text-[10px] font-bold">Instagram</span>
+                            </button>
+                            <button type="button" @click="socialPlatform = 'facebook'"
+                                class="p-2 rounded-[10px] border text-center transition-all flex flex-col items-center gap-1"
+                                :class="socialPlatform === 'facebook' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                <i data-lucide="facebook" class="w-4 h-4"></i>
+                                <span class="text-[10px] font-bold">Facebook</span>
+                            </button>
+                            <button type="button" @click="socialPlatform = 'tiktok'"
+                                class="p-2 rounded-[10px] border text-center transition-all flex flex-col items-center gap-1"
+                                :class="socialPlatform === 'tiktok' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                <i data-lucide="video" class="w-4 h-4"></i>
+                                <span class="text-[10px] font-bold">TikTok</span>
+                            </button>
+                            <button type="button" @click="socialPlatform = 'threads'"
+                                class="p-2 rounded-[10px] border text-center transition-all flex flex-col items-center gap-1"
+                                :class="socialPlatform === 'threads' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF]' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
+                                <i data-lucide="at-sign" class="w-4 h-4"></i>
+                                <span class="text-[10px] font-bold">Threads</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Connected Account Selector -->
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-semibold text-black dark:text-white">Pilih Akun Terhubung</label>
+                        <select x-model="socialAccountId"
+                            class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                            <option value="">-- Mode Umum / Semua Akun Tertaut --</option>
+                            @if(isset($socialAccounts) && $socialAccounts->isNotEmpty())
+                                @foreach($socialAccounts as $account)
+                                    <option value="{{ $account->id }}">
+                                        {{ ucfirst($account->platform) }}: {{ $account->account_name ?: ($account->username ?: 'Akun ' . $account->id) }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @if(!isset($socialAccounts) || $socialAccounts->isEmpty())
+                            <p class="text-[11px] text-amber-600 dark:text-amber-400">
+                                Belum ada akun media sosial yang terhubung. Postingan akan disimpan sebagai draf atau antrean posting.
+                            </p>
+                        @endif
+                    </div>
+
+                    <!-- Caption Content -->
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-semibold text-black dark:text-white">Teks Caption Postingan</label>
+                            <span class="text-[10px] text-black/40 dark:text-white/40" x-text="(socialContent?.length || 0) + '/5000'"></span>
+                        </div>
+                        <textarea x-model="socialContent" rows="4"
+                            class="w-full p-2.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white leading-relaxed"></textarea>
+                    </div>
+
+                    <!-- Publish Mode Switcher -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold text-black dark:text-white">Waktu &amp; Metode Publikasi</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button type="button" @click="socialPublishMode = 'now'"
+                                class="p-2 rounded-[10px] border text-center transition-all"
+                                :class="socialPublishMode === 'now' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] font-bold' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 text-xs'">
+                                Sekarang
+                            </button>
+                            <button type="button" @click="socialPublishMode = 'scheduled'"
+                                class="p-2 rounded-[10px] border text-center transition-all"
+                                :class="socialPublishMode === 'scheduled' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] font-bold' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 text-xs'">
+                                Jadwalkan
+                            </button>
+                            <button type="button" @click="socialPublishMode = 'draft'"
+                                class="p-2 rounded-[10px] border text-center transition-all"
+                                :class="socialPublishMode === 'draft' ? 'bg-[#007AFF]/10 border-[#007AFF] text-[#007AFF] font-bold' : 'border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 text-xs'">
+                                Simpan Draf
+                            </button>
+                        </div>
+
+                        <!-- Date Time Picker if Scheduled -->
+                        <div x-show="socialPublishMode === 'scheduled'" class="pt-2 space-y-1" style="display: none;">
+                            <label class="text-[11px] font-medium text-black/60 dark:text-white/60">Pilih Tanggal &amp; Waktu Tayang</label>
+                            <input type="datetime-local" x-model="socialScheduledAt"
+                                class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white">
+                            <p class="text-[10px] text-black/50 dark:text-white/50">
+                                Sistem scheduler cron otomatis (per menit) akan mengeksekusi publikasi postingan tepat pada waktu yang ditentukan.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Footer Actions -->
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/5">
+                        <button type="button" @click="socialModalOpen = false"
+                            class="px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/60 dark:text-white/60 hover:bg-black/5">{{ __('common.cancel') }}</button>
+                        <button type="button" @click="submitExportToSocialMedia()" :disabled="socialPosting"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] disabled:opacity-50 text-white text-xs font-bold shadow-sm transition-all">
+                            <i data-lucide="share-2" class="w-3.5 h-3.5" x-show="!socialPosting"></i>
+                            <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin" x-show="socialPosting" style="display: none;"></i>
+                            <span x-text="socialPosting ? 'Mengirim...' : (socialPublishMode === 'now' ? 'Publikasikan Sekarang' : (socialPublishMode === 'scheduled' ? 'Jadwalkan Posting' : 'Simpan Draf'))"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ========================================== -->
+    <!-- 5. DRAWER / MODAL: DISPATCH NEW GENERATION -->
     <!-- ========================================== -->
     <template x-teleport="body">
         <div x-show="generationDrawerOpen" x-cloak
@@ -346,7 +620,7 @@
             role="dialog" aria-modal="true"
             @keydown.escape.window="generationDrawerOpen = false"
             style="display: none;">
-            <!-- 1. Standalone Independent Backdrop Overlay -->
+            <!-- Standalone Backdrop -->
             <div x-show="generationDrawerOpen"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0"
@@ -357,7 +631,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
                 @click="generationDrawerOpen = false"></div>
 
-            <!-- 2. Centered Scroll & Dialog Container -->
+            <!-- Dialog Container -->
             <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="generationDrawerOpen = false">
                 <div @click.away="generationDrawerOpen = false"
                     class="w-full max-w-lg rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 shadow-2xl space-y-4">
@@ -446,13 +720,22 @@ function aiStudioCanvas(config) {
         copied: false,
         flashMessage: '',
 
-        // Export Modal State (AC-010)
+        // Export to Catalog Modal State (AC-010)
         exportModalOpen: false,
         exportMode: config.hasAttachedProduct ? 'update' : 'new',
         exportTargetProductId: config.attachedProductId,
         newProductName: '{{ addslashes($project->name) }}',
         newProductPrice: '',
         exporting: false,
+
+        // Social Media Modal State
+        socialModalOpen: false,
+        socialPlatform: '{{ in_array($project->target_platform ?? "", ["instagram", "facebook", "tiktok", "threads"]) ? $project->target_platform : "instagram" }}',
+        socialAccountId: '',
+        socialContent: config.defaultCaption || '',
+        socialPublishMode: 'now',
+        socialScheduledAt: '',
+        socialPosting: false,
 
         // Dispatch Drawer State
         generationDrawerOpen: false,
@@ -507,6 +790,11 @@ function aiStudioCanvas(config) {
             this.$nextTick(() => lucide.createIcons());
         },
 
+        openSocialModal() {
+            this.socialModalOpen = true;
+            this.$nextTick(() => lucide.createIcons());
+        },
+
         async submitExportToCatalog() {
             if (!this.activeAssetId) {
                 alert('Tidak ada aset render aktif yang dapat disimpan.');
@@ -549,34 +837,29 @@ function aiStudioCanvas(config) {
             }
         },
 
-        selectPastGeneration(genId, url, assetId, model, aspect, favorite) {
-            this.activeGenerationId = genId;
-            this.activeImageUrl = url;
-            this.activeAssetId = assetId;
-            this.activeModelName = model;
-            this.activeAspectRatio = aspect;
-            this.isFavorite = favorite;
-            this.currentStatus = 'completed';
-            this.isRendering = false;
-            this.$nextTick(() => lucide.createIcons());
-        },
+        async submitExportToSocialMedia() {
+            if (!this.activeAssetId) {
+                alert('Tidak ada aset render aktif yang dapat diposting.');
+                return;
+            }
 
-        async dispatchNewGeneration() {
-            this.dispatching = true;
+            if (!this.socialContent || !this.socialContent.trim()) {
+                alert('Silakan tuliskan teks caption terlebih dahulu.');
+                return;
+            }
+
+            this.socialPosting = true;
 
             try {
-                const provider = this.dispatchModel === 'dall-e-3' ? 'openai' : (this.dispatchModel === 'sdxl' ? 'stability' : 'ideogram');
-
                 const payload = {
-                    project_id: this.projectId,
-                    provider: provider,
-                    model_name: this.dispatchModel,
-                    custom_prompt: this.dispatchCustomPrompt || null,
-                    aspect_ratio: this.activeAspectRatio,
-                    batch_count: 1,
+                    platform: this.socialPlatform,
+                    social_media_account_id: this.socialAccountId || null,
+                    content: this.socialContent,
+                    publish_mode: this.socialPublishMode,
+                    scheduled_at: this.socialPublishMode === 'scheduled' ? this.socialScheduledAt : null
                 };
 
-                const res = await fetch('{{ route("ai-studio.generate") }}', {
+                const res = await fetch('{{ url("ai-studio/assets") }}/' + this.activeAssetId + '/export-to-social-media', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -589,79 +872,114 @@ function aiStudioCanvas(config) {
                 const data = await res.json();
 
                 if (!res.ok || !data.success) {
-                    if (res.status === 402 || data.error_code === 'INSUFFICIENT_CREDITS') {
-                        this.generationDrawerOpen = false;
-                        window.dispatchEvent(new CustomEvent('open-ai-topup-modal', {
-                            detail: {
-                                required: data.required || this.dispatchCost,
-                                available: data.available ?? this.creditsBalance,
-                                message: data.message || 'Kredit AI Studio Anda tidak mencukupi untuk memproses render ini.'
-                            }
-                        }));
-                        return;
-                    }
-                    throw new Error(data.message || 'Gagal memproses pemesanan generasi.');
+                    throw new Error(data.message || 'Gagal memproses postingan ke media sosial.');
+                }
+
+                this.socialModalOpen = false;
+                this.flashMessage = data.message || 'Aset visual berhasil dikirim ke antrean Media Sosial!';
+            } catch (e) {
+                alert('Gagal: ' + e.message);
+            } finally {
+                this.socialPosting = false;
+            }
+        },
+
+        selectPastGeneration(genId, url, assetId, model, aspect, favorite) {
+            this.activeGenerationId = genId;
+            this.activeImageUrl = url;
+            this.activeAssetId = assetId;
+            this.activeModelName = model;
+            this.activeAspectRatio = aspect;
+            this.isFavorite = favorite;
+            this.currentStatus = 'completed';
+            this.isRendering = false;
+        },
+
+        async dispatchNewGeneration() {
+            this.dispatching = true;
+            try {
+                const payload = {
+                    ai_model_name: this.dispatchModel,
+                    custom_prompt: this.dispatchCustomPrompt || undefined
+                };
+
+                const res = await fetch('{{ route("ai-studio.projects.dispatch-generation", $project->id) }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (res.status === 402) {
+                    this.generationDrawerOpen = false;
+                    this.$dispatch('open-ai-topup-modal', {
+                        required: this.dispatchCost,
+                        available: this.creditsBalance,
+                        message: data.message || 'Saldo kredit AI Anda tidak mencukupi untuk memproses render variasi ini.'
+                    });
+                    return;
+                }
+
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || 'Gagal memicu render AI baru.');
                 }
 
                 this.generationDrawerOpen = false;
-                this.activeGenerationId = data.generation?.id;
+                this.activeGenerationId = data.generation.id;
                 this.isRendering = true;
                 this.currentStatus = 'generating';
-                this.creditsBalance -= this.dispatchCost;
+                this.creditsBalance = data.remaining_credits;
+                this.flashMessage = 'Render variasi baru sedang diproses di latar belakang.';
 
-                this.startPolling();
+                this.pollGenerationStatus(data.generation.id);
             } catch (e) {
-                alert('Gagal memulai generasi: ' + e.message);
+                alert('Gagal: ' + e.message);
             } finally {
                 this.dispatching = false;
             }
         },
 
-        startPolling() {
-            if (!this.activeGenerationId) return;
-
-            const pollInterval = setInterval(async () => {
+        pollGenerationStatus(genId) {
+            const interval = setInterval(async () => {
                 try {
-                    const statusUrl = '{{ url("ai-studio/projects") }}/' + this.projectId + '/generations/' + this.activeGenerationId + '/status';
-                    const res = await fetch(statusUrl, {
+                    const res = await fetch('{{ url("ai-studio/projects") }}/{{ $project->id }}', {
                         headers: { 'Accept': 'application/json' }
                     });
                     const data = await res.json();
+                    if (!data.success) return;
 
-                    if (data.status === 'succeeded') {
-                        clearInterval(pollInterval);
-                        this.isRendering = false;
-                        this.currentStatus = 'succeeded';
-                        const firstAsset = data.assets?.[0];
-                        if (firstAsset) {
-                            this.activeImageUrl = firstAsset.url;
-                            this.activeAssetId = firstAsset.id;
+                    const gen = (data.project.generations || []).find(g => g.id === genId);
+                    if (gen) {
+                        this.currentStatus = gen.status;
+                        if (gen.status === 'completed' || gen.status === 'succeeded') {
+                            clearInterval(interval);
+                            this.isRendering = false;
+                            const asset = (gen.assets || [])[0];
+                            if (asset) {
+                                this.activeImageUrl = asset.output_image_url || asset.asset_url;
+                                this.activeAssetId = asset.id;
+                                this.activeModelName = gen.ai_model_name;
+                                this.activeAspectRatio = asset.aspect_ratio;
+                                this.isFavorite = !!asset.is_selected_favorite;
+                            }
+                            this.flashMessage = 'Visual render AI selesai dengan sempurna!';
+                            this.$nextTick(() => lucide.createIcons());
+                        } else if (gen.status === 'failed') {
+                            clearInterval(interval);
+                            this.isRendering = false;
+                            this.errorMessage = gen.error_message || 'Terjadi kesalahan teknis pada provider AI.';
+                            this.creditsBalance = data.credits_balance;
                         }
-                        this.flashMessage = 'Visual render AI telah selesai diproses!';
-                        this.$nextTick(() => lucide.createIcons());
-                    } else if (data.status === 'failed') {
-                        clearInterval(pollInterval);
-                        this.isRendering = false;
-                        this.currentStatus = 'failed';
-                        this.errorMessage = data.error_message || 'Proses render gagal.';
-                        this.$nextTick(() => lucide.createIcons());
                     }
                 } catch (e) {
-                    console.error('Polling error', e);
+                    console.error('Polling error:', e);
                 }
             }, 3000);
-        },
-
-        init() {
-            lucide.createIcons();
-            if (this.isRendering) {
-                this.startPolling();
-            }
-            window.addEventListener('ai-credits-updated', (e) => {
-                if (e.detail && typeof e.detail.credits !== 'undefined') {
-                    this.creditsBalance = e.detail.credits;
-                }
-            });
         }
     };
 }

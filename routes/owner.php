@@ -714,6 +714,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
             // Aksi Output Gambar Render
             Route::post('/assets/{asset}/export-to-catalog', [OwnerAiStudioWebController::class, 'exportToCatalog'])->name('assets.export-to-catalog');
+            Route::post('/assets/{asset}/export-to-social-media', [OwnerAiStudioWebController::class, 'exportToSocialMedia'])->name('assets.export-to-social-media');
             Route::post('/assets/{asset}/toggle-favorite', [OwnerAiStudioWebController::class, 'toggleFavoriteAsset'])->name('assets.toggle-favorite');
 
             // Riwayat Ledger Kredit Transaksi & Top-Up

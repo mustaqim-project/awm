@@ -500,12 +500,12 @@
 <script>
 function aiStudioCreateProject() {
     return {
-        projectName: @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ''),
+        projectName: @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ($selectedProduct ? 'Fotografi ' . $selectedProduct->name : '')),
         targetChannel: '{{ ($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "9:16" ? "tiktok" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "16:9" ? "banner" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "4:5" ? "facebook" : "instagram")) }}',
         aspectRatio: '{{ $selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "1:1" }}',
         stylePreset: 'clean_commercial',
         customNotes: @json($selectedInspiration?->visualAnalysis?->extracted_style_prompt ?? ''),
-        selectedProductId: '',
+        selectedProductId: '{{ $selectedProduct?->id ?? "" }}',
         productRole: 'hero_product',
         selectedInspirationId: '{{ $selectedInspiration?->id ?? "" }}',
         selectedProvider: 'ideogram',

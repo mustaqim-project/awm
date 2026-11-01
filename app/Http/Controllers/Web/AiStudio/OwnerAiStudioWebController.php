@@ -24,6 +24,10 @@ use App\Models\AiStudio\BusinessInspirationPromptVersion;
 use App\Models\AiStudio\InspirationItem;
 use App\Models\BillingPackage;
 use App\Models\Product;
+use App\Models\SocialMediaAccount;
+use App\Models\SocialMediaPost;
+use App\Models\SocialPostMedia;
+use App\Models\SocialPostTarget;
 use App\Models\SubscriptionPayment;
 use App\Models\Unit;
 use App\Support\Context;
@@ -118,6 +122,7 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'update',
                 'destroy',
                 'exportToCatalog',
+                'exportToSocialMedia',
                 'toggleFavoriteAsset',
             ]),
         ];
@@ -182,6 +187,11 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             ->orderBy('name')
             ->get();
 
+        $selectedProduct = null;
+        if ($request->filled('product_id')) {
+            $selectedProduct = Product::where('business_id', $business->id)->find($request->input('product_id'));
+        }
+
         $selectedInspiration = null;
         if ($request->filled('inspiration_id')) {
             $selectedInspiration = InspirationItem::with(['source', 'category', 'visualAnalysis'])
@@ -191,7 +201,7 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $pricingMatrix = CostQuoteService::MODEL_PRICING;
         $creditsBalance = (int) ($business->ai_credits_balance ?? 0);
 
-        return view('app.ai-studio.create', compact('products', 'selectedInspiration', 'pricingMatrix', 'creditsBalance', 'business'));
+        return view('app.ai-studio.create', compact('products', 'selectedProduct', 'selectedInspiration', 'pricingMatrix', 'creditsBalance', 'business'));
     }
 
     /**
@@ -353,6 +363,11 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $creditsBalance = (int) ($business->ai_credits_balance ?? 0);
         $pricingMatrix = CostQuoteService::MODEL_PRICING;
 
+        $socialAccounts = SocialMediaAccount::where('business_id', $business->id)
+            ->where('status', 'active')
+            ->orderBy('platform')
+            ->get();
+
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -361,7 +376,7 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             ]);
         }
 
-        return view('app.ai-studio.show', compact('project', 'creditsBalance', 'pricingMatrix', 'business'));
+        return view('app.ai-studio.show', compact('project', 'creditsBalance', 'pricingMatrix', 'business', 'socialAccounts'));
     }
 
     /**
@@ -582,6 +597,110 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'id' => $product->id,
                 'name' => $product->name,
                 'image_path' => $product->image_path,
+            ],
+        ]);
+    }
+
+    /**
+     * Ekspor atau jadwalkan posting Aset Generasi AI langsung ke Media Sosial (Instagram, Facebook, TikTok).
+     */
+    public function exportToSocialMedia(Request $request, string $generationAssetId): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        /** @var BusinessInspirationGenerationAsset $asset */
+        $asset = BusinessInspirationGenerationAsset::where('business_id', $business->id)
+            ->findOrFail($generationAssetId);
+
+        $validated = $request->validate([
+            'social_media_account_id' => ['nullable', 'uuid'],
+            'platform' => ['required', 'string'],
+            'content' => ['required', 'string', 'max:5000'],
+            'publish_mode' => ['required', 'string', 'in:now,scheduled,draft'],
+            'scheduled_at' => ['nullable', 'date'],
+        ]);
+
+        $status = match ($validated['publish_mode']) {
+            'now' => SocialMediaPost::STATUS_SCHEDULED,
+            'scheduled' => SocialMediaPost::STATUS_SCHEDULED,
+            default => SocialMediaPost::STATUS_DRAFT,
+        };
+
+        $scheduledAt = null;
+        if ($validated['publish_mode'] === 'scheduled' && !empty($validated['scheduled_at'])) {
+            $scheduledAt = Carbon::parse($validated['scheduled_at']);
+        } elseif ($validated['publish_mode'] === 'now') {
+            $scheduledAt = now();
+        }
+
+        $imagePath = $asset->storage_path ?? $asset->asset_url;
+        $mediaUrl = $asset->output_image_url ?? ($asset->storage_path ? asset('storage/' . ltrim($asset->storage_path, '/')) : null);
+
+        $post = SocialMediaPost::create([
+            'business_id' => $business->id,
+            'user_id' => auth()->id(),
+            'social_media_account_id' => $validated['social_media_account_id'] ?: null,
+            'platform' => $validated['platform'],
+            'content' => $validated['content'],
+            'media_type' => 'image',
+            'media_urls' => $mediaUrl ? [$mediaUrl] : [],
+            'local_media_paths' => $imagePath ? [$imagePath] : [],
+            'status' => $status,
+            'approval_status' => 'approved',
+            'scheduled_at' => $scheduledAt,
+        ]);
+
+        // Simpan lampiran media ke SocialPostMedia
+        if ($imagePath || $mediaUrl) {
+            SocialPostMedia::create([
+                'social_media_post_id' => $post->id,
+                'media_type'           => 'image',
+                'file_path'            => $imagePath,
+                'local_path'           => $imagePath,
+                'url'                  => $mediaUrl,
+                'sort_order'           => 1,
+            ]);
+        }
+
+        // Jika terhubung dengan akun spesifik, buat target publish
+        if (!empty($validated['social_media_account_id'])) {
+            $account = SocialMediaAccount::where('business_id', $business->id)->find($validated['social_media_account_id']);
+            if ($account) {
+                $target = SocialPostTarget::create([
+                    'social_media_post_id'    => $post->id,
+                    'social_media_account_id' => $account->id,
+                    'provider'                => $account->provider ?? $account->platform,
+                    'channel'                 => $account->platform,
+                    'content_type'            => 'image',
+                    'custom_caption'          => $validated['content'],
+                    'status'                  => $status === SocialMediaPost::STATUS_DRAFT ? 'draft' : ($validated['publish_mode'] === 'now' ? 'pending' : 'scheduled'),
+                    'scheduled_at'            => $scheduledAt,
+                    'retry_count'             => 0,
+                ]);
+
+                // Jika publikasikan sekarang, trigger immediate dispatch jika memungkinkan
+                if ($validated['publish_mode'] === 'now') {
+                    try {
+                        \App\Jobs\SocialMedia\PublishSocialMediaTargetJob::dispatch($target->id);
+                    } catch (Throwable $e) {
+                        Log::warning('Failed dispatching immediate publish job: ' . $e->getMessage());
+                    }
+                }
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $validated['publish_mode'] === 'now'
+                ? 'Aset visual AI berhasil dijadwalkan dan dikirim untuk publikasi ke Media Sosial!'
+                : ($validated['publish_mode'] === 'scheduled'
+                    ? 'Aset visual AI berhasil dijadwalkan tayang pada ' . $scheduledAt?->translatedFormat('d M Y H:i')
+                    : 'Aset visual AI berhasil disimpan sebagai draf postingan media sosial.'),
+            'post' => [
+                'id' => $post->id,
+                'platform' => $post->platform,
+                'status' => $post->status,
+                'scheduled_at' => $post->scheduled_at?->toIso8601String(),
             ],
         ]);
     }
