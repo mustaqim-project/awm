@@ -18,42 +18,35 @@
 }">
 
     <!-- ========================================== -->
-    <!-- 1. BENTO HEADER & COCKPIT                  -->
+    <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
     <!-- ========================================== -->
-    <div class="relative z-10 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-        <div class="space-y-1.5 max-w-2xl">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <a href="{{ route('ai-studio.index') }}" class="hover:text-[#007AFF] transition-colors">AI Studio</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <span class="text-black/80 dark:text-white/80 font-semibold">Ledger Kredit</span>
+    <x-module-header
+        title="Ledger Kredit & Mutasi Transaksi AI Studio"
+        subtitle="Transparansi penuh atas setiap reservasi kredit (two-phase hold), pemakaian render, dan pengembalian saldo"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => 'Riwayat Kredit', 'url' => null]
+        ]">
+
+        <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+            <!-- Saldo Card -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white/90">
+                <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
+                    <i data-lucide="coins" class="w-3 h-3"></i>
+                </span>
+                <span>Saldo Kredit:</span>
+                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm" x-text="credits">{{ number_format($creditsBalance) }}</span>
             </div>
 
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-[10px] bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
-                    <i data-lucide="coins" class="w-4 h-4"></i>
-                </span>
-                <span>{{ __('ai.ledger_saldo_kredit_ai_studio') }}</span>
-            </h1>
-            <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
-                Catatan mutasi kredit immutable dengan mekanisme jaminan refund 100% apabila render visual gagal diproses oleh provider.
-            </p>
+            <!-- Top Up Trigger -->
+            <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-xs font-semibold shadow-xs transition-all cursor-pointer">
+                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
+                <span>Top Up Kredit</span>
+            </button>
         </div>
-
-        <!-- Current Balance Bento Pill & Top Up Action -->
-        <div class="flex flex-wrap items-center gap-2.5">
-            <div class="p-3.5 rounded-[14px] bg-[#007AFF]/10 dark:bg-[#007AFF]/20 border border-[#007AFF]/20 flex items-center gap-3">
-                <span class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shadow-sm">
-                    <i data-lucide="wallet" class="w-5 h-5"></i>
-                </span>
-                <div>
-                    <span class="text-[11px] font-semibold text-black/60 dark:text-white/60 block">Saldo Kredit Aktif</span>
-                    <span class="text-xl font-black text-[#007AFF] dark:text-[#0A84FF]" x-text="credits">{{ number_format($creditsBalance) }}</span>
-                    <span class="text-[10px] text-black/40 dark:text-white/40">kredit</span>
-                </div>
-            </div>
+    </x-module-header>
 
             <!-- Top Up Button -->
             <button type="button" @click="$dispatch('open-ai-topup-modal')"

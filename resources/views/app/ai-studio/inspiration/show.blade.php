@@ -7,17 +7,25 @@
 @section('content')
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{ copyFeedback: false }">
 
-    <!-- Breadcrumb & Top Bar -->
-    <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-            <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-            <a href="{{ route('ai-studio.index') }}" class="hover:text-[#007AFF] transition-colors">AI Studio</a>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-            <a href="{{ route('ai-studio.inspiration.index') }}" class="hover:text-[#007AFF] transition-colors">Katalog Inspirasi</a>
-            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-            <span class="text-black/80 dark:text-white/80 font-semibold truncate max-w-[200px]">{{ $item->title }}</span>
+    {{-- Bento Apple HIG Module Header --}}
+    <x-module-header
+        :title="$item->title"
+        subtitle="Detail parameter fotografi produk, analisis visi komputer, dan validasi lisensi komersial"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => 'Katalog Inspirasi', 'url' => route('ai-studio.inspiration.index')],
+            ['label' => $item->title, 'url' => null]
+        ]">
+
+        <div class="flex items-center gap-2">
+            <a href="{{ route('ai-studio.inspiration.index') }}"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Kembali ke Galeri</span>
+            </a>
         </div>
+    </x-module-header>
 
         <a href="{{ route('ai-studio.inspiration.index') }}"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">

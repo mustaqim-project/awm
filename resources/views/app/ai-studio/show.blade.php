@@ -28,163 +28,39 @@
 })">
 
     <!-- ========================================== -->
-    <!-- 1. BENTO HEADER & STATUS COCKPIT           -->
+    <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
     <!-- ========================================== -->
-    <div class="relative z-10 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-        <div class="space-y-1.5 max-w-2xl">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <a href="{{ route('ai-studio.index') }}" class="hover:text-[#007AFF] transition-colors">AI Studio</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <span class="text-black/80 dark:text-white/80 font-semibold truncate max-w-[200px]">{{ $project->name }}</span>
-            </div>
+    <x-module-header
+        :title="$project->name"
+        subtitle="Pantau proses render, sesuaikan variasi prompt, dan simpan hasil visual ke katalog produk"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => $project->name, 'url' => null]
+        ]">
 
-            <div class="flex flex-wrap items-center gap-2.5">
-                <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white">
-                    {{ $project->name }}
-                </h1>
-                <!-- Platform & Aspect Pill -->
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
-                    {{ $project->target_platform ?? 'Instagram' }} ({{ $latestPrompt?->aspect_ratio ?? '1:1' }})
-                </span>
-                <!-- Project Status Pill -->
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold"
-                    :class="{
-                        'bg-[#34C759]/15 text-[#34C759]': currentStatus === 'completed' || currentStatus === 'succeeded',
-                        'bg-[#007AFF]/15 text-[#007AFF] animate-pulse': currentStatus === 'generating' || isRendering,
-                        'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60': currentStatus === 'draft',
-                        'bg-red-500/15 text-red-500': currentStatus === 'failed'
-                    }"
-                    x-text="statusLabel">
-                    {{ ucfirst($project->status) }}
-                </span>
-            </div>
-
-            <p class="text-xs text-black/60 dark:text-white/60">
-                {{ $project->description ?: 'Proyek materi visual pemasaran multi-channel.' }}
-            </p>
+        <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+            <!-- Platform & Aspect Pill -->
+            <span class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold uppercase tracking-wider bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70">
+                {{ $project->target_platform ?? 'Instagram' }} ({{ $latestPrompt?->aspect_ratio ?? '1:1' }})
+            </span>
+            <!-- Status Pill -->
+            <span class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold"
+                :class="{
+                    'bg-[#34C759]/15 text-[#34C759]': currentStatus === 'completed' || currentStatus === 'succeeded',
+                    'bg-[#007AFF]/15 text-[#007AFF] animate-pulse': currentStatus === 'generating' || isRendering,
+                    'bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60': currentStatus === 'draft',
+                    'bg-red-500/15 text-red-500': currentStatus === 'failed'
+                }"
+                x-text="statusLabel">
+            </span>
+            <!-- Back Button -->
+            <a href="{{ route('ai-studio.index') }}"
+                class="px-3 py-1.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-xs font-medium text-black/80 dark:text-white/80 transition-all">
+                Kembali
+            </a>
         </div>
-
-        <!-- Cockpit Actions & Credits Balance -->
-        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-            <!-- Saldo Pill -->
-            <div class="px-3.5 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white/90 flex items-center gap-2">
-                <i data-lucide="coins" class="w-3.5 h-3.5 text-[#FF9500]"></i>
-                <span>Saldo:</span>
-                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF]" x-text="creditsBalance">{{ number_format($creditsBalance) }}</span>
-            </div>
-
-            <!-- Top Up Button -->
-            <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-[0.98] transition-all">
-                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
-                <span>Top Up</span>
-            </button>
-
-            <!-- New Generation Button -->
-            <button type="button" @click="generationDrawerOpen = true"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>+ Render Variasi Baru</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Flash Notifications -->
-    <div x-show="flashMessage" x-transition.opacity
-        class="p-4 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 text-xs font-semibold text-[#34C759] flex items-center justify-between"
-        style="display: none;">
-        <div class="flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-            <span x-text="flashMessage"></span>
-        </div>
-        <button type="button" @click="flashMessage = ''" class="text-black/40 hover:text-black">
-            <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 2. CANVAS MAIN WORKSPACE (2 Columns)      -->
-    <!-- ========================================== -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- LEFT COLUMN: Primary Canvas & Output View (7 Cols) -->
-        <div class="lg:col-span-7 space-y-5">
-
-            <!-- Active Canvas Showcase Card -->
-            <div class="rounded-[20px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 space-y-4">
-
-                <!-- STATE A: Active Rendering In Progress (Shimmer Skeleton & Alpine Poller) -->
-                <div x-show="isRendering" class="space-y-4 py-8 text-center" style="display: none;">
-                    <div class="relative w-48 h-48 mx-auto rounded-[20px] bg-gradient-to-tr from-[#007AFF]/15 via-[#5856D6]/15 to-[#FF2D55]/15 border border-[#007AFF]/20 flex flex-col items-center justify-center overflow-hidden animate-pulse">
-                        <div class="w-12 h-12 rounded-full bg-white/80 dark:bg-[#1C1C1E]/80 shadow-md flex items-center justify-center text-[#007AFF]">
-                            <i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i>
-                        </div>
-                    </div>
-                    <div class="space-y-1.5 max-w-sm mx-auto">
-                        <h3 class="text-sm font-bold text-black dark:text-white">{{ __('ai.sedang_merender_visual_ai') }}</h3>
-                        <p class="text-xs text-black/60 dark:text-white/60">
-                            Mesin AI sedang mengomposisikan objek, pencahayaan, dan detail foto produk. Proses ini biasanya memerlukan waktu 10 hingga 25 detik.
-                        </p>
-                    </div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70">
-                        <span class="w-2 h-2 rounded-full bg-[#007AFF] animate-ping"></span>
-                        <span>Sinkronisasi Status Otomatis Aktif</span>
-                    </div>
-                </div>
-
-                <!-- STATE B: Completed Generation Output (High-Res Canvas) -->
-                <div x-show="!isRendering && activeImageUrl" class="space-y-4">
-                    <!-- Image Frame -->
-                    <div class="relative rounded-[16px] overflow-hidden bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 group">
-                        <img :src="activeImageUrl" alt="Visual Render"
-                            class="w-full h-auto object-contain max-h-[600px] mx-auto transition-transform duration-300">
-
-                        <!-- Floating Badges Top Left -->
-                        <div class="absolute top-3 left-3 flex flex-wrap items-center gap-1.5 pointer-events-none">
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/70 text-white backdrop-blur-md">
-                                <span x-text="activeModelName || 'AI Studio Engine'"></span>
-                            </span>
-                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/70 text-white backdrop-blur-md"
-                                x-text="activeAspectRatio || '1:1'">
-                            </span>
-                        </div>
-
-                        <!-- Favorite Toggle Button Top Right -->
-                        <div class="absolute top-3 right-3">
-                            <button type="button" @click="toggleFavorite()"
-                                class="p-2.5 rounded-full backdrop-blur-md transition-all shadow-md"
-                                :class="isFavorite ? 'bg-amber-500 text-white' : 'bg-black/50 text-white/80 hover:bg-black/70'">
-                                <i data-lucide="star" class="w-4 h-4" :class="{ 'fill-current': isFavorite }"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 1-Click Action Cockpit (AC-010: Simpan ke Katalog Produk) -->
-                    <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-black/5 dark:border-white/10">
-                        <div class="flex items-center gap-2">
-                            <!-- AC-010 Button -->
-                            <button type="button" @click="openExportModal()"
-                                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2db24f] text-white text-xs font-bold shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98]">
-                                <i data-lucide="package-plus" class="w-4 h-4"></i>
-                                <span>{{ __('ai.simpan_ke_katalog_produk') }}</span>
-                            </button>
-
-                            <!-- Direct Download -->
-                            <a :href="activeImageUrl" download="ai-studio-render.png" target="_blank"
-                                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
-                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('admin.unduh') }}</span>
-                            </a>
-                        </div>
-
-                        <div class="text-[11px] text-black/40 dark:text-white/40">
-                            Render ID: <span class="font-mono" x-text="activeGenerationId.substring(0, 8)"></span>
-                        </div>
-                    </div>
-                </div>
+    </x-module-header>
 
                 <!-- STATE C: Generation Failed -->
                 <div x-show="!isRendering && currentStatus === 'failed'" class="p-6 rounded-[16px] bg-red-500/5 border border-red-500/20 text-center space-y-3" style="display: none;">

@@ -3,33 +3,31 @@
 @section('content')
 <div class="space-y-8 pb-28 sm:pb-32 lg:pb-10" x-data="aiPosApp()">
     
-    <!-- Unified Apple HIG Navigation Hub -->
-    @include('app.ai.partials.office_navigation', ['activeOffice' => 'pos'])
+    {{-- Bento Apple HIG Module Header --}}
+    <x-module-header
+        :title="__('ai.pos.title')"
+        :subtitle="__('ai.pos.subtitle')"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Kasir & POS', 'url' => route('pos.orders.index')],
+            ['label' => 'AI POS Intelligence', 'url' => null]
+        ]">
 
-    <!-- AI POS Header & Status Banner -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <div>
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{{ __('ai.navigation.ai_pos') }}</span>
-            </div>
-            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight mt-1">{{ __('ai.pos.title') }}</h1>
-            <p class="text-sm text-slate-500 dark:text-zinc-400 mt-1">{{ __('ai.pos.subtitle') }}</p>
-        </div>
         <div class="flex items-center gap-2">
             @if(\App\Support\Context::hasPermission('pos.terminal'))
-            <a href="{{ route('pos.terminal') }}" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center gap-2">
-                <i data-lucide="layout-grid" class="w-4 h-4 text-emerald-400"></i>
+            <a href="{{ route('pos.terminal') }}" class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="layout-grid" class="w-4 h-4 text-[#007AFF]"></i>
                 <span>{{ __('ai.pos.terminal_cashier') }}</span>
             </a>
             @endif
             @if(\App\Support\Context::hasPermission('pos.reports'))
-            <a href="{{ route('pos.reports.index') }}" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition flex items-center gap-2">
+            <a href="{{ route('pos.reports.index') }}" class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                 <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
                 <span>{{ __('ai.pos.cashier_reports') }}</span>
             </a>
             @endif
         </div>
-    </div>
+    </x-module-header>
 
     @if(\App\Support\Context::hasPermission('ai.access'))
     <!-- 1. Interactive Natural Language Assistant: "Tanya AI POS" -->

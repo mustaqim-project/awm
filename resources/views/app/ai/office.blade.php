@@ -3,44 +3,36 @@
 @section('content')
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="aiOfficeApp()">
 
-    <!-- Header & Executive Controls -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold tracking-wide bg-black/5 dark:bg-white/10 text-black/80 dark:text-white/80 border border-black/10 dark:border-white/10">
-                    {{ __('ai.offices.digital_workforce') }}
-                </span>
-                <span class="text-xs text-black/50 dark:text-white/50 font-mono">{!! __('ai.offices.agents_and_depts', ['agents' => 12, 'depts' => 5]) !!}</span>
-            </div>
-            <h1 class="text-2xl font-bold text-black dark:text-white tracking-tight mt-1">{{ __('ai.offices.office_header_title') }}</h1>
-            <p class="text-xs text-black/60 dark:text-white/60 mt-0.5">{{ __('ai.offices.office_header_subtitle') }}</p>
-        </div>
+    {{-- Bento Apple HIG Module Header --}}
+    <x-module-header
+        :title="__('ai.offices.office_header_title')"
+        :subtitle="__('ai.offices.office_header_subtitle')"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Tim AI Bisnis', 'url' => route('cooca-ai.index')],
+            ['label' => 'Kantor AI', 'url' => null]
+        ]">
 
         <div class="flex flex-wrap items-center gap-2">
-            <a href="{{ route('ai.actions') }}" class="relative px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition border border-black/10 dark:border-white/10 flex items-center gap-2">
-                <i data-lucide="check-square" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+            <a href="{{ route('cooca-ai.actions') }}" class="relative px-3 py-1.5 rounded-[10px] bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition border border-black/10 dark:border-white/10 flex items-center gap-1.5">
+                <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
                 <span>Action Center</span>
-                @if($pendingCount > 0)
-                    <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-amber-500 text-white tabular-nums">{{ $pendingCount }}</span>
+                @if(($pendingCount ?? 0) > 0)
+                    <span class="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-amber-500 text-white tabular-nums">{{ $pendingCount }}</span>
                 @endif
             </a>
 
-            <a href="{{ route('ai.history') }}" class="px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition border border-black/10 dark:border-white/10 flex items-center gap-2">
-                <i data-lucide="history" class="w-4 h-4 text-sky-600 dark:text-sky-400"></i>
+            <a href="{{ route('cooca-ai.history') }}" class="px-3 py-1.5 rounded-[10px] bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition border border-black/10 dark:border-white/10 flex items-center gap-1.5">
+                <i data-lucide="history" class="w-3.5 h-3.5 text-sky-600 dark:text-sky-400"></i>
                 <span>Work History</span>
             </a>
 
-            <a href="{{ route('ai.providers') }}" class="px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-black dark:text-white text-xs font-semibold transition border border-black/10 dark:border-white/10 flex items-center gap-2">
-                <i data-lucide="sliders" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
-                <span>AI Providers</span>
-            </a>
-
-            <button @click="openConsultationModal()" class="px-4 py-2 rounded-xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black font-semibold text-xs shadow-sm transition flex items-center gap-2">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <button type="button" @click="openConsultationModal()" class="px-3.5 py-1.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-xs shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                 <span>{{ __('ai.offices.btn_consult_ai') }}</span>
             </button>
         </div>
-    </div>
+    </x-module-header>
 
     <!-- Active Human Approval Alert Banner -->
     @if($pendingCount > 0)

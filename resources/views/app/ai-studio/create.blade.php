@@ -8,52 +8,36 @@
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="aiStudioCreateProject()">
 
     <!-- ========================================== -->
-    <!-- 1. BENTO HEADER & BREADCRUMBS              -->
+    <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
     <!-- ========================================== -->
-    <div class="relative z-10 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-        <div class="space-y-1.5 max-w-2xl">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <a href="{{ route('ai-studio.index') }}" class="hover:text-[#007AFF] transition-colors">AI Studio</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <span class="text-black/80 dark:text-white/80 font-semibold">Proyek Baru</span>
-            </div>
+    <x-module-header
+        title="Buat Proyek Generasi Visual Baru"
+        subtitle="Konfigurasikan brief kreatif, tautkan foto produk katalog, dan tetapkan rasio aspek multi-channel"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => 'Proyek Baru', 'url' => null]
+        ]">
 
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-[10px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] flex items-center justify-center text-white shadow-sm shadow-[#007AFF]/25">
-                    <i data-lucide="wand-2" class="w-4 h-4"></i>
+        <div class="flex items-center gap-2.5">
+            <!-- Saldo Kredit -->
+            <a href="{{ route('ai-studio.credit-history') }}"
+                class="inline-flex items-center gap-2 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white/90">
+                <span class="w-4 h-4 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
+                    <i data-lucide="coins" class="w-2.5 h-2.5"></i>
                 </span>
-                <span>{{ __('ai.inisiasi_brief_kreatif_visual_produk') }}</span>
-            </h1>
-            <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
-                Pilih produk dari katalog bisnis Anda, tentukan channel pemasaran sasaran, dan pratinjau rancangan prompt sebelum eksekusi render.
-            </p>
-        </div>
+                <span>Saldo:</span>
+                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF]">{{ number_format($creditsBalance) }}</span>
+            </a>
 
-        <!-- Credits Balance Badge & Top Up Action -->
-        <div class="flex items-center gap-2 sm:gap-3">
-            <div class="px-3.5 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white/90 flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
-                    <i data-lucide="coins" class="w-3 h-3"></i>
-                </span>
-                <span>Saldo Anda:</span>
-                <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm" x-text="userCredits">{{ number_format($creditsBalance) }}</span>
-                <span class="text-[10px] text-black/40 dark:text-white/40">kredit</span>
-            </div>
-
-            <!-- Top Up Modal Trigger -->
-            <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-[0.98] transition-all">
-                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
-                <span>Top Up</span>
-            </button>
-
+            <!-- Back to Studio -->
             <a href="{{ route('ai-studio.index') }}"
-                class="px-3.5 py-2 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/70 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5 transition-all">{{ __('common.cancel') }}</a>
+                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-xs font-medium text-black/80 dark:text-white/80 transition-all">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Kembali ke Studio</span>
+            </a>
         </div>
-    </div>
+    </x-module-header>
 
     <!-- Alert Banner when Monthly Credits are Expended (0 Balance) -->
     @if ($creditsBalance <= 0)

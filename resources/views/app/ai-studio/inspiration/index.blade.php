@@ -8,44 +8,33 @@
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="inspirationGallery()">
 
     <!-- ========================================== -->
-    <!-- 1. BENTO HEADER & NAVIGATION COCKPIT      -->
+    <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
     <!-- ========================================== -->
-    <div class="relative z-10 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-        <div class="space-y-1.5 max-w-2xl">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <a href="{{ route('ai-studio.index') }}" class="hover:text-[#007AFF] transition-colors">AI Studio</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <span class="text-black/80 dark:text-white/80 font-semibold">Katalog Inspirasi</span>
-            </div>
+    <x-module-header
+        title="Katalog Inspirasi Viral & Referensi Visual"
+        subtitle="Eksplorasi ribuan tata letak fotografi komersial terverifikasi untuk inspirasi konten produk UMKM"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => 'Katalog Inspirasi', 'url' => null]
+        ]">
 
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-[10px] bg-gradient-to-tr from-[#FF2D55] to-[#FF9500] flex items-center justify-center text-white shadow-sm shadow-[#FF2D55]/25">
-                    <i data-lucide="compass" class="w-4 h-4"></i>
-                </span>
-                <span>Katalog Inspirasi Viral &amp; Referensi Visual</span>
-            </h1>
-            <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
-                Temukan gaya visual terbaik untuk produk Anda. Setiap gambar telah divalidasi kepatuhan hak cipta komersial dan dianalisis parameter pencahayaan serta komposisinya.
-            </p>
-        </div>
-
-        <!-- Navigation Actions -->
-        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+        <div class="flex items-center gap-2.5">
+            <!-- Back to Projects -->
             <a href="{{ route('ai-studio.index') }}"
-                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 transition-all text-xs font-semibold text-black/80 dark:text-white">
-                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-                <span>{{ __('ai.kembali_ke_studio') }}</span>
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
+                <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                <span>Dashboard Proyek</span>
             </a>
+
+            <!-- Create Direct CTA -->
             <a href="{{ route('ai-studio.create') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-semibold shadow-sm transition-all active:scale-[0.98]">
-                <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
-                <span>Buat Proyek Tanpa Referensi</span>
+                class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-semibold shadow-xs transition-all">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Buat Proyek Baru</span>
             </a>
         </div>
-    </div>
+    </x-module-header>
 
     <!-- ========================================== -->
     <!-- 2. CATEGORY PILLS BAR                      -->
