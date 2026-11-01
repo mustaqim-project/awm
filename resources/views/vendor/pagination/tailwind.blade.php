@@ -30,12 +30,7 @@
             </label>
             <div class="relative inline-block">
                 <select id="per_page_select_{{ md5($paginator->getPageName()) }}"
-                        onchange="
-                            const targetUrl = new window.URL(window.location.href);
-                            targetUrl.searchParams.set('per_page', this.value);
-                            targetUrl.searchParams.set('{{ $paginator->getPageName() }}', '1');
-                            window.location.href = targetUrl.toString();
-                        "
+                        onchange="coocaNavigatePerPage(this, '{{ $paginator->getPageName() }}')"
                         class="min-h-[30px] pl-2.5 pr-7 py-1 text-xs font-semibold rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all cursor-pointer appearance-none">
                     @foreach ($options as $opt)
                         <option value="{{ $opt }}" {{ $currentPerPage === $opt ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-black dark:text-white">
@@ -120,4 +115,40 @@
         </div>
     </nav>
 @endif
+
+@once
+<script>
+function coocaNavigatePerPage(selectEl, pageParam) {
+    if (!selectEl) return;
+    var perPage = selectEl.value;
+    var href = window.location.href;
+    try {
+        var u = new (window.URL || URL)(href);
+        u.searchParams.set('per_page', perPage);
+        u.searchParams.set(pageParam || 'page', '1');
+        window.location.href = u.toString();
+        return;
+    } catch (e) {
+        // Fallback robust string parser (zero dependency on URL constructor)
+        var parts = href.split('?');
+        var base = parts[0];
+        var query = parts[1] || '';
+        var params = [];
+        if (query) {
+            var pairs = query.split('&');
+            for (var i = 0; i < pairs.length; i++) {
+                var kv = pairs[i].split('=');
+                var key = decodeURIComponent(kv[0]);
+                if (key !== 'per_page' && key !== pageParam && key !== '') {
+                    params.push(pairs[i]);
+                }
+            }
+        }
+        params.push('per_page=' + encodeURIComponent(perPage));
+        params.push(encodeURIComponent(pageParam || 'page') + '=1');
+        window.location.href = base + '?' + params.join('&');
+    }
+}
+</script>
+@endonce
 
