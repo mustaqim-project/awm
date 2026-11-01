@@ -1179,7 +1179,7 @@
                                                 class="flex items-center gap-2.5 p-2.5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
                                                 <img :src="item.image_url ||
                                                     'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=100&q=80'"
-                                                    :alt="item.name"
+                                                    :alt="item.name" loading="lazy" decoding="async" width="36" height="36"
                                                     class="w-9 h-9 rounded-lg object-cover bg-slate-100 dark:bg-slate-800 shrink-0">
                                                 <div class="min-w-0 flex-1">
                                                     <div class="text-xs font-semibold text-slate-800 dark:text-white truncate group-hover:text-[#007AFF]"
@@ -1237,7 +1237,7 @@
                                                 <div class="relative w-full h-18 sm:h-20 rounded-xl mb-2 overflow-hidden bg-slate-100 dark:bg-slate-800">
                                                     @if ($product->image_url)
                                                         <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
-                                                            loading="lazy"
+                                                            loading="lazy" decoding="async" width="120" height="80"
                                                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80';"
                                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                                     @else
@@ -1581,9 +1581,9 @@
                             <!-- Desk Mockup Container -->
                             <div
                                 class="rounded-[24px] overflow-hidden border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.5)] bg-slate-900/80 backdrop-blur-md">
-                                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1000&q=80"
+                                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=640&q=70"
                                     alt="COOCA Workspace"
-                                    loading="lazy" width="1000" height="600"
+                                    loading="lazy" decoding="async" width="640" height="380"
                                     class="w-full h-72 sm:h-80 object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
                             </div>
 

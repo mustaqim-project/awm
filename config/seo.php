@@ -27,7 +27,7 @@ return [
 
         '/pricing' => [
             'title' => 'Harga Aplikasi Kasir & ERP UMKM Mulai Rp0 | COOCA',
-            'h1' => 'Harga Aplikasi Kasir COOCA: Mulai Gratis, Tanpa Kontrak',
+            'h1' => 'Harga Paket COOCA: Platform Omnichannel & ERP Mulai Rp0, Bebas Kontrak',
             'description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 rb, Premium Rp89 rb, Prestige Rp199 rb/bln. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja.',
             'og_title' => 'Harga Aplikasi Kasir & ERP UMKM Mulai Rp0 | COOCA',
             'og_description' => 'Paket COOCA mulai Rp0 selamanya. Standard Rp39 rb, Premium Rp89 rb, Prestige Rp199 rb/bln. Tanpa biaya pasang, tanpa kontrak, bebas upgrade kapan saja.',
