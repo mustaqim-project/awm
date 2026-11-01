@@ -451,7 +451,7 @@
         </div>
 
         <!-- Pagination -->
-        @if($logs->hasPages())
+        @if($logs->total() > 0)
         <div class="p-4 border-t border-black/5 dark:border-white/10">
             {{ $logs->links() }}
         </div>

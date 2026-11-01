@@ -301,7 +301,7 @@
                 </table>
             </div>
 
-            @if ($businesses->hasPages())
+            @if ($businesses->total() > 0)
                 <div class="px-5 py-3.5 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02]">
                     {{ $businesses->links() }}
                 </div>

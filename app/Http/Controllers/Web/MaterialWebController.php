@@ -78,7 +78,8 @@ final class MaterialWebController extends Controller implements HasMiddleware
             $query->where('category_id', $request->get('category_id'));
         }
 
-        $materials = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $materials = $query->paginate($perPage)->withQueryString();
         $categories = MaterialCategory::where('business_id', $business->id)->get();
         $suppliers = Supplier::where('business_id', $business->id)->get();
         $units = Unit::available()->orderBy('name')->get();

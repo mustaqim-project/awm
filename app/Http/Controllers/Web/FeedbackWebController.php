@@ -29,10 +29,11 @@ final class FeedbackWebController extends Controller implements HasMiddleware
         ];
     }
 
-    public function bugs(): View
+    public function bugs(Request $request): View
     {
         $business = Context::requireBusiness();
-        $items = BugReport::where('business_id', $business->id)->latest()->paginate(12);
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $items = BugReport::where('business_id', $business->id)->latest()->paginate($perPage)->withQueryString();
         return view('app.feedback.index', ['business' => $business, 'items' => $items, 'type' => 'bugs']);
     }
 
@@ -120,10 +121,11 @@ final class FeedbackWebController extends Controller implements HasMiddleware
         return Storage::disk($disk)->response($bugReport->attachment_path);
     }
 
-    public function features(): View
+    public function features(Request $request): View
     {
         $business = Context::requireBusiness();
-        $items = FeatureRequest::where('business_id', $business->id)->latest()->paginate(12);
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $items = FeatureRequest::where('business_id', $business->id)->latest()->paginate($perPage)->withQueryString();
         return view('app.feedback.index', ['business' => $business, 'items' => $items, 'type' => 'features']);
     }
 

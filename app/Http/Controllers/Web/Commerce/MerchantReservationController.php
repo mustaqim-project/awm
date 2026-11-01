@@ -68,7 +68,8 @@ final class MerchantReservationController extends Controller
             });
         }
 
-        $reservations = $query->paginate(20)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $reservations = $query->paginate($perPage)->withQueryString();
 
         $pendingCount = CommerceReservation::where('business_id', $business->id)
             ->where('status', CommerceReservation::STATUS_PENDING_CONFIRMATION)

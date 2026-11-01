@@ -41,7 +41,8 @@ final class SalesOrderWebController extends Controller
             });
         }
 
-        $salesOrders = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $salesOrders = $query->paginate($perPage)->withQueryString();
 
         return view('app.sales-orders.index', compact('business', 'salesOrders'));
     }

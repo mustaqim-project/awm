@@ -174,7 +174,7 @@
                 @endforelse
             </div>
 
-            @if($loans->hasPages())
+            @if($loans->total() > 0)
                 <div class="p-3.5 border-t border-black/5 dark:border-white/10">
                     {{ $loans->links() }}
                 </div>

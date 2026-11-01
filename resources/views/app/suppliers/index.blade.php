@@ -521,7 +521,7 @@
                 </table>
             </div>
 
-            @if ($suppliers->hasPages())
+            @if ($suppliers->total() > 0)
                 <div class="px-4 py-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
                     {{ $suppliers->links() }}
                 </div>
@@ -640,7 +640,7 @@
                 @endforelse
             </div>
 
-            @if ($suppliers->hasPages())
+            @if ($suppliers->total() > 0)
                 <div class="p-3 bg-white dark:bg-[#1C1C1E] rounded-[14px] border border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs">
                     {{ $suppliers->links() }}
                 </div>

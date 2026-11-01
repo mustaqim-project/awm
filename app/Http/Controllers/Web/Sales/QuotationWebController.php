@@ -40,7 +40,8 @@ final class QuotationWebController extends Controller
             });
         }
 
-        $quotations = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $quotations = $query->paginate($perPage)->withQueryString();
 
         return view('app.quotations.index', compact('business', 'quotations'));
     }

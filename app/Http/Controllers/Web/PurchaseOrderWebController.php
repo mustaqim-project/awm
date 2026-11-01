@@ -71,7 +71,8 @@ final class PurchaseOrderWebController extends Controller implements HasMiddlewa
             $query->where('status', $request->get('status'));
         }
 
-        $purchaseOrders = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $purchaseOrders = $query->paginate($perPage)->withQueryString();
 
         // Status KPIs with strict tenant scoping
         $totalOrders = PurchaseOrder::where('business_id', $business->id)->count();

@@ -93,7 +93,8 @@ final class InventoryWebController extends Controller implements HasMiddleware
             });
         }
 
-        $stocks = $query->paginate(20)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $stocks = $query->paginate($perPage)->withQueryString();
 
         // Calculate low stock warnings
         $lowStockCount = InventoryStock::where('business_id', $business->id)
@@ -498,7 +499,7 @@ final class InventoryWebController extends Controller implements HasMiddleware
             $query->where('movement_type', $request->get('movement_type'));
         }
 
-        $movements = $query->paginate(25)->withQueryString();
+        $movements = $query->paginate(\App\Support\PaginationHelper::perPage($request, 25))->withQueryString();
 
         return view('app.inventory.movements', compact('business', 'movements', 'locations', 'products'));
     }
@@ -516,7 +517,8 @@ final class InventoryWebController extends Controller implements HasMiddleware
         $opnames = StockOpname::where('business_id', $business->id)
             ->with(['location', 'conductor', 'reconciler', 'items.material.unit', 'items.product.outputUnit'])
             ->latest('opname_date')
-            ->paginate(15);
+            ->paginate(\App\Support\PaginationHelper::perPage($request, 25))
+            ->withQueryString();
 
         return view('app.inventory.opname', compact('business', 'opnames', 'locations', 'products', 'materials'));
     }

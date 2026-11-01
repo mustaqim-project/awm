@@ -94,7 +94,8 @@ final class ProductWebController extends Controller implements HasMiddleware
             $query->where('category_id', $request->input('category_id'));
         }
 
-        $products = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $products = $query->paginate($perPage)->withQueryString();
         $categories = ProductCategory::where('business_id', $business->id)->get();
         $units = Unit::available()->orderBy('name')->get();
         $allProducts = Product::goods()

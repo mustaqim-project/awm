@@ -1263,7 +1263,7 @@
                 </table>
             </div>
 
-            @if ($products->hasPages())
+            @if ($products->total() > 0)
                 <div
                     class="px-5 py-3.5 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                     {{ $products->links() }}
@@ -1475,7 +1475,7 @@
                     {{ __('products.empty_catalog_mobile') }}
                 </div>
             @endforelse
-            @if ($products->hasPages())
+            @if ($products->total() > 0)
                 <div class="p-3">
                     {{ $products->links() }}
                 </div>

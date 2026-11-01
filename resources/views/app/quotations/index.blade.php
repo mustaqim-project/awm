@@ -300,7 +300,7 @@
     <!-- ===================================================== -->
     <!-- 6. PAGINATION                                         -->
     <!-- ===================================================== -->
-    @if($quotations->hasPages())
+    @if($quotations->total() > 0)
     <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3">
         {{ $quotations->links() }}
     </div>

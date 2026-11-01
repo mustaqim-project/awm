@@ -78,7 +78,8 @@ final class MerchantOrderController extends Controller
             });
         }
 
-        $orders = $query->with(['groupOrder', 'items'])->latest()->paginate(20)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $orders = $query->with(['groupOrder', 'items'])->latest()->paginate($perPage)->withQueryString();
 
         $needsVerificationCount = CommerceOrder::where('business_id', $business->id)
             ->where('status', CommerceOrder::STATUS_PROOF_SUBMITTED)

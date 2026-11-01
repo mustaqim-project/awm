@@ -504,7 +504,7 @@
                 </table>
             </div>
 
-            @if ($materials->hasPages())
+            @if ($materials->total() > 0)
                 <div
                     class="px-4 py-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-[13px] text-[#8E8E93]">
                     {{ $materials->links() }}
@@ -599,7 +599,7 @@
                 </div>
             @endforelse
 
-            @if ($materials->hasPages())
+            @if ($materials->total() > 0)
                 <div class="pt-2">
                     {{ $materials->links() }}
                 </div>

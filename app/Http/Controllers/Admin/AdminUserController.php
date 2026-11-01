@@ -42,7 +42,8 @@ final class AdminUserController extends Controller implements HasMiddleware
             });
         }
 
-        $users = $query->paginate(20)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $users = $query->paginate($perPage)->withQueryString();
 
         return view('admin.users.index', compact('users'));
     }

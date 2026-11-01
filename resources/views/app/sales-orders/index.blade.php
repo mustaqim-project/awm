@@ -345,7 +345,7 @@
         <!-- ===================================================== -->
         <!-- 6. PAGINATION (Minimalist Apple HIG Stepper)          -->
         <!-- ===================================================== -->
-        @if ($salesOrders->hasPages())
+        @if ($salesOrders->total() > 0)
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-4 py-3 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                 <div>

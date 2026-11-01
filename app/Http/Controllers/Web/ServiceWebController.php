@@ -59,7 +59,8 @@ final class ServiceWebController extends Controller implements HasMiddleware
             $query->where('category_id', $request->input('category_id'));
         }
 
-        $services = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $services = $query->paginate($perPage)->withQueryString();
         $categories = ProductCategory::where('business_id', $business->id)->orderBy('name')->get();
         
         // Find suitable service units (Jasa, Sesi, Jam, Paket, Hari, Orang, Unit)

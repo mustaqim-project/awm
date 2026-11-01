@@ -424,7 +424,7 @@
                 </table>
             </div>
 
-            @if ($services->hasPages())
+            @if ($services->total() > 0)
                 <div
                     class="px-4 py-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-[13px] text-[#8E8E93]">
                     {{ $services->links() }}
@@ -524,7 +524,7 @@
                 </div>
             @endforelse
 
-            @if ($services->hasPages())
+            @if ($services->total() > 0)
                 <div class="pt-2">
                     {{ $services->links() }}
                 </div>

@@ -523,7 +523,7 @@
                 </div>
 
                 <!-- Pagination -->
-                @if ($customers->hasPages())
+                @if ($customers->total() > 0)
                     <div class="p-4 border-t border-black/[0.05] dark:border-white/[0.06]">
                         {{ $customers->links() }}
                     </div>

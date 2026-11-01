@@ -80,7 +80,8 @@ final class AdminBusinessController extends Controller implements HasMiddleware
             }
         }
 
-        $businesses = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $businesses = $query->paginate($perPage)->withQueryString();
 
         $totalBusinesses = Business::count();
         $activeBusinesses = Business::where('is_active', true)->count();

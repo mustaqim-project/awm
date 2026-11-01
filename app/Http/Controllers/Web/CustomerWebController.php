@@ -64,7 +64,8 @@ final class CustomerWebController extends Controller implements HasMiddleware
                     ->orWhere('vehicle_model', 'like', "%{$search}%");
             });
         }
-        $customers = $customersQuery->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $customers = $customersQuery->paginate($perPage)->withQueryString();
 
         // Bento Hero Metrics
         $totalCustomers = Customer::where('business_id', $business->id)->count();

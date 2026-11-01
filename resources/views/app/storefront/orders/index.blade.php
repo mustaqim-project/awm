@@ -381,7 +381,7 @@
                 </div>
             @endforelse
 
-            @if ($orders->hasPages())
+            @if ($orders->total() > 0)
                 <div class="pt-2">
                     {{ $orders->links() }}
                 </div>
@@ -528,7 +528,7 @@
                 </table>
             </div>
 
-            @if ($orders->hasPages())
+            @if ($orders->total() > 0)
                 <div class="p-4 border-t border-black/5 dark:border-white/5">
                     {{ $orders->links() }}
                 </div>

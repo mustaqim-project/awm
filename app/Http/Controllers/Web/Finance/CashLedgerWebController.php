@@ -130,7 +130,8 @@ final class CashLedgerWebController extends Controller implements HasMiddleware
             $query->where('description', 'like', $search);
         }
 
-        $transactions = $query->latest('transaction_date')->latest('created_at')->paginate(50)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $transactions = $query->latest('transaction_date')->latest('created_at')->paginate($perPage)->withQueryString();
 
         return view('app.finance.cash-bank.ledger', [
             'business' => $business,

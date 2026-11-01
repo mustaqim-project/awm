@@ -65,7 +65,8 @@ final class CrmWebController extends Controller implements HasMiddleware
             });
         }
 
-        $customers = $query->paginate(20)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $customers = $query->paginate($perPage)->withQueryString();
 
         $totalMembers = Customer::where('business_id', $business->id)->count();
         $totalPointsIssued = (int) Customer::where('business_id', $business->id)->sum('points_balance');

@@ -222,7 +222,7 @@
                 @endforelse
             </div>
 
-            @if($employeeSchedules->hasPages())
+            @if($employeeSchedules->total() > 0)
                 <div class="p-3.5 border-t border-black/5 dark:border-white/10">
                     {{ $employeeSchedules->links() }}
                 </div>

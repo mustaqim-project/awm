@@ -89,7 +89,8 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             $query->latest('inspiration_items.created_at');
         }
 
-        $items = $query->paginate(24)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $items = $query->paginate($perPage)->withQueryString();
 
         $categories = InspirationCategory::query()
             ->where('is_active', true)

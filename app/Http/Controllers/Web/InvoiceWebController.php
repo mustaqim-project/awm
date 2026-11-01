@@ -86,7 +86,8 @@ final class InvoiceWebController extends Controller implements HasMiddleware
             $query->where('status', $request->get('status'));
         }
 
-        $invoices = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $invoices = $query->paginate($perPage)->withQueryString();
 
         // Financial KPIs
         $totalInvoiced = (float) Invoice::where('status', '!=', Invoice::STATUS_VOID)->sum('total_amount');

@@ -47,7 +47,8 @@ final class SupplierWebController extends Controller implements HasMiddleware
             });
         }
 
-        $suppliers = $query->paginate(15)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $suppliers = $query->paginate($perPage)->withQueryString();
 
         return view('app.suppliers.index', compact('business', 'suppliers'));
     }

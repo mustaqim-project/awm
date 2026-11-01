@@ -416,7 +416,7 @@
                 @endforelse
             </div>
 
-            @if($attendances->hasPages())
+            @if($attendances->total() > 0)
                 <div class="p-3.5 border-t border-black/5 dark:border-white/10">
                     {{ $attendances->links() }}
                 </div>

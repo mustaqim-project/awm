@@ -302,7 +302,7 @@
                 @endforelse
             </div>
 
-            @if ($transactions->hasPages())
+            @if ($transactions->total() > 0)
                 <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
                     {{ $transactions->links() }}
                 </div>

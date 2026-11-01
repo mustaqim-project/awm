@@ -43,7 +43,7 @@ final class SupplierInvoiceWebController extends Controller implements HasMiddle
 
         return view('app.purchasing.bills.index', [
             'business' => $business,
-            'invoices' => $query->paginate(20)->withQueryString(),
+            'invoices' => $query->paginate(\App\Support\PaginationHelper::perPage($request, 25))->withQueryString(),
         ]);
     }
 

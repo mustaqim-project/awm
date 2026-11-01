@@ -238,7 +238,7 @@
                 </table>
             </div>
 
-            @if ($expenses->hasPages())
+            @if ($expenses->total() > 0)
                 <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
                     <div>
                         {{ __('common.showing') }} <span class="font-bold text-black dark:text-white tabular-nums">{{ $expenses->firstItem() }}–{{ $expenses->lastItem() }}</span>
@@ -316,7 +316,7 @@
                 </div>
             @endforelse
 
-            @if ($expenses->hasPages())
+            @if ($expenses->total() > 0)
                 <div class="p-3 border-t border-black/5 dark:border-white/10">
                     {{ $expenses->links() }}
                 </div>

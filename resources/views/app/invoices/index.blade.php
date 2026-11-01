@@ -297,14 +297,9 @@
             </table>
         </div>
 
-        @if($invoices->hasPages())
-        <div class="px-4 py-3 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
-            <div>
-                {{ __('sales.invoices.pagination_showing') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->firstItem() ?? 0 }}–{{ $invoices->lastItem() ?? 0 }}</span> {{ __('sales.invoices.pagination_of') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoices->total() }}</span> {{ __('sales.invoices.pagination_invoices') }}
-            </div>
-            <div>
-                {{ $invoices->links() }}
-            </div>
+        @if($invoices->total() > 0)
+        <div class="px-4 py-2 border-t border-black/5 dark:border-white/10">
+            {{ $invoices->links() }}
         </div>
         @endif
     </div>
@@ -383,7 +378,7 @@
             </div>
         @endforelse
 
-        @if($invoices->hasPages())
+        @if($invoices->total() > 0)
         <div class="p-3 border-t border-black/5 dark:border-white/10">
             {{ $invoices->links() }}
         </div>

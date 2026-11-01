@@ -255,7 +255,7 @@
             </table>
         </div>
 
-        @if($stocks->hasPages())
+        @if($stocks->total() > 0)
         <div class="px-5 py-3.5 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.01]">
             {{ $stocks->links() }}
         </div>
@@ -302,7 +302,7 @@
         <div class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">{{ __('inventory.belum_ada_data_stok_tercatat') }}</div>
         @endforelse
 
-        @if($stocks->hasPages())
+        @if($stocks->total() > 0)
         <div class="p-3 border-t border-black/[0.06] dark:border-white/[0.08]">
             {{ $stocks->links() }}
         </div>

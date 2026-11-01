@@ -90,7 +90,7 @@ class AuditLogWebController extends Controller
             ->with('user')
             ->filter($filters)
             ->latest('created_at')
-            ->paginate(20)
+            ->paginate(\App\Support\PaginationHelper::perPage($request, 25))
             ->withQueryString();
 
         $users = $business->users()->select('users.id', 'users.name')->get();

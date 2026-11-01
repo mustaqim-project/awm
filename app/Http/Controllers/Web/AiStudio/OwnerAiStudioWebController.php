@@ -152,7 +152,8 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             $query->where('name', 'like', "%{$search}%");
         }
 
-        $projects = $query->paginate(12)->withQueryString();
+        $perPage = \App\Support\PaginationHelper::perPage($request, 25);
+        $projects = $query->paginate($perPage)->withQueryString();
 
         $stats = [
             'total_projects' => BusinessInspirationProject::where('business_id', $business->id)->count(),

@@ -109,18 +109,19 @@ final class HrmWebController extends Controller implements HasMiddleware
             ->get();
 
         // 2. Payroll runs
+        $hrmPerPage = \App\Support\PaginationHelper::perPage($request, 25);
         $payrolls = Payroll::where('business_id', $business->id)
             ->with(['processedBy', 'approvedBy'])
             ->orderByDesc('period_year')
             ->orderByDesc('period_month')
-            ->paginate(15, ['*'], 'payrolls_page')
+            ->paginate($hrmPerPage, ['*'], 'payrolls_page')
             ->withQueryString();
 
         // 3. Employee loans
         $loans = EmployeeLoan::where('business_id', $business->id)
             ->with(['user', 'approver'])
             ->orderByDesc('created_at')
-            ->paginate(15, ['*'], 'loans_page')
+            ->paginate($hrmPerPage, ['*'], 'loans_page')
             ->withQueryString();
 
         // Summary Statistics
@@ -161,7 +162,7 @@ final class HrmWebController extends Controller implements HasMiddleware
             $attendancesQuery->where('status', $attStatus);
         }
 
-        $attendances = $attendancesQuery->paginate(15, ['*'], 'attendances_page')->withQueryString();
+        $attendances = $attendancesQuery->paginate($hrmPerPage, ['*'], 'attendances_page')->withQueryString();
 
         // 5. Work Shifts query
         $workShifts = WorkShift::where('business_id', $business->id)
@@ -190,7 +191,7 @@ final class HrmWebController extends Controller implements HasMiddleware
             $schedulesQuery->where('schedule_type', $schType);
         }
 
-        $employeeSchedules = $schedulesQuery->paginate(15, ['*'], 'schedules_page')->withQueryString();
+        $employeeSchedules = $schedulesQuery->paginate($hrmPerPage, ['*'], 'schedules_page')->withQueryString();
 
         // 7. Attendance correction tickets query
         $corStatus = $request->query('cor_status');
@@ -202,7 +203,7 @@ final class HrmWebController extends Controller implements HasMiddleware
             $correctionsQuery->where('status', $corStatus);
         }
 
-        $corrections = $correctionsQuery->paginate(15, ['*'], 'corrections_page')->withQueryString();
+        $corrections = $correctionsQuery->paginate($hrmPerPage, ['*'], 'corrections_page')->withQueryString();
 
         // 6. Attendance summary metrics for today
         $todayPresentCount = Attendance::where('business_id', $business->id)

@@ -337,7 +337,7 @@
     <!-- ===================================================== -->
     <!-- 7. PAGINATION                                         -->
     <!-- ===================================================== -->
-    @if($purchaseOrders->hasPages())
+    @if($purchaseOrders->total() > 0)
     <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3">
         {{ $purchaseOrders->links() }}
     </div>

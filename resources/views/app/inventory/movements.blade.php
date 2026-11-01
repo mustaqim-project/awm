@@ -303,7 +303,7 @@
             </table>
         </div>
 
-        @if($movements->hasPages())
+        @if($movements->total() > 0)
         <div class="px-5 py-4 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.015] dark:bg-white/[0.02]">
             {{ $movements->links() }}
         </div>
@@ -345,7 +345,7 @@
         </div>
         @endforelse
 
-        @if($movements->hasPages())
+        @if($movements->total() > 0)
         <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.08]">
             {{ $movements->links() }}
         </div>
