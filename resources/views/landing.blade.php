@@ -504,7 +504,7 @@
                                     <!-- Wordmark & Tagline -->
                                     <div class="relative z-10 flex flex-col items-center justify-center">
                                         @if (!empty($siteLogoDarkUrl))
-                                            <img src="{{ $siteLogoDarkUrl }}" alt="COOCA"
+                                            <img src="{{ $siteLogoDarkUrl }}" alt="COOCA" width="100" height="28" loading="lazy" decoding="async"
                                                 class="h-6 sm:h-7.5 w-auto object-contain mx-auto filter drop-shadow-[0_0_12px_rgba(0,194,255,0.85)]">
                                         @else
                                             <span
@@ -975,8 +975,8 @@
                                 class="rounded-2xl border border-slate-200/70 dark:border-white/10 overflow-hidden bg-slate-50/80 dark:bg-slate-900/60 p-3 flex flex-col justify-between">
                                 <div>
                                     <div class="relative rounded-xl overflow-hidden mb-2.5">
-                                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80"
-                                            alt="Post Preview" class="w-full h-32 object-cover">
+                                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&q=70" alt="Post Preview" loading="lazy" decoding="async" width="300" height="128" class="w-full h-32 object-cover">
+
                                         <div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-white text-[10px] font-medium flex items-center gap-1">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                             <span>{{ __('public_home.split_content_status_ready') }}</span>
@@ -1335,9 +1335,9 @@
                     <!-- 1. F&B -->
                     <a href="{{ route('public.solutions.fnb') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_fnb') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1356,9 +1356,9 @@
                     <!-- 2. Retail -->
                     <a href="{{ route('public.solutions.retail') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_retail') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1377,9 +1377,9 @@
                     <!-- 3. Workshop -->
                     <a href="{{ route('public.solutions.workshop') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_workshop') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1398,9 +1398,9 @@
                     <!-- 4. Laundry -->
                     <a href="{{ route('public.solutions.laundry') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_laundry') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1419,9 +1419,9 @@
                     <!-- 5. Manufacturing -->
                     <a href="{{ route('public.solutions.manufacturing') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_manufacturing') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
@@ -1440,9 +1440,9 @@
                     <!-- 6. Services -->
                     <a href="{{ route('public.solutions.services') }}"
                         class="group relative h-56 rounded-2xl overflow-hidden block shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=400&q=70"
                             alt="{{ __('public_home.ind_services') }}"
-                            loading="lazy" width="600" height="400"
+                            loading="lazy" decoding="async" width="400" height="267"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent">
                         </div>
