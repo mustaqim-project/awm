@@ -31,10 +31,10 @@
             <div class="relative inline-block">
                 <select id="per_page_select_{{ md5($paginator->getPageName()) }}"
                         onchange="
-                            const url = new URL(window.location.href);
-                            url.searchParams.set('per_page', this.value);
-                            url.searchParams.set('{{ $paginator->getPageName() }}', '1');
-                            window.location.href = url.toString();
+                            const targetUrl = new window.URL(window.location.href);
+                            targetUrl.searchParams.set('per_page', this.value);
+                            targetUrl.searchParams.set('{{ $paginator->getPageName() }}', '1');
+                            window.location.href = targetUrl.toString();
                         "
                         class="min-h-[30px] pl-2.5 pr-7 py-1 text-xs font-semibold rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30 transition-all cursor-pointer appearance-none">
                     @foreach ($options as $opt)

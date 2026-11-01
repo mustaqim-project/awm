@@ -5,38 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="{
-        showSuspendModal: false,
-        suspendBizName: '',
-        suspendActionUrl: '',
-        selectedIds: [],
-        pageBusinessIds: @js($businesses->pluck('id')->map(fn($id) => (string)$id)->values()),
-        showBulkSuspendModal: false,
-        bulkSuspendReason: '',
-        toggleSelectAll() {
-            if (this.selectedIds.length === this.pageBusinessIds.length) {
-                this.selectedIds = [];
-            } else {
-                this.selectedIds = [...this.pageBusinessIds];
-            }
-        },
-        isAllSelected() {
-            return this.pageBusinessIds.length > 0 && this.selectedIds.length === this.pageBusinessIds.length;
-        },
-        isPartiallySelected() {
-            return this.selectedIds.length > 0 && this.selectedIds.length < this.pageBusinessIds.length;
-        },
-        syncBulkInputs(form) {
-            form.querySelectorAll('input[name="ids[]"]').forEach(el => el.remove());
-            this.selectedIds.forEach(id => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'ids[]';
-                input.value = id;
-                form.appendChild(input);
-            });
-        }
-    }">
+    <div class="space-y-6" x-data="adminBusinessesManager()">
 
         <!-- Bento KPI Summary Grid (Adaptive 2-Column Micro-Bento Mobile, 4-Column Desktop) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -436,3 +405,42 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function adminBusinessesManager() {
+    return {
+        showSuspendModal: false,
+        suspendBizName: '',
+        suspendActionUrl: '',
+        selectedIds: [],
+        pageBusinessIds: @js($businesses->pluck('id')->map(fn($id) => (string)$id)->values()),
+        showBulkSuspendModal: false,
+        bulkSuspendReason: '',
+        toggleSelectAll() {
+            if (this.selectedIds.length === this.pageBusinessIds.length) {
+                this.selectedIds = [];
+            } else {
+                this.selectedIds = [...this.pageBusinessIds];
+            }
+        },
+        isAllSelected() {
+            return this.pageBusinessIds.length > 0 && this.selectedIds.length === this.pageBusinessIds.length;
+        },
+        isPartiallySelected() {
+            return this.selectedIds.length > 0 && this.selectedIds.length < this.pageBusinessIds.length;
+        },
+        syncBulkInputs(form) {
+            form.querySelectorAll("input[name='ids[]']").forEach(el => el.remove());
+            this.selectedIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
+        }
+    };
+}
+</script>
+@endpush

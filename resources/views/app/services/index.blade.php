@@ -23,7 +23,7 @@
             const form = this.$refs.bulkServiceForm;
             if (!form) return;
             this.$refs.bulkServiceAction.value = action;
-            form.querySelectorAll('input[name="ids[]"]').forEach(el => el.remove());
+            form.querySelectorAll('input[name=\'ids[]\']').forEach(el => el.remove());
             this.selectedServiceIds.forEach(id => {
                 const input = document.createElement('input');
                 input.type = 'hidden';
