@@ -300,6 +300,22 @@
             },
             set activeFlyout(val) {
                 this._activeFlyout = val;
+            },
+            hoveredTooltip: null,
+            hoveredTooltipTop: 0,
+            setTooltip(title, event) {
+                if (!sidebarCollapsed) return;
+                if (typeof secondarySidebarCollapsed !== 'undefined' && !secondarySidebarCollapsed && {{ $hasSecondaryNav ? 'true' : 'false' }}) {
+                    return;
+                }
+                this.hoveredTooltip = title;
+                if (event && event.currentTarget) {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    this.hoveredTooltipTop = Math.round(rect.top + (rect.height / 2) - 16);
+                }
+            },
+            clearTooltip() {
+                this.hoveredTooltip = null;
             }
         }">
 
@@ -386,8 +402,8 @@
             {{-- 1.1 Dashboard Utama --}}
             @if (\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('dashboard.view'))
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'dashboard'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'dashboard'; setTooltip('{{ __('navigation.dashboard_main') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('dashboard') }}" id="tour-nav-dashboard"
                         {{ request()->routeIs('dashboard') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.dashboard_main') }}' : ''"
@@ -1394,8 +1410,8 @@
             {{-- 4.1 Data Pelanggan --}}
             @if (\App\Support\Context::hasPermission('customers.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'customers'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'customers'; setTooltip('{{ __('navigation.customers_data') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('customers.index') }}" id="tour-nav-customers"
                         {{ request()->routeIs('customers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.customers_data') }}' : ''"
@@ -1696,8 +1712,8 @@
 
             {{-- 7.1 Pusat Laporan & Ringkasan --}}
             <div class="relative group"
-                @mouseenter="if(sidebarCollapsed) activeFlyout = 'reports'"
-                @mouseleave="activeFlyout = null">
+                @mouseenter="if(sidebarCollapsed) { activeFlyout = 'reports'; setTooltip('{{ __('navigation.reports_center') }}', $event); }"
+                @mouseleave="activeFlyout = null; clearTooltip();">
                 <a href="{{ route('reports.index') }}" id="tour-nav-reports"
                     {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.reports_center') }}' : ''"
@@ -1711,8 +1727,8 @@
 
             {{-- 7.2 Analitik Bisnis --}}
             <div class="relative group"
-                @mouseenter="if(sidebarCollapsed) activeFlyout = 'analytics'"
-                @mouseleave="activeFlyout = null">
+                @mouseenter="if(sidebarCollapsed) { activeFlyout = 'analytics'; setTooltip('{{ __('navigation.business_analytics') }}', $event); }"
+                @mouseleave="activeFlyout = null; clearTooltip();">
                 <a href="{{ route('analytics.index') }}" id="tour-nav-analytics"
                     {{ request()->routeIs('analytics.*') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.business_analytics') }}' : ''"
@@ -1822,8 +1838,8 @@
             {{-- 8.1 Master Produk & Menu --}}
             @if (\App\Support\Context::hasPermission('products.view'))
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'products'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'products'; setTooltip('{{ __('navigation.products_catalog') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('products.index') }}" id="tour-nav-products"
                         {{ request()->routeIs('products.*') || request()->routeIs('pos.modifiers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.products_catalog') }}' : ''"
@@ -1841,8 +1857,8 @@
             {{-- 8.2 Marketplace Hub --}}
             @if (\App\Support\Context::hasPermission('marketplace.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'marketplace_hub'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'marketplace_hub'; setTooltip('{{ __('navigation.marketplace_hub') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('marketplace-hub.index') }}" id="tour-nav-marketplace-hub"
                         {{ request()->routeIs('marketplace-hub.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.marketplace_hub') }}' : ''"
@@ -1858,8 +1874,8 @@
             {{-- 8.3 Bahan Baku & Resep --}}
             @if (\App\Support\Context::hasPermission('materials.view') && ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RECIPE_BOM) ?? true))
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'materials'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'materials'; setTooltip('{{ __('navigation.materials_recipes') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('materials.index') }}" id="tour-nav-materials"
                         {{ request()->routeIs('materials.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.materials_recipes') }}' : ''"
@@ -1875,8 +1891,8 @@
             {{-- 8.4 Pemasok & Vendor --}}
             @if (\App\Support\Context::hasPermission('master_data.suppliers.view') || \App\Support\Context::hasPermission('purchasing.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'suppliers'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'suppliers'; setTooltip('{{ __('navigation.suppliers') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('suppliers.index') }}" id="tour-nav-suppliers"
                         {{ request()->routeIs('suppliers.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.suppliers') }}' : ''"
@@ -1892,8 +1908,8 @@
             {{-- 8.5 Kategori Produk --}}
             @if (\App\Support\Context::hasPermission('master_data.product_categories.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'product_categories'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'product_categories'; setTooltip('{{ __('navigation.product_categories') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('product-categories.index') }}"
                         {{ request()->routeIs('product-categories.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.product_categories') }}' : ''"
@@ -1909,8 +1925,8 @@
             {{-- 8.6 Kategori Bahan Baku --}}
             @if ((\App\Support\Context::hasPermission('master_data.material_categories.view') || \App\Support\Context::isOwner()) && ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_RECIPE_BOM) ?? true))
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'material_categories'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'material_categories'; setTooltip('{{ __('navigation.material_categories') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('material-categories.index') }}"
                         {{ request()->routeIs('material-categories.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.material_categories') }}' : ''"
@@ -1926,8 +1942,8 @@
             {{-- 8.7 Satuan Ukuran --}}
             @if (\App\Support\Context::hasPermission('master_data.units.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'units'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'units'; setTooltip('{{ __('navigation.measurement_units') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('units.index') }}"
                         {{ request()->routeIs('units.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.measurement_units') }}' : ''"
@@ -1943,8 +1959,8 @@
             {{-- 8.8 Import Data Excel --}}
             @if (\App\Support\Context::hasPermission('materials.view') || \App\Support\Context::hasPermission('products.view') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'import'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'import'; setTooltip('{{ __('navigation.excel_import') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('import.index') }}" id="tour-nav-import"
                         {{ request()->routeIs('import.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.excel_import') }}' : ''"
@@ -1976,8 +1992,8 @@
             {{-- 9.1 Pengaturan Umum Usaha --}}
             @if ($canAccessSettings)
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'settings'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'settings'; setTooltip('{{ __('navigation.settings_general') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('settings.index') }}" id="tour-nav-settings"
                         {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.settings_general') }}' : ''"
@@ -1992,8 +2008,8 @@
 
             {{-- 9.2 Profil Pengguna --}}
             <div class="relative group"
-                @mouseenter="if(sidebarCollapsed) activeFlyout = 'profile'"
-                @mouseleave="activeFlyout = null">
+                @mouseenter="if(sidebarCollapsed) { activeFlyout = 'profile'; setTooltip('{{ __('navigation.user_profile') }}', $event); }"
+                @mouseleave="activeFlyout = null; clearTooltip();">
                 <a href="{{ route('profile.edit') }}"
                     {{ request()->routeIs('profile.edit') ? 'aria-current="page"' : '' }}
                     :title="sidebarCollapsed ? '{{ __('navigation.user_profile') }}' : ''"
@@ -2008,8 +2024,8 @@
             {{-- 9.3 Aturan Otorisasi (MAR) --}}
             @if (\App\Support\Context::hasPermission('approvals.manage') || \App\Support\Context::hasPermission('approval.rules.manage') || \App\Support\Context::isOwner())
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'approval_rules'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'approval_rules'; setTooltip('{{ __('navigation.mar_rules') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('approval-rules.index') }}" id="tour-nav-approval-rules"
                         {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.mar_rules') }}' : ''"
@@ -2025,8 +2041,8 @@
             {{-- 9.4 Log Audit & Deteksi Fraud --}}
             @if ($canAccessAuditLogs)
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'audit_logs'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'audit_logs'; setTooltip('{{ __('navigation.audit_anti_fraud') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('settings.audit-logs.index') }}" id="tour-nav-audit-logs"
                         {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.audit_anti_fraud') }}' : ''"
@@ -2049,8 +2065,8 @@
             {{-- 9.5 Peran & Hak Akses Pengguna --}}
             @if ($canAccessRoles)
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'roles'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'roles'; setTooltip('{{ __('navigation.roles_permissions') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('roles.index') }}"
                         {{ request()->routeIs('roles.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.roles_permissions') }}' : ''"
@@ -2066,8 +2082,8 @@
             {{-- 9.6 Langganan & Kuota Fitur --}}
             @if ($canAccessBilling)
                 <div class="relative group"
-                    @mouseenter="if(sidebarCollapsed) activeFlyout = 'billing'"
-                    @mouseleave="activeFlyout = null">
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'billing'; setTooltip('{{ __('navigation.billing_subscription') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
                     <a href="{{ route('billing.limits') }}" id="tour-nav-billing"
                         {{ request()->routeIs('billing.*') ? 'aria-current="page"' : '' }}
                         :title="sidebarCollapsed ? '{{ __('navigation.billing_subscription') }}' : ''"
@@ -2127,6 +2143,14 @@
             @endif
         </div>
         @endif
+        {{-- Universal Floating Tooltip for Single Rail Items when Collapsed --}}
+        <div x-show="sidebarCollapsed && hoveredTooltip" x-transition.opacity
+            class="fixed left-[70px] pl-3 z-50 pointer-events-none"
+            :style="'top: ' + hoveredTooltipTop + 'px; display: none;'">
+            <div class="sidebar-flyout-panel sidebar-flyout-tooltip bg-white/95 dark:bg-[#1C1C1E]/95 border border-black/10 dark:border-white/10 shadow-lg text-black dark:text-white px-3 py-1.5 rounded-[10px] backdrop-blur-xl text-xs font-semibold whitespace-nowrap">
+                <span x-text="hoveredTooltip"></span>
+            </div>
+        </div>
     </nav>
 
     @if ($canAccessBilling)

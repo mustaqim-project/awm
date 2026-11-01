@@ -210,8 +210,8 @@
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-slate-400 uppercase tracking-wider">Gratis</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight">Rp 0</div>
-                                    <div class="text-[10px] text-emerald-400 font-medium">{{ ($tierLimits['free']['outlet'] ?? null) ? $tierLimits['free']['outlet'] . ' Toko' : 'Toko Tanpa Batas' }} &bull; {{ ($tierLimits['free']['pos'] ?? null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Trx/bln' : 'Trx Tanpa Batas' }}</div>
-                                    <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, {{ ($tierLimits['free']['product'] ?? null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' produk' : 'produk tanpa batas' }}</div>
+                                    <div class="text-[10px] text-emerald-400 font-medium">{{ ($tierLimits['free']['outlet'] !== null) ? $tierLimits['free']['outlet'] . ' Toko' : 'Toko Tanpa Batas' }} &bull; {{ ($tierLimits['free']['pos'] !== null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Trx/bln' : 'Trx Tanpa Batas' }}</div>
+                                    <div class="text-[10.5px] text-slate-400 leading-snug">Kasir POS, nota struk, {{ ($tierLimits['free']['product'] !== null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' produk' : 'produk tanpa batas' }}</div>
                                     <a href="/aplikasi-kasir-gratis" class="text-[10px] text-emerald-400 font-semibold hover:underline block pt-1">{{ __('public_marketing.btn_free_plan_detail') }} &rarr;</a>
                                 </div>
 
@@ -222,23 +222,23 @@
                                         <span class="text-[9px] font-bold bg-[#007AFF] text-white px-1.5 py-0.2 rounded-full">Populer</span>
                                     </div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.standard.annual_monthly_equivalent_formatted : 'Rp ' + prices.standard.monthly_price_formatted">Rp {{ $pricingData['standard']['monthly_price_formatted'] }}</div>
-                                    <div class="text-[10px] text-[#00C4D8] font-medium">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Trx/bln' : '1.000 Trx/bln' }}</div>
-                                    <div class="text-[10.5px] text-slate-300 leading-snug">{{ ($tierLimits['standard']['user'] ?? null) ? $tierLimits['standard']['user'] . ' kasir, ' : '3 kasir, ' }}{{ ($tierLimits['standard']['outlet'] ?? null) ? $tierLimits['standard']['outlet'] . ' cabang, ' : '2 cabang, ' }}{{ ($tierLimits['standard']['recipe'] ?? null) ? $tierLimits['standard']['recipe'] . ' resep' : '20 resep' }}</div>
+                                    <div class="text-[10px] text-[#00C4D8] font-medium">{{ ($tierLimits['standard']['pos'] !== null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Trx/bln' : 'Trx Tanpa Batas' }}</div>
+                                    <div class="text-[10.5px] text-slate-300 leading-snug">{{ ($tierLimits['standard']['user'] !== null) ? $tierLimits['standard']['user'] . ' kasir, ' : '' }}{{ ($tierLimits['standard']['outlet'] !== null) ? $tierLimits['standard']['outlet'] . ' cabang, ' : '' }}{{ ($tierLimits['standard']['recipe'] !== null) ? $tierLimits['standard']['recipe'] . ' resep' : 'resep unlimited' }}</div>
                                 </div>
 
                                 <!-- Plan 3: Premium -->
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-purple-400 uppercase tracking-wider">Premium</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.premium.annual_monthly_equivalent_formatted : 'Rp ' + prices.premium.monthly_price_formatted">Rp {{ $pricingData['premium']['monthly_price_formatted'] }}</div>
-                                    <div class="text-[10px] text-purple-300 font-medium">{{ ($tierLimits['premium']['pos'] ?? null) ? number_format($tierLimits['premium']['pos'], 0, ',', '.') . ' Trx/bln' : 'Marketplace Hub' }}</div>
-                                    <div class="text-[10.5px] text-slate-400 leading-snug">Sync Shopee, TikTok, {{ ($tierLimits['premium']['recipe'] ?? null) ? $tierLimits['premium']['recipe'] . ' resep' : 'resep unlimited' }}</div>
+                                    <div class="text-[10px] text-purple-300 font-medium">{{ ($tierLimits['premium']['pos'] !== null) ? number_format($tierLimits['premium']['pos'], 0, ',', '.') . ' Trx/bln' : 'Marketplace Hub • Trx Tanpa Batas' }}</div>
+                                    <div class="text-[10.5px] text-slate-400 leading-snug">Sync Shopee, TikTok, {{ ($tierLimits['premium']['recipe'] !== null) ? $tierLimits['premium']['recipe'] . ' resep' : 'resep unlimited' }}</div>
                                 </div>
 
                                 <!-- Plan 4: Prestige -->
                                 <div class="p-3 sm:p-3.5 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-1.5 hover:border-white/20 transition-all">
                                     <div class="text-[10.5px] font-bold text-amber-400 uppercase tracking-wider">Prestige</div>
                                     <div class="text-lg font-bold text-white tabular-nums tracking-tight" x-text="pricingCycle === 'annual' ? 'Rp ' + prices.prestige.annual_monthly_equivalent_formatted : 'Rp ' + prices.prestige.monthly_price_formatted">Rp {{ $pricingData['prestige']['monthly_price_formatted'] }}</div>
-                                    <div class="text-[10px] text-amber-300 font-medium">{{ ($tierLimits['prestige']['pos'] ?? null) ? number_format($tierLimits['prestige']['pos'], 0, ',', '.') . ' Trx/bln' : 'AI & Resep Manufaktur' }}</div>
+                                    <div class="text-[10px] text-amber-300 font-medium">{{ ($tierLimits['prestige']['pos'] !== null) ? number_format($tierLimits['prestige']['pos'], 0, ',', '.') . ' Trx/bln' : 'AI & Resep Manufaktur (Unlimited)' }}</div>
                                     <div class="text-[10.5px] text-slate-400 leading-snug">Asisten AI bisnis, BOM bertingkat</div>
                                 </div>
                             </div>
@@ -317,17 +317,17 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>{{ ($tierLimits['free']['outlet'] ?? null) ? $tierLimits['free']['outlet'] . ' Toko' : 'Toko Tanpa Batas' }} &amp; {{ ($tierLimits['free']['user'] ?? null) ? $tierLimits['free']['user'] . ' Pengguna' : 'Pengguna Tanpa Batas' }}</strong> (Owner/Kasir)</span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['free']['outlet'] !== null) ? $tierLimits['free']['outlet'] . ' Toko' : 'Toko Tanpa Batas' }} &amp; {{ ($tierLimits['free']['user'] !== null) ? $tierLimits['free']['user'] . ' Pengguna' : 'Pengguna Tanpa Batas' }}</strong> (Owner/Kasir)</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Maksimal {{ ($tierLimits['free']['product'] ?? null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' Produk' : 'Produk Tanpa Batas' }} &amp; {{ ($tierLimits['free']['material'] ?? null) ? number_format($tierLimits['free']['material'], 0, ',', '.') . ' Bahan Baku' : 'Bahan Baku Tanpa Batas' }}</span>
+                                    <span class="leading-snug">Maksimal {{ ($tierLimits['free']['product'] !== null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' Produk' : 'Produk Tanpa Batas' }} &amp; {{ ($tierLimits['free']['material'] !== null) ? number_format($tierLimits['free']['material'], 0, ',', '.') . ' Bahan Baku' : 'Bahan Baku Tanpa Batas' }}</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>{{ ($tierLimits['free']['pos'] ?? null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Transaksi Kasir POS per bulan' : 'Transaksi Kasir POS Tanpa Batas' }}</strong></span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['free']['pos'] !== null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Transaksi Kasir POS per bulan' : 'Transaksi Kasir POS Tanpa Batas' }}</strong></span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -374,7 +374,7 @@
                             </div>
 
                             <p class="text-xs text-slate-600 dark:text-slate-400 min-h-[34px] leading-relaxed text-pretty">
-                                Pilihan utama toko kelontong modern, bengkel, laundry, dan kafe yang memiliki kasir.
+                                {{ $pricingData['standard']['description'] ?? 'Pilihan utama toko kelontong modern, bengkel, laundry, dan kafe yang memiliki kasir.' }}
                             </p>
 
                             <!-- Price -->
@@ -401,27 +401,27 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>Multi-Kasir ({{ ($tierLimits['standard']['user'] ?? null) ? $tierLimits['standard']['user'] . ' Akun' : '3 Akun' }})</strong> &amp; Hak Akses Aman</span>
+                                    <span class="leading-snug"><strong>Multi-Kasir ({{ ($tierLimits['standard']['user'] !== null) ? $tierLimits['standard']['user'] . ' Akun' : 'Tanpa Batas' }})</strong> &amp; Hak Akses Aman</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">{{ ($tierLimits['standard']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['standard']['outlet'] . ' Lokasi Toko & Gudang' : 'Hingga 2 Lokasi Toko & Gudang' }}</span>
+                                    <span class="leading-snug">{{ ($tierLimits['standard']['outlet'] !== null) ? 'Hingga ' . $tierLimits['standard']['outlet'] . ' Lokasi Toko & Gudang' : 'Lokasi Toko & Gudang Tanpa Batas' }}</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir POS per bulan' : '1.000 Transaksi Kasir POS per bulan' }}</strong></span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['standard']['pos'] !== null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir POS per bulan' : 'Transaksi Kasir POS Tanpa Batas' }}</strong></span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>{{ ($tierLimits['standard']['recipe'] ?? null) ? $tierLimits['standard']['recipe'] . ' Resep Menu Kuliner' : '20 Resep Menu Kuliner' }}</strong> &amp; Potong Stok Otomatis</span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['standard']['recipe'] !== null) ? $tierLimits['standard']['recipe'] . ' Resep Menu Kuliner' : 'Resep Menu Kuliner Tanpa Batas' }}</strong> &amp; Potong Stok Otomatis</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-800 dark:text-slate-200">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF] shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Kirim Nota WhatsApp ({{ ($tierLimits['standard']['whatsapp'] ?? null) ? $tierLimits['standard']['whatsapp'] . ' pesan/bln' : '50 pesan/bln' }}) &amp; Laporan Laba Bersih</span>
+                                    <span class="leading-snug">Kirim Nota WhatsApp ({{ ($tierLimits['standard']['whatsapp'] !== null) ? $tierLimits['standard']['whatsapp'] . ' pesan/bln' : 'Pesan Tanpa Batas' }}) &amp; Laporan Laba Bersih</span>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +450,7 @@
                                 <h2 class="text-2xl font-bold text-slate-900 dark:text-white mt-0.5">Premium</h2>
                                 <p
                                     class="text-xs text-slate-600 dark:text-slate-400 mt-1 min-h-[34px] leading-relaxed text-pretty">
-                                    Untuk bisnis yang aktif berjualan di marketplace (Shopee, TikTok) dan media sosial.
+                                    {{ $pricingData['premium']['description'] ?? 'Untuk bisnis yang aktif berjualan di marketplace (Shopee, TikTok) dan media sosial.' }}
                                 </p>
                             </div>
 
@@ -483,12 +483,12 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug"><strong>{{ ($tierLimits['premium']['recipe'] ?? null) ? number_format($tierLimits['premium']['recipe'], 0, ',', '.') . ' Resep Menu' : 'Resep Menu Kuliner Tanpa Batas' }}</strong> &amp; Bahan Baku</span>
+                                    <span class="leading-snug"><strong>{{ ($tierLimits['premium']['recipe'] !== null) ? number_format($tierLimits['premium']['recipe'], 0, ',', '.') . ' Resep Menu' : 'Resep Menu Kuliner Tanpa Batas' }}</strong> &amp; Bahan Baku</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Hingga {{ ($tierLimits['premium']['outlet'] ?? null) ? $tierLimits['premium']['outlet'] . ' Cabang Toko' : 'Cabang Tanpa Batas' }} &amp; {{ ($tierLimits['premium']['user'] ?? null) ? $tierLimits['premium']['user'] . ' Kasir' : 'Kasir Tanpa Batas' }}</span>
+                                    <span class="leading-snug">Hingga {{ ($tierLimits['premium']['outlet'] !== null) ? $tierLimits['premium']['outlet'] . ' Cabang Toko' : 'Cabang Tanpa Batas' }} &amp; {{ ($tierLimits['premium']['user'] !== null) ? $tierLimits['premium']['user'] . ' Kasir' : 'Kasir Tanpa Batas' }}</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -530,7 +530,7 @@
                                 </h2>
                                 <p
                                     class="text-xs text-slate-600 dark:text-slate-400 mt-1 min-h-[34px] leading-relaxed text-pretty">
-                                    Untuk usaha pabrikasi/kuliner beresep, distributor, dan multi-perusahaan.
+                                    {{ $pricingData['prestige']['description'] ?? 'Untuk usaha pabrikasi/kuliner beresep, distributor, dan multi-perusahaan.' }}
                                 </p>
                             </div>
 
@@ -573,7 +573,7 @@
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
                                         class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"></i>
-                                    <span class="leading-snug">Multi-Perusahaan ({{ ($tierLimits['prestige']['business'] ?? null) ? $tierLimits['prestige']['business'] . ' Bisnis' : 'Tanpa Batas' }}) &amp; Konsolidasi Neraca Keuangan</span>
+                                    <span class="leading-snug">Multi-Perusahaan ({{ ($tierLimits['prestige']['business'] !== null) ? $tierLimits['prestige']['business'] . ' Bisnis' : 'Tanpa Batas' }}) &amp; Konsolidasi Neraca Keuangan</span>
                                 </div>
                                 <div class="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                                     <i data-lucide="check"
@@ -1243,31 +1243,31 @@
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Jumlah Toko / Cabang</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['outlet'] ?? null) ? $tierLimits['free']['outlet'] . ' Toko' : '1 Toko' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['standard']['outlet'] . ' Cabang' : 'Hingga 2 Cabang' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['premium']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['outlet'] ?? null) ? 'Hingga ' . $tierLimits['prestige']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['outlet'] !== null) ? $tierLimits['free']['outlet'] . ' Toko' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['outlet'] !== null) ? 'Hingga ' . $tierLimits['standard']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['outlet'] !== null) ? 'Hingga ' . $tierLimits['premium']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['outlet'] !== null) ? 'Hingga ' . $tierLimits['prestige']['outlet'] . ' Cabang' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Pengguna / Kasir Terdaftar</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['user'] ?? null) ? $tierLimits['free']['user'] . ' Pengguna' : '1 Pengguna' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['user'] ?? null) ? 'Multi-User (' . $tierLimits['standard']['user'] . ' Kasir)' : 'Multi-User (3 Kasir)' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['user'] ?? null) ? 'Multi-User (' . $tierLimits['premium']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['user'] ?? null) ? 'Multi-User (' . $tierLimits['prestige']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['user'] !== null) ? $tierLimits['free']['user'] . ' Pengguna' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['user'] !== null) ? 'Multi-User (' . $tierLimits['standard']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['user'] !== null) ? 'Multi-User (' . $tierLimits['premium']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['user'] !== null) ? 'Multi-User (' . $tierLimits['prestige']['user'] . ' Kasir)' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Kapasitas Produk / Barang</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['product'] ?? null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' Produk' : '10 Produk' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['product'] ?? null) ? number_format($tierLimits['standard']['product'], 0, ',', '.') . ' Produk' : '100 Produk' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['product'] ?? null) ? number_format($tierLimits['premium']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['product'] ?? null) ? number_format($tierLimits['prestige']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['product'] !== null) ? number_format($tierLimits['free']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['product'] !== null) ? number_format($tierLimits['standard']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['product'] !== null) ? number_format($tierLimits['premium']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['product'] !== null) ? number_format($tierLimits['prestige']['product'], 0, ',', '.') . ' Produk' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Batas Transaksi Kasir / bln</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['pos'] ?? null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Transaksi' : '30 Transaksi' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi' : '1.000 Transaksi' }}</td>
-                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['pos'] ?? null) ? number_format($tierLimits['premium']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['pos'] ?? null) ? number_format($tierLimits['prestige']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['free']['pos'] !== null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['pos'] !== null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center">{{ ($tierLimits['premium']['pos'] !== null) ? number_format($tierLimits['premium']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold">{{ ($tierLimits['prestige']['pos'] !== null) ? number_format($tierLimits['prestige']['pos'], 0, ',', '.') . ' Transaksi' : 'Tanpa Batas' }}</td>
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Penyimpanan Cloud Storage</td>
@@ -1389,9 +1389,9 @@
                                     </tr>
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Resep Bahan Baku &amp; Potong Stok (BOM)</td>
-                                        <td class="p-3 sm:p-4 text-center text-slate-600 dark:text-slate-400">{{ ($tierLimits['free']['recipe'] ?? null) ? $tierLimits['free']['recipe'] . ' Resep' : '3 Resep' }}</td>
-                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['recipe'] ?? null) ? $tierLimits['standard']['recipe'] . ' Resep Menu' : '20 Resep Menu' }}</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">{{ ($tierLimits['premium']['recipe'] ?? null) ? $tierLimits['premium']['recipe'] . ' Resep Menu' : 'Resep Menu Unlimited' }}</td>
+                                        <td class="p-3 sm:p-4 text-center text-slate-600 dark:text-slate-400">{{ ($tierLimits['free']['recipe'] !== null) ? $tierLimits['free']['recipe'] . ' Resep' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center font-bold text-[#007AFF]">{{ ($tierLimits['standard']['recipe'] !== null) ? $tierLimits['standard']['recipe'] . ' Resep Menu' : 'Tanpa Batas' }}</td>
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">{{ ($tierLimits['premium']['recipe'] !== null) ? $tierLimits['premium']['recipe'] . ' Resep Menu' : 'Resep Menu Tanpa Batas' }}</td>
                                         <td class="p-3 sm:p-4 text-center text-emerald-600 font-bold">BOM Manufaktur Bertingkat</td>
                                     </tr>
                                 </tbody>
@@ -1531,9 +1531,9 @@
                             <div class="p-4 rounded-[16px] bg-slate-50 dark:bg-white/[0.03] space-y-2">
                                 <div class="font-bold text-slate-900 dark:text-white">Yang Anda Dapatkan:</div>
                                 <ul class="space-y-1.5 list-disc list-inside">
-                                    <li>{{ ($tierLimits['free']['user'] ?? null) ? $tierLimits['free']['user'] . ' User Akun Pemilik / Kasir' : 'User Akun Tanpa Batas' }}</li>
-                                    <li>Maksimal {{ ($tierLimits['free']['product'] ?? null) ? number_format($tierLimits['free']['product'], 0, ',', '.') : '10' }} Produk &amp; {{ ($tierLimits['free']['material'] ?? null) ? number_format($tierLimits['free']['material'], 0, ',', '.') : '10' }} Bahan Baku</li>
-                                    <li>{{ ($tierLimits['free']['pos'] ?? null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') : '30' }} transaksi kasir POS per bulan</li>
+                                    <li>{{ ($tierLimits['free']['user'] !== null) ? $tierLimits['free']['user'] . ' User Akun Pemilik / Kasir' : 'User Akun Tanpa Batas' }}</li>
+                                    <li>Maksimal {{ ($tierLimits['free']['product'] !== null) ? number_format($tierLimits['free']['product'], 0, ',', '.') : 'Tanpa Batas' }} Produk &amp; {{ ($tierLimits['free']['material'] !== null) ? number_format($tierLimits['free']['material'], 0, ',', '.') : 'Tanpa Batas' }} Bahan Baku</li>
+                                    <li>{{ ($tierLimits['free']['pos'] !== null) ? number_format($tierLimits['free']['pos'], 0, ',', '.') : 'Tanpa Batas' }} transaksi kasir POS per bulan</li>
                                     <li>Cetak struk thermal bluetooth langsung dari HP</li>
                                     <li>Buku kas dan laporan omset harian otomatis</li>
                                     <li>Penyimpanan data cloud aman {{ $tierLimits['free']['storage_gb'] ?? 1 }} GB</li>
@@ -1546,18 +1546,17 @@
                     <template x-if="activeDetailModal === 'standard'">
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
-                                Paket Standard adalah pilihan paling ideal untuk toko kelontong modern, bengkel, kafe, atau
-                                barbershop yang memiliki karyawan kasir. Kuota transaksi dan kapasitas resep mencukupi operasional harian.
+                                {{ $pricingData['standard']['description'] ?? 'Paket Standard adalah pilihan paling ideal untuk toko kelontong modern, bengkel, kafe, atau barbershop yang memiliki karyawan kasir. Kuota transaksi dan kapasitas resep mencukupi operasional harian.' }}
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-blue-50/50 dark:bg-blue-950/20 border border-blue-500/20 space-y-2">
                                 <div class="font-bold text-slate-900 dark:text-white">Yang Anda Dapatkan:</div>
                                 <ul class="space-y-1.5 list-disc list-inside">
-                                    <li>Hingga {{ ($tierLimits['standard']['outlet'] ?? null) ? $tierLimits['standard']['outlet'] . ' Cabang Toko & Gudang terpisah' : '2 Cabang Toko & Gudang terpisah' }}</li>
-                                    <li>Multi-User kasir ({{ ($tierLimits['standard']['user'] ?? null) ? $tierLimits['standard']['user'] . ' Akun' : '3 Akun' }}) dengan PIN supervisor</li>
-                                    <li>{{ ($tierLimits['standard']['product'] ?? null) ? number_format($tierLimits['standard']['product'], 0, ',', '.') . ' Produk & ' : '100 Produk & ' }}{{ ($tierLimits['standard']['pos'] ?? null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir POS/bln' : '1.000 Transaksi Kasir POS/bln' }}</li>
-                                    <li>{{ ($tierLimits['standard']['recipe'] ?? null) ? number_format($tierLimits['standard']['recipe'], 0, ',', '.') . ' Resep Menu Kuliner' : '20 Resep Menu Kuliner' }} &amp; Potong Stok Otomatis</li>
-                                    <li>Kirim nota PDF otomatis ke WhatsApp ({{ ($tierLimits['standard']['whatsapp'] ?? null) ? $tierLimits['standard']['whatsapp'] . ' pesan/bln' : '50 pesan/bln' }})</li>
+                                    <li>Hingga {{ ($tierLimits['standard']['outlet'] !== null) ? $tierLimits['standard']['outlet'] . ' Cabang Toko & Gudang terpisah' : 'Cabang Toko & Gudang Tanpa Batas' }}</li>
+                                    <li>Multi-User kasir ({{ ($tierLimits['standard']['user'] !== null) ? $tierLimits['standard']['user'] . ' Akun' : 'Tanpa Batas' }}) dengan PIN supervisor</li>
+                                    <li>{{ ($tierLimits['standard']['product'] !== null) ? number_format($tierLimits['standard']['product'], 0, ',', '.') . ' Produk & ' : 'Produk Tanpa Batas & ' }}{{ ($tierLimits['standard']['pos'] !== null) ? number_format($tierLimits['standard']['pos'], 0, ',', '.') . ' Transaksi Kasir POS/bln' : 'Transaksi Kasir POS Tanpa Batas' }}</li>
+                                    <li>{{ ($tierLimits['standard']['recipe'] !== null) ? number_format($tierLimits['standard']['recipe'], 0, ',', '.') . ' Resep Menu Kuliner' : 'Resep Menu Kuliner Tanpa Batas' }} &amp; Potong Stok Otomatis</li>
+                                    <li>Kirim nota PDF otomatis ke WhatsApp ({{ ($tierLimits['standard']['whatsapp'] !== null) ? $tierLimits['standard']['whatsapp'] . ' pesan/bln' : 'Pesan Tanpa Batas' }})</li>
                                     <li>Tingkat harga grosir dan eceran otomatis</li>
                                     <li>Laporan laba kotor &amp; bersih real-time</li>
                                     <li>Bantuan teknis via WhatsApp resmi ({{ $supportSla['hours'] ?? 'Senin–Sabtu 08.00–20.00 WIB' }})</li>
@@ -1570,8 +1569,7 @@
                     <template x-if="activeDetailModal === 'premium'">
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
-                                Paket Premium menjembatani jualan offline di toko dengan pesanan online di marketplace.
-                                Kelola order Shopee &amp; TikTok Shop dalam satu dashboard tanpa repot cek banyak perangkat.
+                                {{ $pricingData['premium']['description'] ?? 'Paket Premium menjembatani jualan offline di toko dengan pesanan online di marketplace. Kelola order Shopee & TikTok Shop dalam satu dashboard tanpa repot cek banyak perangkat.' }}
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-purple-50/50 dark:bg-purple-950/20 border border-purple-500/20 space-y-2">
@@ -1579,8 +1577,8 @@
                                 <ul class="space-y-1.5 list-disc list-inside">
                                     <li>Seluruh fitur Paket Standard</li>
                                     <li>Hub Pesanan Marketplace Terpusat (Shopee &amp; TikTok Shop)</li>
-                                    <li>{{ ($tierLimits['premium']['recipe'] ?? null) ? number_format($tierLimits['premium']['recipe'], 0, ',', '.') . ' Resep Menu Kuliner' : 'Resep Menu Kuliner Tanpa Batas' }}</li>
-                                    <li>Hingga {{ ($tierLimits['premium']['outlet'] ?? null) ? $tierLimits['premium']['outlet'] . ' Cabang Toko' : 'Cabang Tanpa Batas' }} &amp; {{ ($tierLimits['premium']['user'] ?? null) ? $tierLimits['premium']['user'] . ' Staf Kasir' : 'Staf Kasir Tanpa Batas' }}</li>
+                                    <li>{{ ($tierLimits['premium']['recipe'] !== null) ? number_format($tierLimits['premium']['recipe'], 0, ',', '.') . ' Resep Menu Kuliner' : 'Resep Menu Kuliner Tanpa Batas' }}</li>
+                                    <li>Hingga {{ ($tierLimits['premium']['outlet'] !== null) ? $tierLimits['premium']['outlet'] . ' Cabang Toko' : 'Cabang Tanpa Batas' }} &amp; {{ ($tierLimits['premium']['user'] !== null) ? $tierLimits['premium']['user'] . ' Staf Kasir' : 'Staf Kasir Tanpa Batas' }}</li>
                                     <li>Otomasi jadwal tayang konten katalog di media sosial</li>
                                     <li>Integrasi Webhook pesanan &amp; notifikasi instan</li>
                                     <li>Cloud storage {{ $tierLimits['premium']['storage_gb'] ?? 10 }} GB untuk arsip file bisnis</li>
@@ -1594,8 +1592,7 @@
                     <template x-if="activeDetailModal === 'prestige'">
                         <div class="space-y-4">
                             <p class="text-slate-600 dark:text-slate-300">
-                                Paket Prestige menghadirkan kecerdasan buatan (AI) yang bertindak seperti konsultan pribadi
-                                Anda. Sangat kuat untuk bisnis dengan resep produksi bertingkat (BOM) atau distributor multi-perusahaan.
+                                {{ $pricingData['prestige']['description'] ?? 'Paket Prestige menghadirkan kecerdasan buatan (AI) yang bertindak seperti konsultan pribadi Anda. Sangat kuat untuk bisnis dengan resep produksi bertingkat (BOM) atau distributor multi-perusahaan.' }}
                             </p>
                             <div
                                 class="p-4 rounded-[16px] bg-amber-50/50 dark:bg-amber-950/20 border border-amber-500/20 space-y-2">

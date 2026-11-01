@@ -280,7 +280,7 @@
         }
 
         /* 5. Navigation Items (Links & Buttons): 40x40 Squircles centered at X=38px */
-        .app-sidebar.is-collapsed .sidebar-item {
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) {
             width: 2.5rem !important;
             /* 40px */
             height: 2.5rem !important;
@@ -304,7 +304,7 @@
             position: relative !important;
         }
 
-        .app-sidebar.is-collapsed .sidebar-item .sidebar-item-inner {
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) .sidebar-item-inner {
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
@@ -317,7 +317,7 @@
         }
 
         /* Center child div if wrapped (e.g. WhatsApp icon) */
-        .app-sidebar.is-collapsed .sidebar-item-inner>div {
+        .app-sidebar.is-collapsed .sidebar-item-inner:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>div {
             margin: 0 auto !important;
             display: flex !important;
             justify-content: center !important;
@@ -325,13 +325,13 @@
         }
 
         /* Primary Icons: strictly 18px block centered on X=38px */
-        .app-sidebar.is-collapsed .sidebar-item>svg:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-chevron),
-        .app-sidebar.is-collapsed .sidebar-item>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-chevron),
-        .app-sidebar.is-collapsed .sidebar-item-inner>svg,
-        .app-sidebar.is-collapsed .sidebar-item-inner>i,
-        .app-sidebar.is-collapsed .sidebar-item-inner>div>svg,
-        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box>svg,
-        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box>i {
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>svg:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-chevron),
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-chevron),
+        .app-sidebar.is-collapsed .sidebar-item-inner:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>svg,
+        .app-sidebar.is-collapsed .sidebar-item-inner:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>i,
+        .app-sidebar.is-collapsed .sidebar-item-inner:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>div>svg,
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) .sidebar-icon-box>svg,
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) .sidebar-icon-box>i {
             margin: 0 auto !important;
             width: 1.125rem !important;
             /* 18px */
@@ -342,11 +342,11 @@
         }
 
         /* Strictly hide all dropdown chevrons in collapsed rail */
-        .app-sidebar.is-collapsed [data-lucide="chevron-down"],
-        .app-sidebar.is-collapsed .lucide-chevron-down,
-        .app-sidebar.is-collapsed svg.lucide-chevron-down,
-        .app-sidebar.is-collapsed i[data-lucide="chevron-down"],
-        .app-sidebar.is-collapsed .sidebar-chevron {
+        .app-sidebar.is-collapsed [data-lucide="chevron-down"]:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *),
+        .app-sidebar.is-collapsed .lucide-chevron-down:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *),
+        .app-sidebar.is-collapsed svg.lucide-chevron-down:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *),
+        .app-sidebar.is-collapsed i[data-lucide="chevron-down"]:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *),
+        .app-sidebar.is-collapsed .sidebar-chevron:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) {
             display: none !important;
             visibility: hidden !important;
             width: 0 !important;
@@ -358,10 +358,10 @@
             opacity: 0 !important;
         }
 
-        /* Strictly hide all text labels and badges in collapsed items, PRESERVING icon boxes */
-        .app-sidebar.is-collapsed .sidebar-item>span:not(.sidebar-icon-box),
-        .app-sidebar.is-collapsed .sidebar-item-inner>span:not(.sidebar-icon-box),
-        .app-sidebar.is-collapsed .sidebar-item>div:not(.sidebar-item-inner):not(.sidebar-icon-box) {
+        /* Strictly hide all text labels and badges in collapsed RAIL items, PRESERVING icon boxes and EXCLUDING flyout panel */
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>span:not(.sidebar-icon-box),
+        .app-sidebar.is-collapsed .sidebar-item-inner:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>span:not(.sidebar-icon-box),
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)>div:not(.sidebar-item-inner):not(.sidebar-icon-box) {
             display: none !important;
             visibility: hidden !important;
             width: 0 !important;
@@ -370,7 +370,7 @@
         }
 
         /* Direct link icon box normalization in collapsed rail: clean centered glyph */
-        .app-sidebar.is-collapsed .sidebar-item .sidebar-icon-box {
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *) .sidebar-icon-box {
             display: flex !important;
             visibility: visible !important;
             width: 1.5rem !important;
@@ -403,26 +403,181 @@
         }
 
         .app-sidebar.is-collapsed .sidebar-flyout-panel {
-            width: 15.5rem !important;
-            padding: 0.625rem !important;
+            width: 16rem !important;
+            min-width: 16rem !important;
+            padding: 0.5rem !important;
             border-radius: 0.875rem !important;
             background-color: rgba(255, 255, 255, 0.98) !important;
             border: 1px solid rgba(60, 60, 67, 0.12) !important;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
             backdrop-filter: blur(24px) !important;
             -webkit-backdrop-filter: blur(24px) !important;
             max-height: 85vh !important;
             overflow-y: auto !important;
+            overscroll-behavior: contain !important;
         }
 
         .dark .app-sidebar.is-collapsed .sidebar-flyout-panel {
             background-color: rgba(28, 28, 30, 0.98) !important;
             border-color: rgba(255, 255, 255, 0.14) !important;
-            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+        }
+
+        /* Flyout Header Title (Category / Group Name) */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel > div:first-child {
+            display: block !important;
+            visibility: visible !important;
+            padding: 0.375rem 0.625rem 0.5rem 0.625rem !important;
+            font-size: 0.75rem !important; /* 12px */
+            font-weight: 700 !important;
+            letter-spacing: -0.01em !important;
+            color: rgba(0, 0, 0, 0.85) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+            margin-bottom: 0.375rem !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel > div:first-child {
+            color: rgba(255, 255, 255, 0.9) !important;
+            border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Flyout Action Items (Horizontal link rows with icon + label) */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel button {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            min-height: 2.125rem !important; /* 34px */
+            max-height: none !important;
+            padding: 0.4rem 0.625rem !important;
+            margin: 2px 0 !important;
+            border-radius: 8px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            gap: 0.625rem !important; /* 10px spacing between icon and text */
+            box-sizing: border-box !important;
+            text-decoration: none !important;
+            color: rgba(0, 0, 0, 0.75) !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            cursor: pointer !important;
+            position: relative !important;
+            transition: background-color 0.15s ease, color 0.15s ease !important;
+        }
+
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item,
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel a,
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel button {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        /* Hover Feedback */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item:hover,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a:hover,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel button:hover {
+            color: #000000 !important;
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item:hover,
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel a:hover,
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel button:hover {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        /* Active / Current Route State */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a[aria-current="page"],
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item[aria-current="page"],
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a.font-semibold,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item.font-semibold {
+            background-color: rgba(0, 122, 255, 0.1) !important;
+            color: #007AFF !important;
+            font-weight: 600 !important;
+        }
+
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel a[aria-current="page"],
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item[aria-current="page"],
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel a.font-semibold,
+        .dark .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item.font-semibold {
+            background-color: rgba(10, 132, 255, 0.16) !important;
+            color: #0A84FF !important;
+            font-weight: 600 !important;
+        }
+
+        /* Flyout Icons: strictly inline 15px icon */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item > i,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item > svg,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a > i,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a > svg {
+            width: 0.9375rem !important; /* 15px */
+            height: 0.9375rem !important;
+            min-width: 0.9375rem !important;
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+            color: inherit !important;
+        }
+
+        /* Flyout Text Labels: FULLY VISIBLE, CLEAN TYPOGRAPHY */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-item > span,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel a > span,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel button > span,
+        .app-sidebar.is-collapsed .sidebar-flyout-panel span:not(.sidebar-icon-box) {
+            display: block !important;
+            visibility: visible !important;
+            width: auto !important;
+            height: auto !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            opacity: 1 !important;
+            font-size: 0.8125rem !important; /* 13px */
+            line-height: 1.25rem !important;
+            text-align: left !important;
+            flex: 1 1 auto !important;
+            color: inherit !important;
+        }
+
+        /* Flyout Tooltip Pill (Single Item Direct Links) */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel.sidebar-flyout-tooltip {
+            width: auto !important;
+            min-width: auto !important;
+            padding: 0.375rem 0.75rem !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            border-radius: 0.625rem !important;
+            white-space: nowrap !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
+        }
+
+        /* Flyout Icon Box normalization */
+        .app-sidebar.is-collapsed .sidebar-flyout-panel .sidebar-icon-box {
+            display: flex !important;
+            visibility: visible !important;
+            width: 1.25rem !important;
+            height: 1.25rem !important;
+            min-width: 1.25rem !important;
+            margin: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
         /* 7. Active Squircle State (macOS Sonoma Selection) */
-        .app-sidebar.is-collapsed .sidebar-item[aria-current="page"] {
+        .app-sidebar.is-collapsed .sidebar-item:not(.sidebar-flyout-panel *):not(.sidebar-flyout-wrapper *)[aria-current="page"] {
             border-radius: 10px !important;
             box-shadow: 0 1px 3px rgba(0, 122, 255, 0.35) !important;
         }
