@@ -211,6 +211,7 @@ return [
     'collapse_sidebar' => 'Ciutkan Sidebar',
     'expand_sidebar' => 'Perlebar Sidebar',
     'active_branch' => 'Cabang Aktif',
+    'active_business' => 'Bisnis Aktif',
     'switch_business' => 'Ganti Usaha',
     'all_branches' => 'Semua Cabang',
     'templates_business' => 'Template Bisnis',

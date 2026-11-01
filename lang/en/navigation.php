@@ -211,6 +211,7 @@ return [
     'collapse_sidebar' => 'Collapse Sidebar',
     'expand_sidebar' => 'Expand Sidebar',
     'active_branch' => 'Active Branch',
+    'active_business' => 'Active Business',
     'switch_business' => 'Switch Business',
     'all_branches' => 'All Branches',
     'templates_business' => 'Business Templates',
