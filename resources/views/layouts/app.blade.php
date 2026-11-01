@@ -2455,7 +2455,27 @@
     </script>
 
     <!-- Coming Soon Modal (Bento Apple HIG v2.0 - Authentic Roadmap Preview) -->
-    <div x-show="comingSoonOpen" x-transition:enter="transition ease-out duration-200"
+    <div x-data="{
+            comingSoonOpen: false,
+            comingSoonFeature: { title: '', icon: 'sparkles', desc: '', color: 'purple' },
+            openComingSoon(feature) {
+                this.comingSoonFeature = {
+                    title: feature?.title || 'Fitur Baru',
+                    icon: feature?.icon || 'sparkles',
+                    desc: feature?.desc || '',
+                    color: feature?.color || 'purple'
+                };
+                this.comingSoonOpen = true;
+                this.$nextTick(() => {
+                    if (window.createCoocaIcons) window.createCoocaIcons();
+                    else if (typeof lucide !== 'undefined') lucide.createIcons();
+                });
+            },
+            init() {
+                window.addEventListener('cooca-coming-soon', (e) => { this.openComingSoon(e.detail); });
+            }
+        }"
+        x-show="comingSoonOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0" class="fixed inset-0 z-[200] flex items-center justify-center p-4"
@@ -2495,8 +2515,7 @@
                                 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400': comingSoonFeature.color === 'emerald',
                                 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400': !comingSoonFeature.color || comingSoonFeature.color === 'blue'
                             }">
-                            <i :data-lucide="comingSoonFeature.icon || 'sparkles'" class="w-6 h-6"
-                                x-init="$watch('comingSoonOpen', v => { if (v) { $nextTick(() => lucide.createIcons()); } })"></i>
+                            <i :data-lucide="comingSoonFeature.icon || 'sparkles'" class="w-6 h-6"></i>
                         </div>
                         <div>
                             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide"
@@ -2554,7 +2573,20 @@
     </div>
 
     <!-- Storage & Audit Pruning Preview Modal (Bento Apple HIG v2.0) -->
-    <div x-show="storagePruningOpen" x-transition:enter="transition ease-out duration-200"
+    <div x-data="{
+            storagePruningOpen: false,
+            openModal() {
+                this.storagePruningOpen = true;
+                this.$nextTick(() => {
+                    if (window.createCoocaIcons) window.createCoocaIcons();
+                    else if (typeof lucide !== 'undefined') lucide.createIcons();
+                });
+            },
+            init() {
+                window.addEventListener('open-storage-pruning-modal', () => { this.openModal(); });
+            }
+        }"
+        x-show="storagePruningOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0" class="fixed inset-0 z-[200] flex items-center justify-center p-4"
@@ -2581,7 +2613,7 @@
                 <div class="flex items-start justify-between gap-4">
                     <div class="flex items-center gap-3.5">
                         <div class="w-12 h-12 rounded-[16px] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 border border-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center shadow-sm shrink-0">
-                            <i data-lucide="hard-drive" class="w-6 h-6" x-init="$watch('storagePruningOpen', v => { if (v) { $nextTick(() => { if (window.createCoocaIcons) window.createCoocaIcons(); else if (window.lucide) lucide.createIcons(); }); } })"></i>
+                            <i data-lucide="hard-drive" class="w-6 h-6"></i>
                         </div>
                         <div>
                             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] border border-[#007AFF]/20">
