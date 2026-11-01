@@ -30,6 +30,17 @@ final class PublicPricingController extends Controller
             'prestige' => BusinessSubscription::TIER_PRESTIGE,
         ];
 
+        // Dynamically retrieve official subscription catalog packages configured in admin/billing-packages
+        try {
+            $subscriptionPackages = BillingPackage::where('type', BillingPackage::TYPE_SUBSCRIPTION)
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get()
+                ->keyBy('code');
+        } catch (\Throwable) {
+            $subscriptionPackages = collect();
+        }
+
         $pricingData = [];
         $activeBatch = null;
 
@@ -46,6 +57,9 @@ final class PublicPricingController extends Controller
             $annualMonthlyEquivalent = (int) round($annualPrice / 12);
             $annualSavings = max(0.0, ($monthlyPrice * 12) - $annualPrice);
 
+            $monthlyPkg = $subscriptionPackages->get("{$key}-monthly");
+            $annualPkg = $subscriptionPackages->get("{$key}-annual");
+
             $pricingData[$key] = [
                 'tier' => $key,
                 'monthly_price' => $monthlyPrice,
@@ -57,6 +71,9 @@ final class PublicPricingController extends Controller
                 'is_early_adopter' => $monthlyPricing['is_early_adopter'] || $annualPricing['is_early_adopter'],
                 'batch_name' => $monthlyPricing['batch_name'] ?? $annualPricing['batch_name'] ?? null,
                 'remaining_quota' => $monthlyPricing['remaining_quota'] ?? $annualPricing['remaining_quota'] ?? null,
+                'package_monthly' => $monthlyPkg,
+                'package_annual' => $annualPkg,
+                'description' => $monthlyPkg?->description ?? $annualPkg?->description,
             ];
         }
 
@@ -83,6 +100,7 @@ final class PublicPricingController extends Controller
 
         return view('public.pricing', compact(
             'pricingData',
+            'subscriptionPackages',
             'annualDiscountBadge',
             'activeBatch',
             'tierLimits',
