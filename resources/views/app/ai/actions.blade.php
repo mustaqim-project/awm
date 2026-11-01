@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.actions.title') . ''])
 
 @section('content')
-<div class="space-y-6" x-data="actionCenterApp()">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="actionCenterApp()">
 
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'actions', 'pendingCount' => $counts['pending'] ?? 0])

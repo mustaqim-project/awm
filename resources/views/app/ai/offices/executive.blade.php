@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.offices.executive_title')])
 
 @section('content')
-<div class="space-y-6 w-full" x-data="aiOfficeBase()">
+<div class="space-y-6 w-full pb-28 sm:pb-32 lg:pb-10" x-data="aiOfficeBase()">
 
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'executive', 'pendingCount' => $officeStats['pending_approvals_count'] ?? 0])

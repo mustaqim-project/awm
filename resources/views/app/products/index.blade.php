@@ -1397,39 +1397,39 @@
                                 :class="productToggles['{{ $prod->id }}']?.show_in_website ?
                                     'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/30 font-semibold' :
                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">{{ __('products.channel_web') }}</button>
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">{{ __('products.channel_web') }}</button>
                             <button type="button" @click="toggleProductField('{{ $prod->id }}', 'show_in_pos')"
                                 :disabled="productToggles['{{ $prod->id }}']?.loading === 'show_in_pos'"
                                 :class="productToggles['{{ $prod->id }}']?.show_in_pos ?
                                     'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] border-[#34C759]/30 font-semibold' :
                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">{{ __('products.channel_pos') }}</button>
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">{{ __('products.channel_pos') }}</button>
                             <button type="button"
                                 @click="toggleProductField('{{ $prod->id }}', 'show_in_sales_order')"
                                 :disabled="productToggles['{{ $prod->id }}']?.loading === 'show_in_sales_order'"
                                 :class="productToggles['{{ $prod->id }}']?.show_in_sales_order ?
                                     'bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] border-[#5856D6]/30 font-semibold' :
                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">{{ __('products.channel_so') }}</button>
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">{{ __('products.channel_so') }}</button>
                             <button type="button"
                                 @click="toggleProductField('{{ $prod->id }}', 'show_price_on_web')"
                                 :disabled="productToggles['{{ $prod->id }}']?.loading === 'show_price_on_web'"
                                 :class="productToggles['{{ $prod->id }}']?.show_price_on_web ?
                                     'bg-[#30B0C7]/10 text-[#0071A4] dark:text-[#70D7FF] border-[#30B0C7]/30 font-semibold' :
                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60 line-through'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">{{ __('products.channel_price') }}</button>
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">{{ __('products.channel_price') }}</button>
                             <button type="button" @click="toggleProductField('{{ $prod->id }}', 'is_preorder')"
                                 :disabled="productToggles['{{ $prod->id }}']?.loading === 'is_preorder'"
                                 :class="productToggles['{{ $prod->id }}']?.is_preorder ?
                                     'bg-[#FF9500]/10 text-[#FF9500] border-[#FF9500]/30 font-bold' :
                                     'bg-black/[0.03] dark:bg-white/[0.04] text-black/35 dark:text-white/35 border-black/5 dark:border-white/5 opacity-60'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">{{ __('products.channel_po') }}</button>
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">{{ __('products.channel_po') }}</button>
                             <button type="button" @click="toggleProductField('{{ $prod->id }}', 'is_active')"
                                 :disabled="productToggles['{{ $prod->id }}']?.loading === 'is_active'"
                                 :class="productToggles['{{ $prod->id }}']?.is_active ?
                                     'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] border-[#34C759]/30 font-semibold' :
                                     'bg-[#FF3B30]/10 text-[#FF3B30] border-[#FF3B30]/30 opacity-70'"
-                                class="h-7 px-2.5 rounded-[6px] border text-[11px] font-medium min-w-[44px]">
+                                class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:h-7 px-2.5 rounded-[8px] border text-[11px] font-medium flex items-center justify-center cursor-pointer">
                                 <span
                                     x-text="productToggles['{{ $prod->id }}']?.is_active ? '{{ __('products.status_active') }}' : '{{ __('products.status_inactive') }}'"></span>
                             </button>
@@ -2517,7 +2517,7 @@
                                             <template x-if="editProduct.images && editProduct.images.length > 0">
                                                 <div class="space-y-1.5">
                                                     <span class="text-[11px] text-black/45 dark:text-white/45 block">{{ __('products.gallery_remove_tip') }}</span>
-                                                    <div class="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                                                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
                                                         <template x-for="gImg in editProduct.images" :key="gImg.id">
                                                             <div class="relative aspect-square rounded-[10px] overflow-hidden border border-black/10 dark:border-white/10 group">
                                                                 <img :src="gImg.image_url" :alt="gImg.caption || 'Galeri'"
@@ -2861,7 +2861,7 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddCategoryModal = false">
-                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-xl rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                         <div class="flex items-center gap-2.5">
                             <div
@@ -2874,7 +2874,7 @@
                             <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('products.modal_add_category_title') }}</h3>
                         </div>
                         <button type="button" @click="showAddCategoryModal = false"
-                            class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center">
+                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center cursor-pointer" aria-label="{{ __('common.close') }}">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -2928,7 +2928,7 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddUnitModal = false">
-                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-xl rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                         <div class="flex items-center gap-2.5">
                             <div
@@ -2941,7 +2941,7 @@
                             <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('products.modal_add_unit_title') }}</h3>
                         </div>
                         <button type="button" @click="showAddUnitModal = false"
-                            class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center">
+                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center cursor-pointer" aria-label="{{ __('common.close') }}">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -3012,7 +3012,7 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showProductScannerPermission = false">
-                    <div class="relative w-full max-w-sm rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-xl rounded-[20px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-6 space-y-4 shadow-2xl">
                     <div class="flex items-start gap-3.5">
                         <div
                             class="w-11 h-11 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
@@ -3060,7 +3060,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('products.modal_scanner_title') }}</h3>
                         <button type="button" @click="closeProductScanner()"
-                            class="w-7 h-7 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center">
+                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.1] hover:bg-black/[0.1] text-black/60 dark:text-white/60 flex items-center justify-center cursor-pointer" aria-label="{{ __('common.close') }}">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

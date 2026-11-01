@@ -439,29 +439,51 @@
                                     {{ number_format((float) ($latestPrice?->effective_cost ?? 0), 0, ',', '.') }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                    <div class="flex items-center justify-end gap-1">
+                                    <div class="flex items-center justify-end gap-2">
                                         @if (\App\Support\Context::hasPermission('materials.edit'))
                                             <button type="button" @click="openPriceModal({{ Js::from($mat) }})"
-                                                class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                                title="{{ __('materials.btn_update_price') }}"
-                                                aria-label="{{ __('materials.btn_update_price') }}">
-                                                <i data-lucide="badge-dollar-sign" class="w-4 h-4"></i>
+                                                class="inline-flex items-center min-h-[44px] sm:min-h-0 h-9 px-3 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-xs font-semibold text-[#007AFF] transition-colors cursor-pointer"
+                                                title="{{ __('materials.btn_update_price') }}">
+                                                <i data-lucide="badge-dollar-sign" class="w-3.5 h-3.5 mr-1.5 shrink-0"></i>
+                                                <span>{{ __('materials.btn_update_price') }}</span>
                                             </button>
-                                            <button type="button" @click="openEditModal({{ Js::from($mat) }})"
-                                                class="w-8 h-8 rounded-[8px] text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                                title="{{ __('materials.title_edit_spec') }}"
-                                                aria-label="{{ __('materials.title_edit_spec') }}">
-                                                <i data-lucide="pencil" class="w-4 h-4"></i>
-                                            </button>
+
+                                            <div x-data="{ open: false }" class="relative inline-block text-left">
+                                                <button type="button" 
+                                                        @click="open = !open" 
+                                                        @click.outside="open = false"
+                                                        aria-label="{{ __('common.more_actions') }}"
+                                                        class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 w-9 h-9 rounded-[10px] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                                                    <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+                                                </button>
+
+                                                <div x-show="open"
+                                                     x-cloak
+                                                     x-transition:enter="transition ease-out duration-100"
+                                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                                     x-transition:leave="transition ease-in duration-75"
+                                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                                     class="absolute right-0 mt-1.5 w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-30 text-left">
+                                                    <button type="button" @click="open = false; openEditModal({{ Js::from($mat) }})"
+                                                       class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-left cursor-pointer">
+                                                        <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
+                                                        <span>{{ __('materials.title_edit_spec') }}</span>
+                                                    </button>
+                                                    @if (\App\Support\Context::hasPermission('materials.delete'))
+                                                    <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+                                                    <button type="button"
+                                                            @click="open = false; openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
+                                                            class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
+                                                        <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
+                                                        <span>{{ __('materials.title_delete_material') }}</span>
+                                                    </button>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         @endif
                                         @if (\App\Support\Context::hasPermission('materials.delete'))
-                                            <button type="button"
-                                                @click="openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
-                                                class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                                title="{{ __('materials.title_delete_material') }}"
-                                                aria-label="{{ __('materials.title_delete_material') }}">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                            </button>
                                             <form id="form-delete-{{ $mat->id }}" method="POST"
                                                 action="{{ route('materials.destroy', $mat->id) }}" class="hidden">
                                                 @csrf
@@ -1087,11 +1109,11 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddSupplierModal = false">
-                    <div class="relative w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-2xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                     <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_sup_title') }}</h3>
                     <button type="button" @click="showAddSupplierModal = false"
-                        class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
+                        class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 cursor-pointer" aria-label="{{ __('common.close') }}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1164,11 +1186,11 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddCategoryModal = false">
-                    <div class="relative w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-2xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                     <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_cat_title') }}</h3>
                     <button type="button" @click="showAddCategoryModal = false"
-                        class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
+                        class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 cursor-pointer" aria-label="{{ __('common.close') }}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1229,11 +1251,11 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="showAddUnitModal = false">
-                    <div class="relative w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
+                    <div class="relative w-full max-w-lg lg:max-w-2xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] p-5 sm:p-6 space-y-4 shadow-2xl">
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
                     <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('materials.modal_quick_unit_title') }}</h3>
                     <button type="button" @click="showAddUnitModal = false"
-                        class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
+                        class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50 cursor-pointer" aria-label="{{ __('common.close') }}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />

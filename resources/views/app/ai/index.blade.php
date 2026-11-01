@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.pos.title')])
 
 @section('content')
-<div class="space-y-8" x-data="aiPosApp()">
+<div class="space-y-8 pb-28 sm:pb-32 lg:pb-10" x-data="aiPosApp()">
     
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'pos'])
@@ -600,7 +600,7 @@
                                 {{ __('ai.cashier.score') }}: {{ $cp['score'] }}/100
                             </span>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 text-[11px] bg-slate-50 dark:bg-zinc-800/40 p-2 rounded-xl border border-slate-100 dark:border-white/5">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] bg-slate-50 dark:bg-zinc-800/40 p-2 rounded-xl border border-slate-100 dark:border-white/5">
                             <div>
                                 <span class="text-[9px] text-slate-500 uppercase font-semibold block">{{ __('ai.cashier.revenue') }}:</span>
                                 <span class="font-bold text-emerald-600 dark:text-emerald-400 font-mono">Rp {{ number_format($cp['total_revenue'], 0, ',', '.') }}</span>
@@ -665,7 +665,7 @@
                 <span>{{ __('ai.rfm.title') }}</span>
             </h3>
             <div class="rounded-2xl p-4 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 shadow-sm space-y-3">
-                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs">
                     <div class="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-500/30">
                         <div class="font-black text-base text-emerald-600 dark:text-emerald-400 font-mono">{{ $rfmSegments['summary']['champions_count'] }}</div>
                         <div class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">{{ __('ai.rfm.champions') }}</div>

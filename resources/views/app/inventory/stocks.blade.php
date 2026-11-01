@@ -331,7 +331,7 @@
                 @click="showAdjustModal = false"
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-            <div class="relative z-10 w-full sm:max-w-lg rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
+            <div class="relative z-10 w-full sm:max-w-xl lg:max-w-2xl rounded-t-[26px] sm:rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
                 @click.away="showAdjustModal = false"
                 x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="translate-y-full sm:translate-y-0 sm:scale-95 sm:opacity-0"

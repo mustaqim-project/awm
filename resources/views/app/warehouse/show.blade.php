@@ -1344,7 +1344,7 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="confirmModalOpen = false">
-                    <div class="relative w-full max-w-md rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
+                    <div class="relative w-full max-w-lg lg:max-w-xl rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] p-6 space-y-4 overflow-hidden text-center"
                     x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95"
                     x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">

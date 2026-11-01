@@ -107,7 +107,7 @@
                                 {{-- Bengkel Otomotif: Nopol & KM --}}
                                 @if ($order->vehicle_license_plate)
                                     <span class="px-2 py-0.5 rounded-[5px] bg-black/5 dark:bg-white/10 text-black dark:text-white font-mono font-bold text-[10px] border border-black/10 dark:border-white/10">
-                                        🚗 {{ $order->vehicle_license_plate }}
+                                        <i data-lucide="car" class="w-3.5 h-3.5 text-blue-500 shrink-0 inline-block mr-1"></i>{{ $order->vehicle_license_plate }}
                                     </span>
                                 @endif
                                 @if ($order->vehicle_mileage)
@@ -124,7 +124,7 @@
                                 {{-- Laundry Kiloan: Berat & Rak --}}
                                 @if ($order->laundry_weight_kg)
                                     <span class="px-2 py-0.5 rounded-[5px] bg-[#007AFF]/10 text-[#007AFF] font-bold text-[10px] border border-[#007AFF]/20">
-                                        🧺 {{ $order->laundry_weight_kg }} kg
+                                        <i data-lucide="shirt" class="w-3.5 h-3.5 shrink-0 inline-block mr-1"></i>{{ $order->laundry_weight_kg }} kg
                                     </span>
                                 @endif
                                 @if ($order->rack_location)
@@ -140,12 +140,12 @@
                                 @endphp
                                 @if ($hasBatch)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#34C759]/10 text-[#34C759] text-[10px]">
-                                        💊 {{ __('pos.reports_meta_batch') }}
+                                        <i data-lucide="pill" class="w-3.5 h-3.5 shrink-0 inline-block mr-1"></i>{{ __('pos.reports_meta_batch') }}
                                     </span>
                                 @endif
                                 @if ($hasSerial)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#AF52DE]/10 text-[#AF52DE] font-mono text-[10px]">
-                                        🏷️ {{ __('pos.reports_meta_imei') }}
+                                        <i data-lucide="tag" class="w-3.5 h-3.5 shrink-0 inline-block mr-1"></i>{{ __(\'pos.reports_meta_imei\') }}
                                     </span>
                                 @endif
                             </div>

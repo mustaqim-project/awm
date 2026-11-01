@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.lobby.page_title')])
 
 @section('content')
-<div class="space-y-6 w-full" x-data="aiOfficeBase()">
+<div class="space-y-6 w-full pb-28 sm:pb-32 lg:pb-10" x-data="aiOfficeBase()">
 
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'lobby', 'pendingCount' => $pendingCount])
@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- Live Backend Metrics -->
-                    <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
                             <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['executive']['active_agents_count'] }} / {{ $officesStats['executive']['total_agents'] }}</div>
@@ -125,7 +125,7 @@
                     </div>
 
                     <!-- Live Backend Metrics -->
-                    <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
                             <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['operations']['active_agents_count'] }} / {{ $officesStats['operations']['total_agents'] }}</div>
@@ -180,7 +180,7 @@
                     </div>
 
                     <!-- Live Backend Metrics -->
-                    <div class="grid grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 border-t border-black/5 dark:border-white/5 text-center">
                         <div class="p-2 rounded-xl bg-black/[0.01] dark:bg-white/[0.01]">
                             <div class="text-[10px] text-black/50 dark:text-white/50 uppercase">{{ __('ai.lobby.active_agents') }}</div>
                             <div class="text-sm font-bold text-black dark:text-white tabular-nums mt-0.5">{{ $officesStats['growth']['active_agents_count'] }} / {{ $officesStats['growth']['total_agents'] }}</div>

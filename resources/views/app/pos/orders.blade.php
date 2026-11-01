@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('pos.orders_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-12" x-data="{
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
     showDetailModal: false,
     showVoidModal: false,
     showRefundModal: false,
@@ -648,7 +648,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showVoidModal = false">
-                <div class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
+                <div class="relative w-full sm:max-w-lg lg:max-w-xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
                     x-show="showVoidModal"
                     x-transition:enter="ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95"
@@ -727,7 +727,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showRefundModal = false">
-                <div class="relative w-full sm:max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
+                <div class="relative w-full sm:max-w-lg lg:max-w-xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] border border-black/10 dark:border-white/10 p-6 space-y-4 shadow-2xl"
                     x-show="showRefundModal"
                     x-transition:enter="ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95"

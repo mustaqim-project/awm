@@ -353,7 +353,7 @@
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
-                        <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-slate-50 dark:bg-slate-800/50 text-[10.5px] font-mono border border-slate-200/60 dark:border-slate-700/60 text-center">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-slate-50 dark:bg-slate-800/50 text-[10.5px] font-mono border border-slate-200/60 dark:border-slate-700/60 text-center">
                             <div>
                                 <div class="text-slate-400 text-[9px] uppercase">Storage</div>
                                 <div class="font-bold text-slate-800 dark:text-slate-200">{{ $tierLimits['free']['storage_gb'] ?? 1 }} GB</div>
@@ -429,7 +429,7 @@
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
-                        <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-emerald-50/70 dark:bg-emerald-950/30 text-[10.5px] font-mono border border-emerald-200/60 dark:border-emerald-800/60 text-center">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-emerald-50/70 dark:bg-emerald-950/30 text-[10.5px] font-mono border border-emerald-200/60 dark:border-emerald-800/60 text-center">
                             <div>
                                 <div class="text-emerald-600/70 dark:text-emerald-400/70 text-[9px] uppercase">Storage</div>
                                 <div class="font-bold text-emerald-800 dark:text-emerald-300">{{ $tierLimits['standard']['storage_gb'] ?? 3 }} GB</div>
@@ -509,7 +509,7 @@
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
-                        <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-indigo-50/70 dark:bg-indigo-950/30 text-[10.5px] font-mono border border-indigo-200/60 dark:border-indigo-800/60 text-center">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-indigo-50/70 dark:bg-indigo-950/30 text-[10.5px] font-mono border border-indigo-200/60 dark:border-indigo-800/60 text-center">
                             <div>
                                 <div class="text-indigo-600/70 dark:text-indigo-400/70 text-[9px] uppercase">Storage</div>
                                 <div class="font-bold text-indigo-800 dark:text-indigo-300">{{ ($tierLimits['premium']['storage_gb'] ?? null) ? $tierLimits['premium']['storage_gb'].' GB' : '10 GB' }}</div>
@@ -576,7 +576,7 @@
                         </div>
 
                         <!-- Ringkasan Kapasitas Inti -->
-                        <div class="grid grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-purple-50/70 dark:bg-purple-950/30 text-[10.5px] font-mono border border-purple-200/60 dark:border-purple-800/60 text-center">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 py-2 px-2.5 rounded-[12px] bg-purple-50/70 dark:bg-purple-950/30 text-[10.5px] font-mono border border-purple-200/60 dark:border-purple-800/60 text-center">
                             <div>
                                 <div class="text-purple-600/70 dark:text-purple-400/70 text-[9px] uppercase">Storage</div>
                                 <div class="font-bold text-purple-800 dark:text-purple-300">{{ ($tierLimits['prestige']['storage_gb'] ?? null) ? $tierLimits['prestige']['storage_gb'].' GB' : '30 GB' }}</div>

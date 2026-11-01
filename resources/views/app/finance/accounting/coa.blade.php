@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('finance.coa_page_title')])
 
 @section('content')
-    <div x-data="coaManager()" class="max-w-[1360px] mx-auto space-y-5 pb-28 lg:pb-12">
+    <div x-data="coaManager()" class="max-w-[1360px] mx-auto space-y-5 pb-28 sm:pb-32 lg:pb-10">
 
         {{-- ========================================================== --}}
         {{-- TOOLBAR / PAGE HEADER                                      --}}

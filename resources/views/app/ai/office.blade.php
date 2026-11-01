@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.offices.digital_company_title')])
 
 @section('content')
-<div class="space-y-6" x-data="aiOfficeApp()">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="aiOfficeApp()">
 
     <!-- Header & Executive Controls -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -129,7 +129,7 @@
             </div>
 
             <!-- Operations Stats Bento Strip -->
-            <div class="grid grid-cols-3 gap-2 border-t border-black/5 dark:border-white/5 pt-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 border-t border-black/5 dark:border-white/5 pt-3">
                 <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
                     <div class="text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('ai.offices.teams_involved') }}</div>
                     <div class="text-base font-bold text-black dark:text-white tabular-nums mt-0.5">{{ __('ai.offices.unit_divisions', ['count' => 5]) }}</div>

@@ -550,7 +550,7 @@
                 x-transition:leave="ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                 x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
-                class="relative w-full max-w-lg rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10"
+                class="relative w-full max-w-lg lg:max-w-2xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 space-y-5 shadow-2xl z-10"
                 @click.outside="pullModal = false">
                 
                 <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
@@ -572,7 +572,7 @@
                     @csrf
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2">{{ __('marketplace.pull_orders_select_channel') }}</label>
-                        <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
                             <button type="button" @click="selectedPullChannel = 'shopee'"
                                 :class="selectedPullChannel === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#EE4D2D]' : 'text-black/60 dark:text-white/60 font-medium'"
                                 class="min-h-[44px] py-2.5 text-[12px] rounded-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95">

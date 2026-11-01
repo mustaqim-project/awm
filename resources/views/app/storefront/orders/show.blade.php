@@ -1059,7 +1059,7 @@
                     @click="rejectModalOpen = false"
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4 max-h-[92vh] overflow-y-auto"
+                <div class="relative z-10 w-full max-w-lg lg:max-w-xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4 max-h-[92vh] overflow-y-auto"
                     @click.outside="rejectModalOpen = false">
                     {{-- Mobile Grab Bar --}}
                     <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
@@ -1119,7 +1119,7 @@
                     @click="verifyModalOpen = false"
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4"
+                <div class="relative z-10 w-full max-w-lg lg:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4"
                     @click.outside="verifyModalOpen = false">
                     <div class="flex items-start gap-3.5">
                         <div
@@ -1202,7 +1202,7 @@
                     @click="waybillModalOpen = false"
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="relative z-10 w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4"
+                <div class="relative z-10 w-full max-w-xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/[0.08] dark:border-white/[0.1] space-y-4"
                     @click.outside="waybillModalOpen = false">
                     <div class="flex items-center justify-between pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center gap-2.5">

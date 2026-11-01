@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.history.title') . '   COOCA'])
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-10">
 
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'history'])

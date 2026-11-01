@@ -174,7 +174,7 @@
                         <label class="text-xs font-semibold text-black dark:text-white">
                             Rasio Dimensi Kanvas <span class="text-red-500">*</span>
                         </label>
-                        <div class="grid grid-cols-4 gap-2">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             <label class="p-2.5 rounded-[10px] border text-center cursor-pointer transition-all text-xs font-bold"
                                 :class="aspectRatio === '1:1' ? 'bg-[#007AFF] text-white border-[#007AFF]' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-black/70 dark:text-white/70'">
                                 <input type="radio" name="aspect_ratio" value="1:1" x-model="aspectRatio" class="sr-only">

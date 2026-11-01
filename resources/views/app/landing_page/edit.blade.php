@@ -1001,7 +1001,7 @@
                                                 <option value="shield-check">Shield Check</option>
                                                 <option value="zap">Kilat (Zap)</option>
                                                 <option value="award">Penghargaan (Award)</option>
-                                                <option value="star">⭐ Star</option>
+                                                <option value="star">Bintang (Star)</option>
                                                 <option value="clock">Jam (Clock)</option>
                                                 <option value="heart">Favorit (Heart)</option>
                                                 <option value="truck">Pengiriman (Truck)</option>

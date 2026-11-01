@@ -1649,7 +1649,7 @@ document.addEventListener('alpine:init', () => {
                             <label class="block text-[12px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 mb-2">
                                 {{ __('marketplace.modal_channel_selector') }}
                             </label>
-                            <div class="grid grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-1.5 rounded-[16px] bg-black/[0.04] dark:bg-white/[0.06]">
                                 <button type="button" @click="switchChannel('shopee')"
                                     :class="form.channel === 'shopee' ? 'bg-white dark:bg-[#2C2C2E] shadow-sm font-bold text-[#EE4D2D]' : 'text-black/60 dark:text-white/60 font-medium hover:text-black dark:hover:text-white'"
                                     class="py-2.5 text-[12.5px] rounded-[12px] transition-all flex items-center justify-center gap-1.5 cursor-pointer">

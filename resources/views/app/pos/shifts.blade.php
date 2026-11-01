@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('pos.shifts_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-12" x-data="{
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
     showOpenModal: false,
     showCloseModal: false,
     showMovementModal: false,

@@ -508,7 +508,7 @@
                                 {{ $prod['margin_pct'] }}%
                             </span>
                         </div>
-                        <div class="grid grid-cols-3 gap-2 text-[11px] pt-1 border-t border-black/5 dark:border-white/5">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] pt-1 border-t border-black/5 dark:border-white/5">
                             <div>
                                 <span class="text-black/50 dark:text-white/50 block">{{ __('analytics.sold') }}:</span>
                                 <strong class="text-black dark:text-white tabular-nums">{{ number_format($prod['quantity'], 0, ',', '.') }}</strong>

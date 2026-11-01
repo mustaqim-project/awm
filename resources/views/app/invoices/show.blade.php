@@ -526,7 +526,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-end sm:items-center justify-center p-0 sm:p-4" @click.self="showPaymentModal = false">
-                <div class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[18px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+                <div class="relative w-full max-w-full sm:max-w-[95vw] lg:max-w-3xl rounded-t-[24px] sm:rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
                     @click.away="showPaymentModal = false"
                     x-show="showPaymentModal"
                     x-transition:enter="transition ease-out duration-200"

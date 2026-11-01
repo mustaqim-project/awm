@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-12" x-data="{
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
     deleteModalOpen: false,
     deleteTarget: { url: '', name: '' },
     openDelete(url, name) {
@@ -168,35 +168,54 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                            <div class="flex items-center justify-end gap-1">
-                                <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
-                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="{{ __('common.download_pdf') }}"
-                                    aria-label="{{ __('sales.unduh_pdf') }}">
-                                    <i data-lucide="printer" class="w-4 h-4"></i>
-                                </a>
-                                @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
-                                <a href="{{ route('sales.quotations.edit', $q) }}"
-                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="{{ __('sales.edit_penawaran_2') }}"
-                                    aria-label="{{ __('sales.edit_penawaran_3') }}">
-                                    <i data-lucide="pencil" class="w-4 h-4"></i>
-                                </a>
-                                @endif
+                            <div class="flex items-center justify-end gap-2">
                                 <a href="{{ route('sales.quotations.show', $q) }}"
-                                    class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="{{ __('sales.quotations.btn_detail') }}"
-                                    aria-label="{{ __('sales.quotations.btn_detail') }}">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    class="inline-flex items-center min-h-[44px] sm:min-h-0 h-9 px-3 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-xs font-semibold text-[#007AFF] transition-colors"
+                                    title="{{ __('sales.quotations.btn_detail') }}">
+                                    <i data-lucide="eye" class="w-3.5 h-3.5 mr-1.5 shrink-0"></i>
+                                    <span>{{ __('sales.quotations.btn_detail') }}</span>
                                 </a>
-                                @if($q->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
-                                <button type="button" @click="openDelete('{{ route('sales.quotations.destroy', $q) }}', '{{ addslashes($q->quotation_number) }}')"
-                                    class="w-8 h-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
-                                    title="{{ __('admin.hapus_penawaran') }}"
-                                    aria-label="{{ __('sales.hapus_penawaran') }}">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
-                                @endif
+
+                                <div x-data="{ open: false }" class="relative inline-block text-left">
+                                    <button type="button" 
+                                            @click="open = !open" 
+                                            @click.outside="open = false"
+                                            aria-label="{{ __('common.more_actions') }}"
+                                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 w-9 h-9 rounded-[10px] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                                        <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+                                    </button>
+
+                                    <div x-show="open"
+                                         x-cloak
+                                         x-transition:enter="transition ease-out duration-100"
+                                         x-transition:enter-start="transform opacity-0 scale-95"
+                                         x-transition:enter-end="transform opacity-100 scale-100"
+                                         x-transition:leave="transition ease-in duration-75"
+                                         x-transition:leave-start="transform opacity-100 scale-100"
+                                         x-transition:leave-end="transform opacity-0 scale-95"
+                                         class="absolute right-0 mt-1.5 w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-30 text-left">
+                                        <a href="{{ route('sales.quotations.pdf', $q) }}" target="_blank"
+                                           class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                            <i data-lucide="printer" class="w-4 h-4 text-gray-400"></i>
+                                            <span>{{ __('common.download_pdf') }}</span>
+                                        </a>
+                                        @if (\App\Support\Context::hasPermission('sales.pipeline') || \App\Support\Context::hasPermission('sales.view'))
+                                        <a href="{{ route('sales.quotations.edit', $q) }}"
+                                           class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                            <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
+                                            <span>{{ __('sales.edit_penawaran_2') }}</span>
+                                        </a>
+                                        @endif
+                                        @if($q->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
+                                        <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+                                        <button type="button" @click="open = false; openDelete('{{ route('sales.quotations.destroy', $q) }}', '{{ addslashes($q->quotation_number) }}')"
+                                            class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
+                                            <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
+                                            <span>{{ __('admin.hapus_penawaran') }}</span>
+                                        </button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

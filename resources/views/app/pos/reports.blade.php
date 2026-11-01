@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('pos.reports_title')])
 
 @section('content')
-<div class="max-w-[1440px] mx-auto space-y-6 pb-16">
+<div class="max-w-[1440px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10">
 
     {{-- 1. MODULE HEADER & EXPORT ACTIONS --}}
     <x-module-header

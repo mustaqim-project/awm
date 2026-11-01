@@ -386,7 +386,7 @@
 
         <!-- Box Tanda Tangan Resmi (3 Kolom: Pelanggan, Gudang, Authorized) -->
         <div class="pt-8 keep-together">
-            <div class="grid grid-cols-3 gap-6 text-center text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-3 print:grid-cols-3 gap-6 text-center text-xs">
                 <!-- Kolom 1: Pelanggan -->
                 <div class="space-y-16">
                     <div>

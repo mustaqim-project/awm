@@ -89,7 +89,7 @@
 
                         {{-- Loading Skeleton State --}}
                         <div x-show="isLoading" class="space-y-4 animate-pulse">
-                            <div class="grid grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 <div class="h-20 bg-black/5 dark:bg-white/5 rounded-[14px]"></div>
                                 <div class="h-20 bg-black/5 dark:bg-white/5 rounded-[14px]"></div>
                                 <div class="h-20 bg-black/5 dark:bg-white/5 rounded-[14px]"></div>
@@ -292,7 +292,7 @@
                                                             </template>
                                                         </div>
                                                         <template x-if="item.dosage_instructions">
-                                                            <div class="text-[10px] text-[#007AFF] font-medium mt-0.5" x-text="'💊 {{ __('pos.reports_modal_dosage_prefix') }}: ' + item.dosage_instructions"></div>
+                                                            <div class="text-[10px] text-[#007AFF] font-medium mt-0.5 inline-flex items-center gap-1"><i data-lucide="pill" class="w-3 h-3 shrink-0"></i><span x-text="\'{{ __(\'pos.reports_modal_dosage_prefix\') }}: \' + item.dosage_instructions"></span></div>
                                                         </template>
                                                         <template x-if="item.modifiers && item.modifiers.length > 0">
                                                             <div class="mt-1 flex flex-wrap gap-1">

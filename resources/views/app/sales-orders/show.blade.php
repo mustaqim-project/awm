@@ -335,7 +335,7 @@
             </div>
 
             <!-- Signature Authorization Block for Print -->
-            <div class="hidden print:grid grid-cols-3 gap-6 pt-12 text-center text-xs text-black/70">
+            <div class="hidden print:grid print:grid-cols-3 gap-6 pt-12 text-center text-xs text-black/70">
                 <div class="space-y-12">
                     <p class="font-semibold">{{ __('sales.sales_orders.sig_created_by') }}</p>
                     <p class="border-t border-black/30 pt-1">{{ __('sales.sales_orders.sig_sales_dept') }}</p>

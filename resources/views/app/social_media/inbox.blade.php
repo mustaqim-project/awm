@@ -523,7 +523,7 @@
                                 </button>
                                 <input type="file" x-ref="attachmentInput" class="hidden" @change="handleAttachment($event)">
                                 {{-- Emoji Button --}}
-                                <button type="button" @click="replyText += ' 😊'" title="Emoji"
+                                <button type="button" @click="replyText += ' :)'" title="Emoji"
                                     class="w-8 h-8 rounded-[8px] flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
                                     <i data-lucide="smile" class="w-4 h-4"></i>
                                 </button>
@@ -799,17 +799,17 @@
                     </div>
 
                     <div class="space-y-2">
-                        <button type="button" @click="insertQuickReply('Halo Kak! Terima kasih sudah menghubungi kami. Ada yang bisa kami bantu hari ini? 😊')"
+                        <button type="button" @click="insertQuickReply('Halo Kak! Terima kasih sudah menghubungi kami. Ada yang bisa kami bantu hari ini?')"
                             class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
                             <div class="font-bold text-black dark:text-white">Salam Pembuka Ramah</div>
                             <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Halo Kak! Terima kasih sudah menghubungi kami...</p>
                         </button>
-                        <button type="button" @click="insertQuickReply('Toko kami buka setiap hari pukul 08.00 - 21.00 WIB. Silakan mampir atau lakukan pemesanan langsung ya Kak! 🙏')"
+                        <button type="button" @click="insertQuickReply('Toko kami buka setiap hari pukul 08.00 - 21.00 WIB. Silakan mampir atau lakukan pemesanan langsung ya Kak!')"
                             class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
                             <div class="font-bold text-black dark:text-white">Jam Operasional Toko</div>
                             <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Toko kami buka setiap hari pukul 08.00 - 21.00 WIB...</p>
                         </button>
-                        <button type="button" @click="insertQuickReply('Pesanan Kakak sedang kami siapkan dan akan segera diproses pengirimannya. Terima kasih banyak sudah berbelanja di toko kami! ✨')"
+                        <button type="button" @click="insertQuickReply('Pesanan Kakak sedang kami siapkan dan akan segera diproses pengirimannya. Terima kasih banyak sudah berbelanja di toko kami!')"
                             class="w-full p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] hover:bg-[#007AFF]/10 border border-black/5 text-left text-[12px] transition-colors cursor-pointer active:scale-98">
                             <div class="font-bold text-black dark:text-white">Konfirmasi Proses Pesanan</div>
                             <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">Pesanan Kakak sedang kami siapkan dan akan segera diproses...</p>

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('pos.kitchen_title')])
 
 @section('content')
-<div class="max-w-[1600px] mx-auto space-y-5 pb-16" x-data="kitchenDisplay()">
+<div class="max-w-[1600px] mx-auto space-y-5 pb-28 sm:pb-32 lg:pb-10" x-data="kitchenDisplay()">
 
     {{-- MODULE HEADER & PERSISTENT POS TABS --}}
     <x-module-header

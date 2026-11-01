@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-    <div class="max-w-[1360px] mx-auto space-y-6 pb-36 lg:pb-12" x-data="socialPostsManager()">
+    <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="socialPostsManager()">
 
         {{-- MODULE HEADER & PERSISTENT COMMUNICATION TABS --}}
         <x-module-header
@@ -1257,7 +1257,7 @@
                                         <span class="font-bold text-black/60 dark:text-white/60">{{ __('social_media.aspect_ratio_label') }}:</span>
                                         <span class="text-[10px] font-medium text-[#007AFF] truncate max-w-[210px]" x-text="getAspectRatioDescription()"></span>
                                     </div>
-                                    <div class="grid grid-cols-4 gap-1 p-1 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-bold">
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 p-1 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-bold">
                                         {{-- 4:5 Feed IG Portrait --}}
                                         <button type="button" @click="previewAspectRatio = '4:5'"
                                             :class="previewAspectRatio === '4:5' ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] shadow-xs ring-1 ring-[#007AFF]/30' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
@@ -1950,7 +1950,7 @@
                 previewAspectRatio: '4:5',
                 mediaFitMode: 'cover',
 
-                // ── Post Preview & Manager Modal ──
+                // -- Post Preview & Manager Modal --
                 postManagerOpen: false,
                 pmPost: {},
                 pmTab: 'preview',

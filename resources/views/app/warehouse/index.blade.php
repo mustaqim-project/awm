@@ -689,7 +689,7 @@ function warehouseIndexHub() {
 
                 {{-- Stats Strip --}}
                 <div class="pt-3.5 border-t border-black/[0.04] dark:border-white/[0.06]">
-                    <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
                         <div class="rounded-[10px] bg-slate-50 dark:bg-[#2C2C2E] p-2">
                             <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase">SKU</span>
                             <span class="text-xs sm:text-sm font-bold tabular-nums text-slate-900 dark:text-white">

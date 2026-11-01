@@ -81,7 +81,7 @@
         {{-- 4A. DESKTOP/TABLET CALENDAR GRID (Hidden on Mobile) --}}
         <div class="hidden sm:block rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-sm">
             {{-- Day Header (Mon - Sun) --}}
-            <div class="grid grid-cols-7 border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] text-center text-[12px] font-semibold text-black/60 dark:text-white/60">
+            <div class="grid sm:grid-cols-7 border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] text-center text-[12px] font-semibold text-black/60 dark:text-white/60">
                 <div class="py-2.5">{{ __('social_media.day_mon') }}</div>
                 <div class="py-2.5">{{ __('social_media.day_tue') }}</div>
                 <div class="py-2.5">{{ __('social_media.day_wed') }}</div>
@@ -92,7 +92,7 @@
             </div>
 
             {{-- Grid Cells --}}
-            <div class="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-black/5 dark:border-white/10">
+            <div class="grid sm:grid-cols-7 auto-rows-fr divide-x divide-y divide-black/5 dark:border-white/10">
                 {{-- Leading empty cells --}}
                 @for ($i = 0; $i < $startDayOfWeek; $i++)
                     <div class="min-h-[110px] sm:min-h-[130px] p-2 bg-black/[0.01] dark:bg-white/[0.01] text-black/20 dark:text-white/20">

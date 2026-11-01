@@ -548,7 +548,7 @@
                 <span class="text-xs font-semibold tracking-tight text-gray-800 dark:text-gray-200">{{ __('billing.invoice_official_title') }}</span>
             </div>
 
-            <div class="grid grid-cols-3 sm:flex sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto shrink-0">
+            <div class="grid grid-cols-1 sm:flex sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto shrink-0">
                 <a href="{{ route('billing.payment.show', $payment) }}"
                     class="min-h-[44px] h-11 sm:h-10 px-3.5 sm:px-4 rounded-[12px] bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] text-xs font-semibold active:scale-[0.98] transition-all text-gray-700 dark:text-gray-300 border border-black/[0.06] dark:border-white/[0.08] cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -888,7 +888,7 @@
                         @if ($isApproved)
                             <div style="margin-top: 12px; text-align: center;">
                                 <div style="display: inline-block; padding: 5px 14px; border: 2px solid #16a34a; color: #16a34a; font-weight: 800; font-size: 11px; font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 8px; transform: rotate(-2deg);">
-                                    ✓ {{ __('billing.stamp_paid_verified') }}
+                                    <i data-lucide="check" class="w-3.5 h-3.5 inline-block mr-1"></i>{{ __('billing.stamp_paid_verified') }}
                                 </div>
                             </div>
                         @endif

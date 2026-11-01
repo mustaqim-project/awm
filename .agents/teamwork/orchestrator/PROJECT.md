@@ -30,11 +30,11 @@
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
 | 0 | Survey & Deep Technical Mapping | Map line numbers, AST patterns, and sub-component boundaries across all 4 phases | none | DONE |
-| 1 | Phase 1: Header & Modal Architecture | 44 Double Header views + 76 Backdrop locations in 21 views | M0 | IN_PROGRESS |
-| 2 | Phase 2: Bento Modals & Table Actions | 127 Form modals + Table action dropdown consolidation | M1 | PLANNED |
-| 3 | Phase 3: Mobile Ergonomics & Grids | 32 views bottom padding + 23 responsive grids + 13 SVG emojis + ≥44px targets | M2 | PLANNED |
-| 4 | Phase 4: POS & HRM Monolith Modularization | `pos/terminal.blade.php` & `hrm/index.blade.php` decomposition | M3 | PLANNED |
-| 5 | Phase 5: Verification & Forensic Audit | `php artisan view:cache`, Blade syntax verification, Forensic Auditor review | M4 | PLANNED |
+| 1 | Phase 1: Header & Modal Architecture | 44 Double Header views + 76 Backdrop locations in 21 views | M0 | DONE |
+| 2 | Phase 2: Bento Modals & Table Actions | 127 Form modals + Table action dropdown consolidation | M1 | DONE |
+| 3 | Phase 3: Mobile Ergonomics & Grids | 32 views bottom padding + 23 responsive grids + 13 SVG emojis + ≥44px targets | M2 | DONE |
+| 4 | Phase 4: POS & HRM Monolith Modularization | `pos/terminal.blade.php` & `hrm/index.blade.php` decomposition | M3 | DONE |
+| 5 | Phase 5: Verification & Forensic Audit | `php artisan view:cache`, Blade syntax verification, Forensic Auditor review | M4 | IN_PROGRESS |
 
 ## Interface Contracts
 ### View Component Contracts

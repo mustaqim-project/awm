@@ -15,7 +15,7 @@
     ];
 @endphp
 
-<div class="space-y-6 pb-16">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-10">
     <x-module-header
         module="feedback"
         :title="$type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features')"

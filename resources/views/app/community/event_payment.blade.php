@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="max-w-5xl mx-auto pb-20 px-3 sm:px-6" x-data="{
+<div class="max-w-5xl mx-auto pb-28 sm:pb-32 lg:pb-10 px-3 sm:px-6" x-data="{
     isPaid: {{ $registration->isPaid() ? 'true' : 'false' }},
     checkingStatus: false,
     feedbackMsg: '',

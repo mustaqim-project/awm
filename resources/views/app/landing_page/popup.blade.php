@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="max-w-[1360px] mx-auto space-y-5 pb-28 sm:pb-32 lg:pb-12" 
+    <div class="max-w-[1360px] mx-auto space-y-5 pb-28 sm:pb-32 lg:pb-10" 
          x-data="storefrontPopupEditor({
              enabled: {{ $landingPage->popup_enabled ? 'true' : 'false' }},
              frequency: '{{ $landingPage->popup_frequency ?? 'once_per_day' }}',

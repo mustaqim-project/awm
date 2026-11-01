@@ -71,19 +71,19 @@
             </div>
             <ul class="space-y-2 text-slate-600 dark:text-slate-300 text-[12px]">
                 <li class="flex items-start gap-2.5">
-                    <span class="w-5 h-5 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                    <span class="w-5 h-5 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     <span><strong>Laporan Keuangan & Laba Rugi:</strong> Membaca ikhtisar pendapatan, beban operasional, dan arus kas.</span>
                 </li>
                 <li class="flex items-start gap-2.5">
-                    <span class="w-5 h-5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                    <span class="w-5 h-5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     <span><strong>Inventori & Stok Produk:</strong> Memeriksa ketersediaan stok, harga jual, dan pergerakan barang.</span>
                 </li>
                 <li class="flex items-start gap-2.5">
-                    <span class="w-5 h-5 rounded-full bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                    <span class="w-5 h-5 rounded-full bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     <span><strong>CRM & Pelanggan:</strong> Melihat riwayat transaksi dan data pelanggan toko Anda.</span>
                 </li>
                 <li class="flex items-start gap-2.5">
-                    <span class="w-5 h-5 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">✓</span>
+                    <span class="w-5 h-5 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3.5 h-3.5"></i></span>
                     <span><strong>Model Context Protocol (MCP):</strong> Menjalankan fungsi otonom COOCA ID yang diizinkan melalui AI.</span>
                 </li>
             </ul>

@@ -988,7 +988,7 @@
                                     <circle cx="102" cy="62" r="7.5" fill="#334155" stroke="#64748b" />
                                     <text x="67" y="32" fill="#ffffff" font-size="9" font-family="system-ui, sans-serif" font-weight="bold" text-anchor="middle">AI CEO</text>
                                     <rect x="42" y="38" width="50" height="10" rx="3" fill="#059669" />
-                                    <text x="67" y="46" fill="#ffffff" font-size="6.5" font-family="system-ui, sans-serif" font-weight="bold" text-anchor="middle">● Leading</text>
+                                    <circle cx="53" cy="44" r="1.5" fill="#ffffff" /><text x="69" y="46" fill="#ffffff" font-size="6.5" font-family="system-ui, sans-serif" font-weight="bold" text-anchor="middle">Leading</text>
                                 </g>
 
                                 <!-- Potted ficus trees flanking CEO desk -->
@@ -1606,7 +1606,7 @@
             <div class="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#0f1d33] border border-black/10 dark:border-white/10 shadow-lg space-y-4">
                 <h3 class="font-bold text-sm text-slate-900 dark:text-white tracking-tight">{{ __('ai.ai_office_status') }}</h3>
                 
-                <div class="grid grid-cols-4 gap-2 text-center">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                     <!-- Total Agents -->
                     <div class="p-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5">
                         <div class="flex items-center justify-center text-blue-500 mb-1">
@@ -2579,12 +2579,12 @@
                         { icon: 'briefcase', label: 'Pipeline B2B', query: 'Bagaimana status negosiasi prospek B2B saat ini?' },
                         { icon: 'target', label: 'Closing Target', query: 'Berapa persen pencapaian target closing sales bulan ini?' },
                         { icon: 'message-circle', label: 'Follow-up Client', query: 'Daftar klien prioritas yang perlu di-follow up hari ini' },
-                        { icon: '⭐', label: 'Retensi Pelanggan', query: 'Analisis repeat order dan loyalitas pelanggan' }
+                        { icon: 'star', label: 'Retensi Pelanggan', query: 'Analisis repeat order dan loyalitas pelanggan' }
                     ],
                     sales: [
                         { icon: 'briefcase', label: 'Closing Harian', query: 'Berapa total transaksi dan closing kasir hari ini?' },
                         { icon: 'message-circle', label: 'Follow-up Pelanggan', query: 'Pelanggan mana saja yang belum menyelesaikan pesanan?' },
-                        { icon: '⭐', label: 'Upselling', query: 'Rekomendasikan paket bundling produk untuk kasir' }
+                        { icon: 'star', label: 'Upselling', query: 'Rekomendasikan paket bundling produk untuk kasir' }
                     ],
                     inventory: [
                         { icon: 'package', label: 'Stok Menipis', query: 'Bahan baku dan barang apa saja yang di bawah safety stock?' },
@@ -2625,7 +2625,7 @@
                     ],
                     customer: [
                         { icon: 'message-circle', label: 'Feedback Tamu', query: 'Bagaimana ulasan dan feedback pelanggan minggu ini?' },
-                        { icon: '⭐', label: 'Loyalty Program', query: 'Berapa banyak member aktif yang menukarkan poin reward?' }
+                        { icon: 'star', label: 'Loyalty Program', query: 'Berapa banyak member aktif yang menukarkan poin reward?' }
                     ]
                 };
 

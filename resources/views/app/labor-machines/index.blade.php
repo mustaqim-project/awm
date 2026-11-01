@@ -802,7 +802,7 @@
                                 <span
                                     class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
                                     Efektivitas Kerja</span>
-                                <div class="grid grid-cols-3 gap-2">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                     <div>
                                         <label
                                             class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
@@ -926,7 +926,7 @@
                                 <span
                                     class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
                                     Efektivitas Kerja</span>
-                                <div class="grid grid-cols-3 gap-2">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                     <div>
                                         <label
                                             class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
@@ -1054,7 +1054,7 @@
                                 <span
                                     class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
                                     Daya &amp; Pemeliharaan</span>
-                                <div class="grid grid-cols-3 gap-2">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                     <div>
                                         <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
                                             (kW)</label>
@@ -1174,7 +1174,7 @@
                                 <span
                                     class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
                                     Daya &amp; Pemeliharaan</span>
-                                <div class="grid grid-cols-3 gap-2">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                     <div>
                                         <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
                                             (kW)</label>

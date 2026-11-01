@@ -251,7 +251,7 @@
                     @click="deleteModalOpen = false"
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4"
+                <div class="relative z-10 w-full max-w-lg lg:max-w-xl bg-white dark:bg-[#1C1C1E] rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4"
                     @click.outside="deleteModalOpen = false">
                     <div class="flex items-start gap-3.5">
                         <div
@@ -315,7 +315,7 @@
                     @click="addMethodModalOpen = false"
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
 
-                <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto"
+                <div class="relative z-10 w-full max-w-lg lg:max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto"
                     @click.outside="addMethodModalOpen = false">
 
                     {{-- Mobile Grab Bar --}}

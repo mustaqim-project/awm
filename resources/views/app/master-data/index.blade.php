@@ -743,7 +743,7 @@
                     <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
                         <h3 class="text-[17px] font-semibold text-black dark:text-white">Tambah {{ $title }}</h3>
                         <button type="button" @click="showAddModal = false"
-                            class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition">✕</button>
+                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-[8px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition cursor-pointer" aria-label="{{ __('common.close') }}"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
 
                     <form method="POST" action="{{ route($type . '.store') }}" class="space-y-4 text-[13px]">
@@ -803,9 +803,7 @@
                                                         ID: <span x-text="addItem.marketplace_category_id"></span>
                                                     </span>
                                                     <button type="button" @click.stop="clearMarketplaceCategoryAdd()" title="Kosongkan pemetaan"
-                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer">
-                                                        ✕
-                                                    </button>
+                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __(\'common.delete\') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
                                                 </div>
                                             </template>
                                         </div>
@@ -957,7 +955,7 @@
                     <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
                         <h3 class="text-[17px] font-semibold text-black dark:text-white">{{ __('common.edit') }} {{ $title }}</h3>
                         <button type="button" @click="showEditModal = false"
-                            class="w-7 h-7 rounded-[6px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition cursor-pointer">✕</button>
+                            class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 sm:w-8 sm:h-8 rounded-[8px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition cursor-pointer" aria-label="{{ __('common.close') }}"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
 
                     <form :action="'/{{ $type }}/' + editItem.id" method="POST" class="space-y-4 text-[13px]">
@@ -1021,9 +1019,7 @@
                                                         ID: <span x-text="editItem.marketplace_category_id"></span>
                                                     </span>
                                                     <button type="button" @click.stop="clearMarketplaceCategoryEdit()" title="Kosongkan pemetaan"
-                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer">
-                                                        ✕
-                                                    </button>
+                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __(\'common.delete\') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
                                                 </div>
                                             </template>
                                         </div>

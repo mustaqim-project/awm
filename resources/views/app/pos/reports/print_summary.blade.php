@@ -500,13 +500,13 @@
                 @php
                     $indTexts = [];
                     if (!empty($tx->vehicle_license_plate)) {
-                        $indTexts[] = '🚗 ' . $tx->vehicle_license_plate . ($tx->vehicle_model ? ' (' . $tx->vehicle_model . ')' : '');
+                        $indTexts[] = '[NOPOL] ' . $tx->vehicle_license_plate . ($tx->vehicle_model ? ' (' . $tx->vehicle_model . ')' : '');
                     }
                     if ($tx->laundry_weight_kg > 0) {
-                        $indTexts[] = '🧺 ' . $tx->laundry_weight_kg . ' kg' . ($tx->rack_location ? ' [' . $tx->rack_location . ']' : '');
+                        $indTexts[] = '[LAUNDRY] ' . $tx->laundry_weight_kg . ' kg' . ($tx->rack_location ? ' [' . $tx->rack_location . ']' : '');
                     }
                     if (empty($indTexts) && !empty($tx->notes)) {
-                        $indTexts[] = '📝 ' . Str::limit($tx->notes, 30);
+                        $indTexts[] = '[CATATAN] ' . Str::limit($tx->notes, 30);
                     }
                     $indSummary = !empty($indTexts) ? implode(' | ', $indTexts) : '-';
                 @endphp

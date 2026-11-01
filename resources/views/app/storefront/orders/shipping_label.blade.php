@@ -337,7 +337,7 @@
             </div>
 
             {{-- 5. PACKAGE DETAILS & FRAGILE NOTICE --}}
-            <div class="grid grid-cols-3 border-b-2 border-black py-1.5 px-2 text-[10.5px] font-bold items-center">
+            <div class="grid grid-cols-1 sm:grid-cols-3 print:grid-cols-3 border-b-2 border-black py-1.5 px-2 text-[10.5px] font-bold items-center">
                 <div>
                     {{ __('storefront.backoffice.shipping_label.weight_label') }}: <span class="font-extrabold text-[12px]">{{ $totalWeightKg }} kg</span>
                 </div>

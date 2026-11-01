@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('finance.external_recon_page_title')])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12"
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10"
     x-data="externalReconApp()"
     x-init="init()">
 

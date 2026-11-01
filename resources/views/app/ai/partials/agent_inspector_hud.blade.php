@@ -33,7 +33,7 @@
                             <span x-text="selectedAgentData.name || selectedAgent"></span>
                             <span class="text-[9px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider"
                                   :class="selectedAgentStatus === 'WORKING' ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30' : (selectedAgentStatus === 'WAITING_APPROVAL' ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30' : 'bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/30')"
-                                  x-text="'● ' + selectedAgentStatus"></span>
+                                  class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full shrink-0" :class="selectedAgentStatus === 'WORKING' ? 'bg-emerald-500' : (selectedAgentStatus === 'WAITING_APPROVAL' ? 'bg-amber-500' : 'bg-blue-500')"></span><span x-text="selectedAgentStatus"></span></span>
                         </div>
                         <div class="text-xs text-slate-500 dark:text-slate-300 font-medium" x-text="selectedAgentData.title || 'Specialized Agent'"></div>
                     </div>

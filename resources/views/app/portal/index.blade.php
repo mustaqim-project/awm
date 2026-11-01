@@ -22,7 +22,7 @@
 @endpush
 
 @section('content')
-<div class="max-w-[1360px] mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-28 sm:pb-32 space-y-6"
+<div class="max-w-[1360px] mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-28 sm:pb-32 lg:pb-10 space-y-6"
     x-data="portalAttendance({
         activeTab: '{{ $activeTab }}',
         todayAttendance: {{ Js::from($todayAttendance) }},

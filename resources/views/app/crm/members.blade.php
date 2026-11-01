@@ -449,7 +449,7 @@
                             </div>
 
                             <!-- Key Metrics 3-Col Mini Bento Grid -->
-                            <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
                                 <!-- Poin Belanja -->
                                 <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
                                     <span class="text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block">{{ __('crm.table_points_balance') }}</span>
@@ -625,7 +625,7 @@
                         </div>
 
                         <!-- Quick Percentage Fill Buttons -->
-                        <div class="grid grid-cols-3 gap-2.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                             <button type="button" @click="setQuickCredit(25)"
                                 class="h-10 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-[13px] font-semibold text-black dark:text-white transition cursor-pointer">
                                 {{ __('crm.quick_25') }}

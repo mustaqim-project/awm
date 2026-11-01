@@ -367,7 +367,7 @@
                 class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
             <div class="relative z-10 min-h-full flex items-center justify-center p-4" @click.self="instantModalOpen = false">
-                <div class="relative w-full max-w-lg rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
+                <div class="relative w-full max-w-lg lg:max-w-2xl rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.25)] space-y-4"
                     @click.away="instantModalOpen = false"
                     x-show="instantModalOpen"
                     x-transition:enter="transition ease-out duration-200"

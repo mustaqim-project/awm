@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6 pb-16" x-data="{
+    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
         showVoucherModal: false,
         copiedCode: null,
 

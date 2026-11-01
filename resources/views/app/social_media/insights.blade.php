@@ -488,7 +488,7 @@
                                 </div>
 
                                 {{-- Metrics Row --}}
-                                <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] grid grid-cols-4 gap-1 text-center text-[10px]">
+                                <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-1 text-center text-[10px]">
                                     <div>
                                         <span class="text-black/45 dark:text-white/45 block">{{ __('social_media.kpi_reach') }}</span>
                                         <span class="font-bold text-black dark:text-white tabular-nums">{{ number_format($tpReach) }}</span>
@@ -1082,7 +1082,7 @@
                                 </button>
                             </div>
 
-                            <div class="grid grid-cols-4 gap-2 pt-2 border-t border-black/5 dark:border-white/5 text-center text-[10px]">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-black/5 dark:border-white/5 text-center text-[10px]">
                                 <div>
                                     <span class="text-black/45 dark:text-white/45 block">{{ __('social_media.kpi_reach') }}</span>
                                     <span class="font-bold text-black dark:text-white tabular-nums" id="mobile-metric-reach-{{ $post->id }}">{{ number_format($pReach) }}</span>

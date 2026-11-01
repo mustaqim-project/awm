@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ai.providers.title') . ''])
 
 @section('content')
-<div class="space-y-6" x-data="aiProvidersApp()">
+<div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="aiProvidersApp()">
 
     <!-- Unified Apple HIG Navigation Hub -->
     @include('app.ai.partials.office_navigation', ['activeOffice' => 'providers'])
