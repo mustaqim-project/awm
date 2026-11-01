@@ -282,7 +282,7 @@
                     class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm space-y-3">
                     <div class="flex items-center justify-between gap-2">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <input type="checkbox" :value="'{{ $order->id }}'" x-model="selectedOrderIds"
+                            <input type="checkbox" value="{{ $order->id }}" x-model="selectedOrderIds"
                                 class="w-4 h-4 rounded border-gray-300 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer shrink-0">
                             <span class="font-mono font-bold text-[14px] text-black dark:text-white">
                                 #{{ $order->order_number }}
@@ -413,7 +413,7 @@
                         @forelse($orders as $order)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
                                 <td class="py-3.5 px-3 text-center" @click.stop>
-                                    <input type="checkbox" :value="'{{ $order->id }}'" x-model="selectedOrderIds"
+                                    <input type="checkbox" value="{{ $order->id }}" x-model="selectedOrderIds"
                                         class="w-4 h-4 rounded border-gray-300 text-[#007AFF] focus:ring-[#007AFF] cursor-pointer">
                                 </td>
                                 <td class="py-3.5 px-4 font-mono font-semibold text-black dark:text-white">

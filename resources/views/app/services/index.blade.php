@@ -333,7 +333,7 @@
                                 <td class="w-10 px-4 py-3.5 text-center">
                                     <label class="flex items-center justify-center cursor-pointer m-0 p-0">
                                         <input type="checkbox"
-                                            :value="'{{ (string) $item->id }}'"
+                                            value="{{ $item->id }}"
                                             x-model="selectedServiceIds"
                                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                     </label>
@@ -452,7 +452,7 @@
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-3 min-w-0 flex-1">
                             <input type="checkbox"
-                                :value="'{{ (string) $item->id }}'"
+                                value="{{ $item->id }}"
                                 x-model="selectedServiceIds"
                                 class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
                             <div class="min-w-0">

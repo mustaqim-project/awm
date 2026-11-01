@@ -1433,7 +1433,7 @@
 
             <!-- Main Page Content -->
             <main id="main-content"
-                class="flex-1 min-w-0 pb-36 lg:pb-10 {{ (request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*')) ? 'p-2 sm:p-4 lg:p-6 max-w-none w-full space-y-4' : 'p-3.5 sm:p-5 md:p-6 lg:p-7 space-y-5 sm:space-y-6 max-w-[1440px] w-full mx-auto' }}">
+                class="flex-1 min-w-0 pb-36 lg:pb-10 {{ (request()->routeIs('cooca-ai.*') || request()->routeIs('ai.*') || request()->routeIs('ai-studio.*')) ? 'p-3.5 sm:p-5 md:p-6 lg:p-7 max-w-none w-full space-y-5 sm:space-y-6' : 'p-3.5 sm:p-5 md:p-6 lg:p-7 space-y-5 sm:space-y-6 max-w-[1440px] w-full mx-auto' }}">
                 {{-- Flash success & error notifications are handled by AppAlert floating toasts in footer scripts to avoid duplicate UI banners --}}
                 @if (isset($errors) && $errors->any())
                     <div

@@ -995,7 +995,7 @@
                                 <td class="w-10 px-4 py-3.5 text-center">
                                     <label class="flex items-center justify-center cursor-pointer m-0 p-0">
                                         <input type="checkbox"
-                                            :value="'{{ (string) $prod->id }}'"
+                                            value="{{ $prod->id }}"
                                             x-model="selectedProductIds"
                                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                     </label>
@@ -1298,7 +1298,7 @@
                         <div class="flex items-center gap-3 min-w-0 flex-1">
                             <label class="cursor-pointer m-0 p-0 flex items-center">
                                 <input type="checkbox"
-                                    :value="'{{ (string) $prod->id }}'"
+                                    value="{{ $prod->id }}"
                                     x-model="selectedProductIds"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
                             </label>

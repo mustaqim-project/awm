@@ -65,9 +65,36 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             });
         }
 
-        // Filter Industri / Target Channel
+        // Filter Industri / Target Channel (Adaptive Multi-Industry Keyword & Tag Matcher)
         if ($request->filled('industry')) {
-            $query->where('industry_target', $request->input('industry'));
+            $industryCode = strtolower(trim((string) $request->input('industry')));
+            $industryKeywords = match ($industryCode) {
+                'event' => ['event', 'wedding', 'nikah', 'dekorasi', 'undangan', 'hampers', 'souvenir', 'catering', 'pelaminan', 'mahar', 'cincin'],
+                'fnb' => ['fnb', 'kuliner', 'makanan', 'minuman', 'cafe', 'kopi', 'restoran', 'coffee', 'food', 'beverage', 'snack', 'cake', 'sambal'],
+                'fashion' => ['fashion', 'konveksi', 'baju', 'hijab', 'busana', 'pakaian', 'batik', 'distro', 'apparel', 'totebag', 'tas'],
+                'beauty' => ['beauty', 'skincare', 'kosmetik', 'kecantikan', 'serum', 'bodycare', 'makeup', 'sunscreen'],
+                'automotive' => ['automotive', 'bengkel', 'otomotif', 'motor', 'mobil', 'oli', 'sparepart', 'detailing'],
+                'service' => ['service', 'jasa', 'salon', 'laundry', 'barbershop', 'cuci', 'spa', 'grooming'],
+                'retail' => ['retail', 'ritel', 'kelontong', 'sembako', 'toko', 'warung', 'minimarket', 'hampers', 'gift'],
+                'pharmacy' => ['pharmacy', 'apotek', 'farmasi', 'herbal', 'obat', 'vitamin', 'madu', 'jamu'],
+                'printing' => ['printing', 'percetakan', 'kemasan', 'packaging', 'stiker', 'banner', 'offset', 'box', 'kraft'],
+                'furniture' => ['furniture', 'kerajinan', 'kayu', 'mebel', 'craft', 'rotan', 'interior', 'meja', 'kursi'],
+                'contractor' => ['contractor', 'kontraktor', 'bangunan', 'konstruksi', 'renovasi', 'material', 'kitchen', 'arsitektur'],
+                'distributor' => ['distributor', 'fmcg', 'grosir', 'agen', 'distribusi', 'logistik', 'pallet'],
+                'agriculture' => ['agriculture', 'pertanian', 'peternakan', 'agro', 'sayur', 'buah', 'pupuk', 'benih', 'hidroponik'],
+                default => [$industryCode],
+            };
+
+            $query->where(function ($q) use ($industryCode, $industryKeywords): void {
+                $q->where('industry_target', $industryCode)
+                    ->orWhere('industry_target', 'like', "%{$industryCode}%");
+
+                foreach ($industryKeywords as $kw) {
+                    $q->orWhere('tags', 'like', "%\"{$kw}\"%")
+                      ->orWhere('title', 'like', "%{$kw}%")
+                      ->orWhere('caption', 'like', "%{$kw}%");
+                }
+            });
         }
 
         // Filter Kata Kunci Pencarian

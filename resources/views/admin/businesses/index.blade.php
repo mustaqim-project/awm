@@ -186,7 +186,7 @@
                                 <td class="w-10 px-4 py-4 text-center">
                                     <label class="flex items-center justify-center cursor-pointer m-0 p-0">
                                         <input type="checkbox"
-                                            :value="'{{ (string) $biz->id }}'"
+                                            value="{{ $biz->id }}"
                                             x-model="selectedIds"
                                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                     </label>
