@@ -85,6 +85,8 @@ final class ReservedSlugService
         'b',
 
         // 4. Public Web, Lead Capture, Marketing & Legal
+        'cooca',
+        'cooca-indonesia',
         'jelajah',
         'direktori',
         'kalkulator',

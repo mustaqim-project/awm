@@ -345,6 +345,27 @@ Route::get('/track/{token}', function (string $token) {
     return redirect()->route('public.storefront.order.track', [$order->business->slug, $token]);
 })->name('public.order.quick_track');
 
+// Official Cooca brand direct alias and canonical home fallback
+Route::get('/cooca-indonesia', function () {
+    $business = \App\Models\Business::where('slug', 'cooca-indonesia')
+        ->where('is_active', true)
+        ->whereNull('suspended_at')
+        ->first();
+
+    if ($business) {
+        $landingPage = \App\Models\BusinessLandingPage::where('business_id', $business->id)->first();
+        if ($landingPage && $landingPage->is_published) {
+            return app(\App\Http\Controllers\Web\Storefront\PublicStorefrontController::class)->home('cooca-indonesia');
+        }
+    }
+
+    return redirect('/', 301);
+});
+
+Route::get('/cooca', function () {
+    return redirect('/', 301);
+});
+
 // 15. Public business landing pages using business name as direct URL slug (Must be last)
 Route::get('/{slug}', [PublicStorefrontController::class, 'home'])
     ->where('slug', '^(?!(pos|admin|api|mcp|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community|live-chat)$)[a-z0-9]+(?:-[a-z0-9]+)*$')

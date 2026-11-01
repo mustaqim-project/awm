@@ -77,6 +77,17 @@ final class SecurityHardeningAuditTest extends TestCase
         $this->assertStringContainsString('https://fonts.gstatic.com', $csp);
         $this->assertStringContainsString('https://tripay.co.id', $csp);
         $this->assertStringContainsString('https://*.tripay.co.id', $csp);
+        $this->assertStringContainsString('https://stats.g.doubleclick.net', $csp);
+        $this->assertStringContainsString('https://*.doubleclick.net', $csp);
+        $this->assertStringContainsString('https://*.google.com', $csp);
+        $this->assertStringContainsString('https://*.google.co.id', $csp);
+    }
+
+    public function test_cooca_indonesia_brand_route_redirects_gracefully_when_no_published_storefront(): void
+    {
+        $response = $this->get('/cooca-indonesia');
+        $response->assertStatus(301);
+        $response->assertRedirect('/');
     }
 
     public function test_social_media_test_suite_status_is_gated(): void
