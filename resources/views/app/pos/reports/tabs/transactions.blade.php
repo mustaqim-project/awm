@@ -145,7 +145,7 @@
                                 @endif
                                 @if ($hasSerial)
                                     <span class="px-1.5 py-0.5 rounded-[5px] bg-[#AF52DE]/10 text-[#AF52DE] font-mono text-[10px]">
-                                        <i data-lucide="tag" class="w-3.5 h-3.5 shrink-0 inline-block mr-1"></i>{{ __(\'pos.reports_meta_imei\') }}
+                                        <i data-lucide="tag" class="w-3.5 h-3.5 shrink-0 inline-block mr-1"></i>{{ __('pos.reports_meta_imei') }}
                                     </span>
                                 @endif
                             </div>

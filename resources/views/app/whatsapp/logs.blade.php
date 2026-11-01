@@ -145,7 +145,7 @@
                                 @endphp
                                 <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors cursor-pointer group"
                                     x-show="filterType === 'all' || filterType === '{{ $log->type }}'"
-                                    @click="inspectLog(@json($logJson))">
+                                    @click='inspectLog(@json($logJson))'>
                                     <td class="px-5 py-3.5">
                                         <div class="font-bold text-black dark:text-white">{{ $log->recipient_name }}</div>
                                         <div class="text-black/50 dark:text-white/50 tabular-nums text-[12px] font-mono">{{ $displayPhone }}</div>
@@ -198,7 +198,7 @@
                                     </td>
                                     <td class="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <div class="flex items-center justify-end">
-                                            <button type="button" @click.stop="inspectLog(@json($logJson))"
+                                            <button type="button" @click.stop='inspectLog(@json($logJson))'
                                                 class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
                                                 title="{{ __('whatsapp.view_detail_log') }}"
                                                 aria-label="{{ __('whatsapp.view_detail_log') }}">
@@ -242,7 +242,7 @@
                             ];
                         @endphp
                         <div x-show="filterType === 'all' || filterType === '{{ $log->type }}'"
-                            @click="inspectLog(@json($logJsonMobile))"
+                            @click='inspectLog(@json($logJsonMobile))'
                             class="p-4 space-y-2.5 active:bg-black/[0.02] dark:active:bg-white/[0.03] transition-colors cursor-pointer">
                             <div class="flex items-start justify-between gap-2">
                                 <div>

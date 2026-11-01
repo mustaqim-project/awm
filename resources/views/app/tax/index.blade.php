@@ -475,7 +475,7 @@
                         <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
                             <div>
                                 <span class="text-xs font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('tax.net_income.results_title') }}</span>
-                                <h4 class="text-lg font-bold text-black dark:text-white" x-text="netIncomeResult ? netIncomeResult.tax_scheme : @json(__('tax.net_income.calculating_fiscal'))"></h4>
+                                <h4 class="text-lg font-bold text-black dark:text-white" x-text="netIncomeResult ? netIncomeResult.tax_scheme : @js(__('tax.net_income.calculating_fiscal'))"></h4>
                             </div>
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-[#007AFF] dark:bg-blue-500/20">
                                 <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
@@ -609,7 +609,7 @@
                             </div>
                             <div class="bg-white dark:bg-[#1C1C1E] p-3.5 rounded-2xl border border-black/10 dark:border-white/10 shadow-xs col-span-2 sm:col-span-1">
                                 <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('tax.umkm.card_exempt_facility') }}</div>
-                                <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1" x-text="umkmResult?.is_under_threshold ? @json(__('tax.umkm.exempt_active')) : @json(__('tax.umkm.exempt_exceeded'))"></div>
+                                <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1" x-text="umkmResult?.is_under_threshold ? @js(__('tax.umkm.exempt_active')) : @js(__('tax.umkm.exempt_exceeded'))"></div>
                             </div>
                         </div>
 
@@ -655,10 +655,10 @@
                     </div>
 
                     <div>
-                        <label for="pph21-gross-wage" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1" x-text="pph21Input.calc_type === 'daily_worker' ? @json(__('tax.pph21.wage_daily')) : (pph21Input.calc_type === 'december' ? @json(__('tax.pph21.wage_annual')) : @json(__('tax.pph21.wage_monthly'))))"></label>
+                        <label for="pph21-gross-wage" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1" x-text="pph21Input.calc_type === 'daily_worker' ? @js(__('tax.pph21.wage_daily')) : (pph21Input.calc_type === 'december' ? @js(__('tax.pph21.wage_annual')) : @js(__('tax.pph21.wage_monthly')))"></label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-xs font-semibold text-black/40 dark:text-white/40">Rp</span>
-                            <input id="pph21-gross-wage" type="number" x-model.number="pph21Input.gross_wage" @input.debounce.300ms="runPph21Sim()" class="w-full pl-10 pr-4 h-11 text-base sm:text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white font-medium focus:ring-2 focus:ring-[#5856D6] focus:border-transparent outline-none">
+                        <label for="pph21-gross-wage" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1" x-text="pph21Input.calc_type === 'daily_worker' ? @js(__('tax.pph21.wage_daily')) : (pph21Input.calc_type === 'december' ? @js(__('tax.pph21.wage_annual')) : @js(__('tax.pph21.wage_monthly')))"></label>
                         </div>
                     </div>
 
@@ -695,7 +695,7 @@
                         <div class="flex items-center justify-between pb-4 border-b border-black/10 dark:border-white/10">
                             <div>
                                 <span class="text-xs font-semibold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('tax.pph21.results_title') }}</span>
-                                <h4 class="text-lg font-bold text-black dark:text-white" x-text="pph21Input.calc_type === 'december' ? @json(__('tax.pph21.results_december')) : @json(__('tax.pph21.results_monthly'))"></h4>
+                                <h4 class="text-lg font-bold text-black dark:text-white" x-text="pph21Input.calc_type === 'december' ? @js(__('tax.pph21.results_december')) : @js(__('tax.pph21.results_monthly'))"></h4>
                             </div>
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-[#5856D6] dark:bg-purple-500/20">
                                 <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
@@ -963,7 +963,7 @@
                                 <div class="text-2xl font-black text-black dark:text-white mt-0.5" x-text="formatRupiah(salesTaxResult?.grand_total)"></div>
                             </div>
                             <div class="text-right text-xs text-black/50 dark:text-white/50">
-                                <div>{{ __('tax.sales.status_label') }} <strong class="text-black dark:text-white" x-text="salesTaxInput.is_inclusive ? @json(__('tax.sales.status_inclusive')) : @json(__('tax.sales.status_exclusive'))"></strong></div>
+                                <div>{{ __('tax.sales.status_label') }} <strong class="text-black dark:text-white" x-text="salesTaxInput.is_inclusive ? @js(__('tax.sales.status_inclusive')) : @js(__('tax.sales.status_exclusive'))"></strong></div>
                             </div>
                         </div>
                     </div>

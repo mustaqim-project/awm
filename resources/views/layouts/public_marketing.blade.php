@@ -127,6 +127,15 @@
     @stack('styles')
 
     <!-- Tailwind CSS with Apple HIG Design System Tokens -->
+        <script>
+        (function() {
+            const _origWarn = console.warn;
+            console.warn = function(...args) {
+                if (args.some(a => typeof a === 'string' && a.indexOf('tailwindcss.com') !== -1)) return;
+                _origWarn.apply(console, args);
+            };
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {

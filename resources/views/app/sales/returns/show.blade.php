@@ -190,7 +190,7 @@
                     class="rounded-[10px] p-3.5 border {{ $return->status === 'draft' ? 'bg-[#FF9500]/8 border-[#FF9500]/20' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5' }} flex items-start gap-3">
                     <div
                         class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 {{ in_array($return->status, ['draft', 'approved', 'completed']) ? 'bg-[#FF9500] text-white' : 'bg-black/10 dark:bg-white/10 text-black/40' }} font-bold text-[11px]">
-                        @if (in_array($return->status, [\'approved\', \'completed\']))<i data-lucide="check" class="w-3.5 h-3.5"></i>@else
+                        @if (in_array($return->status, ['approved', 'completed']))<i data-lucide="check" class="w-3.5 h-3.5"></i>@else
                             1
                         @endif
                     </div>
@@ -207,7 +207,7 @@
                     class="rounded-[10px] p-3.5 border {{ $return->status === 'approved' ? 'bg-[#007AFF]/8 border-[#007AFF]/20' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5' }} flex items-start gap-3">
                     <div
                         class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 {{ in_array($return->status, ['approved', 'completed']) ? 'bg-[#007AFF] text-white' : 'bg-black/10 dark:bg-white/10 text-black/40' }} font-bold text-[11px]">
-                        @if ($return->status === \'completed\')<i data-lucide="check" class="w-3.5 h-3.5"></i>@else 2 @endif
+                        @if ($return->status === 'completed')<i data-lucide="check" class="w-3.5 h-3.5"></i>@else 2 @endif
                     </div>
                     <div>
                         <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('sales.returns.step_2_title') }}</h3>
@@ -223,7 +223,7 @@
                     class="rounded-[10px] p-3.5 border {{ $return->status === 'completed' ? 'bg-[#34C759]/8 border-[#34C759]/20' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5' }} flex items-start gap-3">
                     <div
                         class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 {{ $return->status === 'completed' ? 'bg-[#34C759] text-white' : 'bg-black/10 dark:bg-white/10 text-black/40' }} font-bold text-[11px]">
-                        @if ($return->status === \'completed\')<i data-lucide="check" class="w-3.5 h-3.5"></i>@else 3 @endif
+                        @if ($return->status === 'completed')<i data-lucide="check" class="w-3.5 h-3.5"></i>@else 3 @endif
                     </div>
                     <div>
                         <h3 class="text-[13px] font-semibold text-black dark:text-white">{{ __('sales.returns.step_3_title') }}</h3>

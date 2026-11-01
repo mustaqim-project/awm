@@ -18,7 +18,7 @@
             },
             printMassLabels() {
                 if (this.selectedOrderIds.length === 0) {
-                    if (window.AppAlert) AppAlert.toast(@json(__('storefront.select_order_first')), 'warning');
+                    if (window.AppAlert) AppAlert.toast(@js(__('storefront.select_order_first')), 'warning');
                     return;
                 }
                 const form = document.createElement('form');

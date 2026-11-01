@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => '{{ __('customer.register_heading') }} - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('customer.register_heading') . ' - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-12rem)] py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">

@@ -401,7 +401,7 @@
                             {{ __('inventory.notes_explanation_label') }} <span x-show="reasonCode === 'other'" class="text-[#FF3B30]">*</span>
                         </label>
                         <input type="text" name="notes" x-model="notes"
-                            :placeholder="reasonCode === 'other' ? @json(__('inventory.alasan_detail_placeholder')) : @json(__('inventory.alasan_default_placeholder'))"
+                            :placeholder="reasonCode === 'other' ? @js(__('inventory.alasan_detail_placeholder')) : @js(__('inventory.alasan_default_placeholder'))"
                             :required="reasonCode === 'other'"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                         <p x-show="reasonCode === 'other'" class="text-[11px] text-amber-600 dark:text-amber-400 mt-1">

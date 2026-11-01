@@ -7,11 +7,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('public.partials.seo', [
         'siteName' => $business->name,
-        'title' => '{{ __('storefront.order_status') }} #' . $order->order_number . ' - ' . $business->name,
+        'title' => __('storefront.order_status') . ' #' . $order->order_number . ' - ' . $business->name,
         'description' => 'Pantau rincian status pesanan #' . $order->order_number . ' di ' . $business->name . ' secara real-time. Informasi pembayaran, proses kemas, hingga resi pengiriman.',
         'url' => url("/{$business->slug}/order/{$order->tracking_token}"),
         'image' => $business->logo_url ?: asset('assets/seo/cooca-og-default.jpg'),
-        'imageAlt' => '{{ __('storefront.order_status') }} #' . $order->order_number . ' - ' . $business->name,
+        'imageAlt' => __('storefront.order_status') . ' #' . $order->order_number . ' - ' . $business->name,
         'robots' => 'noindex, follow',
     ])
     <link rel="preconnect" href="https://fonts.googleapis.com">

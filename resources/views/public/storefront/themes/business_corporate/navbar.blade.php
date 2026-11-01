@@ -57,7 +57,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="px-3.5 py-2 rounded-md transition-colors {{ request()->is($business->slug . '/kontak*') ? 'bg-slate-800 text-white font-semibold' : 'text-slate-300 hover:text-white hover:bg-slate-800/60' }}">
-                    {{ $landingPage->getNavLabel('contact', '{{ __('storefront.nav_contact') }} & Kantor') }}
+                    {{ $landingPage->getNavLabel('contact', __('storefront.nav_contact') . ' & Kantor') }}
                 </a>
             @endif
 

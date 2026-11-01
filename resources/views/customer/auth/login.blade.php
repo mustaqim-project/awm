@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing', ['title' => '{{ __('customer.btn_login') }} - COOCA', 'noindex' => true])
+@extends('layouts.public_marketing', ['title' => __('customer.btn_login') . ' - COOCA', 'noindex' => true])
 
 @section('content')
     <div class="min-h-[calc(100vh-14rem)] flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-6 lg:px-8">

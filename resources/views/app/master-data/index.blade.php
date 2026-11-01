@@ -803,7 +803,7 @@
                                                         ID: <span x-text="addItem.marketplace_category_id"></span>
                                                     </span>
                                                     <button type="button" @click.stop="clearMarketplaceCategoryAdd()" title="Kosongkan pemetaan"
-                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __(\'common.delete\') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
+                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __('common.delete') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
                                                 </div>
                                             </template>
                                         </div>
@@ -1019,7 +1019,7 @@
                                                         ID: <span x-text="editItem.marketplace_category_id"></span>
                                                     </span>
                                                     <button type="button" @click.stop="clearMarketplaceCategoryEdit()" title="Kosongkan pemetaan"
-                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __(\'common.delete\') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
+                                                        class="w-5 h-5 rounded-full text-black/40 hover:text-[#FF3B30] hover:bg-black/5 flex items-center justify-center text-[11px] cursor-pointer" aria-label="{{ __('common.delete') }}"><i data-lucide="x" class="w-3 h-3"></i></button>
                                                 </div>
                                             </template>
                                         </div>

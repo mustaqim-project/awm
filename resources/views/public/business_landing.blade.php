@@ -135,6 +135,15 @@
     ?>
 
     {{-- Load the CDN before assigning config so class-based dark mode is registered. --}}
+        <script>
+        (function() {
+            const _origWarn = console.warn;
+            console.warn = function(...args) {
+                if (args.some(a => typeof a === 'string' && a.indexOf('tailwindcss.com') !== -1)) return;
+                _origWarn.apply(console, args);
+            };
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -6877,7 +6886,7 @@
                             class="h-11 px-5 rounded-[14px] bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/15 text-black/70 dark:text-white/70 font-semibold text-[13px] transition cursor-pointer">{{ __('common.cancel') }}</button>
                         <button type="button" @click="goToCheckoutStep({{ $hasBatchFeature ? 2 : 3 }})"
                             class="h-11 px-6 rounded-[14px] bg-brand-primary hover:opacity-90 text-white font-bold text-[13px] transition flex items-center gap-2 shadow-xs cursor-pointer">
-                            <span>{{ $hasBatchFeature ? 'Lanjut ke Jadwal PO' : '{{ __('storefront.btn_proceed_to_payment') }}' }}</span>
+                            <span>{{ $hasBatchFeature ? 'Lanjut ke Jadwal PO' : __('storefront.btn_proceed_to_payment') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -7669,7 +7678,7 @@
                         <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
                         <span class="text-black/70 dark:text-white/70">Akun Terdaftar: <strong
                                 class="text-black dark:text-white">{{ auth('customer')->user()->name }}</strong>
-                            ({{ auth('customer')->user()->phone ?? '{{ __('storefront.no_wa_number') }}' }})</span>
+                            ({{ auth('customer')->user()->phone ?? __('storefront.no_wa_number') }})</span>
                     </div>
                     @if (!auth('customer')->user()->isPhoneVerified())
                         <a href="{{ route('customer.otp') }}"

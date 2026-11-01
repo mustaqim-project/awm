@@ -1,4 +1,4 @@
-@extends('layouts.customer', ['title' => '{{ __('customer.orders_history_title') }}'])
+@extends('layouts.customer', ['title' => __('customer.orders_history_title')])
 
 @section('content')
 <div class="space-y-6">

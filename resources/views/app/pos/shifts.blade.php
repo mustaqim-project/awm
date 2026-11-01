@@ -93,17 +93,17 @@
             const data = await res.json();
             if (data.success) {
                 if (window.AppAlert) {
-                    window.AppAlert.success(data.message || @json(__('pos.print_shift_success')));
+                    window.AppAlert.success(data.message || @js(__('pos.print_shift_success')));
                 }
             } else {
                 if (window.AppAlert) {
-                    window.AppAlert.error(data.message || @json(__('pos.print_shift_error')));
+                    window.AppAlert.error(data.message || @js(__('pos.print_shift_error')));
                 }
             }
         } catch (e) {
             console.error(e);
             if (window.AppAlert) {
-                window.AppAlert.error(@json(__('pos.printer_connection_error')));
+                window.AppAlert.error(@js(__('pos.printer_connection_error')));
             }
         } finally {
             this.isPrinting = false;

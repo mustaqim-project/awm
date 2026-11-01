@@ -251,7 +251,7 @@
                                         </button>
                                     </form>
                                     @else
-                                    <span class=\"inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $filter->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}\"><span class=\"w-1.5 h-1.5 rounded-full {{ $filter->is_active ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}\"></span>{{ $filter->is_active ? 'Aktif' : 'Nonaktif' }}</span>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold {{ $filter->is_active ? 'bg-[#34C759]/15 text-[#34C759] dark:text-[#30D158]' : 'bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50' }}"><span class="w-1.5 h-1.5 rounded-full {{ $filter->is_active ? 'bg-[#34C759]' : 'bg-black/40 dark:bg-white/40' }}"></span>{{ $filter->is_active ? 'Aktif' : 'Nonaktif' }}</span>
                                     @endif
                                 </td>
 
