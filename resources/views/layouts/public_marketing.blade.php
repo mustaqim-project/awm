@@ -44,11 +44,11 @@
         $siteTagline = \App\Models\SystemSetting::get('site_tagline') ?: __('public_marketing.brand_tagline_full');
         $seoMetaTitle = \App\Models\SystemSetting::get(
             'seo_meta_title',
-            'COOCA: Aplikasi Kasir POS & Software ERP UMKM Indonesia',
+            'COOCA: Platform Omnichannel & ERP untuk UMKM Indonesia',
         );
         $seoMetaDesc = \App\Models\SystemSetting::get(
             'seo_meta_description',
-            'COOCA: Aplikasi kasir online gratis, pencatatan stok barang, dan laporan keuangan otomatis untuk UMKM Indonesia.',
+            'Platform Omnichannel & ERP all-in-one untuk UMKM Indonesia. Kelola kasir POS, marketplace, stok multi-cabang, resep BOM, akuntansi otomatis & WhatsApp CRM.',
         );
         $seoAuthor = \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia');
         $seoRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
@@ -99,7 +99,7 @@
 
     <!-- Google Analytics (GA4) -->
     @if (!empty($seoGaId))
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $seoGaId }}"></script>
+
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -108,6 +108,26 @@
             }
             gtag('js', new Date());
             gtag('config', '{{ $seoGaId }}');
+
+            (function() {
+                var loaded = false;
+                function loadGtag() {
+                    if (loaded) return;
+                    loaded = true;
+                    var script = document.createElement('script');
+                    script.async = true;
+                    script.src = 'https://www.googletagmanager.com/gtag/js?id={{ $seoGaId }}';
+                    document.head.appendChild(script);
+                }
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(function() { setTimeout(loadGtag, 1800); }, { timeout: 3500 });
+                } else {
+                    window.addEventListener('load', function() { setTimeout(loadGtag, 2000); });
+                }
+                ['scroll', 'touchstart', 'mousemove', 'keydown'].forEach(function(evt) {
+                    window.addEventListener(evt, loadGtag, { once: true, passive: true });
+                });
+            })();
         </script>
     @endif
 

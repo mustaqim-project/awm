@@ -18,11 +18,11 @@ return [
 
     'pages' => [
         '/' => [
-            'title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
-            'h1' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem Cepat',
-            'description' => 'Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp & toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.',
-            'og_title' => 'COOCA: Aplikasi Kasir, Stok & Pembukuan UMKM Gratis',
-            'og_description' => 'Satu aplikasi untuk kasir POS, stok, pembukuan, WhatsApp & toko online UMKM. Gratis selamanya untuk mulai, tanpa kartu kredit. Siap dipakai 2 menit.',
+            'title' => 'COOCA: Platform Omnichannel & ERP untuk UMKM Indonesia',
+            'h1' => 'Platform Omnichannel & ERP Modern: Kendalikan Seluruh Bisnis UMKM Anda',
+            'description' => 'Platform Omnichannel & ERP all-in-one untuk UMKM. Kelola kasir POS, sinkronisasi marketplace, stok multi-gudang, resep produksi BOM, akuntansi otomatis & WhatsApp CRM tanpa spreadsheet.',
+            'og_title' => 'COOCA: Platform Omnichannel & ERP untuk UMKM Indonesia',
+            'og_description' => 'Platform Omnichannel & ERP all-in-one untuk UMKM. Kelola kasir POS, sinkronisasi marketplace, stok multi-gudang, resep produksi BOM, akuntansi otomatis & WhatsApp CRM tanpa spreadsheet.',
         ],
 
         '/pricing' => [

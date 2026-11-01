@@ -9,9 +9,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'hero_kicker' => 'Aplikasi Kasir, Stok & Pembukuan UMKM',
-    'hero_title' => 'Aplikasi Kasir UMKM: Kasir, Stok & Pembukuan dalam Satu Sistem Cepat',
-    'hero_subtitle' => 'Cukup dari HP, tablet, atau laptop. Catat transaksi kasir, potong stok otomatis, pantau laba harian, dan kendalikan operasional toko dengan bantuan Asisten AI tanpa spreadsheet terpisah.',
+    'hero_kicker' => 'Platform Omnichannel & ERP All-in-One UMKM',
+    'hero_title' => 'Platform Omnichannel & ERP Modern: Kendalikan Seluruh Bisnis UMKM Anda',
+    'hero_subtitle' => 'Bukan sekadar kasir biasa. Sinkronisasi transaksi toko fisik, marketplace, stok multi-gudang, resep produksi (BOM), hingga laporan keuangan otomatis dan CRM WhatsApp dalam satu layar praktis. Bebas repot tanpa spreadsheet terpisah.',
     'hero_cta_primary' => 'Mulai Coba Gratis',
     'hero_cta_secondary' => 'Lihat Cara Kerja Sistem',
     'btn_dashboard' => 'Dashboard',
@@ -19,7 +19,7 @@ return [
     'hero_trust_free' => 'Gratis Mulai Rp0',
     'hero_trust_card' => 'Tanpa Kartu Kredit',
     'hero_trust_time' => 'Siap Dipakai 2 Menit',
-    'hero_trust_device' => 'Jalan di HP Android & PC',
+    'hero_trust_device' => 'Akses Fleksibel di HP & PC',
     'hero_social_proof_count' => 'Dari :users Pemilik Usaha & UMKM',
 
     // Trust badge fallback
