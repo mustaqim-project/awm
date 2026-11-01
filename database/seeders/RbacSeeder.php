@@ -36,6 +36,10 @@ final class RbacSeeder extends Seeder
             'products.delete'             => ['Hapus Produk',                           'products',    'Menghapus produk dari katalog.'],
             'products.manage'             => ['Kelola Produk & BOM Lengkap',            'products',    'Akses lengkap manajemen produk, BOM, dan resep.'],
 
+            // ─── Layanan & Servis (Workshop / Service) ───────────────
+            'services.view'               => ['Lihat Layanan & Jasa',                   'services',    'Melihat daftar layanan, tarif jasa, dan order kerja.'],
+            'services.manage'             => ['Kelola Layanan & Jasa',                  'services',    'Menambah, mengedit, dan menghapus layanan jasa serta tarif.'],
+
             // ─── Materials / Bahan Baku ───────────────────────────────
             'materials.view'              => ['Lihat Bahan Baku',                       'materials',   'Melihat daftar bahan baku dan harga.'],
             'materials.create'            => ['Tambah Bahan Baku',                      'materials',   'Menambahkan bahan baku baru.'],
@@ -207,6 +211,8 @@ final class RbacSeeder extends Seeder
             'products.create',
             'products.edit',
             'products.manage',
+            'services.view',
+            'services.manage',
             'materials.view',
             'materials.create',
             'materials.edit',

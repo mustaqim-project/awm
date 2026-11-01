@@ -195,7 +195,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::delete('/products/{product}/gallery/{image}', [ProductWebController::class, 'deleteGalleryImage'])->middleware('require.permission:products.edit')->name('products.gallery.destroy');
 
         // Jasa & Layanan Management
-        Route::middleware('require.permission:products.view')->group(function (): void {
+        Route::middleware(['module:service_workshop'])->group(function (): void {
             Route::get('/services', [ServiceWebController::class, 'index'])->name('services.index');
         });
         Route::post('/services/bulk-action', [ServiceWebController::class, 'bulkAction'])->middleware('require.permission:products.edit')->name('services.bulk-action');
@@ -1008,7 +1008,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // Omnichannel Storefront & Order Management
-        Route::prefix('storefront')->name('storefront.')->middleware(['module:storefront_checkout', 'require.permission:storefront.orders.view'])->group(function (): void {
+        Route::prefix('storefront')->name('storefront.')->group(function (): void {
+            // Storefront Orders & Dispatches
+            Route::middleware(['module:storefront_checkout', 'require.permission:storefront.orders.view'])->group(function (): void {
             Route::get('/orders', [MerchantOrderController::class, 'index'])->name('orders.index');
             Route::get('/orders/export-dispatch', [MerchantOrderController::class, 'exportDispatch'])->name('orders.export-dispatch');
             Route::match(['get', 'post'], '/orders/mass-shipping-label', [MerchantOrderController::class, 'massShippingLabel'])->name('orders.mass_shipping_label');
@@ -1026,6 +1028,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/orders/{order}/biteship/cancel', [MerchantOrderController::class, 'cancelBiteshipOrder'])->middleware('require.permission:storefront.orders.process')->name('orders.biteship.cancel');
             Route::get('/proofs/{proof}/stream', [MerchantOrderController::class, 'streamProof'])->name('proofs.stream');
 
+            });
+
+            // Merchant Shipping Rules
             Route::middleware(['module:merchant_shipping', 'require.permission:storefront.shipping.manage'])->group(function (): void {
                 Route::get('/shipping', [MerchantShippingRuleController::class, 'index'])->name('shipping.index');
                 Route::post('/shipping/origin', [MerchantShippingRuleController::class, 'saveOrigin'])->name('shipping.origin.save');

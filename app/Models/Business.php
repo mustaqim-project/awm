@@ -470,22 +470,23 @@ class Business extends Model
 
     /**
      * Determine if a functional module is enabled for this business.
+     * Owner explicit preference ($this->disabled_modules) takes highest precedence.
      */
     public function isModuleEnabled(string $moduleKey): bool
     {
-        // Reservation module gating:
-        // Requires a designated industry that supports reservations or bookings.
-        // If the business has no industry or its industry does not support reservations, disable it.
-        if ($moduleKey === \App\Domain\Template\ModuleRegistry::MODULE_RESERVATION) {
-            if (! $this->hasIndustry() || ! $this->supportsReservation()) {
-                return false;
-            }
-        }
-
         $disabled = $this->disabled_modules;
 
-        if ($disabled === null && ! empty($this->template_code)) {
-            $disabled = \App\Domain\Template\ModuleRegistry::getDisabledModulesForTemplate($this->template_code);
+        if ($disabled === null) {
+            // Default template behavior for fresh tenants
+            if ($moduleKey === \App\Domain\Template\ModuleRegistry::MODULE_RESERVATION) {
+                if (! $this->hasIndustry() || ! $this->supportsReservation()) {
+                    return false;
+                }
+            }
+
+            if (! empty($this->template_code)) {
+                $disabled = \App\Domain\Template\ModuleRegistry::getDisabledModulesForTemplate($this->template_code);
+            }
         }
 
         $disabled = $disabled ?? [];
@@ -506,14 +507,21 @@ class Business extends Model
      */
     public function isPermissionEnabled(string $permissionSlug): bool
     {
-        $moduleKey = \App\Domain\Template\ModuleRegistry::getModuleForPermission($permissionSlug);
+        $moduleKeys = \App\Domain\Template\ModuleRegistry::getModulesForPermission($permissionSlug);
 
         // If permission doesn't belong to any toggleable module (core permission), it's always enabled
-        if ($moduleKey === null) {
+        if (empty($moduleKeys)) {
             return true;
         }
 
-        return $this->isModuleEnabled($moduleKey);
+        // If permission belongs to one or more modules, it's enabled if ANY of those modules is enabled
+        foreach ($moduleKeys as $moduleKey) {
+            if ($this->isModuleEnabled($moduleKey)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -743,9 +751,14 @@ class Business extends Model
 
     /**
      * Determine if this business supports full F&B dine-in features (tables, reservations, KDS, order QR).
+     * If owner explicitly enabled MODULE_POS_DINEIN, allow dine-in features.
      */
     public function hasDineInFeature(): bool
     {
+        if ($this->disabled_modules !== null && ! in_array(\App\Domain\Template\ModuleRegistry::MODULE_POS_DINEIN, $this->disabled_modules, true)) {
+            return true;
+        }
+
         if (! $this->isFoodIndustry()) {
             return false;
         }
@@ -832,7 +845,7 @@ class Business extends Model
      */
     public function hasIndustry(): bool
     {
-        if (! empty($this->template_code) || ! empty($this->industry_category)) {
+        if (! empty($this->template_code) || ! empty($this->industry_category) || $this->disabled_modules !== null) {
             return true;
         }
 
@@ -847,10 +860,15 @@ class Business extends Model
     /**
      * Determine whether this business supports reservations or appointments based on its industry.
      * Supported: F&B Dine-in, Workshop, Barbershop, Detailing, Event, Custom Tailor.
-     * If no industry is defined or the industry is not in this list, returns false.
+     * If owner has explicitly configured modules, owner sovereignty governs.
      */
     public function supportsReservation(): bool
     {
+        // If owner explicitly configured modules, owner sovereignty governs
+        if ($this->disabled_modules !== null) {
+            return ! in_array(\App\Domain\Template\ModuleRegistry::MODULE_RESERVATION, $this->disabled_modules, true);
+        }
+
         if (! $this->hasIndustry()) {
             return false;
         }

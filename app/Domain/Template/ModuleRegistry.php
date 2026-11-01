@@ -232,9 +232,8 @@ final class ModuleRegistry
                 'icon' => 'briefcase',
                 'category' => 'Layanan & Jasa',
                 'permissions' => [
-                    'products.view',
-                    'products.create',
-                    'products.edit',
+                    'services.view',
+                    'services.manage',
                 ],
             ],
         ];
@@ -807,17 +806,30 @@ final class ModuleRegistry
     }
 
     /**
-     * Check which module a specific permission belongs to.
+     * Get all module keys that contain the given permission slug.
+     *
+     * @return array<int, string>
      */
-    public static function getModuleForPermission(string $permissionSlug): ?string
+    public static function getModulesForPermission(string $permissionSlug): array
     {
+        $modules = [];
         foreach (self::definitions() as $moduleKey => $meta) {
             if (in_array($permissionSlug, $meta['permissions'], true)) {
-                return $moduleKey;
+                $modules[] = $moduleKey;
             }
         }
 
-        return null;
+        return $modules;
+    }
+
+    /**
+     * Check which primary module a specific permission belongs to.
+     */
+    public static function getModuleForPermission(string $permissionSlug): ?string
+    {
+        $modules = self::getModulesForPermission($permissionSlug);
+
+        return $modules[0] ?? null;
     }
 
     /**
