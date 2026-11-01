@@ -600,4 +600,37 @@
     .sidebar-tenant-inner {
         min-width: 0 !important;
     }
+
+    /* 5. Secondary Sidebar (macOS Sonoma Source List Polish) */
+    #secondary-sidebar nav a[aria-current="page"] {
+        background-color: #007AFF !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.28) !important;
+    }
+
+    #secondary-sidebar nav a[aria-current="page"] i,
+    #secondary-sidebar nav a[aria-current="page"] svg {
+        color: #FFFFFF !important;
+    }
+
+    #secondary-sidebar a:focus-visible,
+    #secondary-sidebar button:focus-visible {
+        outline: 2px solid rgba(0, 122, 255, 0.65) !important;
+        outline-offset: 2px !important;
+        border-radius: 0.5rem !important;
+    }
+
+    .dark #secondary-sidebar a:focus-visible,
+    .dark #secondary-sidebar button:focus-visible {
+        outline-color: rgba(10, 132, 255, 0.85) !important;
+    }
+
+    /* 6. Suppress Primary Sidebar Flyout when Secondary Sidebar is Visible on Desktop */
+    @media (min-width: 1024px) {
+        body:has(#secondary-sidebar:not([style*="display: none"])) .app-sidebar.is-collapsed .sidebar-flyout-wrapper {
+            display: none !important;
+            pointer-events: none !important;
+        }
+    }
 </style>

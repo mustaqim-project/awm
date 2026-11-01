@@ -291,7 +291,16 @@
             marketingOpen: {{ ($isChannelsRoute || (isset($isMarketingRoute) && $isMarketingRoute)) ? 'true' : 'false' }},
             reportsOpen: {{ (request()->routeIs('reports.*') || request()->routeIs('analytics.*') || request()->routeIs('pos.reports.*') || request()->routeIs('tax.*')) ? 'true' : 'false' }},
             settingsOpen: {{ $isSettingsRoute ? 'true' : 'false' }},
-            activeFlyout: null
+            _activeFlyout: null,
+            get activeFlyout() {
+                if (typeof secondarySidebarCollapsed !== 'undefined' && !secondarySidebarCollapsed && {{ $hasSecondaryNav ? 'true' : 'false' }}) {
+                    return null;
+                }
+                return this._activeFlyout;
+            },
+            set activeFlyout(val) {
+                this._activeFlyout = val;
+            }
         }">
 
         {{-- ======================================================== --}}
@@ -329,11 +338,18 @@
                                 @click="sidebarOpen = false"
                                 data-subnav-key="{{ $mTab['key'] }}"
                                 data-active-mobile-subnav="{{ $mTab['is_active'] ? 'true' : 'false' }}"
+                                aria-current="{{ $mTab['is_active'] ? 'page' : 'false' }}"
                                 class="flex items-center justify-between px-3 py-2 rounded-[10px] text-[12.5px] font-medium transition-all {{ $mTab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-xs' : 'text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5' }}">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <span class="w-4.5 h-4.5 rounded-[5px] flex items-center justify-center text-[10px] font-mono {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60 font-medium' }}">
-                                        {{ $idx + 1 }}
-                                    </span>
+                                    @if (!empty($mTab['icon']))
+                                        <span class="w-5 h-5 rounded-[6px] flex items-center justify-center shrink-0 {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">
+                                            <i data-lucide="{{ $mTab['icon'] }}" class="w-3.5 h-3.5"></i>
+                                        </span>
+                                    @else
+                                        <span class="w-4.5 h-4.5 rounded-[5px] flex items-center justify-center text-[10px] font-mono {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60 font-medium' }}">
+                                            {{ $idx + 1 }}
+                                        </span>
+                                    @endif
                                     <span class="truncate">{{ $mTab['label'] }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 shrink-0 ml-1">
