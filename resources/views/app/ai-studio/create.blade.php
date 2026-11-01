@@ -416,12 +416,12 @@
                         @else
                             <div x-show="!selectedInspirationId" class="p-4 rounded-[14px] border border-dashed border-black/15 dark:border-white/15 text-center space-y-2">
                                 <p class="text-xs text-black/60 dark:text-white/60">
-                                    Pilih template foto produk/makanan dari 197 inspirasi viral terkurasi COOCA.
+                                    Pilih template visual terkurasi COOCA dari 240+ inspirasi lintas 20+ sektor bisnis (F&amp;B, Bengkel, Salon, Apotek, Fashion, dll.).
                                 </p>
-                                <a href="{{ route('ai-studio.inspiration.index') }}"
+                                <a href="{{ route('ai-studio.inspiration.index', array_filter(['industry' => isset($business) && method_exists($business, 'getAiStudioIndustryTarget') ? $business->getAiStudioIndustryTarget() : null])) }}"
                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] text-xs font-semibold text-black/80 dark:text-white transition-all">
                                     <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('ai.pilih_di_galeri_inspirasi_197_template') }}</span>
+                                    <span>Pilih di Galeri Inspirasi Multi-Industri</span>
                                 </a>
                             </div>
                         @endif
