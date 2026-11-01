@@ -298,7 +298,13 @@ final class InspirationHarvesterService
         $wasDownloaded = false;
 
         $remoteImageUrl = (string) ($data['canonical_url'] ?? $data['thumbnail_url'] ?? '');
-        $localAssetUrl = $remoteImageUrl;
+        $safeExtId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $data['external_id']);
+        $parsedPath = parse_url($remoteImageUrl, PHP_URL_PATH) ?? '';
+        $ext = strtolower(pathinfo($parsedPath, PATHINFO_EXTENSION));
+        if (! in_array($ext, ['webp', 'jpg', 'jpeg', 'png', 'avif'], true)) {
+            $ext = 'jpg';
+        }
+        $localAssetUrl = "/storage/ai-studio/inspirations/{$source->code}/{$safeExtId}.{$ext}";
 
         if ($downloadAssets && ! empty($remoteImageUrl)) {
             $localAssetUrl = $this->downloadAndLocalizeAsset(
@@ -328,7 +334,7 @@ final class InspirationHarvesterService
                     'category_id' => $categoryId,
                     'title' => (string) ($data['title'] ?? 'Inspirasi Visual'),
                     'caption' => Str::limit((string) ($data['caption'] ?? $rawPrompt), 500),
-                    'canonical_url' => $remoteImageUrl,
+                    'canonical_url' => $localAssetUrl,
                     'thumbnail_url' => $localAssetUrl,
                     'media_type' => (string) ($data['media_type'] ?? 'image'),
                     'media_urls' => [$localAssetUrl],

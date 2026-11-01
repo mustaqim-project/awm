@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="50%" stop-color="#27272a"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#007AFF" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5856D6" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  
+  <!-- Subtle Grid -->
+  <circle cx="400" cy="380" r="160" fill="url(#glow)" filter="blur(40px)"/>
+  <rect x="260" y="240" width="280" height="280" rx="32" fill="#27272a" stroke="#3f3f46" stroke-width="2"/>
+  
+  <!-- Camera / Sparkles Icon -->
+  <path d="M360 330 L380 300 L420 300 L440 330 L480 330 C491 330 500 339 500 350 L500 440 C500 451 491 460 480 460 L320 460 C309 460 300 451 300 440 L300 350 C300 339 309 330 320 330 Z" fill="none" stroke="#a1a1aa" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="400" cy="395" r="35" fill="none" stroke="#007AFF" stroke-width="6"/>
+  <circle cx="455" cy="355" r="6" fill="#007AFF"/>
+  
+  <!-- Text Label -->
+  <text x="400" y="570" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="600" fill="#f4f4f5" text-anchor="middle" letter-spacing="0.5">COOCA AI STUDIO</text>
+  <text x="400" y="600" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#71717a" text-anchor="middle">Visual Inspiration Asset</text>
+</svg>
+

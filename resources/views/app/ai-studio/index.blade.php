@@ -256,8 +256,8 @@
                         @if ($primaryAsset && $primaryAsset->output_image_url)
                             <img src="{{ $primaryAsset->output_image_url }}" alt="{{ $project->name }}"
                                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                        @elseif ($referenceItem && ($referenceItem->thumbnail_url || $referenceItem->canonical_url))
-                            <img src="{{ $referenceItem->thumbnail_url ?? $referenceItem->canonical_url }}" alt="{{ $project->name }}"
+                        @elseif ($referenceItem)
+                            <img src="{{ $referenceItem->display_image_url }}" alt="{{ $project->name }}"
                                 class="w-full h-full object-cover opacity-80 filter blur-[0.5px] transition-transform duration-300 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
                                 <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-black/60 text-white backdrop-blur-sm">

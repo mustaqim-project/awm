@@ -135,7 +135,7 @@
                     $analysis = $item->visualAnalysis;
                     $score = $item->trendScore?->trend_score ?? 85;
                     $source = $item->source;
-                    $imgUrl = $item->thumbnail_url ?: $item->canonical_url;
+                    $imgUrl = $item->display_image_url;
                 @endphp
                 <div class="group rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 overflow-hidden flex flex-col justify-between transition-all hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-black/15 dark:hover:border-white/20">
                     <!-- Image Box with Badges & Hover Overlay -->

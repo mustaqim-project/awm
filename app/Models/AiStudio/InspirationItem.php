@@ -106,4 +106,57 @@ class InspirationItem extends Model
     {
         return $this->hasMany(BusinessInspirationProject::class, 'inspiration_item_id');
     }
+
+    /**
+     * Resolusi URL aset visual lokal yang dijamin aman terhadap Content Security Policy (CSP).
+     */
+    public function getDisplayImageUrlAttribute(): string
+    {
+        $url = (string) ($this->thumbnail_url ?: $this->canonical_url);
+
+        if (str_starts_with($url, '/storage/')) {
+            return $url;
+        }
+
+        $sourceCode = $this->source?->code ?? 'general';
+        $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $this->external_id);
+        $localRelPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.jpg";
+
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localRelPath)) {
+            return "/storage/{$localRelPath}";
+        }
+
+        return ! empty($url) && str_starts_with($url, '/') ? $url : '/images/ai-studio/placeholder.svg';
+    }
+
+    public function getThumbnailUrlAttribute(?string $value): string
+    {
+        if (empty($value) || str_starts_with($value, '/storage/')) {
+            return $value ?? '/images/ai-studio/placeholder.svg';
+        }
+
+        if (str_starts_with($value, 'http')) {
+            $sourceCode = $this->source?->code ?? 'general';
+            $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $this->external_id);
+            $localPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.jpg";
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localPath)) {
+                return "/storage/{$localPath}";
+            }
+        }
+
+        return $value;
+    }
+
+    public function getCanonicalUrlAttribute(?string $value): string
+    {
+        if (empty($value) || str_starts_with($value, '/storage/')) {
+            return $value ?? ($this->thumbnail_url ?? '/images/ai-studio/placeholder.svg');
+        }
+
+        if (str_starts_with($value, 'http')) {
+            return $this->thumbnail_url;
+        }
+
+        return $value;
+    }
 }

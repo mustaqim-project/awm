@@ -396,7 +396,7 @@
                     <div x-show="referenceTab === 'gallery'" class="space-y-3">
                         @if ($selectedInspiration)
                             <div x-show="selectedInspirationId" class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 flex items-center gap-3">
-                                <img src="{{ $selectedInspiration->thumbnail_url ?: $selectedInspiration->canonical_url }}" alt="{{ $selectedInspiration->title }}"
+                                <img src="{{ $selectedInspiration->display_image_url }}" alt="{{ $selectedInspiration->title }}"
                                     class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10">
                                 <div class="flex-1 min-w-0 space-y-0.5">
                                     <h4 class="text-xs font-bold text-black dark:text-white truncate">{{ $selectedInspiration->title }}</h4>

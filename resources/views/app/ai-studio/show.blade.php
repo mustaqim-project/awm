@@ -317,7 +317,7 @@
 
                 @if ($referenceItem)
                     <div class="p-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center gap-3">
-                        <img src="{{ $referenceItem->thumbnail_url ?: $referenceItem->canonical_url }}" alt="{{ $referenceItem->title }}"
+                        <img src="{{ $referenceItem->display_image_url }}" alt="{{ $referenceItem->title }}"
                             class="w-12 h-12 rounded-[10px] object-cover shrink-0 border border-black/10">
                         <div class="min-w-0 flex-1">
                             <h5 class="text-xs font-bold text-black dark:text-white truncate">{{ $referenceItem->title }}</h5>

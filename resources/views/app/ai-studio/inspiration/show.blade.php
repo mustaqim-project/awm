@@ -33,7 +33,7 @@
         <!-- Column Left: Visual Showcase (5 Cols) -->
         <div class="lg:col-span-5 space-y-4">
             <div class="rounded-[20px] overflow-hidden bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 shadow-lg relative group">
-                <img src="{{ $item->canonical_url ?: $item->thumbnail_url }}" alt="{{ $item->title }}"
+                <img src="{{ $item->display_image_url }}" alt="{{ $item->title }}"
                     class="w-full h-auto object-cover max-h-[580px]">
 
                 <!-- Verified License Floating Pill -->
