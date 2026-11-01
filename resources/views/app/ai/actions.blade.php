@@ -110,7 +110,7 @@
                                 <span>{{ __('ai.actions.cost_estimate') }}: <strong class="text-black dark:text-white font-mono">Rp {{ number_format((float)$prop->estimated_cost, 0, ',', '.') }}</strong></span>
                             @endif
                             &bull;
-                            <span>{{ __('ai.actions.time') }}: {{ $prop->created_at->diffForHumans() }}</span>
+                            <span>{{ __('ai.actions.time') }}: {{ $prop->created_at?->diffForHumans() ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -712,7 +712,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                    window.AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
                 }
             } finally {
                 this.isSubmitting = false;
@@ -776,7 +776,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                    window.AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
                 }
             } finally {
                 this.isSubmitting = false;
@@ -830,7 +830,7 @@ function actionCenterApp() {
                 }
             } catch (err) {
                 if (window.AppAlert) {
-                    window.AppAlert.error('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                    window.AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
                 }
             } finally {
                 this.isSubmitting = false;

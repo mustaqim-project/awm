@@ -496,23 +496,22 @@
 
 </div>
 
-@push('scripts')
 <script>
 function aiStudioCreateProject() {
     return {
         projectName: @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ($selectedProduct ? 'Fotografi ' . $selectedProduct->name : '')),
-        targetChannel: '{{ ($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "9:16" ? "tiktok" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "16:9" ? "banner" : (($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "") === "4:5" ? "facebook" : "instagram")) }}',
-        aspectRatio: '{{ $selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? "1:1" }}',
+        targetChannel: @json(($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '9:16' ? 'tiktok' : ((($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '16:9') ? 'banner' : ((($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '4:5') ? 'facebook' : 'instagram'))),
+        aspectRatio: @json($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '1:1'),
         stylePreset: 'clean_commercial',
         customNotes: @json($selectedInspiration?->visualAnalysis?->extracted_style_prompt ?? ''),
-        selectedProductId: '{{ $selectedProduct?->id ?? "" }}',
+        selectedProductId: @json($selectedProduct?->id ?? ''),
         productRole: 'hero_product',
-        selectedInspirationId: '{{ $selectedInspiration?->id ?? "" }}',
+        selectedInspirationId: @json($selectedInspiration?->id ?? ''),
         selectedProvider: 'ideogram',
         selectedModel: 'ideogram-v2',
         estimatedCost: 15,
-        userCredits: {{ $creditsBalance }},
-        canAfford: {{ $creditsBalance >= 15 ? 'true' : 'false' }},
+        userCredits: {{ (int) ($creditsBalance ?? 0) }},
+        canAfford: {{ (int) ($creditsBalance ?? 0) >= 15 ? 'true' : 'false' }},
 
         // Objek Produk & Upload State
         productTab: 'catalog',
@@ -538,7 +537,7 @@ function aiStudioCreateProject() {
                 if (!this.projectName && this.customProductName) {
                     this.projectName = 'Fotografi ' + this.customProductName;
                 }
-                this.$nextTick(() => lucide.createIcons());
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
             }
         },
 
@@ -552,7 +551,7 @@ function aiStudioCreateProject() {
             const file = event.target.files[0];
             if (file) {
                 this.customReferencePreview = URL.createObjectURL(file);
-                this.$nextTick(() => lucide.createIcons());
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
             }
         },
 
@@ -644,9 +643,9 @@ function aiStudioCreateProject() {
                 this.canAfford = data.can_afford ?? (this.userCredits >= this.quoteCost);
 
                 this.promptModalOpen = true;
-                this.$nextTick(() => lucide.createIcons());
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
             } catch (err) {
-                alert('{{ __('ai.terjadi_kesalahan_err_message') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'An error occurred: ' : 'Terjadi kesalahan: ') + (err?.message || err));
             } finally {
                 this.compilingPrompt = false;
             }
@@ -658,7 +657,7 @@ function aiStudioCreateProject() {
         },
 
         init() {
-            lucide.createIcons();
+            if (window.lucide) window.lucide.createIcons();
             window.addEventListener('ai-credits-updated', (e) => {
                 if (e.detail && typeof e.detail.credits !== 'undefined') {
                     this.userCredits = e.detail.credits;
@@ -668,6 +667,14 @@ function aiStudioCreateProject() {
         }
     };
 }
+
+window.aiStudioCreateProject = aiStudioCreateProject;
+if (window.Alpine) {
+    window.Alpine.data('aiStudioCreateProject', aiStudioCreateProject);
+} else {
+    document.addEventListener('alpine:init', () => {
+        window.Alpine.data('aiStudioCreateProject', aiStudioCreateProject);
+    });
+}
 </script>
-@endpush
 @endsection

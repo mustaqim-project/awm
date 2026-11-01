@@ -143,7 +143,7 @@
                 })
                 .catch(err => {
                     this.materialExecuting = false;
-                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_bahan') }}
+                    AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error executing raw material import.' : 'Terjadi kesalahan saat mengeksekusi import bahan baku.'));
                 });
         },
 
@@ -236,7 +236,7 @@
                 })
                 .catch(err => {
                     this.productExecuting = false;
-                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import') }}
+                    AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error executing import.' : 'Terjadi kesalahan saat mengeksekusi import.'));
                 });
         },
 
@@ -329,7 +329,7 @@
                 })
                 .catch(err => {
                     this.recipeExecuting = false;
-                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_resep') }}
+                    AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error executing recipe import.' : 'Terjadi kesalahan saat mengeksekusi import resep.'));
                 });
         },
 
@@ -422,7 +422,7 @@
                 })
                 .catch(err => {
                     this.inventoryExecuting = false;
-                    AppAlert.error('{{ __('import.terjadi_kesalahan_saat_mengeksekusi_import_saldo') }}
+                    AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error executing stock balance import.' : 'Terjadi kesalahan saat mengeksekusi import saldo stok.'));
                 });
         }
     }">

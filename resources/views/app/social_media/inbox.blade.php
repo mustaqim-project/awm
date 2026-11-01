@@ -1448,7 +1448,7 @@
                     } catch (err) {
                         console.error(err);
                         if (window.AppAlert) {
-                            window.AppAlert.error('{{ __('social_media.terjadi_kesalahan_saat_mengirim_balasan') }}
+                            window.AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error sending reply.' : 'Terjadi kesalahan saat mengirim balasan.'));
                         }
                     } finally {
                         this.isSending = false;
@@ -1671,7 +1671,7 @@
                     } catch (e) {
                         console.error('Failed to save rule:', e);
                         if (window.AppAlert) {
-                            AppAlert.error('{{ __('social_media.terjadi_kesalahan_saat_menyimpan_aturan') }}
+                            AppAlert.error((window.COOCA_LOCALE === 'en' ? 'Error saving rules.' : 'Terjadi kesalahan saat menyimpan aturan.'));
                         }
                     } finally {
                         this.isSavingRule = false;

@@ -391,7 +391,7 @@
                         btn.disabled = false;
                         btn.innerText = 'Simpan';
                         console.error(err);
-                        alert('{{ __('admin.terjadi_kesalahan_saat_menyimpan_kategori') }}
+                        alert((window.COOCA_LOCALE === 'en' ? 'Error saving category.' : 'Terjadi kesalahan saat menyimpan kategori.'));
                     });
             }
         </script>

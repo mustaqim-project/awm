@@ -719,7 +719,7 @@ return [
     'ai_office_status' => 'AI Office Status',
     'contoh_tambahkan_pencahayaan_sore_keemasan_dari' => 'Contoh: Tambahkan pencahayaan sore keemasan dari jendela kayu, meja ma',
     'hapus_referensi' => 'Hapus Referensi',
-    'terjadi_kesalahan_err_message' => 'Terjadi kesalahan: \' + err.message);',
+    'terjadi_kesalahan_err_message' => 'Terjadi kesalahan.',
     'katalog_bisnis' => 'Katalog Bisnis',
     'pilih_di_galeri_inspirasi_197_template' => 'Pilih di Galeri Inspirasi (197 Template)',
     'simpan_sebagai_draf_proyek' => 'Simpan Sebagai Draf Proyek',

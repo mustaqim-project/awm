@@ -724,7 +724,7 @@ function aiStudioCanvas(config) {
         exportModalOpen: false,
         exportMode: config.hasAttachedProduct ? 'update' : 'new',
         exportTargetProductId: config.attachedProductId,
-        newProductName: '{{ addslashes($project->name) }}',
+        newProductName: @json($project->name),
         newProductPrice: '',
         exporting: false,
 
@@ -778,7 +778,7 @@ function aiStudioCanvas(config) {
         },
 
         copyPrompt() {
-            const promptText = `{{ addslashes($latestPrompt?->positive_prompt ?? '') }}`;
+            const promptText = @json($latestPrompt?->positive_prompt ?? '');
             navigator.clipboard.writeText(promptText).then(() => {
                 this.copied = true;
                 setTimeout(() => { this.copied = false; }, 2000);
@@ -787,12 +787,12 @@ function aiStudioCanvas(config) {
 
         openExportModal() {
             this.exportModalOpen = true;
-            this.$nextTick(() => lucide.createIcons());
+            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
         },
 
         openSocialModal() {
             this.socialModalOpen = true;
-            this.$nextTick(() => lucide.createIcons());
+            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
         },
 
         async submitExportToCatalog() {
@@ -968,7 +968,7 @@ function aiStudioCanvas(config) {
                                 this.isFavorite = !!asset.is_selected_favorite;
                             }
                             this.flashMessage = 'Visual render AI selesai dengan sempurna!';
-                            this.$nextTick(() => lucide.createIcons());
+                            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
                         } else if (gen.status === 'failed') {
                             clearInterval(interval);
                             this.isRendering = false;
@@ -983,6 +983,7 @@ function aiStudioCanvas(config) {
         }
     };
 }
+window.aiStudioCanvas = aiStudioCanvas;
 </script>
 @endpush
 @endsection

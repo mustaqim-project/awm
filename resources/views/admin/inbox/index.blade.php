@@ -2865,7 +2865,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim pesan DM.');
                 }
             } catch (err) {
-                alert('{{ __('admin.terjadi_kesalahan_saat_mengirim_pesan_dm') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'Error sending DM message: ' : 'Terjadi kesalahan saat mengirim pesan DM: ') + (err?.message || err));
             } finally {
                 this.isSendingDm = false;
             }
@@ -2951,7 +2951,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim balasan komentar.');
                 }
             } catch (err) {
-                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
             } finally {
                 this.isSending = false;
             }
@@ -3017,7 +3017,7 @@ function adminInboxHub() {
                     alert(data.message || 'Gagal mengirim balasan.');
                 }
             } catch (err) {
-                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
             } finally {
                 this.isSending = false;
             }
@@ -3258,7 +3258,7 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 thread.is_human_takeover = prevStatus;
-                alert('{{ __('admin.terjadi_kesalahan_jaringan_err_message') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'Network error: ' : 'Terjadi kesalahan jaringan: ') + (err?.message || err));
             } finally {
                 setTimeout(() => { if (window.lucide) window.lucide.createIcons(); }, 50);
             }
@@ -3439,7 +3439,7 @@ function adminInboxHub() {
                 }
             } catch (err) {
                 console.error('[AdminInboxAi] Error generating reply:', err);
-                alert('{{ __('admin.terjadi_kesalahan_koneksi_saat_memanggil_ai') }}
+                alert((window.COOCA_LOCALE === 'en' ? 'Connection error while calling AI.' : 'Terjadi kesalahan koneksi saat memanggil AI.'));
             } finally {
                 this.isGeneratingAi = false;
                 this.$nextTick(() => {

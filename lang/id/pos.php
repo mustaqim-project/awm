@@ -1724,7 +1724,7 @@ return [
     'cetak_struk_shift_esc_pos_2' => 'Cetak Struk Shift (ESC/POS)',
     'tutup_shift' => 'Tutup Shift',
     'tutup_shift_2' => 'Tutup Shift',
-    'terjadi_kesalahan_koneksi_printer' => 'Terjadi kesalahan koneksi printer.\');',
+    'terjadi_kesalahan_koneksi_printer' => 'Terjadi kesalahan koneksi printer..',
     'belum_ada_riwayat_shift_kasir_tercatat' => 'Belum ada riwayat shift kasir tercatat.',
     'contoh_meja_01_vip_a' => 'Contoh: Meja 01, VIP-A',
     'kas_masuk_kas_keluar' => 'Kas Masuk / Kas Keluar',
