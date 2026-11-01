@@ -152,7 +152,7 @@
                             <th class="w-10 px-4 py-3.5 text-center">
                                 <input type="checkbox"
                                     @change="toggleSelectAll($event)"
-                                    :checked="isAllSelected()"
+                                    :checked="isAllSelected()" x-effect="$el.indeterminate = isPartiallySelected()"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
                                     title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
                             </th>
@@ -167,10 +167,10 @@
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($businesses as $biz)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors"
-                                :class="selectedIds.includes(String({{ $biz->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                :class="selectedIds.includes('{{ $biz->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
                                 <td class="w-10 px-4 py-4 text-center">
                                     <input type="checkbox"
-                                        :value="String({{ $biz->id }})"
+                                        value="{{ $biz->id }}"
                                         x-model="selectedIds"
                                         class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                 </td>

@@ -6,20 +6,34 @@
     <div class="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
         selectedProductIds: [],
         toggleSelectAllProducts(e) {
+            const pageIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
             if (e.target.checked) {
-                this.selectedProductIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
+                this.selectedProductIds = Array.from(new Set([...this.selectedProductIds, ...pageIds]));
             } else {
-                this.selectedProductIds = [];
+                this.selectedProductIds = this.selectedProductIds.filter(id => !pageIds.includes(id));
             }
         },
         isAllProductsSelected() {
             const pageIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
             return pageIds.length > 0 && pageIds.every(id => this.selectedProductIds.includes(id));
         },
+        isPartiallyProductsSelected() {
+            const pageIds = {{ Js::from($products->pluck('id')) }}.map(id => String(id));
+            const selectedOnPage = pageIds.filter(id => this.selectedProductIds.includes(id)).length;
+            return selectedOnPage > 0 && selectedOnPage < pageIds.length;
+        },
         submitBulkProduct(action, confirmTitle, confirmText, icon = 'question') {
             const form = this.$refs.bulkProductForm;
             if (!form) return;
             this.$refs.bulkProductAction.value = action;
+            form.querySelectorAll('input[name=\'ids[]\']').forEach(el => el.remove());
+            this.selectedProductIds.forEach(id => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'ids[]';
+                input.value = id;
+                form.appendChild(input);
+            });
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: confirmTitle,
@@ -949,11 +963,13 @@
                         <tr
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
                             <th class="w-10 px-4 py-3 text-center">
-                                <input type="checkbox"
-                                    :checked="isAllProductsSelected()"
-                                    @change="toggleSelectAllProducts($event)"
-                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
-                                    title="{{ __('products.pilih_semua_produk') }}">
+                                <label class="flex items-center justify-center cursor-pointer m-0 p-0" title="{{ __('products.pilih_semua_produk') }}">
+                                    <input type="checkbox"
+                                        :checked="isAllProductsSelected()"
+                                        x-effect="$el.indeterminate = isPartiallyProductsSelected()"
+                                        @change="toggleSelectAllProducts($event)"
+                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                </label>
                             </th>
                             <x-table-sort-th :col="1" type="string" :title="__('products.th_product_name_barcode')" class="whitespace-nowrap min-w-[280px]" />
                             <x-table-sort-th :col="2" type="string" :title="__('products.th_category')" class="whitespace-nowrap min-w-[170px]" />
@@ -978,12 +994,14 @@
                                     : (float) $prod->base_cost;
                             @endphp
                             <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.025] transition-colors group"
-                                :class="selectedProductIds.includes(String({{ $prod->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                :class="selectedProductIds.includes('{{ $prod->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
                                 <td class="w-10 px-4 py-3.5 text-center">
-                                    <input type="checkbox"
-                                        :value="String({{ $prod->id }})"
-                                        x-model="selectedProductIds"
-                                        class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    <label class="flex items-center justify-center cursor-pointer m-0 p-0">
+                                        <input type="checkbox"
+                                            value="{{ $prod->id }}"
+                                            x-model="selectedProductIds"
+                                            class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
+                                    </label>
                                 </td>
                                 <td data-sort-value="{{ strtolower($prod->name) }}" class="py-3.5 px-5 font-medium text-black dark:text-white">
                                     <div class="flex items-center gap-3">
@@ -1262,6 +1280,7 @@
                     <label class="inline-flex items-center gap-2 cursor-pointer font-medium select-none">
                         <input type="checkbox"
                             :checked="isAllProductsSelected()"
+                            x-effect="$el.indeterminate = isPartiallyProductsSelected()"
                             @change="toggleSelectAllProducts($event)"
                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                         <span>Pilih Semua di Halaman Ini</span>
@@ -1277,13 +1296,15 @@
                 @endphp
                 <div
                     class="p-4 rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] space-y-3 shadow-sm transition-all"
-                    :class="selectedProductIds.includes(String({{ $prod->id }})) ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
+                    :class="selectedProductIds.includes('{{ $prod->id }}') ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
                     <div class="flex items-start justify-between gap-3">
                         <div class="flex items-center gap-3 min-w-0 flex-1">
-                            <input type="checkbox"
-                                :value="String({{ $prod->id }})"
-                                x-model="selectedProductIds"
-                                class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
+                            <label class="cursor-pointer m-0 p-0 flex items-center">
+                                <input type="checkbox"
+                                    value="{{ $prod->id }}"
+                                    x-model="selectedProductIds"
+                                    class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
+                            </label>
                             <div
                                 class="w-11 h-11 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 overflow-hidden flex items-center justify-center shrink-0">
                                 @if ($prod->image_url)

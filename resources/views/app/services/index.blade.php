@@ -298,7 +298,7 @@
                             class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
                             <th class="w-10 px-4 py-3 text-center">
                                 <input type="checkbox"
-                                    :checked="isAllServicesSelected()"
+                                    :checked="isAllServicesSelected()" x-effect="$el.indeterminate = isPartiallyServicesSelected()"
                                     @change="toggleSelectAllServices($event)"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
                                     title="{{ __('services.pilih_semua_layanan') }}">
@@ -318,10 +318,10 @@
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($services as $item)
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group"
-                                :class="selectedServiceIds.includes(String({{ $item->id }})) ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
+                                :class="selectedServiceIds.includes('{{ $item->id }}') ? 'bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08]' : ''">
                                 <td class="w-10 px-4 py-3.5 text-center">
                                     <input type="checkbox"
-                                        :value="String({{ $item->id }})"
+                                        value="{{ $item->id }}"
                                         x-model="selectedServiceIds"
                                         class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                 </td>
@@ -424,7 +424,7 @@
                 <div class="flex items-center justify-between px-1 text-[13px] text-black/60 dark:text-white/60">
                     <label class="inline-flex items-center gap-2 cursor-pointer font-medium select-none">
                         <input type="checkbox"
-                            :checked="isAllServicesSelected()"
+                            :checked="isAllServicesSelected()" x-effect="$el.indeterminate = isPartiallyServicesSelected()"
                             @change="toggleSelectAllServices($event)"
                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                         <span>Pilih Semua di Halaman Ini</span>
@@ -435,11 +435,11 @@
             @forelse($services as $item)
                 <div
                     class="rounded-[20px] bg-white/90 dark:bg-[#1C1C1E]/90 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-4 shadow-xs space-y-3 transition-all"
-                    :class="selectedServiceIds.includes(String({{ $item->id }})) ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
+                    :class="selectedServiceIds.includes('{{ $item->id }}') ? 'ring-2 ring-[#007AFF] bg-[#007AFF]/[0.02]' : ''">
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-3 min-w-0 flex-1">
                             <input type="checkbox"
-                                :value="String({{ $item->id }})"
+                                value="{{ $item->id }}"
                                 x-model="selectedServiceIds"
                                 class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
                             <div class="min-w-0">
