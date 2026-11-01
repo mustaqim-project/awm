@@ -140,13 +140,7 @@
     <!-- Fonts (SF Pro Fallback: Inter & JetBrains Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-        media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
-    </noscript>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
     @stack('styles')
 
     <!-- Tailwind CSS with Apple HIG Design System Tokens -->
@@ -159,9 +153,8 @@
             };
         })();
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
+        window.tailwind = {
             darkMode: 'class',
             theme: {
                 extend: {
@@ -201,8 +194,9 @@
                     }
                 }
             }
-        }
+        };
     </script>
+    <script defer src="https://cdn.tailwindcss.com"></script>
 
     <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>

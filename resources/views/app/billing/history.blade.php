@@ -431,7 +431,7 @@
             @endif
 
             <!-- 7. Pagination Bar -->
-            @if ($payments->hasPages())
+            @if ($payments->total() > 0)
                 <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.08] bg-black/[0.01] dark:bg-white/[0.02]">
                     {{ $payments->links() }}
                 </div>

@@ -210,7 +210,7 @@
                 </div>
 
                 <!-- Pagination Vouchers -->
-                @if ($vouchers->hasPages())
+                @if ($vouchers->total() > 0)
                     <div class="p-4 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08]">
                         {{ $vouchers->links() }}
                     </div>

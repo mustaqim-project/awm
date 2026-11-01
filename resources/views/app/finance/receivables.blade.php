@@ -251,7 +251,7 @@
             </table>
         </div>
 
-        @if($invoices->hasPages())
+        @if($invoices->total() > 0)
         <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
             <span>{{ __('finance.invoices_count_badge', ['count' => $invoices->total()]) }}</span>
             <div class="flex items-center gap-2">
@@ -364,7 +364,7 @@
             @endforelse
         </div>
 
-        @if($invoices->hasPages())
+        @if($invoices->total() > 0)
         <div class="p-3 bg-white dark:bg-[#1C1C1E] rounded-[16px] border border-black/5 dark:border-white/5 flex items-center justify-between text-[12px]">
             <span class="text-black/50 dark:text-white/50">{{ __('finance.invoices_count_badge', ['count' => $invoices->total()]) }}</span>
             <div class="flex items-center gap-1.5">

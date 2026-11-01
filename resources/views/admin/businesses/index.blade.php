@@ -10,24 +10,21 @@
         suspendBizName: '',
         suspendActionUrl: '',
         selectedIds: [],
+        pageBusinessIds: @js($businesses->pluck('id')->map(fn($id) => (string)$id)->values()),
         showBulkSuspendModal: false,
         bulkSuspendReason: '',
-        toggleSelectAll(e) {
-            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
-            if (e.target.checked) {
-                this.selectedIds = Array.from(new Set([...this.selectedIds, ...pageIds]));
+        toggleSelectAll() {
+            if (this.selectedIds.length === this.pageBusinessIds.length) {
+                this.selectedIds = [];
             } else {
-                this.selectedIds = this.selectedIds.filter(id => !pageIds.includes(id));
+                this.selectedIds = [...this.pageBusinessIds];
             }
         },
         isAllSelected() {
-            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
-            return pageIds.length > 0 && pageIds.every(id => this.selectedIds.includes(id));
+            return this.pageBusinessIds.length > 0 && this.selectedIds.length === this.pageBusinessIds.length;
         },
         isPartiallySelected() {
-            const pageIds = {{ Js::from($businesses->pluck('id')) }}.map(id => String(id));
-            const selectedOnPage = pageIds.filter(id => this.selectedIds.includes(id)).length;
-            return selectedOnPage > 0 && selectedOnPage < pageIds.length;
+            return this.selectedIds.length > 0 && this.selectedIds.length < this.pageBusinessIds.length;
         },
         syncBulkInputs(form) {
             form.querySelectorAll('input[name="ids[]"]').forEach(el => el.remove());
@@ -168,7 +165,7 @@
                             <th class="w-10 px-4 py-3.5 text-center">
                                 <label class="flex items-center justify-center cursor-pointer m-0 p-0" title="{{ __('admin.pilih_semua_di_halaman_ini') }}">
                                     <input type="checkbox"
-                                        @change="toggleSelectAll($event)"
+                                        @click="toggleSelectAll()"
                                         :checked="isAllSelected()"
                                         x-effect="$el.indeterminate = isPartiallySelected()"
                                         class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
@@ -189,7 +186,7 @@
                                 <td class="w-10 px-4 py-4 text-center">
                                     <label class="flex items-center justify-center cursor-pointer m-0 p-0">
                                         <input type="checkbox"
-                                            value="{{ $biz->id }}"
+                                            :value="'{{ (string) $biz->id }}'"
                                             x-model="selectedIds"
                                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                     </label>

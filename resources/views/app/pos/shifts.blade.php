@@ -304,7 +304,7 @@
             </table>
         </div>
 
-        @if($shifts->hasPages())
+        @if($shifts->total() > 0)
         <div class="p-3 border-t border-black/5 dark:border-white/10">
             {{ $shifts->links() }}
         </div>
@@ -370,7 +370,7 @@
         </div>
         @endforelse
 
-        @if($shifts->hasPages())
+        @if($shifts->total() > 0)
         <div class="p-3 border-t border-black/5 dark:border-white/10">
             {{ $shifts->links() }}
         </div>

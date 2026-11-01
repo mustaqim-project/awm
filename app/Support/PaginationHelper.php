@@ -60,3 +60,4 @@ final class PaginationHelper
         return $options;
     }
 }
+

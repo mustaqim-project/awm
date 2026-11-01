@@ -306,7 +306,7 @@
             @endforelse
         </div>
 
-        @if($invoices->hasPages())
+        @if($invoices->total() > 0)
         <div class="px-5 py-3.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
             <span>{{ __('finance.total_bills_footer', ['count' => $invoices->total()]) }}</span>
             <div class="flex items-center gap-2">

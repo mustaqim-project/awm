@@ -5,22 +5,19 @@
 @section('content')
     <div class="w-full max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="{
         selectedServiceIds: [],
-        toggleSelectAllServices(e) {
-            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
-            if (e.target.checked) {
-                this.selectedServiceIds = Array.from(new Set([...this.selectedServiceIds, ...pageIds]));
+        pageServiceIds: @js($services->pluck('id')->map(fn($id) => (string)$id)->values()),
+        toggleSelectAllServices() {
+            if (this.selectedServiceIds.length === this.pageServiceIds.length) {
+                this.selectedServiceIds = [];
             } else {
-                this.selectedServiceIds = this.selectedServiceIds.filter(id => !pageIds.includes(id));
+                this.selectedServiceIds = [...this.pageServiceIds];
             }
         },
         isAllServicesSelected() {
-            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
-            return pageIds.length > 0 && pageIds.every(id => this.selectedServiceIds.includes(id));
+            return this.pageServiceIds.length > 0 && this.selectedServiceIds.length === this.pageServiceIds.length;
         },
         isPartiallyServicesSelected() {
-            const pageIds = {{ Js::from($services->pluck('id')) }}.map(id => String(id));
-            const selectedOnPage = pageIds.filter(id => this.selectedServiceIds.includes(id)).length;
-            return selectedOnPage > 0 && selectedOnPage < pageIds.length;
+            return this.selectedServiceIds.length > 0 && this.selectedServiceIds.length < this.pageServiceIds.length;
         },
         submitBulkService(action, confirmTitle, confirmText, icon = 'question') {
             const form = this.$refs.bulkServiceForm;
@@ -313,7 +310,7 @@
                             <th class="w-10 px-4 py-3 text-center">
                                 <input type="checkbox"
                                     :checked="isAllServicesSelected()" x-effect="$el.indeterminate = isPartiallyServicesSelected()"
-                                    @change="toggleSelectAllServices($event)"
+                                    @click="toggleSelectAllServices()"
                                     class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer"
                                     title="{{ __('services.pilih_semua_layanan') }}">
                             </th>
@@ -336,7 +333,7 @@
                                 <td class="w-10 px-4 py-3.5 text-center">
                                     <label class="flex items-center justify-center cursor-pointer m-0 p-0">
                                         <input type="checkbox"
-                                            value="{{ $item->id }}"
+                                            :value="'{{ (string) $item->id }}'"
                                             x-model="selectedServiceIds"
                                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                                     </label>
@@ -441,7 +438,7 @@
                     <label class="inline-flex items-center gap-2 cursor-pointer font-medium select-none">
                         <input type="checkbox"
                             :checked="isAllServicesSelected()" x-effect="$el.indeterminate = isPartiallyServicesSelected()"
-                            @change="toggleSelectAllServices($event)"
+                            @click="toggleSelectAllServices()"
                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer">
                         <span>Pilih Semua di Halaman Ini</span>
                     </label>
@@ -455,7 +452,7 @@
                     <div class="flex items-start justify-between gap-2">
                         <div class="flex items-start gap-3 min-w-0 flex-1">
                             <input type="checkbox"
-                                value="{{ $item->id }}"
+                                :value="'{{ (string) $item->id }}'"
                                 x-model="selectedServiceIds"
                                 class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]/30 border-black/20 dark:border-white/20 bg-white dark:bg-[#1C1C1E] cursor-pointer shrink-0 mt-0.5">
                             <div class="min-w-0">

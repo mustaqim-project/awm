@@ -327,7 +327,7 @@
             </table>
         </div>
 
-        @if($orders->hasPages())
+        @if($orders->total() > 0)
         <div class="px-4 py-3 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60">
             {{ $orders->links() }}
         </div>
@@ -419,7 +419,7 @@
         </div>
         @endforelse
 
-        @if($orders->hasPages())
+        @if($orders->total() > 0)
         <div class="p-3 border-t border-black/5 dark:border-white/5">
             {{ $orders->links() }}
         </div>

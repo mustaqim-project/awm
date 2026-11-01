@@ -220,7 +220,7 @@
         @endforelse
     </div>
 
-    @if ($entries->hasPages())
+    @if ($entries->total() > 0)
         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-5 py-3.5 flex items-center justify-between text-[13px] text-black/60 dark:text-white/60 shadow-xs">
             <div>
                 {{ __('common.showing') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->firstItem() }}–{{ $entries->lastItem() }}</span> {{ __('common.of') }} <span class="font-medium text-black dark:text-white tabular-nums">{{ $entries->total() }}</span> {{ __('common.entries') }}
