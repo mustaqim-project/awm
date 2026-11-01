@@ -3,28 +3,21 @@
 @section('content')
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="actionCenterApp()">
 
-    <!-- Unified Apple HIG Navigation Hub -->
-    @include('app.ai.partials.office_navigation', ['activeOffice' => 'actions', 'pendingCount' => $counts['pending'] ?? 0])
-
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('cooca-ai.index') }}" class="text-xs text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white flex items-center gap-1 transition">
-                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
-                    <span>{{ __('ai.navigation.back_to_office') }}</span>
-                </a>
-            </div>
-            <h1 class="text-2xl font-bold text-black dark:text-white tracking-tight mt-1">{{ __('ai.actions.title') }}</h1>
-            <p class="text-xs text-black/60 dark:text-white/60 mt-0.5">{{ __('ai.actions.subtitle') }}</p>
-        </div>
-
+    {{-- Bento Apple HIG Header --}}
+    <x-module-header
+        :title="__('ai.actions.title')"
+        :subtitle="__('ai.actions.subtitle')"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Tim AI Bisnis', 'url' => route('cooca-ai.index')],
+            ['label' => 'Pusat Tindakan & Approval', 'url' => null]
+        ]">
         <div class="flex items-center gap-2">
-            <span class="text-xs text-black/50 dark:text-white/50 font-mono">
+            <span class="px-3 py-1.5 rounded-[10px] bg-black/5 dark:bg-white/10 text-xs font-mono font-bold text-black/70 dark:text-white/70">
                 {{ __('ai.actions.total_proposals', ['count' => $counts['all']]) }}
             </span>
         </div>
-    </div>
+    </x-module-header>
 
     <!-- Filter Tabs (Segmented Control Apple HIG) -->
     <div class="flex items-center gap-1.5 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 overflow-x-auto">

@@ -642,6 +642,11 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/pos', [PosAiWebController::class, 'index'])->name('pos');
             Route::post('/ask', [AiCompanyWebController::class, 'ask'])->name('ask');
             Route::post('/daily-check', [AiCompanyWebController::class, 'triggerDailyCheck'])->name('daily-check');
+            Route::post('/teamwork', [AiCompanyWebController::class, 'teamwork'])->name('teamwork');
+            Route::post('/goal', [AiCompanyWebController::class, 'goal'])->name('goal');
+            Route::post('/grill-me', [AiCompanyWebController::class, 'grillMe'])->name('grill-me');
+            Route::post('/boost', [AiCompanyWebController::class, 'boost'])->name('boost');
+            Route::post('/schedule', [AiCompanyWebController::class, 'schedule'])->name('schedule');
             Route::get('/actions', [AiCompanyWebController::class, 'actions'])->name('actions');
             Route::post('/actions/{proposal}/approve', [AiCompanyWebController::class, 'approveAction'])->name('actions.approve');
             Route::post('/actions/{proposal}/revise', [AiCompanyWebController::class, 'reviseAction'])->name('actions.revise');
@@ -679,6 +684,11 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             // Legacy POST route fallbacks
             Route::post('/ask', [AiCompanyWebController::class, 'ask'])->name('ask');
             Route::post('/daily-check', [AiCompanyWebController::class, 'triggerDailyCheck'])->name('daily-check');
+            Route::post('/teamwork', [AiCompanyWebController::class, 'teamwork'])->name('teamwork');
+            Route::post('/goal', [AiCompanyWebController::class, 'goal'])->name('goal');
+            Route::post('/grill-me', [AiCompanyWebController::class, 'grillMe'])->name('grill-me');
+            Route::post('/boost', [AiCompanyWebController::class, 'boost'])->name('boost');
+            Route::post('/schedule', [AiCompanyWebController::class, 'schedule'])->name('schedule');
             Route::post('/actions/{proposal}/approve', [AiCompanyWebController::class, 'approveAction'])->name('actions.approve');
             Route::post('/actions/{proposal}/revise', [AiCompanyWebController::class, 'reviseAction'])->name('actions.revise');
             Route::post('/actions/{proposal}/reject', [AiCompanyWebController::class, 'rejectAction'])->name('actions.reject');

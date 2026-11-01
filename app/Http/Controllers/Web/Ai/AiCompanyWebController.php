@@ -12,6 +12,7 @@ use App\Domain\Ai\Organization\ExecutiveRole;
 use App\Domain\Ai\Orchestration\AiOrchestrator;
 use App\Domain\Ai\Policy\AiActionPolicy;
 use App\Domain\Ai\Providers\AiProviderManager;
+use App\Domain\Ai\Services\AiBusinessTeamworkService;
 use App\Http\Controllers\Controller;
 use App\Domain\Ai\Organization\AiOffice;
 use App\Domain\Ai\Tools\DetectAnomaliesAndFraudTool;
@@ -44,6 +45,7 @@ final class AiCompanyWebController extends Controller
         private readonly AiActionExecutor $actionExecutor = new AiActionExecutor(),
         private readonly AiActionPolicy $actionPolicy = new AiActionPolicy(),
         private readonly AiProviderManager $providerManager = new AiProviderManager(),
+        private readonly AiBusinessTeamworkService $teamworkService = new AiBusinessTeamworkService(),
     ) {}
 
     /**
@@ -104,6 +106,7 @@ final class AiCompanyWebController extends Controller
 
         $resolvedProvider = $this->providerManager->resolveForBusiness($business);
         $teams = CompanyHierarchy::getTeams();
+        $cockpitMetrics = $this->teamworkService->getLiveCockpitMetrics($business);
 
         return view('app.ai.lobby', compact(
             'business',
@@ -115,7 +118,8 @@ final class AiCompanyWebController extends Controller
             'recentTasks',
             'recentHistories',
             'resolvedProvider',
-            'teams'
+            'teams',
+            'cockpitMetrics'
         ));
     }
 
@@ -1095,5 +1099,142 @@ final class AiCompanyWebController extends Controller
             'message' => 'Aturan berhasil dihapus.',
         ]);
     }
-}
 
+    /**
+     * WORKFLOW: /teamwork - Run autonomous cross-agent collaboration session.
+     */
+    public function teamwork(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Autentikasi diperlukan.'], 401);
+        }
+
+        $topic = $request->input('topic');
+
+        try {
+            $result = $this->teamworkService->runTeamwork($business, $user, $topic);
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menjalankan sesi teamwork: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * WORKFLOW: /goal - Set or track strategic goal.
+     */
+    public function goal(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Autentikasi diperlukan.'], 401);
+        }
+
+        $validated = $request->validate([
+            'goal_type' => ['required', 'string', 'in:revenue,margin,debt_recovery'],
+            'target_value' => ['required', 'numeric', 'min:0'],
+            'timeframe' => ['nullable', 'string'],
+        ]);
+
+        try {
+            $result = $this->teamworkService->runGoal(
+                $business,
+                $user,
+                $validated['goal_type'],
+                (float) $validated['target_value'],
+                $validated['timeframe'] ?? 'this_month'
+            );
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memproses goal: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * WORKFLOW: /grill-me - Run diagnostic interview or submit answers.
+     */
+    public function grillMe(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Autentikasi diperlukan.'], 401);
+        }
+
+        $focusArea = $request->input('focus_area');
+        $answers = $request->input('answers');
+
+        try {
+            $result = $this->teamworkService->runGrillMe($business, $user, $focusArea, $answers);
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memproses diagnosa usaha: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * WORKFLOW: /boost - Run deep multi-perspective stress test.
+     */
+    public function boost(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Autentikasi diperlukan.'], 401);
+        }
+
+        $validated = $request->validate([
+            'query' => ['required', 'string', 'min:3', 'max:1000'],
+        ]);
+
+        try {
+            $result = $this->teamworkService->runBoost($business, $user, $validated['query']);
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memproses analisis boost: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * WORKFLOW: /schedule - Run scheduled automated routines.
+     */
+    public function schedule(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user();
+
+        if (! $user) {
+            return response()->json(['success' => false, 'message' => 'Autentikasi diperlukan.'], 401);
+        }
+
+        $routine = $request->input('routine', 'morning_briefing');
+
+        try {
+            $result = $this->teamworkService->runSchedule($business, $user, (string) $routine);
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menjalankan jadwal rutinitas: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+}

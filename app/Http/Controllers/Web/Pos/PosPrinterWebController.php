@@ -397,25 +397,35 @@ final class PosPrinterWebController extends Controller
         $reason = $validated['reason'] ?? 'Manual Pop via Pos Terminal';
         $pin = (string) ($validated['supervisor_pin'] ?? '');
 
-        // If user is owner/supervisor and pin is empty, fallback to business PIN
+        // If user is owner/admin and pin is empty, allow direct drawer pop
         if ($pin === '' && (Context::isOwner() || in_array(Context::role(), ['owner', 'admin'], true))) {
-            $pin = (string) ($business->pos_supervisor_pin ?? '');
+            try {
+                $result = $this->cashDrawerService->openDrawer($printer, $reason, $user);
+                return response()->json($result);
+            } catch (Throwable $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], 422);
+            }
         }
 
-        if ($pin === '' || empty($business->pos_supervisor_pin)) {
+        if (! $business->hasSupervisorPin()) {
             return response()->json([
                 'success' => false,
                 'message' => __('printer.drawer_pin_unconfigured'),
             ], 422);
         }
 
+        if ($pin === '' || ! $business->verifySupervisorPin($pin)) {
+            return response()->json([
+                'success' => false,
+                'message' => __('printer.drawer_pin_invalid'),
+            ], 422);
+        }
+
         try {
-            $result = $this->cashDrawerService->openManualWithPin(
-                $printer,
-                $pin,
-                $reason,
-                $user
-            );
+            $result = $this->cashDrawerService->openDrawer($printer, $reason, $user);
 
             return response()->json($result);
         } catch (Throwable $e) {

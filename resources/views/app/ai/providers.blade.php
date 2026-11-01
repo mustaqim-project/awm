@@ -3,8 +3,6 @@
 @section('content')
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="aiProvidersApp()">
 
-    <!-- Unified Apple HIG Navigation Hub -->
-    @include('app.ai.partials.office_navigation', ['activeOffice' => 'providers'])
 
     <!-- Toast Notification (Frosted Glass Apple HIG) -->
     <div x-show="toast.show" 
@@ -39,19 +37,16 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('cooca-ai.index') }}" class="text-xs text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white flex items-center gap-1 transition">
-                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
-                    <span>{{ __('ai.navigation.back_to_office') }}</span>
-                </a>
-            </div>
-            <h1 class="text-2xl font-bold text-black dark:text-white tracking-tight mt-1">{{ __('ai.providers.title') }}</h1>
-            <p class="text-xs text-black/60 dark:text-white/60 mt-0.5">{{ __('ai.providers.subtitle') }}</p>
-        </div>
-    </div>
+    {{-- Bento Apple HIG Header --}}
+    <x-module-header
+        :title="__('ai.providers.title')"
+        :subtitle="__('ai.providers.subtitle')"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Tim AI Bisnis', 'url' => route('cooca-ai.index')],
+            ['label' => 'Pengaturan Provider AI', 'url' => null]
+        ]">
+    </x-module-header>
 
     <!-- Security & Encryption Guarantee Banner -->
     <div class="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 flex items-start gap-3">

@@ -77,9 +77,9 @@ final class SupplierInvoiceWebController extends Controller implements HasMiddle
         ]);
 
         // Proteksi Otorisasi Pengeluaran Kas Bernilai Besar (>= Rp 5.000.000)
-        if ((float) $validated['amount'] >= 5000000 && ! empty($business->pos_supervisor_pin)) {
+        if ((float) $validated['amount'] >= 5000000 && $business->hasSupervisorPin()) {
             $pin = $request->input('supervisor_pin') ?? $request->input('pin');
-            if (empty($pin) || ! Hash::check((string) $pin, $business->pos_supervisor_pin)) {
+            if (empty($pin) || ! $business->verifySupervisorPin((string) $pin)) {
                 return back()->withInput()->withErrors(['supervisor_pin' => __('purchasing.messages.supervisor_pin_required_for_large_payment')]);
             }
         }

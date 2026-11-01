@@ -730,5 +730,41 @@ class SocialMediaHardeningAndSecurityTest extends TestCase
         $responseOk->assertOk();
         $responseOk->assertJson(['success' => true]);
     }
+
+    public function test_disconnect_account_handles_legacy_unhashed_supervisor_pin_gracefully_and_rehashes(): void
+    {
+        [$owner, $business] = $this->createMerchant('Merchant Legacy PIN');
+        
+        // Simulate legacy unhashed PIN in database directly via DB query to bypass mutator
+        \Illuminate\Support\Facades\DB::table('businesses')
+            ->where('id', $business->id)
+            ->update(['pos_supervisor_pin' => '4321']);
+
+        $business->refresh();
+        $this->assertEquals('4321', $business->pos_supervisor_pin);
+
+        $account = $this->createAccount($business, 'facebook');
+
+        // Wrong PIN -> returns 422, does NOT throw RuntimeException: This password does not use the Bcrypt algorithm
+        $responseWrong = $this->actingAs($owner)->postJson(route('social-media.disconnect'), [
+            'account_id' => $account->id,
+            'pin'        => '9999',
+        ]);
+        $responseWrong->assertStatus(422);
+        $responseWrong->assertJson(['success' => false]);
+
+        // Correct PIN -> succeeds and rehashes pos_supervisor_pin to Bcrypt in database
+        $responseCorrect = $this->actingAs($owner)->postJson(route('social-media.disconnect'), [
+            'account_id' => $account->id,
+            'pin'        => '4321',
+        ]);
+        $responseCorrect->assertOk();
+        $responseCorrect->assertJson(['success' => true]);
+
+        // Verify that the PIN was self-healed into a valid Bcrypt hash
+        $business->refresh();
+        $this->assertNotEquals('4321', $business->pos_supervisor_pin);
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('4321', $business->pos_supervisor_pin));
+    }
 }
 

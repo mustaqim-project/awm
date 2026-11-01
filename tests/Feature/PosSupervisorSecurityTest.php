@@ -370,4 +370,47 @@ final class PosSupervisorSecurityTest extends TestCase
         // Reset back to ID
         app()->setLocale('id');
     }
+
+    public function test_supervisor_pin_mutator_automatically_hashes_plaintext(): void
+    {
+        $this->business->pos_supervisor_pin = '556677';
+        $this->business->save();
+
+        $this->assertNotEquals('556677', $this->business->pos_supervisor_pin);
+        $this->assertTrue(Hash::check('556677', $this->business->pos_supervisor_pin));
+    }
+
+    public function test_supervisor_pin_verify_handles_legacy_plaintext_and_auto_rehashes(): void
+    {
+        // Bypass mutator via DB direct update
+        \Illuminate\Support\Facades\DB::table('businesses')
+            ->where('id', $this->business->id)
+            ->update(['pos_supervisor_pin' => '2468']);
+
+        $this->business->refresh();
+        $this->assertEquals('2468', $this->business->pos_supervisor_pin);
+
+        // Verification with wrong PIN returns false without crashing
+        $this->assertFalse($this->business->verifySupervisorPin('1111'));
+
+        // Verification with correct PIN returns true and rehashes
+        $this->assertTrue($this->business->verifySupervisorPin('2468'));
+
+        $this->business->refresh();
+        $this->assertNotEquals('2468', $this->business->pos_supervisor_pin);
+        $this->assertTrue(Hash::check('2468', $this->business->pos_supervisor_pin));
+    }
+
+    public function test_supervisor_pin_verify_handles_corrupted_hash_without_crashing(): void
+    {
+        // Set invalid/corrupted hash in DB
+        \Illuminate\Support\Facades\DB::table('businesses')
+            ->where('id', $this->business->id)
+            ->update(['pos_supervisor_pin' => 'invalid_random_string_not_bcrypt']);
+
+        $this->business->refresh();
+
+        // Must return false and NOT throw RuntimeException
+        $this->assertFalse($this->business->verifySupervisorPin('123456'));
+    }
 }

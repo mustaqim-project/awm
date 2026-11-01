@@ -163,6 +163,211 @@ function aiOfficeBase() {
             hr: 'Halo Pak! AI HR Specialist siap merekapitulasi presensi karyawan hari ini dan kepatuhan shift kasir.'
         },
 
+        
+        // ==========================================
+        // AI AGENT TEAMWORK & GROWTH WORKFLOWS STATE
+        // ==========================================
+        activeWorkflowTab: 'teamwork', // teamwork, goal, grill_me, boost, schedule
+        workflowLoading: false,
+        workflowError: null,
+        workflowResults: {
+            teamwork: null,
+            goal: null,
+            grill_me: null,
+            boost: null,
+            schedule: null
+        },
+        teamworkTopic: '',
+        goalType: 'revenue',
+        goalTargetValue: 30000000,
+        boostQuery: '',
+        grillMeFocus: 'margin',
+        grillMeAnswers: {},
+        scheduleRoutine: 'morning_briefing',
+
+        async runTeamworkWorkflow() {
+            this.workflowLoading = true;
+            this.workflowError = null;
+            try {
+                const res = await fetch("{{ route('cooca-ai.teamwork') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        topic: this.teamworkTopic
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.workflowResults.teamwork = data;
+                } else {
+                    this.workflowError = data.message || 'Gagal menjalankan sesi teamwork.';
+                }
+            } catch (e) {
+                this.workflowError = 'Terjadi gangguan jaringan: ' + e.message;
+            } finally {
+                this.workflowLoading = false;
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+            }
+        },
+
+        async runGoalWorkflow() {
+            this.workflowLoading = true;
+            this.workflowError = null;
+            try {
+                const res = await fetch("{{ route('cooca-ai.goal') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        goal_type: this.goalType,
+                        target_value: this.goalTargetValue
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.workflowResults.goal = data;
+                } else {
+                    this.workflowError = data.message || 'Gagal menghitung target pertumbuhan.';
+                }
+            } catch (e) {
+                this.workflowError = 'Terjadi gangguan koneksi: ' + e.message;
+            } finally {
+                this.workflowLoading = false;
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+            }
+        },
+
+        async runGrillMeWorkflow() {
+            this.workflowLoading = true;
+            this.workflowError = null;
+            try {
+                const res = await fetch("{{ route('cooca-ai.grill-me') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        focus_area: this.grillMeFocus,
+                        answers: Object.keys(this.grillMeAnswers).length > 0 ? this.grillMeAnswers : null
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.workflowResults.grill_me = data;
+                } else {
+                    this.workflowError = data.message || 'Gagal memuat diagnosa usaha.';
+                }
+            } catch (e) {
+                this.workflowError = 'Terjadi kesalahan sistem: ' + e.message;
+            } finally {
+                this.workflowLoading = false;
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+            }
+        },
+
+        async runBoostWorkflow() {
+            if (!this.boostQuery || this.boostQuery.trim().length < 3) {
+                alert('Silakan tuliskan keputusan atau masalah bisnis yang ingin dianalisis.');
+                return;
+            }
+            this.workflowLoading = true;
+            this.workflowError = null;
+            try {
+                const res = await fetch("{{ route('cooca-ai.boost') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        query: this.boostQuery
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.workflowResults.boost = data;
+                } else {
+                    this.workflowError = data.message || 'Gagal menjalankan analisis boost.';
+                }
+            } catch (e) {
+                this.workflowError = 'Terjadi kendala jaringan: ' + e.message;
+            } finally {
+                this.workflowLoading = false;
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+            }
+        },
+
+        async runScheduleWorkflow() {
+            this.workflowLoading = true;
+            this.workflowError = null;
+            try {
+                const res = await fetch("{{ route('cooca-ai.schedule') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        routine: this.scheduleRoutine
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    this.workflowResults.schedule = data;
+                } else {
+                    this.workflowError = data.message || 'Gagal memuat jadwal rutinitas.';
+                }
+            } catch (e) {
+                this.workflowError = 'Terjadi kendala jaringan: ' + e.message;
+            } finally {
+                this.workflowLoading = false;
+                this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+            }
+        },
+
+        async quickApproveProposal(proposalId) {
+            if (!confirm('Apakah Anda yakin menyetujui proposal tindakan ini untuk segera dieksekusi oleh sistem?')) {
+                return;
+            }
+            try {
+                const url = "{{ url('cooca-ai/actions') }}/" + proposalId + "/approve";
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Proposal berhasil disetujui dan dieksekusi!');
+                    window.location.reload();
+                } else {
+                    alert(data.message || 'Gagal menyetujui proposal.');
+                }
+            } catch (e) {
+                alert('Terjadi kesalahan: ' + e.message);
+            }
+        },
+
         init() {
             this.loadChatHistoriesFromStorage();
 

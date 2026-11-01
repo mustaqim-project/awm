@@ -909,7 +909,27 @@ class Business extends Model
     }
 
     /**
-     * Validate supervisor PIN using strict Bcrypt hash verification (zero plaintext fallback).
+     * Mutator to ensure supervisor PIN is always stored as a Bcrypt hash.
+     */
+    public function setPosSupervisorPinAttribute($value): void
+    {
+        if (empty($value)) {
+            $this->attributes['pos_supervisor_pin'] = null;
+            return;
+        }
+
+        $val = (string) $value;
+        $info = password_get_info($val);
+        $isHashed = ($info['algoName'] ?? '') === 'bcrypt'
+            || str_starts_with($val, '$2y$')
+            || str_starts_with($val, '$2a$')
+            || str_starts_with($val, '$2b$');
+
+        $this->attributes['pos_supervisor_pin'] = $isHashed ? $val : \Illuminate\Support\Facades\Hash::make($val);
+    }
+
+    /**
+     * Validate supervisor PIN with resilient Bcrypt verification, legacy fallback, and auto-rehashing.
      */
     public function verifySupervisorPin(string $pin): bool
     {
@@ -917,7 +937,38 @@ class Business extends Model
             return false;
         }
 
-        return \Illuminate\Support\Facades\Hash::check($pin, (string) $this->pos_supervisor_pin);
+        $stored = (string) $this->pos_supervisor_pin;
+
+        // Check if stored value is a valid Bcrypt hash
+        $info = password_get_info($stored);
+        $isBcrypt = ($info['algoName'] ?? '') === 'bcrypt'
+            || str_starts_with($stored, '$2y$')
+            || str_starts_with($stored, '$2a$')
+            || str_starts_with($stored, '$2b$');
+
+        if ($isBcrypt) {
+            try {
+                return \Illuminate\Support\Facades\Hash::check($pin, $stored);
+            } catch (\Throwable) {
+                return false;
+            }
+        }
+
+        // Legacy / unhashed fallback: compare securely using constant-time hash_equals
+        if (hash_equals($stored, $pin)) {
+            // Self-heal: automatically migrate plaintext PIN to standard Bcrypt hash
+            try {
+                $this->updateQuietly([
+                    'pos_supervisor_pin' => \Illuminate\Support\Facades\Hash::make($pin),
+                ]);
+            } catch (\Throwable) {
+                // Ignore if read-only context or database lock
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

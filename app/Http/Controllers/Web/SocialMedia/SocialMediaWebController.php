@@ -2060,7 +2060,7 @@ class SocialMediaWebController extends Controller implements HasMiddleware
         ]);
 
         // Enforce Supervisor PIN if configured for this business
-        if (! empty($business->pos_supervisor_pin)) {
+        if ($business->hasSupervisorPin()) {
             if (empty($validated['pin'])) {
                 return response()->json([
                     'success'      => false,
@@ -2069,7 +2069,7 @@ class SocialMediaWebController extends Controller implements HasMiddleware
                 ], 422);
             }
 
-            if (! \Illuminate\Support\Facades\Hash::check($validated['pin'], $business->pos_supervisor_pin)) {
+            if (! $business->verifySupervisorPin($validated['pin'])) {
                 return response()->json([
                     'success' => false,
                     'message' => __('social_media.supervisor_pin_invalid'),

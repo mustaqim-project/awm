@@ -7,82 +7,94 @@
 @section('content')
     <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="landingPageEditor()">
 
-        {{-- 0. STOREFRONT & WEBSITE HUB NAVIGATION --}}
-        @include('app.storefront.partials.navigation', ['title' => 'Website & Profil Bisnis'])
+        {{-- ========================================================== --}}
+        {{-- 1. UNIFIED MODULE HEADER (Bento Apple HIG v2.0 Standard)   --}}
+        {{-- ========================================================== --}}
+        <x-module-header
+            module="storefront"
+            title="Website & Profil Bisnis"
+            subtitle="Kelola profil digital, katalog produk & layanan, galeri, serta etalase online {{ $business->name }}">
+            
+            <a href="{{ $publicUrl }}" target="_blank" rel="noopener"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="external-link" class="w-4 h-4 text-[#007AFF]"></i>
+                <span>Lihat Storefront</span>
+            </a>
 
-        <!-- ========================================== -->
-        <!-- 1. UNIFIED ACTION COCKPIT & STATUS TOOLBAR -->
-        <!-- ========================================== -->
-        <div class="rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-3.5 sm:p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3.5">
-            <!-- Left: Live Status & Meta Pills -->
+            <button type="button" @click="openPreview()" :disabled="saving"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50">
+                <i data-lucide="play" class="w-4 h-4 text-[#007AFF]"></i>
+                <span x-text="saving ? 'Menyiapkan...' : 'Preview Live'">Preview Live</span>
+            </button>
+
+            @if (\App\Support\Context::hasPermission('cms.manage'))
+                <button type="button" @click="saveAll()" :disabled="saving"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer disabled:opacity-50">
+                    <i x-show="!saving" data-lucide="check" class="w-4 h-4"></i>
+                    <svg x-show="saving" class="w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span x-text="saving ? 'Menyimpan...' : 'Simpan Perubahan'">Simpan Perubahan</span>
+                </button>
+            @endif
+        </x-module-header>
+
+        {{-- ========================================================== --}}
+        {{-- 2. QUICK STORE STATUS & SHARE STRIP (Sleek Compact Bento)  --}}
+        {{-- ========================================================== --}}
+        <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 px-4 py-3 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div class="flex items-center gap-2.5 flex-wrap">
                 <!-- Status Badge -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[12px] font-semibold border transition-all"
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[12px] font-semibold border transition-all"
                      :class="isPublished ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 border-black/5 dark:border-white/10'">
                     <span class="w-2 h-2 rounded-full" :class="isPublished ? 'bg-emerald-500 animate-pulse' : 'bg-black/30 dark:bg-white/30'"></span>
                     <span x-text="isPublished ? 'Live Publik (Terbuka Umum)' : 'Draft Offline (Hanya Pemilik)'"></span>
                 </div>
 
                 <!-- Active Preset Pill -->
-                <div class="inline-flex items-center gap-1.5 text-[12px] text-black/60 dark:text-white/60 bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
+                <div class="inline-flex items-center gap-1.5 text-[12px] text-black/60 dark:text-white/60 bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1 rounded-full border border-black/5 dark:border-white/5">
                     <span class="text-black/40 dark:text-white/40">Tema:</span>
                     <strong class="text-[#007AFF] font-semibold uppercase font-mono" x-text="form.theme_preset || form.industry_preset"></strong>
                 </div>
 
-                <!-- Quick Copy Link -->
+                <!-- Public Store URL Link -->
+                <a href="{{ $publicUrl }}" target="_blank" rel="noopener"
+                    class="text-[12px] text-[#007AFF] hover:underline font-mono truncate max-w-[260px] sm:max-w-none inline-flex items-center gap-1">
+                    <span>{{ $publicUrl }}</span>
+                    <i data-lucide="external-link" class="w-3 h-3 shrink-0"></i>
+                </a>
+            </div>
+
+            <!-- Quick Actions: Copy Link, Share WA, Preset, Toggle Publish -->
+            <div class="flex items-center gap-2 flex-wrap">
                 <button type="button" @click="copyLink('{{ $publicUrl }}')"
-                    class="h-8 px-2.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/70 dark:text-white/70 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px]">
+                    class="h-8 px-2.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/70 dark:text-white/70 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px] cursor-pointer">
                     <i data-lucide="copy" class="w-3.5 h-3.5 opacity-70"></i>
                     <span x-text="copied ? 'Tersalin!' : 'Salin URL'">Salin URL</span>
                 </button>
 
-                <!-- Share WA -->
                 <a href="https://api.whatsapp.com/send?text={{ urlencode('Halo, kunjungi website kami di: ' . $publicUrl) }}"
                     target="_blank"
-                    class="h-8 px-2.5 rounded-[9px] bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px]">
+                    class="h-8 px-2.5 rounded-[8px] bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium active:scale-95 transition inline-flex items-center gap-1.5 text-[11.5px]">
                     <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                     <span>Share WA</span>
                 </a>
-            </div>
 
-            <!-- Right: Studio Actions -->
-            <div class="flex items-center gap-2 flex-wrap">
                 @if (\App\Support\Context::hasPermission('cms.manage'))
-                    <!-- Preset Modal Button -->
                     <button type="button" @click="showPresetModal = true; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
-                        class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-95 transition-all inline-flex items-center gap-1.5 border border-[#FF9500]/20">
+                        class="h-8 px-2.5 rounded-[8px] text-[11.5px] font-semibold text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/10 hover:bg-[#FF9500]/15 active:scale-95 transition inline-flex items-center gap-1.5 border border-[#FF9500]/20 cursor-pointer">
                         <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
                         <span>Preset Industri</span>
                     </button>
 
-                    <!-- Toggle Publish Button -->
                     <button type="button" @click="togglePublish()" :disabled="saving"
                         :class="isPublished
                             ? 'text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/15 border border-red-500/20'
                             : 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/15 border border-emerald-500/20'"
-                        class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold active:scale-95 transition-all inline-flex items-center gap-1.5 disabled:opacity-50">
+                        class="h-8 px-3 rounded-[8px] text-[11.5px] font-semibold active:scale-95 transition inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer">
                         <i :data-lucide="isPublished ? 'eye-off' : 'globe'" class="w-3.5 h-3.5"></i>
                         <span x-text="isPublished ? 'Arsipkan Publik' : 'Terbitkan Sekarang'"></span>
-                    </button>
-                @endif
-
-                <!-- Live Preview Button -->
-                <button type="button" @click="openPreview()" :disabled="saving"
-                    class="min-h-[38px] px-3.5 rounded-[11px] text-[12.5px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] active:scale-95 transition-all inline-flex items-center gap-1.5 border border-black/5 dark:border-white/10">
-                    <i data-lucide="play" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                    <span x-text="saving ? 'Menyiapkan...' : 'Preview Live'">Preview Live</span>
-                </button>
-
-                <!-- Primary Save Button -->
-                @if (\App\Support\Context::hasPermission('cms.manage'))
-                    <button type="button" @click="saveAll()" :disabled="saving"
-                        class="min-h-[38px] px-4 rounded-[11px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-95 transition-all inline-flex items-center gap-1.5 shadow-sm disabled:opacity-50">
-                        <i x-show="!saving" data-lucide="check" class="w-4 h-4"></i>
-                        <svg x-show="saving" class="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        <span x-text="saving ? 'Menyimpan...' : '{{ __('common.save') }}'">{{ __('common.save') }}</span>
                     </button>
                 @endif
             </div>
@@ -231,118 +243,135 @@
                 <div class="lg:col-span-9 space-y-5">
 
                     <!-- ============================================================ -->
-                    <!-- TAB 1: GENERAL / IDENTITAS & WARNA TEMA                       -->
+                    <!-- TAB 1: GENERAL / IDENTITAS & WARNA TEMA (Bento Sub-Cards)    -->
                     <!-- ============================================================ -->
-                    <div x-show="activeTab === 'general'" x-cloak class="space-y-5">
-                        <div
-                            class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-5 transition-colors">
+                    <div x-show="activeTab === 'general'" x-cloak class="space-y-4">
 
-                            <div
-                                class="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-3">
-                                <div>
-                                    <h2 class="text-[16px] font-semibold text-black dark:text-white">
-                                        1. Identitas Visual &amp; Warna Tema
-                                    </h2>
-                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Tentukan warna dominan
-                                        dan karakter visual yang merepresentasikan identitas brand bisnis Anda.</p>
-                                </div>
-                                <span
-                                    class="text-[11px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] px-2.5 py-1 rounded-full">
-                                    Preset: <strong class="text-[#007AFF] uppercase font-mono"
-                                        x-text="form.industry_preset"></strong>
-                                </span>
-                            </div>
-
-                            <!-- Theme Color Picker -->
-                            <div>
-                                <label
-                                    class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2 uppercase tracking-wider">
-                                    Palet Warna Aksen Utama
-                                </label>
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <template x-for="color in colorSwatches" :key="color.hex">
-                                        <button type="button" @click="form.theme_color = color.hex"
-                                            :style="`background-color: ${color.hex}`"
-                                            :class="form.theme_color === color.hex ?
-                                                'ring-2 ring-[#007AFF] ring-offset-2 ring-offset-white dark:ring-offset-[#1C1C1E] scale-110' :
-                                                'opacity-80 hover:opacity-100 hover:scale-105'"
-                                            class="w-8 h-8 rounded-full transition-all flex items-center justify-center text-white shadow-xs cursor-pointer"
-                                            :title="color.label">
-                                            <svg x-show="form.theme_color === color.hex" class="w-3.5 h-3.5"
-                                                fill="none" stroke="currentColor" stroke-width="2.5"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M4.5 12.75l6 6 9-13.5" />
-                                            </svg>
-                                        </button>
-                                    </template>
-                                    <div
-                                        class="flex items-center gap-2 ml-2 px-3 py-1.5 bg-black/[0.04] dark:bg-white/[0.06] rounded-[10px]">
-                                        <input type="color" x-model="form.theme_color"
-                                            class="w-6 h-6 rounded-md cursor-pointer bg-transparent border-0 p-0"
-                                            title="{{ __('landing_page.pilih_warna_kustom') }}">
-                                        <code class="text-[12px] text-[#007AFF] font-mono font-semibold uppercase"
-                                            x-text="form.theme_color"></code>
+                        <!-- SUB-CARD 1: PRESET INDUSTRI & KARAKTER BRAND -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs">
+                            <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                        <i data-lucide="wand-2" class="w-4 h-4"></i>
                                     </div>
-                                </div>
-                                <p class="text-[11px] text-black/50 dark:text-white/50 mt-2">
-                                    Warna aksen ini akan diterapkan pada tombol utama, badge produk, serta elemen sorotan
-                                    pada website publik.
-                                </p>
-                            </div>
-
-                            <!-- Font Family & Google Fonts Selector -->
-                            <div class="pt-2">
-                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-2 uppercase tracking-wider">
-                                    Tipografi &amp; Google Fonts Storefront
-                                </label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
-                                        <select x-model="form.font_family"
-                                            class="w-full h-11 px-3.5 text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF] transition cursor-pointer">
-                                            <option value="">Bawaan Tema Aktif (Otentik)</option>
-                                            <template x-for="font in curatedFonts" :key="font">
-                                                <option :value="font" x-text="font" :selected="form.font_family === font"></option>
-                                            </template>
-                                        </select>
-                                    </div>
-                                    <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
-                                        <div class="truncate">
-                                            <span class="text-[10px] text-black/40 dark:text-white/40 block font-semibold">Pratinjau Huruf:</span>
-                                            <span class="text-[13px] font-bold text-black dark:text-white truncate block"
-                                                  :style="form.font_family ? `font-family: '${form.font_family}', sans-serif;` : ''"
-                                                  x-text="form.font_family || (allThemesMap[form.theme_preset]?.font_heading || 'Plus Jakarta Sans') + ' (Bawaan)'"></span>
-                                        </div>
-                                        <button type="button" x-show="form.font_family" @click="form.font_family = ''"
-                                            class="text-[11px] text-[#007AFF] hover:underline font-semibold shrink-0 cursor-pointer">
-                                            Reset Default
-                                        </button>
+                                        <h2 class="text-[14px] sm:text-[15px] font-semibold text-black dark:text-white">1. Identitas Visual &amp; Preset Industri</h2>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Tentukan karakter visual dan preset industri yang merepresentasikan brand bisnis Anda.</p>
                                     </div>
                                 </div>
-                                <p class="text-[11px] text-black/50 dark:text-white/50 mt-1.5">
-                                    Gunakan font kustom Google Fonts atau biarkan kosong untuk menerapkan perpaduan tipografi otentik bawaan dari tema yang dipilih.
-                                </p>
+                                <button type="button" @click="showPresetModal = true; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
+                                    class="px-3 py-1.5 rounded-[9px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-95 transition cursor-pointer">
+                                    Ganti Preset
+                                </button>
                             </div>
+                            <div class="mt-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/[0.02] dark:bg-white/[0.02] p-3.5 rounded-[12px] border border-black/[0.04] dark:border-white/[0.04]">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="text-[11px] font-medium text-black/50 dark:text-white/50 uppercase tracking-wider">Preset Aktif:</span>
+                                    <strong class="text-[#007AFF] font-bold font-mono uppercase text-[13px]" x-text="form.industry_preset"></strong>
+                                </div>
+                                <span class="text-[11px] text-black/45 dark:text-white/45">Preset mengatur tipografi, palet warna, dan arsitektur hero yang optimal.</span>
+                            </div>
+                        </div>
 
-                            <!-- Dark Mode Toggle for Landing Page -->
-                            <div
-                                class="rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 flex items-center justify-between">
+                        <!-- SUB-CARD 2: PALET WARNA AKSEN UTAMA -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                                        <i data-lucide="palette" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-[14px] sm:text-[15px] font-semibold text-black dark:text-white">Palet Warna Aksen Utama</h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Warna aksen ini akan diterapkan pada tombol utama, badge produk, serta elemen sorotan storefront.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 px-3 py-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[10px]">
+                                    <input type="color" x-model="form.theme_color"
+                                        class="w-5 h-5 rounded-md cursor-pointer bg-transparent border-0 p-0"
+                                        title="{{ __('landing_page.pilih_warna_kustom') }}">
+                                    <code class="text-[12px] text-[#007AFF] font-mono font-semibold uppercase"
+                                        x-text="form.theme_color"></code>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 pt-1">
+                                <template x-for="color in colorSwatches" :key="color.hex">
+                                    <button type="button" @click="form.theme_color = color.hex"
+                                        :style="`background-color: ${color.hex}`"
+                                        :class="form.theme_color === color.hex ?
+                                            'ring-2 ring-[#007AFF] ring-offset-2 ring-offset-white dark:ring-offset-[#1C1C1E] scale-110' :
+                                            'opacity-80 hover:opacity-100 hover:scale-105'"
+                                        class="w-8 h-8 rounded-full transition-all flex items-center justify-center text-white shadow-xs cursor-pointer"
+                                        :title="color.label">
+                                        <svg x-show="form.theme_color === color.hex" class="w-3.5 h-3.5"
+                                            fill="none" stroke="currentColor" stroke-width="2.5"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- SUB-CARD 3: TIPOGRAFI & GOOGLE FONTS -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
+                                        <i data-lucide="type" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-[14px] sm:text-[15px] font-semibold text-black dark:text-white">Tipografi &amp; Google Fonts Storefront</h3>
+                                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Gunakan font kustom Google Fonts atau terapkan perpaduan tipografi bawaan dari tema.</p>
+                                    </div>
+                                </div>
+                                <button type="button" x-show="form.font_family" @click="form.font_family = ''"
+                                    class="text-[12px] text-[#007AFF] hover:underline font-semibold shrink-0 cursor-pointer">
+                                    Reset Default
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                                 <div>
-                                    <div class="text-[14px] font-semibold text-black dark:text-white">Tampilan Elegan Gelap
-                                        (Dark Mode Publik)</div>
-                                    <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Aktifkan untuk
-                                        memberikan nuansa mewah bertema gelap pada landing page publik bisnis Anda.</div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Pilih Font</label>
+                                    <select x-model="form.font_family"
+                                        class="w-full h-11 px-3.5 text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF] transition cursor-pointer">
+                                        <option value="">Bawaan Tema Aktif (Otentik)</option>
+                                        <template x-for="font in curatedFonts" :key="font">
+                                            <option :value="font" x-text="font" :selected="form.font_family === font"></option>
+                                        </template>
+                                    </select>
                                 </div>
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="dark_mode" value="1" x-model="form.dark_mode"
-                                        class="sr-only peer">
-                                    <div
-                                        class="w-11 h-6 bg-black/20 dark:bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#007AFF]">
+                                <div>
+                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Pratinjau Huruf</label>
+                                    <div class="h-11 px-3.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 flex items-center justify-between gap-2">
+                                        <span class="text-[13px] font-bold text-black dark:text-white truncate block"
+                                              :style="form.font_family ? `font-family: '${form.font_family}', sans-serif;` : ''"
+                                              x-text="form.font_family || (allThemesMap[form.theme_preset]?.font_heading || 'Plus Jakarta Sans') + ' (Bawaan)'"></span>
                                     </div>
-                                </label>
+                                </div>
                             </div>
+                        </div>
 
-                            <!-- ============================================================ -->
+                        <!-- SUB-CARD 4: MODE TAMPILAN GELAP (DARK MODE) -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center shrink-0">
+                                    <i data-lucide="moon" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-[14px] font-semibold text-black dark:text-white">Tampilan Elegan Gelap (Dark Mode Publik)</h4>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">Aktifkan untuk memberikan nuansa mewah bertema gelap pada landing page publik bisnis Anda.</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                                <input type="checkbox" name="dark_mode" value="1" x-model="form.dark_mode" class="sr-only peer">
+                                <div class="w-11 h-6 bg-black/20 dark:bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#007AFF]"></div>
+                            </label>
+                        </div>
+
+                        <!-- SUB-CARD 5: KOLEKSI 42 TEMA INDUSTRI OTENTIK & STOREFRONT -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs space-y-4">
+<!-- ============================================================ -->
                             <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
                             <!-- ============================================================ -->
                             <!-- ============================================================ -->
@@ -587,8 +616,11 @@
                                     @endforeach
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- ============================================================ -->
+                        <!-- SUB-CARD 6: MULTI-HALAMAN AKTIF & PENGATURAN NAVIGASI -->
+                        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs space-y-4">
+<!-- ============================================================ -->
                             <!-- AUTO-HIDE DYNAMIC NAVIGATION PANEL (§PRD-07 §2.B)             -->
                             <!-- ============================================================ -->
                             <div class="pt-4 border-t border-black/5 dark:border-white/5 space-y-4">
@@ -708,9 +740,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
+
 
                     <!-- ============================================================ -->
                     <!-- TAB 2: HERO / BANNER UTAMA                                   -->

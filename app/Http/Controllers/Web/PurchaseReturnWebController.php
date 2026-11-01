@@ -123,9 +123,9 @@ final class PurchaseReturnWebController extends Controller implements HasMiddlew
         $business = Context::requireBusiness();
         abort_unless($return->business_id === $business->id, 403);
 
-        if (! empty($business->pos_supervisor_pin)) {
+        if ($business->hasSupervisorPin()) {
             $pin = $request->input('pin') ?? $request->input('supervisor_pin');
-            if (empty($pin) || ! Hash::check((string) $pin, $business->pos_supervisor_pin)) {
+            if (empty($pin) || ! $business->verifySupervisorPin((string) $pin)) {
                 return back()->withErrors(['pin' => __('purchasing.messages.invalid_supervisor_pin')]);
             }
         }
@@ -155,9 +155,9 @@ final class PurchaseReturnWebController extends Controller implements HasMiddlew
         $business = Context::requireBusiness();
         abort_unless($return->business_id === $business->id, 403);
 
-        if (! empty($business->pos_supervisor_pin)) {
+        if ($business->hasSupervisorPin()) {
             $pin = $request->input('pin') ?? $request->input('supervisor_pin');
-            if (empty($pin) || ! Hash::check((string) $pin, $business->pos_supervisor_pin)) {
+            if (empty($pin) || ! $business->verifySupervisorPin((string) $pin)) {
                 return back()->withErrors(['pin' => __('purchasing.messages.invalid_supervisor_pin')]);
             }
         }

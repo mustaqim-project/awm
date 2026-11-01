@@ -3,10 +3,17 @@
 @section('content')
 <div class="space-y-6 w-full pb-28 sm:pb-32 lg:pb-10" x-data="aiOfficeBase()">
 
-    <!-- Unified Apple HIG Navigation Hub -->
-    @include('app.ai.partials.office_navigation', ['activeOffice' => 'operations', 'pendingCount' => $officeStats['pending_approvals_count'] ?? 0])
+    <x-module-header
+        title="Kantor Operasional (AI COO & Gudang)"
+        subtitle="Pengawasan rantai pasok, level stok kritis inventori, dan pemenuhan pesanan"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Tim AI Bisnis', 'url' => route('cooca-ai.index')],
+            ['label' => 'Kantor Operasional (AI COO & Gudang)', 'url' => null]
+        ]">
+    </x-module-header>
 
-    <!-- INTERACTIVE VIRTUAL OFFICE FLOOR (Watch AI Agents Work Live) -->
+<!-- INTERACTIVE VIRTUAL OFFICE FLOOR (Watch AI Agents Work Live) -->
     @include('app.ai.partials.virtual_office_canvas', [
         'mode' => 'operations',
         'agentStatuses' => $officeStats['agent_statuses'] ?? [],

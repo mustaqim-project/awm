@@ -309,9 +309,9 @@ final class PurchaseOrderWebController extends Controller implements HasMiddlewa
         }
 
         // Guard 3: Supervisor PIN Verification for Confirmed orders
-        if ($purchaseOrder->status === PurchaseOrder::STATUS_CONFIRMED && ! empty($business->pos_supervisor_pin)) {
+        if ($purchaseOrder->status === PurchaseOrder::STATUS_CONFIRMED && $business->hasSupervisorPin()) {
             $pin = (string) $request->input('supervisor_pin', '');
-            if (! Hash::check($pin, $business->pos_supervisor_pin)) {
+            if (! $business->verifySupervisorPin($pin)) {
                 return back()->with('error', __('purchasing.errors.invalid_supervisor_pin'));
             }
         }

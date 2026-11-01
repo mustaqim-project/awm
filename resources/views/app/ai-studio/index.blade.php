@@ -8,68 +8,56 @@
 <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="aiStudioDashboard()">
 
     <!-- ========================================== -->
-    <!-- 1. BENTO HEADER & ACTION COCKPIT           -->
+    <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
     <!-- ========================================== -->
-    <div class="relative z-10 rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 transition-colors shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
-        <div class="space-y-1.5 max-w-2xl">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-1.5 text-xs text-black/50 dark:text-white/50 font-medium">
-                <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
-                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                <span class="text-black/80 dark:text-white/80 font-semibold">AI Studio Visual</span>
-            </div>
+    <x-module-header
+        title="AI Studio - Generator Visual & Materi Promosi"
+        subtitle="Rancang foto katalog produk premium, banner promosi omnichannel, dan materi visual viral bertenaga AI"
+        :breadcrumbs="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],
+            ['label' => 'Dashboard Proyek', 'url' => null]
+        ]">
 
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-[10px] bg-gradient-to-tr from-[#007AFF] to-[#5856D6] flex items-center justify-center text-white shadow-sm shadow-[#007AFF]/25">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                </span>
-                <span>{{ __('ai.studio_kreatif_visual_produk') }}</span>
-            </h1>
-            <p class="text-xs sm:text-sm text-black/60 dark:text-white/60 leading-relaxed">
-                Rancang materi pemasaran omnichannel berbasis referensi visual legal, analisis visi otomatis, dan perakitan prompt dinamis.
-            </p>
-        </div>
-
-        <!-- Cockpit Quick Actions & Credits Pill -->
-        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-start lg:justify-end">
+        <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
             <!-- Credit Balance Badge -->
             <a href="{{ route('ai-studio.credit-history') }}"
-                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 transition-all text-xs font-semibold text-black/80 dark:text-white/90">
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.07] dark:hover:bg-white/[0.1] border border-black/5 dark:border-white/10 transition-all text-xs font-semibold text-black/80 dark:text-white/90">
                 <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center">
                     <i data-lucide="coins" class="w-3 h-3"></i>
                 </span>
-                <span>{{ __('ai.saldo_kredit') }}</span>
+                <span>Saldo Kredit:</span>
                 <span class="font-bold text-[#007AFF] dark:text-[#0A84FF] text-sm" x-text="creditsBalance">{{ number_format($stats['credits_balance']) }}</span>
             </a>
 
             <!-- Top Up Kredit Trigger -->
             <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-[0.98] transition-all">
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-xs font-semibold shadow-xs transition-all cursor-pointer">
                 <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
                 <span>Top Up Kredit</span>
             </button>
 
             <!-- Browse Inspiration Button -->
             <a href="{{ route('ai-studio.inspiration.index') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-white dark:bg-[#2C2C2E] hover:bg-black/[0.03] dark:hover:bg-white/[0.06] border border-black/10 dark:border-white/15 text-xs font-semibold text-black/80 dark:text-white transition-all active:scale-[0.98] shadow-sm">
-                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#007AFF] dark:text-[#0A84FF]"></i>
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-xs font-medium text-black/80 dark:text-white/80 transition-all">
+                <i data-lucide="compass" class="w-3.5 h-3.5 text-[#007AFF]"></i>
                 <span>Jelajahi Inspirasi</span>
             </a>
 
             <!-- Create Project Primary CTA -->
             <a href="{{ route('ai-studio.create') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-semibold shadow-sm shadow-[#007AFF]/30 transition-all active:scale-[0.98]">
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-semibold shadow-xs transition-all">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>Buat Proyek Baru</span>
             </a>
         </div>
-    </div>
+    </x-module-header>
 
     <!-- Alert Banner when Monthly Credits are Expended (0 Balance) -->
     @if ($stats['credits_balance'] <= 0)
-        <div class="p-4 rounded-[16px] bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 border border-orange-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-[12px] bg-orange-500/15 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+                <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/15 text-[#FF9500] flex items-center justify-center shrink-0">
                     <i data-lucide="alert-circle" class="w-5 h-5"></i>
                 </div>
                 <div>
@@ -80,7 +68,7 @@
                 </div>
             </div>
             <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[12px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-sm shadow-orange-500/20 transition-all shrink-0">
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-xs font-bold shadow-xs transition-all shrink-0">
                 <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
                 <span>Top Up Sekarang</span>
             </button>

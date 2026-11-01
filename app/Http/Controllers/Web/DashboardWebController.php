@@ -166,7 +166,7 @@ final class DashboardWebController extends Controller implements HasMiddleware
         $amount = (float) $validated['amount'];
 
         // Maker-Checker Threshold: If amount >= 500,000 and business has supervisor PIN configured
-        if ($amount >= 500000 && ! empty($business->pos_supervisor_pin)) {
+        if ($amount >= 500000 && $business->hasSupervisorPin()) {
             $pin = $request->input('supervisor_pin');
             if (empty($pin)) {
                 return response()->json([
@@ -175,7 +175,7 @@ final class DashboardWebController extends Controller implements HasMiddleware
                     'message' => __('quick_actions.expense.pin_required_msg'),
                 ], 422);
             }
-            if (! Hash::check((string) $pin, $business->pos_supervisor_pin)) {
+            if (! $business->verifySupervisorPin((string) $pin)) {
                 return response()->json([
                     'success' => false,
                     'requires_pin' => true,
