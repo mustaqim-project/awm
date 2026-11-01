@@ -388,16 +388,17 @@
         /* Hero Ecosystem Hub Animations */
         @keyframes cableFlow {
             0% {
-                stroke-dashoffset: 0;
+                opacity: 0.35;
             }
 
             100% {
-                stroke-dashoffset: -20;
+                opacity: 0.95;
             }
         }
 
         .hero-cable-flow {
-            animation: cableFlow 1.5s linear infinite;
+            animation: cableFlow 2s ease-in-out infinite;
+            will-change: opacity;
         }
 
         @keyframes scanlineBeam {
@@ -534,7 +535,7 @@
                     @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
                     class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
                     @if (!empty($siteLogoDarkUrl))
-                        <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}"
+                        <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}" width="160" height="40" fetchpriority="high" decoding="async"
                             class="h-8 sm:h-9 lg:h-9 xl:h-10 w-auto object-contain transition-transform group-hover:scale-105">
                     @else
                         <span
@@ -2251,7 +2252,7 @@
                         <div class="space-y-3.5">
                             <a href="{{ route('landing') }}" class="inline-block group">
                                 @if (!empty($siteLogoDarkUrl))
-                                    <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}"
+                                    <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}" width="160" height="40" loading="lazy" decoding="async"
                                         class="h-9 sm:h-10 lg:h-11 w-auto object-contain transition-transform group-hover:scale-105">
                                 @else
                                     <span
