@@ -102,10 +102,9 @@ final class StockTransferDispatchAndReceiveTest extends TestCase
             'business_id' => $this->business->id,
             'name' => 'Biji Kopi Arabika Gayo 1kg',
             'code' => 'COF-GAYO-1KG',
-            'barcode' => '8998877665544',
-            'unit_id' => $this->unit->id,
+            'output_unit_id' => $this->unit->id,
             'base_cost' => 125000.0,
-            'price' => 175000.0,
+            'selling_price' => 175000.0,
             'is_active' => true,
         ]);
 

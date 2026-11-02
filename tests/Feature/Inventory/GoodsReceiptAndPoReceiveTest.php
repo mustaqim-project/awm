@@ -104,11 +104,10 @@ final class GoodsReceiptAndPoReceiveTest extends TestCase
             'id' => (string) Str::uuid(),
             'business_id' => $this->business->id,
             'name' => 'Susu Steril Tujuh Kurma 189ml',
-            'code' => 'PRD-KURMA-01',
-            'barcode' => '8991002003001',
-            'unit_id' => $this->unit->id,
+            'code' => '8991002003001',
+            'output_unit_id' => $this->unit->id,
             'base_cost' => 8500.0,
-            'price' => 11000.0,
+            'selling_price' => 11000.0,
             'is_active' => true,
         ]);
 
@@ -116,11 +115,10 @@ final class GoodsReceiptAndPoReceiveTest extends TestCase
             'id' => (string) Str::uuid(),
             'business_id' => $this->business->id,
             'name' => 'Biskuit Gandum Sehat 250g',
-            'code' => 'PRD-BISKUIT-02',
-            'barcode' => '8991002003002',
-            'unit_id' => $this->unit->id,
+            'code' => '8991002003002',
+            'output_unit_id' => $this->unit->id,
             'base_cost' => 12000.0,
-            'price' => 15500.0,
+            'selling_price' => 15500.0,
             'is_active' => true,
         ]);
     }
@@ -296,7 +294,7 @@ final class GoodsReceiptAndPoReceiveTest extends TestCase
             ->assertJsonPath('success', true)
             ->assertJsonPath('data.goods_receipt.status', 'completed')
             ->assertJsonPath('data.goods_receipt.po_status', PurchaseOrder::STATUS_PARTIALLY_INVOICED)
-            ->assertJsonPath('data.goods_receipt.items.0.quantity', 12.0)
+            ->assertJsonPath('data.goods_receipt.items.0.quantity', 12)
             ->assertJsonPath('data.goods_receipt.items.0.batch_number', 'BATCH-KURMA-202611-A')
             ->assertJsonPath('data.goods_receipt.items.0.expiry_date', '2027-11-01');
 

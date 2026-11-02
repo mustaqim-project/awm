@@ -156,7 +156,7 @@ final class InventoryPurchaseOrderController extends Controller
             $totalRemaining += $remainingQty;
 
             $sku = $item->sku ?? $item->product?->code ?? $item->material?->code ?? '';
-            $barcode = $item->product?->barcode ?? $item->material?->code ?? $sku;
+            $barcode = $item->product?->code ?? $item->material?->code ?? $sku;
 
             $formattedItems[] = [
                 'id' => $item->id,
@@ -172,14 +172,14 @@ final class InventoryPurchaseOrderController extends Controller
                 'unit' => $item->unit ? [
                     'id' => $item->unit->id,
                     'name' => $item->unit->name,
-                    'code' => $item->unit->code ?? $item->unit->symbol ?? '',
+                    'code' => $item->unit->code ?? '',
                 ] : null,
                 'product' => $item->product ? [
                     'id' => $item->product->id,
                     'name' => $item->product->name,
                     'code' => $item->product->code,
-                    'barcode' => $item->product->barcode,
-                    'image_url' => $item->product->image_url ?? null,
+                    'barcode' => $item->product->code,
+                    'image_url' => $item->product->image_path ?? null,
                 ] : null,
             ];
         }
