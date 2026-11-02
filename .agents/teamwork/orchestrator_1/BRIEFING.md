@@ -60,14 +60,15 @@ Implement Phase 1 feature integration across backend `cooca_core` and mobile `co
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| explorer_survey_1 | teamwork_explorer | Backend cooca_core architecture survey | in-progress | cb4f110d-52dd-460c-9836-e93523e48577 |
+| explorer_survey_1 | teamwork_explorer | Backend cooca_core architecture survey | completed | cb4f110d-52dd-460c-9836-e93523e48577 |
 | explorer_survey_2 | teamwork_explorer | Mobile cooca_my_own architecture survey | completed | b4336e98-ca62-4b5b-903e-123571000ced |
-| explorer_survey_3 | teamwork_spec_miner | API contracts & specs mapping | in-progress | 55d64a3a-d9de-4b18-9a27-d9a4c54b4d78 |
+| explorer_survey_3 | teamwork_spec_miner | API contracts & specs mapping | completed | 55d64a3a-d9de-4b18-9a27-d9a4c54b4d78 |
+| worker_backend_m1 | teamwork_worker | Milestone 1 Backend API & PHPUnit tests | in-progress | f5c88b66-b96d-46e3-9fc2-d00fa2a5a128 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 3 / 16
-- Pending subagents: cb4f110d-52dd-460c-9836-e93523e48577, b4336e98-ca62-4b5b-903e-123571000ced, 55d64a3a-d9de-4b18-9a27-d9a4c54b4d78
+- Spawn count: 4 / 16
+- Pending subagents: f5c88b66-b96d-46e3-9fc2-d00fa2a5a128
 - Predecessor: none
 - Successor: not yet spawned
 

@@ -20,19 +20,29 @@ Investigate the backend architecture in c:\laragon\www\cooca_core to prepare for
 - Updated: not yet
 
 ## Investigation State
-- **Explored paths**: None yet
-- **Key findings**: Just initialized
-- **Unexplored areas**:
-  - ORIGINAL_REQUEST.md and plan_core_to_mobile_features.md
-  - Cash Ledger & Petty Cash models, controllers, migrations
-  - POS shift models and shift lifecycles
-  - API routes & middleware (Sanctum, merchant/tenant isolation)
-  - Receipt image storage conventions
-  - Owner Approval models/tables/patterns
-  - Test suite architecture & test execution
+- **Explored paths**:
+  - `app/Domain/Finance/CashLedgerService.php`, `app/Models/CashTransaction.php`, `app/Models/CashAccount.php`
+  - `app/Http/Controllers/Web/Finance/CashLedgerWebController.php`, `app/Http/Controllers/Api/V1/Finance/CashLedgerController.php`
+  - `app/Domain/Pos/PosShiftService.php`, `app/Models/PosShift.php`, `app/Models/PosCashMovement.php`
+  - `app/Http/Controllers/Api/V1/Pos/PosShiftController.php`, `app/Http/Controllers/Api/V1/Pos/PosTerminalController.php`
+  - `routes/api.php`, `bootstrap/app.php`
+  - `app/Http/Middleware/SetActiveBusinessContext.php`, `app/Http/Middleware/EnsureActiveBusiness.php`, `app/Models/Traits/BelongsToBusiness.php`, `app/Support/Context.php`
+  - `app/Domain/Storage/TenantStorage.php`, `app/Models/Expense.php`, `app/Domain/Mcp/Tools/FinanceRecordExpenseTool.php`
+  - `app/Models/ApprovalRequest.php`, `app/Models/ApprovalRule.php`, `app/Models/PosApprovalRequest.php`, `app/Models/AttendanceCorrection.php`
+  - `app/Domain/Approval/ApprovalWorkflowService.php`, `app/Domain/HRM/AttendanceService.php`
+  - `tests/TestCase.php`, `phpunit.xml`, `composer.json`, `tests/Feature/ActiveBusinessContextTest.php`, `tests/Feature/CashLedgerIntegrationTest.php`
+- **Key findings**:
+  - `CashTransaction` is the model for ledger movements (no `CashLedgerEntry`).
+  - `PosShift` and `PosCashMovement` calculate live expected cash in shifts.
+  - `TenantStorage` manages private `'local'` disk under `bisnis/{slug}/expenses` for receipts.
+  - Three approval models exist: `PosApprovalRequest`, `AttendanceCorrection`, and `ApprovalRequest`.
+  - PHPUnit 12 is the test framework (Pest is not used); tests run with SQLite in-memory and pass 100%.
+- **Unexplored areas**: None for Phase 1 pre-implementation survey.
 
 ## Key Decisions Made
-- Follow investigation methodology step-by-step and write detailed findings into report.md and handoff.md.
+- Detailed technical findings written to `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\report.md`.
+- Handoff report written to `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md`.
+- Ready to send message back to orchestrator.
 
 ## Artifact Index
 - DISPATCH.md — incoming dispatch instructions

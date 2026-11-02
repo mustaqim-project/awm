@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T05:16:00Z
+# BRIEFING — 2026-11-02T05:28:45Z
 
 ## Mission
 Mine, formalize, and document complete specification contracts for Phase 1 (Petty Cash / Quick Expense and Owner Approval Center) across backend (cooca_core) and mobile (cooca_my_own).
@@ -19,7 +19,7 @@ Mine, formalize, and document complete specification contracts for Phase 1 (Pett
 
 ## Current Parent
 - Conversation ID: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Updated: not yet
+- Updated: 2026-11-02T05:28:45Z
 
 ## Task Summary
 - **What to build**: Complete specification contract covering Petty Cash API, Owner Approval API, Flutter UI/Logic Contracts, and Full Test Matrix.
@@ -28,14 +28,19 @@ Mine, formalize, and document complete specification contracts for Phase 1 (Pett
 - **Code layout**: Backend in `cooca_core`, Mobile in `cooca_my_own`
 
 ## Key Decisions Made
-- Specification mining initiated. Probing existing POS shift, CashLedger, Approval systems in both repositories.
+- Specification mining successfully completed across both `cooca_core` and `cooca_my_own`.
+- Formalized `POST /api/v1/pos/expenses` linking `PosExpense` -> `PosCashMovement` (`TYPE_CASH_OUT`) -> `CashLedgerService::recordOutflow()`.
+- Formalized unified `GET /api/v1/owner/approvals/pending` aggregating `PosApprovalRequest`, `AttendanceCorrection`, and `ApprovalRequest`.
+- Formalized `POST /api/v1/owner/approvals/{id}/action` with transaction locking, idempotency guard (422 if resolved), and side-effects.
+- Designed mobile contracts for `PosExpenseModal` (Apple HIG, camera capture, offline sync queue) and `OwnerApprovalScreen` (Cupertino, swipe-to-approve/reject with haptics, dashboard badge).
+- Established 14 Backend test scenarios and 11 Mobile Flutter test scenarios.
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\DISPATCH.md — Dispatch instructions
-- c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\BRIEFING.md — Working memory
-- c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\progress.md — Liveness & progress tracking
-- c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\report.md — Complete specification report
-- c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md — 5-component handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\DISPATCH.md` — Dispatch instructions
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\BRIEFING.md` — Working memory
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\progress.md` — Liveness & progress tracking
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\report.md` — Complete specification report
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md` — 5-component handoff report
 
 ## Loaded Skills
 - cooca-agent-directive: System orchestration for COOCA SaaS ERP multi-tenant Indonesian MSME
