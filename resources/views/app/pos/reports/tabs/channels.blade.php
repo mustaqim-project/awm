@@ -1,5 +1,7 @@
 {{-- TAB 14: SALES CHANNELS & ONLINE FOOD DELIVERY (F&B) --}}
 @php
+    $channelBiz = $business ?? $activeBiz ?? \App\Support\Context::business() ?? auth()->user()?->activeBusiness;
+    $isFoodBiz = $channelBiz && ($channelBiz->isFoodIndustry() || $channelBiz->isModuleEnabled('pos_dinein'));
     $totalChannelOrders = (int) $channelSales->sum('orders_count');
     $totalGrossGMV = (float) $channelSales->sum('gross_sales');
     $totalDiscountsAll = (float) $channelSales->sum('total_discount');
@@ -50,7 +52,11 @@
                     {{ $totalPlatformFees > 0 ? '-Rp ' . number_format($totalPlatformFees, 0, ',', '.') : 'Rp 0' }}
                 </div>
                 <div class="text-[11px] text-black/50 dark:text-white/50 mt-1 tabular-nums truncate">
-                    ShopeeFood 20% • GoFood 20% • GrabFood 25%
+                    @if ($isFoodBiz)
+                        ShopeeFood 20% • GoFood 20% • GrabFood 25%
+                    @else
+                        {{ __('pos.reports_channels_multi_platform_rate', ['default' => 'Multi-Channel Platform Fees']) }}
+                    @endif
                 </div>
             </div>
         </div>

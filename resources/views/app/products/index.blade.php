@@ -1599,7 +1599,9 @@
                                                 class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_costing_method') }} <span class="text-[#FF3B30]">*</span></label>
                                             <select name="costing_method" required
                                                 class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                @if ($business && $business->isModuleEnabled('recipe_bom'))
                                                 <option value="recipe_bom">{{ __('products.method_recipe_bom') }}</option>
+                                                @endif
                                                 <option value="simple">{{ __('products.method_simple') }}</option>
                                                 <option value="job">{{ __('products.method_job') }}</option>
                                                 <option value="process">{{ __('products.method_process') }}</option>

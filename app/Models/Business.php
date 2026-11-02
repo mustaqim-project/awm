@@ -832,12 +832,22 @@ class Business extends Model
             || str_contains(strtolower($this->name ?? ''), 'wedding');
     }
 
+    public function isEventOrganizer(): bool
+    {
+        return $this->isEventService();
+    }
+
     public function isTailor(): bool
     {
         $code = strtolower((string) ($this->template_code ?? $this->industry_category ?? ''));
         return in_array($code, ['mfg_tailor_custom', 'tailor', 'penjahit', 'jahit'], true)
             || str_contains(strtolower($this->name ?? ''), 'tailor')
             || str_contains(strtolower($this->name ?? ''), 'jahit');
+    }
+
+    public function isTailorCustom(): bool
+    {
+        return $this->isTailor();
     }
 
     /**

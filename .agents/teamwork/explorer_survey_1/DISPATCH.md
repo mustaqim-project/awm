@@ -1,27 +1,38 @@
-# Dispatch Task: Explorer Survey 1 — Layout, Navigation & Component Architecture
+## 2026-11-02T05:14:15Z
+From: 1516ea67-27cb-4c71-a78a-e0325a01044c
+Priority: MESSAGE_PRIORITY_HIGH
+Content:
+You are explorer_survey_1, a teamwork_explorer subagent.
+Your role: Backend Codebase Explorer for cooca_core.
+Your working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
 
-## Objective
-Map and survey the entire folder structure of `resources/views/app`, with deep focus on:
-1. Base layouts, layout templates, shells, frames (e.g., app layout, guest layout, dashboard wrappers, mobile wrappers).
-2. Navigation systems (sidebars, top navigation, bottom navigation bars for mobile/tablet, breadcrumbs, command bars, dropdown menus).
-3. Shared UI components (cards, badges, modals, drawers, tables, buttons, form elements, alerts, tabs).
-4. Evaluate visual hierarchy, responsive layout patterns, Apple HIG / Tailwind CSS compliance, and identify inconsistencies or UI/UX issues.
+MANDATORY FIRST STEP:
+Read ORIGINAL_REQUEST.md at c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Read the integration plan at C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\acf5365f-47d8-4edf-9b08-e7eb3389da96\plan_core_to_mobile_features.md
 
-## Scope Boundaries
-- STRICTLY READ-ONLY. DO NOT write or modify any application files in `resources/views/app` or anywhere in `resources/` or `app/`.
-- Your working directory is `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1`. Write all your notes, progress, and final report here.
+YOUR MISSION:
+Investigate the backend architecture in c:\laragon\www\cooca_core to prepare for implementing Phase 1 (Petty Cash & Owner Approval Center).
+Specifically investigate and document:
+1. Cash Ledger & Petty Cash:
+   - Check app/Http/Controllers/CashLedgerWebController.php, app/Models/CashLedgerEntry.php, or related ledger models and migrations.
+   - How is cash movement recorded in the database? What columns/fields exist? How are debit/credit/expense categories handled?
+   - How are POS shifts modeled? Search for models such as PosShift, CashierShift, PosSession, etc. in app/Models/. How is a shift determined to be active/open?
+   - Inspect routes/api.php. What existing /api/v1/pos/ routes exist? What middleware is applied (auth:sanctum, permissions)?
+   - How is tenant/merchant isolation implemented on Sanctum API requests?
+   - How are file/image uploads handled (receipt images)? What storage disk and directory conventions are used?
+2. Owner Approval Center:
+   - Are there existing approval models, tables, or migrations? (e.g., ApprovalRequest, OrderVoid, etc.)
+   - How are void transactions, above-limit discounts, and attendance corrections currently represented or stored?
+   - How does owner/admin authorization work on API endpoints?
+3. Test Suite Architecture:
+   - Check existing tests in tests/ (Feature and Unit). Is Pest or PHPUnit used?
+   - What helper traits, factories, or database setups are used for API testing?
+   - Run or inspect how tests are run.
 
-## Input Information
-- User requirements: `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` (MUST read first)
-- Target directory: `c:\laragon\www\cooca_core\resources\views\app`
-- Relevant skills & guidelines to consult:
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\cooca-agent-directive\SKILL.md`
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\responsive-ui-ux\SKILL.md`
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-ux-pro-max\SKILL.md`
-
-## Output Requirements
-Produce a structured handoff report in `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md` containing:
-1. Complete inventory of layout and shared component views found.
-2. Layout & Information Architecture evaluation (shell, responsiveness, navigation flow).
-3. Detailed UI/UX findings: view file path, visual/UX issue description, severity (CRITICAL / HIGH / MEDIUM / LOW), concrete improvement recommendations.
-4. Summary of strengths and system-wide design patterns observed.
+DELIVERABLE:
+Write your complete technical findings to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\report.md
+Write your handoff report to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md
+Update progress.md in your working directory.
+When finished, notify your caller with send_message including summary and file path.

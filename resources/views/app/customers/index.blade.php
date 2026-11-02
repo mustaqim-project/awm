@@ -134,9 +134,9 @@
             .catch(err => {
                 this.importLoading = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}');
                 } else {
-                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}
+                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}');
                 }
             });
         },
@@ -205,9 +205,9 @@
             .catch(err => {
                 this.importExecuting = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem_saat_mengeksekusi_import') }}
+                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem_saat_mengeksekusi_import') }}');
                 } else {
-                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}
+                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}');
                 }
             });
         },

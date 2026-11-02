@@ -1,12 +1,19 @@
 # Progress — explorer_survey_1
 
-Last visited: 2026-10-31T18:04:30Z
-
-- [x] Initialized DISPATCH.md and updated BRIEFING.md
-- [x] Read ORIGINAL_REQUEST.md and skills (cooca-agent-directive, responsive-ui-ux, ui-ux-pro-max)
-- [x] Inspect Base Layouts (`resources/views/layouts/app.blade.php`, `resources/views/layouts/partials/*`)
-- [x] Inspect Navigation Systems (Sidebar, Topbar, Mobile Nav, Spotlight)
-- [x] Inspect Shared UI Components (`resources/views/components/*`)
-- [x] Deep survey of views in `resources/views/app/` across all 44 directories (185 views)
-- [x] Evaluate against Apple HIG, Tailwind CSS patterns, and responsive UI/UX principles
-- [x] Compile handoff.md and report to parent
+- Last visited: 2026-11-02T05:25:00Z
+- Status: In Progress
+- Completed:
+  - Read ORIGINAL_REQUEST.md & plan_core_to_mobile_features.md
+  - Investigated Cash Ledger & Petty Cash:
+    - CashAccount & CashTransaction models, CashLedgerService (`recordInflow`, `recordOutflow`, `transfer`)
+    - CashLedgerWebController & CashLedgerController (API)
+    - PosShift & PosCashMovement models, PosShiftService (`openShift`, `closeShift`, `recordCashMovement`, `getShiftSummary`)
+    - PosShiftController (API)
+    - Tenant isolation: SetActiveBusinessContext, EnsureActiveBusiness, BelongsToBusiness trait, Context::requireBusiness()
+    - Storage conventions: TenantStorage (DISK_PUBLIC, DISK_PRIVATE), Expense receipt image conventions
+  - Investigated Owner Approval Center:
+    - ApprovalRequest, PosApprovalRequest, AttendanceCorrection models & tables
+    - Document approval rules & ApprovalWorkflowService
+    - Authorization middleware: require.role, require.permission
+- Current step:
+  - Verifying test suite execution and preparing comprehensive survey report

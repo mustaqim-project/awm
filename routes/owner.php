@@ -761,7 +761,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // Kitchen & Bar Display (KDS) & Daily Batch Prep Sheet
-        Route::middleware(['require.permission:pos.kitchen', 'entitlement:kds'])->group(function (): void {
+        Route::middleware(['module:pos_dinein', 'require.permission:pos.kitchen', 'entitlement:kds'])->group(function (): void {
             Route::get('/pos/kitchen', [PosKitchenWebController::class, 'index'])->name('pos.kitchen.index');
             Route::get('/pos/kitchen/prep-sheet', [PosKitchenWebController::class, 'prepSheet'])->name('pos.kitchen.prep_sheet');
             Route::get('/pos/kitchen/orders', [PosKitchenWebController::class, 'getActiveOrders'])->name('pos.kitchen.orders');

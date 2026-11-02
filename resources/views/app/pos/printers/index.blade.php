@@ -243,10 +243,14 @@
     </div>
     @endif
 
+    @php
+        $isFood = $business && ($business->isFoodIndustry() || $business->hasDineInFeature());
+    @endphp
+
     <!-- ===================================================== -->
     <!-- 2. BENTO KPI CARDS STRIP                               -->
     <!-- ===================================================== -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div class="grid grid-cols-2 {{ $isFood ? 'lg:grid-cols-4' : 'lg:grid-cols-3' }} gap-3 sm:gap-4">
         <!-- Total Printers -->
         <div class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-xs flex flex-col justify-between">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
@@ -289,6 +293,7 @@
             </div>
         </div>
 
+        @if ($isFood)
         <!-- Kitchen / Bar Printers -->
         <div class="p-4 rounded-[18px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 shadow-xs flex flex-col justify-between">
             <div class="flex items-center justify-between text-[#FF9500]">
@@ -302,6 +307,7 @@
                 <div class="text-[11px] text-black/45 dark:text-white/45 mt-0.5">{{ __('pos.kot_routed_orders') }}</div>
             </div>
         </div>
+        @endif
     </div>
 
     <!-- ===================================================== -->
@@ -759,6 +765,7 @@
                                             <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" checked class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_cashier') }}</span>
                                         </label>
+                                        @if ($isFood)
                                         <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
                                             <input type="checkbox" name="assigned_usages[]" value="kitchen_order" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_kitchen') }}</span>
@@ -767,6 +774,7 @@
                                             <input type="checkbox" name="assigned_usages[]" value="bar_order" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_bar') }}</span>
                                         </label>
+                                        @endif
                                         <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
                                             <input type="checkbox" name="assigned_usages[]" value="shift_report" checked class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_shift') }}</span>
@@ -960,6 +968,7 @@
                                             <input type="checkbox" name="assigned_usages[]" value="cashier_receipt" :checked="editPrinter.assigned_usages.includes('cashier_receipt')" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_cashier') }}</span>
                                         </label>
+                                        @if ($isFood)
                                         <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
                                             <input type="checkbox" name="assigned_usages[]" value="kitchen_order" :checked="editPrinter.assigned_usages.includes('kitchen_order')" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_kitchen') }}</span>
@@ -968,6 +977,7 @@
                                             <input type="checkbox" name="assigned_usages[]" value="bar_order" :checked="editPrinter.assigned_usages.includes('bar_order')" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_bar') }}</span>
                                         </label>
+                                        @endif
                                         <label class="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 cursor-pointer">
                                             <input type="checkbox" name="assigned_usages[]" value="shift_report" :checked="editPrinter.assigned_usages.includes('shift_report')" class="rounded text-[#007AFF]">
                                             <span>{{ __('pos.routing_shift') }}</span>

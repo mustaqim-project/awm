@@ -1,47 +1,41 @@
-# Dispatch Task: Explorer Survey 2 — Core Transactional Modules (POS, Sales, Inventory, Products, Orders)
+## 2026-11-02T05:14:36Z
+You are explorer_survey_2, a teamwork_explorer subagent.
+Your role: Mobile Codebase Explorer for cooca_my_own.
+Your working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\
 
-## Objective
-Survey and audit all transactional and operations views in `resources/views/app`, specifically focusing on:
-1. Point of Sale (POS), cashier interfaces, checkout screens, quick-order modals.
-2. Sales, Orders, Transactions, Invoices, Receipts.
-3. Product catalog, categories, pricing, barcodes, variants, modifiers.
-4. Inventory, stock adjustments, stock transfers, procurement, suppliers.
-5. Form density, button hierarchy, action button clustering/overlaps, table readability, mobile/tablet usability, and touch target accessibility (thumb zone, minimum 44-48px).
+MANDATORY FIRST STEP:
+Read ORIGINAL_REQUEST.md at c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Read the integration plan at C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\acf5365f-47d8-4edf-9b08-e7eb3389da96\plan_core_to_mobile_features.md
 
-## Scope Boundaries
-- STRICTLY READ-ONLY. DO NOT write or modify any application files in `resources/views/app` or anywhere in `resources/` or `app/`.
-- Your working directory is `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2`. Write all your notes, progress, and final report here.
+YOUR MISSION:
+Investigate the Flutter mobile application at c:\laragon\www\cooca_my_own to prepare for implementing Phase 1 (Petty Cash & Owner Approval Center).
+Specifically investigate and document:
+1. POS & Shift Management:
+   - Inspect lib/screens/pos/ directory, especially lib/screens/pos/pos_shift_modal.dart.
+   - How are shifts started, monitored, and closed? How is expectedCash computed during close shift?
+   - What UI component or menu in the POS screen allows cashiers to access shift actions, and where should the new "Petty Cash / Pengeluaran Kas" button be added?
+   - How does the POS store current active shift details in state?
+2. State Management & API/Network layer:
+   - Inspect state management in lib/ (e.g., MerchantState, providers, or controllers).
+   - How does the app communicate with the backend? Where is the base URL and API client defined?
+   - How are auth tokens (Sanctum) stored and sent with HTTP requests?
+   - How is offline sync handled (e.g. pos_offline_sync_manager.dart)?
+3. Approvals & Dashboard:
+   - Inspect lib/screens/dashboard_screen.dart. Where are badges, alert indicators, or quick-action cards located?
+   - How can a pending approval badge/counter be cleanly integrated into the dashboard?
+   - Where should the new OwnerApprovalScreen (lib/screens/approvals/owner_approval_screen.dart) be navigated from?
+   - What Apple HIG styling tokens and haptic feedback utilities are available in the project (e.g., ios_tokens.dart, ios_adaptive.dart, HapticFeedback)?
+4. Camera & Media Support:
+   - Check pubspec.yaml in c:\laragon\www\cooca_my_own. Are camera, image_picker, or similar packages installed?
+   - Check AndroidManifest.xml and Info.plist for camera/photo library permissions.
+5. Testing Infrastructure:
+   - Inspect test/ directory in c:\laragon\www\cooca_my_own. What test utilities and mock patterns exist?
+   - Check how flutter test and flutter analyze are run and whether existing tests pass.
 
-## Input Information
-- User requirements: `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` (MUST read first)
-- Target directory: `c:\laragon\www\cooca_core\resources\views\app`
-- Relevant skills & guidelines to consult:
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\cooca-agent-directive\SKILL.md`
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-simplify-layout\SKILL.md`
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-layout-hierarchy-reorganizer\SKILL.md`
-  - `C:\Users\Ulfah Ramadhani\.gemini\config\skills\responsive-ui-ux\SKILL.md`
-
-## Output Requirements
-Produce a structured handoff report in `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md` containing:
-1. Complete inventory of transactional module views found.
-2. Usability, form density, and button hierarchy evaluation.
-3. Detailed UI/UX findings: view file path, visual/UX issue description, severity (CRITICAL / HIGH / MEDIUM / LOW), concrete improvement recommendations.
-4. Evaluation of POS & mobile/tablet operational efficiency.
-
-
-## 2026-10-31T10:54:25Z
-From: aa2ef6eb-6969-4758-9898-c916a6745d73
-Priority: MESSAGE_PRIORITY_HIGH
-Content:
-You are an Explorer agent for surveying the UI/UX architecture of resources/views/app in COOCA.
-Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2
-Read your dispatch details at: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\DISPATCH.md
-Read the original request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-
-CRITICAL RULES:
-- STRICTLY READ-ONLY. DO NOT modify any codebase files in resources/views/app or anywhere in the repository.
-- Survey all transactional and operations views in resources/views/app (POS, sales, orders, products, inventory, purchasing, checkout).
-- Evaluate form density, action button hierarchy, button overlap/clutter, table readability, touch targets, and mobile/tablet operational efficiency.
-- Identify specific UI/UX issues, visual hierarchy flaws, clutter, or inconsistency.
-- Write your final handoff report to: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md
-- Send a completion message back when done.
+DELIVERABLE:
+Write your complete technical findings to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\report.md
+Write your handoff report to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md
+Update progress.md in your working directory.
+When finished, notify your caller with send_message including summary and file path.

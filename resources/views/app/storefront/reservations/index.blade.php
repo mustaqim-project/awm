@@ -44,11 +44,13 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                    @if ($business && $business->hasDineInFeature())
                     <a href="{{ route('pos.tables.index') }}"
                         class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
                         <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#5856D6]"></i>
                         <span>{{ __('storefront.backoffice.reservations.btn_pos_tables') }}</span>
                     </a>
+                    @endif
                     <a href="{{ route('pos.terminal') }}"
                         class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
                         <i data-lucide="calculator" class="w-3.5 h-3.5"></i>

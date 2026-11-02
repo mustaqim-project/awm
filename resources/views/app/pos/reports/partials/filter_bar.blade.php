@@ -117,14 +117,21 @@
             </div>
 
             <div>
+                @php
+                    $filterBiz = $business ?? $activeBiz ?? \App\Support\Context::business() ?? auth()->user()?->activeBusiness;
+                @endphp
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_sales_channel') }}</label>
                 <select name="sales_channel" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     <option value="">{{ __('pos.reports_filter_all_channels') }}</option>
                     <option value="pos" {{ request('sales_channel') === 'pos' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_pos') }}</option>
-                    <option value="qr_table" {{ request('sales_channel') === 'qr_table' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_qr') }}</option>
-                    <option value="grabfood" {{ request('sales_channel') === 'grabfood' ? 'selected' : '' }}>GrabFood</option>
-                    <option value="gofood" {{ request('sales_channel') === 'gofood' ? 'selected' : '' }}>GoFood</option>
-                    <option value="shopeefood" {{ request('sales_channel') === 'shopeefood' ? 'selected' : '' }}>ShopeeFood</option>
+                    @if ($filterBiz && $filterBiz->hasDineInFeature())
+                        <option value="qr_table" {{ request('sales_channel') === 'qr_table' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_qr') }}</option>
+                    @endif
+                    @if ($filterBiz && ($filterBiz->isFoodIndustry() || $filterBiz->isModuleEnabled('pos_dinein')))
+                        <option value="grabfood" {{ request('sales_channel') === 'grabfood' ? 'selected' : '' }}>GrabFood</option>
+                        <option value="gofood" {{ request('sales_channel') === 'gofood' ? 'selected' : '' }}>GoFood</option>
+                        <option value="shopeefood" {{ request('sales_channel') === 'shopeefood' ? 'selected' : '' }}>ShopeeFood</option>
+                    @endif
                     <option value="online" {{ request('sales_channel') === 'online' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_storefront') }}</option>
                 </select>
             </div>

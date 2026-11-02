@@ -1,46 +1,41 @@
 # Original User Request
 
-## Initial Request — 2026-10-31T14:29:43Z
+## Approved Task Prompt — 2026-11-02T05:10:33Z
 
-Lakukan perbaikan UI/UX dan arsitektur antarmuka pada view di resources/views/app berdasarkan hasil temuan audit dan roadmap remediasi 4 fase pada docs/UI_UX_AUDIT_REPORT.md.
+Implementasikan Fase 1 dari rencana integrasi fitur di C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\acf5365f-47d8-4edf-9b08-e7eb3389da96\plan_core_to_mobile_features.md, yang mencakup fitur Petty Cash / Quick Expense Kasir dan Owner Approval Center secara terintegrasi antara backend cooca_core dan mobile cooca_my_own untuk penggunaan production.
 
 Working directory: c:\laragon\www\cooca_core
 Integrity mode: development
 
+Dokumen acuan: C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\acf5365f-47d8-4edf-9b08-e7eb3389da96\plan_core_to_mobile_features.md
+
 ## Requirements
 
-### R1. Remediation Scope and Execution
-Laksanakan seluruh 4 fase remediasi Bab 7 pada `docs/UI_UX_AUDIT_REPORT.md` secara menyeluruh pada target view di `resources/views/app`:
-- **Fase 1 (Quick Wins)**: Eliminasi redundansi Double Header (44 views) antara `headerTitle` sticky topbar dan komponen `<x-module-header>`, serta perbaiki arsitektur modal backdrop wrapper (76 lokasi di 21 views) agar tidak memicu pemotongan dialog dan kebocoran z-index.
-- **Fase 2 (Modal Standardization & Table Action Consolidation)**: Standarisasi formulir modal berdesakan (127 lokasi) menjadi layout responsif terstruktur (Bento 2-kolom pada layar lebar), serta konsolidasi tombol aksi baris tabel yang menumpuk menjadi dropdown aksi terpadu.
-- **Fase 3 (Mobile Ergonomics & Touch Targets)**: Tingkatkan ukuran touch target tabel menjadi minimal 44px sesuai Apple HIG, tambahkan mobile bottom padding (32 views) untuk mencegah elemen dan tombol submit terpotong oleh fixed mobile bottom tab bar, serta perbaiki hardcoded unresponsive multi-column grids (23 views) dan ganti raw unicode emojis (13 views) dengan ikon sistem SVG.
-- **Fase 4 (Monolith Modularization)**: Lakukan dekomposisi modular pada view monolith POS (`resources/views/app/pos/terminal.blade.php`) dan HRM (`resources/views/app/hrm/index.blade.php`) menjadi sub-komponen terpisah yang terisolasi dan mudah dipelihara.
+### R1. Petty Cash / Quick Expense Kasir
+Implementasikan fitur Petty Cash / Quick Expense Kasir terintegrasi pada backend `c:\laragon\www\cooca_core` dan mobile `c:\laragon\www\cooca_my_own`:
+- Backend `cooca_core`: Buat endpoint API `POST /api/v1/pos/expenses` yang dilindungi autentikasi Sanctum, memvalidasi shift POS yang sedang aktif/terbuka, mencatat mutasi pengeluaran kas kecil pada cash ledger (`CashLedgerWebController` / `CashLedgerEntry`), serta mendukung upload foto/bukti nota struk.
+- Mobile `cooca_my_own`: Buat komponen modal `PosExpenseModal` (`lib/screens/pos/pos_expense_modal.dart`) yang mendukung pengambilan foto nota menggunakan kamera HP, sediakan tombol akses di menu shift POS kasir, dan integrasikan dengan `pos_shift_modal.dart` sehingga pengeluaran kas kecil otomatis memotong nilai expected cash saat penutupan shift.
 
-### R2. Preserving Existing Functionality and Scope
-Terapkan perubahan pada seluruh target view di `resources/views/app` yang tercatat dalam laporan audit tanpa pengecualian file. Pertahankan seluruh fungsionalitas bisnis, route bindings, event handlers (Alpine.js / JavaScript), dan alur form submission yang ada.
+### R2. Owner Approval Center
+Implementasikan fitur Owner Approval Center terintegrasi pada backend `c:\laragon\www\cooca_core` dan mobile `c:\laragon\www\cooca_my_own`:
+- Backend `cooca_core`: Buat endpoint API `GET /api/v1/owner/approvals/pending` untuk mengambil daftar permintaan persetujuan yang tertunda dan `POST /api/v1/owner/approvals/{id}/action` dengan payload aksi (`approve` atau `reject`) beserta alasan untuk persetujuan pembatalan transaksi (*void*), diskon di atas batas, dan koreksi absensi melalui model persetujuan terkait.
+- Mobile `cooca_my_own`: Buat layar `OwnerApprovalScreen` (`lib/screens/approvals/owner_approval_screen.dart`), tambahkan indikator/badge jumlah pending approval pada `dashboard_screen.dart`, serta sediakan interaksi kartu geser (swipe to approve / reject) dengan haptic feedback Apple HIG.
 
-### R3. Verification
-Verifikasi integritas seluruh file view yang dimodifikasi menggunakan kompilasi programatik Blade (`php artisan view:cache`) dan pengecekan sintaks PHP/Blade untuk memastikan tidak ada kesalahan sintaks atau rendering template yang rusak.
+### R3. Automated Testing and Verification
+Buat dan jalankan test suite otomatis baru sesuai konvensi testing pada masing-masing repositori:
+- Backend `cooca_core`: Buat test suite otomatis menggunakan Pest atau PHPUnit untuk menguji validasi, otorisasi, pencatatan mutasi cash ledger saat petty cash dicatat, serta alur approval pending dan aksi approve/reject.
+- Mobile `cooca_my_own`: Buat automated test (unit/widget test di direktori `test/`) untuk form/modal petty cash dan interaksi approval, serta pastikan `flutter analyze` dan `flutter test` berjalan bersih tanpa error.
 
 ## Acceptance Criteria
 
-### Header and Modal Architecture (Fase 1)
-- [ ] Seluruh 44 view yang memiliki redundansi Double Header telah dibersihkan sehingga judul hanya dirender sekali secara konsisten
-- [ ] Seluruh 76 lokasi modal backdrop wrapper pada 21 view telah direfaktor dengan memisahkan overlay backdrop gelap dari container dialog (dialog tidak terpotong dan z-index tidak bocor)
+### Petty Cash / Quick Expense Kasir
+- [ ] Endpoint `POST /api/v1/pos/expenses` di `cooca_core` memvalidasi shift aktif, merekam mutasi pengeluaran kas kecil pada cash ledger, menyimpan file/bukti nota, dan mengembalikan respon sukses
+- [ ] Komponen `PosExpenseModal` di `cooca_my_own` memungkinkan kasir memasukkan data pengeluaran dan foto nota, mengirimkannya ke backend, serta memperbarui kalkulasi expected cash pada `pos_shift_modal.dart` saat tutup shift
 
-### Form Modals and Table Actions (Fase 2)
-- [ ] Seluruh 127 modal formulir berdesakan telah distandarisasi menggunakan layout responsif (Bento 2-kolom pada desktop/tablet)
-- [ ] Tombol aksi baris tabel yang menumpuk telah dikonsolidasikan ke dalam menu dropdown aksi terpadu
+### Owner Approval Center
+- [ ] Endpoint `GET /api/v1/owner/approvals/pending` dan `POST /api/v1/owner/approvals/{id}/action` di `cooca_core` berhasil mengembalikan data approval tertunda dan memproses aksi persetujuan/penolakan (approve/reject)
+- [ ] Layar `OwnerApprovalScreen` di `cooca_my_own` menampilkan daftar permintaan pending, mendukung interaksi swipe approve/reject, dan badge pending approvals terintegrasi pada `dashboard_screen.dart`
 
-### Mobile Ergonomics and Grids (Fase 3)
-- [ ] Semua touch target aksi tabel memenuhi standar ukuran minimum 44px
-- [ ] Seluruh 32 view yang teridentifikasi memiliki class padding bawah untuk fixed mobile bottom tab bar (misalnya `pb-20` atau `pb-24`) sehingga konten dan tombol aksi tidak tertutup navigasi bawah
-- [ ] Seluruh 23 view dengan grid kolom tidak responsif telah dikonversi menjadi grid adaptif (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-...`)
-- [ ] Seluruh 13 view dengan raw unicode emoji telah digantikan dengan ikon SVG standar sistem
-
-### Monolith Modularization (Fase 4)
-- [ ] View monolith POS (`terminal.blade.php`) dan HRM (`hrm/index.blade.php`) telah didekomposisi menjadi sub-view modular di bawah direktori komponen masing-masing dengan alur passing data yang utuh
-
-### Build and Integrity Verification
-- [ ] Perintah `php artisan view:cache` berhasil dijalankan tanpa error sintaks maupun kompilasi Blade
-- [ ] Semua interaksi Alpine.js, event click modal, submit formulir, dan parameter route tetap berfungsi normal
+### Automated Verification
+- [ ] Test suite baru (Pest/PHPUnit) di `cooca_core` mencakup endpoint petty cash dan approval center, serta seluruh pengujian lolos eksekusi
+- [ ] Perintah `flutter analyze` pada `cooca_my_own` menghasilkan 0 issues/error, dan `flutter test` lolos pengujian tanpa kegagalan

@@ -355,5 +355,90 @@ final class PosTerminalIndustryGatingTest extends TestCase
         // 2. Resto Dine-In card template rendered in detail modal
         $response->assertSee('Restoran &amp; Dine-In', false);
     }
-}
+    public function test_retail_reseller_reports_filter_bar_hides_ojol_and_qr_channels(): void
+    {
+        [$retailBiz, $location, $shift] = $this->createTenant('Toko Retail Pakaian', 'retail_reseller');
+        Context::flush();
+        $membership = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
+            ->where('user_id', $this->owner->id)
+            ->first();
+        Context::setBusiness($retailBiz, $membership);
 
+        $response = $this->actingAs($this->owner)
+            ->withSession([
+                'active_business_id' => $retailBiz->id,
+                'business_id'        => $retailBiz->id,
+            ])
+            ->get(route('pos.reports.index'));
+
+        $response->assertStatus(200);
+        $response->assertDontSee('<option value="qr_table"', false);
+        $response->assertDontSee('<option value="grabfood"', false);
+        $response->assertDontSee('<option value="gofood"', false);
+        $response->assertDontSee('<option value="shopeefood"', false);
+    }
+
+    public function test_retail_reseller_printers_hides_kitchen_and_bar_routing(): void
+    {
+        [$retailBiz, $location, $shift] = $this->createTenant('Toko Retail Pakaian', 'retail_reseller');
+        Context::flush();
+        $membership = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
+            ->where('user_id', $this->owner->id)
+            ->first();
+        Context::setBusiness($retailBiz, $membership);
+
+        $response = $this->actingAs($this->owner)
+            ->withSession([
+                'active_business_id' => $retailBiz->id,
+                'business_id'        => $retailBiz->id,
+            ])
+            ->get(route('pos.printers.index'));
+
+        $response->assertStatus(200);
+        $response->assertDontSee(__('pos.kitchen_bar_printers_kpi'));
+        $response->assertDontSee('value="kitchen_order"', false);
+        $response->assertDontSee('value="bar_order"', false);
+    }
+
+    public function test_fnb_resto_printers_shows_kitchen_and_bar_routing(): void
+    {
+        [$restoBiz, $location, $shift] = $this->createTenant('Restoran Rasa Nusantara', 'fnb_resto');
+        Context::flush();
+        $membership = \App\Models\BusinessMembership::where('business_id', $restoBiz->id)
+            ->where('user_id', $this->owner->id)
+            ->first();
+        Context::setBusiness($restoBiz, $membership);
+
+        $response = $this->actingAs($this->owner)
+            ->withSession([
+                'active_business_id' => $restoBiz->id,
+                'business_id'        => $restoBiz->id,
+            ])
+            ->get(route('pos.printers.index'));
+
+        $response->assertStatus(200);
+        $response->assertSee(__('pos.kitchen_bar_printers_kpi'));
+        $response->assertSee('value="kitchen_order"', false);
+        $response->assertSee('value="bar_order"', false);
+    }
+
+    public function test_retail_reseller_product_form_hides_recipe_bom_costing_method(): void
+    {
+        [$retailBiz, $location, $shift] = $this->createTenant('Toko Retail Pakaian', 'retail_reseller');
+        Context::flush();
+        $membership = \App\Models\BusinessMembership::where('business_id', $retailBiz->id)
+            ->where('user_id', $this->owner->id)
+            ->first();
+        Context::setBusiness($retailBiz, $membership);
+
+        $response = $this->actingAs($this->owner)
+            ->withSession([
+                'active_business_id' => $retailBiz->id,
+                'business_id'        => $retailBiz->id,
+            ])
+            ->get(route('products.index'));
+
+        $response->assertStatus(200);
+        $response->assertDontSee('<option value="recipe_bom"', false);
+    }
+}

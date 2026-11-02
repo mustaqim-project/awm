@@ -1,0 +1,55 @@
+{
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.1.2058688727.1793588127",
+      "domain": ".cooca_core.test",
+      "path": "/",
+      "expires": 1828148126.744854,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cooca_wa_trusted_device",
+      "value": "eyJpdiI6ImNwNjJkamZtWkQ2bnZHTlZ4ZGovcnc9PSIsInZhbHVlIjoiWndPRjhYRkNTdXcwUlc1czg3WUlXUlptNWdETDlOTG5GZG9jajBqQ3J6NFMrVmpseVQzRy9WckZBVVVpQTh1bFVRMi9EWEpGTnR0dEtzbTVLZWZIRk1KMnZFdVVUK0RNQ3N0VElnaXZlMzllanh1UlFsYVhSS09uQTNkV2JUVnNabGU4M0JndWU2OEdPZTIyT2pJTTI2WFU2K1kzcFh3OVhFTHlDZktUNHU1K1hIZTBvYno1WGQvQk5EUkpPbjE2Q2lYVC8rc2UzbTRKOEw5SDJ2bFlaQ0p1OGQrVXRQM0xrWHNsYVA2ZzVNV1VRU0l5eHZQR3ptdGliWjVBaXBYaiIsIm1hYyI6IjY4YmZhYzQwYTQ4YWNjZjA3NGM4MWVlMjRkZmE0MzU1NDE0M2E2YjUwYjFkMmExMWE5MjBkMmFkZTAwNWYxYjAiLCJ0YWciOiIifQ%3D%3D",
+      "domain": "cooca_core.test",
+      "path": "/",
+      "expires": 1798772128.407326,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_HZSN9QHGN1",
+      "value": "GS2.1.s1793588126$o1$g0$t1793588129$j57$l0$h0",
+      "domain": ".cooca_core.test",
+      "path": "/",
+      "expires": 1828148129.319884,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "XSRF-TOKEN",
+      "value": "eyJpdiI6IlFXOVZMSHNRRnpUdHVUNm5QRDZHWHc9PSIsInZhbHVlIjoiZVdoUXZXYXBkVkdLUTJqaGFkUGZzbEtLdzUrei9WWXlUdzBCODRtc2ZteGVFRnBTRVM4U2p2UGsvQ0Y5Vkh6RG5pMHFJZjNDd2JLTTFuUFNXZ0hzb0N1Wnk1cmpiL053SllhOUpVZW5WME85Sk9tOGRwcEk3MmZrRWQxL202cFkiLCJtYWMiOiIzMTdkMzMzZTlmOTRhYmRkOTllMDVjNjgyZWYwMzYwNTM5OWM3NThiMmM1ZDgzMWYyNGQ2ZDQzY2VjZjYzNDJhIiwidGFnIjoiIn0%3D",
+      "domain": "cooca_core.test",
+      "path": "/",
+      "expires": 1793595330.527243,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cooca-session",
+      "value": "eyJpdiI6Im4zNlJ5NWpqYkhpYy8zd1UvK3JRN3c9PSIsInZhbHVlIjoiNno5UnRQWUhRN29MVlVKd3h0TFJCVWhNMFZXY1l5UmxFMUtUWnA3dzRnZ2tzcnRQRUtTRDIwZlJFZjZJNFdKZGpFTUVTS21KVHF5YnovdG5aL1JZRjBQR3FsekVLNXRJc0tZNnE5VGZBWk4rekx5T3JoRWVUU0VOb3V0MElJTHUiLCJtYWMiOiI5NTY5ZGM1OTY1MzY5OTI4MjhkZmQyOWZkNmU0NTVmYzI1MGFmY2Q5OTgxNmQwZTVhMzBkNjM2ZWJkYmUyMzVjIiwidGFnIjoiIn0%3D",
+      "domain": "cooca_core.test",
+      "path": "/",
+      "expires": 1793595330.527437,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

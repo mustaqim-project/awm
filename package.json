@@ -4,9 +4,15 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "test:e2e": "playwright test",
+        "test:e2e:ui": "playwright test --ui",
+        "test:e2e:report": "playwright show-report",
+        "test:e2e:codegen": "playwright codegen http://cooca_core.test",
+        "demo": "playwright test tests/e2e/demo-product-flow.spec.js --headed"
     },
     "devDependencies": {
+        "@playwright/test": "^1.64.1",
         "@tailwindcss/vite": "^4.0.0",
         "concurrently": "^10.0.3",
         "laravel-echo": "^2.6.3",
