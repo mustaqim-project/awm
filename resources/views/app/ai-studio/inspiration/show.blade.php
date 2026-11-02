@@ -34,7 +34,8 @@
         <div class="lg:col-span-5 space-y-4">
             <div class="rounded-[20px] overflow-hidden bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 shadow-lg relative group">
                 <img src="{{ $item->display_image_url }}" alt="{{ $item->title }}"
-                    class="w-full h-auto object-cover max-h-[580px]">
+                    class="w-full h-auto object-cover max-h-[580px]"
+                    onerror="this.onerror=null; this.src='{{ asset('images/ai-studio/placeholder.svg') }}';">
 
                 <!-- Verified License Floating Pill -->
                 <div class="absolute top-3 right-3">

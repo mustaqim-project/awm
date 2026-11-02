@@ -663,8 +663,146 @@ class MultiIndustryInspirationSeeder extends Seeder
             );
         }
 
-        // 4. Update legacy 'general' items with intelligent industry mapping
+        // 4. Seed Pinterest E-Commerce & Commercial Catalog for 20+ Industries
+        $this->seedPinterestCatalog($categories);
+
+        // 5. Update legacy 'general' items with intelligent industry mapping
         $this->smartReclassifyLegacyItems();
+    }
+
+    /**
+     * Seed curated Pinterest commercial photography catalog.
+     */
+    private function seedPinterestCatalog(array $categories): void
+    {
+        $pinterestSource = InspirationSource::firstOrCreate(
+            ['code' => 'pinterest'],
+            [
+                'name' => 'Pinterest Commercial Design Boards',
+                'driver_class' => 'App\\Domain\\Ai\\Inspiration\\Adapters\\PinterestAdapter',
+                'is_active' => true,
+                'fetch_frequency_minutes' => 60,
+                'rate_limit_per_minute' => 60,
+                'supports_image' => true,
+                'supports_video' => false,
+            ]
+        );
+
+        if (! $pinterestSource->policy) {
+            InspirationSourcePolicy::create([
+                'source_id' => $pinterestSource->id,
+                'allow_commercial_use' => true,
+                'require_attribution' => false,
+                'retention_days' => 365,
+                'disclaimer_template' => 'Referensi visual komersial Pinterest bebas royalti untuk inspirasi fotografi UMKM.',
+            ]);
+        }
+
+        $templates = (new \App\Domain\Ai\Inspiration\Adapters\PinterestAdapter())->getCuratedPinterestTemplates();
+
+        foreach ($templates as $tpl) {
+            $catSlug = match ($tpl['category_code'] ?? $tpl['industry_target']) {
+                'fnb', 'Makanan & Minuman (F&B)' => 'makanan-minuman',
+                'fashion', 'Fashion & Konveksi' => 'fashion-tekstil',
+                'beauty', 'Kecantikan & Skincare' => 'kecantikan-skincare',
+                'automotive', 'Bengkel & Otomotif' => 'jasa-otomotif',
+                'service', 'Jasa & Layanan Profesional', 'Jasa, Salon & Laundry' => 'jasa-lifestyle',
+                'retail', 'Ritel & Produk Kemasan', 'Ritel & Toko Kelontong' => 'ritel-kelontong',
+                'pharmacy', 'Apotek, Farmasi & Herbal' => 'kesehatan-farmasi',
+                'printing', 'Percetakan & Kemasan' => 'manufaktur-percetakan',
+                'furniture', 'Furniture & Kerajinan' => 'furniture-craft',
+                'contractor', 'Kontraktor & Bangunan' => 'kontraktor-interior',
+                'event', 'Event & Wedding Organizer' => 'event-wedding',
+                'distributor', 'Distributor FMCG & Grosir' => 'distribusi-fmcg',
+                'agriculture', 'Pertanian & Peternakan' => 'pertanian-agro',
+                default => 'viral-trending',
+            };
+
+            $cat = $categories[$catSlug] ?? ($categories['viral-trending'] ?? null);
+
+            $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $tpl['external_id']);
+            $localRel = "ai-studio/inspirations/pinterest/{$safeId}.jpg";
+            $imageUrl = \Illuminate\Support\Facades\Storage::disk('public')->exists($localRel) || file_exists(public_path('storage/' . $localRel))
+                ? "/storage/{$localRel}"
+                : ($tpl['thumbnail_url'] ?? $tpl['canonical_url']);
+
+            $industryTarget = match ($tpl['industry_target'] ?? 'general') {
+                'Makanan & Minuman (F&B)' => 'fnb',
+                'Fashion & Konveksi' => 'fashion',
+                'Kecantikan & Skincare' => 'beauty',
+                'Bengkel & Otomotif' => 'automotive',
+                'Jasa & Layanan Profesional', 'Jasa, Salon & Laundry' => 'service',
+                'Ritel & Produk Kemasan', 'Ritel & Toko Kelontong' => 'retail',
+                'Apotek, Farmasi & Herbal' => 'pharmacy',
+                'Percetakan & Kemasan' => 'printing',
+                'Furniture & Kerajinan' => 'furniture',
+                'Kontraktor & Bangunan' => 'contractor',
+                'Event & Wedding Organizer' => 'event',
+                'Distributor FMCG & Grosir' => 'distributor',
+                'Pertanian & Peternakan' => 'agriculture',
+                default => (string) ($tpl['industry_target'] ?? 'general'),
+            };
+
+            $item = InspirationItem::updateOrCreate(
+                [
+                    'source_id' => $pinterestSource->id,
+                    'external_id' => $tpl['external_id'],
+                ],
+                [
+                    'category_id' => $cat?->id,
+                    'title' => $tpl['title'],
+                    'caption' => $tpl['caption'] ?? $tpl['title'],
+                    'canonical_url' => $imageUrl,
+                    'thumbnail_url' => $imageUrl,
+                    'media_type' => 'image',
+                    'tags' => $tpl['tags'] ?? [],
+                    'industry_target' => $industryTarget,
+                    'view_count' => rand(4500, 15000),
+                    'like_count' => rand(850, 3200),
+                    'comment_count' => rand(70, 480),
+                    'share_count' => rand(120, 890),
+                    'save_count' => rand(300, 1450),
+                    'is_curated' => true,
+                    'curated_notes' => 'Kurasi Pinterest commercial photography untuk UMKM Indonesia.',
+                    'status' => 'active',
+                    'collected_at' => now(),
+                ]
+            );
+
+            $vis = $tpl['visual_analysis'] ?? [];
+            InspirationVisualAnalysis::updateOrCreate(
+                ['inspiration_item_id' => $item->id],
+                [
+                    'composition' => $vis['composition'] ?? 'Dynamic commercial layout',
+                    'lighting' => $vis['lighting'] ?? 'Studio lighting',
+                    'color_palette' => $vis['color_palette'] ?? ['#111111', '#EEEEEE'],
+                    'color_mood' => $vis['color_mood'] ?? 'Commercial appeal',
+                    'visual_hook' => $vis['visual_hook'] ?? 'Crisp product focal point',
+                    'cta_pattern' => $vis['cta_pattern'] ?? 'Pesan Sekarang',
+                    'extracted_style_prompt' => $vis['extracted_style_prompt'] ?? $tpl['caption'],
+                    'negative_style_prompt' => $vis['negative_style_prompt'] ?? 'blurry, low quality, distorted',
+                    'suggested_aspect_ratios' => $vis['suggested_aspect_ratios'] ?? ['4:5', '1:1', '9:16'],
+                    'safety_score' => 0.99,
+                    'metadata' => [
+                        'source' => 'pinterest',
+                        'industry_sector' => $industryTarget,
+                    ],
+                    'analyzed_at' => now(),
+                ]
+            );
+
+            InspirationTrendScore::updateOrCreate(
+                ['inspiration_item_id' => $item->id],
+                [
+                    'trend_score' => (float) rand(91, 99) + (rand(1, 9) / 10),
+                    'virality_velocity' => (float) rand(88, 98),
+                    'engagement_rate' => 0.09,
+                    'recency_weight' => 1.0,
+                    'source_credibility_weight' => 0.98,
+                    'scored_at' => now(),
+                ]
+            );
+        }
     }
 
     /**

@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="inspirationGallery()">
+<div class="w-full min-w-0 space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="inspirationGallery()">
 
     <!-- ========================================== -->
     <!-- 1. BENTO APPLE HIG MODULE HEADER          -->
@@ -148,7 +148,7 @@
     <!-- 4. MASONRY / INSPIRATION GRID             -->
     <!-- ========================================== -->
     @if ($items->isEmpty())
-        <div class="rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-12 text-center space-y-4">
+        <div class="w-full rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-12 text-center space-y-4">
             <div class="w-14 h-14 rounded-2xl bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center mx-auto">
                 <i data-lucide="image-off" class="w-7 h-7"></i>
             </div>
@@ -174,7 +174,8 @@
                     <!-- Image Box with Badges & Hover Overlay -->
                     <div class="relative aspect-[4/5] w-full bg-black/[0.04] dark:bg-white/[0.04] overflow-hidden">
                         <img src="{{ $imgUrl }}" alt="{{ $item->title }}" loading="lazy"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            onerror="this.onerror=null; this.src='{{ asset('images/ai-studio/placeholder.svg') }}';">
 
                         <!-- Trend Score & Category Badge -->
                         <div class="absolute top-2.5 left-2.5 flex flex-wrap items-center gap-1.5 pointer-events-none">

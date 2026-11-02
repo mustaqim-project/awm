@@ -59,6 +59,29 @@ require __DIR__ . '/public.php';
     \Illuminate\Support\Facades\Route::match(['POST', 'OPTIONS'], '/tools/{tool}/execute', [\App\Http\Controllers\Api\V1\Mcp\McpSseController::class, 'executeDirect'])->middleware(['mcp.auth', 'throttle:120,1']);
 });
 
+// Direct Storage File Server Fallback: Prevents 404s when storage symlink is absent on shared hosting (Hostinger)
+\Illuminate\Support\Facades\Route::get('/storage/{path}', function (string $path) {
+    $cleanPath = ltrim($path, '/');
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+    if ($disk->exists($cleanPath)) {
+        return response()->file($disk->path($cleanPath));
+    }
+    if (file_exists(public_path('storage/' . $cleanPath))) {
+        return response()->file(public_path('storage/' . $cleanPath));
+    }
+    // Safe placeholder fallback for AI Studio assets
+    if (str_starts_with($cleanPath, 'ai-studio/')) {
+        $placeholder = public_path('images/ai-studio/placeholder.svg');
+        if (file_exists($placeholder)) {
+            return response()->file($placeholder, [
+                'Content-Type' => 'image/svg+xml',
+                'Cache-Control' => 'public, max-age=86400',
+            ]);
+        }
+    }
+    abort(404);
+})->where('path', '.*');
+
 // Catch-all Canonical Redirection: Eliminate any accidental /public prefix
 \Illuminate\Support\Facades\Route::any('/public/{any?}', function (?string $any = null) {
     return redirect('/' . ($any ?? ''), 301);
