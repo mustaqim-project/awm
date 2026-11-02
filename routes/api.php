@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\V1\BepController;
 use App\Http\Controllers\Api\V1\BomController;
 use App\Http\Controllers\Api\V1\Crm\CrmLoyaltyController;
 use App\Http\Controllers\Api\V1\Crm\CustomerController;
+use App\Http\Controllers\Api\V1\Crm\CustomerDebtApiController;
 use App\Http\Controllers\Api\V1\DashboardController;
 use App\Http\Controllers\Api\V1\Finance\FinanceController;
 use App\Http\Controllers\Api\V1\Finance\CashLedgerController;
@@ -22,8 +23,10 @@ use App\Http\Controllers\Api\V1\Inventory\InventoryPurchaseOrderController;
 use App\Http\Controllers\Api\V1\Inventory\StockOpnameController;
 use App\Http\Controllers\Api\V1\Inventory\StockTransferController;
 use App\Http\Controllers\Api\V1\Pos\PosAgentApiController;
+use App\Http\Controllers\Api\V1\Pos\PosIncomingOrderApiController;
 use App\Http\Controllers\Api\V1\Pos\PosModifierApiController;
 use App\Http\Controllers\Api\V1\Pos\PosOrderController;
+use App\Http\Controllers\Api\V1\Pos\PosReceiptApiController;
 use App\Http\Controllers\Api\V1\Pos\PosReportController;
 use App\Http\Controllers\Api\V1\Pos\PosShiftController;
 use App\Http\Controllers\Api\V1\Pos\PosTerminalController;
@@ -1241,6 +1244,12 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/orders/{posOrder}', [PosOrderController::class, 'show'])->middleware('require.permission:pos.orders');
                 Route::post('/orders/{posOrder}/void', [PosOrderController::class, 'void'])->middleware('require.permission:pos.supervisor_pin');
                 Route::post('/orders/{posOrder}/refund', [PosOrderController::class, 'refund'])->middleware('require.permission:pos.supervisor_pin');
+                Route::post('/orders/{posOrder}/send-whatsapp-receipt', [PosReceiptApiController::class, 'sendWhatsAppReceipt'])->middleware('require.permission:pos.terminal,pos.orders');
+                Route::post('/orders/{id}/accept', [PosIncomingOrderApiController::class, 'acceptOrder'])->middleware('require.permission:pos.terminal,pos.orders');
+                Route::post('/orders/{id}/reject', [PosIncomingOrderApiController::class, 'rejectOrder'])->middleware('require.permission:pos.terminal,pos.orders');
+
+                // Omnichannel Storefront & QR Incoming Orders
+                Route::get('/incoming-orders', [PosIncomingOrderApiController::class, 'incomingOrders'])->middleware('require.permission:pos.terminal,sales.view');
 
                 // Reports
                 Route::get('/reports/sales-summary', [PosReportController::class, 'salesSummary'])->middleware('require.permission:pos.reports');
@@ -1378,11 +1387,19 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('require.permission:customers.view');
                 Route::put('/customers/{customer}', [CustomerController::class, 'update'])->middleware('require.permission:customers.edit');
                 Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->middleware('require.permission:customers.delete');
+                Route::get('/customers/{customer}/debts', [CustomerDebtApiController::class, 'debts'])->middleware('require.permission:customers.view,pos.terminal');
+                Route::post('/customers/{customer}/repay-debt', [CustomerDebtApiController::class, 'repayDebt'])->middleware('require.permission:customers.edit,pos.terminal');
 
                 // Loyalty
                 Route::get('/loyalty/program', [CrmLoyaltyController::class, 'program'])->middleware('require.permission:crm.view');
                 Route::get('/loyalty/customers/{customer}', [CrmLoyaltyController::class, 'customerAccount'])->middleware('require.permission:crm.view');
                 Route::post('/loyalty/customers/{customer}/adjust', [CrmLoyaltyController::class, 'adjustPoints'])->middleware('require.permission:crm.manage');
+            });
+
+            // Direct REST routes for Customer Debts & Kasbon
+            Route::prefix('customers')->group(function (): void {
+                Route::get('/{customer}/debts', [CustomerDebtApiController::class, 'debts'])->middleware('require.permission:customers.view,pos.terminal');
+                Route::post('/{customer}/repay-debt', [CustomerDebtApiController::class, 'repayDebt'])->middleware('require.permission:customers.edit,pos.terminal');
             });
 
             // ──────────────────────────────────────────────────────────────────
@@ -1472,6 +1489,7 @@ Route::prefix('v1')->group(function (): void {
             // MOBILE APP API – Merchant Commerce Orders (Native COOCA Fulfillment)
             // ──────────────────────────────────────────────────────────────────
             Route::prefix('commerce/orders')->middleware('require.permission:sales.view')->group(function (): void {
+                Route::get('/incoming', [PosIncomingOrderApiController::class, 'incomingOrders']);
                 Route::get('/', [\App\Http\Controllers\Api\V1\Commerce\MerchantOrderApiController::class, 'index']);
                 Route::get('/{order}', [\App\Http\Controllers\Api\V1\Commerce\MerchantOrderApiController::class, 'show']);
                 Route::post('/{order}/verify-payment', [\App\Http\Controllers\Api\V1\Commerce\MerchantOrderApiController::class, 'verifyPayment'])->middleware('require.permission:sales.pipeline');

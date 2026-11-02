@@ -170,4 +170,23 @@ final class CustomerController extends Controller
             'message' => 'Pelanggan berhasil dihapus.',
         ], Response::HTTP_OK);
     }
+
+    /**
+     * Retrieve customer debt overview and transaction history.
+     * GET /api/v1/customers/{customer}/debts
+     */
+    public function debts(Request $request, Customer|string $customer): JsonResponse
+    {
+        return app(CustomerDebtApiController::class)->debts($request, $customer);
+    }
+
+    /**
+     * Record customer credit repayment.
+     * POST /api/v1/customers/{customer}/repay-debt
+     */
+    public function repayDebt(Request $request, Customer|string $customer): JsonResponse
+    {
+        return app(CustomerDebtApiController::class)->repayDebt($request, $customer);
+    }
 }
+

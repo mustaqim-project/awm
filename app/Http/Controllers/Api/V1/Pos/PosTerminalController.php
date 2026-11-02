@@ -1279,5 +1279,42 @@ final class PosTerminalController extends Controller
             'whatsapp_url' => $whatsappUrl,
         ], Response::HTTP_OK);
     }
+
+    /**
+     * Send or format digital WhatsApp receipt for a POS order.
+     * POST /api/v1/pos/orders/{posOrder}/send-whatsapp-receipt
+     */
+    public function sendWhatsAppReceipt(Request $request, PosOrder|string $posOrder): JsonResponse
+    {
+        return app(PosReceiptApiController::class)->sendWhatsAppReceipt($request, $posOrder);
+    }
+
+    /**
+     * Polling stream of incoming omnichannel orders from web storefront & standee QR tables.
+     * GET /api/v1/pos/incoming-orders
+     */
+    public function incomingOrders(Request $request): JsonResponse
+    {
+        return app(PosIncomingOrderApiController::class)->incomingOrders($request);
+    }
+
+    /**
+     * Cashier accepts an incoming QR order or Storefront order.
+     * POST /api/v1/pos/orders/{id}/accept
+     */
+    public function acceptOrder(Request $request, string $id): JsonResponse
+    {
+        return app(PosIncomingOrderApiController::class)->acceptOrder($request, $id);
+    }
+
+    /**
+     * Cashier rejects an incoming QR order or Storefront order with mandatory reason.
+     * POST /api/v1/pos/orders/{id}/reject
+     */
+    public function rejectOrder(Request $request, string $id): JsonResponse
+    {
+        return app(PosIncomingOrderApiController::class)->rejectOrder($request, $id);
+    }
 }
+
 
