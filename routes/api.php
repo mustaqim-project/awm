@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\V1\Finance\FinanceController;
 use App\Http\Controllers\Api\V1\Finance\CashLedgerController;
 use App\Http\Controllers\Api\V1\Finance\PaymentSettlementController;
 use App\Http\Controllers\Api\V1\Inventory\InventoryController;
+use App\Http\Controllers\Api\V1\Inventory\InventoryGoodsReceiptController;
+use App\Http\Controllers\Api\V1\Inventory\InventoryPurchaseOrderController;
 use App\Http\Controllers\Api\V1\Inventory\StockOpnameController;
 use App\Http\Controllers\Api\V1\Inventory\StockTransferController;
 use App\Http\Controllers\Api\V1\Pos\PosAgentApiController;
@@ -1232,6 +1234,7 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/shifts/active', [PosShiftController::class, 'current'])->middleware('require.permission:pos.terminal,pos.orders');
                 Route::get('/shifts/current', [PosShiftController::class, 'current'])->middleware('require.permission:pos.terminal,pos.orders');
                 Route::post('/shifts/{posShift}/print', [PosShiftController::class, 'printSummary'])->middleware('require.permission:pos.terminal,pos.orders');
+                Route::post('/expenses', [\App\Http\Controllers\Api\V1\Pos\PosExpenseApiController::class, 'store'])->middleware('require.permission:pos.terminal,pos.orders');
 
                 // Orders
                 Route::get('/orders', [PosOrderController::class, 'index'])->middleware('require.permission:pos.orders');
@@ -1271,9 +1274,17 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/opnames/{stockOpname}', [StockOpnameController::class, 'show'])->middleware('require.permission:inventory.view');
                 Route::post('/opnames/{stockOpname}/reconcile', [StockOpnameController::class, 'reconcile'])->middleware('require.permission:inventory.manage');
 
-                // Stock Transfers (Inter-Location)
+                // Purchase Orders (Receiving / Mobile Barcode Scan)
+                Route::get('/purchase-orders/pending', [InventoryPurchaseOrderController::class, 'pending'])->middleware('require.permission:inventory.view,purchasing.view,receiving.manage');
+                Route::get('/purchase-orders/{id}', [InventoryPurchaseOrderController::class, 'show'])->middleware('require.permission:inventory.view,purchasing.view,receiving.manage');
+
+                // Goods Receipts (Inbound Stock & Batch Tracking)
+                Route::post('/goods-receipts', [InventoryGoodsReceiptController::class, 'store'])->middleware('require.permission:inventory.manage,receiving.manage');
+
+                // Stock Transfers (Inter-Location & 2-Step In-Transit Dispatch/Receive)
                 Route::get('/transfers', [StockTransferController::class, 'index'])->middleware('require.permission:inventory.view');
                 Route::post('/transfers', [StockTransferController::class, 'store'])->middleware('require.permission:inventory.manage');
+                Route::post('/transfers/dispatch', [StockTransferController::class, 'dispatchTransfer'])->middleware('require.permission:inventory.manage');
                 Route::get('/transfers/{stockTransfer}', [StockTransferController::class, 'show'])->middleware('require.permission:inventory.view');
                 Route::post('/transfers/{stockTransfer}/receive', [StockTransferController::class, 'receive'])->middleware('require.permission:inventory.manage');
             });
@@ -1475,6 +1486,14 @@ Route::prefix('v1')->group(function (): void {
             Route::prefix('mobile/dashboard')->group(function (): void {
                 Route::get('/pulse', [\App\Http\Controllers\Api\V1\Dashboard\MobileOwnerPulseApiController::class, 'pulse'])->middleware('require.permission:dashboard.view');
                 Route::get('/analytics', [\App\Http\Controllers\Api\V1\Dashboard\MobileOwnerPulseApiController::class, 'analytics'])->middleware('require.permission:dashboard.view');
+            });
+
+            // ──────────────────────────────────────────────────────────────────
+            // MOBILE APP API – Owner Approval Center
+            // ──────────────────────────────────────────────────────────────────
+            Route::prefix('owner/approvals')->middleware('require.role:owner,admin')->group(function (): void {
+                Route::get('/pending', [\App\Http\Controllers\Api\V1\Owner\OwnerApprovalApiController::class, 'pending']);
+                Route::post('/{id}/action', [\App\Http\Controllers\Api\V1\Owner\OwnerApprovalApiController::class, 'action']);
             });
         });
     });

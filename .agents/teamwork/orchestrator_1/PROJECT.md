@@ -32,9 +32,9 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | Backend API & Tests (`cooca_core`) | F1, F2, F3: Implement `/api/v1/pos/expenses`, `/api/v1/owner/approvals/pending`, `/api/v1/owner/approvals/{id}/action` + PHPUnit test suite | none | IN_PROGRESS |
-| 2 | Mobile UI, State & Tests (`cooca_my_own`) | F4, F5, F6, F7, F8: Implement `PosExpenseModal`, `OwnerApprovalScreen`, dashboard badge, shift expected cash sync + Flutter tests & analyze | M1 | PLANNED |
-| 3 | Verification, Stress Test & Forensic Audit | F9, F10, F11: Reviewers, Challengers, and Forensic Auditor verify integrity and full end-to-end integration | M1, M2 | PLANNED |
+| 1 | Backend API & Tests (`cooca_core`) | F1, F2, F3: Implement `/api/v1/pos/expenses`, `/api/v1/owner/approvals/pending`, `/api/v1/owner/approvals/{id}/action` + PHPUnit test suite | none | DONE |
+| 2 | Mobile UI, State & Tests (`cooca_my_own`) | F4, F5, F6, F7, F8: Implement `PosExpenseModal`, `OwnerApprovalScreen`, dashboard badge, shift expected cash sync + Flutter tests & analyze | M1 | DONE |
+| 3 | Verification, Stress Test & Forensic Audit | F9, F10, F11: Reviewers, Challengers, and Forensic Auditor verify integrity and full end-to-end integration | M1, M2 | DONE |
 
 ## Interface Contracts
 

@@ -1,44 +1,102 @@
-# Project: COOCA UI/UX & Interface Architecture Remediation
+# Project: COOCA Core to Mobile Integration (Fase 2 & Fase 3)
 
 ## Architecture
-- Target Scope: Blade views in `resources/views/app` identified in `docs/UI_UX_AUDIT_REPORT.md`.
-- Layout Architecture: `layouts.app` shell, sticky topbar (`topbar.blade.php`), mobile bottom tab bar (`fixed inset-x-0 bottom-0 z-30 lg:hidden`), and modal dialog architectures.
-- Shared Components: `<x-module-header>`, `<x-dropdown>`, standard Apple HIG modals, responsive tables.
-- Remediation Framework: 4-phase engineering roadmap from Chapter 7 of `docs/UI_UX_AUDIT_REPORT.md`:
-  - Phase 1: Quick Wins & Layout Normalization (Double Header elimination across 44 views, Modal Backdrop wrapper refactoring across 76 locations in 21 views).
-  - Phase 2: Modal Standardization (127 cramped modals to Bento 2-column) & Table Action Consolidation (kebab overflow dropdowns).
-  - Phase 3: Mobile Ergonomics & Responsive Overhaul (≥44px touch targets, mobile safe-area bottom padding in 32 views, 23 responsive grids, 13 SVG emoji replacements).
-  - Phase 4: Monolith Modularization (POS `terminal.blade.php` and HRM `hrm/index.blade.php` sub-component extraction).
-  - Milestone 5: Integrity & Build Verification (`php artisan view:cache`, Blade syntax check, forensic audit).
+- **Backend API**: `c:\laragon\www\cooca_core` (Laravel 11, Laravel Sanctum, Eloquent ORM, PHPUnit 11)
+- **Mobile Client**: `c:\laragon\www\cooca_my_own` (Flutter 3.47 / Dart 3.13, Provider/Listenable `MerchantState`, Apple HIG tokens `ios_tokens.dart`, `ios_adaptive.dart`, `flutter test`, `flutter analyze`)
+- **Fase 2 (Logistik & Gudang Toko)**:
+  - Goods Receipt / Penerimaan Barang Supplier: PO pending list, PO detail, camera barcode scan (`mobile_scanner`), actual vs damaged received qty, batch/lot & exp date tracking in `product_batches`.
+  - Stock Transfer / Mutasi Antar Cabang: Transfer list, dispatch (pengiriman barang, deduction to in-transit status), receive (penerimaan inbound scan, destination stock increment).
+- **Fase 3 (Customer Piutang & Omnichannel Digital)**:
+  - Customer Piutang & Kasbon: Debt history, unpaid balance tracking (`current_credit_balance`), repayment recording via `LoyaltyService`, POS "Kasbon / Tempo" payment method.
+  - Digital WhatsApp Receipt: POS order WhatsApp receipt dispatch API with mobile direct WhatsApp intent fallback via `url_launcher` (`whatsapp://send?phone=...`).
+  - Storefront & Standee QR Orders: Inbound order polling/events, `MerchantState` listener, dashboard & POS popup badges, order action workflows (Terima Pesanan -> Cetak KDS -> Panggil Kurir).
+- **Quality Gates**:
+  - Backend: 100% PHPUnit tests passing for all new/modified endpoints.
+  - Mobile: `flutter analyze` with 0 issues, 100% widget & unit tests passing.
+  - Hard forensic audit gate: Clean audit verdict.
 
 ## Feature Inventory
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| 1 | Double Header Elimination | Remove `headerTitle`/`headerSubtitle` redundancy across 44 views using `<x-module-header>` | M1 | UI_UX_AUDIT_REPORT §3.2 |
-| 2 | Modal Backdrop Architecture | Separate backdrop overlay from dialog container across 76 locations in 21 views | M1 | UI_UX_AUDIT_REPORT §5.2.1 |
-| 3 | Bento XXL Modal Standardization | Upgrade 127 cramped form modals to responsive Bento 2-column canvases | M2 | UI_UX_AUDIT_REPORT §5.2.2 |
-| 4 | Table Action Consolidation | Consolidate cluttered table action buttons into single primary action + kebab dropdown | M2 | UI_UX_AUDIT_REPORT §5.2.4 |
-| 5 | Mobile Safe-Area Bottom Padding | Add `pb-28 sm:pb-32 lg:pb-10` padding across 32 views missing bottom cushion | M3 | UI_UX_AUDIT_REPORT §5.1 #13 |
-| 6 | Responsive Multi-Column Grids | Convert 23 hardcoded `grid-cols-3/4` to responsive `grid-cols-1 sm:grid-cols-2 lg:grid-cols-...` | M3 | UI_UX_AUDIT_REPORT §5.2.7 |
-| 7 | SVG Iconography Standardization | Replace raw Unicode emojis with standardized SVG components across 13 views | M3 | UI_UX_AUDIT_REPORT §5.2.8 |
-| 8 | Table Action Touch Target Elevation | Ensure all table action controls meet minimum 44×44px touch bounding box | M3 | UI_UX_AUDIT_REPORT §5.2.3 |
-| 9 | POS Terminal Monolith Modularization | Decompose `resources/views/app/pos/terminal.blade.php` (7,158 lines, 20 modals) into sub-views | M4 | UI_UX_AUDIT_REPORT §4.1 |
-| 10 | HRM Index Monolith Modularization | Decompose `resources/views/app/hrm/index.blade.php` (5,705 lines, 15 modals) into sub-views | M4 | UI_UX_AUDIT_REPORT §4.42 |
-| 11 | View Cache & Syntax Verification | Validate `php artisan view:cache` and Blade syntax across 100% modified templates | M5 | User Request R3 |
+| 1 | Pending Purchase Orders API | `GET /api/v1/inventory/purchase-orders/pending` & `GET /api/v1/inventory/purchase-orders/{id}` | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
+| 2 | Goods Receipt Creation API | `POST /api/v1/inventory/goods-receipts` (update PO received qty, stock mutation, batch & exp date) | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
+| 3 | Stock Transfer API (2-Step) | `GET /api/v1/inventory/transfers`, `POST /api/v1/inventory/transfers/dispatch`, `POST /api/v1/inventory/transfers/{id}/receive` | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
+| 4 | Mobile Goods Receipt Screen | `GoodsReceiptScreen` with camera barcode scanner, actual vs damaged qty, batch & exp date | M2 (Mobile Fase 2) | ORIGINAL_REQUEST R1 |
+| 5 | Mobile Stock Transfer Screen | `StockTransferScreen` with 2 tabs: Dispatch & Inbound Scan | M2 (Mobile Fase 2) | ORIGINAL_REQUEST R1 |
+| 6 | Customer Debts & Kasbon API | `GET /api/v1/customers/{id}/debts` & `POST /api/v1/customers/{id}/repay-debt` | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
+| 7 | WhatsApp Receipt API | `POST /api/v1/pos/orders/{id}/send-whatsapp-receipt` | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
+| 8 | Storefront & QR Orders API | Storefront & table QR orders endpoint and notification support | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
+| 9 | Mobile Kasbon Payment & Debt Sheet | POS payment "Kasbon / Tempo" option & `PosCustomerDebtSheet` modal | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
+| 10 | Mobile WhatsApp Receipt Fallback | `pos_receipt_screen.dart` WhatsApp send button with direct intent fallback | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
+| 11 | Mobile Omnichannel Orders Listener & UI | `MerchantState` listener, dashboard & POS badges/dialogs, action buttons | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
+| 12 | Comprehensive Test Suite & QA Gate | Backend PHPUnit tests, Mobile flutter tests & flutter analyze (0 issues) | M5 (Test & Verification) | ORIGINAL_REQUEST R3 |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 0 | Survey & Deep Technical Mapping | Map line numbers, AST patterns, and sub-component boundaries across all 4 phases | none | DONE |
-| 1 | Phase 1: Header & Modal Architecture | 44 Double Header views + 76 Backdrop locations in 21 views | M0 | DONE |
-| 2 | Phase 2: Bento Modals & Table Actions | 127 Form modals + Table action dropdown consolidation | M1 | DONE |
-| 3 | Phase 3: Mobile Ergonomics & Grids | 32 views bottom padding + 23 responsive grids + 13 SVG emojis + ≥44px targets | M2 | DONE |
-| 4 | Phase 4: POS & HRM Monolith Modularization | `pos/terminal.blade.php` & `hrm/index.blade.php` decomposition | M3 | DONE |
-| 5 | Phase 5: Verification & Forensic Audit | `php artisan view:cache`, Blade syntax verification, Forensic Auditor review | M4 | IN_PROGRESS |
+| 0 | Phase 0: Survey & Technical Discovery | Survey codebase schemas, existing routes, Flutter widgets, and test setups | none | DONE |
+| 1 | Milestone 1: Backend Fase 2 (Logistics & Stock) | PO pending, PO detail, Goods Receipt, Stock Transfer dispatch & receive | M0 | IN_PROGRESS |
+| 2 | Milestone 2: Mobile Fase 2 (Logistics UI) | `GoodsReceiptScreen` & `StockTransferScreen` with camera & scanner | M1 | PLANNED |
+| 3 | Milestone 3: Backend Fase 3 (Debts & Omnichannel) | Customer debt/repay, WhatsApp receipt, Storefront/QR orders API | M0 | PLANNED |
+| 4 | Milestone 4: Mobile Fase 3 (Debts & Omnichannel UI) | Kasbon POS payment, `PosCustomerDebtSheet`, WA receipt fallback, Omnichannel order alerts | M3 | PLANNED |
+| 5 | Milestone 5: Full E2E & Automated Test Gate | PHPUnit tests, Flutter widget/unit tests, `flutter analyze`, forensic audit | M1, M2, M3, M4 | PLANNED |
 
 ## Interface Contracts
-### View Component Contracts
-- Alpine.js State Preservation: Modal triggers (`x-show`, `x-cloak`, `@click`), form submit actions, table event listeners, and data-binding variables (`x-model`, `:value`) must maintain identical identifiers and scopes.
-- Route Bindings: All existing routes, URL parameters (`$order`, `$product`, etc.), and query params must remain intact.
-- Multi-Tenant & Industry Directives: Directives such as `@if(tenant()->isWorkshop())`, `@if(tenant()->hasDineInFeature())`, `@can(...)`, and `isModuleEnabled(...)` must remain untouched in their respective scopes.
-- Blade Modularization Sub-view Inclusions: Sub-components extracted to `partials/` or `modals/` must be included via `@include('app.pos.modals.close-shift')` or `@include('app.hrm.partials.tab-employees')`, passing parent scope `$viewData` seamlessly.
+### General Standards
+- Authentication: `Bearer <sanctum_token>` via `auth:sanctum` middleware.
+- Tenant Context: `X-Business-Id: <business_uuid>` header, mapped via `SetActiveBusinessContext` middleware.
+- Response Envelope: `{ "success": true, "data": ..., "message": "..." }` or standard Laravel resources.
+- Error Format: HTTP 422 `{ "success": false, "message": "Validation error", "errors": { ... } }`.
+
+### 10 Authoritative Endpoints
+1. `GET /api/v1/inventory/purchase-orders/pending?location_id={uuid}`: Returns confirmed POs awaiting physical receipt.
+2. `GET /api/v1/inventory/purchase-orders/{id}`: Returns PO details, ordered qty, received qty, remaining qty per item.
+3. `POST /api/v1/inventory/goods-receipts`: Creates goods receipt, updates PO items, records stock movement (`TYPE_GOODS_RECEIPT`), creates `product_batches` if batch/expiry provided.
+4. `GET /api/v1/inventory/transfers?location_id={uuid}&type={all|inbound|outbound}`: Lists stock transfers.
+5. `POST /api/v1/inventory/transfers/dispatch`: Deducts source stock (`TYPE_TRANSFER_OUT`), sets `STATUS_IN_TRANSIT`.
+6. `POST /api/v1/inventory/transfers/{id}/receive`: Adds destination stock (`TYPE_TRANSFER_IN`), sets `STATUS_RECEIVED`.
+7. `GET /api/v1/customers/{id}/debts`: Returns customer credit summary, `credit_limit`, `current_credit_balance`, unpaid invoices.
+8. `POST /api/v1/customers/{id}/repay-debt`: Records repayment via `LoyaltyService::recordCustomerCreditPayment`, creates `CustomerCreditTransaction::TYPE_PAYMENT`, records cash entry.
+9. `POST /api/v1/pos/orders/{id}/send-whatsapp-receipt`: Sends WhatsApp receipt via Meta API / Gateway and returns fallback `whatsapp_url`.
+10. `GET /api/v1/commerce/orders/incoming` (or `/api/v1/pos/incoming-orders`): Returns pending web storefront & QR table orders.
+
+## Code Layout
+- Backend (`cooca_core`):
+  - Routes: `c:\laragon\www\cooca_core\routes\api.php`
+  - Controllers:
+    - `c:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Inventory\InventoryPurchaseOrderController.php`
+    - `c:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Inventory\InventoryGoodsReceiptController.php`
+    - `c:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Inventory\StockTransferController.php`
+    - `c:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Crm\CustomerDebtApiController.php`
+    - `c:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Pos\PosReceiptApiController.php`
+  - Domain Services:
+    - `c:\laragon\www\cooca_core\app\Domain\Purchasing\GoodsReceiptService.php`
+    - `c:\laragon\www\cooca_core\app\Domain\Inventory\StockService.php`
+    - `c:\laragon\www\cooca_core\app\Domain\Crm\LoyaltyService.php`
+    - `c:\laragon\www\cooca_core\app\Domain\WhatsApp\WhatsAppGatewayService.php`
+  - Tests:
+    - `c:\laragon\www\cooca_core\tests\Feature\Inventory\GoodsReceiptAndPoReceiveTest.php`
+    - `c:\laragon\www\cooca_core\tests\Feature\Inventory\StockTransferDispatchAndReceiveTest.php`
+    - `c:\laragon\www\cooca_core\tests\Feature\Crm\CustomerDebtAndRepayTest.php`
+    - `c:\laragon\www\cooca_core\tests\Feature\Pos\PosWhatsAppReceiptApiTest.php`
+- Mobile (`cooca_my_own`):
+  - Dependecies: `c:\laragon\www\cooca_my_own\pubspec.yaml` (`url_launcher: ^6.3.1`)
+  - Inventory Screens:
+    - `c:\laragon\www\cooca_my_own\lib\screens\inventory\goods_receipt_screen.dart`
+    - `c:\laragon\www\cooca_my_own\lib\screens\inventory\stock_transfer_screen.dart`
+  - POS Screens & Modals:
+    - `c:\laragon\www\cooca_my_own\lib\screens\pos\pos_payment_sheet.dart`
+    - `c:\laragon\www\cooca_my_own\lib\screens\pos\pos_customer_debt_sheet.dart`
+    - `c:\laragon\www\cooca_my_own\lib\screens\pos\pos_receipt_screen.dart`
+    - `c:\laragon\www\cooca_my_own\lib\screens\pos\pos_screen.dart`
+    - `c:\laragon\www\cooca_my_own\lib\screens\dashboard_screen.dart`
+  - Services & State:
+    - `c:\laragon\www\cooca_my_own\lib\core\services\inventory_service.dart`
+    - `c:\laragon\www\cooca_my_own\lib\core\services\pos_service.dart`
+    - `c:\laragon\www\cooca_my_own\lib\state\merchant_state.dart`
+  - Tests:
+    - `c:\laragon\www\cooca_my_own\test\goods_receipt_screen_test.dart`
+    - `c:\laragon\www\cooca_my_own\test\stock_transfer_screen_test.dart`
+    - `c:\laragon\www\cooca_my_own\test\pos_customer_debt_test.dart`
+    - `c:\laragon\www\cooca_my_own\test\pos_whatsapp_receipt_test.dart`
+    - `c:\laragon\www\cooca_my_own\test\storefront_orders_test.dart`

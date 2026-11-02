@@ -10,6 +10,7 @@ use App\Models\GoodsReceipt;
 use App\Models\GoodsReceiptItem;
 use App\Models\Material;
 use App\Models\MaterialPrice;
+use App\Models\ProductBatch;
 use App\Models\PurchaseOrder;
 use App\Models\StockMovement;
 use App\Support\Context;
@@ -78,6 +79,11 @@ final class GoodsReceiptService
             }
 
             $receiptNumber = $data['receipt_number'] ?? ('GR-' . now()->format('Ym') . '-' . random_int(1000, 9999));
+            $receiptNotes = $data['notes'] ?? null;
+            if (! empty($data['delivery_order_number'])) {
+                $receiptNotes = trim(($receiptNotes ? $receiptNotes . ' ' : '') . '[No DO/Surat Jalan: ' . $data['delivery_order_number'] . ']');
+            }
+
             $receipt = GoodsReceipt::create([
                 'business_id' => $purchaseOrder->business_id,
                 'location_id' => $data['location_id'],
@@ -86,7 +92,7 @@ final class GoodsReceiptService
                 'receipt_number' => $receiptNumber,
                 'receipt_date' => $data['receipt_date'],
                 'status' => 'completed',
-                'notes' => $data['notes'] ?? null,
+                'notes' => $receiptNotes,
                 'received_by' => $userId,
             ]);
 
@@ -98,6 +104,12 @@ final class GoodsReceiptService
                 }
                 $materialId = $item['material_id'] ?? null;
                 $productId = $item['product_id'] ?? null;
+                $itemNotes = $item['notes'] ?? null;
+                $damagedQty = isset($item['damaged_quantity']) ? (float) $item['damaged_quantity'] : 0.0;
+                if ($damagedQty > 0) {
+                    $itemNotes = trim(($itemNotes ? $itemNotes . ' ' : '') . "[Qty Rusak: {$damagedQty}]");
+                }
+
                 GoodsReceiptItem::create([
                     'goods_receipt_id' => $receipt->id,
                     'product_id' => $productId,
@@ -107,7 +119,37 @@ final class GoodsReceiptService
                     'unit_cost' => (float) $item['unit_cost'],
                     'batch_number' => $item['batch_number'] ?? null,
                     'expiry_date' => $item['expiry_date'] ?? null,
+                    'notes' => $itemNotes,
                 ]);
+
+                if (! empty($item['batch_number']) && $productId) {
+                    $batch = ProductBatch::where('business_id', $purchaseOrder->business_id)
+                        ->where('location_id', $data['location_id'])
+                        ->where('product_id', $productId)
+                        ->where('batch_number', (string) $item['batch_number'])
+                        ->first();
+
+                    if ($batch) {
+                        $batch->quantity = (float) $batch->quantity + $quantity;
+                        $batch->unit_cost = (float) $item['unit_cost'];
+                        if (! empty($item['expiry_date'])) {
+                            $batch->expiry_date = $item['expiry_date'];
+                        }
+                        $batch->is_active = true;
+                        $batch->save();
+                    } else {
+                        ProductBatch::create([
+                            'business_id' => $purchaseOrder->business_id,
+                            'location_id' => $data['location_id'],
+                            'product_id' => $productId,
+                            'batch_number' => (string) $item['batch_number'],
+                            'expiry_date' => $item['expiry_date'] ?? null,
+                            'quantity' => $quantity,
+                            'unit_cost' => (float) $item['unit_cost'],
+                            'is_active' => true,
+                        ]);
+                    }
+                }
 
                 if (! $productId && ! $materialId) {
                     continue;

@@ -1,19 +1,20 @@
-## Current Status
-Last visited: 2026-10-31T20:43:30Z
+# Progress Tracking — COOCA Core to Mobile Integration (Fase 2 & 3)
 
-- [x] Initialized dispatch and updated BRIEFING.md
-- [x] Phase 0: Survey & Technical Mapping (3 Explorers in parallel)
-  - [x] Explorer 1: Map Phase 1 (44 Double Header views & 76 Modal Backdrop locations across 21 views) [completed - handoff.md 4,186 lines]
-  - [x] Explorer 2: Map Phase 2 (127 Cramped Modals & Table Action Clutter) + Phase 3 (32 Padding views, 23 Grids, 13 Emojis, ≥44px targets) [completed - handoff.md ready]
-  - [x] Explorer 3: Map Phase 4 (POS terminal.blade.php & HRM hrm/index.blade.php Monolith Modularization) + Build Verification baseline [completed - view:cache 100% clean]
-- [x] Synthesize Survey Findings & Author Remediations Plan
-- [x] Milestone 1: Phase 1 Remediation (Double Header & Backdrop Architecture) [DONE - 44 headers removed, 76 backdrops refactored, view:cache clean]
-- [x] Milestone 2: Phase 2 Remediation (Bento Modals & Table Dropdowns) [DONE - 127 Bento modals, table action dropdowns, ≥44px touch targets]
-- [x] Milestone 3: Phase 3 Remediation (Mobile Ergonomics, Padding, Grids, Emojis) [DONE - 32 padding views, 23 responsive grids, 13 SVG emojis]
-- [ ] Milestone 4: Phase 4 Remediation (POS & HRM Monolith Modularization) [in-progress: worker_phase4]
-- [ ] Milestone 5: Full Integrity Verification & Forensic Audit (`php artisan view:cache`)
-- [ ] Final reporting to Sentinel
+## Current Status
+Last visited: 2026-11-02T09:42:30Z
+- [x] Received dispatch message and updated ORIGINAL_REQUEST.md and DISPATCH.md
+- [x] Initialized PROJECT.md and BRIEFING.md with architectural scope and feature inventory
+- [x] Phase 0: Survey & Technical Discovery (3 parallel Explorers)
+  - [x] Explorer 1 (Backend `cooca_core` survey) — COMPLETED
+  - [x] Explorer 2 (Mobile `cooca_my_own` survey) — COMPLETED
+  - [x] Explorer 3 (Cross-system API contracts and test infrastructure) — COMPLETED
+- [ ] Phase 1: Milestone 1 — Backend Fase 2 (Logistics & Stock APIs)
+  - [x] Worker Fase 2 Backend (`ec0d2f41-5bc2-496d-8c41-063f33ab6d6a`) — CRASHED (dial tcp connection error)
+  - [ ] Worker Fase 2 Backend Replacement (`2f49893d-60b9-44a4-a883-7971d2cb3d74`) — IN-PROGRESS (status ping sent)
+- [ ] Phase 2: Milestone 2 — Mobile Fase 2 (Logistics Screens & Scanner)
+- [ ] Phase 3: Milestone 3 — Backend Fase 3 (Customer Debts & Omnichannel APIs)
+- [ ] Phase 4: Milestone 4 — Mobile Fase 3 (Debts & Omnichannel UI)
+- [ ] Phase 5: Milestone 5 — Full Automated Testing, Flutter Analyze & Forensic Audit Gate
 
 ## Iteration Status
 Current iteration: 1 / 32
-Gate Result: IN_PROGRESS

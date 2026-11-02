@@ -965,7 +965,52 @@ final class StockService
     }
 
     /**
-     * Transfer stock between two locations.
+     * Dispatch stock transfer: deducts stock from source location and marks status as in_transit.
+     */
+    public function dispatchStockTransfer(StockTransfer $transfer, User $sender): void
+    {
+        DB::transaction(function () use ($transfer, $sender) {
+            $transfer = StockTransfer::with(['items', 'sourceLocation', 'destinationLocation'])
+                ->lockForUpdate()
+                ->findOrFail($transfer->id);
+
+            if ($transfer->status === StockTransfer::STATUS_IN_TRANSIT) {
+                return;
+            }
+
+            if ($transfer->status !== StockTransfer::STATUS_PENDING) {
+                throw new InvalidArgumentException('Hanya transfer berstatus pending yang dapat diberangkatkan.');
+            }
+
+            foreach ($transfer->items as $item) {
+                $qty = (float) $item->quantity;
+                $cost = (float) $item->unit_cost;
+
+                // Out from source location
+                $this->recordMovement(
+                    businessId: $transfer->business_id,
+                    locationId: $transfer->source_location_id,
+                    productId: $item->product_id,
+                    movementType: StockMovement::TYPE_TRANSFER_OUT,
+                    quantityChange: -$qty,
+                    unitCost: $cost,
+                    referenceId: $transfer->id,
+                    referenceNumber: $transfer->transfer_number,
+                    notes: "Transfer Keluar (Dispatch) ke " . ($transfer->destinationLocation->name ?? 'Tujuan'),
+                    userId: $sender->id,
+                    materialId: $item->material_id ?? null
+                );
+            }
+
+            $transfer->update([
+                'status' => StockTransfer::STATUS_IN_TRANSIT,
+                'sent_at' => now(),
+            ]);
+        });
+    }
+
+    /**
+     * Transfer stock between two locations or complete an in-transit transfer.
      */
     public function completeStockTransfer(StockTransfer $transfer, User $receiver): void
     {
@@ -979,24 +1024,29 @@ final class StockService
             if (! in_array($transfer->status, [StockTransfer::STATUS_PENDING, StockTransfer::STATUS_IN_TRANSIT], true)) {
                 throw new InvalidArgumentException('Transfer stok tidak dapat diterima pada status saat ini.');
             }
+
+            $alreadyDispatched = ($transfer->status === StockTransfer::STATUS_IN_TRANSIT);
+
             foreach ($transfer->items as $item) {
                 $qty = (float) $item->quantity;
                 $cost = (float) $item->unit_cost;
 
-                // Out from source
-                $this->recordMovement(
-                    businessId: $transfer->business_id,
-                    locationId: $transfer->source_location_id,
-                    productId: $item->product_id,
-                    movementType: StockMovement::TYPE_TRANSFER_OUT,
-                    quantityChange: -$qty,
-                    unitCost: $cost,
-                    referenceId: $transfer->id,
-                    referenceNumber: $transfer->transfer_number,
-                    notes: "Transfer Keluar ke " . ($transfer->destinationLocation->name ?? 'Tujuan'),
-                    userId: $receiver->id,
-                    materialId: $item->material_id ?? null
-                );
+                // Out from source (only if not already dispatched during in_transit stage)
+                if (! $alreadyDispatched) {
+                    $this->recordMovement(
+                        businessId: $transfer->business_id,
+                        locationId: $transfer->source_location_id,
+                        productId: $item->product_id,
+                        movementType: StockMovement::TYPE_TRANSFER_OUT,
+                        quantityChange: -$qty,
+                        unitCost: $cost,
+                        referenceId: $transfer->id,
+                        referenceNumber: $transfer->transfer_number,
+                        notes: "Transfer Keluar ke " . ($transfer->destinationLocation->name ?? 'Tujuan'),
+                        userId: $receiver->id,
+                        materialId: $item->material_id ?? null
+                    );
+                }
 
                 // In to destination
                 $this->recordMovement(

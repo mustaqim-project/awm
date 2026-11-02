@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T05:31:00Z
+# BRIEFING — 2026-11-02T05:44:30Z
 
 ## Mission
 Implement backend APIs for POS Shift Expense recording and Owner Approvals (pending aggregation and action) along with comprehensive PHPUnit tests.
@@ -22,7 +22,7 @@ Implement backend APIs for POS Shift Expense recording and Owner Approvals (pend
 
 ## Current Parent
 - Conversation ID: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Updated: 2026-11-02T05:31:00Z
+- Updated: 2026-11-02T05:44:30Z
 
 ## Task Summary
 - **What to build**:
@@ -39,7 +39,14 @@ Implement backend APIs for POS Shift Expense recording and Owner Approvals (pend
 - **Code layout**: Existing Laravel 11 structure in cooca_core.
 
 ## Key Decisions Made
-- [TBD]
+- PosExpenseApiController implements HasMiddleware with `require.permission:pos.terminal,pos.orders`.
+- PosShift active validation verifies business scope and open status; returns 422 if not open.
+- PosCashMovement recorded as cash_out atomically incrementing shift total_cash_out.
+- CashTransaction recorded via CashLedgerService::recordOutflow with reference_type pos_shift_expense.
+- OwnerApprovalApiController implements HasMiddleware with `require.role:owner,admin`.
+- Aggregated pending approvals normalize items from PosApprovalRequest, AttendanceCorrection, and ApprovalRequest.
+- Action endpoint implements idempotency guard: returns 422 if request status is not pending.
+- Void approvals update PosOrder status to voided via PosOrderService::voidOrder (with fallback).
 
 ## Artifact Index
 - DISPATCH.md — Assignment and requirements
@@ -47,14 +54,19 @@ Implement backend APIs for POS Shift Expense recording and Owner Approvals (pend
 - handoff.md — Final handoff report
 
 ## Change Tracker
-- **Files modified**: None yet
-- **Build status**: Untested
+- **Files modified**:
+  - app/Http/Controllers/Api/V1/Pos/PosExpenseApiController.php (created)
+  - app/Http/Controllers/Api/V1/Owner/OwnerApprovalApiController.php (created)
+  - routes/api.php (added pos/expenses and owner/approvals routes)
+  - tests/Feature/Api/PosExpenseApiTest.php (created, 8 tests)
+  - tests/Feature/Api/OwnerApprovalApiTest.php (created, 9 tests)
+- **Build status**: PASS (17 tests, 77 assertions, 0 failures)
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: Not yet run
+- **Build/test result**: phpunit tests/Feature/Api/PosExpenseApiTest.php tests/Feature/Api/OwnerApprovalApiTest.php PASSED (17/17)
 - **Lint status**: Clean
-- **Tests added/modified**: Pending
+- **Tests added/modified**: 17 new feature tests covering authorization, validation, state mutations, and idempotency
 
 ## Loaded Skills
 - None
