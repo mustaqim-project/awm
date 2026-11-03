@@ -8,6 +8,9 @@ use App\Domain\Ai\Platform\AiPlatformEngineService;
 use App\Domain\Ai\Studio\Adapters\OpenAiImageAdapter;
 use App\Models\Admin;
 use App\Models\AdminAiVisualAsset;
+use App\Models\AiStudio\InspirationCategory;
+use App\Models\AiStudio\InspirationItem;
+use App\Models\AiStudio\InspirationSource;
 use App\Models\SocialMediaPost;
 use App\Models\SocialPostTarget;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -222,6 +225,126 @@ class AdminAiStudioVisualTest extends TestCase
             'id' => $asset->id,
         ]);
         Storage::disk('public')->assertMissing($filePath);
+    }
+
+    public function test_admin_can_fetch_inspirations_for_modal(): void
+    {
+        $source = InspirationSource::create([
+            'code' => 'pinterest',
+            'name' => 'Pinterest Commercial Library',
+            'driver_class' => 'App\Domain\Ai\Studio\Inspiration\Adapters\PinterestAdapter',
+            'is_active' => true,
+        ]);
+
+        $category = InspirationCategory::create([
+            'name' => 'SaaS Marketing',
+            'slug' => 'saas-marketing',
+            'sort_order' => 1,
+        ]);
+
+        $item = InspirationItem::create([
+            'source_id' => $source->id,
+            'category_id' => $category->id,
+            'external_id' => 'pin-test-999',
+            'title' => 'SaaS Promotional Dashboard 3D',
+            'image_url' => 'https://cdn.cooca.id/test.png',
+            'preview_url' => 'https://cdn.cooca.id/test-thumb.png',
+            'status' => 'active',
+            'commercial_license' => 'allowed',
+        ]);
+
+        $response = $this->actingAs($this->admin, 'admin')
+            ->getJson(route('admin.ai-studio.visual.inspirations', ['q' => 'Dashboard']));
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+        ]);
+        $response->assertJsonFragment([
+            'title' => 'SaaS Promotional Dashboard 3D',
+        ]);
+    }
+
+    public function test_admin_can_generate_visual_with_directives_and_reference(): void
+    {
+        $source = InspirationSource::create([
+            'code' => 'cooca_curated',
+            'name' => 'Cooca Curated',
+            'driver_class' => 'App\Domain\Ai\Studio\Inspiration\Adapters\GrokImageAdapter',
+            'is_active' => true,
+        ]);
+
+        $category = InspirationCategory::create([
+            'name' => 'Branding',
+            'slug' => 'branding',
+            'sort_order' => 2,
+        ]);
+
+        $inspiration = InspirationItem::create([
+            'source_id' => $source->id,
+            'category_id' => $category->id,
+            'external_id' => 'curated-001',
+            'title' => 'Isometric ERP Software',
+            'image_url' => 'https://cdn.cooca.id/curated-001.png',
+            'status' => 'active',
+            'commercial_license' => 'allowed',
+        ]);
+
+        $mockAdapter = $this->createMock(OpenAiImageAdapter::class);
+        $mockAdapter->method('generate')->willReturn([
+            'status'     => 'completed',
+            'provider'   => 'openai',
+            'model_name' => 'gpt-image-2.5-flare',
+            'images'     => [
+                [
+                    'url'          => 'data:image/png;base64,' . base64_encode('fake-generated-image'),
+                    'width'        => 1024,
+                    'height'       => 1024,
+                    'content_type' => 'image/png',
+                ],
+            ],
+            'usage'      => [
+                'total_tokens' => 500,
+            ],
+            'latency_ms' => 1100,
+            'error_message' => null,
+        ]);
+
+        $this->app->instance(OpenAiImageAdapter::class, $mockAdapter);
+
+        $payload = [
+            'title'                     => 'Banner Diskon Q4 Multi-Konten',
+            'prompt'                    => 'Promotional banner with glassmorphism',
+            'negative_prompt'           => 'watermark, blur',
+            'aspect_ratio'              => '1:1',
+            'model_name'                => 'gpt-image-2.5-flare',
+            'quality'                   => 'high',
+            'content_type'              => 'saas_promo',
+            'visual_style'              => '3d_apple_glass',
+            'lighting_style'            => 'softbox_studio',
+            'color_palette'             => 'cooca_signature',
+            'leave_space_for_text'      => '1',
+            'include_ui_mockup'         => '1',
+            'banner_headline'           => 'Diskon 50% Langganan Tahunan',
+            'reference_inspiration_id'  => $inspiration->id,
+        ];
+
+        $response = $this->actingAs($this->admin, 'admin')
+            ->post(route('admin.ai-studio.visual.generate'), $payload, [
+                'Accept' => 'application/json',
+            ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+        ]);
+
+        $asset = AdminAiVisualAsset::where('title', 'Banner Diskon Q4 Multi-Konten')->first();
+        $this->assertNotNull($asset);
+        $this->assertEquals('saas_promo', $asset->metadata['content_type']);
+        $this->assertEquals('3d_apple_glass', $asset->metadata['visual_style']);
+        $this->assertEquals($inspiration->id, $asset->metadata['reference_id']);
+        $this->assertStringContainsString('negative space', $asset->prompt);
     }
 }
 

@@ -111,6 +111,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             // Studio Visual & Konten Media Sosial Admin
             Route::get('/', [AdminAiStudioVisualController::class, 'index'])->name('index');
             Route::get('/visual', [AdminAiStudioVisualController::class, 'index'])->name('visual.index');
+            Route::get('/visual/inspirations', [AdminAiStudioVisualController::class, 'inspirations'])->name('visual.inspirations');
             Route::post('/visual/generate', [AdminAiStudioVisualController::class, 'generate'])->name('visual.generate');
             Route::post('/visual/{asset}/send-to-social-media', [AdminAiStudioVisualController::class, 'sendToSocialMedia'])->name('visual.send-to-social-media');
             Route::post('/visual/{asset}/favorite', [AdminAiStudioVisualController::class, 'toggleFavorite'])->name('visual.favorite');

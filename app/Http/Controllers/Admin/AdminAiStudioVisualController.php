@@ -10,6 +10,8 @@ use App\Domain\SocialMedia\AdminSocialMediaService;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AdminAiVisualAsset;
+use App\Models\AiStudio\InspirationCategory;
+use App\Models\AiStudio\InspirationItem;
 use App\Models\SocialMediaAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +33,7 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
     public static function middleware(): array
     {
         return [
-            new Middleware('require.admin.permission:admin.social_media.view', only: ['index']),
+            new Middleware('require.admin.permission:admin.social_media.view', only: ['index', 'inspirations']),
             new Middleware('require.admin.permission:admin.social_media.post', only: [
                 'generate',
                 'sendToSocialMedia',
@@ -42,7 +44,7 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
     }
 
     /**
-     * Preset template prompt kampanye resmi COOCA untuk konten media sosial platform.
+     * Preset Template Kampanye Siap Pakai Platform COOCA.
      */
     public const CAMPAIGN_PRESETS = [
         [
@@ -85,21 +87,222 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             'ratio' => '16:9',
             'model' => 'gpt-image-2.5-sunburst',
             'quality' => 'high',
-            'prompt' => 'Wide 16:9 cinematic technology hero banner, modern Indonesian business owner smiling confidently in contemporary boutique cafe, sleek tablet showing COOCA cloud POS dashboard, warm natural sunlight streaming through glass window, crisp depth of field, premium editorial corporate photography.',
-            'negative_prompt' => 'grainy, lowres, bad lighting, deformed hands, plastic skin',
-            'caption_suggestion' => 'Solusi all-in-one yang dirancang khusus untuk membebaskan pemilik usaha dari kerumitan administrasi manual. Akses laporan laba-rugi realtime dari mana saja bersama COOCA. #EnterpriseSaaS #SmartBusiness',
+            'prompt' => 'Wide 16:9 modern corporate announcement visual banner, floating 3D glass megaphone with subtle golden audio waves, polished dark slate podium, professional ambient lighting, deep navy blue background with soft geometric patterns, elegant ample space for title and schedule text.',
+            'negative_prompt' => 'blurry, noise, low quality, ugly artifacts, watermark',
+            'caption_suggestion' => '🚀 Solusi all-in-one ERP cloud multi-tenant untuk ribuan wirausaha modern Indonesia. Jelajahi ekosistem COOCA di cooca.id! #SaaSIndonesia #EnterpriseERP',
         ],
-        [
-            'id' => 'quote_motivasi',
-            'category' => 'Motivasi & Komunitas',
-            'title' => 'Kutipan Inspirasi Wirausaha',
-            'ratio' => '4:5',
+    ];
+
+    /**
+     * Kategori & Template Berbagai Macam Konten Resmi Platform COOCA.
+     */
+    public const CONTENT_TYPES = [
+        'saas_promo' => [
+            'id' => 'saas_promo',
+            'label' => 'Promo & Diskon SaaS',
+            'badge' => 'Promosi',
+            'icon' => 'percent',
+            'desc' => 'Banner promosi langganan ERP, flash sale, paket tahunan & penawaran spesial.',
+            'default_ratio' => '1:1',
+            'model' => 'gpt-image-2.5-flare',
+            'quality' => 'high',
+            'default_prompt' => 'Clean Apple-style 3D marketing visual banner for COOCA Business OS ERP, featuring sleek glassmorphic iPad display showing sales analytics charts, glowing golden badge "PROMO 50% ANNUAL PLAN", floating minimalist isometric icons of cash register and shopping cart, studio product lighting, soft volumetric gradient background in electric royal blue and warm amber, ultra-high resolution, hyper-detailed render.',
+            'default_negative' => 'cluttered, blurry, low resolution, watermark, pixelated, ugly font, dark gloomy artifacts',
+            'caption_suggestion' => '🚀 Tingkatkan Omzet & Rapikan Operasional Bisnis Anda 10x Lebih Cepat! Dapatkan potongan diskon 50% langganan tahunan COOCA Cloud ERP hari ini. Coba gratis sekarang di cooca.id! #BisnisNaikKelas #ERPUMKM #COOCA',
+        ],
+        'feature_launch' => [
+            'id' => 'feature_launch',
+            'label' => 'Peluncuran Fitur Baru',
+            'badge' => 'Update Sistem',
+            'icon' => 'sparkles',
+            'desc' => 'Visual rilis fitur baru COOCA: AI Studio, POS Kasir, Omnichannel & Multi-Cabang.',
+            'default_ratio' => '9:16',
+            'model' => 'gpt-image-2.5-sunburst',
+            'quality' => 'high',
+            'default_prompt' => 'Vertical 9:16 Instagram Story visual showcasing futuristic AI Photo Studio inside mobile phone screen, magical sparkling particles transforming a raw product photo into high-end studio commercial shoot, vibrant purple and neon cyan glow, minimalist typography overlay layout space, ultra-clean commercial aesthetic.',
+            'default_negative' => 'ugly, lowres, text artifacts, bad anatomy, noise, watermark',
+            'caption_suggestion' => '✨ Bikin foto katalog produk sekelas studio profesional cuma dalam 3 detik! Fitur AI Studio kini hadir resmi di aplikasi COOCA. Cek update terbaru di bio kami! #AIStudio #KatalogProduk #UMKMGoDigital',
+        ],
+        'umkm_tips' => [
+            'id' => 'umkm_tips',
+            'label' => 'Tips & Edukasi Bisnis',
+            'badge' => 'Edukasi',
+            'icon' => 'book-open',
+            'desc' => 'Infografis dan visual tips pengelolaan arus kas, stok opname, dan strategi harga.',
+            'default_ratio' => '1:1',
             'model' => 'gpt-image-2.5-flare',
             'quality' => 'standard',
-            'prompt' => 'Portrait 4:5 aesthetic coffee table aesthetic with notebook, fountain pen, and artisan coffee cup beside a modern laptop, soft morning shadows, cozy cafe atmosphere, ample elegant negative space for quote text, film photography tone.',
-            'negative_prompt' => 'blur, low quality, oversaturated, artificial look',
+            'default_prompt' => 'Minimalist modern editorial infographic visual illustrating financial balance and inventory management for retail shops, stylized 3D wooden ledger blocks, sleek green profit growth arrow, warm Scandinavian lighting, ivory and slate grey aesthetic, professional and trustworthy commercial style.',
+            'default_negative' => 'distorted, messy, low quality, noisy, dark shadows',
+            'caption_suggestion' => '💡 3 Kebiasaan Sederhana yang Bikin Arus Kas Bisnis Tetap Sehat: 1. Pisahkan rekening pribadi & bisnis. 2. Stock opname berkala. 3. Catat transaksi otomatis pakai POS. Simpan postingan ini untuk panduan tim Anda! #TipsBisnis #ManajemenKeuangan',
+        ],
+        'announcement' => [
+            'id' => 'announcement',
+            'label' => 'Pengumuman & Event',
+            'badge' => 'Info Resmi',
+            'icon' => 'megaphone',
+            'desc' => 'Poster pengumuman webinar, maintenance sistem, jam operasional, atau event wirausaha.',
+            'default_ratio' => '16:9',
+            'model' => 'gpt-image-2.5-sunburst',
+            'quality' => 'high',
+            'default_prompt' => 'Wide 16:9 modern corporate announcement visual banner, floating 3D glass megaphone with subtle golden audio waves, polished dark slate podium, professional ambient lighting, deep navy blue background with soft geometric patterns, elegant ample space for title and schedule text.',
+            'default_negative' => 'blurry, noise, low quality, ugly artifacts, watermark',
+            'caption_suggestion' => '📢 PENGUMUMAN PENTING: Ikuti Live Webinar Eksklusif "Strategi Otomasi Kasir & Pembukuan UMKM 2026" bersama tim COOCA. Daftar gratis melalui link di bio sekarang! #WebinarBisnis #COOCAEvent',
+        ],
+        'testimonial' => [
+            'id' => 'testimonial',
+            'label' => 'Testimoni & Kisah Sukses',
+            'badge' => 'Social Proof',
+            'icon' => 'award',
+            'desc' => 'Review bintang 5, kisah sukses toko mitra UMKM, dan pencapaian omzet.',
+            'default_ratio' => '4:5',
+            'model' => 'gpt-image-2.5-flare',
+            'quality' => 'high',
+            'default_prompt' => 'Portrait 4:5 authentic warm portrait of an Indonesian retail shop owner smiling warmly behind clean contemporary cashier counter, glowing 3D golden five-star rating badge floating above tablet screen, natural warm morning sunlight, bokeh store background, uplifting entrepreneurial vibe.',
+            'default_negative' => 'deformed face, unnatural plastic skin, blur, dark gloom, lowres',
+            'caption_suggestion' => '⭐ "Sejak pakai COOCA, rekap penjualan harian dari 3 cabang toko selesai cuma dalam 5 menit tanpa selisih!" Terima kasih atas kepercayaan Toko Berkah Mandiri. Saatnya bisnis Anda juga naik kelas! #CeritaMitraCOOCA #TestimoniBisnis',
+        ],
+        'culture' => [
+            'id' => 'culture',
+            'label' => 'Kultur Tim & Lowongan',
+            'badge' => 'Internal',
+            'icon' => 'users',
+            'desc' => 'Behind the scenes, rekrutmen talenta teknologi, perayaan tim, dan profil tim COOCA.',
+            'default_ratio' => '16:9',
+            'model' => 'gpt-image-2.5-flare',
+            'quality' => 'standard',
+            'default_prompt' => 'Wide 16:9 creative tech startup workspace visual, collaborative meeting area with modern standing desks, plants, sticky notes on glass partition, warm Scandinavian daylight, floating 3D neon badge "WE ARE HIRING", modern Indonesian developer team atmosphere, friendly and vibrant culture.',
+            'default_negative' => 'messy, dark, low resolution, distorted anatomy, grainy',
+            'caption_suggestion' => '🚀 Kami Sedang Mencari Talenta Terbaik untuk Bergabung Membangun Sistem Operasi Bisnis UMKM Indonesia! Cek posisi terbuka di cooca.id/careers dan kirimkan portfolio Anda sekarang. #Hiring #TechJobs #LifeAtCOOCA',
+        ],
+        'motivation' => [
+            'id' => 'motivation',
+            'label' => 'Motivasi & Komunitas',
+            'badge' => 'Kutipan Harian',
+            'icon' => 'coffee',
+            'desc' => 'Quotes motivasi bisnis, mindset wirausaha, etos kerja, dan inspirasi harian.',
+            'default_ratio' => '4:5',
+            'model' => 'gpt-image-2.5-flare',
+            'quality' => 'standard',
+            'default_prompt' => 'Portrait 4:5 aesthetic coffee table aesthetic with notebook, fountain pen, and artisan coffee cup beside a modern laptop, soft morning shadows, cozy cafe atmosphere, ample elegant negative space for quote text, film photography tone.',
+            'default_negative' => 'blur, low quality, oversaturated, artificial look',
             'caption_suggestion' => '"Bisnis yang hebat tidak dibangun dalam semalam, tapi dibangun dari konsistensi menyelesaikan hal-hal kecil setiap hari." Semangat menyambut hari produktif! ☕ #QuoteBisnis #MindsetWirausaha',
         ],
+        'custom' => [
+            'id' => 'custom',
+            'label' => 'Kustom Bebas (Full Custom)',
+            'badge' => 'Fleksibel',
+            'icon' => 'palette',
+            'desc' => 'Tulis prompt bebas tanpa batasan template, dengan dukungan panduan gaya & referensi.',
+            'default_ratio' => '1:1',
+            'model' => 'gpt-image-2.5-sunburst',
+            'quality' => 'high',
+            'default_prompt' => 'Commercial packshot banner visual for Indonesian business software, sleek 3D minimalist podium with metallic accents, volumetric softbox studio lighting, electric blue and amber glow, hyper-detailed rendering.',
+            'default_negative' => 'blurry, low resolution, artifacts, distorted, noisy',
+            'caption_suggestion' => 'Solusi cerdas untuk automasi dan pertumbuhan bisnis Anda bersama COOCA Business OS. Cek informasi selengkapnya di cooca.id! #COOCA',
+        ],
+    ];
+
+    /**
+     * Opsi Gaya Visual Populer.
+     */
+    public const VISUAL_STYLES = [
+        '3d_apple_glass' => [
+            'label' => 'Apple Clean 3D Glassmorphism',
+            'prompt_fragment' => 'Ultra-clean modern Apple-inspired 3D glassmorphic render, smooth frosted glass translucent panels, polished metallic chrome bevels, floating isometric UI elements, crisp octane render 8k.',
+        ],
+        'photorealistic_commercial' => [
+            'label' => 'Fotografi Komersial Studio Premium',
+            'prompt_fragment' => 'High-end commercial studio product photography, shot on 85mm f/1.4 lens, ultra-sharp focus, shallow depth of field, authentic material textures, crisp reflections.',
+        ],
+        'bento_infographic' => [
+            'label' => 'Modern Bento Grid Infografis',
+            'prompt_fragment' => 'Sleek bento grid layout composition with rounded card containers, clean typographic hierarchy, stylized 3D data visualization charts, modern tech editorial aesthetic.',
+        ],
+        'cyberpunk_neon' => [
+            'label' => 'Futuristic Cyberpunk Neon Tech',
+            'prompt_fragment' => 'Dark sleek futuristic obsidian background, volumetric electric cyan and magenta neon edge highlights, holographic particle glow, high-tech industrial aesthetic.',
+        ],
+        'warm_scandinavian' => [
+            'label' => 'Scandinavian Warm Editorial',
+            'prompt_fragment' => 'Warm contemporary Scandinavian minimalist aesthetic, natural light oak wood textures, soft natural daylight, cozy indoor boutique atmosphere, muted earthy pastels.',
+        ],
+        'bold_pop_art' => [
+            'label' => 'Bold & Vibrant Commercial Pop',
+            'prompt_fragment' => 'High-energy bold pop commercial visual, punchy saturated colors, dynamic angled perspective, high visual contrast designed for maximum social media thumb-stopping engagement.',
+        ],
+        'claymorphism_cute' => [
+            'label' => 'Soft Matte 3D Claymorphism',
+            'prompt_fragment' => 'Friendly soft matte 3D claymorphic figures and objects, smooth rounded corners, gentle pastel clay textures, warm soft diffused shadows, approachable and welcoming.',
+        ],
+    ];
+
+    /**
+     * Opsi Skema Pencahayaan.
+     */
+    public const LIGHTING_STYLES = [
+        'softbox_studio' => [
+            'label' => 'Dual Studio Softbox Diffused',
+            'prompt_fragment' => 'Professional dual studio softbox lighting with gentle wrap-around illumination and controlled soft shadows.',
+        ],
+        'morning_sunlight' => [
+            'label' => 'Golden Hour Natural Sunlight',
+            'prompt_fragment' => 'Warm natural golden hour morning sunlight streaming through window, creating soft cinematic long shadows and golden rim glow.',
+        ],
+        'dramatic_dark' => [
+            'label' => 'Moody Dark Dramatic Contrast',
+            'prompt_fragment' => 'Dramatic chiaroscuro studio lighting, deep rich shadow contrast with focused key light highlighting the subject.',
+        ],
+        'neon_rim' => [
+            'label' => 'Volumetric Neon Rim Edge',
+            'prompt_fragment' => 'Vibrant volumetric neon rim lighting creating glowing colored edge outlines around main elements in darkness.',
+        ],
+        'ambient_cozy' => [
+            'label' => 'Warm Ambient Indoor Cafe',
+            'prompt_fragment' => 'Warm 3000K ambient interior lighting with soft bokeh background and welcoming gentle highlights.',
+        ],
+    ];
+
+    /**
+     * Opsi Palet Warna Brand COOCA.
+     */
+    public const COLOR_PALETTES = [
+        'cooca_signature' => [
+            'label' => 'COOCA Royal Blue & Amber',
+            'colors' => ['#007AFF', '#FF9500', '#F2F2F7', '#1C1C1E'],
+            'prompt_fragment' => 'Dominant color palette of COOCA electric royal blue (#007AFF) accented with energetic amber gold (#FF9500) and clean neutral white.',
+        ],
+        'growth_emerald' => [
+            'label' => 'Growth & Profit Emerald Green',
+            'colors' => ['#34C759', '#059669', '#10B981', '#F0FDF4'],
+            'prompt_fragment' => 'Vibrant financial growth color palette of fresh emerald green (#34C759) and mint accents on clean ivory background.',
+        ],
+        'luxury_midnight' => [
+            'label' => 'Midnight Obsidian & Gold',
+            'colors' => ['#09090B', '#F59E0B', '#27272A', '#D97706'],
+            'prompt_fragment' => 'Sophisticated dark luxury palette of deep obsidian black, dark carbon grey, and refined metallic champagne gold highlights.',
+        ],
+        'creative_violet' => [
+            'label' => 'Creative AI Electric Violet',
+            'colors' => ['#5856D6', '#AF52DE', '#8B5CF6', '#FAF5FF'],
+            'prompt_fragment' => 'Futuristic creative palette of deep electric violet (#5856D6) and magenta neon gradient glow.',
+        ],
+        'clean_minimal' => [
+            'label' => 'Clean Ivory & Slate Grey',
+            'colors' => ['#F8FAFC', '#64748B', '#0F172A', '#E2E8F0'],
+            'prompt_fragment' => 'Monochrome minimalist palette of pure linen white, warm ivory, slate grey, and sharp dark typography tones.',
+        ],
+    ];
+
+    /**
+     * Opsi Nada Komunikasi & Persona Brand.
+     */
+    public const BRAND_TONES = [
+        'modern_tech' => 'Modern Tech Clean (Apple HIG Aesthetic)',
+        'friendly_umkm' => 'Ramah, Bersahaja & Dekat dengan UMKM Indonesia',
+        'corporate' => 'Professional Corporate, Terpercaya & Elegan',
+        'bold_promo' => 'Bold, Energik & High-Converting Call-To-Action',
+        'fun_playful' => 'Kreatif, Segar & Menyenangkan',
     ];
 
     public function __construct(
@@ -149,7 +352,22 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             ->orderBy('platform')
             ->get();
 
+        // Koleksi Inspirasi Visual Lokal COOCA untuk Gambar Referensi
+        $inspirationReferences = InspirationItem::query()
+            ->with(['source', 'category', 'visualAnalysis'])
+            ->where('status', 'active')
+            ->orderByDesc('view_count')
+            ->take(36)
+            ->get();
+
+        $categories = InspirationCategory::orderBy('sort_order')->get();
+
+        $contentTypes = self::CONTENT_TYPES;
         $campaignPresets = self::CAMPAIGN_PRESETS;
+        $visualStyles = self::VISUAL_STYLES;
+        $lightingStyles = self::LIGHTING_STYLES;
+        $colorPalettes = self::COLOR_PALETTES;
+        $brandTones = self::BRAND_TONES;
 
         return view('admin.ai-studio.visual', compact(
             'assets',
@@ -157,24 +375,116 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             'isEngineReady',
             'activeKeys',
             'platformAccounts',
+            'contentTypes',
             'campaignPresets',
+            'visualStyles',
+            'lightingStyles',
+            'colorPalettes',
+            'brandTones',
+            'inspirationReferences',
+            'categories',
             'aspectRatioFilter',
             'onlyFavorite'
         ));
     }
 
     /**
-     * Eksekusi render gambar visual AI menggunakan API Key Platform pool.
+     * API Live Search & Filter Galeri Inspirasi Visual untuk Modal Picker Admin.
+     */
+    public function inspirations(Request $request): JsonResponse
+    {
+        $query = trim((string) $request->input('q', ''));
+        $categorySlug = trim((string) $request->input('category', 'all'));
+        $sourceCode = trim((string) $request->input('source', 'all'));
+        $limit = min(60, max(12, (int) $request->input('limit', 24)));
+
+        $itemsQuery = InspirationItem::query()
+            ->with(['source', 'category', 'visualAnalysis'])
+            ->where('status', 'active');
+
+        if (! empty($query)) {
+            $itemsQuery->where(function ($q) use ($query) {
+                $q->where('title', 'LIKE', "%{$query}%")
+                    ->orWhere('caption', 'LIKE', "%{$query}%")
+                    ->orWhereJsonContains('tags', $query);
+            });
+        }
+
+        if ($categorySlug !== 'all') {
+            $itemsQuery->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        if ($sourceCode !== 'all') {
+            $itemsQuery->whereHas('source', function ($q) use ($sourceCode) {
+                $q->where('code', $sourceCode);
+            });
+        }
+
+        $items = $itemsQuery->orderByDesc('view_count')->take($limit)->get();
+
+        $data = $items->map(function (InspirationItem $item) {
+            $analysis = $item->visualAnalysis;
+
+            return [
+                'id'              => $item->id,
+                'external_id'     => $item->external_id,
+                'title'           => $item->title,
+                'caption'         => $item->caption,
+                'image_url'       => $item->display_image_url,
+                'thumbnail_url'   => $item->thumbnail_url,
+                'aspect_ratio'    => $item->aspect_ratio,
+                'source_name'     => $item->source?->name ?? 'Katalog Visual',
+                'category_name'   => $item->category?->name ?? 'Umum',
+                'tags'            => $item->tags ?? [],
+                'color_palette'   => $analysis?->color_palette ?? [],
+                'color_mood'      => $analysis?->color_mood,
+                'lighting'        => $analysis?->lighting,
+                'composition'     => $analysis?->composition,
+                'style_prompt'    => $analysis?->extracted_style_prompt ?? $item->caption,
+                'negative_prompt' => $analysis?->negative_style_prompt,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'total'   => $items->count(),
+            'data'    => $data,
+        ]);
+    }
+
+    /**
+     * Eksekusi render gambar visual AI menggunakan API Key Platform pool,
+     * mendukung gambar referensi (katalog / upload) dan kompilasi ketentuan khusus.
      */
     public function generate(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'prompt'          => ['required', 'string', 'max:4000'],
-            'negative_prompt' => ['nullable', 'string', 'max:1000'],
-            'title'           => ['nullable', 'string', 'max:191'],
-            'aspect_ratio'    => ['required', 'string', 'in:1:1,9:16,16:9,4:5'],
-            'model_name'      => ['required', 'string', 'in:gpt-image-2.5-flare,gpt-image-2.5-sunburst,gpt-image-2'],
-            'quality'         => ['required', 'string', 'in:standard,high,xhigh,low'],
+            'prompt'             => ['required', 'string', 'max:4000'],
+            'negative_prompt'    => ['nullable', 'string', 'max:1000'],
+            'title'              => ['nullable', 'string', 'max:191'],
+            'aspect_ratio'       => ['required', 'string', 'in:1:1,9:16,16:9,4:5'],
+            'model_name'         => ['required', 'string', 'in:gpt-image-2.5-flare,gpt-image-2.5-sunburst,gpt-image-2'],
+            'quality'            => ['required', 'string', 'in:standard,high,xhigh,low'],
+            'content_type'             => ['nullable', 'string', 'max:50'],
+            'reference_id'             => ['nullable', 'string', 'max:100'],
+            'reference_inspiration_id' => ['nullable', 'string', 'max:100'],
+            'reference_image'          => ['nullable', 'file', 'image', 'max:10240'],
+            'brand_tone'               => ['nullable', 'string', 'max:50'],
+            'visual_style'             => ['nullable', 'string', 'max:50'],
+            'lighting_style'           => ['nullable', 'string', 'max:50'],
+            'color_scheme'             => ['nullable', 'string', 'max:50'],
+            'color_palette'            => ['nullable', 'string', 'max:50'],
+            'custom_directives'        => ['nullable', 'array'],
+            'custom_directives.*'      => ['string', 'max:100'],
+            'leave_space_for_text'     => ['nullable', 'string', 'max:10'],
+            'include_ui_mockup'        => ['nullable', 'string', 'max:10'],
+            'floating_3d_badge'        => ['nullable', 'string', 'max:10'],
+            'indonesian_msme_context'  => ['nullable', 'string', 'max:10'],
+            'headline_text'            => ['nullable', 'string', 'max:255'],
+            'banner_headline'          => ['nullable', 'string', 'max:255'],
+            'additional_rules'         => ['nullable', 'string', 'max:1000'],
         ]);
 
         /** @var Admin|null $admin */
@@ -183,14 +493,91 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             return response()->json(['success' => false, 'message' => 'Otorisasi admin tidak valid.'], 403);
         }
 
+        // Normalisasi alias input parameter
+        if (empty($validated['reference_id']) && ! empty($validated['reference_inspiration_id'])) {
+            $validated['reference_id'] = $validated['reference_inspiration_id'];
+        }
+        if (empty($validated['headline_text']) && ! empty($validated['banner_headline'])) {
+            $validated['headline_text'] = $validated['banner_headline'];
+        }
+        if (empty($validated['color_scheme']) && ! empty($validated['color_palette'])) {
+            $validated['color_scheme'] = $validated['color_palette'];
+        }
+
+        $customDirectives = (array) ($validated['custom_directives'] ?? []);
+        foreach (['leave_space_for_text', 'include_ui_mockup', 'floating_3d_badge', 'indonesian_msme_context'] as $dirKey) {
+            if ($request->boolean($dirKey)) {
+                $customDirectives[$dirKey] = true;
+            }
+        }
+        $validated['custom_directives'] = $customDirectives;
+
         try {
+            // 1. Ekstraksi Gambar Referensi (Upload Manual atau Pilih Katalog)
+            $referenceImagePath = null;
+            $referenceImageUrl = null;
+            $referenceTitle = null;
+            $referenceStylePrompt = null;
+
+            if ($request->hasFile('reference_image')) {
+                $file = $request->file('reference_image');
+                $refExt = $file->getClientOriginalExtension() ?: 'png';
+                $refName = 'manual_ref_' . Str::uuid() . '.' . $refExt;
+                $refStoragePath = 'admin/ai-studio/references/' . $refName;
+
+                Storage::disk('public')->putFileAs('admin/ai-studio/references', $file, $refName);
+                $referenceImagePath = storage_path('app/public/' . $refStoragePath);
+                $referenceImageUrl = Storage::disk('public')->url($refStoragePath);
+                $referenceTitle = 'Upload Referensi: ' . $file->getClientOriginalName();
+            } elseif (! empty($validated['reference_id'])) {
+                /** @var InspirationItem|null $refItem */
+                $refItem = InspirationItem::with(['source', 'category', 'visualAnalysis'])->find($validated['reference_id']);
+                if ($refItem) {
+                    $referenceTitle = $refItem->title;
+                    $referenceImageUrl = $refItem->display_image_url;
+                    $referenceStylePrompt = $refItem->visualAnalysis?->extracted_style_prompt ?? $refItem->caption;
+
+                    // Cari berkas lokal fisik
+                    $rel = ltrim(str_replace('/storage/', '', $refItem->canonical_url), '/');
+                    $absAppPath = storage_path('app/public/' . $rel);
+                    $absPubPath = public_path('storage/' . $rel);
+
+                    if (file_exists($absAppPath) && filesize($absAppPath) > 0) {
+                        $referenceImagePath = $absAppPath;
+                    } elseif (file_exists($absPubPath) && filesize($absPubPath) > 0) {
+                        $referenceImagePath = $absPubPath;
+                    }
+                }
+            }
+
+            // 2. Susun Prompt Berdasarkan Ketentuan Khusus & Gaya
+            $compiledPrompt = $this->compileEnrichedPrompt(
+                rawPrompt: $validated['prompt'],
+                contentType: $validated['content_type'] ?? null,
+                visualStyle: $validated['visual_style'] ?? null,
+                lightingStyle: $validated['lighting_style'] ?? null,
+                colorScheme: $validated['color_scheme'] ?? null,
+                brandTone: $validated['brand_tone'] ?? null,
+                customDirectives: $validated['custom_directives'] ?? [],
+                headlineText: $validated['headline_text'] ?? null,
+                additionalRules: $validated['additional_rules'] ?? null,
+                referenceTitle: $referenceTitle,
+                referenceStylePrompt: $referenceStylePrompt
+            );
+
             $payload = [
-                'positive_prompt' => $validated['prompt'],
+                'positive_prompt' => $compiledPrompt,
                 'negative_prompt' => $validated['negative_prompt'] ?? null,
                 'aspect_ratio'    => $validated['aspect_ratio'],
                 'model_name'      => $validated['model_name'],
                 'quality'         => $validated['quality'],
             ];
+
+            // Pasang berkas gambar referensi jika tersedia
+            if ($referenceImagePath && file_exists($referenceImagePath)) {
+                $payload['reference_image_path'] = $referenceImagePath;
+                $payload['reference_images'] = [$referenceImagePath];
+            }
 
             $startTime = microtime(true);
             $generationResult = $this->imageAdapter->generate($payload);
@@ -229,19 +616,21 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             Storage::disk('public')->put($storagePath, $binary);
             $publicUrl = Storage::disk('public')->url($storagePath);
 
-            // Pastikan URL publik adalah URL absolut (HTTPS jika request menggunakan HTTPS)
             if (! str_starts_with($publicUrl, 'http://') && ! str_starts_with($publicUrl, 'https://')) {
                 $publicUrl = url($publicUrl);
             }
 
-            $title = ! empty($validated['title'])
-                ? trim($validated['title'])
-                : 'Materi Visual ' . strtoupper($validated['aspect_ratio']) . ' - ' . now()->translatedFormat('d M H:i');
+            $contentTypeMeta = self::CONTENT_TYPES[$validated['content_type'] ?? ''] ?? null;
+            $defaultTitle = $contentTypeMeta
+                ? ($contentTypeMeta['label'] . ' - ' . now()->translatedFormat('d M H:i'))
+                : ('Materi Visual ' . strtoupper($validated['aspect_ratio']) . ' - ' . now()->translatedFormat('d M H:i'));
+
+            $title = ! empty($validated['title']) ? trim($validated['title']) : $defaultTitle;
 
             $asset = AdminAiVisualAsset::create([
                 'admin_id'        => $admin->id,
                 'title'           => $title,
-                'prompt'          => $validated['prompt'],
+                'prompt'          => $compiledPrompt,
                 'negative_prompt' => $validated['negative_prompt'] ?? null,
                 'model_name'      => $validated['model_name'],
                 'aspect_ratio'    => $validated['aspect_ratio'],
@@ -252,17 +641,28 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
                 'height'          => $height,
                 'file_size'       => strlen($binary),
                 'metadata'        => [
-                    'latency_ms'  => $latencyMs,
-                    'provider'    => $generationResult['provider'] ?? 'openai',
-                    'usage'       => $generationResult['usage'] ?? null,
-                    'created_by'  => $admin->name,
+                    'latency_ms'            => $latencyMs,
+                    'provider'              => $generationResult['provider'] ?? 'openai',
+                    'usage'                 => $generationResult['usage'] ?? null,
+                    'created_by'            => $admin->name,
+                    'content_type'          => $validated['content_type'] ?? 'custom',
+                    'brand_tone'            => $validated['brand_tone'] ?? null,
+                    'visual_style'          => $validated['visual_style'] ?? null,
+                    'lighting_style'        => $validated['lighting_style'] ?? null,
+                    'color_scheme'          => $validated['color_scheme'] ?? null,
+                    'custom_directives'     => $validated['custom_directives'] ?? [],
+                    'headline_text'         => $validated['headline_text'] ?? null,
+                    'reference_id'          => $validated['reference_id'] ?? null,
+                    'reference_title'       => $referenceTitle,
+                    'reference_image_url'   => $referenceImageUrl,
+                    'original_user_prompt'  => $validated['prompt'],
                 ],
                 'is_favorite'     => false,
             ]);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Visual materi promosi berhasil dibuat dengan AI Studio!',
+                'message' => 'Visual materi promosi multi-konten berhasil dibuat dengan AI Studio!',
                 'asset'   => [
                     'id'           => $asset->id,
                     'title'        => $asset->title,
@@ -272,6 +672,7 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
                     'height'       => $asset->height,
                     'model_name'   => $asset->model_name,
                     'created_at'   => $asset->created_at?->translatedFormat('d M Y, H:i'),
+                    'metadata'     => $asset->metadata,
                 ],
             ]);
         } catch (Throwable $e) {
@@ -285,6 +686,83 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
                 'message' => 'Terjadi kesalahan sistem saat memproses generasi gambar: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+    /**
+     * Kompilasi prompt yang diperkaya dengan ketentuan khusus, gaya visual, dan inspirasi.
+     */
+    protected function compileEnrichedPrompt(
+        string $rawPrompt,
+        ?string $contentType,
+        ?string $visualStyle,
+        ?string $lightingStyle,
+        ?string $colorScheme,
+        ?string $brandTone,
+        array $customDirectives,
+        ?string $headlineText,
+        ?string $additionalRules,
+        ?string $referenceTitle,
+        ?string $referenceStylePrompt
+    ): string {
+        $parts = [];
+        $parts[] = trim($rawPrompt);
+
+        // Tambahkan gaya visual jika dipilih
+        if (! empty($visualStyle) && isset(self::VISUAL_STYLES[$visualStyle])) {
+            $parts[] = self::VISUAL_STYLES[$visualStyle]['prompt_fragment'];
+        }
+
+        // Tambahkan gaya pencahayaan jika dipilih
+        if (! empty($lightingStyle) && isset(self::LIGHTING_STYLES[$lightingStyle])) {
+            $parts[] = self::LIGHTING_STYLES[$lightingStyle]['prompt_fragment'];
+        }
+
+        // Tambahkan skema warna jika dipilih
+        if (! empty($colorScheme) && isset(self::COLOR_PALETTES[$colorScheme])) {
+            $parts[] = self::COLOR_PALETTES[$colorScheme]['prompt_fragment'];
+        }
+
+        // Tambahkan ketentuan khusus (Directives)
+        $directiveInstructions = [];
+        if (in_array('negative_space', $customDirectives, true) || ! empty($customDirectives['leave_space_for_text']) || in_array('leave_space_for_text', $customDirectives, true)) {
+            $directiveInstructions[] = 'Composition must feature ample clean negative space in the upper or side third, specifically preserved for overlaid typography headline.';
+        }
+        if (in_array('mockup_device', $customDirectives, true) || ! empty($customDirectives['include_ui_mockup']) || in_array('include_ui_mockup', $customDirectives, true)) {
+            $directiveInstructions[] = 'Feature sleek modern floating iPad or smartphone mockup displaying authentic contemporary COOCA cloud ERP dashboard UI.';
+        }
+        if (in_array('promo_badge', $customDirectives, true) || ! empty($customDirectives['floating_3d_badge']) || in_array('floating_3d_badge', $customDirectives, true)) {
+            $directiveInstructions[] = 'Include a polished glossy 3D floating commercial badge or discount emblem with subtle metallic gold rim.';
+        }
+        if (in_array('indonesian_context', $customDirectives, true) || ! empty($customDirectives['indonesian_msme_context']) || in_array('indonesian_msme_context', $customDirectives, true)) {
+            $directiveInstructions[] = 'Authentic modern Indonesian business context, friendly and approachable local entrepreneurial vibe.';
+        }
+        if (! empty($directiveInstructions)) {
+            $parts[] = implode(' ', $directiveInstructions);
+        }
+
+        // Tambahkan headline teks jika ada
+        if (! empty($headlineText)) {
+            $parts[] = "Layout space tailored for commercial headline text: \"{$headlineText}\".";
+        }
+
+        // Tambahkan inspirasi gaya referensi jika ada
+        if (! empty($referenceTitle) || ! empty($referenceStylePrompt)) {
+            $refText = 'Visual aesthetics, lighting mood, and composition inspired by';
+            if ($referenceTitle) {
+                $refText .= " \"{$referenceTitle}\"";
+            }
+            if ($referenceStylePrompt) {
+                $refText .= " ({$referenceStylePrompt})";
+            }
+            $parts[] = $refText . '.';
+        }
+
+        // Tambahkan aturan tambahan bebas dari admin
+        if (! empty($additionalRules)) {
+            $parts[] = trim($additionalRules);
+        }
+
+        return implode(' ', array_filter($parts));
     }
 
     /**

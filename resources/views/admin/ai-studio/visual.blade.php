@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
     'title' => 'AI Studio Visual Creator - Admin Console',
     'headerTitle' => 'Studio Visual & Materi Media Sosial AI',
-    'headerSubtitle' => 'Rancang dan render konten promosi platform, banner kampanye, dan publikasikan langsung ke media sosial',
+    'headerSubtitle' => 'Rancang konten visual promosi platform, banner kampanye, pilih referensi gaya, dan publikasikan langsung ke media sosial',
 ])
 
 @section('content')
@@ -21,11 +21,11 @@
                         AI Studio Visual Creator
                     </h1>
                     <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]">
-                        Platform Marketing
+                        Platform Marketing Pro
                     </span>
                 </div>
                 <p class="text-xs text-black/60 dark:text-white/60">
-                    Hasilkan materi visual promosi resmi COOCA, banner SaaS, infografis UMKM, dan jadwalkan postingan ke kanal Instagram, Facebook, Threads, LinkedIn, atau TikTok.
+                    Hasilkan materi visual promosi resmi COOCA, banner SaaS, infografis UMKM, pilih gambar referensi gaya, dan jadwalkan postingan ke media sosial.
                 </p>
             </div>
 
@@ -55,7 +55,7 @@
             <a href="{{ route('admin.ai-studio.sources.index') }}"
                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
                 <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                <span>Sumber Inspirasi &amp; Tren</span>
+                <span>Sumber Inspirasi &amp; Tren ({{ $inspirationReferences->count() }}+)</span>
             </a>
             <a href="{{ route('admin.ai-studio.pricing.index') }}"
                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
@@ -142,19 +142,38 @@
                         <i data-lucide="wand-2" class="w-4 h-4 text-[#007AFF]"></i>
                         <span>1. Konfigurasi Generator Visual</span>
                     </h2>
-                    <span class="text-[11px] text-black/40 dark:text-white/40">OpenAI GPT Image 2.5</span>
+                    <span class="text-[11px] font-semibold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full">Multi-Konten</span>
                 </div>
 
-                <!-- Template Kampanye Cepat (Preset Chips) -->
+                <!-- Bagian A: Pilihan Kategori / Jenis Konten -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-semibold text-black dark:text-white flex items-center justify-between">
+                        <span>Jenis Konten Platform</span>
+                        <span class="text-[10px] text-black/40 dark:text-white/40">Pilih tipe komunikasi</span>
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                        @foreach ($contentTypes as $key => $type)
+                            <button type="button"
+                                @click="contentType = '{{ $key }}'"
+                                :class="contentType === '{{ $key }}' ? 'border-[#007AFF] bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]' : 'border-black/10 dark:border-white/10 hover:border-black/20 text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.02]'"
+                                class="p-2 rounded-[10px] border text-left transition-all flex flex-col justify-between h-[58px]">
+                                <span class="text-[11px] font-bold truncate">{{ $type['label'] ?? $type['name'] ?? '' }}</span>
+                                <span class="text-[9px] opacity-60 truncate">{{ $type['desc'] }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Bagian B: Preset Kampanye Cepat (Chips) -->
                 <div class="space-y-2">
                     <label class="block text-xs font-semibold text-black dark:text-white">
-                        Preset Kampanye Resmi COOCA
+                        Preset Kampanye Siap Pakai
                     </label>
                     <div class="flex flex-wrap gap-1.5">
                         @foreach ($campaignPresets as $preset)
                             <button type="button"
                                 @click="applyPreset(@js($preset))"
-                                :class="selectedPresetId === '{{ $preset['id'] }}' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/75 dark:text-white/80 hover:bg-black/[0.08]'"
+                                :class="selectedPresetId === '{{ $preset['id'] }}' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/75 dark:text-white/80 hover:bg-black/[0.08]'"
                                 class="px-2.5 py-1.5 rounded-[8px] text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer">
                                 <span>{{ $preset['title'] }}</span>
                             </button>
@@ -162,7 +181,205 @@
                     </div>
                 </div>
 
-                <!-- Pilihan Rasio Media Sosial -->
+                <!-- ========================================== -->
+                <!-- Bagian C: Pemilih Gambar Referensi Visual   -->
+                <!-- ========================================== -->
+                <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
+                            <i data-lucide="image-plus" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                            <span>Gambar Referensi Gaya Visual</span>
+                        </label>
+                        <template x-if="hasReference">
+                            <button type="button" @click="clearReference()"
+                                class="text-[11px] font-semibold text-red-500 hover:text-red-600 flex items-center gap-1">
+                                <i data-lucide="x" class="w-3 h-3"></i>
+                                <span>Hapus Referensi</span>
+                            </button>
+                        </template>
+                    </div>
+
+                    <!-- Pilihan Sumber Referensi (Tab: Dari Inspirasi Lokal vs Upload Manual) -->
+                    <div class="grid grid-cols-2 gap-1.5 p-1 bg-black/[0.04] dark:bg-white/[0.05] rounded-[10px]">
+                        <button type="button" @click="refMode = 'catalog'"
+                            :class="refMode === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
+                            class="py-1.5 px-2 rounded-[8px] text-xs transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="compass" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                            <span>Pilih dari Katalog Inspirasi</span>
+                        </button>
+                        <button type="button" @click="refMode = 'upload'"
+                            :class="refMode === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
+                            class="py-1.5 px-2 rounded-[8px] text-xs transition-all flex items-center justify-center gap-1.5">
+                            <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                            <span>Unggah Foto Manual</span>
+                        </button>
+                    </div>
+
+                    <!-- Panel Mode A: Pilih dari Katalog Inspirasi -->
+                    <div x-show="refMode === 'catalog'" class="space-y-2">
+                        <template x-if="!selectedInspiration">
+                            <div class="space-y-2">
+                                <button type="button" @click="openInspirationPickerModal()"
+                                    class="w-full py-2.5 px-3 rounded-[10px] border border-dashed border-[#007AFF]/40 hover:border-[#007AFF] bg-[#007AFF]/5 hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                                    <i data-lucide="search" class="w-4 h-4"></i>
+                                    <span>Jelajahi 460+ Gambar Inspirasi COOCA</span>
+                                </button>
+                                <p class="text-[10px] text-black/50 dark:text-white/50 text-center">
+                                    Pilih contoh visual dari Pinterest, Civitai, atau koleksi terkurasi COOCA sebagai acuan komposisi &amp; lighting.
+                                </p>
+                            </div>
+                        </template>
+
+                        <template x-if="selectedInspiration">
+                            <div class="flex items-center gap-3 p-2 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 shadow-xs">
+                                <img :src="selectedInspiration.preview_url || selectedInspiration.image_url" :alt="selectedInspiration.title"
+                                    class="w-14 h-14 rounded-[8px] object-cover border border-black/5">
+                                <div class="flex-1 min-w-0 space-y-0.5">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF]" x-text="selectedInspiration.source_type"></span>
+                                        <span class="text-[10px] text-black/40 dark:text-white/40 truncate" x-text="selectedInspiration.category_name || 'Inspirasi Visual'"></span>
+                                    </div>
+                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="selectedInspiration.title"></h5>
+                                    <p class="text-[10px] text-black/60 dark:text-white/60 truncate" x-text="selectedInspiration.prompt_hint || 'Referensi gaya aktif'"></p>
+                                </div>
+                                <button type="button" @click="openInspirationPickerModal()"
+                                    class="px-2.5 py-1.5 rounded-[8px] text-[10px] font-bold bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] text-black/80 dark:text-white/80 transition-all">
+                                    Ganti
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Panel Mode B: Unggah Foto Manual -->
+                    <div x-show="refMode === 'upload'" class="space-y-2">
+                        <template x-if="!uploadedReferenceUrl">
+                            <label class="w-full py-4 px-3 rounded-[10px] border border-dashed border-black/20 dark:border-white/20 hover:border-[#34C759] bg-black/[0.01] dark:bg-white/[0.02] hover:bg-[#34C759]/5 text-center flex flex-col items-center justify-center gap-1.5 cursor-pointer transition-all">
+                                <i data-lucide="upload" class="w-5 h-5 text-black/40 dark:text-white/40"></i>
+                                <span class="text-xs font-semibold text-black dark:text-white">Klik atau Tarik File Foto ke Sini</span>
+                                <span class="text-[10px] text-black/45 dark:text-white/45">Mendukung format JPG, PNG, WEBP (Maks 10MB)</span>
+                                <input type="file" accept="image/*" @change="handleFileUpload($event)" class="hidden">
+                            </label>
+                        </template>
+
+                        <template x-if="uploadedReferenceUrl">
+                            <div class="flex items-center gap-3 p-2 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 shadow-xs">
+                                <img :src="uploadedReferenceUrl" alt="Uploaded Reference"
+                                    class="w-14 h-14 rounded-[8px] object-cover border border-black/5">
+                                <div class="flex-1 min-w-0 space-y-0.5">
+                                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#34C759]/10 text-[#34C759]">Berkas Manual</span>
+                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="uploadedFileName || 'Gambar Manual'"></h5>
+                                    <p class="text-[10px] text-black/50 dark:text-white/50">Gambar akan dijadikan acuan gaya &amp; layout oleh engine AI</p>
+                                </div>
+                                <label class="px-2.5 py-1.5 rounded-[8px] text-[10px] font-bold bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] text-black/80 dark:text-white/80 cursor-pointer transition-all">
+                                    <span>Ganti File</span>
+                                    <input type="file" accept="image/*" @change="handleFileUpload($event)" class="hidden">
+                                </label>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- Bagian D: Directives & Modifiers (Ketentuan Khusus) -->
+                <!-- ========================================== -->
+                <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
+                            <i data-lucide="sliders" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                            <span>Arahan Gaya &amp; Ketentuan Khusus</span>
+                        </label>
+                        <button type="button" @click="autoRecompilePrompt()"
+                            class="text-[10px] font-bold text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i>
+                            <span>Susun Ulang Prompt Otomatis</span>
+                        </button>
+                    </div>
+
+                    <!-- Dropdown Gaya Visual, Lighting, dan Palet -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <!-- Gaya Visual -->
+                        <div class="space-y-1">
+                            <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70">
+                                Gaya Visual
+                            </label>
+                            <select x-model="visualStyle"
+                                class="w-full h-8 px-2 rounded-[8px] text-[11px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                                @foreach ($visualStyles as $key => $vStyle)
+                                    <option value="{{ $key }}">{{ $vStyle['label'] ?? $vStyle['name'] ?? $key }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Pencahayaan (Lighting) -->
+                        <div class="space-y-1">
+                            <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70">
+                                Pencahayaan
+                            </label>
+                            <select x-model="lightingStyle"
+                                class="w-full h-8 px-2 rounded-[8px] text-[11px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                                @foreach ($lightingStyles as $key => $lStyle)
+                                    <option value="{{ $key }}">{{ $lStyle['label'] ?? $lStyle['name'] ?? $key }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Palet Warna -->
+                        <div class="space-y-1">
+                            <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70">
+                                Palet Warna
+                            </label>
+                            <select x-model="colorPalette"
+                                class="w-full h-8 px-2 rounded-[8px] text-[11px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                                @foreach ($colorPalettes as $key => $palette)
+                                    <option value="{{ $key }}">{{ $palette['label'] ?? $palette['name'] ?? $key }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Checklist Ketentuan Khusus / Directives -->
+                    <div class="space-y-1.5 pt-1">
+                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70">
+                            Ketentuan Komposisi Khusus (Opsional)
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <label class="flex items-center gap-2 p-2 rounded-[8px] border border-black/10 dark:border-white/10 cursor-pointer bg-white dark:bg-[#2C2C2E]"
+                                :class="customDirectives.leave_space_for_text ? 'border-[#007AFF] bg-[#007AFF]/5' : ''">
+                                <input type="checkbox" x-model="customDirectives.leave_space_for_text" class="rounded text-[#007AFF]">
+                                <span class="text-[11px] font-medium text-black dark:text-white">Ruang Kosong untuk Teks</span>
+                            </label>
+
+                            <label class="flex items-center gap-2 p-2 rounded-[8px] border border-black/10 dark:border-white/10 cursor-pointer bg-white dark:bg-[#2C2C2E]"
+                                :class="customDirectives.include_ui_mockup ? 'border-[#007AFF] bg-[#007AFF]/5' : ''">
+                                <input type="checkbox" x-model="customDirectives.include_ui_mockup" class="rounded text-[#007AFF]">
+                                <span class="text-[11px] font-medium text-black dark:text-white">Mockup UI Aplikasi COOCA</span>
+                            </label>
+
+                            <label class="flex items-center gap-2 p-2 rounded-[8px] border border-black/10 dark:border-white/10 cursor-pointer bg-white dark:bg-[#2C2C2E]"
+                                :class="customDirectives.floating_3d_badge ? 'border-[#007AFF] bg-[#007AFF]/5' : ''">
+                                <input type="checkbox" x-model="customDirectives.floating_3d_badge" class="rounded text-[#007AFF]">
+                                <span class="text-[11px] font-medium text-black dark:text-white">Badge 3D Penawaran Diskon</span>
+                            </label>
+
+                            <label class="flex items-center gap-2 p-2 rounded-[8px] border border-black/10 dark:border-white/10 cursor-pointer bg-white dark:bg-[#2C2C2E]"
+                                :class="customDirectives.indonesian_msme_context ? 'border-[#007AFF] bg-[#007AFF]/5' : ''">
+                                <input type="checkbox" x-model="customDirectives.indonesian_msme_context" class="rounded text-[#007AFF]">
+                                <span class="text-[11px] font-medium text-black dark:text-white">Nuansa Lokal UMKM Indonesia</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Teks Headline Banner (Opsional) -->
+                    <div class="space-y-1 pt-1">
+                        <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70">
+                            Teks Utama / Headline Banner (Opsional)
+                        </label>
+                        <input type="text" x-model="bannerHeadline" placeholder="Contoh: Otomasi Bisnis Ritel &amp; F&amp;B Tanpa Ribet"
+                            class="w-full h-8 px-3 rounded-[8px] text-xs bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                    </div>
+                </div>
+
+                <!-- Bagian E: Pilihan Rasio Media Sosial -->
                 <div class="space-y-2">
                     <label class="block text-xs font-semibold text-black dark:text-white">
                         Rasio Media Sosial
@@ -199,16 +416,19 @@
                     </div>
                 </div>
 
-                <!-- Pilihan Model & Kualitas -->
+                <!-- Bagian F: Pilihan Model & Kualitas -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div class="space-y-1.5">
-                        <label class="block text-xs font-semibold text-black dark:text-white">
-                            Model AI
+                        <label class="block text-xs font-semibold text-black dark:text-white flex items-center justify-between">
+                            <span>Model AI</span>
+                            <template x-if="hasReference && modelName === 'gpt-image-2.5-flare'">
+                                <span class="text-[10px] text-[#007AFF] font-bold">💡 Sunburst disarankan untuk referensi</span>
+                            </template>
                         </label>
                         <select x-model="modelName"
                             class="w-full h-10 px-3 rounded-[12px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             <option value="gpt-image-2.5-flare">GPT Image 2.5 Flare (Cepat &amp; Harian)</option>
-                            <option value="gpt-image-2.5-sunburst">GPT Image 2.5 Sunburst (Ultra Detail)</option>
+                            <option value="gpt-image-2.5-sunburst">GPT Image 2.5 Sunburst (Ultra Detail + Edit Referensi)</option>
                         </select>
                     </div>
                     <div class="space-y-1.5">
@@ -224,16 +444,16 @@
                     </div>
                 </div>
 
-                <!-- Judul Materi Promosi -->
+                <!-- Bagian G: Judul Materi Promosi -->
                 <div class="space-y-1.5">
                     <label class="block text-xs font-semibold text-black dark:text-white">
-                        Judul Materi Visual (Label Internal)
+                        Judul Materi Visual (Label Arsip)
                     </label>
                     <input type="text" x-model="title" placeholder="Contoh: Banner Promo Langganan Tahunan Q4"
                         class="w-full h-10 px-3.5 rounded-[12px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 </div>
 
-                <!-- Input Prompt Positif -->
+                <!-- Bagian H: Input Prompt Positif -->
                 <div class="space-y-1.5">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-semibold text-black dark:text-white">
@@ -246,7 +466,7 @@
                         class="w-full p-3.5 rounded-[14px] text-xs leading-relaxed bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white placeholder-black/40 dark:placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#007AFF] resize-y"></textarea>
                 </div>
 
-                <!-- Negative Prompt (Accordion) -->
+                <!-- Bagian I: Negative Prompt (Accordion) -->
                 <div x-data="{ open: false }" class="border border-black/5 dark:border-white/10 rounded-[12px] p-3 bg-black/[0.01] dark:bg-white/[0.02]">
                     <button type="button" @click="open = !open"
                         class="w-full flex items-center justify-between text-xs font-semibold text-black/70 dark:text-white/70">
@@ -258,12 +478,12 @@
                     </button>
                     <div x-show="open" x-cloak class="mt-2.5 pt-2 border-t border-black/5 dark:border-white/10">
                         <textarea x-model="negativePrompt" rows="2" maxlength="1000"
-                            placeholder="blur, text watermark, ugly hands, low resolution, bad lighting..."
+                            placeholder="blur, text watermark, ugly hands, low resolution, bad lighting, distorted faces..."
                             class="w-full p-2.5 rounded-[10px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                     </div>
                 </div>
 
-                <!-- Tombol Action Render Utama -->
+                <!-- Bagian J: Tombol Action Render Utama -->
                 <div>
                     <button type="button" @click="dispatchGenerate()"
                         :disabled="isGenerating || !prompt.trim()"
@@ -302,7 +522,7 @@
                         <span>2. Canvas Pratinjau Visual</span>
                     </h2>
                     <template x-if="activeAsset">
-                        <div class="flex items-center gap-1.5">
+                        <div class="flex items-center gap-2">
                             <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF]" x-text="activeAsset.aspect_ratio"></span>
                             <span class="text-[11px] text-black/40 dark:text-white/40" x-text="activeAsset.width + ' × ' + activeAsset.height + ' px'"></span>
                         </div>
@@ -321,7 +541,7 @@
                             <div class="space-y-1">
                                 <h4 class="text-sm font-bold text-black dark:text-white">Merender Visual Promosi Platform</h4>
                                 <p class="text-xs text-black/50 dark:text-white/50 max-w-xs">
-                                    Model OpenAI sedang menyusun komposisi pencahayaan studio dan rasio aspek yang dipilih...
+                                    Model OpenAI sedang menyusun komposisi pencahayaan studio, gaya visual, dan rasio aspek yang dipilih...
                                 </p>
                             </div>
                         </div>
@@ -350,7 +570,7 @@
                             <div class="space-y-1">
                                 <h4 class="text-xs font-bold text-black dark:text-white">Belum Ada Visual yang Dipilih</h4>
                                 <p class="text-[11px] text-black/50 dark:text-white/50 max-w-xs">
-                                    Pilih preset kampanye di samping atau klik tombol Generate untuk menciptakan visual promosi baru.
+                                    Pilih jenis konten &amp; referensi di sebelah kiri atau klik tombol Generate untuk menciptakan visual baru.
                                 </p>
                             </div>
                         </div>
@@ -465,9 +685,11 @@
                         {{ $assets->links() }}
                     </div>
                 @else
-                    <div class="p-8 text-center rounded-[14px] bg-black/[0.02] dark:bg-white/[0.02] border border-dashed border-black/10 dark:border-white/10">
-                        <i data-lucide="folder-open" class="w-8 h-8 text-black/30 dark:text-white/30 mx-auto mb-2"></i>
-                        <p class="text-xs font-semibold text-black/60 dark:text-white/60">Belum ada berkas visual yang tersimpan untuk filter ini.</p>
+                    <div class="p-8 text-center space-y-2">
+                        <div class="w-10 h-10 mx-auto rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center">
+                            <i data-lucide="image" class="w-5 h-5"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-black/60 dark:text-white/60">Belum ada materi visual tersimpan</p>
                     </div>
                 @endif
             </div>
@@ -475,68 +697,154 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 4. MODAL: 1-CLICK KIRIM KE SOCIAL MEDIA    -->
-    <!-- ========================================== -->
-    <template x-teleport="body">
-        <div x-show="socialModalOpen" x-cloak
-            class="fixed inset-0 z-[200] overflow-y-auto"
-            role="dialog" aria-modal="true"
-            @keydown.escape.window="socialModalOpen = false"
-            style="display: none;">
+    <!-- ======================================================== -->
+    <!-- MODAL 1: PEMILIH INSPIRASI DARI KATALOG COOCA (460+ FOTO)-->
+    <!-- ======================================================== -->
+    <template x-if="inspirationPickerOpen">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            @keydown.escape.window="inspirationPickerOpen = false">
+            <div class="w-full max-w-4xl max-h-[90vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
-            <!-- Backdrop -->
-            <div x-show="socialModalOpen"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"
-                @click="socialModalOpen = false"></div>
-
-            <!-- Modal Container -->
-            <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="socialModalOpen = false">
-                <div @click.away="socialModalOpen = false"
-                    class="w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 p-6 sm:p-7 shadow-2xl space-y-5">
-
-                    <div class="flex items-center justify-between border-b border-black/5 dark:border-white/10 pb-4">
-                        <div class="flex items-center gap-2.5">
-                            <span class="w-9 h-9 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center">
-                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                <!-- Header Modal -->
+                <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between gap-4">
+                    <div class="space-y-0.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="compass" class="w-4 h-4"></i>
                             </span>
-                            <div>
-                                <h3 class="text-sm sm:text-base font-bold text-black dark:text-white">
-                                    Kirim ke Social Media Platform
-                                </h3>
-                                <p class="text-[11px] text-black/50 dark:text-white/50">
-                                    Publikasikan aset visual AI ke kanal resmi COOCA secara simultan
-                                </p>
-                            </div>
+                            <h3 class="text-sm font-bold text-black dark:text-white">Pilih Inspirasi Gaya Visual COOCA</h3>
                         </div>
-                        <button type="button" @click="socialModalOpen = false"
-                            class="p-1.5 rounded-full text-black/40 hover:bg-black/5 dark:text-white/40 dark:hover:bg-white/5 transition-colors">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
+                        <p class="text-xs text-black/60 dark:text-white/60">
+                            Pilih gambar sebagai referensi gaya, layout, atau pencahayaan untuk generator AI Anda.
+                        </p>
                     </div>
 
-                    <!-- Pratinjau Gambar Terpilih -->
+                    <button type="button" @click="inspirationPickerOpen = false"
+                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Bar Filter & Pencarian -->
+                <div class="p-4 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02] flex flex-col sm:flex-row items-center gap-3">
+                    <div class="relative flex-1 w-full">
+                        <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" x-model="modalSearch" @input.debounce.300ms="fetchModalInspirations()"
+                            placeholder="Cari berdasarkan kata kunci, judul, atau gaya (cth: saas, glass, minimal, dashboard)..."
+                            class="w-full h-9 pl-9 pr-3 rounded-[10px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                    </div>
+
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <select x-model="modalCategory" @change="fetchModalInspirations()"
+                            class="h-9 px-3 rounded-[10px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                            <option value="">Semua Kategori</option>
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Grid Gambar Inspirasi Modal -->
+                <div class="p-5 flex-1 overflow-y-auto min-h-[300px]">
+                    <template x-if="isLoadingInspirations">
+                        <div class="h-64 flex flex-col items-center justify-center space-y-2">
+                            <div class="w-8 h-8 rounded-full border-2 border-[#007AFF] border-t-transparent animate-spin"></div>
+                            <span class="text-xs text-black/50 dark:text-white/50">Memuat koleksi inspirasi...</span>
+                        </div>
+                    </template>
+
+                    <template x-if="!isLoadingInspirations && modalInspirations.length > 0">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            <template x-for="item in modalInspirations" :key="item.id">
+                                <div @click="selectInspirationFromModal(item)"
+                                    class="group relative rounded-[12px] overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:border-[#007AFF] cursor-pointer transition-all aspect-square flex flex-col">
+                                    <img :src="item.preview_url || item.image_url" :alt="item.title"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                    <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-xs" x-text="item.source_type"></span>
+
+                                    <!-- Hover Select Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-2.5 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <p class="text-[11px] font-bold truncate" x-text="item.title"></p>
+                                        <p class="text-[9px] text-white/70 truncate" x-text="item.category_name"></p>
+                                        <span class="mt-1.5 py-1 px-2 rounded-[6px] text-[10px] font-bold bg-[#007AFF] text-white text-center">
+                                            Pilih Referensi Ini
+                                        </span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template x-if="!isLoadingInspirations && modalInspirations.length === 0">
+                        <div class="h-64 flex flex-col items-center justify-center text-center space-y-2">
+                            <i data-lucide="image-off" class="w-8 h-8 text-black/30 dark:text-white/30"></i>
+                            <h4 class="text-xs font-bold text-black dark:text-white">Tidak Ditemukan Gambar Inspirasi</h4>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer Modal -->
+                <div class="p-4 border-t border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02] flex items-center justify-between">
+                    <span class="text-xs text-black/50 dark:text-white/50">
+                        Total <span x-text="modalInspirations.length"></span> inspirasi ditemukan
+                    </span>
+                    <button type="button" @click="inspirationPickerOpen = false"
+                        class="px-4 py-2 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70">
+                        Tutup
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- ======================================================== -->
+    <!-- MODAL 2: 1-CLICK SOCIAL MEDIA POST                       -->
+    <!-- ======================================================== -->
+    <template x-if="socialModalOpen">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            @keydown.escape.window="socialModalOpen = false">
+            <div class="w-full max-w-xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+
+                <div class="p-5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                    <div class="space-y-0.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>
+                            </span>
+                            <h3 class="text-sm font-bold text-black dark:text-white">Publikasikan ke Social Media</h3>
+                        </div>
+                        <p class="text-xs text-black/60 dark:text-white/60">
+                            Kirim materi visual yang sudah dirender langsung ke saluran resmi COOCA.
+                        </p>
+                    </div>
+
+                    <button type="button" @click="socialModalOpen = false"
+                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+
+                    <!-- Pratinjau Mini Gambar -->
                     <template x-if="activeAsset">
-                        <div class="flex items-center gap-3.5 p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-3 p-3 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.04] border border-black/5 dark:border-white/10">
                             <img :src="activeAsset.image_url" :alt="activeAsset.title"
-                                class="w-14 h-14 rounded-[10px] object-cover shrink-0 border border-black/10 dark:border-white/10">
-                            <div class="min-w-0 flex-1">
+                                class="w-16 h-16 rounded-[8px] object-cover">
+                            <div class="space-y-0.5 min-w-0 flex-1">
                                 <h4 class="text-xs font-bold text-black dark:text-white truncate" x-text="activeAsset.title"></h4>
-                                <p class="text-[10px] text-black/50 dark:text-white/50" x-text="'Rasio ' + activeAsset.aspect_ratio + ' • ' + activeAsset.width + 'x' + activeAsset.height + ' px'"></p>
+                                <p class="text-[11px] text-black/50 dark:text-white/50" x-text="activeAsset.aspect_ratio + ' • ' + activeAsset.model_name"></p>
                             </div>
                         </div>
                     </template>
 
-                    <!-- Pilihan Multi-Kanal Social Media -->
+                    <!-- Pilihan Platform -->
                     <div class="space-y-2">
                         <label class="block text-xs font-semibold text-black dark:text-white">
-                            Pilih Saluran Publikasi <span class="text-red-500">*</span>
+                            Pilih Saluran Media Sosial <span class="text-red-500">*</span>
                         </label>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                             <!-- Instagram -->
@@ -676,6 +984,33 @@ function adminAiStudioVisual() {
         quality: 'high',
         selectedPresetId: 'promo_saas',
 
+        // Enhanced Controls
+        contentType: 'saas_promo',
+        visualStyle: '3d_apple_glass',
+        lightingStyle: 'softbox_studio',
+        colorPalette: 'cooca_signature',
+        bannerHeadline: '',
+        customDirectives: {
+            leave_space_for_text: true,
+            include_ui_mockup: true,
+            floating_3d_badge: false,
+            indonesian_msme_context: true
+        },
+
+        // Reference Image State
+        refMode: 'catalog', // 'catalog' or 'upload'
+        selectedInspiration: null, // item object
+        uploadedFile: null,
+        uploadedReferenceUrl: null,
+        uploadedFileName: '',
+
+        // Inspiration Modal State
+        inspirationPickerOpen: false,
+        modalSearch: '',
+        modalCategory: '',
+        isLoadingInspirations: false,
+        modalInspirations: @js($inspirationReferences->take(24)->values()->toArray() ?? []),
+
         // Generation Process State
         isGenerating: false,
         generationTimer: 0,
@@ -708,6 +1043,82 @@ function adminAiStudioVisual() {
             });
         },
 
+        get hasReference() {
+            return Boolean(this.selectedInspiration || this.uploadedFile);
+        },
+
+        clearReference() {
+            this.selectedInspiration = null;
+            this.uploadedFile = null;
+            this.uploadedReferenceUrl = null;
+            this.uploadedFileName = '';
+        },
+
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 10 * 1024 * 1024) {
+                alert('Ukuran file maksimal adalah 10 MB.');
+                return;
+            }
+
+            this.uploadedFile = file;
+            this.uploadedFileName = file.name;
+            this.uploadedReferenceUrl = URL.createObjectURL(file);
+            this.selectedInspiration = null; // Prioritaskan file upload manual
+        },
+
+        openInspirationPickerModal() {
+            this.inspirationPickerOpen = true;
+            if (this.modalInspirations.length === 0) {
+                this.fetchModalInspirations();
+            }
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        async fetchModalInspirations() {
+            this.isLoadingInspirations = true;
+            try {
+                const params = new URLSearchParams();
+                if (this.modalSearch.trim()) params.append('q', this.modalSearch.trim());
+                if (this.modalCategory) params.append('category_id', this.modalCategory);
+
+                const response = await fetch('{{ route("admin.ai-studio.visual.inspirations") }}?' + params.toString(), {
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    this.modalInspirations = data.items || [];
+                }
+            } catch (error) {
+                console.error('Gagal mengambil data inspirasi:', error);
+            } finally {
+                this.isLoadingInspirations = false;
+                this.$nextTick(() => {
+                    if (window.lucide) window.lucide.createIcons();
+                });
+            }
+        },
+
+        selectInspirationFromModal(item) {
+            this.selectedInspiration = item;
+            this.uploadedFile = null;
+            this.uploadedReferenceUrl = null;
+            this.inspirationPickerOpen = false;
+
+            // Jika prompt masih default atau kosong, bisa gunakan prompt hint inspirasi
+            if (item.prompt_hint && (!this.prompt || this.prompt.length < 50)) {
+                this.prompt = item.prompt_hint;
+            }
+
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
         applyPreset(preset) {
             this.selectedPresetId = preset.id;
             this.title = preset.title;
@@ -717,6 +1128,63 @@ function adminAiStudioVisual() {
             this.modelName = preset.model || 'gpt-image-2.5-flare';
             this.quality = preset.quality || 'high';
             this.socialContent = preset.caption_suggestion || '';
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        autoRecompilePrompt() {
+            const stylesMap = @js($visualStyles);
+            const lightMap = @js($lightingStyles);
+            const palMap = @js($colorPalettes);
+
+            let parts = [];
+
+            // Base core prompt
+            if (this.prompt.trim()) {
+                parts.push(this.prompt.trim());
+            } else {
+                parts.push('High-end promotional visual banner for COOCA Business Operating System platform');
+            }
+
+            // Visual Style
+            if (stylesMap[this.visualStyle] && stylesMap[this.visualStyle].prompt_fragment) {
+                parts.push('Art direction: ' + stylesMap[this.visualStyle].prompt_fragment);
+            }
+
+            // Lighting
+            if (lightMap[this.lightingStyle] && lightMap[this.lightingStyle].prompt_fragment) {
+                parts.push('Lighting: ' + lightMap[this.lightingStyle].prompt_fragment);
+            }
+
+            // Palette
+            if (palMap[this.colorPalette] && palMap[this.colorPalette].prompt_fragment) {
+                parts.push('Color scheme: ' + palMap[this.colorPalette].prompt_fragment);
+            }
+
+            // Directives
+            let directives = [];
+            if (this.customDirectives.leave_space_for_text) {
+                directives.push('ample negative space for typography and headline banner overlay');
+            }
+            if (this.customDirectives.include_ui_mockup) {
+                directives.push('clean modern 3D glass laptop or tablet displaying COOCA SaaS dashboard interface');
+            }
+            if (this.customDirectives.floating_3d_badge) {
+                directives.push('subtle floating 3D discount badge and promotional ribbon icons');
+            }
+            if (this.customDirectives.indonesian_msme_context) {
+                directives.push('tailored for Indonesian modern MSME entrepreneurship context');
+            }
+            if (this.bannerHeadline.trim()) {
+                directives.push('banner concept themed for: "' + this.bannerHeadline.trim() + '"');
+            }
+
+            if (directives.length > 0) {
+                parts.push('Requirements: ' + directives.join(', '));
+            }
+
+            this.prompt = parts.join('. ') + '.';
             this.$nextTick(() => {
                 if (window.lucide) window.lucide.createIcons();
             });
@@ -749,21 +1217,40 @@ function adminAiStudioVisual() {
             }, 1000);
 
             try {
+                // Menggunakan FormData agar mendukung upload file referensi gambar
+                const formData = new FormData();
+                formData.append('title', this.title);
+                formData.append('prompt', this.prompt);
+                formData.append('negative_prompt', this.negativePrompt);
+                formData.append('aspect_ratio', this.aspectRatio);
+                formData.append('model_name', this.modelName);
+                formData.append('quality', this.quality);
+                formData.append('content_type', this.contentType);
+                formData.append('visual_style', this.visualStyle);
+                formData.append('lighting_style', this.lightingStyle);
+                formData.append('color_palette', this.colorPalette);
+                formData.append('banner_headline', this.bannerHeadline);
+
+                // Directives
+                if (this.customDirectives.leave_space_for_text) formData.append('leave_space_for_text', '1');
+                if (this.customDirectives.include_ui_mockup) formData.append('include_ui_mockup', '1');
+                if (this.customDirectives.floating_3d_badge) formData.append('floating_3d_badge', '1');
+                if (this.customDirectives.indonesian_msme_context) formData.append('indonesian_msme_context', '1');
+
+                // Referensi Gambar
+                if (this.selectedInspiration) {
+                    formData.append('reference_inspiration_id', this.selectedInspiration.id);
+                } else if (this.uploadedFile) {
+                    formData.append('reference_image', this.uploadedFile);
+                }
+
                 const response = await fetch('{{ route("admin.ai-studio.visual.generate") }}', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({
-                        title: this.title,
-                        prompt: this.prompt,
-                        negative_prompt: this.negativePrompt,
-                        aspect_ratio: this.aspectRatio,
-                        model_name: this.modelName,
-                        quality: this.quality
-                    })
+                    body: formData
                 });
 
                 const data = await response.json();
@@ -899,4 +1386,3 @@ function adminAiStudioVisual() {
 }
 </script>
 @endsection
-
