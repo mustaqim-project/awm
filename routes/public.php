@@ -330,24 +330,25 @@ Route::get('/apk', function () {
 Route::get('/app/version', function () {
     $apkFile = public_path('cooca.apk');
     $hasApk = file_exists($apkFile);
+    $fileSize = $hasApk ? filesize($apkFile) : 0;
+    $fileModTime = $hasApk ? filemtime($apkFile) : 0;
     return response()->json([
         'success' => true,
         'app_name' => 'COOCA My Own',
-        'package_name' => 'com.cooca.myown',
-        'latest_version' => '1.0.0',
-        'latest_build' => 2,
+        'package_name' => 'com.cooca.myown.cooca_my_own',
+        'latest_version' => '1.0.3',
+        'latest_build' => 4,
         'min_supported_version' => '1.0.0',
         'force_update' => false,
-        'download_url' => url('/download/apk'),
-        'file_size' => $hasApk ? filesize($apkFile) : 0,
-        'updated_at' => $hasApk ? date('c', filemtime($apkFile)) : null,
+        'download_url' => url('/cooca.apk'),
+        'file_size' => $fileSize,
+        'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
         'release_notes' => [
-            'Pembaruan fitur otomatis tanpa download manual (OTA In-App Update).',
-            'Kustomisasi struk thermal & opsi tampilan logo bisnis di header.',
-            'Aturan watermark struk: Bersih tanpa watermark untuk akun berlangganan, dan watermark "by Cooca.id" untuk akun gratis.',
-            'Perbaikan siklus kasir OpenShift & isolasi terminal register.',
-            'Keamanan absensi dengan proteksi anti-Fake GPS / Mock Location.',
-            'Peningkatan responsivitas layar HP dan eliminasi elemen tumpang tindih.',
+            'Pemisahan tab portal kepegawaian (Presensi, Profil, Slip Gaji, Riwayat) menjadi modul halaman independen.',
+            'Eliminasi multi-click dan touch collision antar segmen tab pada layar ponsel.',
+            'Pembersihan total garis bawah kuning (yellow underlines) pada teks modal dialog.',
+            'Sinkronisasi otomatis konteks bisnis setelah login Google SSO.',
+            'Pembaruan OTA instan dan kestabilan performa.',
         ],
     ]);
 });

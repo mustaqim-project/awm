@@ -152,6 +152,27 @@ final class AuthController extends Controller
             ]);
         }
 
+        if ($user->businesses()->count() === 0) {
+            $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+            $newBiz = \App\Models\Business::create([
+                'name' => $bizName,
+                'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::random(5),
+                'currency' => 'IDR',
+                'currency_symbol' => 'Rp',
+                'currency_precision' => 0,
+                'is_active' => true,
+                'template_code' => 'retail_reseller',
+                'industry_category' => 'retail',
+            ]);
+            \App\Models\BusinessMembership::create([
+                'id' => (string) \Illuminate\Support\Str::uuid(),
+                'business_id' => $newBiz->id,
+                'user_id' => $user->id,
+                'role' => 'owner',
+            ]);
+            $user->updateQuietly(['active_business_id' => $newBiz->id]);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([

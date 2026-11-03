@@ -31,6 +31,27 @@ final class UserResource extends JsonResource
             }
         }
 
+        if ($activeBusiness === null) {
+            $businessName = 'Usaha ' . ($this->resource->name ?: 'COOCA');
+            $activeBusiness = \App\Models\Business::create([
+                'name' => $businessName,
+                'slug' => \Illuminate\Support\Str::slug($businessName) . '-' . \Illuminate\Support\Str::random(5),
+                'currency' => 'IDR',
+                'currency_symbol' => 'Rp',
+                'currency_precision' => 0,
+                'is_active' => true,
+                'template_code' => 'retail_reseller',
+                'industry_category' => 'retail',
+            ]);
+            \App\Models\BusinessMembership::create([
+                'id' => (string) \Illuminate\Support\Str::uuid(),
+                'business_id' => $activeBusiness->id,
+                'user_id' => $this->resource->id,
+                'role' => 'owner',
+            ]);
+            $this->resource->updateQuietly(['active_business_id' => $activeBusiness->id]);
+        }
+
         $role = \App\Support\Context::role();
         if ($role === null && $activeBusiness !== null) {
             $role = \App\Models\BusinessMembership::where('business_id', $activeBusiness->id)
