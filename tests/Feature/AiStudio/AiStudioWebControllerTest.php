@@ -710,16 +710,27 @@ final class AiStudioWebControllerTest extends TestCase
         $project = BusinessInspirationProject::create([
             'business_id' => $this->business->id,
             'user_id' => $this->user->id,
-            'title' => 'Project Aset Delete Test',
+            'name' => 'Project Aset Delete Test',
             'status' => 'completed',
+        ]);
+
+        $promptVersion = BusinessInspirationPromptVersion::create([
+            'business_id' => $this->business->id,
+            'project_id' => $project->id,
+            'version_number' => 1,
+            'positive_prompt' => 'Aset test prompt',
+            'aspect_ratio' => '1:1',
         ]);
 
         $generation = BusinessInspirationGeneration::create([
             'business_id' => $this->business->id,
             'project_id' => $project->id,
-            'status' => 'completed',
-            'ai_model' => 'gpt-image-2.5-flare',
-            'credits_cost' => 1,
+            'prompt_version_id' => $promptVersion->id,
+            'provider' => 'openai',
+            'model_name' => 'gpt-image-2.5-flare',
+            'status' => 'succeeded',
+            'credit_cost' => 1,
+            'idempotency_key' => 'delete_asset_test_01',
         ]);
 
         $filePath = 'bisnis/test/ai-studio/' . $project->id . '/test-asset.png';
@@ -728,14 +739,12 @@ final class AiStudioWebControllerTest extends TestCase
         $asset = BusinessInspirationGenerationAsset::create([
             'business_id' => $this->business->id,
             'generation_id' => $generation->id,
-            'file_name' => 'test-asset.png',
+            'output_image_url' => 'https://storage.cooca.id/' . $filePath,
             'storage_path' => $filePath,
-            'mime_type' => 'image/png',
-            'size_bytes' => 1024,
             'aspect_ratio' => '1:1',
             'width' => 1024,
             'height' => 1024,
-            'is_selected' => true,
+            'is_selected_favorite' => false,
         ]);
 
         $this->assertTrue(Storage::disk('public')->exists($filePath));
@@ -765,25 +774,34 @@ final class AiStudioWebControllerTest extends TestCase
         $otherProject = BusinessInspirationProject::create([
             'business_id' => $otherBusiness->id,
             'user_id' => $this->user->id,
-            'title' => 'Competitor Project',
+            'name' => 'Competitor Project',
             'status' => 'completed',
+        ]);
+
+        $otherPromptVersion = BusinessInspirationPromptVersion::create([
+            'business_id' => $otherBusiness->id,
+            'project_id' => $otherProject->id,
+            'version_number' => 1,
+            'positive_prompt' => 'Competitor test prompt',
+            'aspect_ratio' => '1:1',
         ]);
 
         $otherGeneration = BusinessInspirationGeneration::create([
             'business_id' => $otherBusiness->id,
             'project_id' => $otherProject->id,
-            'status' => 'completed',
-            'ai_model' => 'gpt-image-2.5-flare',
-            'credits_cost' => 1,
+            'prompt_version_id' => $otherPromptVersion->id,
+            'provider' => 'openai',
+            'model_name' => 'gpt-image-2.5-flare',
+            'status' => 'succeeded',
+            'credit_cost' => 1,
+            'idempotency_key' => 'delete_other_asset_test_01',
         ]);
 
         $otherAsset = BusinessInspirationGenerationAsset::create([
             'business_id' => $otherBusiness->id,
             'generation_id' => $otherGeneration->id,
-            'file_name' => 'competitor-asset.png',
+            'output_image_url' => 'https://storage.cooca.id/bisnis/competitor/test.png',
             'storage_path' => 'bisnis/competitor/test.png',
-            'mime_type' => 'image/png',
-            'size_bytes' => 1024,
             'aspect_ratio' => '1:1',
             'width' => 1024,
             'height' => 1024,
@@ -804,25 +822,34 @@ final class AiStudioWebControllerTest extends TestCase
         $project = BusinessInspirationProject::create([
             'business_id' => $this->business->id,
             'user_id' => $this->user->id,
-            'title' => 'Catalog View Project',
+            'name' => 'Catalog View Project',
             'status' => 'completed',
+        ]);
+
+        $promptVersion = BusinessInspirationPromptVersion::create([
+            'business_id' => $this->business->id,
+            'project_id' => $project->id,
+            'version_number' => 1,
+            'positive_prompt' => 'Catalog test prompt',
+            'aspect_ratio' => '1:1',
         ]);
 
         $generation = BusinessInspirationGeneration::create([
             'business_id' => $this->business->id,
             'project_id' => $project->id,
-            'status' => 'completed',
-            'ai_model' => 'gpt-image-2.5-flare',
-            'credits_cost' => 1,
+            'prompt_version_id' => $promptVersion->id,
+            'provider' => 'openai',
+            'model_name' => 'gpt-image-2.5-flare',
+            'status' => 'succeeded',
+            'credit_cost' => 1,
+            'idempotency_key' => 'catalog_asset_test_01',
         ]);
 
         BusinessInspirationGenerationAsset::create([
             'business_id' => $this->business->id,
             'generation_id' => $generation->id,
-            'file_name' => 'catalog-test.png',
+            'output_image_url' => 'https://storage.cooca.id/bisnis/test/catalog-test.png',
             'storage_path' => 'bisnis/test/catalog-test.png',
-            'mime_type' => 'image/png',
-            'size_bytes' => 1024,
             'aspect_ratio' => '1:1',
             'width' => 1024,
             'height' => 1024,
