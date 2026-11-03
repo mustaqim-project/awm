@@ -319,3 +319,4 @@ final class SocialMediaApiController extends Controller implements HasMiddleware
         ]);
     }
 }
+

@@ -298,3 +298,4 @@ final class MarketplaceApiController extends Controller implements HasMiddleware
         ]);
     }
 }
+
