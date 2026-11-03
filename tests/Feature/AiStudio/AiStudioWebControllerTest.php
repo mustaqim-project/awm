@@ -702,5 +702,138 @@ final class AiStudioWebControllerTest extends TestCase
             'amount' => 150,
         ]);
     }
+
+    public function test_owner_can_destroy_their_own_ai_asset(): void
+    {
+        Storage::fake('public');
+
+        $project = BusinessInspirationProject::create([
+            'business_id' => $this->business->id,
+            'user_id' => $this->user->id,
+            'title' => 'Project Aset Delete Test',
+            'status' => 'completed',
+        ]);
+
+        $generation = BusinessInspirationGeneration::create([
+            'business_id' => $this->business->id,
+            'project_id' => $project->id,
+            'status' => 'completed',
+            'ai_model' => 'gpt-image-2.5-flare',
+            'credits_cost' => 1,
+        ]);
+
+        $filePath = 'bisnis/test/ai-studio/' . $project->id . '/test-asset.png';
+        Storage::disk('public')->put($filePath, 'dummy image content');
+
+        $asset = BusinessInspirationGenerationAsset::create([
+            'business_id' => $this->business->id,
+            'generation_id' => $generation->id,
+            'file_name' => 'test-asset.png',
+            'storage_path' => $filePath,
+            'mime_type' => 'image/png',
+            'size_bytes' => 1024,
+            'aspect_ratio' => '1:1',
+            'width' => 1024,
+            'height' => 1024,
+            'is_selected' => true,
+        ]);
+
+        $this->assertTrue(Storage::disk('public')->exists($filePath));
+
+        $response = $this->actingAs($this->user)
+            ->deleteJson(route('ai-studio.assets.destroy', $asset->id));
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+        ]);
+
+        $this->assertDatabaseMissing('business_inspiration_generation_assets', [
+            'id' => $asset->id,
+        ]);
+
+        $this->assertFalse(Storage::disk('public')->exists($filePath));
+    }
+
+    public function test_owner_cannot_destroy_other_business_ai_asset(): void
+    {
+        $otherBusiness = Business::create([
+            'name' => 'Competitor Business',
+            'ai_credits_balance' => 5,
+        ]);
+
+        $otherProject = BusinessInspirationProject::create([
+            'business_id' => $otherBusiness->id,
+            'user_id' => $this->user->id,
+            'title' => 'Competitor Project',
+            'status' => 'completed',
+        ]);
+
+        $otherGeneration = BusinessInspirationGeneration::create([
+            'business_id' => $otherBusiness->id,
+            'project_id' => $otherProject->id,
+            'status' => 'completed',
+            'ai_model' => 'gpt-image-2.5-flare',
+            'credits_cost' => 1,
+        ]);
+
+        $otherAsset = BusinessInspirationGenerationAsset::create([
+            'business_id' => $otherBusiness->id,
+            'generation_id' => $otherGeneration->id,
+            'file_name' => 'competitor-asset.png',
+            'storage_path' => 'bisnis/competitor/test.png',
+            'mime_type' => 'image/png',
+            'size_bytes' => 1024,
+            'aspect_ratio' => '1:1',
+            'width' => 1024,
+            'height' => 1024,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->deleteJson(route('ai-studio.assets.destroy', $otherAsset->id));
+
+        $response->assertNotFound();
+
+        $this->assertDatabaseHas('business_inspiration_generation_assets', [
+            'id' => $otherAsset->id,
+        ]);
+    }
+
+    public function test_owner_can_view_ai_assets_in_index_catalog(): void
+    {
+        $project = BusinessInspirationProject::create([
+            'business_id' => $this->business->id,
+            'user_id' => $this->user->id,
+            'title' => 'Catalog View Project',
+            'status' => 'completed',
+        ]);
+
+        $generation = BusinessInspirationGeneration::create([
+            'business_id' => $this->business->id,
+            'project_id' => $project->id,
+            'status' => 'completed',
+            'ai_model' => 'gpt-image-2.5-flare',
+            'credits_cost' => 1,
+        ]);
+
+        BusinessInspirationGenerationAsset::create([
+            'business_id' => $this->business->id,
+            'generation_id' => $generation->id,
+            'file_name' => 'catalog-test.png',
+            'storage_path' => 'bisnis/test/catalog-test.png',
+            'mime_type' => 'image/png',
+            'size_bytes' => 1024,
+            'aspect_ratio' => '1:1',
+            'width' => 1024,
+            'height' => 1024,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->get(route('ai-studio.index', ['tab' => 'assets']));
+
+        $response->assertOk();
+        $response->assertViewHas('aiAssets');
+        $response->assertViewHas('totalAssetsCount');
+    }
 }
 
