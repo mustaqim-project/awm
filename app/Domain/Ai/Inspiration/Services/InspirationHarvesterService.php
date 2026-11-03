@@ -40,6 +40,7 @@ final class InspirationHarvesterService
             'civitai' => $civitaiAdapter,
             'pinterest' => $pinterestAdapter ?? new PinterestAdapter,
             'grok' => $grokImageAdapter ?? new GrokImageAdapter,
+            'cooca_curated' => $grokImageAdapter ?? new GrokImageAdapter,
         ];
     }
 
@@ -82,10 +83,26 @@ final class InspirationHarvesterService
         $targetAdapters = [];
         if ($sourceCode === 'all') {
             $targetAdapters = $this->adapters;
+            // Sertakan juga sumber aktif dari database jika belum terdaftar
+            try {
+                $dbSources = InspirationSource::where('is_active', true)->get();
+                foreach ($dbSources as $dbSource) {
+                    if (! isset($targetAdapters[$dbSource->code]) && class_exists($dbSource->driver_class)) {
+                        $targetAdapters[$dbSource->code] = app($dbSource->driver_class);
+                    }
+                }
+            } catch (Throwable) {
+                // Abaikan saat pengujian in-memory
+            }
         } elseif (isset($this->adapters[$sourceCode])) {
             $targetAdapters[$sourceCode] = $this->adapters[$sourceCode];
         } else {
-            throw new \InvalidArgumentException("Sumber inspirasi '{$sourceCode}' tidak dikenali.");
+            $dbSource = InspirationSource::where('code', $sourceCode)->first();
+            if ($dbSource && class_exists($dbSource->driver_class)) {
+                $targetAdapters[$sourceCode] = app($dbSource->driver_class);
+            } else {
+                throw new \InvalidArgumentException("Sumber inspirasi '{$sourceCode}' tidak dikenali.");
+            }
         }
 
         $results = [

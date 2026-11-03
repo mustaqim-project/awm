@@ -42,190 +42,144 @@ final class CivitaiAdapter implements InspirationAdapterInterface
     public function search(string $query = '', array $filters = []): array
     {
         $limit = (int) ($filters['limit'] ?? 50);
-        $periods = ($limit > 24) ? ['AllTime', 'Month', 'Week'] : [(string) ($filters['period'] ?? 'Week')];
-        $sort = (string) ($filters['sort'] ?? 'Most Reactions');
+        $periods = ($limit > 24) ? ['AllTime', 'Year', 'Month', 'Week', 'Day'] : [(string) ($filters['period'] ?? 'Week')];
+        $sorts = ($limit > 80) ? ['Most Reactions', 'Most Bookmarks', 'Most Comments'] : [(string) ($filters['sort'] ?? 'Most Reactions')];
 
         $allItems = [];
 
         try {
-            foreach ($periods as $period) {
-                $fetchLimit = min(100, max(40, (int) ceil($limit / count($periods)) * 2));
-
-                $response = Http::withHeaders([
-                    'User-Agent' => 'Cooca-AiStudio/1.0 (+https://cooca.id)',
-                    'Accept' => 'application/json',
-                ])->timeout(12)->get(self::BASE_URL, [
-                    'limit' => $fetchLimit,
-                    'sort' => $sort,
-                    'period' => $period,
-                    'nsfw' => 'false',
-                    'withMeta' => 'true',
-                ]);
-
-                if (! $response->successful()) {
-                    Log::warning("[CivitaiAdapter] HTTP failed ({$response->status()}) from Civitai API for period {$period}");
-                    continue;
-                }
-
-                $json = $response->json();
-                $items = $json['items'] ?? [];
-
-                foreach ($items as $item) {
-                    $rawPrompt = $item['meta']['prompt'] ?? null;
-                    if (empty($rawPrompt) || ! is_string($rawPrompt)) {
-                        continue;
-                    }
-
-                    $id = (int) ($item['id'] ?? 0);
-                    if ($id <= 0) {
-                        continue;
-                    }
-
-                    $imageUrl = (string) ($item['url'] ?? '');
-                    if (empty($imageUrl)) {
-                        continue;
-                    }
-
-                    $width = (int) ($item['width'] ?? 1024);
-                    $height = (int) ($item['height'] ?? 1024);
-                    $aspectRatio = $this->resolveAspectRatio($width, $height);
-
-                    $username = (string) ($item['username'] ?? 'Civitai Creator');
-                    $baseModel = (string) ($item['baseModel'] ?? $item['meta']['Model'] ?? 'Flux.1');
-                    $negativePrompt = (string) ($item['meta']['negativePrompt'] ?? '');
-
-                    $likes = (int) (($item['stats']['likeCount'] ?? 0) + ($item['stats']['heartCount'] ?? 0));
-                    $comments = (int) ($item['stats']['commentCount'] ?? 0);
-
-                    $tags = $this->extractTags($rawPrompt, $baseModel);
-                    $title = $this->deriveTitle($rawPrompt, $baseModel);
-
-                    $allItems['civitai_' . $id] = [
-                        'external_id' => 'civitai_' . $id,
-                        'title' => $title,
-                        'caption' => Str::limit($this->cleanPromptForDisplay($rawPrompt), 180),
-                        'canonical_url' => $imageUrl,
-                        'thumbnail_url' => $imageUrl,
-                        'media_type' => 'image',
-                        'media_urls' => [$imageUrl],
-                        'aspect_ratio' => $aspectRatio,
-                        'tags' => $tags,
-                        'license' => 'Open Community AI License',
-                        'photographer_name' => $username,
-                        'allow_commercial_use' => true,
-                        'raw_prompt' => $rawPrompt,
-                        'negative_prompt' => $negativePrompt,
-                        'ai_model' => $baseModel,
-                        'like_count' => $likes,
-                        'view_count' => $likes * 12 + ($comments * 5),
-                        'meta_details' => [
-                            'steps' => $item['meta']['steps'] ?? null,
-                            'cfgScale' => $item['meta']['cfgScale'] ?? null,
-                            'sampler' => $item['meta']['sampler'] ?? null,
-                            'seed' => $item['meta']['seed'] ?? null,
-                        ],
-                    ];
-
-                    if (count($allItems) >= $limit) {
-                        break 2;
-                    }
-                }
-            }
-
-            $results = array_values($allItems);
-
-            if (empty($results)) {
-                return $this->getFallbackCuratedItems($query);
-            }
-
-            $results = [];
-            foreach ($items as $item) {
-                // Filter ketat: Hanya ambil yang memiliki meta prompt untuk direplikasi oleh merchant
-                $rawPrompt = $item['meta']['prompt'] ?? null;
-                if (empty($rawPrompt) || ! is_string($rawPrompt)) {
-                    continue;
-                }
-
-                $id = (int) ($item['id'] ?? 0);
-                if ($id <= 0) {
-                    continue;
-                }
-
-                $imageUrl = (string) ($item['url'] ?? '');
-                if (empty($imageUrl)) {
-                    continue;
-                }
-
-                $width = (int) ($item['width'] ?? 1024);
-                $height = (int) ($item['height'] ?? 1024);
-                $aspectRatio = $this->resolveAspectRatio($width, $height);
-
-                $username = (string) ($item['username'] ?? 'Civitai Creator');
-                $baseModel = (string) ($item['baseModel'] ?? $item['meta']['Model'] ?? 'Flux.1');
-                $negativePrompt = (string) ($item['meta']['negativePrompt'] ?? '');
-
-                $likes = (int) (($item['stats']['likeCount'] ?? 0) + ($item['stats']['heartCount'] ?? 0));
-                $comments = (int) ($item['stats']['commentCount'] ?? 0);
-
-                $tags = $this->extractTags($rawPrompt, $baseModel);
-                $title = $this->deriveTitle($rawPrompt, $baseModel);
-
-                $results[] = [
-                    'external_id' => 'civitai_' . $id,
-                    'title' => $title,
-                    'caption' => Str::limit($this->cleanPromptForDisplay($rawPrompt), 180),
-                    'canonical_url' => $imageUrl,
-                    'thumbnail_url' => $imageUrl,
-                    'media_type' => 'image',
-                    'media_urls' => [$imageUrl],
-                    'aspect_ratio' => $aspectRatio,
-                    'tags' => $tags,
-                    'license' => 'Open Community AI License',
-                    'photographer_name' => $username,
-                    'allow_commercial_use' => true,
-                    'raw_prompt' => $rawPrompt,
-                    'negative_prompt' => $negativePrompt,
-                    'ai_model' => $baseModel,
-                    'like_count' => $likes,
-                    'view_count' => $likes * 12 + ($comments * 5),
-                    'meta_details' => [
-                        'steps' => $item['meta']['steps'] ?? null,
-                        'cfgScale' => $item['meta']['cfgScale'] ?? null,
-                        'sampler' => $item['meta']['sampler'] ?? null,
-                        'seed' => $item['meta']['seed'] ?? null,
-                    ],
-                ];
-
-                if (count($results) >= $limit) {
+            foreach ($sorts as $sort) {
+                if (count($allItems) >= $limit) {
                     break;
                 }
-            }
 
-            if (empty($results)) {
-                return $this->getFallbackCuratedItems($query);
-            }
+                foreach ($periods as $period) {
+                    if (count($allItems) >= $limit) {
+                        break;
+                    }
 
-            // Filter teks jika query diberikan
-            if (! empty($query)) {
-                $q = mb_strtolower(trim($query));
-                $filtered = array_filter($results, function (array $item) use ($q): bool {
-                    $haystack = mb_strtolower(
-                        ($item['title'] ?? '') . ' ' .
-                        ($item['caption'] ?? '') . ' ' .
-                        implode(' ', $item['tags'] ?? []) . ' ' .
-                        ($item['raw_prompt'] ?? '')
-                    );
-                    return str_contains($haystack, $q);
-                });
-                return array_values($filtered);
-            }
+                    $cursor = null;
+                    $pagePerPeriod = 0;
 
-            return $results;
-        } catch (Throwable $e) {
-            Log::warning('[CivitaiAdapter] Error fetching from Civitai: ' . $e->getMessage());
+                    do {
+                        $fetchLimit = min(100, max(20, $limit - count($allItems)));
+                        $params = [
+                            'limit' => $fetchLimit,
+                            'sort' => $sort,
+                            'period' => $period,
+                            'nsfw' => 'false',
+                            'withMeta' => 'true',
+                        ];
+                        if ($cursor) {
+                            $params['cursor'] = $cursor;
+                        }
+
+                    $response = Http::withHeaders([
+                        'User-Agent' => 'Cooca-AiStudio/1.0 (+https://cooca.id)',
+                        'Accept' => 'application/json',
+                    ])->timeout(15)->get(self::BASE_URL, $params);
+
+                    if (! $response->successful()) {
+                        Log::warning("[CivitaiAdapter] HTTP failed ({$response->status()}) from Civitai API for period {$period}");
+                        break;
+                    }
+
+                    $json = $response->json();
+                    $items = $json['items'] ?? [];
+                    $cursor = $json['metadata']['nextCursor'] ?? null;
+                    $pagePerPeriod++;
+
+                    foreach ($items as $item) {
+                        $rawPrompt = $item['meta']['prompt'] ?? null;
+                        if (empty($rawPrompt) || ! is_string($rawPrompt)) {
+                            continue;
+                        }
+
+                        $id = (int) ($item['id'] ?? 0);
+                        if ($id <= 0) {
+                            continue;
+                        }
+
+                        $imageUrl = (string) ($item['url'] ?? '');
+                        if (empty($imageUrl)) {
+                            continue;
+                        }
+
+                        $width = (int) ($item['width'] ?? 1024);
+                        $height = (int) ($item['height'] ?? 1024);
+                        $aspectRatio = $this->resolveAspectRatio($width, $height);
+
+                        $username = (string) ($item['username'] ?? 'Civitai Creator');
+                        $baseModel = (string) ($item['baseModel'] ?? $item['meta']['Model'] ?? 'Flux.1');
+                        $negativePrompt = (string) ($item['meta']['negativePrompt'] ?? '');
+
+                        $likes = (int) (($item['stats']['likeCount'] ?? 0) + ($item['stats']['heartCount'] ?? 0));
+                        $comments = (int) ($item['stats']['commentCount'] ?? 0);
+
+                        $tags = $this->extractTags($rawPrompt, $baseModel);
+                        $title = $this->deriveTitle($rawPrompt, $baseModel);
+
+                        $allItems['civitai_' . $id] = [
+                            'external_id' => 'civitai_' . $id,
+                            'title' => $title,
+                            'caption' => Str::limit($this->cleanPromptForDisplay($rawPrompt), 180),
+                            'canonical_url' => $imageUrl,
+                            'thumbnail_url' => $imageUrl,
+                            'media_type' => 'image',
+                            'media_urls' => [$imageUrl],
+                            'aspect_ratio' => $aspectRatio,
+                            'tags' => $tags,
+                            'license' => 'Open Community AI License',
+                            'photographer_name' => $username,
+                            'allow_commercial_use' => true,
+                            'raw_prompt' => $rawPrompt,
+                            'negative_prompt' => $negativePrompt,
+                            'ai_model' => $baseModel,
+                            'like_count' => $likes,
+                            'view_count' => $likes * 12 + ($comments * 5),
+                            'meta_details' => [
+                                'steps' => $item['meta']['steps'] ?? null,
+                                'cfgScale' => $item['meta']['cfgScale'] ?? null,
+                                'sampler' => $item['meta']['sampler'] ?? null,
+                                'seed' => $item['meta']['seed'] ?? null,
+                            ],
+                        ];
+
+                        if (count($allItems) >= $limit) {
+                            break 3;
+                        }
+                    }
+                } while (! empty($cursor) && $pagePerPeriod < 4 && count($allItems) < $limit);
+            }
+        }
+
+        $results = array_values($allItems);
+
+        if (empty($results)) {
             return $this->getFallbackCuratedItems($query);
         }
+
+        // Filter teks jika query diberikan
+        if (! empty($query)) {
+            $q = mb_strtolower(trim($query));
+            $filtered = array_filter($results, function (array $item) use ($q): bool {
+                $haystack = mb_strtolower(
+                    ($item['title'] ?? '') . ' ' .
+                    ($item['caption'] ?? '') . ' ' .
+                    implode(' ', $item['tags'] ?? []) . ' ' .
+                    ($item['raw_prompt'] ?? '')
+                );
+                return str_contains($haystack, $q);
+            });
+            return array_values($filtered);
+        }
+
+        return $results;
+    } catch (Throwable $e) {
+        Log::warning('[CivitaiAdapter] Error fetching from Civitai: ' . $e->getMessage());
+        return $this->getFallbackCuratedItems($query);
     }
+}
 
     /**
      * Detail satu item berdasarkan ID eksternal (contoh: civitai_146322075).
