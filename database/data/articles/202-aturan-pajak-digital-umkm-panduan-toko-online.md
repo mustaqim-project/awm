@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Pajak & Legalitas"
 cluster: "edukasi"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/aturan-pajak-digital-umkm-panduan-toko-online.jpg"
 ---
 
 # Aturan Pajak Digital UMKM: Panduan PPh Final dan Toko Online

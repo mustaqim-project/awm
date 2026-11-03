@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/otomatisasi-invoice-pembayaran-5-alasan-umkm-harus-mulai-sekarang.jpg Ringkasan / Excerpt
 
 Proses invoice dan penagihan pembayaran manual seringkali memakan waktu dan rawan kesalahan. Berikut alasan mengapa UMKM perlu mulai mengotomatisasi proses ini.
 

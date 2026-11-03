@@ -7,7 +7,7 @@ primary_keyword: "setting minimum stok warung"
 secondary_keywords: "notifikasi stok; POS UMKM gratis"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stok-beras-habis-di-jam-sibuk-cara-setting-minimum-stok-otomatis-untuk.jpg"
 reading_time: "5 menit"
 ---
 

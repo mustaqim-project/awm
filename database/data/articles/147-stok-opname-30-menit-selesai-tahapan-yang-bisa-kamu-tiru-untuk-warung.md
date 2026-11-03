@@ -7,7 +7,7 @@ primary_keyword: "stok opname cepat UMKM"
 secondary_keywords: "stok opname warung; opname kilat"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stok-opname-30-menit-selesai-tahapan-yang-bisa-kamu-tiru-untuk-warung.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hitung-bep-caf-kecil-15-meja-contoh-nyata-agar-tidak-salah-hitung.jpg Ringkasan / Excerpt
 
 Berikut contoh perhitungan BEP untuk café kecil berkapasitas 15 meja, lengkap dengan asumsi biaya yang bisa disesuaikan dengan kondisi usaha Anda sendiri.
 

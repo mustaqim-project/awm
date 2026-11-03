@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stok-opname-30-menit-selesai-tahapan-yang-bisa-kamu-tiru-untuk-warung.jpg Ringkasan / Excerpt
 
 Stok opname sering dianggap merepotkan dan memakan waktu lama. Dengan tahapan yang tepat, proses ini bisa diselesaikan jauh lebih cepat dan tetap akurat.
 

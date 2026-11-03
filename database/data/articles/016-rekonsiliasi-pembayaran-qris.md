@@ -7,7 +7,7 @@ primary_keyword: "rekonsiliasi pembayaran qris"
 secondary_keywords: "cek mutasi qris; selisih qris dan penjualan; pencatatan pembayaran digital; biaya mdr qris"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/rekonsiliasi-pembayaran-qris.jpg"
 reading_time: "4 menit"
 ---
 

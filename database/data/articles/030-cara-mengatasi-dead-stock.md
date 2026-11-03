@@ -7,7 +7,7 @@ primary_keyword: "cara mengatasi dead stock"
 secondary_keywords: "dead stock adalah; barang tidak laku; bundling produk; likuidasi stok"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-mengatasi-dead-stock.jpg"
 reading_time: "4 menit"
 ---
 

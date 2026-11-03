@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/bep-warung-kopi-berapa-cangkir-per-hari-untuk-balik-modal.jpg Ringkasan / Excerpt
 
 Mengetahui titik impas (BEP) dalam bentuk jumlah cangkir yang harus terjual per hari membantu owner warung kopi menetapkan target penjualan yang realistis.
 

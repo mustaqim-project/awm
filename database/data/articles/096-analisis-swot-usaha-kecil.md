@@ -7,7 +7,7 @@ primary_keyword: "analisis swot usaha kecil"
 secondary_keywords: "contoh matriks swot warung; strategi analisis swot umkm; perencanaan bisnis toko kecil; evaluasi kekuatan kompetitor"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/analisis-swot-usaha-kecil.jpg"
 reading_time: "6 menit"
 ---
 

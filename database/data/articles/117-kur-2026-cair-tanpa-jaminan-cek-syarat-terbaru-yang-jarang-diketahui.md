@@ -7,7 +7,7 @@ primary_keyword: "syarat KUR 2026"
 secondary_keywords: "KUR mikro; KUR tanpa agunan; Bank KUR"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kur-2026-cair-tanpa-jaminan-cek-syarat-terbaru-yang-jarang-diketahui.jpg"
 reading_time: "5 menit"
 ---
 

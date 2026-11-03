@@ -7,7 +7,7 @@ primary_keyword: "menu qr code restoran"
 secondary_keywords: "pesan lewat qr meja; menu digital cafe; self order restoran; split bill kasir"
 search_intent: "Komersial"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/menu-qr-code-restoran.jpg"
 reading_time: "4 menit"
 ---
 

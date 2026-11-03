@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Operasional"
 cluster: "tutorial"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-biaya-logistik-umkm-saat-bbm-berubah.jpg"
 ---
 
 # Cara Menghitung Biaya Logistik UMKM Saat Tarif BBM Berubah

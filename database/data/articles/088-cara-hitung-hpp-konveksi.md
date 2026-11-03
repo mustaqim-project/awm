@@ -7,7 +7,7 @@ primary_keyword: "cara hitung hpp konveksi"
 secondary_keywords: "modal usaha jahit konveksi; rumus konsumsi kain per baju; ongkos jahit maklon; kalkulasi harga grosir pakaian"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-hitung-hpp-konveksi.jpg"
 reading_time: "6 menit"
 ---
 

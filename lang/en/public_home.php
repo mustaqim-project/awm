@@ -13,6 +13,7 @@ return [
     'hero_title' => 'Modern Omnichannel & ERP Platform: Run Your Entire Business from One System',
     'hero_subtitle' => 'More than just a simple POS. Seamlessly synchronize point-of-sale, online marketplaces, multi-warehouse inventory, recipe BOM manufacturing, automated accounting, and WhatsApp CRM—all in one place without messy spreadsheets.',
     'hero_cta_primary' => 'Start Free Trial',
+    'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'See How It Works',
     'btn_dashboard' => 'Dashboard',
 

@@ -7,7 +7,7 @@ primary_keyword: "cara negosiasi dengan supplier"
 secondary_keywords: "trik tawar harga distributor; pengajuan tempo supplier umkm; kemitraan pemasok bahan baku; negosiasi dagang usaha kecil"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-negosiasi-dengan-supplier.jpg"
 reading_time: "6 menit"
 ---
 

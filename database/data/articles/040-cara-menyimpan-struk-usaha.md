@@ -7,7 +7,7 @@ primary_keyword: "cara menyimpan struk usaha"
 secondary_keywords: "scan struk pembelian; arsip nota; receipt capture; bukti pengeluaran usaha"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menyimpan-struk-usaha.jpg"
 reading_time: "4 menit"
 ---
 

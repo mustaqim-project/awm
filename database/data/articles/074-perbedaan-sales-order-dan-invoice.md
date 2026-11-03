@@ -7,7 +7,7 @@ primary_keyword: "perbedaan sales order dan invoice"
 secondary_keywords: "alur dokumen penjualan umkm; fungsi sales order so; beda so dan faktur tagihan; siklus transaksi dagang"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/perbedaan-sales-order-dan-invoice.jpg"
 reading_time: "6 menit"
 ---
 

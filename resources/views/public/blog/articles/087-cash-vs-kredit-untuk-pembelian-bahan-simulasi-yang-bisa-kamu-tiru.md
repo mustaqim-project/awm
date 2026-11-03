@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cash-vs-kredit-untuk-pembelian-bahan-simulasi-yang-bisa-kamu-tiru.jpg Ringkasan / Excerpt
 
 Membeli bahan baku secara tunai atau kredit dari supplier punya dampak berbeda terhadap arus kas usaha. Berikut simulasi sederhana untuk membantu menentukan pilihan yang tepat.
 

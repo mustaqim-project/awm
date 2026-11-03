@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/punya-nib-bagaimana-cara-pasang-di-toko-online-shop-panduan-branding-u.jpg Ringkasan / Excerpt
 
 NIB tidak hanya untuk arsip, tapi juga bisa jadi elemen kepercayaan yang ditampilkan di toko fisik maupun online shop. Ini cara menampilkannya dengan tepat.
 

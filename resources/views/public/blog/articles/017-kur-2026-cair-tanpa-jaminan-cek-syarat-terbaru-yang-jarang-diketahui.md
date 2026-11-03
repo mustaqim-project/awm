@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/kur-2026-cair-tanpa-jaminan-cek-syarat-terbaru-yang-jarang-diketahui.jpg Ringkasan / Excerpt
 
 KUR mikro dikenal sebagai pinjaman tanpa agunan tambahan untuk plafon tertentu. Berikut syarat dan hal yang perlu diperhatikan sebelum mengajukan.
 

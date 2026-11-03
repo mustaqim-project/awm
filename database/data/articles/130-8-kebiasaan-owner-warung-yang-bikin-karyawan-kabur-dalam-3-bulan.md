@@ -7,7 +7,7 @@ primary_keyword: "kebiasaan owner warung"
 secondary_keywords: "retensi karyawan UMKM; turnover karyawan warung"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/8-kebiasaan-owner-warung-yang-bikin-karyawan-kabur-dalam-3-bulan.jpg"
 reading_time: "5 menit"
 ---
 

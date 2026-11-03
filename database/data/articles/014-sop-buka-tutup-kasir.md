@@ -7,7 +7,7 @@ primary_keyword: "sop buka tutup kasir"
 secondary_keywords: "sop kasir toko; cek kas awal shift; rekap kas harian; prosedur tutup toko"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/sop-buka-tutup-kasir.jpg"
 reading_time: "4 menit"
 ---
 

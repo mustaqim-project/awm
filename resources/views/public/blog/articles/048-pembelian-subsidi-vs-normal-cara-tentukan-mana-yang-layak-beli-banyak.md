@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pembelian-subsidi-vs-normal-cara-tentukan-mana-yang-layak-beli-banyak.jpg Ringkasan / Excerpt
 
 Membeli dalam jumlah banyak tidak selalu lebih hemat. Ini cara menentukan produk mana yang layak dibeli dalam jumlah besar dan mana yang sebaiknya rutin sedikit-sedikit.
 

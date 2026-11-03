@@ -7,7 +7,7 @@ primary_keyword: "percepat transaksi kasir"
 secondary_keywords: "antrian pendek kasir; kecepatan POS"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/antrian-panjang-pembeli-kabur-5-trik-percepat-transaksi-kasir-warung.jpg"
 reading_time: "5 menit"
 ---
 

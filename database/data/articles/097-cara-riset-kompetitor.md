@@ -7,7 +7,7 @@ primary_keyword: "cara riset kompetitor"
 secondary_keywords: "analisis pesaing usaha kecil; mystery shopping toko sebelah; riset pasar umkm; strategi diferensiasi produk"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-riset-kompetitor.jpg"
 reading_time: "6 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/bon-karyawan-menumpuk-sop-pinjaman-karyawan-yang-bikin-tenang-owner-sd.jpg Ringkasan / Excerpt
 
 Bon atau pinjaman karyawan yang tidak dikelola dengan jelas bisa menimbulkan kesalahpahaman. Ini SOP sederhana untuk mengelola pinjaman karyawan dengan tenang.
 

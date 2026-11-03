@@ -7,7 +7,7 @@ primary_keyword: "cara membuat caption jualan"
 secondary_keywords: "contoh caption jualan; copywriting umkm; kata ajakan beli; caption instagram produk"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-caption-jualan.jpg"
 reading_time: "5 menit"
 ---
 

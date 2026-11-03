@@ -7,7 +7,7 @@ primary_keyword: "cara hitung harga katering"
 secondary_keywords: "hpp katering pernikahan; rumus harga nasi kotak boks; biaya prasmanan per porsi; hitung modal katering rumahan"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-hitung-harga-katering.jpg"
 reading_time: "6 menit"
 ---
 

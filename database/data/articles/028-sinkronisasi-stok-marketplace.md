@@ -7,7 +7,7 @@ primary_keyword: "sinkronisasi stok marketplace"
 secondary_keywords: "oversell marketplace; stok shopee tokopedia; kelola toko online banyak platform; marketplace hub"
 search_intent: "Komersial"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/sinkronisasi-stok-marketplace.jpg"
 reading_time: "4 menit"
 ---
 

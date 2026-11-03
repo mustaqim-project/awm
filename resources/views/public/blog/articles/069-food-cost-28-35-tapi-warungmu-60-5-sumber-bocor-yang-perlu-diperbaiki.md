@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/food-cost-28-35-tapi-warungmu-60-5-sumber-bocor-yang-perlu-diperbaiki.jpg Ringkasan / Excerpt
 
 Food cost yang jauh di atas standar industri kuliner biasanya menandakan ada kebocoran biaya yang perlu segera diidentifikasi dan diperbaiki.
 

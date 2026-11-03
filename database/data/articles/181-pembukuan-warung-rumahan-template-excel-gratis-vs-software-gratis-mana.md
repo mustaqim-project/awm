@@ -7,7 +7,7 @@ primary_keyword: "pembukuan warung gratis"
 secondary_keywords: "aplikasi pembukuan; Excel pembukuan"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pembukuan-warung-rumahan-template-excel-gratis-vs-software-gratis-mana.jpg"
 reading_time: "5 menit"
 ---
 

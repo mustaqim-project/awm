@@ -7,7 +7,7 @@ primary_keyword: "cara meminta ulasan pelanggan"
 secondary_keywords: "cara minta review google maps; testimoni pembeli shopee; strategi rating bintang 5 toko; ulasan kepuasan pelanggan"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-meminta-ulasan-pelanggan.jpg"
 reading_time: "6 menit"
 ---
 

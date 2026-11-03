@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/umkm-wajib-nib-di-2026-aturan-baru-yang-perlu-kamu-tahu-sebelum-mulai.jpg Ringkasan / Excerpt
 
 Ketentuan seputar legalitas usaha terus diperbarui pemerintah. Berikut rangkuman arah kebijakan NIB dan OSS RBA yang perlu dipahami pelaku UMKM sebelum memulai usaha.
 

@@ -7,7 +7,7 @@ primary_keyword: "delegasi owner warung"
 secondary_keywords: "ekspansi UMKM; leadership warung"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pemilik-warung-sibuk-7-delegasi-wajib-agar-bisa-fokus-buka-cabang-baru.jpg"
 reading_time: "5 menit"
 ---
 

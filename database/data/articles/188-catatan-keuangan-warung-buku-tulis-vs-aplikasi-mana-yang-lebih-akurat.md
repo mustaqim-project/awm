@@ -7,7 +7,7 @@ primary_keyword: "buku tulis vs aplikasi"
 secondary_keywords: "pembukuan UMKM; akurasi pembukuan"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/catatan-keuangan-warung-buku-tulis-vs-aplikasi-mana-yang-lebih-akurat.jpg"
 reading_time: "5 menit"
 ---
 

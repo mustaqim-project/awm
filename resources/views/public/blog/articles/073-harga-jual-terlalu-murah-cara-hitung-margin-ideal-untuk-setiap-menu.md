@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/harga-jual-terlalu-murah-cara-hitung-margin-ideal-untuk-setiap-menu.jpg Ringkasan / Excerpt
 
 Menentukan harga jual yang terlalu murah bisa membuat usaha sulit berkembang. Berikut cara menghitung margin ideal untuk setiap menu agar tetap kompetitif namun menguntungkan.
 

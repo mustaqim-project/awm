@@ -7,7 +7,7 @@ primary_keyword: "cara mengelola barang kedaluwarsa"
 secondary_keywords: "barang expired toko; tanggal kedaluwarsa stok; diskon barang hampir expired; kerugian stok"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-mengelola-barang-kedaluwarsa.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hpp-roti-kue-7-biaya-yang-sering-tidak-disadari-owner-bakery-rumahan.jpg Ringkasan / Excerpt
 
 Usaha bakery rumahan sering menetapkan harga jual tanpa memperhitungkan seluruh komponen biaya produksi. Berikut 7 biaya yang sering terlewat dalam perhitungan HPP.
 

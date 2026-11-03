@@ -7,7 +7,7 @@ primary_keyword: "selisih stok sistem dan fisik"
 secondary_keywords: "penyebab selisih stok; stok minus; koreksi stok; stok hilang toko"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/selisih-stok-sistem-dan-fisik.jpg"
 reading_time: "4 menit"
 ---
 

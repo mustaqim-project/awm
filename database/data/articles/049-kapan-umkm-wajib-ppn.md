@@ -7,7 +7,7 @@ primary_keyword: "kapan umkm wajib ppn"
 secondary_keywords: "pengusaha kena pajak; pkp umkm; faktur pajak sederhana; batas omzet pkp"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kapan-umkm-wajib-ppn.jpg"
 reading_time: "5 menit"
 ---
 

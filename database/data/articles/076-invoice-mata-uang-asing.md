@@ -7,7 +7,7 @@ primary_keyword: "invoice mata uang asing"
 secondary_keywords: "tagihan ekspor umkm; invoice usd ke klien luar negeri; biaya transfer bank swift; kurs pajak bea cukai"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/invoice-mata-uang-asing.jpg"
 reading_time: "6 menit"
 ---
 

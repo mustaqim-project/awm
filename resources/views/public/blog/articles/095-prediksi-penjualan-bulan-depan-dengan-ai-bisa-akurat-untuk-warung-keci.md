@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/prediksi-penjualan-bulan-depan-dengan-ai-bisa-akurat-untuk-warung-keci.jpg Ringkasan / Excerpt
 
 Teknologi prediksi berbasis AI kini juga bisa diakses usaha kecil untuk memperkirakan penjualan bulan depan. Seberapa akurat prediksi ini untuk skala warung?
 

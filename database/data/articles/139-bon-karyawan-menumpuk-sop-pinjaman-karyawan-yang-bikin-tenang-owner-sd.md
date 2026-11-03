@@ -7,7 +7,7 @@ primary_keyword: "SOP pinjaman karyawan"
 secondary_keywords: "piutang karyawan warung; bon karyawan"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bon-karyawan-menumpuk-sop-pinjaman-karyawan-yang-bikin-tenang-owner-sd.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "laporan tunggal karyawan owner"
 secondary_keywords: "konsolidasi data usaha; dashboard UMKM"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pemilik-toko-karyawan-beda-laporan-solusi-single-source-of-truth.jpg"
 reading_time: "5 menit"
 ---
 

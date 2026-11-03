@@ -7,7 +7,7 @@ primary_keyword: "cerita modal usaha receh"
 secondary_keywords: "kisah sukses UMKM modal kecil"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/modal-receh-tapi-penghasilan-rp-25-juta-sebulan-studi-kasus-warung-mie.jpg"
 reading_time: "5 menit"
 ---
 

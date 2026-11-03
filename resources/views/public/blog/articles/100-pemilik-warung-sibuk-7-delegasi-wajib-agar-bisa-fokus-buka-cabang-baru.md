@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pemilik-warung-sibuk-7-delegasi-wajib-agar-bisa-fokus-buka-cabang-baru.jpg Ringkasan / Excerpt
 
 Owner yang ingin fokus membuka cabang baru perlu belajar mendelegasikan tugas operasional harian. Berikut 7 area yang wajib didelegasikan agar ekspansi bisa berjalan lancar.
 

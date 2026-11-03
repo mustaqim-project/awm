@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pelanggan-komplain-kualitas-template-balasan-sopan-untuk-owner-warung.jpg Ringkasan / Excerpt
 
 Menghadapi komplain pelanggan butuh cara komunikasi yang tepat agar hubungan tetap baik. Berikut template balasan sopan yang bisa disesuaikan untuk berbagai situasi.
 

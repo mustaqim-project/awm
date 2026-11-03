@@ -7,7 +7,7 @@ primary_keyword: "prediksi penjualan UMKM"
 secondary_keywords: "AI prediksi warung; machine learning UMKM"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/prediksi-penjualan-bulan-depan-dengan-ai-bisa-akurat-untuk-warung-keci.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "kelola pesanan WhatsApp"
 secondary_keywords: "customer service UMKM; WA Bisnis"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-kelola-banyak-pesanan-whatsapp-tanpa-typo-workflow-yang-bisa-diti.jpg"
 reading_time: "5 menit"
 ---
 

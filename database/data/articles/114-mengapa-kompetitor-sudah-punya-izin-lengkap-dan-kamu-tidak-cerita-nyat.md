@@ -7,7 +7,7 @@ primary_keyword: "cerita NIB UMKM"
 secondary_keywords: "izin usaha terlambat; studi kasus NIB"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/mengapa-kompetitor-sudah-punya-izin-lengkap-dan-kamu-tidak-cerita-nyat.jpg"
 reading_time: "5 menit"
 ---
 

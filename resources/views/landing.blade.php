@@ -203,7 +203,7 @@
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
-                        <div class="pt-1 flex flex-row items-center justify-start gap-2.5 sm:gap-3.5 w-full sm:w-auto">
+                        <div class="pt-1 flex flex-row flex-wrap sm:flex-nowrap items-center justify-start gap-2.5 sm:gap-3.5 w-full sm:w-auto">
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
@@ -223,6 +223,14 @@
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @endif
+
+                            <!-- Tombol Download COOCA My Own (Release APK) Samping Coba Gratis -->
+                            <a href="{{ route('public.download.apk') }}"
+                                class="h-11 sm:h-12 px-4.5 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-cyan-400/50 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_0_20px_rgba(0,194,255,0.3)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 touch-action-manipulation backdrop-blur-md group"
+                                title="Download COOCA My Own (Android APK)">
+                                <i data-lucide="smartphone" class="w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                                <span>{{ __('public_home.hero_cta_download_app') }}</span>
+                            </a>
                         </div>
 
                         <!-- Social Proof or Factual Trust Badge (Prompt 1 Compliant) -->

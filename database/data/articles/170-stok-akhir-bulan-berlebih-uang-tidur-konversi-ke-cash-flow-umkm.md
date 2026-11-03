@@ -7,7 +7,7 @@ primary_keyword: "stok berlebih UMKM"
 secondary_keywords: "cash flow warung; dead stock"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stok-akhir-bulan-berlebih-uang-tidur-konversi-ke-cash-flow-umkm.jpg"
 reading_time: "5 menit"
 ---
 

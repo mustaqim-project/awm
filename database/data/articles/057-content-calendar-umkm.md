@@ -7,7 +7,7 @@ primary_keyword: "content calendar umkm"
 secondary_keywords: "ide konten jualan; kalender konten media sosial; template content plan; konten produk harian"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/content-calendar-umkm.jpg"
 reading_time: "4 menit"
 ---
 

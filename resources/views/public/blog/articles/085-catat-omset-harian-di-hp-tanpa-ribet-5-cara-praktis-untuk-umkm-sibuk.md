@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/catat-omset-harian-di-hp-tanpa-ribet-5-cara-praktis-untuk-umkm-sibuk.jpg Ringkasan / Excerpt
 
 Kesibukan operasional harian sering membuat pemilik usaha menunda mencatat omset. Berikut 5 cara praktis mencatat omset harian langsung dari HP tanpa memakan banyak waktu.
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pemilik-toko-karyawan-beda-laporan-solusi-single-source-of-truth.jpg Ringkasan / Excerpt
 
 Perbedaan laporan penjualan antara owner dan karyawan sering memicu kebingungan. Konsep single source of truth bisa jadi solusi untuk masalah ini.
 

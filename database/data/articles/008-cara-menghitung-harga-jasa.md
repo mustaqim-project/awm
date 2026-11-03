@@ -7,7 +7,7 @@ primary_keyword: "cara menghitung harga jasa"
 secondary_keywords: "tarif jasa per jam; harga jual jasa; hitung tarif layanan; biaya tenaga kerja jasa"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-harga-jasa.jpg"
 reading_time: "4 menit"
 ---
 

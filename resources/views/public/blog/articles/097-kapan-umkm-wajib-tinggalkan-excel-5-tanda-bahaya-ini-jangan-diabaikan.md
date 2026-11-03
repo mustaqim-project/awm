@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/kapan-umkm-wajib-tinggalkan-excel-5-tanda-bahaya-ini-jangan-diabaikan.jpg Ringkasan / Excerpt
 
 Excel sering jadi andalan awal UMKM untuk pencatatan usaha, tapi ada batas di mana ketergantungan pada Excel justru mulai membahayakan operasional.
 

@@ -7,7 +7,7 @@ primary_keyword: "cara daftar merek dagang"
 secondary_keywords: "pendaftaran merek umkm; hak merek; cek merek dagang; hak kekayaan intelektual usaha"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-daftar-merek-dagang.jpg"
 reading_time: "4 menit"
 ---
 

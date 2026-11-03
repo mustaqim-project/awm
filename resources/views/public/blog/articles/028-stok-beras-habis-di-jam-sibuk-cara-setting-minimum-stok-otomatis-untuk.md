@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stok-beras-habis-di-jam-sibuk-cara-setting-minimum-stok-otomatis-untuk.jpg Ringkasan / Excerpt
 
 Kehabisan stok di jam ramai bisa bikin pelanggan kecewa dan omzet hilang. Ini cara mengatur minimum stok otomatis agar kejadian ini tidak terulang.
 

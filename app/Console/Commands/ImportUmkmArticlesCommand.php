@@ -33,8 +33,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'calculator',
             'description' => 'Kalkulasi HPP, Food Cost kuliner, markup harga, margin laba, dan strategi diskon UMKM',
             'images' => [
-                'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1501339847302-ac426a4a7cbb.jpg',
+                'https://cooca.id/images/blog/photo-1554224155-8d04cb21cd6c.jpg',
             ],
         ],
         'Kasir & POS' => [
@@ -42,8 +42,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'monitor',
             'description' => 'Panduan aplikasi kasir POS, barcode scanner, printer struk, SOP kasir, dan pembayaran QRIS',
             'images' => [
-                'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1556740738-b6a63e27c4df.jpg',
+                'https://cooca.id/images/blog/photo-1556742502-ec7c0e9f34b1.jpg',
             ],
         ],
         'Inventori & Stok' => [
@@ -51,8 +51,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'package',
             'description' => 'Manajemen persediaan barang, stok opname, safety stock, metode FIFO/FEFO, dan multi-gudang',
             'images' => [
-                'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg',
+                'https://cooca.id/images/blog/photo-1578916171728-46686eac8d58.jpg',
             ],
         ],
         'Keuangan & Pembukuan' => [
@@ -60,8 +60,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'trending-up',
             'description' => 'Laporan laba rugi, arus kas (cash flow), neraca sederhana, budgeting, dan pemisahan rekening',
             'images' => [
-                'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1554224154-26032ffc0d07.jpg',
+                'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg',
             ],
         ],
         'Pajak & Legalitas' => [
@@ -69,8 +69,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'shield-check',
             'description' => 'Panduan izin NIB OSS, sertifikasi Halal, izin PIRT, NPWP usaha, dan pelaporan pajak UMKM',
             'images' => [
-                'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg',
+                'https://cooca.id/images/blog/photo-1589829545856-d10d557cf95f.jpg',
             ],
         ],
         'Marketing & WhatsApp' => [
@@ -78,8 +78,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'message-circle',
             'description' => 'Strategi WhatsApp Business, live TikTok Shop, content calendar, dan optimasi Google Maps',
             'images' => [
-                'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1611746872915-64382b5c76da.jpg',
+                'https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg',
             ],
         ],
         'CRM & Loyalty' => [
@@ -87,8 +87,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'heart',
             'description' => 'Program poin loyalitas pelanggan, membership tier, penanganan komplain, dan retensi pelanggan',
             'images' => [
-                'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1556740758-90de374c12ad.jpg',
+                'https://cooca.id/images/blog/photo-1521791136064-7986c2920216.jpg',
             ],
         ],
         'Invoice, PO & SO' => [
@@ -96,8 +96,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'file-text',
             'description' => 'Standar invoice profesional, purchase order (PO), sales order (SO), surat jalan, dan tempo net-30',
             'images' => [
-                'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1450133064473-71024230f91b.jpg',
+                'https://cooca.id/images/blog/photo-1454165804606-c3d57bc86b40.jpg',
             ],
         ],
         'Solusi Per Industri' => [
@@ -105,8 +105,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'store',
             'description' => 'Solusi operasional spesifik kafe, laundry kiloan, barbershop, salon, bengkel, toko kelontong, dan konveksi',
             'images' => [
-                'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1501339847302-ac426a4a7cbb.jpg',
+                'https://cooca.id/images/blog/photo-1545173168-9f1947eebb7f.jpg',
             ],
         ],
         'Strategi & Operasional' => [
@@ -114,8 +114,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'compass',
             'description' => 'SOP operasional usaha, jadwal shift karyawan, KPI harian, target omzet, dan Business Operating System',
             'images' => [
-                'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1519389950473-47ba0277781c.jpg',
+                'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg',
             ],
         ],
         'Legalitas' => [
@@ -123,8 +123,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'shield-check',
             'description' => 'Izin usaha OSS, NIB gratis, sertifikasi Halal self-declare, izin PIRT, dan perlindungan hukum UMKM',
             'images' => [
-                'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1450133064473-71024230f91b.jpg',
+                'https://cooca.id/images/blog/photo-1589829545856-d10d557cf95f.jpg',
             ],
         ],
         'Modal' => [
@@ -132,8 +132,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'coins',
             'description' => 'Akses permodalan UMKM, simulasi pinjaman KUR 2026, bantuan pemerintah, leasing, dan crowdfunding',
             'images' => [
-                'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1553729459-efe14ef6055d.jpg',
+                'https://cooca.id/images/blog/photo-1554224154-26032ffc0d07.jpg',
             ],
         ],
         'Operasional' => [
@@ -141,8 +141,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'settings',
             'description' => 'Manajemen operasional warung, SOP karyawan, shift kerja, supplier bahan baku, dan efisiensi harian',
             'images' => [
-                'https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1556740758-90de374c12ad.jpg',
+                'https://cooca.id/images/blog/photo-1586528116311-ad8dd3c8310d.jpg',
             ],
         ],
         'Marketing' => [
@@ -150,8 +150,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'megaphone',
             'description' => 'Strategi video TikTok viral, Instagram Reels, foto produk HP, copywriting WhatsApp, dan Google Maps',
             'images' => [
-                'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg',
+                'https://cooca.id/images/blog/photo-1611746872915-64382b5c76da.jpg',
             ],
         ],
         'Keuangan' => [
@@ -159,8 +159,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'trending-up',
             'description' => 'Kalkulasi HPP kuliner, BEP warung, arus kas, pemisahan rekening, pajak UMKM, dan pembukuan praktis',
             'images' => [
-                'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1554224155-8d04cb21cd6c.jpg',
+                'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg',
             ],
         ],
         'Scale-up' => [
@@ -168,8 +168,8 @@ final class ImportUmkmArticlesCommand extends Command
             'icon' => 'rocket',
             'description' => 'Strategi ekspansi multi-cabang, implementasi AI UMKM, migrasi cloud software, dan otomatisasi bisnis',
             'images' => [
-                'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-                'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+                'https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg',
+                'https://cooca.id/images/blog/photo-1522071820081-009f0129c71c.jpg',
             ],
         ],
     ];
@@ -289,7 +289,7 @@ final class ImportUmkmArticlesCommand extends Command
             $coverImage = $parsed['cover_image'] ?? null;
             if (empty($coverImage)) {
                 $imgPool = self::CATEGORY_CONFIG[$catName]['images'] ?? [
-                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80'
+                    'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg'
                 ];
                 $coverImage = $imgPool[$idx % count($imgPool)];
             }

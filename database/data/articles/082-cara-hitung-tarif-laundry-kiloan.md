@@ -7,7 +7,7 @@ primary_keyword: "cara hitung tarif laundry kiloan"
 secondary_keywords: "hpp laundry kiloan; modal usaha cuci pakaian; tarif cuci setrika per kg; rumus harga jasa laundry"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-hitung-tarif-laundry-kiloan.jpg"
 reading_time: "6 menit"
 ---
 

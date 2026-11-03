@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/setup-multi-outlet-cooca-umkm-dalam-24-jam-step-by-step-migrasi.jpg Ringkasan / Excerpt
 
 Migrasi ke pengaturan multi-outlet di COOCA.ID bisa dilakukan dengan cepat asal mengikuti tahapan yang tepat, tanpa mengganggu operasional harian usaha.
 

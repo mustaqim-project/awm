@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stok-akhir-bulan-berlebih-uang-tidur-konversi-ke-cash-flow-umkm.jpg Ringkasan / Excerpt
 
 Stok yang menumpuk di akhir bulan sebenarnya adalah uang usaha yang 'tidur' dan tidak produktif. Ini penjelasan dampaknya terhadap arus kas usaha.
 

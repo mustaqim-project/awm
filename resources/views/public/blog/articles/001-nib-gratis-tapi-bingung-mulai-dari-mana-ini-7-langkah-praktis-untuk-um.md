@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/nib-gratis-tapi-bingung-mulai-dari-mana-ini-7-langkah-praktis-untuk-um.jpg Ringkasan / Excerpt
 
 NIB (Nomor Induk Berusaha) bisa didapat gratis lewat OSS, tapi banyak pemilik UMKM bingung mulai dari mana. Berikut 7 langkah praktis mendaftar NIB tanpa ribet.
 

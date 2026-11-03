@@ -7,7 +7,7 @@ primary_keyword: "manajemen salon kecantikan"
 secondary_keywords: "aplikasi kasir salon kecantikan; kelola stok produk salon; jadwal reservasi perawatan; sistem operasional klinik kecantikan"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/manajemen-salon-kecantikan.jpg"
 reading_time: "6 menit"
 ---
 

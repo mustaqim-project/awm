@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pph-21-karyawan-warung-cara-hitung-yang-benar-tanpa-tersandung-aturan.jpg Ringkasan / Excerpt
 
 Usaha yang mulai mempekerjakan karyawan perlu memahami kewajiban PPh 21 agar tidak melanggar aturan perpajakan yang berlaku.
 

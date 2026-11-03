@@ -7,7 +7,7 @@ primary_keyword: "broadcast whatsapp bisnis"
 secondary_keywords: "kirim pesan massal whatsapp; tidak kena blokir whatsapp; izin kontak pelanggan; template broadcast"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/broadcast-whatsapp-bisnis.jpg"
 reading_time: "5 menit"
 ---
 

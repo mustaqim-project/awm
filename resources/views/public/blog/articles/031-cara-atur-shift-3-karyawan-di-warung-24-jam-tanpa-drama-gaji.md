@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-atur-shift-3-karyawan-di-warung-24-jam-tanpa-drama-gaji.jpg Ringkasan / Excerpt
 
 Mengatur shift untuk warung yang buka 24 jam bisa jadi rumit jika tidak sistematis. Ini cara membagi shift 3 karyawan tanpa menimbulkan masalah gaji di kemudian hari.
 

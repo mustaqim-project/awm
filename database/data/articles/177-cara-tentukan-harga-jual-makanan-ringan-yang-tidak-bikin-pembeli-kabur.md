@@ -7,7 +7,7 @@ primary_keyword: "harga jual makanan ringan"
 secondary_keywords: "strategi harga; harga keripik dll"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-tentukan-harga-jual-makanan-ringan-yang-tidak-bikin-pembeli-kabur.jpg"
 reading_time: "5 menit"
 ---
 

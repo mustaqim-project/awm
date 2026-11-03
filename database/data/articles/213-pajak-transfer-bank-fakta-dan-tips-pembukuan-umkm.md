@@ -3,6 +3,7 @@ title: "Pajak Transfer Bank Benarkah Berlaku? Ini Penjelasan Resmi dan Tips Pemb
 meta_title: "Pajak Transfer Bank Benarkah Berlaku? Ini Fakta Sebenarnya"
 meta_description: "Isu pajak transfer bank bikin cemas UMKM. Simak klarifikasi resmi DJP, risiko campur rekening, dan cara rapi mencatat transaksi usaha agar bisnis tetap aman."
 slug: "pajak-transfer-bank-fakta-dan-tips-pembukuan-umkm"
+cover_image: "https://cooca.id/images/blog/pajak-transfer-bank-fakta-dan-tips-pembukuan-umkm.jpg"
 primary_keyword: "pajak transfer bank"
 secondary_keywords: "pajak transfer bank kena pajak digital, aturan pajak digital umkm, rekening pribadi untuk usaha, pencatatan transaksi umkm, pph final umkm 0 5 persen, spp tdln djp"
 search_intent: "informational"

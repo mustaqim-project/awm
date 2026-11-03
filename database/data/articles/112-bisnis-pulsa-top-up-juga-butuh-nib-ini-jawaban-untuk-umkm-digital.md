@@ -7,7 +7,7 @@ primary_keyword: "NIB untuk jualan pulsa"
 secondary_keywords: "izin usaha digital; NIB online shop"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bisnis-pulsa-top-up-juga-butuh-nib-ini-jawaban-untuk-umkm-digital.jpg"
 reading_time: "5 menit"
 ---
 

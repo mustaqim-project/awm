@@ -7,7 +7,7 @@ primary_keyword: "SOP warung kopi"
 secondary_keywords: "operasional cafe kecil; SOP kopi"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/warung-kopi-20-meja-3-karyawan-begini-sop-harian-yang-bikin-operasiona.jpg"
 reading_time: "5 menit"
 ---
 

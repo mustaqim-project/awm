@@ -7,7 +7,7 @@ primary_keyword: "metode fifo dan fefo"
 secondary_keywords: "fifo adalah; fefo adalah; rotasi stok makanan; stok barang expired"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/metode-fifo-dan-fefo.jpg"
 reading_time: "4 menit"
 ---
 

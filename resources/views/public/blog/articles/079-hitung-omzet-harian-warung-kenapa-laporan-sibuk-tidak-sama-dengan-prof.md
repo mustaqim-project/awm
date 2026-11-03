@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hitung-omzet-harian-warung-kenapa-laporan-sibuk-tidak-sama-dengan-prof.jpg Ringkasan / Excerpt
 
 Warung yang terlihat ramai belum tentu menghasilkan profit yang sebanding. Ini penjelasan mengapa omzet tinggi tidak selalu berarti keuntungan besar.
 

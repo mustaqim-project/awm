@@ -7,7 +7,7 @@ primary_keyword: "simulasi cicilan UMKM"
 secondary_keywords: "kalkulator angsuran; simulasi gaji"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bingung-bayar-cicilan-simulasi-gaji-30-hari-ini-bisa-bantu-keputusan.jpg"
 reading_time: "5 menit"
 ---
 

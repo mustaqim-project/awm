@@ -7,7 +7,7 @@ primary_keyword: "digital marketing franchise"
 secondary_keywords: "branding UMKM; marketing untuk waralaba"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/mau-buka-franchise-digital-marketing-jadi-fondasi-yang-wajib-kamu-bang.jpg"
 reading_time: "5 menit"
 ---
 

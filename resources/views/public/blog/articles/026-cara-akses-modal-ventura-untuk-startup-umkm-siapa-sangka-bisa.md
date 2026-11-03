@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-akses-modal-ventura-untuk-startup-umkm-siapa-sangka-bisa.jpg Ringkasan / Excerpt
 
 Modal ventura tidak hanya untuk startup teknologi besar. UMKM dengan model bisnis skalabel juga berpeluang mengakses pendanaan jenis ini.
 

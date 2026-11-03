@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/8-kebiasaan-owner-warung-yang-bikin-karyawan-kabur-dalam-3-bulan.jpg Ringkasan / Excerpt
 
 Tingginya turnover karyawan di warung sering disebabkan kebiasaan pemilik usaha sendiri. Kenali 8 kebiasaan ini agar karyawan lebih betah bekerja.
 

@@ -7,7 +7,7 @@ primary_keyword: "setup multi-outlet COOCA"
 secondary_keywords: "migrasi ke premium; upgrade UMKM"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/setup-multi-outlet-cooca-umkm-dalam-24-jam-step-by-step-migrasi.jpg"
 reading_time: "5 menit"
 ---
 

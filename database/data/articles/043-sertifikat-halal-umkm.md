@@ -7,7 +7,7 @@ primary_keyword: "sertifikat halal umkm"
 secondary_keywords: "halal self declare; daftar bahan halal; label halal produk; kewajiban sertifikasi halal"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/sertifikat-halal-umkm.jpg"
 reading_time: "4 menit"
 ---
 

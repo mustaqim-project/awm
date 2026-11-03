@@ -7,7 +7,7 @@ primary_keyword: "syarat pembayaran net 30"
 secondary_keywords: "termin pembayaran piutang; sistem tempo penjualan umkm; credit terms net 30; arus kas piutang usaha"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/syarat-pembayaran-net-30.jpg"
 reading_time: "6 menit"
 ---
 

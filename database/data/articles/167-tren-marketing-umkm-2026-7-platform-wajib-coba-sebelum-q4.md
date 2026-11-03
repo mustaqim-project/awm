@@ -7,7 +7,7 @@ primary_keyword: "tren marketing UMKM 2026"
 secondary_keywords: "platform UMKM; tren digital marketing"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/tren-marketing-umkm-2026-7-platform-wajib-coba-sebelum-q4.jpg"
 reading_time: "5 menit"
 ---
 

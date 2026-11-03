@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/penjualan-naik-profit-tidak-7-biaya-tersembunyi-yang-sering-tidak-disa.jpg Ringkasan / Excerpt
 
 Omzet yang naik tidak selalu berbanding lurus dengan profit. Ada beberapa biaya tersembunyi yang sering luput dari perhatian pemilik usaha kecil.
 

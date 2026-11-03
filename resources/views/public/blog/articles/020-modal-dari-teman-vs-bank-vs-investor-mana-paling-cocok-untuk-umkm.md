@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/modal-dari-teman-vs-bank-vs-investor-mana-paling-cocok-untuk-umkm.jpg Ringkasan / Excerpt
 
 Ada banyak sumber modal untuk UMKM, dari kerabat, bank, hingga investor. Masing-masing punya kelebihan dan risiko yang perlu dipertimbangkan.
 

@@ -7,7 +7,7 @@ primary_keyword: "AI untuk UMKM"
 secondary_keywords: "AI assistant bisnis UMKM"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/ai-untuk-warung-rumahan-5-kegunaan-praktis-yang-bisa-dipakai-setiap-ha.jpg"
 reading_time: "5 menit"
 ---
 

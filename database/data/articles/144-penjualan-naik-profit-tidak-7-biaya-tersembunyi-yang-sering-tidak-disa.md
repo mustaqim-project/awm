@@ -7,7 +7,7 @@ primary_keyword: "biaya tersembunyi usaha kecil"
 secondary_keywords: "efisiensi warung; profit leakage"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/penjualan-naik-profit-tidak-7-biaya-tersembunyi-yang-sering-tidak-disa.jpg"
 reading_time: "5 menit"
 ---
 

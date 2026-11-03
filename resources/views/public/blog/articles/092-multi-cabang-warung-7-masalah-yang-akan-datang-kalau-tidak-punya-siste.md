@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/multi-cabang-warung-7-masalah-yang-akan-datang-kalau-tidak-punya-siste.jpg Ringkasan / Excerpt
 
 Membuka banyak cabang tanpa sistem yang memadai berisiko menimbulkan berbagai masalah operasional yang bisa mengancam keberlangsungan bisnis secara keseluruhan.
 

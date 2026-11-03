@@ -7,7 +7,7 @@ primary_keyword: "cara menghitung reorder point"
 secondary_keywords: "safety stock adalah; titik pemesanan ulang; stok minimum barang; lead time supplier"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-reorder-point.jpg"
 reading_time: "4 menit"
 ---
 

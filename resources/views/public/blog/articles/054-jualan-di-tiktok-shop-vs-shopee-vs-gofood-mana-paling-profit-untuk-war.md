@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/jualan-di-tiktok-shop-vs-shopee-vs-gofood-mana-paling-profit-untuk-war.jpg Ringkasan / Excerpt
 
 Setiap platform jualan online punya karakteristik berbeda. Berikut perbandingan TikTok Shop, Shopee, dan GoFood untuk membantu warung rumahan menentukan kanal paling sesuai.
 

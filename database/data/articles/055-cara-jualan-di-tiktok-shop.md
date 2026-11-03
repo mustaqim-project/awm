@@ -7,7 +7,7 @@ primary_keyword: "cara jualan di tiktok shop"
 secondary_keywords: "daftar tiktok shop seller; konten jualan tiktok; biaya tiktok shop; stok tiktok shop"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-jualan-di-tiktok-shop.jpg"
 reading_time: "5 menit"
 ---
 

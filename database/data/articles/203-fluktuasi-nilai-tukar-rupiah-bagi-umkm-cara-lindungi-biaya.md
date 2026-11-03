@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Keuangan & Pembukuan"
 cluster: "edukasi"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/fluktuasi-nilai-tukar-rupiah-bagi-umkm-cara-lindungi-biaya.jpg"
 ---
 
 # Fluktuasi Nilai Tukar Rupiah bagi UMKM: Cara Lindungi Biaya Bahan

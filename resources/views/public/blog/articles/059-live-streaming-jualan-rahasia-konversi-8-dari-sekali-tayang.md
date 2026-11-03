@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/live-streaming-jualan-rahasia-konversi-8-dari-sekali-tayang.jpg Ringkasan / Excerpt
 
 Live streaming jualan bisa menghasilkan konversi yang jauh lebih tinggi dibanding konten biasa jika dilakukan dengan strategi yang tepat.
 

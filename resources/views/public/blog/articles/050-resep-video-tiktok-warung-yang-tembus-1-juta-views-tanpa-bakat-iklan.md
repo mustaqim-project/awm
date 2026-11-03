@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/resep-video-tiktok-warung-yang-tembus-1-juta-views-tanpa-bakat-iklan.jpg Ringkasan / Excerpt
 
 Membuat video TikTok viral tidak butuh bakat iklan khusus. Berikut pola konten sederhana yang sering berhasil menarik banyak penonton untuk usaha warung.
 

@@ -7,7 +7,7 @@ primary_keyword: "cara mengajak pelanggan lama kembali"
 secondary_keywords: "strategi win back pelanggan; pesan wa pelanggan pasif; reaktivasi pembeli lama; retensi pelanggan umkm"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-mengajak-pelanggan-lama-kembali.jpg"
 reading_time: "6 menit"
 ---
 

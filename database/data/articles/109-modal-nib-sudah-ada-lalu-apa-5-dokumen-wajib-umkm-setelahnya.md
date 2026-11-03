@@ -7,7 +7,7 @@ primary_keyword: "dokumen usaha setelah NIB"
 secondary_keywords: "izin usaha lanjutan; NPWP UMKM"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/modal-nib-sudah-ada-lalu-apa-5-dokumen-wajib-umkm-setelahnya.jpg"
 reading_time: "5 menit"
 ---
 

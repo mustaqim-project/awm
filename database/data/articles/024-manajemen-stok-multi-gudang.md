@@ -7,7 +7,7 @@ primary_keyword: "manajemen stok multi gudang"
 secondary_keywords: "transfer stok antar gudang; stok per lokasi; inventori multi cabang; mutasi barang"
 search_intent: "Komersial"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1586528116493-a029325540fa?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/manajemen-stok-multi-gudang.jpg"
 reading_time: "4 menit"
 ---
 

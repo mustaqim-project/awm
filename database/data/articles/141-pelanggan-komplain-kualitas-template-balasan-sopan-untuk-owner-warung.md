@@ -7,7 +7,7 @@ primary_keyword: "template balasan komplain"
 secondary_keywords: "layanan pelanggan UMKM; CS warung"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pelanggan-komplain-kualitas-template-balasan-sopan-untuk-owner-warung.jpg"
 reading_time: "5 menit"
 ---
 

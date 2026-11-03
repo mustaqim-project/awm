@@ -7,7 +7,7 @@ primary_keyword: "jadwal posting instagram bisnis"
 secondary_keywords: "jam posting instagram; frekuensi posting umkm; konsistensi konten; jadwal konten otomatis"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/jadwal-posting-instagram-bisnis.jpg"
 reading_time: "5 menit"
 ---
 

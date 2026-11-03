@@ -7,7 +7,7 @@ primary_keyword: "cara pindah ke aplikasi kasir"
 secondary_keywords: "migrasi data produk kasir; impor produk excel pos; ganti sistem kasir; persiapan pindah pos"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-pindah-ke-aplikasi-kasir.jpg"
 reading_time: "4 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/simulasi-what-if-bahan-naik-10-wajah-laba-bisnismu-sebulan-ke-depan.jpg Ringkasan / Excerpt
 
 Melakukan simulasi skenario kenaikan harga bahan baku membantu pemilik usaha mempersiapkan strategi sebelum dampaknya benar-benar terjadi pada laba usaha.
 

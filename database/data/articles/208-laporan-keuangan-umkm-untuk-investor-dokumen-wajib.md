@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Modal"
 cluster: "edukasi"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/laporan-keuangan-umkm-untuk-investor-dokumen-wajib.jpg"
 ---
 
 # Laporan Keuangan UMKM untuk Investor: Dokumen Wajib dan Metrik Utama

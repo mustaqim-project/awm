@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/iklan-meta-vs-google-ads-untuk-warung-mikro-mana-yang-lebih-murah.jpg Ringkasan / Excerpt
 
 Memilih platform iklan yang tepat penting bagi warung dengan budget terbatas. Berikut perbandingan karakteristik iklan Meta (Facebook/Instagram) dan Google Ads untuk usaha mikro.
 

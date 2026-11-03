@@ -7,7 +7,7 @@ primary_keyword: "hpp bakso per porsi"
 secondary_keywords: "hpp mie ayam; harga pokok bakso; modal jualan bakso; hitung hpp warung makan"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hpp-bakso-per-porsi.jpg"
 reading_time: "5 menit"
 ---
 

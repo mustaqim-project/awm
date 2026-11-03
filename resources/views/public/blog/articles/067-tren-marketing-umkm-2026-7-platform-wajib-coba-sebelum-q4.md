@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/tren-marketing-umkm-2026-7-platform-wajib-coba-sebelum-q4.jpg Ringkasan / Excerpt
 
 Lanskap pemasaran digital terus berkembang setiap tahun. Berikut gambaran platform yang perlu dipertimbangkan pelaku UMKM untuk memperluas jangkauan pemasaran.
 

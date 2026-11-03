@@ -7,7 +7,7 @@ primary_keyword: "rumus markup dan margin"
 secondary_keywords: "beda markup dan margin; cara hitung margin; cara hitung markup; persentase keuntungan"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/rumus-markup-dan-margin.jpg"
 reading_time: "4 menit"
 ---
 

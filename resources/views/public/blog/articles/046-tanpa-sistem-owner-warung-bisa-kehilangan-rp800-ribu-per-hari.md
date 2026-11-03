@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/tanpa-sistem-owner-warung-bisa-kehilangan-rp800-ribu-per-hari.jpg Ringkasan / Excerpt
 
 Tanpa sistem pencatatan yang baik, kerugian usaha bisa terjadi tanpa disadari dari berbagai celah kecil yang terakumulasi setiap harinya.
 

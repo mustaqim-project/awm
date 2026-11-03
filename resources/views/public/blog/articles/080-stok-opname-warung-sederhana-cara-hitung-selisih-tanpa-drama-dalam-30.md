@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stok-opname-warung-sederhana-cara-hitung-selisih-tanpa-drama-dalam-30.jpg Ringkasan / Excerpt
 
 Menghitung selisih stok tidak harus jadi proses yang rumit dan memicu kepanikan. Berikut cara melakukan stok opname sederhana secara cepat dan sistematis.
 

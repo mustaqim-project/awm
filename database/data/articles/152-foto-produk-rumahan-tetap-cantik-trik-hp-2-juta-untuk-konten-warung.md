@@ -7,7 +7,7 @@ primary_keyword: "foto produk HP murah"
 secondary_keywords: "fotografi produk UMKM; foto gratis"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/foto-produk-rumahan-tetap-cantik-trik-hp-2-juta-untuk-konten-warung.jpg"
 reading_time: "5 menit"
 ---
 

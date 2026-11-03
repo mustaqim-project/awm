@@ -7,7 +7,7 @@ primary_keyword: "cara membuat landing page umkm"
 secondary_keywords: "landing page builder; halaman produk sederhana; toko online tanpa coding; halaman pemesanan"
 search_intent: "Komersial"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-landing-page-umkm.jpg"
 reading_time: "4 menit"
 ---
 

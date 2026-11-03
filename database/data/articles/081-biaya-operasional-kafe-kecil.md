@@ -7,7 +7,7 @@ primary_keyword: "biaya operasional kafe kecil"
 secondary_keywords: "modal operasional kedai kopi; pengeluaran bulanan coffee shop; biaya overhead kafe; rincian biaya kafe pemula"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/biaya-operasional-kafe-kecil.jpg"
 reading_time: "6 menit"
 ---
 

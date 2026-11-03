@@ -7,7 +7,7 @@ primary_keyword: "food cost terlalu tinggi"
 secondary_keywords: "efisiensi HPP warung; food cost"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/food-cost-28-35-tapi-warungmu-60-5-sumber-bocor-yang-perlu-diperbaiki.jpg"
 reading_time: "5 menit"
 ---
 

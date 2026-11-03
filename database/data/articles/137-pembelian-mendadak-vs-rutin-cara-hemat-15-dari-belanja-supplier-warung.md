@@ -7,7 +7,7 @@ primary_keyword: "hemat belanja supplier"
 secondary_keywords: "efisiensi biaya operasional warung"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1586528116493-a029325540fa?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pembelian-mendadak-vs-rutin-cara-hemat-15-dari-belanja-supplier-warung.jpg"
 reading_time: "5 menit"
 ---
 

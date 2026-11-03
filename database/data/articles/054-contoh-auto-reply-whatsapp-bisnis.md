@@ -7,7 +7,7 @@ primary_keyword: "contoh auto reply whatsapp bisnis"
 secondary_keywords: "pesan otomatis whatsapp; balasan cepat whatsapp; template chat pelanggan; jam operasional otomatis"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/contoh-auto-reply-whatsapp-bisnis.jpg"
 reading_time: "4 menit"
 ---
 

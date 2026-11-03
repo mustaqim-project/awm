@@ -7,7 +7,7 @@ primary_keyword: "BEP warung kopi"
 secondary_keywords: "kalkulator BEP; BEP coffee shop"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bep-warung-kopi-berapa-cangkir-per-hari-untuk-balik-modal.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/followers-naik-terus-tapi-penjualan-tidak-5-diagnosis-yang-sering-terj.jpg Ringkasan / Excerpt
 
 Jumlah followers yang terus bertambah tidak selalu berbanding lurus dengan penjualan. Berikut 5 kemungkinan penyebab yang sering terjadi pada usaha kecil.
 

@@ -7,7 +7,7 @@ primary_keyword: "printer struk kasir"
 secondary_keywords: "printer thermal 58mm; printer bluetooth kasir; kertas struk; rekomendasi printer kasir"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/printer-struk-kasir.jpg"
 reading_time: "4 menit"
 ---
 

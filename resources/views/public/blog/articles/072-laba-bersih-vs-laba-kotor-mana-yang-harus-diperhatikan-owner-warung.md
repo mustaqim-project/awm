@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/laba-bersih-vs-laba-kotor-mana-yang-harus-diperhatikan-owner-warung.jpg Ringkasan / Excerpt
 
 Banyak pemilik usaha keliru menyamakan laba kotor dengan keuntungan sebenarnya. Berikut penjelasan perbedaan keduanya dan mana yang seharusnya jadi fokus utama.
 

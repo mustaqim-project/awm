@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stok-menipis-tanpa-sadar-sistem-notifikasi-ini-bisa-selamatkan-hari-si.jpg Ringkasan / Excerpt
 
 Stok yang menipis tanpa disadari bisa mengganggu operasional di jam sibuk. Fitur notifikasi otomatis membantu owner mengantisipasi masalah ini lebih awal.
 

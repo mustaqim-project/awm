@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/bingung-bayar-cicilan-simulasi-gaji-30-hari-ini-bisa-bantu-keputusan.jpg Ringkasan / Excerpt
 
 Sebelum memutuskan mengambil cicilan, simulasikan dulu arus kas harian usaha Anda selama 30 hari untuk melihat apakah cicilan tersebut realistis dibayar.
 

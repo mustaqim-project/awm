@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/70-pembeli-cari-di-google-maps-optimasi-profil-bisnis-lokal-dalam-1-ja.jpg Ringkasan / Excerpt
 
 Banyak calon pembeli mencari usaha lokal melalui Google Maps sebelum berkunjung. Berikut cara mengoptimalkan profil bisnis di Google Maps dalam waktu singkat.
 

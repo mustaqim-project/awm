@@ -7,7 +7,7 @@ primary_keyword: "cara lapor spt tahunan umkm"
 secondary_keywords: "spt tahunan orang pribadi; e-filing pajak; dokumen lapor pajak usaha; catatan peredaran bruto"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-lapor-spt-tahunan-umkm.jpg"
 reading_time: "4 menit"
 ---
 

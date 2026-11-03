@@ -3,6 +3,7 @@ title: "Strategi Saluran Distribusi Toko Retail dan Warung Kelontong agar Cepat 
 meta_title: "Strategi Saluran Distribusi Toko Retail dan Warung UMKM"
 meta_description: "Belajar dari sistem rantai pasok industri konsumer. Pelajari strategi saluran distribusi toko retail dan manajemen pasokan barang agar perputaran modal cepat."
 slug: "strategi-saluran-distribusi-toko-retail-dan-warung-kelontong"
+cover_image: "https://cooca.id/images/blog/strategi-saluran-distribusi-toko-retail-dan-warung-kelontong.jpg"
 primary_keyword: "strategi saluran distribusi toko"
 secondary_keywords: "rantai pasok ritel umkm, stok warung kelontong, perputaran barang fast moving, supplier toko sembako"
 search_intent: "informational"

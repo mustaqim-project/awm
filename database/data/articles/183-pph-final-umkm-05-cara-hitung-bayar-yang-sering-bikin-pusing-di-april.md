@@ -7,7 +7,7 @@ primary_keyword: "PPH final UMKM"
 secondary_keywords: "kalkulator PPH final; pajak UMKM 0.5%"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pph-final-umkm-05-cara-hitung-bayar-yang-sering-bikin-pusing-di-april.jpg"
 reading_time: "5 menit"
 ---
 

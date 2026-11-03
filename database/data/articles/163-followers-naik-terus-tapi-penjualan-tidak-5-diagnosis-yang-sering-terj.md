@@ -7,7 +7,7 @@ primary_keyword: "followers naik tidak jual"
 secondary_keywords: "konversi Instagram UMKM; CAC vs follower"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/followers-naik-terus-tapi-penjualan-tidak-5-diagnosis-yang-sering-terj.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "optimasi Google Maps"
 secondary_keywords: "SEO lokal UMKM; GMB optimasi"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/70-pembeli-cari-di-google-maps-optimasi-profil-bisnis-lokal-dalam-1-ja.jpg"
 reading_time: "5 menit"
 ---
 

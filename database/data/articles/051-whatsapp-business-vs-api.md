@@ -7,7 +7,7 @@ primary_keyword: "whatsapp business vs api"
 secondary_keywords: "whatsapp official api; whatsapp business app; multi agent whatsapp; biaya whatsapp api"
 search_intent: "Komersial"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/whatsapp-business-vs-api.jpg"
 reading_time: "4 menit"
 ---
 

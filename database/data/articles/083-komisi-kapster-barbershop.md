@@ -7,7 +7,7 @@ primary_keyword: "komisi kapster barbershop"
 secondary_keywords: "gaji pemotong rambut barbershop; sistem bagi hasil pangkas rambut; insentif tukang cukur; manajemen sdm barbershop"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/komisi-kapster-barbershop.jpg"
 reading_time: "6 menit"
 ---
 

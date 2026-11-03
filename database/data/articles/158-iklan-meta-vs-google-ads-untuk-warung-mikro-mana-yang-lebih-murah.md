@@ -7,7 +7,7 @@ primary_keyword: "Meta vs Google Ads UMKM"
 secondary_keywords: "iklan UMKM murah; ROI iklan warung"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/iklan-meta-vs-google-ads-untuk-warung-mikro-mana-yang-lebih-murah.jpg"
 reading_time: "5 menit"
 ---
 

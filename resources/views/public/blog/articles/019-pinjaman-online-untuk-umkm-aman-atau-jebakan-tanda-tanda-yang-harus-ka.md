@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pinjaman-online-untuk-umkm-aman-atau-jebakan-tanda-tanda-yang-harus-ka.jpg Ringkasan / Excerpt
 
 Pinjaman online bisa jadi solusi modal cepat, tapi juga berisiko jika salah pilih platform. Kenali tanda-tanda pinjaman online yang aman dan legal.
 

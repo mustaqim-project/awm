@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/modal-rp-5-juta-bisa-buka-warung-cara-hitung-budget-realistis-untuk-pe.jpg Ringkasan / Excerpt
 
 Modal Rp 5 juta memang terbatas, tapi bukan berarti mustahil untuk buka warung kecil. Ini cara menghitung dan mengalokasikan budget secara realistis.
 

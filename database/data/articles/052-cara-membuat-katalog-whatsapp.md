@@ -7,7 +7,7 @@ primary_keyword: "cara membuat katalog whatsapp"
 secondary_keywords: "katalog whatsapp business; jualan lewat whatsapp; foto produk katalog; tautan katalog"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-katalog-whatsapp.jpg"
 reading_time: "4 menit"
 ---
 

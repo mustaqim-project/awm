@@ -7,7 +7,7 @@ primary_keyword: "cara daftar google bisnis"
 secondary_keywords: "google maps usaha; verifikasi google business; jam buka google maps; ulasan google"
 search_intent: "Informasional"
 category: "Marketing & WhatsApp"
-cover_image: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-daftar-google-bisnis.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/daftar-umkm-di-kemenkop-ukm-apa-bedanya-dengan-oss-mana-yang-wajib.jpg Ringkasan / Excerpt
 
 Selain OSS, ada juga pendataan UMKM melalui Kementerian Koperasi dan UKM. Apa bedanya, dan mana yang sebenarnya wajib diikuti pelaku usaha?
 

@@ -7,7 +7,7 @@ primary_keyword: "ciri usaha belum legal"
 secondary_keywords: "izin usaha UMKM; bisnis ilegal"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/usaha-kamu-ilegal-atau-cuma-belum-diproses-cek-7-tanda-ini-sekarang.jpg"
 reading_time: "5 menit"
 ---
 

@@ -3,6 +3,7 @@ title: "Cara Melindungi Margin Usaha Saat Harga Bahan Baku Impor Bergerak Naik T
 meta_title: "Cara Melindungi Margin Usaha dari Bahan Baku Impor"
 meta_description: "Fluktuasi kurs mata uang asing bisa membuat modal bahan melonjak. Pelajari cara melindungi margin usaha dan strategi penetapan harga jual produk yang aman."
 slug: "cara-melindungi-margin-usaha-saat-harga-bahan-baku-impor-fluktuatif"
+cover_image: "https://cooca.id/images/blog/cara-melindungi-margin-usaha-saat-harga-bahan-baku-impor-fluktuatif.jpg"
 primary_keyword: "cara melindungi margin usaha"
 secondary_keywords: "fluktuasi kurs mata uang umkm, bahan baku impor, penetapan harga jual produk, lindung nilai biaya usaha"
 search_intent: "informational"

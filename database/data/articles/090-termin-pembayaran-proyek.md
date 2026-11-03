@@ -7,7 +7,7 @@ primary_keyword: "termin pembayaran proyek"
 secondary_keywords: "skema pembayaran termin jasa; invoice progres proyek; uang muka dp proyek umkm; surat perjanjian kontrak kerja"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/termin-pembayaran-proyek.jpg"
 reading_time: "6 menit"
 ---
 

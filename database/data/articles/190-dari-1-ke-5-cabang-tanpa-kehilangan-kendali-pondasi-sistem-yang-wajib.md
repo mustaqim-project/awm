@@ -7,7 +7,7 @@ primary_keyword: "sistem multi cabang warung"
 secondary_keywords: "ekspansi UMKM; multi-outlet"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/dari-1-ke-5-cabang-tanpa-kehilangan-kendali-pondasi-sistem-yang-wajib.jpg"
 reading_time: "5 menit"
 ---
 

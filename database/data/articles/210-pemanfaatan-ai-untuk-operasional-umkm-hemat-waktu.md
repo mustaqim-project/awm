@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Strategi & Operasional"
 cluster: "edukasi"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pemanfaatan-ai-untuk-operasional-umkm-hemat-waktu.jpg"
 ---
 
 # Pemanfaatan AI untuk Operasional UMKM: Hemat Waktu dan Biaya Usaha

@@ -7,7 +7,7 @@ primary_keyword: "cara cek status NIB"
 secondary_keywords: "verifikasi NIB online; cek OSS"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-cek-nib-sudah-terbit-atau-belum-tanpa-harus-ke-kantor-oss.jpg"
 reading_time: "5 menit"
 ---
 

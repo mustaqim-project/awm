@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/bisnis-pulsa-top-up-juga-butuh-nib-ini-jawaban-untuk-umkm-digital.jpg Ringkasan / Excerpt
 
 Usaha digital seperti jualan pulsa dan top-up sering dianggap tidak butuh izin usaha formal. Benarkah demikian? Ini penjelasannya.
 

@@ -7,7 +7,7 @@ primary_keyword: "cara menentukan gaji owner umkm"
 secondary_keywords: "gaji pemilik usaha; prive; penarikan modal pemilik; upah owner"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menentukan-gaji-owner-umkm.jpg"
 reading_time: "4 menit"
 ---
 

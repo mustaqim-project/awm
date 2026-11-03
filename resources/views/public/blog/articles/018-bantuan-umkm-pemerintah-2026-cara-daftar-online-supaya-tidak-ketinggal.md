@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/bantuan-umkm-pemerintah-2026-cara-daftar-online-supaya-tidak-ketinggal.jpg Ringkasan / Excerpt
 
 Program bantuan pemerintah untuk UMKM biasanya memiliki kuota terbatas dan periode pendaftaran tertentu. Ini cara mendaftar agar tidak ketinggalan informasi.
 

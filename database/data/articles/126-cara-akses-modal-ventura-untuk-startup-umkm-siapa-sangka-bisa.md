@@ -7,7 +7,7 @@ primary_keyword: "modal ventura UMKM"
 secondary_keywords: "pendanaan ventura Indonesia; modal VC UMKM"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-akses-modal-ventura-untuk-startup-umkm-siapa-sangka-bisa.jpg"
 reading_time: "5 menit"
 ---
 

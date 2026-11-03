@@ -7,7 +7,7 @@ primary_keyword: "aplikasi bengkel motor"
 secondary_keywords: "software kasir bengkel motor; program inventori sparepart motor; spk servis bengkel; pembukuan bengkel kendaraan"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/aplikasi-bengkel-motor.jpg"
 reading_time: "6 menit"
 ---
 

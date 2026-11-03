@@ -7,7 +7,7 @@ primary_keyword: "cara membuat invoice profesional"
 secondary_keywords: "format faktur penagihan umkm; contoh invoice pembayaran jasa; template invoice excel pdf; tagihan usaha kecil"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-invoice-profesional.jpg"
 reading_time: "6 menit"
 ---
 

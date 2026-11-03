@@ -7,7 +7,7 @@ primary_keyword: "otomatisasi invoice UMKM"
 secondary_keywords: "billing otomatis; payment automation"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/otomatisasi-invoice-pembayaran-5-alasan-umkm-harus-mulai-sekarang.jpg"
 reading_time: "5 menit"
 ---
 

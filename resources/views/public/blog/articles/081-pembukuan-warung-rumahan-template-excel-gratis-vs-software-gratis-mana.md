@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pembukuan-warung-rumahan-template-excel-gratis-vs-software-gratis-mana.jpg Ringkasan / Excerpt
 
 Ada berbagai opsi gratis untuk memulai pembukuan usaha, dari template Excel hingga software pencatatan sederhana. Berikut perbandingan keduanya.
 

@@ -7,7 +7,7 @@ primary_keyword: "copywriting WhatsApp warung"
 secondary_keywords: "closing WA UMKM; template WA jualan"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/copywriting-whatsapp-untuk-closing-warung-5-template-yang-sudah-terbuk.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pembelian-bahan-naik-10-laba-turun-42-apa-hubungannya.jpg Ringkasan / Excerpt
 
 Kenaikan harga bahan baku yang terlihat kecil bisa berdampak jauh lebih besar terhadap laba usaha. Ini penjelasan hubungan antara kenaikan biaya dan penurunan profit.
 

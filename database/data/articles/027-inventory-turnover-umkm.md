@@ -7,7 +7,7 @@ primary_keyword: "inventory turnover umkm"
 secondary_keywords: "perputaran persediaan; rumus inventory turnover; barang slow moving; analisis stok"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/inventory-turnover-umkm.jpg"
 reading_time: "4 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "cara stok opname"
 secondary_keywords: "stok opname toko; stock opname adalah; jadwal stok opname; form stok opname"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-stok-opname.jpg"
 reading_time: "5 menit"
 ---
 

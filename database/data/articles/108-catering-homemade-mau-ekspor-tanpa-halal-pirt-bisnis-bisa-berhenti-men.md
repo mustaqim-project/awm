@@ -7,7 +7,7 @@ primary_keyword: "syarat ekspor UMKM"
 secondary_keywords: "izin ekspor makanan; sertifikat halal ekspor"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/catering-homemade-mau-ekspor-tanpa-halal-pirt-bisnis-bisa-berhenti-men.jpg"
 reading_time: "5 menit"
 ---
 

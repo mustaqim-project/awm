@@ -7,7 +7,7 @@ primary_keyword: "catat transaksi manual"
 secondary_keywords: "POS kasir; sistem kasir warung"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/manual-vs-sistem-mana-lebih-cepat-untuk-catat-penjualan-50-transaksi-p.jpg"
 reading_time: "5 menit"
 ---
 

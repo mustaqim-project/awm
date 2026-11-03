@@ -7,7 +7,7 @@ primary_keyword: "bantuan UMKM 2026"
 secondary_keywords: "BPUM; BLT UMKM; bantuan presiden UMKM"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bantuan-umkm-pemerintah-2026-cara-daftar-online-supaya-tidak-ketinggal.jpg"
 reading_time: "5 menit"
 ---
 

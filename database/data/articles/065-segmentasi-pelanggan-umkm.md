@@ -7,7 +7,7 @@ primary_keyword: "segmentasi pelanggan umkm"
 secondary_keywords: "kategori pelanggan toko; klasifikasi konsumen usaha kecil; rfm sederhana umkm; crm bisnis kecil"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/segmentasi-pelanggan-umkm.jpg"
 reading_time: "6 menit"
 ---
 

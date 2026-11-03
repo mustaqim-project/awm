@@ -7,7 +7,7 @@ primary_keyword: "atur shift karyawan warung"
 secondary_keywords: "payroll sederhana; jadwal karyawan"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-atur-shift-3-karyawan-di-warung-24-jam-tanpa-drama-gaji.jpg"
 reading_time: "5 menit"
 ---
 

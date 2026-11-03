@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-buat-konten-ugc-untuk-umkm-dengan-bayaran-rp-50-ribu-per-video.jpg Ringkasan / Excerpt
 
 Konten User Generated Content (UGC) bisa jadi strategi promosi yang efektif dengan biaya terjangkau. Berikut cara memanfaatkannya untuk usaha kecil.
 

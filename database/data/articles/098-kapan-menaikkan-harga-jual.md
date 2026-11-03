@@ -7,7 +7,7 @@ primary_keyword: "kapan menaikkan harga jual"
 secondary_keywords: "strategi menaikkan harga produk; inflasi bahan baku umkm; cara komunikasi kenaikan harga; mempertahankan margin laba"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kapan-menaikkan-harga-jual.jpg"
 reading_time: "6 menit"
 ---
 

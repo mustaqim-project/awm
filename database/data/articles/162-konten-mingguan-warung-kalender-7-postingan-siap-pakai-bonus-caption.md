@@ -7,7 +7,7 @@ primary_keyword: "kalender konten warung"
 secondary_keywords: "content calendar UMKM; posting mingguan"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/konten-mingguan-warung-kalender-7-postingan-siap-pakai-bonus-caption.jpg"
 reading_time: "5 menit"
 ---
 

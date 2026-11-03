@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cerita-warung-yang-sudah-naik-ke-scale-dari-omzet-80-juta-ke-2-milyar.jpg Ringkasan / Excerpt
 
 [Simulasi Model Bisnis] Materi edukasi mengenai tahapan transformasi usaha warung dari pencatatan manual menuju standarisasi SOP dan ekspansi bertahap.
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hpp-satu-porsi-nasi-goreng-cara-hitung-real-dalam-5-menit.jpg Ringkasan / Excerpt
 
 Menghitung Harga Pokok Produksi (HPP) satu porsi nasi goreng bisa dilakukan dengan cepat asal tahu komponen biaya yang perlu dimasukkan.
 

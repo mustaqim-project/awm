@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/karyawan-shift-malam-vs-siang-cara-hitung-gaji-yang-adil-di-warung.jpg Ringkasan / Excerpt
 
 Menentukan besaran gaji untuk shift malam dan siang perlu perhitungan yang adil agar karyawan merasa dihargai sesuai beban kerja masing-masing shift.
 

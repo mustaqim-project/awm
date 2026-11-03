@@ -7,7 +7,7 @@ primary_keyword: "caption Instagram warung"
 secondary_keywords: "copywriting UMKM; caption IG"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/caption-instagram-warung-yang-bikin-like-otomatis-tanpa-jualan-keras.jpg"
 reading_time: "5 menit"
 ---
 

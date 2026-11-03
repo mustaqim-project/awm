@@ -7,7 +7,7 @@ primary_keyword: "bpjs ketenagakerjaan umkm"
 secondary_keywords: "kewajiban bpjs pemberi kerja; daftar bpjs usaha; iuran jkk jkm; perlindungan karyawan toko"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bpjs-ketenagakerjaan-umkm.jpg"
 reading_time: "4 menit"
 ---
 

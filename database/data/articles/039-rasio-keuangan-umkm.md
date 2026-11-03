@@ -7,7 +7,7 @@ primary_keyword: "rasio keuangan umkm"
 secondary_keywords: "margin laba; rasio likuiditas sederhana; kesehatan keuangan usaha; analisis laporan keuangan toko"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/rasio-keuangan-umkm.jpg"
 reading_time: "4 menit"
 ---
 

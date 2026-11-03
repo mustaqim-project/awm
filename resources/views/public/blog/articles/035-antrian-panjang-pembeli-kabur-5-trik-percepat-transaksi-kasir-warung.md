@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/antrian-panjang-pembeli-kabur-5-trik-percepat-transaksi-kasir-warung.jpg Ringkasan / Excerpt
 
 Antrian panjang di kasir bisa membuat calon pembeli berubah pikiran dan pergi. Ini 5 trik praktis untuk mempercepat proses transaksi di warung.
 

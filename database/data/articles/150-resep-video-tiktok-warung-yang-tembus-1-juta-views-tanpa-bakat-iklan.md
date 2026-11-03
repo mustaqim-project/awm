@@ -7,7 +7,7 @@ primary_keyword: "video TikTok warung viral"
 secondary_keywords: "konten TikTok UMKM; viral TikTok"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/resep-video-tiktok-warung-yang-tembus-1-juta-views-tanpa-bakat-iklan.jpg"
 reading_time: "5 menit"
 ---
 

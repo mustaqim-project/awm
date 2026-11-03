@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/catatan-keuangan-warung-buku-tulis-vs-aplikasi-mana-yang-lebih-akurat.jpg Ringkasan / Excerpt
 
 Mencatat keuangan usaha bisa dilakukan dengan buku tulis konvensional atau aplikasi digital. Berikut perbandingan akurasi dan kepraktisan keduanya.
 

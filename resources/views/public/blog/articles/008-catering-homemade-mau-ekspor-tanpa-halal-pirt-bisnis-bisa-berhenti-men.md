@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/catering-homemade-mau-ekspor-tanpa-halal-pirt-bisnis-bisa-berhenti-men.jpg Ringkasan / Excerpt
 
 Banyak usaha catering rumahan ingin ekspansi ke pasar ekspor, tapi terhenti karena belum memenuhi syarat legalitas dasar seperti PIRT dan sertifikat halal.
 

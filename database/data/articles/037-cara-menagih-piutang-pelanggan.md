@@ -7,7 +7,7 @@ primary_keyword: "cara menagih piutang pelanggan"
 secondary_keywords: "piutang usaha; template pesan penagihan; jatuh tempo pembayaran; pelanggan telat bayar"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menagih-piutang-pelanggan.jpg"
 reading_time: "4 menit"
 ---
 

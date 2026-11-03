@@ -7,7 +7,7 @@ primary_keyword: "cara membuat budget bulanan usaha"
 secondary_keywords: "anggaran usaha kecil; pos pengeluaran; dynamic budgeting; kontrol pengeluaran"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-budget-bulanan-usaha.jpg"
 reading_time: "4 menit"
 ---
 

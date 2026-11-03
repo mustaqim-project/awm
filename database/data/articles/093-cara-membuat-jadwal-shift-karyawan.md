@@ -7,7 +7,7 @@ primary_keyword: "cara membuat jadwal shift karyawan"
 secondary_keywords: "susun roster shift toko; jadwal kerja karyawan kafe; pola rotasi shift adil; manajemen jam kerja umkm"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-jadwal-shift-karyawan.jpg"
 reading_time: "6 menit"
 ---
 

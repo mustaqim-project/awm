@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/kelola-keuangan-warung-dari-nol-7-kebiasaan-owner-yang-bikin-rekening.jpg Ringkasan / Excerpt
 
 Mengelola keuangan usaha dari nol membutuhkan kebiasaan yang konsisten. Berikut 7 kebiasaan yang membantu menjaga kesehatan rekening usaha dalam jangka panjang.
 

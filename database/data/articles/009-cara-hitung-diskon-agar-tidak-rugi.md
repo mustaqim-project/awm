@@ -7,7 +7,7 @@ primary_keyword: "cara hitung diskon agar tidak rugi"
 secondary_keywords: "batas diskon aman; strategi promo toko; hitung laba setelah diskon; promo buy 1 get 1"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-hitung-diskon-agar-tidak-rugi.jpg"
 reading_time: "4 menit"
 ---
 

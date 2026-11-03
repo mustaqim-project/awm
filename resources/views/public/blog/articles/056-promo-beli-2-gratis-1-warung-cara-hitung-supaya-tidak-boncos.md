@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/promo-beli-2-gratis-1-warung-cara-hitung-supaya-tidak-boncos.jpg Ringkasan / Excerpt
 
 Promo beli 2 gratis 1 bisa menarik pelanggan, tapi jika salah hitung justru membuat usaha rugi. Ini cara menghitung promo ini agar tetap menguntungkan.
 

@@ -7,7 +7,7 @@ primary_keyword: "sistem membership toko"
 secondary_keywords: "membership tier; kartu member digital; benefit member; level pelanggan setia"
 search_intent: "Komersial"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/sistem-membership-toko.jpg"
 reading_time: "4 menit"
 ---
 

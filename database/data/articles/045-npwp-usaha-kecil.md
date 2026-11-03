@@ -7,7 +7,7 @@ primary_keyword: "npwp usaha kecil"
 secondary_keywords: "npwp pribadi atau badan; daftar npwp umkm; kewajiban pajak usaha; pajak orang pribadi umkm"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/npwp-usaha-kecil.jpg"
 reading_time: "4 menit"
 ---
 

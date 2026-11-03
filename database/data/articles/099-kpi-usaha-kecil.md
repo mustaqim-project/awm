@@ -7,7 +7,7 @@ primary_keyword: "kpi usaha kecil"
 secondary_keywords: "indikator kinerja bisnis umkm; dashboard keuangan pemilik toko; metrik penjualan ritel; laporan kpi kasir harian"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kpi-usaha-kecil.jpg"
 reading_time: "6 menit"
 ---
 

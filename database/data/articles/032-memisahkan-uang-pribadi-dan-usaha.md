@@ -7,7 +7,7 @@ primary_keyword: "memisahkan uang pribadi dan usaha"
 secondary_keywords: "rekening usaha terpisah; gaji pemilik usaha; keuangan pribadi pemilik umkm; kas usaha"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/memisahkan-uang-pribadi-dan-usaha.jpg"
 reading_time: "4 menit"
 ---
 

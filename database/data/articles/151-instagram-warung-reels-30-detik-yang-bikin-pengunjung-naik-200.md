@@ -7,7 +7,7 @@ primary_keyword: "Instagram Reels warung"
 secondary_keywords: "strategi Instagram UMKM; Reels viral"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/instagram-warung-reels-30-detik-yang-bikin-pengunjung-naik-200.jpg"
 reading_time: "5 menit"
 ---
 

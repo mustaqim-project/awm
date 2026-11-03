@@ -7,7 +7,7 @@ primary_keyword: "hpp usaha frozen food"
 secondary_keywords: "harga pokok frozen food; modal jualan frozen food; biaya kemasan vakum; harga reseller frozen food"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hpp-usaha-frozen-food.jpg"
 reading_time: "4 menit"
 ---
 

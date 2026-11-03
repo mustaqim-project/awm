@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/instagram-warung-reels-30-detik-yang-bikin-pengunjung-naik-200.jpg Ringkasan / Excerpt
 
 Reels Instagram berdurasi singkat bisa jadi alat efektif menarik pengunjung baru ke warung. Berikut strategi membuat Reels yang menarik perhatian calon pelanggan.
 

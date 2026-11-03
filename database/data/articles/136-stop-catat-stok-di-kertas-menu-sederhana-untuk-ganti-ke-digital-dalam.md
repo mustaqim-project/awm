@@ -7,7 +7,7 @@ primary_keyword: "ganti pencatatan stok ke digital"
 secondary_keywords: "aplikasi stok gratis; digitalisasi inventory"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stop-catat-stok-di-kertas-menu-sederhana-untuk-ganti-ke-digital-dalam.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/konten-mingguan-warung-kalender-7-postingan-siap-pakai-bonus-caption.jpg Ringkasan / Excerpt
 
 Bingung mau posting apa setiap hari? Berikut contoh kalender konten mingguan untuk warung yang bisa langsung disesuaikan dan digunakan.
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-kelola-ulasan-1-bintang-tanpa-sungkan-template-balasan-untuk-umkm.jpg Ringkasan / Excerpt
 
 Ulasan bintang satu bisa membuat pemilik usaha merasa tidak nyaman, tapi cara meresponsnya justru bisa jadi kesempatan menunjukkan profesionalisme.
 

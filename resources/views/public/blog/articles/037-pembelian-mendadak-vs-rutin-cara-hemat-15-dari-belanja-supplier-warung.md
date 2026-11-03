@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pembelian-mendadak-vs-rutin-cara-hemat-15-dari-belanja-supplier-warung.jpg Ringkasan / Excerpt
 
 Pola belanja yang tidak terencana ke supplier bisa membuat biaya operasional membengkak. Ini cara mengatur pembelian rutin untuk menghemat pengeluaran usaha.
 

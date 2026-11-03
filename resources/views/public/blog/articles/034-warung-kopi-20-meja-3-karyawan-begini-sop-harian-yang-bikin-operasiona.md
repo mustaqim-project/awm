@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/warung-kopi-20-meja-3-karyawan-begini-sop-harian-yang-bikin-operasiona.jpg Ringkasan / Excerpt
 
 Mengelola warung kopi dengan kapasitas cukup besar butuh SOP harian yang jelas agar operasional tetap tenang meski hanya dijalankan sedikit karyawan.
 

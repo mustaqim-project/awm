@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/jualan-nasi-uduk-perlu-pirt-begini-cara-daftar-sertifikatnya-dalam-14.jpg Ringkasan / Excerpt
 
 PIRT (kini SPP-IRT) wajib dimiliki usaha pangan olahan rumahan tertentu. Simak siapa yang wajib punya dan cara mengurusnya secara bertahap.
 

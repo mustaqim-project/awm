@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hpp-minuman-caf-vs-boba-mana-lebih-cepat-balik-modal.jpg Ringkasan / Excerpt
 
 Minuman kopi kekinian dan minuman boba memiliki struktur biaya yang berbeda. Berikut perbandingan HPP dan potensi kecepatan balik modal antara keduanya.
 

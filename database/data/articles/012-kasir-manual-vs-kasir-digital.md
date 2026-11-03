@@ -7,7 +7,7 @@ primary_keyword: "kasir manual vs kasir digital"
 secondary_keywords: "kelebihan kasir digital; kekurangan kasir manual; biaya aplikasi kasir; pindah ke pos"
 search_intent: "Komersial"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kasir-manual-vs-kasir-digital.jpg"
 reading_time: "4 menit"
 ---
 

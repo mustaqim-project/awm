@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/mengapa-kompetitor-sudah-punya-izin-lengkap-dan-kamu-tidak-cerita-nyat.jpg Ringkasan / Excerpt
 
 [Studi Kasus Edukasi] Pembelajaran praktis mengenai pentingnya legalitas dan izin edar usaha bagi pedagang UMKM agar siap menangkap peluang kerja sama formal.
 

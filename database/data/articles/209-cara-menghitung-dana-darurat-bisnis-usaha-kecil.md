@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Keuangan & Pembukuan"
 cluster: "tutorial"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-dana-darurat-bisnis-usaha-kecil.jpg"
 ---
 
 # Cara Menghitung Dana Darurat Bisnis untuk Pemilik Usaha Kecil

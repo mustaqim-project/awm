@@ -7,7 +7,7 @@ primary_keyword: "hitung harga jual ideal"
 secondary_keywords: "margin keuntungan UMKM; pricing menu"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/harga-jual-terlalu-murah-cara-hitung-margin-ideal-untuk-setiap-menu.jpg"
 reading_time: "5 menit"
 ---
 

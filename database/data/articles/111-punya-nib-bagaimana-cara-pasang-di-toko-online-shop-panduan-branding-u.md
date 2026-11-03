@@ -7,7 +7,7 @@ primary_keyword: "pemasangan NIB di toko"
 secondary_keywords: "izin usaha visible; branding UMKM"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/punya-nib-bagaimana-cara-pasang-di-toko-online-shop-panduan-branding-u.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "strategi toko kelontong"
 secondary_keywords: "toko kelontong modern; display barang warung sembako; cara menata toko madura; strategi ritel toko kecil"
 search_intent: "Informasional"
 category: "Solusi Per Industri"
-cover_image: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/strategi-toko-kelontong.jpg"
 reading_time: "6 menit"
 ---
 

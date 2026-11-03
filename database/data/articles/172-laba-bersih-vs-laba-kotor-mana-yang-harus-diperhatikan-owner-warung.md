@@ -7,7 +7,7 @@ primary_keyword: "laba bersih vs laba kotor"
 secondary_keywords: "kalkulator laba bersih; pengertian laba"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/laba-bersih-vs-laba-kotor-mana-yang-harus-diperhatikan-owner-warung.jpg"
 reading_time: "5 menit"
 ---
 

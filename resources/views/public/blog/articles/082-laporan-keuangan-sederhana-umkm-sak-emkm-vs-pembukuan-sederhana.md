@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/laporan-keuangan-sederhana-umkm-sak-emkm-vs-pembukuan-sederhana.jpg Ringkasan / Excerpt
 
 SAK EMKM adalah standar akuntansi yang dirancang khusus untuk usaha mikro, kecil, dan menengah. Berikut penjelasan perbedaannya dengan pembukuan sederhana biasa.
 

@@ -7,7 +7,7 @@ primary_keyword: "leasing peralatan usaha"
 secondary_keywords: "beli cash vs kredit; cicilan gerobak"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/leasing-vs-cash-cara-beli-gerobak-peralatan-warung-tanpa-sakit-di-akhi.jpg"
 reading_time: "5 menit"
 ---
 

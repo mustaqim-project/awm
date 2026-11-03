@@ -7,7 +7,7 @@ primary_keyword: "hitung promo warung"
 secondary_keywords: "simulasi promo UMKM; gift margin"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/promo-beli-2-gratis-1-warung-cara-hitung-supaya-tidak-boncos.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "cash vs kredit pembelian"
 secondary_keywords: "cash flow UMKM; pembelian bahan"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cash-vs-kredit-untuk-pembelian-bahan-simulasi-yang-bisa-kamu-tiru.jpg"
 reading_time: "5 menit"
 ---
 

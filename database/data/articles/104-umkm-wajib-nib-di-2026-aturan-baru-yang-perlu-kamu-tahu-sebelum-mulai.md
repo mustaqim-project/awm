@@ -7,7 +7,7 @@ primary_keyword: "aturan NIB UMKM 2026"
 secondary_keywords: "OSS RBA 2026; izin usaha baru; regulasi UMKM"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/umkm-wajib-nib-di-2026-aturan-baru-yang-perlu-kamu-tahu-sebelum-mulai.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "cara pilih KBLI usaha"
 secondary_keywords: "kode KBLI warung; jenis usaha UMKM"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/dari-warung-ke-klinik-kecil-cara-tentukan-kbli-yang-benar-untuk-jenis.jpg"
 reading_time: "5 menit"
 ---
 

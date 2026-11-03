@@ -7,7 +7,7 @@ primary_keyword: "hitung omzet harian"
 secondary_keywords: "kalkulator omzet; omzet warung"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hitung-omzet-harian-warung-kenapa-laporan-sibuk-tidak-sama-dengan-prof.jpg"
 reading_time: "5 menit"
 ---
 

@@ -3,6 +3,7 @@ title: "Tata Kelola Usaha dan Peran Dewan Penasihat agar Bisnis UMKM Siap Naik K
 meta_title: "Tata Kelola Usaha dan Peran Penasihat Bisnis bagi UMKM"
 meta_description: "Membangun bisnis mandiri butuh arahan strategis. Simak pentingnya tata kelola usaha dan peran mentor atau penasihat bisnis agar operasional toko lebih tertata."
 slug: "tata-kelola-usaha-dan-peran-dewan-penasihat-bagi-umkm-naik-kelas"
+cover_image: "https://cooca.id/images/blog/tata-kelola-usaha-dan-peran-dewan-penasihat-bagi-umkm-naik-kelas.jpg"
 primary_keyword: "tata kelola usaha"
 secondary_keywords: "advisory board umkm, dewan penasihat bisnis, delegasi tugas pemilik warung, gcg usaha kecil"
 search_intent: "informational"

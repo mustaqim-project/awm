@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/modal-receh-tapi-penghasilan-rp-25-juta-sebulan-studi-kasus-warung-mie.jpg Ringkasan / Excerpt
 
 [Simulasi Model Bisnis] Materi simulasi usaha kuliner mengenai pentingnya menjaga mutu menu andalan, perputaran kas harian, dan reinvestasi keuntungan.
 

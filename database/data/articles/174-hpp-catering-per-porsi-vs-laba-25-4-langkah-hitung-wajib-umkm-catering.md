@@ -7,7 +7,7 @@ primary_keyword: "hitung HPP catering"
 secondary_keywords: "kalkulator catering; HPP catering"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hpp-catering-per-porsi-vs-laba-25-4-langkah-hitung-wajib-umkm-catering.jpg"
 reading_time: "5 menit"
 ---
 

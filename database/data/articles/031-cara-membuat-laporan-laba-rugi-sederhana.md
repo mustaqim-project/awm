@@ -7,7 +7,7 @@ primary_keyword: "cara membuat laporan laba rugi sederhana"
 secondary_keywords: "contoh laporan laba rugi umkm; format laba rugi; laba kotor dan laba bersih; laporan keuangan toko"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-laporan-laba-rugi-sederhana.jpg"
 reading_time: "4 menit"
 ---
 

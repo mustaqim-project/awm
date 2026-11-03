@@ -3,6 +3,7 @@ title: "Peluang Bisnis Jastip dan Oleh Oleh Wisatawan: Cara UMKM Raih Cuan Maksi
 meta_title: "Peluang Bisnis Jastip dan Oleh Oleh: Panduan UMKM"
 meta_description: "Peluang bisnis jastip dan oleh oleh wisatawan kian menjanjikan. Simak strategi kurasi produk, manajemen pesanan, dan kalkulasi komisi praktis."
 slug: "peluang-bisnis-oleh-oleh-dan-jastip-wisatawan-internasional"
+cover_image: "https://cooca.id/images/blog/peluang-bisnis-oleh-oleh-dan-jastip-wisatawan-internasional.jpg"
 primary_keyword: "bisnis jastip dan oleh oleh"
 secondary_keywords: "bisnis jastip luar negeri, oleh oleh khas daerah, manajemen pesanan toko online, pembukuan jastip"
 search_intent: "informational"

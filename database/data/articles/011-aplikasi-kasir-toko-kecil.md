@@ -7,7 +7,7 @@ primary_keyword: "aplikasi kasir toko kecil"
 secondary_keywords: "pilih aplikasi kasir; aplikasi pos gratis; fitur kasir wajib; aplikasi kasir android"
 search_intent: "Komersial"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/aplikasi-kasir-toko-kecil.jpg"
 reading_time: "4 menit"
 ---
 

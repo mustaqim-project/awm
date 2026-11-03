@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/usaha-kamu-ilegal-atau-cuma-belum-diproses-cek-7-tanda-ini-sekarang.jpg Ringkasan / Excerpt
 
 Bingung apakah usaha Anda sudah cukup legal atau masih ada yang tertinggal? Berikut 7 tanda yang bisa jadi indikasi legalitas usaha Anda belum lengkap.
 

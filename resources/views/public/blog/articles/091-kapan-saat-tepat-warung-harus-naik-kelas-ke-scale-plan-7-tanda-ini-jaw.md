@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/kapan-saat-tepat-warung-harus-naik-kelas-ke-scale-plan-7-tanda-ini-jaw.jpg Ringkasan / Excerpt
 
 Beralih ke sistem atau paket layanan yang lebih lengkap perlu momentum yang tepat. Berikut 7 tanda usaha sudah saatnya naik kelas ke sistem yang lebih komprehensif.
 

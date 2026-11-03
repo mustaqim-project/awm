@@ -429,7 +429,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                         </div>
 
                         <div class="lg:col-span-5 h-52 sm:h-64 lg:h-72 rounded-[16px] sm:rounded-[18px] overflow-hidden relative border border-black/[0.06] dark:border-white/[0.08] bg-slate-100 dark:bg-[#2C2C2E]">
-                            <img src="{{ $featuredPost->cover_image ?? 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80' }}"
+                            <img src="{{ $featuredPost->cover_image ?? 'https://cooca.id/images/blog/photo-1555396273-367ea4eb4db5.jpg' }}"
                                 alt="{{ $featuredPost->title }}"
                                 loading="lazy"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -447,7 +447,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                             {{-- Card wrapped in block link for full-card tap --}}
                             <a href="{{ route('blog.show', $post->slug) }}" class="blog-touch-target blog-focus block flex-1">
                                 <div class="h-40 sm:h-44 lg:h-48 overflow-hidden relative border-b border-black/[0.06] dark:border-white/[0.08] bg-slate-100 dark:bg-[#2C2C2E]">
-                                    <img src="{{ $post->cover_image ?? 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80' }}"
+                                    <img src="{{ $post->cover_image ?? 'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg' }}"
                                         alt="{{ $post->title }}"
                                         loading="lazy"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

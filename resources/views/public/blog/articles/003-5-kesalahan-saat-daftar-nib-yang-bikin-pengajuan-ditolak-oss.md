@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/5-kesalahan-saat-daftar-nib-yang-bikin-pengajuan-ditolak-oss.jpg Ringkasan / Excerpt
 
 Pengajuan NIB di OSS seharusnya mudah, tapi banyak pelaku usaha gagal karena kesalahan teknis sederhana. Kenali 5 kesalahan paling umum ini sebelum mendaftar.
 

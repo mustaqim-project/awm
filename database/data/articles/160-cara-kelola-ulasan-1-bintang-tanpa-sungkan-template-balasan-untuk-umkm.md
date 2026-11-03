@@ -7,7 +7,7 @@ primary_keyword: "kelola ulasan buruk"
 secondary_keywords: "reputasi online UMKM; balasan review"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-kelola-ulasan-1-bintang-tanpa-sungkan-template-balasan-untuk-umkm.jpg"
 reading_time: "5 menit"
 ---
 

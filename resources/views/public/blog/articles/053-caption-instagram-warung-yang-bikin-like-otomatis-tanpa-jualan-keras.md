@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/caption-instagram-warung-yang-bikin-like-otomatis-tanpa-jualan-keras.jpg Ringkasan / Excerpt
 
 Caption yang terlalu jualan keras justru sering diabaikan pengikut. Berikut beberapa template caption yang lebih natural namun tetap efektif mendorong interaksi.
 

@@ -7,7 +7,7 @@ primary_keyword: "biaya overhead usaha kecil"
 secondary_keywords: "alokasi biaya listrik usaha; overhead dalam hpp; biaya tidak langsung; cara bagi biaya tetap"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/biaya-overhead-usaha-kecil.jpg"
 reading_time: "4 menit"
 ---
 

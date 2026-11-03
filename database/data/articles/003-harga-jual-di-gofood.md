@@ -7,7 +7,7 @@ primary_keyword: "harga jual di gofood"
 secondary_keywords: "harga menu online; komisi aplikasi pesan antar; markup harga menu; strategi harga makanan online"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/harga-jual-di-gofood.jpg"
 reading_time: "5 menit"
 ---
 

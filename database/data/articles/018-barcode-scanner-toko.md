@@ -7,7 +7,7 @@ primary_keyword: "barcode scanner toko"
 secondary_keywords: "scanner barcode usb; cara input barcode produk; label barcode barang; kasir retail"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/barcode-scanner-toko.jpg"
 reading_time: "4 menit"
 ---
 

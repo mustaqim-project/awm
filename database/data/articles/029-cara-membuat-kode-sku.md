@@ -7,7 +7,7 @@ primary_keyword: "cara membuat kode sku"
 secondary_keywords: "contoh kode sku; sku adalah; penamaan produk; kode barang toko"
 search_intent: "Informasional"
 category: "Inventori & Stok"
-cover_image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-kode-sku.jpg"
 reading_time: "4 menit"
 ---
 

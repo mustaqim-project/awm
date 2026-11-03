@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/foto-produk-rumahan-tetap-cantik-trik-hp-2-juta-untuk-konten-warung.jpg Ringkasan / Excerpt
 
 Foto produk yang menarik tidak selalu butuh kamera mahal. Berikut trik memotret produk usaha rumahan hanya dengan HP kelas menengah agar tetap terlihat profesional.
 

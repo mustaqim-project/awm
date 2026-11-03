@@ -7,7 +7,7 @@ primary_keyword: "tinggalkan Excel UMKM"
 secondary_keywords: "digitalisasi UMKM; bahaya Excel"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kapan-umkm-wajib-tinggalkan-excel-5-tanda-bahaya-ini-jangan-diabaikan.jpg"
 reading_time: "5 menit"
 ---
 

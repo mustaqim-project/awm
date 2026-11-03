@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/modal-nib-sudah-ada-lalu-apa-5-dokumen-wajib-umkm-setelahnya.jpg Ringkasan / Excerpt
 
 NIB hanyalah langkah pertama. Berikut 5 dokumen lanjutan yang perlu disiapkan UMKM agar usaha semakin siap berkembang dan mengakses berbagai program pembiayaan.
 

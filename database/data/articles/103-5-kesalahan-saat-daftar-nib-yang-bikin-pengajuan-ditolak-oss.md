@@ -7,7 +7,7 @@ primary_keyword: "kesalahan daftar NIB"
 secondary_keywords: "NIB ditolak; OSS RBA; penyebab NIB gagal"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/5-kesalahan-saat-daftar-nib-yang-bikin-pengajuan-ditolak-oss.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-cek-nib-sudah-terbit-atau-belum-tanpa-harus-ke-kantor-oss.jpg Ringkasan / Excerpt
 
 Tidak perlu datang ke kantor untuk memastikan status NIB. Berikut cara mengecek status NIB secara online dengan cepat dan mudah.
 

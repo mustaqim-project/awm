@@ -7,7 +7,7 @@ primary_keyword: "cara mencegah kecurangan kasir"
 secondary_keywords: "selisih kas kasir; kebocoran kas toko; pengawasan kasir; audit kas harian"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-mencegah-kecurangan-kasir.jpg"
 reading_time: "4 menit"
 ---
 

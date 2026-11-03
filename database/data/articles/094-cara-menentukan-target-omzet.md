@@ -7,7 +7,7 @@ primary_keyword: "cara menentukan target omzet"
 secondary_keywords: "rumus target penjualan toko; cara hitung bep omzet bulanan; strategi capai target omzet umkm; perencanaan keuangan usaha"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menentukan-target-omzet.jpg"
 reading_time: "6 menit"
 ---
 

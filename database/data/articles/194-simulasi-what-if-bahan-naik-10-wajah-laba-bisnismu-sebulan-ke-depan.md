@@ -7,7 +7,7 @@ primary_keyword: "simulasi what-if bahan naik"
 secondary_keywords: "prediksi laba UMKM"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/simulasi-what-if-bahan-naik-10-wajah-laba-bisnismu-sebulan-ke-depan.jpg"
 reading_time: "5 menit"
 ---
 

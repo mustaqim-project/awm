@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/story-instagram-vs-feed-mana-lebih-efektif-untuk-jualan-harian.jpg Ringkasan / Excerpt
 
 Instagram Story dan Feed punya fungsi berbeda dalam strategi promosi harian. Berikut perbandingan keduanya untuk kebutuhan jualan sehari-hari usaha kecil.
 

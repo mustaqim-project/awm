@@ -9,7 +9,7 @@ primary_keyword: "studi kasus warung Scale"
 secondary_keywords: "case study UMKM"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cerita-warung-yang-sudah-naik-ke-scale-dari-omzet-80-juta-ke-2-milyar.jpg"
 reading_time: "5 menit"
 ---
 

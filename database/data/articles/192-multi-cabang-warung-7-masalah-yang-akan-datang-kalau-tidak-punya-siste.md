@@ -7,7 +7,7 @@ primary_keyword: "masalah multi-cabang UMKM"
 secondary_keywords: "ekspansi warung; multi outlet warung"
 search_intent: "Informasional"
 category: "Scale-up"
-cover_image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/multi-cabang-warung-7-masalah-yang-akan-datang-kalau-tidak-punya-siste.jpg"
 reading_time: "5 menit"
 ---
 

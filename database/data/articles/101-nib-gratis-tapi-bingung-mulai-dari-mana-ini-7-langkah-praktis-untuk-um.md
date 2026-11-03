@@ -7,7 +7,7 @@ primary_keyword: "cara daftar NIB UMKM"
 secondary_keywords: "oss.go.id; NIB gratis; izin usaha online; daftar NIB 2026"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/nib-gratis-tapi-bingung-mulai-dari-mana-ini-7-langkah-praktis-untuk-um.jpg"
 reading_time: "5 menit"
 ---
 

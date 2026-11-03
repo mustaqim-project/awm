@@ -7,7 +7,7 @@ primary_keyword: "hitung PPh 21 karyawan"
 secondary_keywords: "pajak karyawan UMKM; PPh 21 warung"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pph-21-karyawan-warung-cara-hitung-yang-benar-tanpa-tersandung-aturan.jpg"
 reading_time: "5 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/7-kesalahan-fatal-saat-pilih-supplier-bahan-baku-warung-pemula-wajib-t.jpg Ringkasan / Excerpt
 
 Memilih supplier yang salah bisa mengganggu operasional dan merugikan usaha dalam jangka panjang. Kenali 7 kesalahan umum ini sebelum menentukan supplier tetap.
 

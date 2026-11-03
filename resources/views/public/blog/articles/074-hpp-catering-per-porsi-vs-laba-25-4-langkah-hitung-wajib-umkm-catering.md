@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hpp-catering-per-porsi-vs-laba-25-4-langkah-hitung-wajib-umkm-catering.jpg Ringkasan / Excerpt
 
 Usaha catering punya struktur biaya yang sedikit berbeda dari warung biasa karena melibatkan pesanan dalam jumlah besar. Berikut 4 langkah menghitung HPP dan menetapkan margin yang tepat.
 

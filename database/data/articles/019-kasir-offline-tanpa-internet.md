@@ -7,7 +7,7 @@ primary_keyword: "kasir offline tanpa internet"
 secondary_keywords: "pos mode offline; sinkron data setelah online; internet toko mati; rencana cadangan kasir"
 search_intent: "Informasional"
 category: "Kasir & POS"
-cover_image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kasir-offline-tanpa-internet.jpg"
 reading_time: "4 menit"
 ---
 

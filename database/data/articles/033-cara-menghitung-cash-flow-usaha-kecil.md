@@ -7,7 +7,7 @@ primary_keyword: "cara menghitung cash flow usaha kecil"
 secondary_keywords: "arus kas masuk dan keluar; laporan arus kas sederhana; laba vs cash flow; kas habis padahal untung"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-cash-flow-usaha-kecil.jpg"
 reading_time: "4 menit"
 ---
 

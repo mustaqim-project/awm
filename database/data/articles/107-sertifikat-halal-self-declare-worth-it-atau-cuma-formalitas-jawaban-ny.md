@@ -7,7 +7,7 @@ primary_keyword: "sertifikat halal UMKM self declare"
 secondary_keywords: "halal gratis; BPJPH; sertifikat halal 2026"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/sertifikat-halal-self-declare-worth-it-atau-cuma-formalitas-jawaban-ny.jpg"
 reading_time: "5 menit"
 ---
 

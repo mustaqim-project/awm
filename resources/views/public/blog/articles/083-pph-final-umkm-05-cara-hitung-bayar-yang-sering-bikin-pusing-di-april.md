@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/pph-final-umkm-05-cara-hitung-bayar-yang-sering-bikin-pusing-di-april.jpg Ringkasan / Excerpt
 
 Skema PPh Final dengan tarif tertentu bagi UMKM sering membingungkan saat harus dihitung dan dilaporkan. Berikut penjelasan dasar cara menghitungnya.
 

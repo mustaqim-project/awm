@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/dari-warung-ke-klinik-kecil-cara-tentukan-kbli-yang-benar-untuk-jenis.jpg Ringkasan / Excerpt
 
 Kode KBLI menentukan jenis izin dan kewajiban usaha ke depan. Berikut cara memilih KBLI yang tepat sesuai jenis usaha Anda, dari warung makan sampai klinik kecil.
 

@@ -7,7 +7,7 @@ primary_keyword: "cara membuat purchase order"
 secondary_keywords: "format surat pesanan barang; contoh po pembelian supplier; template purchase order excel; pengadaan barang umkm"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-purchase-order.jpg"
 reading_time: "6 menit"
 ---
 

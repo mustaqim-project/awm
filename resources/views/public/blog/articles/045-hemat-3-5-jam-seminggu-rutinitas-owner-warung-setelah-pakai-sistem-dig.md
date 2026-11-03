@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/hemat-3-5-jam-seminggu-rutinitas-owner-warung-setelah-pakai-sistem-dig.jpg Ringkasan / Excerpt
 
 Beralih ke sistem digital tidak hanya soal kerapian data, tapi juga soal waktu yang bisa dihemat owner dalam menjalankan rutinitas operasional mingguan.
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/panduan-bpum-2026-apakah-umkm-kamu-termasuk-penerima-cek-sekarang.jpg Ringkasan / Excerpt
 
 BPUM adalah salah satu bentuk bantuan langsung bagi pelaku UMKM. Berikut cara mengecek apakah usaha Anda termasuk kategori yang berpotensi menerima program ini.
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/mau-buka-franchise-digital-marketing-jadi-fondasi-yang-wajib-kamu-bang.jpg Ringkasan / Excerpt
 
 Sebelum menawarkan kemitraan franchise, fondasi digital marketing yang kuat perlu dibangun terlebih dahulu agar brand punya daya tarik bagi calon mitra maupun konsumen.
 

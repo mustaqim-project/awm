@@ -7,7 +7,7 @@ primary_keyword: "stok opname warung sederhana"
 secondary_keywords: "template stok opname gratis"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stok-opname-warung-sederhana-cara-hitung-selisih-tanpa-drama-dalam-30.jpg"
 reading_time: "5 menit"
 ---
 

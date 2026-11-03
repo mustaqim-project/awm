@@ -7,7 +7,7 @@ primary_keyword: "live streaming jualan"
 secondary_keywords: "live shopping UMKM; live streaming marketplace"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/live-streaming-jualan-rahasia-konversi-8-dari-sekali-tayang.jpg"
 reading_time: "5 menit"
 ---
 

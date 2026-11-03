@@ -7,7 +7,7 @@ primary_keyword: "cara membuat nib"
 secondary_keywords: "nib umkm; pendaftaran oss; izin usaha mikro; nomor induk berusaha"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-nib.jpg"
 reading_time: "4 menit"
 ---
 

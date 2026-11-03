@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/leasing-vs-cash-cara-beli-gerobak-peralatan-warung-tanpa-sakit-di-akhi.jpg Ringkasan / Excerpt
 
 Membeli peralatan usaha seperti gerobak bisa dilakukan tunai atau leasing. Mana yang lebih menguntungkan tergantung kondisi arus kas usaha Anda.
 

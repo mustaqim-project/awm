@@ -7,7 +7,7 @@ primary_keyword: "notifikasi stok menipis"
 secondary_keywords: "POS UMKM Android; alert stok kritis"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/stok-menipis-tanpa-sadar-sistem-notifikasi-ini-bisa-selamatkan-hari-si.jpg"
 reading_time: "5 menit"
 ---
 

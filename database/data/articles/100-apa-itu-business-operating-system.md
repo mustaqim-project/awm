@@ -7,7 +7,7 @@ primary_keyword: "apa itu business operating system"
 secondary_keywords: "software all in one umkm; sistem integrasi bisnis kecil; erp sederhana toko ritel; otomatisasi operasional toko"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/apa-itu-business-operating-system.jpg"
 reading_time: "6 menit"
 ---
 

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/rapikan-keuangan-warung-dalam-14-hari-step-by-step-untuk-owner-sibuk.jpg Ringkasan / Excerpt
 
 Merapikan keuangan usaha yang sudah lama berantakan bisa dilakukan bertahap dalam 14 hari tanpa harus mengorbankan waktu operasional harian.
 

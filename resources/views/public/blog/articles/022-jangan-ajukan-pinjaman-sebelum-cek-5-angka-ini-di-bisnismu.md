@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/jangan-ajukan-pinjaman-sebelum-cek-5-angka-ini-di-bisnismu.jpg Ringkasan / Excerpt
 
 Sebelum mengajukan pinjaman usaha, ada 5 angka penting dalam bisnis Anda yang wajib dicek terlebih dahulu agar keputusan pinjaman tidak jadi beban di kemudian hari.
 

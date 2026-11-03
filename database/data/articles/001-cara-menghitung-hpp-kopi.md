@@ -7,7 +7,7 @@ primary_keyword: "cara menghitung hpp kopi"
 secondary_keywords: "hpp kopi per cup; biaya bahan kopi susu; harga pokok minuman; hitung modal cafe"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-hpp-kopi.jpg"
 reading_time: "6 menit"
 ---
 

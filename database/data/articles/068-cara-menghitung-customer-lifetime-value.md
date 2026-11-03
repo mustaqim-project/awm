@@ -7,7 +7,7 @@ primary_keyword: "cara menghitung customer lifetime value"
 secondary_keywords: "rumus clv umkm; customer lifetime value adalah; nilai seumur hidup pelanggan; biaya retensi pembeli"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-customer-lifetime-value.jpg"
 reading_time: "6 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "activity based costing umkm"
 secondary_keywords: "hpp berbasis aktivitas; metode abc costing; alokasi biaya per aktivitas; cost driver usaha kecil"
 search_intent: "Informasional"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/activity-based-costing-umkm.jpg"
 reading_time: "4 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "hitung HPP nasi goreng"
 secondary_keywords: "kalkulator HPP; nasi goreng HPP"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hpp-satu-porsi-nasi-goreng-cara-hitung-real-dalam-5-menit.jpg"
 reading_time: "5 menit"
 ---
 

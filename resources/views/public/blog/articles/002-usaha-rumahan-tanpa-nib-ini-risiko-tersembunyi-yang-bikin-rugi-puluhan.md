@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/usaha-rumahan-tanpa-nib-ini-risiko-tersembunyi-yang-bikin-rugi-puluhan.jpg Ringkasan / Excerpt
 
 Banyak usaha rumahan berjalan bertahun-tahun tanpa NIB. Kelihatannya aman, tapi ada risiko finansial dan operasional yang baru terasa saat usaha mulai berkembang.
 

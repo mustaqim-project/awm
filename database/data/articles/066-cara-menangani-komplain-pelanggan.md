@@ -7,7 +7,7 @@ primary_keyword: "cara menangani komplain pelanggan"
 secondary_keywords: "sop komplain pelanggan umkm; menghadapi pelanggan marah; retensi pelanggan kecewa; layanan konsumen toko"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-menangani-komplain-pelanggan.jpg"
 reading_time: "6 menit"
 ---
 

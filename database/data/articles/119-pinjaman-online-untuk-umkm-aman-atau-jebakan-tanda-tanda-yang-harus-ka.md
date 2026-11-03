@@ -7,7 +7,7 @@ primary_keyword: "pinjaman online UMKM aman"
 secondary_keywords: "pinjol legal OJK; fintech UMKM"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pinjaman-online-untuk-umkm-aman-atau-jebakan-tanda-tanda-yang-harus-ka.jpg"
 reading_time: "5 menit"
 ---
 

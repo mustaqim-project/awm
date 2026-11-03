@@ -7,7 +7,7 @@ primary_keyword: "hitung gaji shift karyawan"
 secondary_keywords: "kalkulator gaji karyawan; upah shift"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/karyawan-shift-malam-vs-siang-cara-hitung-gaji-yang-adil-di-warung.jpg"
 reading_time: "5 menit"
 ---
 

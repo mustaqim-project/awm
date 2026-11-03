@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/stop-catat-stok-di-kertas-menu-sederhana-untuk-ganti-ke-digital-dalam.jpg Ringkasan / Excerpt
 
 Beralih dari pencatatan stok manual di kertas ke sistem digital tidak harus rumit. Ini langkah sederhana yang bisa dilakukan dalam satu hari.
 

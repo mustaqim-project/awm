@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "HPP & Biaya"
 cluster: "tutorial"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/menekan-biaya-kemasan-usaha-umkm-metode-abc.jpg"
 ---
 
 # Menekan Biaya Kemasan Usaha UMKM dengan Metode Activity Based Costing

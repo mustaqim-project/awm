@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/copywriting-whatsapp-untuk-closing-warung-5-template-yang-sudah-terbuk.jpg Ringkasan / Excerpt
 
 Kemampuan menulis pesan yang persuasif di WhatsApp bisa meningkatkan peluang closing penjualan. Berikut 5 template yang bisa langsung digunakan dan disesuaikan.
 

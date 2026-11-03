@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/manual-vs-sistem-mana-lebih-cepat-untuk-catat-penjualan-50-transaksi-p.jpg Ringkasan / Excerpt
 
 Mencatat 50 transaksi per hari secara manual jelas berbeda dengan menggunakan sistem kasir digital. Berikut perbandingan kecepatan dan akurasi keduanya.
 

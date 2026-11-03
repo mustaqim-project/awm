@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/kasir-salah-hitung-saat-ramai-4-trik-anti-human-error-bikin-laporan-ak.jpg Ringkasan / Excerpt
 
 Kesalahan hitung di kasir sering terjadi saat warung sedang ramai. Berikut 4 trik untuk meminimalkan human error agar laporan penjualan tetap akurat.
 

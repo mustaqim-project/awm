@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "Pemasaran & Toko Online"
 cluster: "tutorial"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/strategi-omnichannel-toko-online-umkm-jual-lintas-kanal.jpg"
 ---
 
 # Strategi Omnichannel Toko Online UMKM: Jual Lintas Kanal Tanpa Pusing

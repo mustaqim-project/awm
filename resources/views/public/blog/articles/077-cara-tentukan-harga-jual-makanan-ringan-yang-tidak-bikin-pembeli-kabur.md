@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-tentukan-harga-jual-makanan-ringan-yang-tidak-bikin-pembeli-kabur.jpg Ringkasan / Excerpt
 
 Menentukan harga jual makanan ringan perlu keseimbangan antara margin keuntungan dan daya beli target pasar agar tidak membuat calon pembeli mengurungkan niatnya.
 

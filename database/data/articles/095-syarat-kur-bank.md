@@ -7,7 +7,7 @@ primary_keyword: "syarat kur bank"
 secondary_keywords: "pengajuan kur umkm; dokumen kur; kur tanpa agunan; laporan keuangan untuk bank"
 search_intent: "Informasional"
 category: "Strategi & Operasional"
-cover_image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/syarat-kur-bank.jpg"
 reading_time: "4 menit"
 ---
 

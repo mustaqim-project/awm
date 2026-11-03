@@ -3,6 +3,7 @@ title: "Cara Menghitung Biaya Listrik ke Dalam HPP Produk UMKM agar Tidak Boncos
 meta_title: "Cara Menghitung Biaya Listrik ke Dalam HPP Produk UMKM"
 meta_description: "Beban listrik sering luput dari hitungan modal usaha. Pelajari cara menghitung biaya listrik ke dalam HPP produk UMKM secara akurat dan mudah."
 slug: "cara-menghitung-biaya-listrik-ke-dalam-hpp-produk-umkm"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-biaya-listrik-ke-dalam-hpp-produk-umkm.jpg"
 primary_keyword: "cara menghitung biaya listrik ke dalam hpp produk"
 secondary_keywords: "biaya listrik usaha, kalkulasi hpp kuliner, hpp laundry kiloan, biaya overhead pabrik kecil"
 search_intent: "informational"

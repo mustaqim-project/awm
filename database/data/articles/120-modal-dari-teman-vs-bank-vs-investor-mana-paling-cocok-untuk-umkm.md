@@ -7,7 +7,7 @@ primary_keyword: "sumber modal UMKM"
 secondary_keywords: "modal usaha kecil; friends family fools"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/modal-dari-teman-vs-bank-vs-investor-mana-paling-cocok-untuk-umkm.jpg"
 reading_time: "5 menit"
 ---
 

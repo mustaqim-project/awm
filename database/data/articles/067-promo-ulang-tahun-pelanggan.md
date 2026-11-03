@@ -7,7 +7,7 @@ primary_keyword: "promo ulang tahun pelanggan"
 secondary_keywords: "diskon hari ulang tahun pembeli; voucher ultah pelanggan; loyalty reward ulang tahun; strategi promosi umkm"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/promo-ulang-tahun-pelanggan.jpg"
 reading_time: "6 menit"
 ---
 

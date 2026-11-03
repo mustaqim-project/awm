@@ -7,7 +7,7 @@ primary_keyword: "cara membuat voucher diskon"
 secondary_keywords: "kupon diskon digital toko; voucher belanja umkm; sistem kode promo kasir; aturan promo anti boncos"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-membuat-voucher-diskon.jpg"
 reading_time: "6 menit"
 ---
 

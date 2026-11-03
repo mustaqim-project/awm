@@ -7,7 +7,7 @@ primary_keyword: "SAK EMKM UMKM"
 secondary_keywords: "laporan keuangan UMKM; standar akuntansi UMKM"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/laporan-keuangan-sederhana-umkm-sak-emkm-vs-pembukuan-sederhana.jpg"
 reading_time: "5 menit"
 ---
 

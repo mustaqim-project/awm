@@ -7,7 +7,7 @@ primary_keyword: "omzet 500 juta bebas pajak"
 secondary_keywords: "omzet kumulatif umkm; pph final 0,5 persen; batas omzet 4,8 miliar; hitung omzet setahun"
 search_intent: "Informasional"
 category: "Pajak & Legalitas"
-cover_image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/omzet-500-juta-bebas-pajak.jpg"
 reading_time: "4 menit"
 ---
 

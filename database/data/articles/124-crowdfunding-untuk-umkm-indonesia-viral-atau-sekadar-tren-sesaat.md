@@ -7,7 +7,7 @@ primary_keyword: "crowdfunding UMKM"
 secondary_keywords: "pendanaan UMKM alternatif; Kickstarter Indonesia"
 search_intent: "Informasional"
 category: "Modal"
-cover_image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/crowdfunding-untuk-umkm-indonesia-viral-atau-sekadar-tren-sesaat.jpg"
 reading_time: "5 menit"
 ---
 

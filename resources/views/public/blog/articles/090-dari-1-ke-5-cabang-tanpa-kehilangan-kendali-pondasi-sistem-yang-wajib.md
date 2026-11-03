@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/dari-1-ke-5-cabang-tanpa-kehilangan-kendali-pondasi-sistem-yang-wajib.jpg Ringkasan / Excerpt
 
 Berkembang dari satu ke beberapa cabang butuh fondasi sistem yang kuat agar owner tetap bisa mengontrol operasional tanpa harus hadir fisik di setiap lokasi.
 

@@ -7,7 +7,7 @@ primary_keyword: "recurring invoice"
 secondary_keywords: "faktur tagihan berulang; otomatisasi invoice langganan; tagihan sewa bulanan umkm; sistem billing otomatis"
 search_intent: "Informasional"
 category: "Invoice, PO & SO"
-cover_image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/recurring-invoice.jpg"
 reading_time: "6 menit"
 ---
 

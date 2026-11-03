@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/crowdfunding-untuk-umkm-indonesia-viral-atau-sekadar-tren-sesaat.jpg Ringkasan / Excerpt
 
 Crowdfunding menjadi salah satu alternatif pendanaan yang mulai dilirik UMKM Indonesia. Tapi apakah metode ini benar-benar efektif atau sekadar tren sesaat?
 

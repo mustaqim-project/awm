@@ -7,7 +7,7 @@ primary_keyword: "UGC UMKM murah"
 secondary_keywords: "kreator konten UMKM; micro influencer"
 search_intent: "Informasional"
 category: "Marketing"
-cover_image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-buat-konten-ugc-untuk-umkm-dengan-bayaran-rp-50-ribu-per-video.jpg"
 reading_time: "5 menit"
 ---
 

@@ -7,7 +7,7 @@ primary_keyword: "dampak kenaikan bahan ke laba"
 secondary_keywords: "simulasi what-if; sensitivitas laba"
 search_intent: "Informasional"
 category: "Operasional"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/pembelian-bahan-naik-10-laba-turun-42-apa-hubungannya.jpg"
 reading_time: "5 menit"
 ---
 

@@ -3,6 +3,7 @@ title: "Strategi Penguatan Modal Usaha dan Membeli Kembali Kepemilikan bagi UMKM
 meta_title: "Strategi Penguatan Modal Usaha dan Buyback bagi UMKM"
 meta_description: "Ingin mengambil alih kembali saham toko dari mitra? Simak strategi penguatan modal usaha dan langkah membeli kembali kepemilikan bisnis secara bertahap."
 slug: "strategi-penguatan-modal-dan-buyback-kepemilikan-bisnis-umkm"
+cover_image: "https://cooca.id/images/blog/strategi-penguatan-modal-dan-buyback-kepemilikan-bisnis-umkm.jpg"
 primary_keyword: "penguatan modal usaha"
 secondary_keywords: "buyback saham bisnis kecil, kemitraan toko, valuasi usaha umkm, pembiayaan modal mandiri"
 search_intent: "informational"

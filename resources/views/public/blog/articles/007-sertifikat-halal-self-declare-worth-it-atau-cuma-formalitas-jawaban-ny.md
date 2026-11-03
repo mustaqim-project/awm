@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/sertifikat-halal-self-declare-worth-it-atau-cuma-formalitas-jawaban-ny.jpg Ringkasan / Excerpt
 
 Sertifikat halal self-declare menjanjikan proses lebih cepat dan gratis untuk UMKM tertentu. Tapi apakah benar-benar cukup dibanding jalur reguler? Ini perbandingannya.
 

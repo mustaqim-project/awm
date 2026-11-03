@@ -7,7 +7,7 @@ primary_keyword: "cara daftar PIRT"
 secondary_keywords: "SPP-IRT; izin pangan rumah tangga"
 search_intent: "Informasional"
 category: "Legalitas"
-cover_image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/jualan-nasi-uduk-perlu-pirt-begini-cara-daftar-sertifikatnya-dalam-14.jpg"
 reading_time: "5 menit"
 ---
 

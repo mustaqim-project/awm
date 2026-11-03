@@ -7,7 +7,7 @@ primary_keyword: "catat omset harian HP"
 secondary_keywords: "pencatatan omset UMKM; aplikasi omset"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/catat-omset-harian-di-hp-tanpa-ribet-5-cara-praktis-untuk-umkm-sibuk.jpg"
 reading_time: "5 menit"
 ---
 

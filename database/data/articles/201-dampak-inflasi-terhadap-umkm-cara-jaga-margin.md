@@ -9,7 +9,7 @@ search_intent: "informational"
 category: "HPP & Harga Jual"
 cluster: "edukasi"
 reading_time: "9 menit"
-cover_image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/dampak-inflasi-terhadap-umkm-cara-jaga-margin.jpg"
 ---
 
 # Dampak Inflasi terhadap UMKM: Cara Menjaga Margin Laba dan Food Cost

@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/ai-untuk-warung-rumahan-5-kegunaan-praktis-yang-bisa-dipakai-setiap-ha.jpg Ringkasan / Excerpt
 
 Teknologi AI kini semakin terjangkau dan bisa dimanfaatkan usaha rumahan untuk berbagai kebutuhan operasional harian, bukan hanya perusahaan besar.
 

@@ -7,7 +7,7 @@ primary_keyword: "cara mengumpulkan data pelanggan"
 secondary_keywords: "database pelanggan umkm; data nomor whatsapp pelanggan; izin data pribadi pelanggan; crm sederhana"
 search_intent: "Informasional"
 category: "CRM & Loyalty"
-cover_image: "https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/cara-mengumpulkan-data-pelanggan.jpg"
 reading_time: "4 menit"
 ---
 

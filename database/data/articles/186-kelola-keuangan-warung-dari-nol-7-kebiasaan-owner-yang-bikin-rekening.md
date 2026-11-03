@@ -7,7 +7,7 @@ primary_keyword: "kelola keuangan warung"
 secondary_keywords: "keuangan UMKM; cash flow warung"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/kelola-keuangan-warung-dari-nol-7-kebiasaan-owner-yang-bikin-rekening.jpg"
 reading_time: "5 menit"
 ---
 

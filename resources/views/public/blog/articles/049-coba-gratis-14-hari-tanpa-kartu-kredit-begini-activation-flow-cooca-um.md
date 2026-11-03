@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/coba-gratis-14-hari-tanpa-kartu-kredit-begini-activation-flow-cooca-um.jpg Ringkasan / Excerpt
 
 COOCA.ID menyediakan masa coba gratis untuk pelaku UMKM yang ingin merasakan manfaat sistem digital sebelum berkomitmen berlangganan.
 

@@ -7,7 +7,7 @@ primary_keyword: "bep multi produk"
 secondary_keywords: "titik impas banyak produk; break even point toko; rumus bep rupiah; target penjualan minimum"
 search_intent: "Informasional"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/bep-multi-produk.jpg"
 reading_time: "4 menit"
 ---
 

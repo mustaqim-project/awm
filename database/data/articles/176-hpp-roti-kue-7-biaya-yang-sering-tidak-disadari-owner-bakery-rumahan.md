@@ -7,7 +7,7 @@ primary_keyword: "HPP roti kue"
 secondary_keywords: "biaya bakery; harga roti"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/hpp-roti-kue-7-biaya-yang-sering-tidak-disadari-owner-bakery-rumahan.jpg"
 reading_time: "5 menit"
 ---
 

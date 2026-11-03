@@ -14,7 +14,7 @@ Tim Edukasi COOCA
 
 **URL Cover Image (Opsional)**
 
-## Ringkasan / Excerpt
+https://cooca.id/images/blog/cara-kelola-banyak-pesanan-whatsapp-tanpa-typo-workflow-yang-bisa-diti.jpg Ringkasan / Excerpt
 
 Menangani banyak pesanan melalui WhatsApp bisa jadi rumit tanpa alur kerja yang jelas. Berikut workflow sederhana agar pesanan tetap tercatat rapi dan minim kesalahan.
 

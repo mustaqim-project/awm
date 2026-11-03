@@ -3,6 +3,7 @@ title: "Pelajaran Investasi Lo Kheng Hong untuk Mengelola Laba Usaha dan Arus Ka
 meta_title: "Pelajaran Investasi Lo Kheng Hong untuk Kelola Laba UMKM"
 meta_description: "Prinsip value investing investor legendaris relevan bagi pemilik toko. Pelajari cara alokasi laba ditahan dan disiplin arus kas usaha agar bisnis bertumbuh."
 slug: "pelajaran-investasi-lo-kheng-hong-untuk-mengelola-laba-umkm"
+cover_image: "https://cooca.id/images/blog/pelajaran-investasi-lo-kheng-hong-untuk-mengelola-laba-umkm.jpg"
 primary_keyword: "mengelola laba usaha"
 secondary_keywords: "alokasi laba ditahan, cash flow bisnis kecil, investasi untuk umkm, manajemen keuangan toko"
 search_intent: "informational"

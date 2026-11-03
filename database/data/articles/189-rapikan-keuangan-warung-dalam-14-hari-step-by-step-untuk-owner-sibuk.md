@@ -7,7 +7,7 @@ primary_keyword: "rapikan keuangan warung"
 secondary_keywords: "financial reset UMKM"
 search_intent: "Informasional"
 category: "Keuangan"
-cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://cooca.id/images/blog/rapikan-keuangan-warung-dalam-14-hari-step-by-step-untuk-owner-sibuk.jpg"
 reading_time: "5 menit"
 ---
 
