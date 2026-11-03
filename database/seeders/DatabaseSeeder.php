@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             ServicesAndAutomotiveClusterSeeder::class,
             AiPrestigeTestingAccountSeeder::class,
+            AiModelRegistrySeeder::class,
         ]);
     }
 }

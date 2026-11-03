@@ -20,7 +20,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $generation_id
  * @property string $type
  * @property int $amount
+ * @property int|null $balance_before
  * @property int $balance_after
+ * @property float|null $exchange_rate
+ * @property float|null $api_cost_usd
+ * @property array|null $tokens_usage
  * @property string $idempotency_key
  * @property string $description
  * @property array|null $metadata
@@ -39,7 +43,11 @@ class AiCreditTransaction extends Model
         'generation_id',
         'type',
         'amount',
+        'balance_before',
         'balance_after',
+        'exchange_rate',
+        'api_cost_usd',
+        'tokens_usage',
         'idempotency_key',
         'description',
         'metadata',
@@ -49,7 +57,11 @@ class AiCreditTransaction extends Model
     {
         return [
             'amount' => 'integer',
+            'balance_before' => 'integer',
             'balance_after' => 'integer',
+            'exchange_rate' => 'float',
+            'api_cost_usd' => 'float',
+            'tokens_usage' => 'array',
             'metadata' => 'array',
         ];
     }
