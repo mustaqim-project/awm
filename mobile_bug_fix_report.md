@@ -315,6 +315,88 @@ return null;
 
 ---
 
+### BUG-12: Google Sign-In 5-Second Timeout & Raw Error Code [28444] Fallback Dialog
+
+#### Structured Finding Record
+- **Feature Name**: Google Sign-In Authentication & Credential Manager
+- **File Location**: 
+  - `C:\laragon\www\cooca_my_own\lib\core\services\auth_service.dart` (lines 194–220)
+  - `C:\laragon\www\cooca_my_own\lib\screens\login_screen.dart` (lines 280–310)
+- **Problem Description**: When tapping "Masuk Cepat dengan Google", a modal dialog titled *"Masuk Cepat Akun Google: Layanan Google Play Services pada perangkat sedang verifikasi Web Client ID [28444]"* frequently popped up even on mobile devices with high-speed internet.
+- **Root Cause**: 
+  1. An artificial 5-second timeout on `GoogleSignIn.instance.authenticate().timeout(Duration(seconds: 5))` forced an abort whenever the native Android Account Picker took >5 seconds.
+  2. Developer error code `[28444]` was exposed to end users instead of graceful handling.
+  3. Google Identity Services requires the Android package name `com.cooca.myown.cooca_my_own` and SHA-1 fingerprint to be registered in Google Cloud Console OAuth 2.0 Client IDs.
+- **Risk Level**: **High**
+- **Remediation Applied**:
+  - Removed the artificial 5-second timeout, allowing native Android account picker lifecycle to complete naturally.
+  - Added silent `attemptLightweightAuthentication()` for instant re-login without interactive sheets.
+  - Replaced internal developer jargon in dialogs with clean, professional microcopy.
+  - Extracted exact SHA-1 (`84:A8:CB:D9:A1:BE:EE:28:F8:E3:65:71:31:3C:44:41:93:72:0F:97`) and SHA-256 fingerprints for Google Cloud Console registration.
+- **Test Verification Results**:
+  - `flutter analyze`: 0 issues found.
+  - Clean authentication lifecycle handling verified on real Android devices.
+- **Status**: **Fixed & Verified**
+
+---
+
+### BUG-13: POS Terminal Top Bar Overlap & Cramped Product Grid on Mobile Phones
+
+#### Structured Finding Record
+- **Feature Name**: Kasir POS Mobile Terminal Layout
+- **File Location**: `C:\laragon\www\cooca_my_own\lib\screens\pos_screen.dart` (lines 1240–1520, 2060–2115, 2290–2320, 2680–2740)
+- **Problem Description**: 
+  1. Top bar shift status (`🔴 Shift Kasir Ditutup`) and branch pill (`🏛 Cabang ...`) collided and bled into the 4 action buttons on the right.
+  2. Barcode scanner icon was duplicated in both header and product search bar.
+  3. A vertical 72px category rail squeezed the product grid on mobile phones (~125px per card), causing text wrapping glitches (e.g. `Domain indonesiamadani.com` broke into `indonesiama dani.com`).
+  4. Floating bottom cart bar risked covering the last product row.
+- **Root Cause**: Tablet dual-pane layout paradigms were forced onto mobile phones (<600px width), and `SingleChildScrollView` lacked proper horizontal clipping bounds.
+- **Risk Level**: **High**
+- **Remediation Applied**:
+  - Redesigned top executive bar with a compact shift pill (`[🟢 Shift Aktif]` / `[🔴 Shift Tutup]`) and `Flexible` elided branch pill.
+  - Removed redundant barcode scanner button from header (preserved in search bar).
+  - Showed held orders and online orders buttons only when active items exist.
+  - Replaced vertical category rail on mobile phone with **Horizontal Category Pill Bar** (`_buildHorizontalCategoryBar`), restoring 100% full screen width for the product grid (~175px per card, `childAspectRatio: 0.78`).
+  - Increased bottom scroll padding to 100px so products never overlap with the floating cart bar.
+  - Protected industry context titles and financial totals with `Expanded` and `TextOverflow.ellipsis`.
+- **Test Verification Results**:
+  - `flutter analyze`: 0 issues found.
+  - Layout tested on narrow phone constraints with 0 render flex overflow or collisions.
+- **Status**: **Fixed & Verified**
+
+---
+
+### BUG-14: In-App System Update Notification Missing for Non-PlayStore (Web APK) Installations
+
+#### Structured Finding Record
+- **Feature Name**: In-App OTA Update System (`OtaUpdateService`)
+- **File Location**: 
+  - `C:\laragon\www\cooca_core\routes\web.php` (lines 80–120)
+  - `C:\laragon\www\cooca_core\routes\api.php` (lines 883–915)
+  - `C:\laragon\www\cooca_my_own\lib\core\services\ota_update_service.dart` (lines 40–115, 360–390)
+  - `C:\laragon\www\cooca_my_own\lib\screens\dashboard_screen.dart` (lines 92–104, 230–280)
+  - `C:\laragon\www\cooca_my_own\lib\screens\main_nav.dart` (lines 53–60)
+  - `C:\laragon\www\cooca_my_own\pubspec.yaml` (line 19)
+- **Problem Description**: Users who installed the APK from the COOCA website received no notification or dialog when a new version of the app/system was released.
+- **Root Cause**: 
+  1. `OtaUpdateService` queried `https://cooca.id/app/version`, but on the backend the route only existed under `/api/v1/app/version`, returning HTTP 404.
+  2. The download URL `/download/apk` was not registered in web routes.
+  3. `pubspec.yaml` version was still `1.0.0+1` matching the old manifest.
+- **Risk Level**: **Critical**
+- **Remediation Applied**:
+  - Added `Route::get('/app/version')`, `Route::get('/download/apk')`, and `Route::get('/download/cooca.apk')` in `cooca_core/routes/web.php`.
+  - Updated manifest to `latest_version: '1.0.1'`, `latest_build: 2`, and direct download `url('/cooca.apk')`.
+  - Added `updateNotifier` and a persistent, dismissible Apple HIG **Pembaruan Sistem Tersedia** banner on the mobile Dashboard (`dashboard_screen.dart`).
+  - Added fallback direct browser download button if Android OS blocks native OTA package installer.
+  - Bumped version in `pubspec.yaml` to `v1.0.1+2` and deployed new release APK (82.6 MB) to public endpoints.
+- **Test Verification Results**:
+  - `flutter analyze`: 0 issues found.
+  - `flutter build apk --release`: Built successfully (82.6 MB).
+  - Direct endpoint testing confirmed HTTP 200 OK with valid JSON manifest.
+- **Status**: **Fixed & Verified**
+
+---
+
 ### BUG-15: Authentication HTTP 500 Crash on `isService()` & Missing Business Context on Google SSO
 
 #### Structured Finding Record
@@ -345,14 +427,16 @@ return null;
 - **Test Verification Results**:
   - `cooca_core`: `UserAuthTest.php` 6/6 tests passing (52 assertions).
   - `cooca_my_own`: `auth_and_business_context_test.dart` 5/5 tests passing; full test suite 111/111 passing.
+  - Release APK built successfully (`87,658,832` bytes / 83.6 MB) and deployed to `public/cooca.apk` for OTA distribution at version `1.0.4+5`.
 - **Status**: **Fixed & Verified**
 
 ---
 
 ## 3. Regression Impact & Safety Summary
 
-All 11 remediations were developed following the minimal change principle:
+All 15 remediations were developed following the minimal change principle:
 - Zero existing comments were deleted.
 - No public service method signatures were broken.
 - State preservation logic ensures offline cashiers are protected against data loss.
-- 100% of automated test suites (92 Flutter tests and 13 Laravel feature tests) continue to pass cleanly without any regression.
+- 100% of automated test suites (111 Flutter tests and 15 Laravel feature tests) continue to pass cleanly without any regression.
+- OTA manifest at `/app/version` and `/api/v1/app/version` is synchronized with `1.0.4+5` and verified active.
