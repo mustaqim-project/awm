@@ -27,6 +27,40 @@ final class BusinessController extends Controller
         /** @var User $user */
         $user = $request->user();
         $businesses = $user->businesses()->get();
+
+        if ($businesses->isEmpty()) {
+            if ($user->active_business_id && ($activeBiz = Business::find($user->active_business_id))) {
+                BusinessMembership::firstOrCreate([
+                    'business_id' => $activeBiz->id,
+                    'user_id' => $user->id,
+                ], [
+                    'id' => (string) Str::uuid(),
+                    'role' => 'owner',
+                ]);
+                $businesses = $user->businesses()->get();
+            } else {
+                $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+                $newBiz = Business::create([
+                    'name' => $bizName,
+                    'slug' => Str::slug($bizName) . '-' . Str::lower(Str::random(5)),
+                    'currency' => 'IDR',
+                    'currency_symbol' => 'Rp',
+                    'currency_precision' => 0,
+                    'is_active' => true,
+                    'template_code' => 'retail_reseller',
+                    'industry_category' => 'retail',
+                ]);
+                BusinessMembership::create([
+                    'id' => (string) Str::uuid(),
+                    'business_id' => $newBiz->id,
+                    'user_id' => $user->id,
+                    'role' => 'owner',
+                ]);
+                $user->updateQuietly(['active_business_id' => $newBiz->id]);
+                $businesses = $user->businesses()->get();
+            }
+        }
+
         $resource = BusinessResource::collection($businesses);
 
         return response()->json([

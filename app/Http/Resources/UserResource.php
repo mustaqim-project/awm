@@ -50,6 +50,7 @@ final class UserResource extends JsonResource
                 'role' => 'owner',
             ]);
             $this->resource->updateQuietly(['active_business_id' => $activeBusiness->id]);
+            $this->resource->unsetRelation('businesses');
         }
 
         $role = \App\Support\Context::role();

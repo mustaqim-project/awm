@@ -239,12 +239,32 @@ final class GoogleAuthController extends Controller
         request()->session()->put('auth_wa_otp_verified_user_id', $user->id);
         request()->session()->put('auth_wa_otp_verified_at', now()->timestamp);
 
-        if (! $user->active_business_id) {
+        if (! $user->active_business_id || ! $user->businesses()->exists()) {
             $firstBusiness = $user->businesses()->first();
 
             if ($firstBusiness !== null) {
                 $user->update(['active_business_id' => $firstBusiness->id]);
                 $user->active_business_id = $firstBusiness->id;
+            } else {
+                $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+                $newBiz = \App\Models\Business::create([
+                    'name' => $bizName,
+                    'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::lower(\Illuminate\Support\Str::random(5)),
+                    'currency' => 'IDR',
+                    'currency_symbol' => 'Rp',
+                    'currency_precision' => 0,
+                    'is_active' => true,
+                    'template_code' => 'retail_reseller',
+                    'industry_category' => 'retail',
+                ]);
+                \App\Models\BusinessMembership::create([
+                    'id' => (string) \Illuminate\Support\Str::uuid(),
+                    'business_id' => $newBiz->id,
+                    'user_id' => $user->id,
+                    'role' => 'owner',
+                ]);
+                $user->updateQuietly(['active_business_id' => $newBiz->id]);
+                $user->active_business_id = $newBiz->id;
             }
         }
 

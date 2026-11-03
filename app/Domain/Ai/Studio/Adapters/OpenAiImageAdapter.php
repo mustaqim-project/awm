@@ -126,7 +126,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
 
         // 1. Jika running di mock atau environment testing, gunakan respon simulasi cepat
         if ($this->forceMock || app()->environment('testing')) {
-            return $this->generateMockResponse($prompt, $aspectRatio, $startTime);
+            return $this->generateMockResponse($prompt, $aspectRatio, $startTime, $model);
         }
 
         // 2. Dapatkan pool kunci aktif dari Setting
@@ -140,7 +140,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
 
         // Jika tidak ada kunci sama sekali di Setting database maupun fallback env, jalankan mock mode
         if ($activeKeyData === null) {
-            return $this->generateMockResponse($prompt, $aspectRatio, $startTime);
+            return $this->generateMockResponse($prompt, $aspectRatio, $startTime, $model);
         }
 
         // 3. Pemetaan ukuran OpenAI resmi

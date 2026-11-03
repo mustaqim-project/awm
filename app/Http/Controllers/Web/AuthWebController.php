@@ -135,11 +135,31 @@ final class AuthWebController extends Controller
             $user = Auth::guard('web')->user();
 
             // Set active business context
-            if (! $user->active_business_id) {
+            if (! $user->active_business_id || ! $user->businesses()->exists()) {
                 $firstBusiness = $user->businesses()->first();
                 if ($firstBusiness) {
                     $user->update(['active_business_id' => $firstBusiness->id]);
                     session(['active_business_id' => $firstBusiness->id]);
+                } elseif ($user->isBusinessOwner() || ! $user->memberships()->exists()) {
+                    $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+                    $newBiz = Business::create([
+                        'name' => $bizName,
+                        'slug' => Str::slug($bizName) . '-' . Str::lower(Str::random(5)),
+                        'currency' => 'IDR',
+                        'currency_symbol' => 'Rp',
+                        'currency_precision' => 0,
+                        'is_active' => true,
+                        'template_code' => 'retail_reseller',
+                        'industry_category' => 'retail',
+                    ]);
+                    BusinessMembership::create([
+                        'id' => (string) Str::uuid(),
+                        'business_id' => $newBiz->id,
+                        'user_id' => $user->id,
+                        'role' => 'owner',
+                    ]);
+                    $user->updateQuietly(['active_business_id' => $newBiz->id]);
+                    session(['active_business_id' => $newBiz->id]);
                 }
             } else {
                 session(['active_business_id' => $user->active_business_id]);

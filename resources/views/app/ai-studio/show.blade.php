@@ -652,6 +652,8 @@
                         <label class="text-xs font-semibold text-black dark:text-white">Pilihan Engine Model AI</label>
                         <select x-model="dispatchModel" @change="onDrawerModelChange()"
                             class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                            <option value="gpt-image-2.5-flare">Fast Generation (gpt-image-2.5-flare - 15 Kredit / Generate Harian)</option>
+                            <option value="gpt-image-2.5-sunburst">Premium Generation (gpt-image-2.5-sunburst - 25 Kredit / Presisi &amp; Edit)</option>
                             <option value="ideogram-v2">Ideogram v2 (15 Kredit - Unggul Tipografi &amp; Label)</option>
                             <option value="dall-e-3">OpenAI DALL-E 3 (20 Kredit - Fotografi Realistik Tinggi)</option>
                             <option value="sdxl">Stable Diffusion XL (10 Kredit - Cepat &amp; Artistik)</option>
@@ -739,7 +741,7 @@ function aiStudioCanvas(config) {
 
         // Dispatch Drawer State
         generationDrawerOpen: false,
-        dispatchModel: 'ideogram-v2',
+        dispatchModel: 'gpt-image-2.5-flare',
         dispatchCost: 15,
         dispatchCustomPrompt: '',
         dispatching: false,
@@ -752,7 +754,9 @@ function aiStudioCanvas(config) {
         },
 
         onDrawerModelChange() {
-            if (this.dispatchModel === 'dall-e-3') this.dispatchCost = 20;
+            if (this.dispatchModel === 'gpt-image-2.5-flare') this.dispatchCost = 15;
+            else if (this.dispatchModel === 'gpt-image-2.5-sunburst') this.dispatchCost = 25;
+            else if (this.dispatchModel === 'dall-e-3') this.dispatchCost = 20;
             else if (this.dispatchModel === 'sdxl') this.dispatchCost = 10;
             else this.dispatchCost = 15;
         },
@@ -787,12 +791,12 @@ function aiStudioCanvas(config) {
 
         openExportModal() {
             this.exportModalOpen = true;
-            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
+            this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
         },
 
         openSocialModal() {
             this.socialModalOpen = true;
-            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
+            this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
         },
 
         async submitExportToCatalog() {
@@ -899,11 +903,12 @@ function aiStudioCanvas(config) {
             this.dispatching = true;
             try {
                 const payload = {
-                    ai_model_name: this.dispatchModel,
+                    project_id: '{{ $project->id }}',
+                    model_name: this.dispatchModel,
                     custom_prompt: this.dispatchCustomPrompt || undefined
                 };
 
-                const res = await fetch('{{ route("ai-studio.projects.dispatch-generation", $project->id) }}', {
+                const res = await fetch('{{ route("ai-studio.generate") }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -968,7 +973,7 @@ function aiStudioCanvas(config) {
                                 this.isFavorite = !!asset.is_selected_favorite;
                             }
                             this.flashMessage = 'Visual render AI selesai dengan sempurna!';
-                            this.$nextTick(() => if (window.lucide) window.lucide.createIcons());
+                            this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
                         } else if (gen.status === 'failed') {
                             clearInterval(interval);
                             this.isRendering = false;

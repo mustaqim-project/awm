@@ -92,6 +92,16 @@ class Business extends Model
 
     protected static function booted(): void
     {
+        static::creating(function (Business $business): void {
+            if (empty($business->slug)) {
+                $baseSlug = \Illuminate\Support\Str::slug($business->name ?: 'usaha');
+                if (empty($baseSlug)) {
+                    $baseSlug = 'usaha';
+                }
+                $business->slug = $baseSlug . '-' . \Illuminate\Support\Str::lower(\Illuminate\Support\Str::random(6));
+            }
+        });
+
         static::updating(function (Business $business): void {
             if ($business->isDirty('slug')) {
                 $oldSlug = (string) $business->getOriginal('slug');
@@ -792,6 +802,11 @@ class Business extends Model
             'service_event', 'bengkel', 'salon', 'laundry', 'carwash',
         ];
         return in_array($code, $serviceCodes, true);
+    }
+
+    public function isService(): bool
+    {
+        return $this->isServiceSector();
     }
 
     public function isWorkshop(): bool

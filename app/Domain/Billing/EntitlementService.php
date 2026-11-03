@@ -1976,7 +1976,7 @@ final class EntitlementService
                 // Sinkronkan kredit AI Studio ke saldo bisnis secara atomik
                 try {
                     $creditLedgerService = app(\App\Domain\Ai\Studio\Billing\CreditLedgerService::class);
-                    $creditsToAdd = (int) ($payment->topup_quantity >= 100000 ? max(10, (int) round($payment->topup_quantity / 10000)) : max(1, (int) $payment->topup_quantity));
+                    $creditsToAdd = max(1, (int) $payment->topup_quantity);
                     if ($creditsToAdd > 0) {
                         $creditLedgerService->topup(
                             business: $payment->business_id,
