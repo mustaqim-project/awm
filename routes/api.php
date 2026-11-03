@@ -890,21 +890,38 @@ Route::prefix('v1')->group(function (): void {
         return response()->json([
             'success' => true,
             'app_name' => 'COOCA My Own',
-            'package_name' => 'com.cooca.myown',
-            'latest_version' => '1.0.0',
+            'package_name' => 'com.cooca.myown.cooca_my_own',
+            'latest_version' => '1.0.1',
             'latest_build' => 2,
             'min_supported_version' => '1.0.0',
             'force_update' => false,
-            'download_url' => url('/download/apk'),
+            'download_url' => url('/cooca.apk'),
             'file_size' => $fileSize,
             'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
             'release_notes' => [
-                'Pembaruan fitur otomatis tanpa download manual (OTA In-App Update).',
-                'Kustomisasi struk thermal & opsi tampilan logo bisnis di header.',
-                'Aturan watermark struk: Bersih tanpa watermark untuk akun berlangganan, dan watermark "by Cooca.id" untuk akun gratis.',
-                'Perbaikan siklus kasir OpenShift & isolasi terminal register.',
-                'Keamanan absensi dengan proteksi anti-Fake GPS / Mock Location.',
-                'Peningkatan responsivitas layar HP dan eliminasi elemen tumpang tindih.',
+                'Perbaikan layout kasir POS bebas tumpang tindih dan responsif untuk mobile.',
+                'Kategori produk horizontal yang lebih luas dan mudah dioperasikan.',
+                'Pembaruan alur Google Sign-In Play Services yang cepat dan stabil.',
+                'Pembaruan sistem in-app langsung tanpa download manual dari browser.',
+            ],
+        ]);
+    });
+
+    // Alias endpoint for AppUpdateService / OTA checks
+    Route::get('/app/check-update', function () {
+        $apkFile = public_path('cooca.apk');
+        $hasApk = file_exists($apkFile);
+        $fileSize = $hasApk ? filesize($apkFile) : 0;
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'version' => '1.0.1',
+                'build_number' => '2',
+                'download_url' => url('/cooca.apk'),
+                'release_notes' => 'Perbaikan layout kasir POS bebas tumpang tindih dan responsif untuk mobile.',
+                'is_mandatory' => false,
+                'file_size' => $fileSize,
             ],
         ]);
     });
