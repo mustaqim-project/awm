@@ -378,6 +378,11 @@
                     <div class="flex items-center gap-3">
                         <span class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">Total
                             {{ $platformPosts->total() }} Postingan</span>
+                        <a href="{{ route('admin.ai-studio.visual.index') }}"
+                            class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-bold text-white bg-gradient-to-r from-[#AF52DE] to-[#5856D6] hover:from-[#9c3fd0] hover:to-[#4a47b8] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm shadow-[#AF52DE]/25">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            <span>Buat Gambar AI</span>
+                        </a>
                         <button type="button" @click="openCreatePostModal = true"
                             class="min-h-[34px] px-3.5 rounded-[10px] text-[12px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shadow-sm">
                             <i data-lucide="plus" class="w-3.5 h-3.5"></i>
@@ -2973,6 +2978,12 @@
                     const tabParam = urlParams.get('tab');
                     if (tabParam) {
                         this.activeTab = tabParam;
+                    }
+                    const draftImageParam = urlParams.get('draft_image');
+                    if (draftImageParam) {
+                        this.mediaSourceTab = 'url';
+                        this.mediaUrl = decodeURIComponent(draftImageParam);
+                        this.openCreatePostModal = true;
                     }
                     this.$watch('openCreatePostModal', (val) => {
                         if (val) {

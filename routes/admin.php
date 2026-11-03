@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\AdminAccountRecoveryController;
 use App\Http\Controllers\Admin\AdminAiStudioPricingController;
 use App\Http\Controllers\Admin\AdminAiStudioSourceController;
+use App\Http\Controllers\Admin\AdminAiStudioVisualController;
 use App\Http\Controllers\Admin\AdminAiTokenController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBillingPackageController;
@@ -105,8 +106,16 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::delete('/ai-tokens/engine/models/{modelId}', [AdminAiTokenController::class, 'deleteModel'])->where('modelId', '.*')->name('ai-tokens.engine.models.delete');
         Route::post('/ai-tokens/engine/models/reset-default', [AdminAiTokenController::class, 'resetDefaultModels'])->name('ai-tokens.engine.models.reset-default');
 
-        // AI Studio Platform Administration (Sources, Licenses, and Pricing)
+        // AI Studio Platform Administration (Studio Visual Medsos, Sources, Licenses, and Pricing)
         Route::prefix('ai-studio')->name('ai-studio.')->group(function (): void {
+            // Studio Visual & Konten Media Sosial Admin
+            Route::get('/', [AdminAiStudioVisualController::class, 'index'])->name('index');
+            Route::get('/visual', [AdminAiStudioVisualController::class, 'index'])->name('visual.index');
+            Route::post('/visual/generate', [AdminAiStudioVisualController::class, 'generate'])->name('visual.generate');
+            Route::post('/visual/{asset}/send-to-social-media', [AdminAiStudioVisualController::class, 'sendToSocialMedia'])->name('visual.send-to-social-media');
+            Route::post('/visual/{asset}/favorite', [AdminAiStudioVisualController::class, 'toggleFavorite'])->name('visual.favorite');
+            Route::delete('/visual/{asset}', [AdminAiStudioVisualController::class, 'destroy'])->name('visual.destroy');
+
             // Sumber Inspirasi & Lisensi
             Route::get('/sources', [AdminAiStudioSourceController::class, 'index'])->name('sources.index');
             Route::post('/sources', [AdminAiStudioSourceController::class, 'storeSource'])->name('sources.store');

@@ -36,6 +36,24 @@
                 <span>+ Hibahkan Kredit Tenant</span>
             </button>
         </div>
+        <!-- Tab Navigasi Submodul AI Studio Admin -->
+        <div class="w-full flex items-center gap-1.5 border-t border-black/5 dark:border-white/10 pt-4 overflow-x-auto no-scrollbar">
+            <a href="{{ route('admin.ai-studio.visual.index') }}"
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
+                <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                <span>Studio Visual &amp; Medsos</span>
+            </a>
+            <a href="{{ route('admin.ai-studio.sources.index') }}"
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
+                <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                <span>Sumber Inspirasi &amp; Tren</span>
+            </a>
+            <a href="{{ route('admin.ai-studio.pricing.index') }}"
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-bold transition-all bg-[#007AFF] text-white shadow-xs">
+                <i data-lucide="coins" class="w-3.5 h-3.5"></i>
+                <span>Model Registry &amp; Tarif</span>
+            </a>
+        </div>
     </div>
 
     <!-- Feedback Alerts -->

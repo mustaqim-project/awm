@@ -45,3 +45,4 @@ return new class extends Migration
         Schema::dropIfExists('admin_ai_visual_assets');
     }
 };
+
