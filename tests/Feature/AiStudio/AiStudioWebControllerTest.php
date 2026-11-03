@@ -860,7 +860,7 @@ final class AiStudioWebControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertViewHas('aiAssets');
-        $response->assertViewHas('totalAssetsCount');
+        $response->assertViewHas('stats');
     }
 }
 
