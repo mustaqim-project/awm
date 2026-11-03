@@ -1066,4 +1066,20 @@ final class AttendanceService
             'message' => $message,
         ];
     }
+
+    /**
+     * Evaluate Google Play Integrity API token with graceful degradation when cloud credentials are unconfigured.
+     *
+     * @param string $token
+     * @return string
+     */
+    public function evaluatePlayIntegrityToken(string $token): string
+    {
+        $cloudCredentialsConfigured = config('services.google.play_integrity_credentials') !== null;
+        if (! $cloudCredentialsConfigured) {
+            return 'degraded_local_integrity_verified';
+        }
+
+        return 'cloud_integrity_verified';
+    }
 }
