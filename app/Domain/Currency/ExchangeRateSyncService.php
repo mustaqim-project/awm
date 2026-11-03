@@ -6,7 +6,7 @@ namespace App\Domain\Currency;
 
 use App\Models\Currency;
 use App\Models\ExchangeRate;
-use App\Models\Setting;
+use App\Models\SystemSetting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -73,7 +73,7 @@ class ExchangeRateSyncService
 
         // 3. Coba ambil dari System Setting
         try {
-            $settingRate = Setting::get('ai_exchange_rate_usd_idr');
+            $settingRate = SystemSetting::get('ai_exchange_rate_usd_idr');
             if (!empty($settingRate) && is_numeric($settingRate)) {
                 return (float) $settingRate;
             }
@@ -173,8 +173,8 @@ class ExchangeRateSyncService
             }
 
             // Simpan juga ke setting untuk referensi admin
-            Setting::set('ai_exchange_rate_usd_idr', (string) $rate);
-            Setting::set('ai_exchange_rate_last_synced_at', now()->toIso8601String());
+            SystemSetting::set('ai_exchange_rate_usd_idr', (string) $rate);
+            SystemSetting::set('ai_exchange_rate_last_synced_at', now()->toIso8601String());
         } catch (Throwable $e) {
             Log::warning('[ExchangeRateSyncService] Failed persisting rate snapshot: ' . $e->getMessage());
         }

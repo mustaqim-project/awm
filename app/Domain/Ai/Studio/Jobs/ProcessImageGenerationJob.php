@@ -210,7 +210,7 @@ class ProcessImageGenerationJob implements ShouldQueue
 
         // 8. Update status proyek
         $generation->project?->update([
-            'status' => 'ready',
+            'status' => 'completed',
             'last_activity_at' => now(),
         ]);
     }

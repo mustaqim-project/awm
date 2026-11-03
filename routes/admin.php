@@ -117,10 +117,13 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/sources/{source}/policy', [AdminAiStudioSourceController::class, 'updatePolicy'])->name('sources.policy.update');
             Route::post('/sources/{source}/toggle', [AdminAiStudioSourceController::class, 'toggleSource'])->name('sources.toggle');
 
-            // Matriks Harga & Ledger Finansial
+            // Matriks Harga, Model Registry, Kurs & Ledger Finansial
             Route::get('/pricing', [AdminAiStudioPricingController::class, 'index'])->name('pricing.index');
             Route::post('/pricing/grant-credits', [AdminAiStudioPricingController::class, 'grantCredits'])->name('pricing.grant-credits');
             Route::post('/pricing/update', [AdminAiStudioPricingController::class, 'updatePricing'])->name('pricing.update');
+            Route::post('/pricing/sync-exchange-rate', [AdminAiStudioPricingController::class, 'syncExchangeRate'])->name('pricing.sync-exchange-rate');
+            Route::post('/pricing/models/{modelId}/toggle', [AdminAiStudioPricingController::class, 'toggleModel'])->name('pricing.models.toggle');
+            Route::post('/pricing/models/{modelId}/update-rates', [AdminAiStudioPricingController::class, 'updateModelRates'])->name('pricing.models.update-rates');
         });
 
         // Google API, System Settings, Payment Gateway, WhatsApp & SMTP

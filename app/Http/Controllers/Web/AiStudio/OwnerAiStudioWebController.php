@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AiStudio\CompilePromptRequest;
 use App\Http\Requests\AiStudio\DispatchGenerationRequest;
 use App\Models\AiStudio\AiCreditTransaction;
+use App\Models\AiStudio\AiModelRegistry;
 use App\Models\AiStudio\BusinessInspirationGeneration;
 use App\Models\AiStudio\BusinessInspirationGenerationAsset;
 use App\Models\AiStudio\BusinessInspirationProject;
@@ -202,7 +203,12 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $pricingMatrix = CostQuoteService::MODEL_PRICING;
         $creditsBalance = (int) ($business->ai_credits_balance ?? 0);
 
-        return view('app.ai-studio.create', compact('products', 'selectedProduct', 'selectedInspiration', 'pricingMatrix', 'creditsBalance', 'business'));
+        $activeModels = AiModelRegistry::with('activePricing')
+            ->where('is_active', true)
+            ->orderBy('is_default', 'desc')
+            ->get();
+
+        return view('app.ai-studio.create', compact('products', 'selectedProduct', 'selectedInspiration', 'pricingMatrix', 'creditsBalance', 'business', 'activeModels'));
     }
 
     /**

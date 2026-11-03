@@ -220,35 +220,52 @@
                         <span>2. Pilihan Mesin Generative AI</span>
                     </h3>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <!-- Fast Generation (GPT Image 2.5 Flare) - Default -->
+                        <label class="p-3.5 rounded-[14px] border cursor-pointer transition-all flex flex-col justify-between space-y-2"
+                            :class="selectedModel === 'gpt-image-2.5-flare' ? 'bg-[#007AFF]/10 border-[#007AFF]' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 hover:bg-black/5'">
+                            <input type="radio" name="ai_model" value="gpt-image-2.5-flare" x-model="selectedModel" @change="onModelChange('openai', 'gpt-image-2.5-flare', 15)" class="sr-only">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-black dark:text-white">Fast Generation</span>
+                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#007AFF]/20 text-[#007AFF]">Default</span>
+                                </div>
+                                <p class="text-[11px] text-black/60 dark:text-white/60 mt-1">OpenAI GPT Image 2.5 Flare. Kecepatan tinggi untuk materi harian UMKM &amp; medsos.</p>
+                            </div>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs font-bold text-[#007AFF]">
+                                <span>15 Kredit</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedModel === 'gpt-image-2.5-flare'"></i>
+                            </div>
+                        </label>
+
+                        <!-- Premium Generation (GPT Image 2.5 Sunburst) -->
+                        <label class="p-3.5 rounded-[14px] border cursor-pointer transition-all flex flex-col justify-between space-y-2"
+                            :class="selectedModel === 'gpt-image-2.5-sunburst' ? 'bg-[#007AFF]/10 border-[#007AFF]' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 hover:bg-black/5'">
+                            <input type="radio" name="ai_model" value="gpt-image-2.5-sunburst" x-model="selectedModel" @change="onModelChange('openai', 'gpt-image-2.5-sunburst', 25)" class="sr-only">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-black dark:text-white">Premium Edition</span>
+                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#AF52DE]/20 text-[#AF52DE]">Presisi</span>
+                                </div>
+                                <p class="text-[11px] text-black/60 dark:text-white/60 mt-1">OpenAI GPT Image 2.5 Sunburst. Visual produk ultra-detail &amp; editing referensi.</p>
+                            </div>
+                            <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs font-bold text-[#AF52DE]">
+                                <span>25 Kredit</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedModel === 'gpt-image-2.5-sunburst'"></i>
+                            </div>
+                        </label>
+
                         <!-- Ideogram v2 -->
                         <label class="p-3.5 rounded-[14px] border cursor-pointer transition-all flex flex-col justify-between space-y-2"
                             :class="selectedModel === 'ideogram-v2' ? 'bg-[#007AFF]/10 border-[#007AFF]' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 hover:bg-black/5'">
                             <input type="radio" name="ai_model" value="ideogram-v2" x-model="selectedModel" @change="onModelChange('ideogram', 'ideogram-v2', 15)" class="sr-only">
                             <div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-xs font-bold text-black dark:text-white">Ideogram v2</span>
-                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#007AFF]/20 text-[#007AFF]">Rekomendasi</span>
-                                </div>
-                                <p class="text-[11px] text-black/60 dark:text-white/60 mt-1">Unggul dalam tipografi tajam, rendering logo, dan label kemasan.</p>
+                                <span class="text-xs font-bold text-black dark:text-white">Ideogram v2</span>
+                                <p class="text-[11px] text-black/60 dark:text-white/60 mt-1">Unggul dalam tipografi teks tajam, logo, dan label kemasan produk.</p>
                             </div>
                             <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs font-bold text-[#007AFF]">
                                 <span>15 Kredit</span>
                                 <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedModel === 'ideogram-v2'"></i>
-                            </div>
-                        </label>
-
-                        <!-- DALL-E 3 -->
-                        <label class="p-3.5 rounded-[14px] border cursor-pointer transition-all flex flex-col justify-between space-y-2"
-                            :class="selectedModel === 'dall-e-3' ? 'bg-[#007AFF]/10 border-[#007AFF]' : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 hover:bg-black/5'">
-                            <input type="radio" name="ai_model" value="dall-e-3" x-model="selectedModel" @change="onModelChange('openai', 'dall-e-3', 20)" class="sr-only">
-                            <div>
-                                <span class="text-xs font-bold text-black dark:text-white">DALL-E 3</span>
-                                <p class="text-[11px] text-black/60 dark:text-white/60 mt-1">Fotografi realistik tinggi dengan interpretasi prompt kaya konteks.</p>
-                            </div>
-                            <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between text-xs font-bold text-[#007AFF]">
-                                <span>20 Kredit</span>
-                                <i data-lucide="check" class="w-3.5 h-3.5" x-show="selectedModel === 'dall-e-3'"></i>
                             </div>
                         </label>
 
@@ -507,8 +524,8 @@ function aiStudioCreateProject() {
         selectedProductId: @json($selectedProduct?->id ?? ''),
         productRole: 'hero_product',
         selectedInspirationId: @json($selectedInspiration?->id ?? ''),
-        selectedProvider: 'ideogram',
-        selectedModel: 'ideogram-v2',
+        selectedProvider: 'openai',
+        selectedModel: 'gpt-image-2.5-flare',
         estimatedCost: 15,
         userCredits: {{ (int) ($creditsBalance ?? 0) }},
         canAfford: {{ (int) ($creditsBalance ?? 0) >= 15 ? 'true' : 'false' }},

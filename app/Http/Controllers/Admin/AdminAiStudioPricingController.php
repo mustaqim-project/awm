@@ -6,10 +6,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Domain\Ai\Studio\Billing\CostQuoteService;
 use App\Domain\Ai\Studio\Billing\CreditLedgerService;
+use App\Domain\Currency\ExchangeRateSyncService;
 use App\Http\Controllers\Controller;
 use App\Models\AiStudio\AiCreditTransaction;
+use App\Models\AiStudio\AiModelPricing;
+use App\Models\AiStudio\AiModelRegistry;
 use App\Models\Business;
-use App\Models\Setting;
+use App\Models\SystemSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,6 +26,7 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
     public function __construct(
         private readonly CreditLedgerService $creditLedgerService = new CreditLedgerService,
         private readonly CostQuoteService $costQuoteService = new CostQuoteService,
+        private readonly ExchangeRateSyncService $exchangeRateService = new ExchangeRateSyncService,
     ) {}
 
     /**
@@ -35,6 +39,9 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
                 'index',
                 'grantCredits',
                 'updatePricing',
+                'syncExchangeRate',
+                'toggleModel',
+                'updateModelRates',
             ]),
         ];
     }
@@ -45,6 +52,14 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
     public function index(Request $request): View|JsonResponse
     {
         $pricingMatrix = CostQuoteService::MODEL_PRICING;
+
+        $models = AiModelRegistry::with('activePricing')
+            ->orderBy('provider')
+            ->orderBy('is_default', 'desc')
+            ->get();
+
+        $usdToIdrRate = $this->exchangeRateService->getUsdToIdrRate();
+        $exchangeRateLastSynced = SystemSetting::get('ai_exchange_rate_last_synced_at') ?? now()->toIso8601String();
 
         $recentTransactions = AiCreditTransaction::query()
             ->latest()
@@ -69,13 +84,24 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
             return response()->json([
                 'success' => true,
                 'pricing_matrix' => $pricingMatrix,
+                'models' => $models,
+                'usd_to_idr_rate' => $usdToIdrRate,
+                'exchange_rate_last_synced' => $exchangeRateLastSynced,
                 'stats' => $stats,
                 'businesses' => $businesses,
                 'recent_transactions' => $recentTransactions,
             ]);
         }
 
-        return view('admin.ai-studio.pricing', compact('pricingMatrix', 'recentTransactions', 'businesses', 'stats'));
+        return view('admin.ai-studio.pricing', compact(
+            'pricingMatrix',
+            'models',
+            'usdToIdrRate',
+            'exchangeRateLastSynced',
+            'recentTransactions',
+            'businesses',
+            'stats'
+        ));
     }
 
     /**
@@ -121,6 +147,100 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
     }
 
     /**
+     * Sinkronisasi Real-Time Kurs USD/IDR dari API Eksternal.
+     */
+    public function syncExchangeRate(Request $request): RedirectResponse|JsonResponse
+    {
+        $newRate = $this->exchangeRateService->syncLatestRate();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Kurs USD/IDR berhasil disinkronkan: Rp " . number_format($newRate, 0, ',', '.'),
+                'rate' => $newRate,
+            ]);
+        }
+
+        return redirect()->route('admin.ai-studio.pricing.index')
+            ->with('success', "Kurs USD/IDR berhasil diperbarui: Rp " . number_format($newRate, 0, ',', '.'));
+    }
+
+    /**
+     * Toggle status aktif/non-aktif model AI di registry.
+     */
+    public function toggleModel(string $modelId, Request $request): RedirectResponse|JsonResponse
+    {
+        /** @var AiModelRegistry $model */
+        $model = AiModelRegistry::findOrFail($modelId);
+        $model->is_active = ! $model->is_active;
+        $model->save();
+
+        $statusStr = $model->is_active ? 'diaktifkan' : 'dinonaktifkan';
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Model {$model->model_name} berhasil {$statusStr}.",
+                'is_active' => $model->is_active,
+            ]);
+        }
+
+        return redirect()->route('admin.ai-studio.pricing.index')
+            ->with('success', "Model {$model->model_name} berhasil {$statusStr}.");
+    }
+
+    /**
+     * Perbarui tarif token per juta untuk model AI tertentu.
+     */
+    public function updateModelRates(string $modelId, Request $request): RedirectResponse|JsonResponse
+    {
+        /** @var AiModelRegistry $model */
+        $model = AiModelRegistry::with('activePricing')->findOrFail($modelId);
+
+        $validated = $request->validate([
+            'text_input_rate' => ['required', 'numeric', 'min:0'],
+            'cached_text_rate' => ['nullable', 'numeric', 'min:0'],
+            'image_input_rate' => ['required', 'numeric', 'min:0'],
+            'image_output_rate' => ['required', 'numeric', 'min:0'],
+            'fixed_per_image_cost_usd' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $activePricing = $model->activePricing;
+        if ($activePricing) {
+            $activePricing->update([
+                'text_input_rate' => $validated['text_input_rate'],
+                'cached_text_rate' => $validated['cached_text_rate'] ?? 0,
+                'image_input_rate' => $validated['image_input_rate'],
+                'image_output_rate' => $validated['image_output_rate'],
+                'fixed_per_image_cost_usd' => $validated['fixed_per_image_cost_usd'] ?? null,
+            ]);
+        } else {
+            AiModelPricing::create([
+                'model_id' => $model->id,
+                'version' => '1.0',
+                'billing_mode' => 'token',
+                'currency' => 'USD',
+                'text_input_rate' => $validated['text_input_rate'],
+                'cached_text_rate' => $validated['cached_text_rate'] ?? 0,
+                'image_input_rate' => $validated['image_input_rate'],
+                'image_output_rate' => $validated['image_output_rate'],
+                'fixed_per_image_cost_usd' => $validated['fixed_per_image_cost_usd'] ?? null,
+                'effective_at' => now(),
+            ]);
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Tarif token model {$model->model_name} berhasil diperbarui.",
+            ]);
+        }
+
+        return redirect()->route('admin.ai-studio.pricing.index')
+            ->with('success', "Tarif token model {$model->model_name} berhasil diperbarui.");
+    }
+
+    /**
      * Perbarui Matriks Harga & Biaya Kredit Model Generasi AI.
      */
     public function updatePricing(Request $request): JsonResponse
@@ -130,7 +250,7 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
         ]);
 
         // Simpan konfigurasi matriks harga kustom ke pengaturan sistem
-        Setting::set('ai_studio_pricing_overrides', json_encode($validated['pricing_overrides']));
+        SystemSetting::set('ai_studio_pricing_overrides', json_encode($validated['pricing_overrides']));
 
         return response()->json([
             'success' => true,
