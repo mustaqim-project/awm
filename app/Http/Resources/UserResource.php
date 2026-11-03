@@ -33,6 +33,17 @@ final class UserResource extends JsonResource
             $permissions = \App\Models\Permission::pluck('slug')->all();
         }
 
+        $landingRoute = 'attendance';
+        if ($role === 'owner' || in_array('dashboard.view', $permissions, true)) {
+            $landingRoute = 'dashboard';
+        } elseif (in_array('pos.terminal', $permissions, true)) {
+            $landingRoute = 'pos';
+        } elseif (in_array('pos.kitchen', $permissions, true) || in_array('pos.orders', $permissions, true)) {
+            $landingRoute = 'kds';
+        } elseif (in_array('inventory.view', $permissions, true) || in_array('warehouse.view', $permissions, true)) {
+            $landingRoute = 'inventory';
+        }
+
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
@@ -48,6 +59,7 @@ final class UserResource extends JsonResource
             'is_owner' => $role === 'owner',
             'permissions' => $permissions,
             'can_view_margin' => $role === 'owner' || in_array('costing.view_margin', $permissions, true),
+            'landing_route' => $landingRoute,
             'created_at' => $this->resource->created_at?->toIso8601String(),
             'updated_at' => $this->resource->updated_at?->toIso8601String(),
         ];

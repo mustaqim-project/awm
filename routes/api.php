@@ -930,16 +930,40 @@ Route::prefix('v1')->group(function (): void {
             Route::get('/context/current', function (): JsonResponse {
                 $business = Context::requireBusiness();
 
+                $landingRoute = 'attendance';
+                if (Context::isOwner() || Context::hasPermission('dashboard.view')) {
+                    $landingRoute = 'dashboard';
+                } elseif (Context::hasPermission('pos.terminal')) {
+                    $landingRoute = 'pos';
+                } elseif (Context::hasPermission('pos.kitchen') || Context::hasPermission('pos.orders')) {
+                    $landingRoute = 'kds';
+                } elseif (Context::hasPermission('inventory.view') || Context::hasPermission('warehouse.view')) {
+                    $landingRoute = 'inventory';
+                }
+
                 return response()->json([
+                    'success' => true,
                     'business' => [
                         'id' => $business->id,
                         'name' => $business->name,
                         'slug' => $business->slug,
+                        'template_code' => $business->template_code,
+                        'industry_category' => $business->industry_category,
+                        'disabled_modules' => $business->disabled_modules ?? \App\Domain\Template\ModuleRegistry::getDisabledModulesForTemplate($business->template_code ?? ''),
+                        'is_food_industry' => $business->isFoodIndustry(),
+                        'has_dine_in' => $business->hasDineInFeature(),
+                        'is_workshop' => $business->isWorkshop(),
+                        'is_laundry' => $business->isLaundry(),
+                        'is_pharmacy' => $business->isPharmacy(),
+                        'is_manufacturing' => $business->isManufacturingSector(),
+                        'is_service' => $business->isService(),
+                        'is_retail' => $business->isRetailSector(),
                     ],
                     'role' => Context::role(),
                     'is_owner' => Context::isOwner(),
                     'permissions' => Context::permissions(),
                     'can_view_margin' => Context::hasPermission('costing.view_margin'),
+                    'landing_route' => $landingRoute,
                 ]);
             });
 
