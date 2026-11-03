@@ -42,9 +42,9 @@
 |---|------|-------|-------------|--------|
 | M1 | OpenShift Lifecycle Remediation & Hardening | Features 1-6 (ApiClient fix, PosService parsing, cache protection, backend isolation, modal UI states, smart float) | none | DONE (15/15 tests passed, 0 issues) |
 | M2 | Android Security & Fake GPS Attendance | Features 7-11 (MainActivity MethodChannel, 4-tier policy, pre-attendance checks, backend telemetry validation) | none | DONE (13/13 tests passed, 0 issues) |
-| M3 | Comprehensive Mobile Feature Audit & Dummy Data Elimination | Features 12-18 (Purge all mocks in POS catalog, inventory, dashboard, settings, auth, HRM, fix route mismatches) | M1 | IN_PROGRESS (worker_modules_m3) |
-| M4 | Android Production Build Configuration & Performance | Features 19-21 (Non-debuggable release, signing config, HTTPS enforcement, ProGuard/R8, image caching) | M1, M2 | IN_PROGRESS (worker_build_m4) |
-| M5 | Verification, Automated Testing & Audit Reports | Features 22-23 (`flutter analyze`, test execution, 5 audit markdown reports, Forensic Integrity Audit) | M1, M2, M3, M4 | PLANNED |
+| M3 | Comprehensive Mobile Feature Audit & Dummy Data Elimination | Features 12-18 (Purge all mocks in POS catalog, inventory, dashboard, settings, auth, HRM, fix route mismatches) | M1 | DONE (7/7 tests passed, 0 issues) |
+| M4 | Android Production Build Configuration & Performance | Features 19-21 (Non-debuggable release, signing config, HTTPS enforcement, ProGuard/R8, image caching) | M1, M2 | DONE (Build verified, 0 issues) |
+| M5 | Verification, Automated Testing & Audit Reports | Features 22-23 (`flutter analyze`, test execution, 5 audit markdown reports, Forensic Integrity Audit) | M1, M2, M3, M4 | IN_PROGRESS (worker_audit_reports_m5) |
 
 ## Interface Contracts
 

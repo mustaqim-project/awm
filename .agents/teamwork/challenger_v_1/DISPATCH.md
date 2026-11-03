@@ -1,30 +1,22 @@
-## 2026-10-31T20:51:05Z
-You are challenger_v_1 (Empirical Automated Verifier).
+## 2026-11-03T04:27:26Z
+You are challenger_v_1, a code-executing adversarial verification agent.
 Working directory: c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_1\
-Parent: Orchestrator (Conversation ID: a75db325-cf9d-49ca-b5e1-728a0b485275)
+Original request path: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Project plan path: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
 
-Read the authoritative user request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-Read the master audit report at: c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md
-Read all worker handoffs:
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase1\handoff.md
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase2_3\handoff.md
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase4\handoff.md
-
-Your mission:
-Empirically test and stress-test the entire set of UI/UX remediations using automated verification scripts (Python / PowerShell via run_command):
-1. Test Double Header Elimination:
-   Verify across all 185 Blade files in `resources/views/app` that ZERO files declare headerTitle in @extends and render <x-module-header> simultaneously.
-2. Test Modal Backdrop Wrappers:
-   Verify across all 185 Blade files that ZERO files have class="... fixed inset-0 ... flex ... bg-black/...".
-3. Test Hardcoded Unresponsive Grids:
-   Verify across all 185 Blade files that ZERO files have raw unprefixed grid-cols-3 or grid-cols-4 declarations.
-4. Test Raw Emojis:
-   Verify across all 185 Blade files that ZERO views have raw Unicode emojis (🚗, 🧺, 💊, 🏷️, ★, 😊, ✨).
-5. Test Mobile Bottom Padding:
-   Verify that all 32 views identified have bottom padding (pb-20, pb-24, pb-28, pb-32, or pb-36).
-6. Test Monolith Modularization:
-   Verify that pos/terminal.blade.php line count was drastically reduced and includes 20 modals under resources/views/app/pos/modals/*.blade.php.
-   Verify that hrm/index.blade.php line count was drastically reduced and includes partials and modals under resources/views/app/hrm/.
-
-Write your empirical test script results and explicit verdict (APPROVE or REQUEST_CHANGES) in `c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_1\handoff.md`.
-Notify the Orchestrator via send_message.
+YOUR MISSION:
+Empirically and adversarially challenge Milestone 1 (OpenShift Remediation) and Milestone 2 (Attendance Security):
+1. Stress-test OpenShift lifecycle:
+   - What happens when a client sends invalid/cross-tenant location IDs? Does the modal stay open and show red banner?
+   - What happens when two cashiers attempt to open shifts on the same register concurrently? Is register collision caught?
+   - What happens when network drops during active shift check? Is the local cache preserved?
+2. Stress-test Attendance Security & Fake GPS:
+   - What happens when an attendance check-in payload contains `is_mock: true`? Does backend reject with HTTP 422?
+   - What happens when Developer Options is ON but mock location is OFF? Is attendance permitted with non-blocking Level 1 warning (no false positive)?
+   - What happens when GPS accuracy exceeds 250m?
+3. Execute automated test suites:
+   - `flutter test test/pos_shift_test.dart`
+   - `flutter test test/attendance_security_test.dart`
+   - `php artisan test tests/Feature/Api/PosShiftRemediationTest.php`
+   - `php artisan test tests/Feature/Api/AttendanceSecurityRemediationTest.php`
+4. Deliver your findings in `c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_1\handoff.md` with an explicit verdict: `APPROVE` or `REQUEST_CHANGES`. Send a message when complete.

@@ -1,22 +1,23 @@
-## 2026-10-31T20:51:13Z
-You are challenger_v_2 (Functional Stress & Syntax Verifier).
+## 2026-11-03T04:27:38Z
+You are challenger_v_2, a code-executing adversarial verification agent.
 Working directory: c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_2\
-Parent: Orchestrator (Conversation ID: a75db325-cf9d-49ca-b5e1-728a0b485275)
+Original request path: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Project plan path: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
 
-Read the authoritative user request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-Read the master audit report at: c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md
-Read all worker handoffs:
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase1\handoff.md
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase2_3\handoff.md
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase4\handoff.md
-
-Your mission:
-Stress-test compilation, file structure, and runtime syntax across all modified Blade templates:
-1. Run `php artisan view:clear; php artisan view:cache` using run_command to verify 100% template compilation without any syntax or Blade errors.
-2. Run PHP syntax linting (`php -l`) across all new and modified Blade files.
-3. Verify that all 20 modals in `resources/views/app/pos/modals/` exist and are valid.
-4. Verify that all 8 tab partials in `resources/views/app/hrm/partials/` and 15 modals in `resources/views/app/hrm/modals/` exist and are valid.
-5. Run `php artisan test tests/Feature/Pos/PosTerminalIndustryGatingTest.php` to verify feature test suite execution.
-
-Write your stress test results and explicit verdict (APPROVE or REQUEST_CHANGES) in `c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_2\handoff.md`.
-Notify the Orchestrator via send_message.
+YOUR MISSION:
+Empirically and adversarially challenge Milestone 3 (Dummy Data Elimination) and Milestone 4 (Android Build):
+1. Stress-test Dummy Data Elimination:
+   - Does `merchant_state.dart` contain ANY occurrence of `_getDefaultStarterProducts`? Can empty catalog ever inject starter products?
+   - Does `inventory_screen.dart` compute valuation from real items, or does any static list remain?
+   - Does `dashboard_screen.dart` have any hardcoded hourly switches or static Unsplash stock photos?
+   - Are courier pickup and payment verification endpoints pointing to real live backend routes?
+2. Stress-test Android Release Configuration:
+   - Is `isDebuggable` set to `false` in `android/app/build.gradle.kts`?
+   - Is debug keystore signing removed from release?
+   - Are `isMinifyEnabled` and `isShrinkResources` enabled with `proguard-rules.pro`?
+   - Is `android:usesCleartextTraffic` absent in `AndroidManifest.xml`?
+3. Execute automated test suites:
+   - `flutter analyze` in `C:\laragon\www\cooca_my_own`
+   - `flutter test test/dummy_data_elimination_test.dart` in `C:\laragon\www\cooca_my_own`
+   - Gradle build check in `C:\laragon\www\cooca_my_own\android`
+4. Deliver your findings in `c:\laragon\www\cooca_core\.agents\teamwork\challenger_v_2\handoff.md` with an explicit verdict: `APPROVE` or `REQUEST_CHANGES`. Send a message when complete.

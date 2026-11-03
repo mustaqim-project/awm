@@ -880,6 +880,35 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/devices/fcm-token', [\App\Http\Controllers\Api\V1\Device\MobileDeviceTokenApiController::class, 'unregisterCustomerToken']);
     });
 
+    // Mobile App OTA Version & In-App Update Manifest (Public)
+    Route::get('/app/version', function () {
+        $apkFile = public_path('cooca.apk');
+        $hasApk = file_exists($apkFile);
+        $fileSize = $hasApk ? filesize($apkFile) : 0;
+        $fileModTime = $hasApk ? filemtime($apkFile) : 0;
+
+        return response()->json([
+            'success' => true,
+            'app_name' => 'COOCA My Own',
+            'package_name' => 'com.cooca.myown',
+            'latest_version' => '1.0.0',
+            'latest_build' => 2,
+            'min_supported_version' => '1.0.0',
+            'force_update' => false,
+            'download_url' => url('/download/apk'),
+            'file_size' => $fileSize,
+            'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
+            'release_notes' => [
+                'Pembaruan fitur otomatis tanpa download manual (OTA In-App Update).',
+                'Kustomisasi struk thermal & opsi tampilan logo bisnis di header.',
+                'Aturan watermark struk: Bersih tanpa watermark untuk akun berlangganan, dan watermark "by Cooca.id" untuk akun gratis.',
+                'Perbaikan siklus kasir OpenShift & isolasi terminal register.',
+                'Keamanan absensi dengan proteksi anti-Fake GPS / Mock Location.',
+                'Peningkatan responsivitas layar HP dan eliminasi elemen tumpang tindih.',
+            ],
+        ]);
+    });
+
     // Authentication (Public with 60 req/min rate limit, login & forgot-password strictly throttled to 10/min)
     Route::middleware('throttle:60,1')->prefix('auth')->group(function (): void {
         Route::post('/register', [AuthController::class, 'register']);

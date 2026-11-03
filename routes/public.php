@@ -327,6 +327,34 @@ Route::get('/apk', function () {
     return redirect()->route('public.download.apk');
 })->name('public.apk.index');
 
+Route::get('/app/version', function () {
+    $apkFile = public_path('cooca.apk');
+    $hasApk = file_exists($apkFile);
+    return response()->json([
+        'success' => true,
+        'app_name' => 'COOCA My Own',
+        'package_name' => 'com.cooca.myown',
+        'latest_version' => '1.0.0',
+        'latest_build' => 2,
+        'min_supported_version' => '1.0.0',
+        'force_update' => false,
+        'download_url' => url('/download/apk'),
+        'file_size' => $hasApk ? filesize($apkFile) : 0,
+        'updated_at' => $hasApk ? date('c', filemtime($apkFile)) : null,
+        'release_notes' => [
+            'Pembaruan fitur otomatis tanpa download manual (OTA In-App Update).',
+            'Kustomisasi struk thermal & opsi tampilan logo bisnis di header.',
+            'Aturan watermark struk: Bersih tanpa watermark untuk akun berlangganan, dan watermark "by Cooca.id" untuk akun gratis.',
+            'Perbaikan siklus kasir OpenShift & isolasi terminal register.',
+            'Keamanan absensi dengan proteksi anti-Fake GPS / Mock Location.',
+            'Peningkatan responsivitas layar HP dan eliminasi elemen tumpang tindih.',
+        ],
+    ]);
+});
+Route::get('/version.json', function () {
+    return redirect('/app/version');
+});
+
 // 14. Website Public Live Chat (Real-time Laravel Reverb Broadcasting)
 Route::prefix('live-chat')->name('public.live-chat.')->group(function (): void {
     Route::post('/start', \App\Http\Controllers\Web\PublicLiveChatController::class . '@start')->middleware('throttle:15,1')->name('start');

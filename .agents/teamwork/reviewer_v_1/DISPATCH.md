@@ -1,26 +1,25 @@
-## 2026-10-31T20:50:50Z
-You are reviewer_v_1 (UI/UX Code Reviewer - Fase 1 & 2).
+## 2026-11-03T04:26:49Z
+You are reviewer_v_1, an independent code review and verification agent.
 Working directory: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_v_1\
-Parent: Orchestrator (Conversation ID: a75db325-cf9d-49ca-b5e1-728a0b485275)
+Original request path: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Project plan path: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
 
-Read the authoritative user request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-Read the master audit report at: c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md
-Read the worker handoffs at:
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase1\handoff.md
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_phase2_3\handoff.md
+Upstream handoff reports to inspect:
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\handoff.md
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_security_m2\handoff.md
 
-Your mission:
-Independently review the implementations for Phase 1 and Phase 2:
-1. Double Header Redundancy Elimination (44 views):
-   - Verify that headerTitle and headerSubtitle were cleanly removed from @extends('layouts.app') in all 44 views while keeping browser tab 'title'.
-   - Verify that <x-module-header> renders properly without title duplication.
-2. Modal Backdrop Architecture Refactoring (76 locations across 21 views):
-   - Inspect the modified modals and verify that the backdrop overlay has been completely decoupled from the scrolling dialog container (fixed inset-0 z-[200] overflow-y-auto + standalone backdrop div + centered container + inner dialog card).
-3. Modal Bento Standardization (127 cramped form modals) & Table Action Consolidation:
-   - Verify responsive Bento 2-column canvases on complex modals.
-   - Verify table action rows in sales-orders, invoices, returns, materials, quotations have been consolidated into 1 primary action + kebab dropdown (⋯) with ≥44px touch targets.
-4. Run verification commands:
-   - Run `php artisan view:clear; php artisan view:cache` using run_command to verify 100% clean compilation.
-
-Write your evaluation and explicit verdict (APPROVE or REQUEST_CHANGES) in `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_v_1\handoff.md`.
-Notify the Orchestrator via send_message.
+YOUR MISSION:
+Review Milestone 1 (OpenShift Remediation) and Milestone 2 (Android Security & Attendance Fake GPS):
+1. Inspect the code in `C:\laragon\www\cooca_my_own` and `C:\laragon\www\cooca_core`:
+   - `lib/core/services/api_client.dart` & `pos_service.dart`: verify elimination of false-positive `'data': null` bug.
+   - `lib/screens/pos/pos_shift_modal.dart` & `merchant_state.dart`: verify cache protection, error banner, non-dismissing modal, and denominations counter.
+   - `app/Domain/Pos/PosShiftService.php` & `PosShiftController.php`: verify cashier isolation and register concurrency guard.
+   - `android/app/src/main/kotlin/.../MainActivity.kt`: verify native MethodChannel `com.cooca.myown/security`.
+   - `lib/core/services/location_biometric_service.dart` & `attendance_screen.dart`: verify 4-tier risk-proportionate policy.
+   - `AttendanceApiController.php` & `AttendanceService.php`: verify mock location rejection and telemetry persistence.
+2. Execute verification commands:
+   - `flutter test test/pos_shift_test.dart` in `cooca_my_own`
+   - `flutter test test/attendance_security_test.dart` in `cooca_my_own`
+   - `php artisan test tests/Feature/Api/PosShiftRemediationTest.php` in `cooca_core`
+   - `php artisan test tests/Feature/Api/AttendanceSecurityRemediationTest.php` in `cooca_core`
+3. Deliver a structured review report in `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_v_1\handoff.md` with an explicit verdict: `APPROVE` or `REQUEST_CHANGES`. Send a message when complete.
