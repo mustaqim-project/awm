@@ -48,20 +48,6 @@
         </div>
     </x-module-header>
 
-            <!-- Top Up Button -->
-            <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-4 py-3 rounded-[14px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-md shadow-orange-500/20 active:scale-[0.98] transition-all">
-                <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
-                <span>Top Up Kredit</span>
-            </button>
-
-            <a href="{{ route('ai-studio.index') }}"
-                class="px-4 py-3 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black/80 dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all">
-                &larr; Studio
-            </a>
-        </div>
-    </div>
-
     <!-- ========================================== -->
     <!-- 2. TRANSACTIONS LEDGER TABLE               -->
     <!-- ========================================== -->
@@ -89,7 +75,7 @@
                 <table class="w-full text-left text-xs">
                     <thead>
                         <tr class="border-b border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.02] text-black/50 dark:text-white/50 uppercase tracking-wider text-[10px]">
-                            <th class="py-3 px-4 font-bold">Waktu</th>
+                            <th class="py-3 px-4 font-bold">Waktu (WIB / UTC+7)</th>
                             <th class="py-3 px-4 font-bold">Jenis Mutasi</th>
                             <th class="py-3 px-4 font-bold">Keterangan</th>
                             <th class="py-3 px-4 font-bold text-right">Nominal Kredit</th>
@@ -102,7 +88,7 @@
                             <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                 <!-- Timestamp -->
                                 <td class="py-3 px-4 whitespace-nowrap text-black/60 dark:text-white/60">
-                                    {{ $tx->created_at->format('d M Y, H:i') }}
+                                    {{ $tx->created_at->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') }} WIB
                                 </td>
 
                                 <!-- Type Badge -->

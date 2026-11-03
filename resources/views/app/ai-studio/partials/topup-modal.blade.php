@@ -180,6 +180,15 @@
                     </div>
                 </div>
 
+                <!-- Expiration Notice (WIB / UTC+7) -->
+                <div class="p-2.5 rounded-[12px] bg-amber-500/10 border border-amber-500/20 text-xs text-amber-800 dark:text-amber-300 flex items-center justify-between gap-2 text-left">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0"></i>
+                        <span>Batas Pembayaran:</span>
+                    </div>
+                    <span class="font-bold text-amber-900 dark:text-amber-200" x-text="activeOrder?.expired_at_wib ? (activeOrder.expired_at_wib) : '15 Menit (WIB)'"></span>
+                </div>
+
                 <!-- Total Payable Card -->
                 <div class="p-3.5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-1">
                     <span class="text-[11px] text-black/60 dark:text-white/60">Total yang harus dibayar:</span>
@@ -462,14 +471,21 @@ function aiStudioTopupModal() {
 
         startCountdown() {
             this.stopCountdown();
-            this.countdownSeconds = 900;
+            if (this.activeOrder && this.activeOrder.expired_at) {
+                const expiresMs = new Date(this.activeOrder.expired_at).getTime();
+                const nowMs = Date.now();
+                const diffSec = Math.floor((expiresMs - nowMs) / 1000);
+                this.countdownSeconds = diffSec > 0 ? diffSec : 0;
+            } else {
+                this.countdownSeconds = 900;
+            }
             this.updateCountdownText();
             this.countdownInterval = setInterval(() => {
                 this.countdownSeconds--;
                 if (this.countdownSeconds <= 0) {
                     this.stopCountdown();
                     this.stopPolling();
-                    this.countdownText = 'Kadaluarsa';
+                    this.countdownText = 'Kadaluarsa (WIB)';
                 } else {
                     this.updateCountdownText();
                 }

@@ -1098,6 +1098,10 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
         $tripayRes = $this->tripayService->createSubscriptionTransaction($payment, $channelCode);
 
         if ($tripayRes['success'] ?? false) {
+            $expiredAt = isset($tripayRes['expired_time'])
+                ? Carbon::createFromTimestamp($tripayRes['expired_time'])->timezone('Asia/Jakarta')
+                : now()->timezone('Asia/Jakarta')->addMinutes(15);
+
             $payment->update([
                 'payment_gateway' => SubscriptionPayment::GATEWAY_TRIPAY,
                 'gateway_reference' => $tripayRes['reference'] ?? null,
@@ -1106,8 +1110,10 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'gateway_qr_url' => $tripayRes['qr_url'] ?? null,
                 'gateway_qr_string' => $tripayRes['qr_string'] ?? null,
                 'gateway_fee' => (float) ($tripayRes['fee'] ?? 0.0),
-                'gateway_expired_at' => isset($tripayRes['expired_time']) ? Carbon::createFromTimestamp($tripayRes['expired_time']) : now()->addMinutes(15),
+                'gateway_expired_at' => $expiredAt,
             ]);
+
+            $expiredWib = $payment->gateway_expired_at?->timezone('Asia/Jakarta');
 
             return response()->json([
                 'success' => true,
@@ -1124,7 +1130,10 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                     'qr_string' => $payment->gateway_qr_string,
                     'pay_code' => $payment->gateway_pay_code,
                     'checkout_url' => $payment->gateway_pay_url,
-                    'expired_at' => $payment->gateway_expired_at?->toIso8601String(),
+                    'expired_at' => $expiredWib?->toIso8601String(),
+                    'expired_at_wib' => $expiredWib?->format('d M Y, H:i') . ' WIB',
+                    'expired_time_wib' => $expiredWib?->format('H:i') . ' WIB',
+                    'timezone' => 'Asia/Jakarta (UTC+7 / WIB)',
                     'payment_url' => route('billing.payment.show', $payment->id),
                     'status_url' => route('ai-studio.topup.status', $payment->id),
                 ],
@@ -1163,6 +1172,8 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
 
         $business->refresh();
 
+        $expiredWib = $payment->gateway_expired_at?->timezone('Asia/Jakarta');
+
         return response()->json([
             'success' => true,
             'status' => $payment->status,
@@ -1171,6 +1182,10 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'order_number' => $payment->order_number,
             'qr_url' => $payment->gateway_qr_url,
             'pay_code' => $payment->gateway_pay_code,
+            'expired_at' => $expiredWib?->toIso8601String(),
+            'expired_at_wib' => $expiredWib?->format('d M Y, H:i') . ' WIB',
+            'expired_time_wib' => $expiredWib?->format('H:i') . ' WIB',
+            'timezone' => 'Asia/Jakarta (UTC+7 / WIB)',
             'message' => $payment->isPaid() ? 'Pembayaran berhasil! Saldo kredit telah ditambahkan.' : 'Menunggu pembayaran...',
         ]);
     }
