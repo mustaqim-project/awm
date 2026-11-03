@@ -58,8 +58,9 @@ class CreditLedgerService
 
             /** @var Business $biz */
             $biz = Business::query()->where('id', $businessId)->lockForUpdate()->firstOrFail();
+            $balanceBefore = (int) ($biz->ai_credits_balance ?? 0);
 
-            $biz->ai_credits_balance = (int) ($biz->ai_credits_balance ?? 0) + $credits;
+            $biz->ai_credits_balance = $balanceBefore + $credits;
             $biz->save();
 
             return AiCreditTransaction::create([
@@ -68,6 +69,7 @@ class CreditLedgerService
                 'generation_id' => null,
                 'type' => 'topup',
                 'amount' => $credits,
+                'balance_before' => $balanceBefore,
                 'balance_after' => $biz->ai_credits_balance,
                 'idempotency_key' => $idempotencyKey,
                 'description' => $description,
@@ -129,6 +131,7 @@ class CreditLedgerService
                 'generation_id' => null,
                 'type' => 'hold',
                 'amount' => -$credits,
+                'balance_before' => $currentBalance,
                 'balance_after' => $biz->ai_credits_balance,
                 'idempotency_key' => $idempotencyKey,
                 'description' => $description ?? "Reservasi hold {$credits} kredit AI Studio",
@@ -140,16 +143,30 @@ class CreditLedgerService
     /**
      * Fase 2: Settle hold kredit.
      * Mengubah status hold menjadi 'settled' ('usage') dan menautkan generation_id resmi.
+     * Jika actualCreditsUsed < held credits, selisihnya direfund ke saldo bisnis secara atomik.
      */
     public function settleHold(
         string|Business $business,
         string $holdIdempotencyKey,
         ?string $generationId = null,
-        array $metadata = []
+        array $metadata = [],
+        ?int $actualCreditsUsed = null,
+        ?float $exchangeRate = null,
+        ?float $apiCostUsd = null,
+        ?array $tokensUsage = null
     ): AiCreditTransaction {
         $businessId = $business instanceof Business ? $business->id : $business;
 
-        return DB::transaction(function () use ($businessId, $holdIdempotencyKey, $generationId, $metadata): AiCreditTransaction {
+        return DB::transaction(function () use (
+            $businessId,
+            $holdIdempotencyKey,
+            $generationId,
+            $metadata,
+            $actualCreditsUsed,
+            $exchangeRate,
+            $apiCostUsd,
+            $tokensUsage
+        ): AiCreditTransaction {
             /** @var AiCreditTransaction|null $hold */
             $hold = AiCreditTransaction::query()
                 ->where('business_id', $businessId)
@@ -172,8 +189,50 @@ class CreditLedgerService
                 throw new InvalidHoldStateException("Tidak dapat men-settle hold yang sudah di-release/dikembalikan.");
             }
 
+            $heldAmount = abs((int) $hold->amount);
             $meta['hold_status'] = 'settled';
             $meta['settled_at'] = now()->toIso8601String();
+            $meta['held_credits'] = $heldAmount;
+
+            // Rekonsiliasi FinOps: Jika aktual < hold, refund kelebihannya ke saldo bisnis secara atomik
+            if ($actualCreditsUsed !== null && $actualCreditsUsed < $heldAmount) {
+                $excessRefund = $heldAmount - $actualCreditsUsed;
+                /** @var Business $biz */
+                $biz = Business::query()->where('id', $businessId)->lockForUpdate()->firstOrFail();
+                $currentBal = (int) ($biz->ai_credits_balance ?? 0);
+                $biz->ai_credits_balance = $currentBal + $excessRefund;
+                $biz->save();
+
+                $refundIdempotencyKey = 'refund_unused_hold_' . $holdIdempotencyKey;
+                AiCreditTransaction::firstOrCreate(
+                    [
+                        'business_id' => $biz->id,
+                        'idempotency_key' => $refundIdempotencyKey,
+                    ],
+                    [
+                        'user_id' => $hold->user_id,
+                        'generation_id' => $generationId,
+                        'type' => 'refund',
+                        'amount' => $excessRefund,
+                        'balance_before' => $currentBal,
+                        'balance_after' => $biz->ai_credits_balance,
+                        'description' => "Pengembalian selisih reservasi kredit AI (#{$generationId})",
+                        'metadata' => [
+                            'hold_idempotency_key' => $holdIdempotencyKey,
+                            'held_amount' => $heldAmount,
+                            'actual_credits_used' => $actualCreditsUsed,
+                            'excess_refunded' => $excessRefund,
+                        ],
+                    ]
+                );
+
+                $hold->amount = -$actualCreditsUsed;
+                $meta['actual_credits_used'] = $actualCreditsUsed;
+                $meta['excess_refunded'] = $excessRefund;
+            } elseif ($actualCreditsUsed !== null) {
+                $meta['actual_credits_used'] = $heldAmount;
+            }
+
             if (! empty($metadata)) {
                 $meta = array_merge($meta, $metadata);
             }
@@ -181,6 +240,15 @@ class CreditLedgerService
             $hold->type = 'usage';
             if ($generationId !== null) {
                 $hold->generation_id = $generationId;
+            }
+            if ($exchangeRate !== null) {
+                $hold->exchange_rate = $exchangeRate;
+            }
+            if ($apiCostUsd !== null) {
+                $hold->api_cost_usd = $apiCostUsd;
+            }
+            if ($tokensUsage !== null) {
+                $hold->tokens_usage = $tokensUsage;
             }
             $hold->metadata = $meta;
             $hold->save();
@@ -233,8 +301,9 @@ class CreditLedgerService
             /** @var Business $biz */
             $biz = Business::query()->where('id', $businessId)->lockForUpdate()->firstOrFail();
             $restoreAmount = abs((int) $hold->amount);
+            $balBefore = (int) ($biz->ai_credits_balance ?? 0);
 
-            $biz->ai_credits_balance = (int) ($biz->ai_credits_balance ?? 0) + $restoreAmount;
+            $biz->ai_credits_balance = $balBefore + $restoreAmount;
             $biz->save();
 
             $meta['hold_status'] = 'released';
@@ -249,6 +318,7 @@ class CreditLedgerService
                 'generation_id' => $hold->generation_id,
                 'type' => 'refund',
                 'amount' => $restoreAmount,
+                'balance_before' => $balBefore,
                 'balance_after' => $biz->ai_credits_balance,
                 'idempotency_key' => "release_{$holdIdempotencyKey}",
                 'description' => "Pengembalian hold kredit AI Studio: {$reason}",
@@ -289,8 +359,9 @@ class CreditLedgerService
 
             /** @var Business $biz */
             $biz = Business::query()->where('id', $businessId)->lockForUpdate()->firstOrFail();
+            $balBefore = (int) ($biz->ai_credits_balance ?? 0);
 
-            $biz->ai_credits_balance = (int) ($biz->ai_credits_balance ?? 0) + $credits;
+            $biz->ai_credits_balance = $balBefore + $credits;
             $biz->save();
 
             return AiCreditTransaction::create([
@@ -299,6 +370,7 @@ class CreditLedgerService
                 'generation_id' => $generationId,
                 'type' => 'refund',
                 'amount' => $credits,
+                'balance_before' => $balBefore,
                 'balance_after' => $biz->ai_credits_balance,
                 'idempotency_key' => $idempotencyKey,
                 'description' => $reason,

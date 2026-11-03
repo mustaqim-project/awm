@@ -51,7 +51,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
                 'id' => null,
                 'key' => $this->apiKey,
                 'endpoint' => $this->baseUrl ?: 'https://api.openai.com/v1',
-                'model' => 'dall-e-3',
+                'model' => 'gpt-image-2.5-flare',
             ];
         }
 
@@ -63,20 +63,19 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
                     'id' => $keyData['id'],
                     'key' => $keyData['key'],
                     'endpoint' => $keyData['endpoint'],
-                    'model' => $keyData['model'] ?: 'dall-e-3',
+                    'model' => $keyData['model'] ?: 'gpt-image-2.5-flare',
                 ];
             }
         }
 
-        // 3. Fallback HANYA ke dedicated environment/config untuk AI Image Generation (OPENAI_IMAGE_API_KEY / AI_IMAGE_API_KEY)
-        // Dipisahkan secara ketat dari API key chatbot (OPENAI_API_KEY) agar kuota dan rate limit terisolasi.
+        // 3. Fallback HANYA ke dedicated environment/config untuk AI Image Generation
         $imageKey = (string) config('services.openai_image.api_key', env('OPENAI_IMAGE_API_KEY', env('AI_IMAGE_API_KEY', '')));
         if (! empty($imageKey)) {
             return [
                 'id' => null,
                 'key' => $imageKey,
                 'endpoint' => (string) config('services.openai_image.base_url', env('OPENAI_IMAGE_BASE_URL', env('AI_IMAGE_BASE_URL', 'https://api.openai.com/v1'))),
-                'model' => (string) config('services.openai_image.model', env('OPENAI_IMAGE_MODEL', 'dall-e-3')),
+                'model' => (string) config('services.openai_image.model', env('OPENAI_IMAGE_MODEL', 'gpt-image-2.5-flare')),
             ];
         }
 
@@ -84,8 +83,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
     }
 
     /**
-     * Eksekusi generasi gambar ke OpenAI DALL-E 3 API (atau mock mode di sandbox/testing).
-     * Mendukung Multi-Key Pool dari Database Setting (Bekerja Bersamaan & Auto-Failover).
+     * Eksekusi generasi gambar ke OpenAI API (mendukung GPT Image 2.5 Flare & Sunburst).
      *
      * @param array{
      *     positive_prompt: string,
@@ -97,7 +95,10 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
      *     seed?: ?int,
      *     style_preset?: ?string,
      *     model_name?: string,
-     *     reference_images?: array<int, string>
+     *     quality?: string,
+     *     output_format?: string,
+     *     reference_images?: array<int, string>,
+     *     reference_image_path?: ?string
      * } $payload
      *
      * @return array{
@@ -109,9 +110,15 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
      *         url: string,
      *         width: int,
      *         height: int,
-     *         content_type?: string,
-     *         seed?: int
+     *         content_type: string
      *     }>,
+     *     usage?: array{
+     *         prompt_tokens: int,
+     *         completion_tokens: int,
+     *         total_tokens: int,
+     *         prompt_tokens_details?: array{text_tokens: int, image_tokens: int, cached_tokens: int},
+     *         completion_tokens_details?: array{image_tokens: int}
+     *     },
      *     latency_ms: int,
      *     error_message: ?string,
      *     raw_response?: array<string, mixed>
@@ -122,7 +129,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
         $startTime = microtime(true);
         $prompt = trim($payload['positive_prompt'] ?? '');
         $aspectRatio = (string) ($payload['aspect_ratio'] ?? '1:1');
-        $model = (string) ($payload['model_name'] ?? 'dall-e-3');
+        $model = (string) ($payload['model_name'] ?? 'gpt-image-2.5-flare');
 
         // 1. Jika running di mock atau environment testing, gunakan respon simulasi cepat
         if ($this->forceMock || app()->environment('testing')) {
@@ -143,9 +150,10 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
             return $this->generateMockResponse($prompt, $aspectRatio, $startTime, $model);
         }
 
-        // 3. Pemetaan ukuran OpenAI resmi
+        // 3. Pemetaan ukuran OpenAI resmi (multiple of 16, aspect ratio 1:3 s/d 3:1)
         $size = match ($aspectRatio) {
-            '9:16', '4:5' => '1024x1792',
+            '9:16' => '1024x1792',
+            '4:5' => '1024x1536',
             '16:9' => '1792x1024',
             default => '1024x1024',
         };
@@ -166,17 +174,51 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
                 ? $activeKeyData['model']
                 : $model;
 
+            $isGptImage25 = str_contains($currentModel, 'gpt-image-2.5');
+            $isSunburst = str_contains($currentModel, 'sunburst');
+
+            // Resolusi kualitas parameter
+            $quality = $payload['quality'] ?? ($isSunburst ? 'high' : ($isGptImage25 ? 'medium' : 'standard'));
+            $outputFormat = $payload['output_format'] ?? 'png';
+
             try {
-                $response = Http::withToken($currentKey)
-                    ->timeout(60)
-                    ->post($currentEndpoint . '/images/generations', [
+                $hasReferenceImage = ! empty($payload['reference_image_path']) && file_exists((string) $payload['reference_image_path']);
+
+                // Jika model Sunburst & ada gambar referensi untuk diedit, gunakan endpoint /images/edits
+                if ($hasReferenceImage && $isSunburst) {
+                    $refPath = (string) $payload['reference_image_path'];
+                    $response = Http::withToken($currentKey)
+                        ->timeout(60)
+                        ->attach('image', (string) file_get_contents($refPath), basename($refPath))
+                        ->post($currentEndpoint . '/images/edits', [
+                            'model' => $currentModel,
+                            'prompt' => $prompt,
+                            'n' => 1,
+                            'size' => $size,
+                            'quality' => $quality,
+                            'response_format' => 'url',
+                        ]);
+                } else {
+                    $requestBody = [
                         'model' => $currentModel,
                         'prompt' => $prompt,
-                        'n' => 1, // DALL-E 3 n=1 per call
+                        'n' => 1,
                         'size' => $size,
-                        'quality' => 'standard',
                         'response_format' => 'url',
-                    ]);
+                    ];
+
+                    if ($isGptImage25) {
+                        $requestBody['quality'] = $quality;
+                        $requestBody['output_format'] = $outputFormat;
+                    } else {
+                        // DALL-E 3 fallback parameter
+                        $requestBody['quality'] = in_array($quality, ['standard', 'hd'], true) ? $quality : 'standard';
+                    }
+
+                    $response = Http::withToken($currentKey)
+                        ->timeout(60)
+                        ->post($currentEndpoint . '/images/generations', $requestBody);
+                }
 
                 $latencyMs = (int) round((microtime(true) - $startTime) * 1000);
 
@@ -186,8 +228,23 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
                     }
 
                     $data = $response->json();
-                    $imageUrl = (string) ($data['data'][0]['url'] ?? '');
+                    $imageUrl = (string) ($data['data'][0]['url'] ?? $data['data'][0]['b64_json'] ?? '');
                     $jobId = 'openai_' . Str::uuid();
+
+                    // Tangkap struktur token usage resmi OpenAI
+                    $usage = $data['usage'] ?? [
+                        'prompt_tokens' => max(10, (int) round(strlen($prompt) / 4)),
+                        'completion_tokens' => ($isSunburst ? 1500 : 1000),
+                        'total_tokens' => max(10, (int) round(strlen($prompt) / 4)) + ($isSunburst ? 1500 : 1000),
+                        'prompt_tokens_details' => [
+                            'text_tokens' => max(10, (int) round(strlen($prompt) / 4)),
+                            'image_tokens' => $hasReferenceImage ? 1000 : 0,
+                            'cached_tokens' => 0,
+                        ],
+                        'completion_tokens_details' => [
+                            'image_tokens' => ($isSunburst ? 1500 : 1000),
+                        ],
+                    ];
 
                     return [
                         'status' => 'succeeded',
@@ -199,9 +256,10 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
                                 'url' => $imageUrl,
                                 'width' => (int) $width,
                                 'height' => (int) $height,
-                                'content_type' => 'image/png',
+                                'content_type' => 'image/' . ($outputFormat === 'jpeg' ? 'jpeg' : ($outputFormat === 'webp' ? 'webp' : 'png')),
                             ],
                         ],
+                        'usage' => $usage,
                         'latency_ms' => $latencyMs,
                         'error_message' => null,
                         'raw_response' => $data,
@@ -247,7 +305,7 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
      *
      * @return array<string, mixed>
      */
-    protected function generateMockResponse(string $prompt, string $aspectRatio, float $startTime): array
+    protected function generateMockResponse(string $prompt, string $aspectRatio, float $startTime, string $model = 'gpt-image-2.5-flare'): array
     {
         $latencyMs = (int) round((microtime(true) - $startTime) * 1000);
 
@@ -258,25 +316,49 @@ class OpenAiImageAdapter implements ImageGenerationProviderInterface
         };
 
         $jobId = 'mock_openai_' . Str::uuid();
-        $safePromptSlug = Str::slug(substr($prompt, 0, 30));
-        $mockUrl = "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w={$width}&h={$height}&fit=crop&q=80#ai_studio_{$safePromptSlug}";
+        // 1x1 valid transparent PNG data URI for offline/test reliability
+        $mockUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+        $promptTokens = max(10, (int) round(strlen($prompt) / 4));
+        $isSunburst = str_contains($model, 'sunburst');
+        $completionTokens = $isSunburst ? 1500 : 1000;
 
         return [
             'status' => 'succeeded',
             'provider' => 'openai',
-            'model_name' => 'dall-e-3-mock',
+            'model_name' => $model . '-mock',
             'provider_job_id' => $jobId,
             'images' => [
                 [
                     'url' => $mockUrl,
                     'width' => $width,
                     'height' => $height,
-                    'content_type' => 'image/jpeg',
+                    'content_type' => 'image/png',
+                ],
+            ],
+            'usage' => [
+                'prompt_tokens' => $promptTokens,
+                'completion_tokens' => $completionTokens,
+                'total_tokens' => $promptTokens + $completionTokens,
+                'prompt_tokens_details' => [
+                    'text_tokens' => $promptTokens,
+                    'image_tokens' => 0,
+                    'cached_tokens' => 0,
+                ],
+                'completion_tokens_details' => [
+                    'image_tokens' => $completionTokens,
                 ],
             ],
             'latency_ms' => max(150, $latencyMs),
             'error_message' => null,
-            'raw_response' => ['mock' => true],
+            'raw_response' => [
+                'mock' => true,
+                'usage' => [
+                    'prompt_tokens' => $promptTokens,
+                    'completion_tokens' => $completionTokens,
+                    'total_tokens' => $promptTokens + $completionTokens,
+                ],
+            ],
         ];
     }
 }
