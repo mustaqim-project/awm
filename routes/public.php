@@ -294,16 +294,17 @@ Route::match(['get', 'post'], '/webhooks/marketplace/{provider}', [\App\Http\Con
     ->middleware('throttle:120,1')
     ->name('webhooks.marketplace');
 
-// 15. Public COOCA My Own Mobile Android APK Download
+// 15. Public COOCA My Own Mobile Android APK Download & OTA Gateway
 Route::get('/download/apk', function () {
     $candidates = [
         public_path('cooca.apk'),
         public_path('downloads/cooca.apk'),
+        public_path('downloads/cooca_my_own.apk'),
     ];
 
     foreach ($candidates as $apkPath) {
         if (file_exists($apkPath)) {
-            return response()->download($apkPath, 'COOCA-My-Own-v1.0.0.apk', [
+            return response()->download($apkPath, 'cooca.apk', [
                 'Content-Type' => 'application/vnd.android.package-archive',
             ]);
         }
@@ -317,6 +318,10 @@ Route::get('/download/apk', function () {
 })->name('public.download.apk');
 
 Route::get('/download-apk', function () {
+    return redirect()->route('public.download.apk');
+});
+
+Route::get('/download/cooca.apk', function () {
     return redirect()->route('public.download.apk');
 });
 
@@ -353,6 +358,9 @@ Route::get('/app/version', function () {
     ]);
 });
 Route::get('/version.json', function () {
+    return redirect('/app/version');
+});
+Route::get('/app/check-update', function () {
     return redirect('/app/version');
 });
 

@@ -82,52 +82,6 @@ require __DIR__ . '/public.php';
     abort(404);
 })->where('path', '.*');
 
-// ──────────────────────────────────────────────────────────────────
-// Mobile App In-App OTA Update & APK Gateway (Web Fallback)
-// Handles direct calls without /api/v1 prefix from installed mobile apps
-// ──────────────────────────────────────────────────────────────────
-\Illuminate\Support\Facades\Route::get('/app/version', function () {
-    $apkFile = public_path('cooca.apk');
-    $hasApk = file_exists($apkFile);
-    $fileSize = $hasApk ? filesize($apkFile) : 0;
-    $fileModTime = $hasApk ? filemtime($apkFile) : 0;
-
-    return response()->json([
-        'success' => true,
-        'app_name' => 'COOCA My Own',
-        'package_name' => 'com.cooca.myown.cooca_my_own',
-        'latest_version' => '1.0.3',
-        'latest_build' => 4,
-        'min_supported_version' => '1.0.0',
-        'force_update' => false,
-        'download_url' => url('/cooca.apk'),
-        'file_size' => $fileSize,
-        'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
-        'release_notes' => [
-            'Pemisahan tab portal kepegawaian (Presensi, Profil, Slip Gaji, Riwayat) menjadi modul halaman terpisah.',
-            'Eliminasi multi-click dan touch collision antar segmen tab pada layar ponsel.',
-            'Pembersihan total garis bawah kuning (yellow underlines) pada teks modal dialog.',
-            'Sinkronisasi otomatis konteks bisnis setelah login Google SSO.',
-            'Pembaruan sistem in-app langsung tanpa download manual dari browser.',
-        ],
-    ]);
-});
-
-\Illuminate\Support\Facades\Route::get('/download/apk', function () {
-    $apkFile = public_path('cooca.apk');
-    if (!file_exists($apkFile)) {
-        abort(404, 'File APK belum tersedia di server.');
-    }
-    return response()->file($apkFile, [
-        'Content-Type' => 'application/vnd.android.package-archive',
-        'Content-Disposition' => 'attachment; filename="cooca.apk"',
-    ]);
-});
-
-\Illuminate\Support\Facades\Route::get('/download/cooca.apk', function () {
-    return redirect('/download/apk');
-});
-
 // Catch-all Canonical Redirection: Eliminate any accidental /public prefix
 \Illuminate\Support\Facades\Route::any('/public/{any?}', function (?string $any = null) {
     return redirect('/' . ($any ?? ''), 301);

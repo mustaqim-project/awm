@@ -1614,6 +1614,27 @@ Route::prefix('v1')->group(function (): void {
                 Route::post('/chat/{id}/send', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'sendChatMessage']);
                 Route::post('/chat/{id}/read', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'markChatRead']);
             });
+
+            // ──────────────────────────────────────────────────────────────────
+            // MOBILE APP API – Community Hub & Events
+            // ──────────────────────────────────────────────────────────────────
+            Route::prefix('community')->group(function (): void {
+                Route::get('/feed', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'feed']);
+                Route::post('/posts', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'storePost']);
+                Route::delete('/posts/{post}', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'destroyPost']);
+                Route::post('/posts/{post}/like', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'toggleLike']);
+                Route::post('/posts/{post}/repost', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'toggleRepost']);
+                Route::post('/posts/{post}/comment', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'comment']);
+                Route::get('/notifications', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'notifications']);
+                Route::post('/notifications/read', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'markNotificationsRead']);
+                Route::get('/events', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'events']);
+                Route::post('/events/{event}/register', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'registerEvent']);
+                Route::post('/events/{event}/cancel', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'cancelEventRegistration']);
+                Route::get('/events/{event}/ticket', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'getEventTicket']);
+                Route::post('/events/{event}/checkin-location', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'checkinLocation']);
+                Route::post('/events/{event}/checkin-barcode', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'checkinBarcode']);
+                Route::post('/events/registrations/{registration}/simulate-pay', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'simulateEventPayment']);
+            });
         });
     });
 });
