@@ -55,23 +55,43 @@ final class OpenAiProvider implements AiProviderInterface
         }
 
         $targetModel = trim($model) ?: 'gpt-4o-mini';
+        $isImageOrGenericModel = str_contains($targetModel, 'image')
+            || str_contains($targetModel, 'dall-e')
+            || str_contains($targetModel, 'flare')
+            || str_contains($targetModel, 'sunburst')
+            || $targetModel === 'default';
 
         try {
-            $response = Http::withToken($sanitizedKey)
-                ->timeout(12)
-                ->post(self::BASE_URL . '/chat/completions', [
-                    'model' => $targetModel,
-                    'messages' => [
-                        ['role' => 'user', 'content' => 'Ping. Respond with single word "OK".'],
-                    ],
-                    'max_tokens' => 20,
-                ]);
+            if ($isImageOrGenericModel) {
+                // Endpoint /chat/completions tidak mendukung model gambar dan mengembalikan 503/400.
+                // Verifikasi validitas API Key menggunakan endpoint resmi GET /v1/models (zero token cost).
+                $response = Http::withToken($sanitizedKey)
+                    ->timeout(12)
+                    ->get(self::BASE_URL . '/models');
 
-            if ($response->successful()) {
-                return [
-                    'success' => true,
-                    'message' => "Koneksi ke OpenAI ({$targetModel}) berhasil terverifikasi!",
-                ];
+                if ($response->successful()) {
+                    return [
+                        'success' => true,
+                        'message' => "Koneksi ke OpenAI untuk model ({$targetModel}) berhasil terverifikasi!",
+                    ];
+                }
+            } else {
+                $response = Http::withToken($sanitizedKey)
+                    ->timeout(12)
+                    ->post(self::BASE_URL . '/chat/completions', [
+                        'model' => $targetModel,
+                        'messages' => [
+                            ['role' => 'user', 'content' => 'Ping. Respond with single word "OK".'],
+                        ],
+                        'max_tokens' => 20,
+                    ]);
+
+                if ($response->successful()) {
+                    return [
+                        'success' => true,
+                        'message' => "Koneksi ke OpenAI ({$targetModel}) berhasil terverifikasi!",
+                    ];
+                }
             }
 
             $status = $response->status();

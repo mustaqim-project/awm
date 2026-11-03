@@ -12,7 +12,7 @@ use App\Models\AiStudio\AiCreditTransaction;
 use App\Models\AiStudio\AiModelPricing;
 use App\Models\AiStudio\AiModelRegistry;
 use App\Models\Business;
-use App\Models\SystemSetting;
+use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -59,7 +59,7 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
             ->get();
 
         $usdToIdrRate = $this->exchangeRateService->getUsdToIdrRate();
-        $exchangeRateLastSynced = SystemSetting::get('ai_exchange_rate_last_synced_at') ?? now()->toIso8601String();
+        $exchangeRateLastSynced = Setting::get('ai_exchange_rate_last_synced_at') ?? now()->toIso8601String();
 
         $recentTransactions = AiCreditTransaction::query()
             ->latest()
@@ -250,7 +250,7 @@ final class AdminAiStudioPricingController extends Controller implements HasMidd
         ]);
 
         // Simpan konfigurasi matriks harga kustom ke pengaturan sistem
-        SystemSetting::set('ai_studio_pricing_overrides', json_encode($validated['pricing_overrides']));
+        Setting::set('ai_studio_pricing_overrides', json_encode($validated['pricing_overrides']));
 
         return response()->json([
             'success' => true,
