@@ -960,3 +960,4 @@ final class CommunityApiController extends Controller implements HasMiddleware
         ]);
     }
 }
+

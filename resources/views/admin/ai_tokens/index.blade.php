@@ -1386,24 +1386,25 @@
 
 <script>
 function aiEngineConsole(config) {
+    const engineConfig = (config && config.engineConfig) || {};
     return {
-        activeTab: config.currentTab || 'engine',
-        engineStatus: config.engineConfig.status || 'connected',
-        latencyMs: config.engineConfig.latency_ms || 0,
-        selectedProvider: config.engineConfig.provider || 'openai_compatible',
-        endpointUrl: config.engineConfig.endpoint || 'https://r4g77gv.abc-tunnel.us/v1',
-        selectedModel: config.engineConfig.model || 'ag/gemini-3.8-flash-high',
+        activeTab: (config && config.currentTab) || 'engine',
+        engineStatus: engineConfig.status || 'connected',
+        latencyMs: engineConfig.latency_ms || 0,
+        selectedProvider: engineConfig.provider || 'openai_compatible',
+        endpointUrl: engineConfig.endpoint || 'https://r4g77gv.abc-tunnel.us/v1',
+        selectedModel: engineConfig.model || 'ag/gemini-3.8-flash-high',
         customModelName: '',
-        rotationStrategy: config.engineConfig.rotation_strategy || 'failover',
-        modelsList: config.modelsList || [],
-        maskedKeys: config.engineConfig.masked_keys || [],
-        providersMeta: config.engineConfig.providers_meta || {},
-        providersStats: config.engineConfig.providers_stats || {},
-        totalKeysCount: config.engineConfig.total_keys_count || 0,
-        activeKeysCount: config.engineConfig.active_keys_count || 0,
-        connectedProvidersCount: config.engineConfig.connected_providers_count || 0,
-        totalRoutedRequests: config.engineConfig.total_routed_requests || 0,
-        totalRoutedErrors: config.engineConfig.total_routed_errors || 0,
+        rotationStrategy: engineConfig.rotation_strategy || 'failover',
+        modelsList: (config && config.modelsList) || [],
+        maskedKeys: engineConfig.masked_keys || [],
+        providersMeta: engineConfig.providers_meta || {},
+        providersStats: engineConfig.providers_stats || {},
+        totalKeysCount: engineConfig.total_keys_count || 0,
+        activeKeysCount: engineConfig.active_keys_count || 0,
+        connectedProvidersCount: engineConfig.connected_providers_count || 0,
+        totalRoutedRequests: engineConfig.total_routed_requests || 0,
+        totalRoutedErrors: engineConfig.total_routed_errors || 0,
 
         // Key Filters & Search
         keyFilter: 'all',
@@ -1698,7 +1699,7 @@ function aiEngineConsole(config) {
             } catch (err) {
                 this.modelFeedback.show = true;
                 this.modelFeedback.success = false;
-                this.modelFeedback.message = '{{ __('admin.terjadi_kesalahan_err_message') }}
+                this.modelFeedback.message = '{{ __('admin.terjadi_kesalahan_err_message') }}' + err.message;
             } finally {
                 this.isAddingModel = false;
                 this.$nextTick(() => {
@@ -1856,6 +1857,15 @@ function aiEngineConsole(config) {
             }
         }
     };
+}
+
+window.aiEngineConsole = aiEngineConsole;
+if (typeof Alpine !== 'undefined' && Alpine.data) {
+    Alpine.data('aiEngineConsole', (config) => aiEngineConsole(config));
+} else {
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('aiEngineConsole', (config) => aiEngineConsole(config));
+    });
 }
 </script>
 @endsection

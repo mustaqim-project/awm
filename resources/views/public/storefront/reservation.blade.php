@@ -87,7 +87,7 @@
                      this.errorMessage = data.message || 'Gagal mengirimkan reservasi. Silakan periksa kembali data Anda.';
                  }
              } catch (e) {
-                 this.errorMessage = '{{ __('storefront.reservation_connection_error') }}
+                 this.errorMessage = '{{ __('storefront.reservation_connection_error') }}';
              } finally {
                  this.isSubmitting = false;
              }

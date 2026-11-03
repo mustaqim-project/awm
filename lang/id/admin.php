@@ -260,7 +260,7 @@ return [
     'testingkeyid_k_id_animate_spin' => 'testingKeyId === k.id ? \'animate-spin\' :',
     'testingkeyid_k_id_menguji' => 'testingKeyId === k.id ? \'Menguji...\' :',
     'testingkeyid' => 'testingKeyId:',
-    'terjadi_kesalahan_err_message' => 'Terjadi kesalahan: \' + err.message;',
+    'terjadi_kesalahan_err_message' => 'Terjadi kesalahan: ',
     'belum_ada_riwayat_konsumsi_token_tercatat' => 'Belum ada riwayat konsumsi token tercatat.',
     'belum_ada_data_tenant_yang_menggunakan' => 'Belum ada data tenant yang menggunakan AI.',
     'belum_ada_aktivitas_ai' => 'Belum ada aktivitas AI',
