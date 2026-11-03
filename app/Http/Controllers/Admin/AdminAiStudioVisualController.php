@@ -12,6 +12,7 @@ use App\Models\Admin;
 use App\Models\AdminAiVisualAsset;
 use App\Models\AiStudio\InspirationCategory;
 use App\Models\AiStudio\InspirationItem;
+use App\Models\AiStudio\InspirationSource;
 use App\Models\SocialMediaAccount;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -352,15 +353,66 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             ->orderBy('platform')
             ->get();
 
-        // Koleksi Inspirasi Visual Lokal COOCA untuk Gambar Referensi
-        $inspirationReferences = InspirationItem::query()
+        // Filter & Koleksi Galeri Gambar Inspirasi Visual COOCA (460+ Item Lokal)
+        $inspSource = $request->query('insp_source', 'all');
+        $inspCategory = $request->query('insp_category', 'all');
+        $inspQuery = trim((string) $request->query('insp_q', ''));
+
+        $inspirationQuery = InspirationItem::query()
+            ->with(['source', 'category', 'visualAnalysis'])
+            ->where('status', 'active');
+
+        if (! empty($inspQuery)) {
+            $inspirationQuery->where(function ($q) use ($inspQuery) {
+                $q->where('title', 'LIKE', "%{$inspQuery}%")
+                    ->orWhere('caption', 'LIKE', "%{$inspQuery}%")
+                    ->orWhereJsonContains('tags', $inspQuery);
+            });
+        }
+
+        if ($inspCategory !== 'all') {
+            $inspirationQuery->whereHas('category', function ($q) use ($inspCategory) {
+                $q->where('slug', $inspCategory);
+            });
+        }
+
+        if ($inspSource !== 'all') {
+            $inspirationQuery->whereHas('source', function ($q) use ($inspSource) {
+                $q->where('code', $inspSource);
+            });
+        }
+
+        $inspirationReferences = $inspirationQuery
+            ->orderByDesc('view_count')
+            ->paginate(24, ['*'], 'insp_page')
+            ->withQueryString();
+
+        // 8 Item Referensi Cepat untuk Strip di Form Generator
+        $quickReferences = InspirationItem::query()
             ->with(['source', 'category', 'visualAnalysis'])
             ->where('status', 'active')
             ->orderByDesc('view_count')
-            ->take(36)
-            ->get();
+            ->take(8)
+            ->get()
+            ->map(function (InspirationItem $item) {
+                return [
+                    'id'                => $item->id,
+                    'title'             => $item->title,
+                    'caption'           => $item->caption,
+                    'display_image_url' => $item->display_image_url,
+                    'thumbnail_url'     => $item->display_image_url,
+                    'source_name'       => $item->source?->name ?? 'Katalog Visual',
+                    'source_code'       => $item->source?->code ?? 'cooca',
+                    'category_name'     => $item->category?->name ?? 'Umum',
+                    'prompt_hint'       => $item->visualAnalysis?->extracted_style_prompt ?? $item->caption,
+                ];
+            })
+            ->values()
+            ->toArray();
 
+        $sources = InspirationSource::where('is_active', true)->orderBy('name')->get();
         $categories = InspirationCategory::orderBy('sort_order')->get();
+        $totalInspirationsCount = InspirationItem::where('status', 'active')->count();
 
         $contentTypes = self::CONTENT_TYPES;
         $campaignPresets = self::CAMPAIGN_PRESETS;
@@ -382,7 +434,13 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             'colorPalettes',
             'brandTones',
             'inspirationReferences',
+            'quickReferences',
+            'sources',
             'categories',
+            'totalInspirationsCount',
+            'inspSource',
+            'inspCategory',
+            'inspQuery',
             'aspectRatioFilter',
             'onlyFavorite'
         ));
@@ -433,15 +491,19 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
                 'title'           => $item->title,
                 'caption'         => $item->caption,
                 'image_url'       => $item->display_image_url,
+                'display_image_url' => $item->display_image_url,
+                'preview_url'     => $item->display_image_url,
                 'thumbnail_url'   => $item->thumbnail_url,
-                'aspect_ratio'    => $item->aspect_ratio,
+                'aspect_ratio'    => $item->visualAnalysis?->aspect_ratio ?? '1:1',
                 'source_name'     => $item->source?->name ?? 'Katalog Visual',
+                'source_code'     => $item->source?->code ?? 'cooca',
                 'category_name'   => $item->category?->name ?? 'Umum',
                 'tags'            => $item->tags ?? [],
                 'color_palette'   => $analysis?->color_palette ?? [],
                 'color_mood'      => $analysis?->color_mood,
                 'lighting'        => $analysis?->lighting,
                 'composition'     => $analysis?->composition,
+                'prompt_hint'     => $analysis?->extracted_style_prompt ?? $item->caption,
                 'style_prompt'    => $analysis?->extracted_style_prompt ?? $item->caption,
                 'negative_prompt' => $analysis?->negative_style_prompt,
             ];

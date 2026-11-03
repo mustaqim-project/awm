@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
     'title' => 'AI Studio Visual Creator - Admin Console',
     'headerTitle' => 'Studio Visual & Materi Media Sosial AI',
-    'headerSubtitle' => 'Rancang konten visual promosi platform, banner kampanye, pilih referensi gaya, dan publikasikan langsung ke media sosial',
+    'headerSubtitle' => 'Rancang konten visual promosi platform, jelajahi 460+ gambar referensi gaya, dan publikasikan langsung ke media sosial',
 ])
 
 @section('content')
@@ -25,7 +25,7 @@
                     </span>
                 </div>
                 <p class="text-xs text-black/60 dark:text-white/60">
-                    Hasilkan materi visual promosi resmi COOCA, banner SaaS, infografis UMKM, pilih gambar referensi gaya, dan jadwalkan postingan ke media sosial.
+                    Hasilkan materi visual promosi resmi COOCA, pilih 460+ referensi gambar dari Pinterest, Civitai, atau CopasPrompt, dan jadwalkan postingan ke media sosial.
                 </p>
             </div>
 
@@ -55,7 +55,7 @@
             <a href="{{ route('admin.ai-studio.sources.index') }}"
                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
                 <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                <span>Sumber Inspirasi &amp; Tren ({{ $inspirationReferences->count() }}+)</span>
+                <span>Sumber Inspirasi &amp; Tren ({{ $totalInspirationsCount ?? 463 }} Foto)</span>
             </a>
             <a href="{{ route('admin.ai-studio.pricing.index') }}"
                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
@@ -69,31 +69,31 @@
     <!-- 2. BENTO METRICS GRID                      -->
     <!-- ========================================== -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <!-- Metric 1: Total Aset Visual -->
+        <!-- Metric 1: Total Aset Visual Admin -->
         <div class="rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-4 transition-colors">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-black/55 dark:text-white/55">Total Materi Visual</span>
+                <span class="text-xs font-medium text-black/55 dark:text-white/55">Hasil Render Admin</span>
                 <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] flex items-center justify-center">
                     <i data-lucide="image" class="w-3.5 h-3.5"></i>
                 </span>
             </div>
             <div class="mt-2.5 flex items-baseline gap-2">
                 <span class="text-2xl font-bold tracking-tight text-black dark:text-white">{{ $stats['total_assets'] }}</span>
-                <span class="text-[11px] text-black/50 dark:text-white/50">aset tersimpan</span>
+                <span class="text-[11px] text-black/50 dark:text-white/50">materi tersimpan</span>
             </div>
         </div>
 
-        <!-- Metric 2: Aset Favorit -->
+        <!-- Metric 2: Katalog Inspirasi Siap Pakai -->
         <div class="rounded-[16px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-4 transition-colors">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-medium text-black/55 dark:text-white/55">Aset Favorit</span>
+                <span class="text-xs font-medium text-black/55 dark:text-white/55">Katalog Gambar Referensi</span>
                 <span class="w-7 h-7 rounded-[8px] bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9500]/20 dark:text-[#FF9F0A] flex items-center justify-center">
-                    <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FF9500]"></i>
+                    <i data-lucide="compass" class="w-3.5 h-3.5 fill-[#FF9500]/20"></i>
                 </span>
             </div>
             <div class="mt-2.5 flex items-baseline gap-2">
-                <span class="text-2xl font-bold tracking-tight text-black dark:text-white">{{ $stats['total_favorites'] }}</span>
-                <span class="text-[11px] text-black/50 dark:text-white/50">unggulan</span>
+                <span class="text-2xl font-bold tracking-tight text-[#FF9500] dark:text-[#FF9F0A]">{{ $totalInspirationsCount ?? 463 }}</span>
+                <span class="text-[11px] text-black/50 dark:text-white/50">desain siap pakai</span>
             </div>
         </div>
 
@@ -149,7 +149,7 @@
                 <div class="space-y-2">
                     <label class="block text-xs font-semibold text-black dark:text-white flex items-center justify-between">
                         <span>Jenis Konten Platform</span>
-                        <span class="text-[10px] text-black/40 dark:text-white/40">Pilih tipe komunikasi</span>
+                        <span class="text-[10px] text-black/40 dark:text-white/40">8 Tipe Komunikasi</span>
                     </label>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                         @foreach ($contentTypes as $key => $type)
@@ -181,10 +181,10 @@
                     </div>
                 </div>
 
-                <!-- ========================================== -->
-                <!-- Bagian C: Pemilih Gambar Referensi Visual   -->
-                <!-- ========================================== -->
-                <div class="p-3.5 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 space-y-3">
+                <!-- ========================================================= -->
+                <!-- Bagian C: Pemilih Gambar Referensi Visual (VISUAL PICKER)  -->
+                <!-- ========================================================= -->
+                <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/10 space-y-3">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
                             <i data-lucide="image-plus" class="w-3.5 h-3.5 text-[#007AFF]"></i>
@@ -205,7 +205,7 @@
                             :class="refMode === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
                             class="py-1.5 px-2 rounded-[8px] text-xs transition-all flex items-center justify-center gap-1.5">
                             <i data-lucide="compass" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>Pilih dari Katalog Inspirasi</span>
+                            <span>Katalog COOCA ({{ $totalInspirationsCount ?? 463 }}+)</span>
                         </button>
                         <button type="button" @click="refMode = 'upload'"
                             :class="refMode === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
@@ -216,38 +216,88 @@
                     </div>
 
                     <!-- Panel Mode A: Pilih dari Katalog Inspirasi -->
-                    <div x-show="refMode === 'catalog'" class="space-y-2">
+                    <div x-show="refMode === 'catalog'" class="space-y-2.5">
+
+                        <!-- KONDISI 1: Belum Ada Referensi Dipilih -> Tampilkan Quick Pick Thumbnails Langsung! -->
                         <template x-if="!selectedInspiration">
                             <div class="space-y-2">
-                                <button type="button" @click="openInspirationPickerModal()"
-                                    class="w-full py-2.5 px-3 rounded-[10px] border border-dashed border-[#007AFF]/40 hover:border-[#007AFF] bg-[#007AFF]/5 hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center gap-2 transition-all">
-                                    <i data-lucide="search" class="w-4 h-4"></i>
-                                    <span>Jelajahi 460+ Gambar Inspirasi COOCA</span>
+                                <div class="flex items-center justify-between text-[11px] text-black/60 dark:text-white/60">
+                                    <span class="font-semibold text-black dark:text-white">Pilihan Cepat Gambar Referensi:</span>
+                                    <span>Klik untuk pasang</span>
+                                </div>
+
+                                <!-- Strip Thumbnail Gambar Referensi Populer (Langsung Terlihat di Layar!) -->
+                                <div class="grid grid-cols-4 gap-2">
+                                    @foreach ($quickReferences as $qRef)
+                                        <div @click="selectInspirationFromModal(@js($qRef))"
+                                            title="{{ $qRef['title'] }} ({{ $qRef['source_name'] }})"
+                                            class="group relative rounded-[10px] overflow-hidden border border-black/10 dark:border-white/10 hover:border-[#007AFF] aspect-square cursor-pointer transition-all bg-black/[0.04] shadow-2xs">
+                                            <img src="{{ $qRef['display_image_url'] }}" alt="{{ $qRef['title'] }}"
+                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                            <span class="absolute top-1 left-1 px-1 py-0.2 rounded text-[8px] font-bold uppercase bg-black/70 text-white backdrop-blur-xs">
+                                                {{ $qRef['source_code'] }}
+                                            </span>
+                                            <!-- Hover Overlay -->
+                                            <div class="absolute inset-0 bg-black/65 opacity-0 group-hover:opacity-100 transition-opacity p-1 flex flex-col justify-end text-white text-[9px] font-bold">
+                                                <span class="truncate">{{ $qRef['title'] }}</span>
+                                                <span class="text-[#0A84FF]">Pilih &rarr;</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Tombol Navigasi ke Galeri Lengkap di Bawah -->
+                                <button type="button" @click="scrollOrOpenGallery()"
+                                    class="w-full py-2 px-3 rounded-[10px] border border-dashed border-[#007AFF]/40 hover:border-[#007AFF] bg-[#007AFF]/5 hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                                    <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                                    <span>Lihat &amp; Cari di 460+ Koleksi Gambar Lengkap &darr;</span>
                                 </button>
-                                <p class="text-[10px] text-black/50 dark:text-white/50 text-center">
-                                    Pilih contoh visual dari Pinterest, Civitai, atau koleksi terkurasi COOCA sebagai acuan komposisi &amp; lighting.
-                                </p>
                             </div>
                         </template>
 
+                        <!-- KONDISI 2: Referensi Sudah Dipilih -> Tampilkan Kartu Referensi Aktif -->
                         <template x-if="selectedInspiration">
-                            <div class="flex items-center gap-3 p-2 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 shadow-xs">
-                                <img :src="selectedInspiration.preview_url || selectedInspiration.image_url" :alt="selectedInspiration.title"
-                                    class="w-14 h-14 rounded-[8px] object-cover border border-black/5">
-                                <div class="flex-1 min-w-0 space-y-0.5">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF]" x-text="selectedInspiration.source_type"></span>
-                                        <span class="text-[10px] text-black/40 dark:text-white/40 truncate" x-text="selectedInspiration.category_name || 'Inspirasi Visual'"></span>
+                            <div class="p-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#007AFF]/30 shadow-xs space-y-2">
+                                <div class="flex items-center gap-3">
+                                    <img :src="selectedInspiration.display_image_url || selectedInspiration.preview_url || selectedInspiration.image_url" :alt="selectedInspiration.title"
+                                        class="w-16 h-16 rounded-[10px] object-cover border border-black/10 shrink-0 shadow-sm">
+                                    <div class="flex-1 min-w-0 space-y-0.5">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#007AFF]/10 text-[#007AFF]" x-text="selectedInspiration.source_code || selectedInspiration.source_name || 'COOCA'"></span>
+                                            <span class="text-[10px] text-[#34C759] font-bold flex items-center gap-0.5">
+                                                <i data-lucide="check-circle" class="w-3 h-3"></i>
+                                                <span>Referensi Aktif</span>
+                                            </span>
+                                        </div>
+                                        <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="selectedInspiration.title"></h5>
+                                        <p class="text-[10px] text-black/50 dark:text-white/50 truncate" x-text="selectedInspiration.category_name || 'Katalog Visual'"></p>
                                     </div>
-                                    <h5 class="text-xs font-bold text-black dark:text-white truncate" x-text="selectedInspiration.title"></h5>
-                                    <p class="text-[10px] text-black/60 dark:text-white/60 truncate" x-text="selectedInspiration.prompt_hint || 'Referensi gaya aktif'"></p>
+                                    <div class="flex flex-col gap-1">
+                                        <button type="button" @click="scrollOrOpenGallery()"
+                                            class="px-2.5 py-1 rounded-[7px] text-[10px] font-bold bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] text-black/80 dark:text-white/80 transition-all">
+                                            Ganti
+                                        </button>
+                                        <button type="button" @click="clearReference()"
+                                            class="px-2.5 py-1 rounded-[7px] text-[10px] font-bold bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-all">
+                                            Hapus
+                                        </button>
+                                    </div>
                                 </div>
-                                <button type="button" @click="openInspirationPickerModal()"
-                                    class="px-2.5 py-1.5 rounded-[8px] text-[10px] font-bold bg-black/[0.04] hover:bg-black/[0.08] dark:bg-white/[0.06] text-black/80 dark:text-white/80 transition-all">
-                                    Ganti
-                                </button>
+
+                                <!-- Tombol Salin Prompt Inspirasi jika ada -->
+                                <template x-if="selectedInspiration.prompt_hint">
+                                    <div class="pt-2 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                                        <span class="text-[10px] text-black/50 dark:text-white/50">Tersedia prompt gaya visual</span>
+                                        <button type="button" @click="applyInspirationPrompt()"
+                                            class="text-[10px] font-bold text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer">
+                                            <i data-lucide="sparkles" class="w-3 h-3"></i>
+                                            <span>Salin ke Prompt Generator</span>
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
                         </template>
+
                     </div>
 
                     <!-- Panel Mode B: Unggah Foto Manual -->
@@ -521,15 +571,24 @@
                         <i data-lucide="monitor" class="w-4 h-4 text-[#007AFF]"></i>
                         <span>2. Canvas Pratinjau Visual</span>
                     </h2>
-                    <template x-if="activeAsset">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF]" x-text="activeAsset.aspect_ratio"></span>
-                            <span class="text-[11px] text-black/40 dark:text-white/40" x-text="activeAsset.width + ' × ' + activeAsset.height + ' px'"></span>
-                        </div>
-                    </template>
+
+                    <!-- Keterangan Status Canvas -->
+                    <div>
+                        <template x-if="activeAsset">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF]" x-text="activeAsset.aspect_ratio"></span>
+                                <span class="text-[11px] text-black/40 dark:text-white/40" x-text="activeAsset.width + ' × ' + activeAsset.height + ' px'"></span>
+                            </div>
+                        </template>
+                        <template x-if="!activeAsset && selectedInspiration">
+                            <span class="px-2 py-0.5 rounded-[6px] text-[10px] font-bold bg-[#34C759]/15 text-[#34C759]">
+                                Pratinjau Referensi Terpasang
+                            </span>
+                        </template>
+                    </div>
                 </div>
 
-                <!-- Frame Gambar Hasil Render -->
+                <!-- Frame Gambar Hasil Render / Referensi Terpasang -->
                 <div class="relative w-full rounded-[16px] overflow-hidden bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 flex items-center justify-center min-h-[380px] max-h-[520px]">
 
                     <!-- Loading State saat Render -->
@@ -541,13 +600,13 @@
                             <div class="space-y-1">
                                 <h4 class="text-sm font-bold text-black dark:text-white">Merender Visual Promosi Platform</h4>
                                 <p class="text-xs text-black/50 dark:text-white/50 max-w-xs">
-                                    Model OpenAI sedang menyusun komposisi pencahayaan studio, gaya visual, dan rasio aspek yang dipilih...
+                                    Model OpenAI sedang menyusun komposisi pencahayaan studio, gaya visual, dan referensi terpilih...
                                 </p>
                             </div>
                         </div>
                     </template>
 
-                    <!-- Active Image Display -->
+                    <!-- Active Image Display (Aset Hasil Render) -->
                     <template x-if="!isGenerating && activeAsset">
                         <div class="relative w-full h-full flex items-center justify-center p-2 group">
                             <img :src="activeAsset.image_url" :alt="activeAsset.title"
@@ -561,16 +620,36 @@
                         </div>
                     </template>
 
+                    <!-- Tampilan Pratinjau Gambar Referensi Aktif (Jika belum ada hasil render) -->
+                    <template x-if="!isGenerating && !activeAsset && selectedInspiration">
+                        <div class="relative w-full h-full flex flex-col items-center justify-center p-4 group">
+                            <img :src="selectedInspiration.display_image_url || selectedInspiration.preview_url || selectedInspiration.image_url" :alt="selectedInspiration.title"
+                                class="max-h-[400px] w-auto max-w-full rounded-[14px] object-contain shadow-lg border border-black/10">
+
+                            <!-- Overlay Keterangan Referensi -->
+                            <div class="mt-3 p-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-sm flex items-center justify-between w-full max-w-md">
+                                <div class="min-w-0 pr-2">
+                                    <span class="text-[9px] font-bold uppercase tracking-wider text-[#007AFF]" x-text="'Referensi: ' + (selectedInspiration.source_name || selectedInspiration.source_code)"></span>
+                                    <h4 class="text-xs font-bold text-black dark:text-white truncate" x-text="selectedInspiration.title"></h4>
+                                </div>
+                                <button type="button" @click="dispatchGenerate()"
+                                    class="px-3 py-1.5 rounded-[8px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-[11px] font-bold shadow-xs transition-all shrink-0">
+                                    Render Sekarang &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
                     <!-- Empty Canvas Placeholder -->
-                    <template x-if="!isGenerating && !activeAsset">
+                    <template x-if="!isGenerating && !activeAsset && !selectedInspiration">
                         <div class="flex flex-col items-center justify-center p-8 text-center space-y-3">
-                            <div class="w-12 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-[14px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                                 <i data-lucide="image" class="w-6 h-6"></i>
                             </div>
                             <div class="space-y-1">
-                                <h4 class="text-xs font-bold text-black dark:text-white">Belum Ada Visual yang Dipilih</h4>
+                                <h4 class="text-xs font-bold text-black dark:text-white">Pilih Gambar Referensi di Bawah untuk Memulai</h4>
                                 <p class="text-[11px] text-black/50 dark:text-white/50 max-w-xs">
-                                    Pilih jenis konten &amp; referensi di sebelah kiri atau klik tombol Generate untuk menciptakan visual baru.
+                                    Klik salah satu dari 460+ inspirasi di galeri bawah atau pilih preset kampanye untuk merancang visual promosi.
                                 </p>
                             </div>
                         </div>
@@ -621,77 +700,208 @@
                 </template>
             </div>
 
-            <!-- Bento Card 3: Galeri Riwayat Aset Admin -->
-            <div class="rounded-[20px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 shadow-xs space-y-4">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50 flex items-center gap-2">
-                        <i data-lucide="grid" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span>3. Galeri Materi Visual Tersimpan</span>
-                    </h3>
-
-                    <!-- Filter Chips Rasio -->
-                    <div class="flex items-center gap-1">
-                        <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => 'all']) }}"
-                            class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === 'all' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
-                            Semua
-                        </a>
-                        <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '1:1']) }}"
-                            class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '1:1' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
-                            1:1
-                        </a>
-                        <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '9:16']) }}"
-                            class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '9:16' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
-                            9:16
-                        </a>
-                        <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '16:9']) }}"
-                            class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '16:9' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
-                            16:9
-                        </a>
+            <!-- ======================================================== -->
+            <!-- Bento Card 3: DUAL-TAB BENTO GALLERY (INSPIRASI vs HASIL) -->
+            <!-- ======================================================== -->
+            <div id="bentoGallerySection" class="rounded-[20px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-5 sm:p-6 shadow-xs space-y-4">
+                
+                <!-- Tab Switcher: Galeri Inspirasi (Default) vs Aset Admin -->
+                <div class="flex items-center justify-between flex-wrap gap-3 pb-3 border-b border-black/5 dark:border-white/10">
+                    <div class="flex items-center gap-1.5 p-1 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06]">
+                        <button type="button" @click="activeBottomTab = 'inspirations'"
+                            :class="activeBottomTab === 'inspirations' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04]'"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9px] text-xs font-bold transition-all cursor-pointer">
+                            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                            <span>Koleksi 460+ Gambar Inspirasi</span>
+                        </button>
+                        <button type="button" @click="activeBottomTab = 'my_assets'"
+                            :class="activeBottomTab === 'my_assets' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04]'"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9px] text-xs font-bold transition-all cursor-pointer">
+                            <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                            <span>Materi Visual Tersimpan ({{ $stats['total_assets'] }})</span>
+                        </button>
                     </div>
+
+                    <span class="text-[11px] text-black/50 dark:text-white/50">
+                        <span x-show="activeBottomTab === 'inspirations'">Pinterest, Civitai, CopasPrompt</span>
+                        <span x-show="activeBottomTab === 'my_assets'">Hasil Generate Platform</span>
+                    </span>
                 </div>
 
-                <!-- Asset Grid -->
-                @if ($assets->count() > 0)
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                        @foreach ($assets as $assetItem)
-                            <div @click="selectAsset(@js($assetItem))"
-                                :class="activeAsset && activeAsset.id === '{{ $assetItem->id }}' ? 'ring-2 ring-[#007AFF] shadow-md' : 'hover:border-black/20 dark:hover:border-white/20'"
-                                class="group relative rounded-[14px] overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 cursor-pointer transition-all aspect-square">
-                                <img src="{{ $assetItem->image_url }}" alt="{{ $assetItem->title }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                <!-- ========================================================= -->
+                <!-- TAB 1: KOLEKSI GAMBAR INSPIRASI REFERENSI LOKAL (DEFAULT!) -->
+                <!-- ========================================================= -->
+                <div x-show="activeBottomTab === 'inspirations'" class="space-y-4">
 
-                                <!-- Badge Aspek Rasio -->
-                                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded-[6px] text-[9px] font-bold bg-black/60 text-white backdrop-blur-xs">
-                                    {{ $assetItem->aspect_ratio }}
-                                </span>
-
-                                @if ($assetItem->is_favorite)
-                                    <span class="absolute top-2 right-2 text-[#FF9500]">
-                                        <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FF9500]"></i>
-                                    </span>
-                                @endif
-
-                                <!-- Hover Quick Details -->
-                                <div class="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <p class="text-[10px] font-bold truncate">{{ $assetItem->title }}</p>
-                                    <p class="text-[9px] text-white/70">{{ $assetItem->created_at?->diffForHumans() }}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="pt-3 border-t border-black/5 dark:border-white/10">
-                        {{ $assets->links() }}
-                    </div>
-                @else
-                    <div class="p-8 text-center space-y-2">
-                        <div class="w-10 h-10 mx-auto rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center">
-                            <i data-lucide="image" class="w-5 h-5"></i>
+                    <!-- Filter Sumber Feed & Pencarian -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                        <!-- Source Filter Chips -->
+                        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'all', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'all' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Semua ({{ $totalInspirationsCount ?? 463 }})
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'pinterest', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'pinterest' ? 'bg-[#E60023] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Pinterest (34)
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'civitai', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'civitai' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Civitai (262)
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'copasprompt', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'copasprompt' ? 'bg-[#34C759] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                CopasPrompt (133)
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'cooca_curated', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'cooca_curated' ? 'bg-[#AF52DE] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Cooca Curated (26)
+                            </a>
                         </div>
-                        <p class="text-xs font-semibold text-black/60 dark:text-white/60">Belum ada materi visual tersimpan</p>
+
+                        <!-- Tombol Buka Modal Pencarian Lengkap -->
+                        <button type="button" @click="openInspirationPickerModal()"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-bold text-black/80 dark:text-white/80 shrink-0 cursor-pointer">
+                            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                            <span>Pencarian Canggih</span>
+                        </button>
                     </div>
-                @endif
+
+                    <!-- GRID UTAMA GAMBAR INSPIRASI (GAMBAR ASLI DITAMPILKAN DI SINI!) -->
+                    @if ($inspirationReferences->count() > 0)
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            @foreach ($inspirationReferences as $item)
+                                @php
+                                    $itemData = [
+                                        'id' => $item->id,
+                                        'title' => $item->title,
+                                        'caption' => $item->caption,
+                                        'display_image_url' => $item->display_image_url,
+                                        'thumbnail_url' => $item->display_image_url,
+                                        'source_name' => $item->source?->name ?? 'Katalog Visual',
+                                        'source_code' => $item->source?->code ?? 'cooca',
+                                        'category_name' => $item->category?->name ?? 'Umum',
+                                        'prompt_hint' => $item->visualAnalysis?->extracted_style_prompt ?? $item->caption,
+                                    ];
+                                @endphp
+                                <div class="group relative rounded-[14px] overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:border-[#007AFF] transition-all aspect-square flex flex-col shadow-2xs">
+                                    <img src="{{ $item->display_image_url }}" alt="{{ $item->title }}" loading="lazy"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+
+                                    <!-- Source Badge -->
+                                    <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-black/70 text-white backdrop-blur-xs">
+                                        {{ $item->source?->code ?? 'cooca' }}
+                                    </span>
+
+                                    <!-- Hover Action Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-2.5 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-opacity space-y-1.5">
+                                        <p class="text-[11px] font-bold truncate">{{ $item->title }}</p>
+                                        <p class="text-[9px] text-white/70 truncate">{{ $item->category?->name ?? 'Katalog Visual' }}</p>
+
+                                        <div class="grid grid-cols-2 gap-1 pt-1">
+                                            <button type="button" @click="selectInspirationFromModal(@js($itemData))"
+                                                class="py-1 px-1.5 rounded-[6px] text-[10px] font-bold bg-[#007AFF] hover:bg-[#0062cc] text-white text-center cursor-pointer shadow-xs">
+                                                🎯 Referensi
+                                            </button>
+                                            <button type="button" @click="selectInspirationFromModal(@js($itemData)); applyInspirationPrompt();"
+                                                class="py-1 px-1.5 rounded-[6px] text-[10px] font-bold bg-white/20 hover:bg-white/30 text-white text-center cursor-pointer backdrop-blur-xs">
+                                                ✨ + Prompt
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Pagination Gambar Inspirasi -->
+                        <div class="pt-3 border-t border-black/5 dark:border-white/10">
+                            {{ $inspirationReferences->links() }}
+                        </div>
+                    @else
+                        <div class="p-8 text-center space-y-2">
+                            <i data-lucide="image-off" class="w-8 h-8 mx-auto text-black/30 dark:text-white/30"></i>
+                            <h4 class="text-xs font-bold text-black dark:text-white">Tidak Ada Gambar Inspirasi Ditemukan</h4>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Coba pilih sumber feed lain atau reset filter pencarian.</p>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- TAB 2: MATERI VISUAL HASIL RENDER ADMIN                   -->
+                <!-- ========================================================= -->
+                <div x-show="activeBottomTab === 'my_assets'" class="space-y-4" style="display: none;">
+
+                    <!-- Filter Chips Rasio -->
+                    <div class="flex items-center justify-between flex-wrap gap-2">
+                        <div class="flex items-center gap-1">
+                            <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => 'all']) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === 'all' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
+                                Semua
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '1:1']) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '1:1' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
+                                1:1
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '9:16']) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '9:16' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
+                                9:16
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['ratio' => '16:9']) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[10px] font-bold {{ $aspectRatioFilter === '16:9' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60' }}">
+                                16:9
+                            </a>
+                        </div>
+
+                        <span class="text-[11px] text-black/50 dark:text-white/50">
+                            {{ $assets->total() }} berkas tersimpan
+                        </span>
+                    </div>
+
+                    <!-- Asset Grid -->
+                    @if ($assets->count() > 0)
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            @foreach ($assets as $assetItem)
+                                <div @click="selectAsset(@js($assetItem))"
+                                    :class="activeAsset && activeAsset.id === '{{ $assetItem->id }}' ? 'ring-2 ring-[#007AFF] shadow-md' : 'hover:border-black/20 dark:hover:border-white/20'"
+                                    class="group relative rounded-[14px] overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 cursor-pointer transition-all aspect-square">
+                                    <img src="{{ $assetItem->image_url }}" alt="{{ $assetItem->title }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+
+                                    <!-- Badge Aspek Rasio -->
+                                    <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded-[6px] text-[9px] font-bold bg-black/60 text-white backdrop-blur-xs">
+                                        {{ $assetItem->aspect_ratio }}
+                                    </span>
+
+                                    @if ($assetItem->is_favorite)
+                                        <span class="absolute top-2 right-2 text-[#FF9500]">
+                                            <i data-lucide="star" class="w-3.5 h-3.5 fill-[#FF9500]"></i>
+                                        </span>
+                                    @endif
+
+                                    <!-- Hover Quick Details -->
+                                    <div class="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <p class="text-[10px] font-bold truncate">{{ $assetItem->title }}</p>
+                                        <p class="text-[9px] text-white/70">{{ $assetItem->created_at?->diffForHumans() }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pt-3 border-t border-black/5 dark:border-white/10">
+                            {{ $assets->links() }}
+                        </div>
+                    @else
+                        <div class="p-8 text-center space-y-2">
+                            <div class="w-10 h-10 mx-auto rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-black/40 dark:text-white/40 flex items-center justify-center">
+                                <i data-lucide="image" class="w-5 h-5"></i>
+                            </div>
+                            <h4 class="text-xs font-bold text-black dark:text-white">Belum Ada Materi Visual Buatan Admin</h4>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Gunakan generator di atas untuk menciptakan aset promosi resmi platform.</p>
+                        </div>
+                    @endif
+                </div>
+
             </div>
 
         </div>
@@ -712,7 +922,7 @@
                             <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
                                 <i data-lucide="compass" class="w-4 h-4"></i>
                             </span>
-                            <h3 class="text-sm font-bold text-black dark:text-white">Pilih Inspirasi Gaya Visual COOCA</h3>
+                            <h3 class="text-sm font-bold text-black dark:text-white">Pilih Gambar Referensi Gaya Visual COOCA</h3>
                         </div>
                         <p class="text-xs text-black/60 dark:text-white/60">
                             Pilih gambar sebagai referensi gaya, layout, atau pencahayaan untuk generator AI Anda.
@@ -720,7 +930,7 @@
                     </div>
 
                     <button type="button" @click="inspirationPickerOpen = false"
-                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all">
+                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -730,16 +940,16 @@
                     <div class="relative flex-1 w-full">
                         <i data-lucide="search" class="w-4 h-4 text-black/40 dark:text-white/40 absolute left-3 top-1/2 -translate-y-1/2"></i>
                         <input type="text" x-model="modalSearch" @input.debounce.300ms="fetchModalInspirations()"
-                            placeholder="Cari berdasarkan kata kunci, judul, atau gaya (cth: saas, glass, minimal, dashboard)..."
+                            placeholder="Cari kata kunci: saas, glass, minimal, dashboard, coffee, retail..."
                             class="w-full h-9 pl-9 pr-3 rounded-[10px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                     </div>
 
                     <div class="flex items-center gap-2 w-full sm:w-auto">
                         <select x-model="modalCategory" @change="fetchModalInspirations()"
                             class="h-9 px-3 rounded-[10px] text-xs bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                            <option value="">Semua Kategori</option>
+                            <option value="all">Semua Kategori</option>
                             @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                <option value="{{ $cat->slug }}">{{ $cat->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -750,7 +960,7 @@
                     <template x-if="isLoadingInspirations">
                         <div class="h-64 flex flex-col items-center justify-center space-y-2">
                             <div class="w-8 h-8 rounded-full border-2 border-[#007AFF] border-t-transparent animate-spin"></div>
-                            <span class="text-xs text-black/50 dark:text-white/50">Memuat koleksi inspirasi...</span>
+                            <span class="text-xs text-black/50 dark:text-white/50">Memuat koleksi gambar inspirasi...</span>
                         </div>
                     </template>
 
@@ -759,16 +969,16 @@
                             <template x-for="item in modalInspirations" :key="item.id">
                                 <div @click="selectInspirationFromModal(item)"
                                     class="group relative rounded-[12px] overflow-hidden bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:border-[#007AFF] cursor-pointer transition-all aspect-square flex flex-col">
-                                    <img :src="item.preview_url || item.image_url" :alt="item.title"
+                                    <img :src="item.display_image_url || item.preview_url || item.image_url" :alt="item.title"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
-                                    <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-black/60 text-white backdrop-blur-xs" x-text="item.source_type"></span>
+                                    <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-black/70 text-white backdrop-blur-xs" x-text="item.source_code || item.source_name"></span>
 
                                     <!-- Hover Select Overlay -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-2.5 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent p-2.5 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-opacity">
                                         <p class="text-[11px] font-bold truncate" x-text="item.title"></p>
                                         <p class="text-[9px] text-white/70 truncate" x-text="item.category_name"></p>
                                         <span class="mt-1.5 py-1 px-2 rounded-[6px] text-[10px] font-bold bg-[#007AFF] text-white text-center">
-                                            Pilih Referensi Ini
+                                            Pilih Sebagai Referensi
                                         </span>
                                     </div>
                                 </div>
@@ -791,7 +1001,7 @@
                         Total <span x-text="modalInspirations.length"></span> inspirasi ditemukan
                     </span>
                     <button type="button" @click="inspirationPickerOpen = false"
-                        class="px-4 py-2 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70">
+                        class="px-4 py-2 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70 cursor-pointer">
                         Tutup
                     </button>
                 </div>
@@ -822,7 +1032,7 @@
                     </div>
 
                     <button type="button" @click="socialModalOpen = false"
-                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all">
+                        class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.05] hover:bg-black/[0.1] text-black/70 dark:text-white/70 flex items-center justify-center transition-all cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -940,7 +1150,7 @@
 
                         <div class="flex items-center gap-2">
                             <button type="button" @click="socialModalOpen = false"
-                                class="px-4 py-2.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70">
+                                class="px-4 py-2.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70 cursor-pointer">
                                 Batal
                             </button>
                             <button type="button" @click="submitSocialPost()"
@@ -975,6 +1185,9 @@
 <script>
 function adminAiStudioVisual() {
     return {
+        // Tab Section Bawah
+        activeBottomTab: 'inspirations', // 'inspirations' (default) or 'my_assets'
+
         // Form Generator State
         title: '',
         prompt: @js($campaignPresets[0]['prompt'] ?? ''),
@@ -1007,9 +1220,9 @@ function adminAiStudioVisual() {
         // Inspiration Modal State
         inspirationPickerOpen: false,
         modalSearch: '',
-        modalCategory: '',
+        modalCategory: 'all',
         isLoadingInspirations: false,
-        modalInspirations: @js($inspirationReferences->take(24)->values()->toArray() ?? []),
+        modalInspirations: @js($quickReferences ?? []),
 
         // Generation Process State
         isGenerating: false,
@@ -1052,6 +1265,19 @@ function adminAiStudioVisual() {
             this.uploadedFile = null;
             this.uploadedReferenceUrl = null;
             this.uploadedFileName = '';
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        scrollOrOpenGallery() {
+            this.activeBottomTab = 'inspirations';
+            const galleryEl = document.getElementById('bentoGallerySection');
+            if (galleryEl) {
+                galleryEl.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                this.openInspirationPickerModal();
+            }
         },
 
         handleFileUpload(event) {
@@ -1066,7 +1292,10 @@ function adminAiStudioVisual() {
             this.uploadedFile = file;
             this.uploadedFileName = file.name;
             this.uploadedReferenceUrl = URL.createObjectURL(file);
-            this.selectedInspiration = null; // Prioritaskan file upload manual
+            this.selectedInspiration = null;
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
         },
 
         openInspirationPickerModal() {
@@ -1084,7 +1313,7 @@ function adminAiStudioVisual() {
             try {
                 const params = new URLSearchParams();
                 if (this.modalSearch.trim()) params.append('q', this.modalSearch.trim());
-                if (this.modalCategory) params.append('category_id', this.modalCategory);
+                if (this.modalCategory && this.modalCategory !== 'all') params.append('category', this.modalCategory);
 
                 const response = await fetch('{{ route("admin.ai-studio.visual.inspirations") }}?' + params.toString(), {
                     headers: { 'Accept': 'application/json' }
@@ -1109,11 +1338,28 @@ function adminAiStudioVisual() {
             this.uploadedReferenceUrl = null;
             this.inspirationPickerOpen = false;
 
-            // Jika prompt masih default atau kosong, bisa gunakan prompt hint inspirasi
-            if (item.prompt_hint && (!this.prompt || this.prompt.length < 50)) {
-                this.prompt = item.prompt_hint;
+            // Jika canvas sedang kosong (belum ada gambar render), pastikan activeAsset null agar referensi tampil di canvas
+            if (!this.activeAsset) {
+                // Biarkan activeAsset null, canvas akan menampilkan gambar referensi terpilih
             }
 
+            // Scroll ke generator di mobile jika perlu
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            this.$nextTick(() => {
+                if (window.lucide) window.lucide.createIcons();
+            });
+        },
+
+        applyInspirationPrompt() {
+            if (!this.selectedInspiration) return;
+            const hint = this.selectedInspiration.prompt_hint || this.selectedInspiration.caption;
+            if (hint) {
+                this.prompt = hint;
+            }
+            if (this.selectedInspiration.title && !this.title) {
+                this.title = 'Promosi: ' + this.selectedInspiration.title;
+            }
             this.$nextTick(() => {
                 if (window.lucide) window.lucide.createIcons();
             });
@@ -1140,29 +1386,24 @@ function adminAiStudioVisual() {
 
             let parts = [];
 
-            // Base core prompt
             if (this.prompt.trim()) {
                 parts.push(this.prompt.trim());
             } else {
                 parts.push('High-end promotional visual banner for COOCA Business Operating System platform');
             }
 
-            // Visual Style
             if (stylesMap[this.visualStyle] && stylesMap[this.visualStyle].prompt_fragment) {
                 parts.push('Art direction: ' + stylesMap[this.visualStyle].prompt_fragment);
             }
 
-            // Lighting
             if (lightMap[this.lightingStyle] && lightMap[this.lightingStyle].prompt_fragment) {
                 parts.push('Lighting: ' + lightMap[this.lightingStyle].prompt_fragment);
             }
 
-            // Palette
             if (palMap[this.colorPalette] && palMap[this.colorPalette].prompt_fragment) {
                 parts.push('Color scheme: ' + palMap[this.colorPalette].prompt_fragment);
             }
 
-            // Directives
             let directives = [];
             if (this.customDirectives.leave_space_for_text) {
                 directives.push('ample negative space for typography and headline banner overlay');
@@ -1217,7 +1458,6 @@ function adminAiStudioVisual() {
             }, 1000);
 
             try {
-                // Menggunakan FormData agar mendukung upload file referensi gambar
                 const formData = new FormData();
                 formData.append('title', this.title);
                 formData.append('prompt', this.prompt);
@@ -1231,14 +1471,13 @@ function adminAiStudioVisual() {
                 formData.append('color_palette', this.colorPalette);
                 formData.append('banner_headline', this.bannerHeadline);
 
-                // Directives
                 if (this.customDirectives.leave_space_for_text) formData.append('leave_space_for_text', '1');
                 if (this.customDirectives.include_ui_mockup) formData.append('include_ui_mockup', '1');
                 if (this.customDirectives.floating_3d_badge) formData.append('floating_3d_badge', '1');
                 if (this.customDirectives.indonesian_msme_context) formData.append('indonesian_msme_context', '1');
 
-                // Referensi Gambar
                 if (this.selectedInspiration) {
+                    formData.append('reference_id', this.selectedInspiration.id);
                     formData.append('reference_inspiration_id', this.selectedInspiration.id);
                 } else if (this.uploadedFile) {
                     formData.append('reference_image', this.uploadedFile);
@@ -1260,6 +1499,7 @@ function adminAiStudioVisual() {
                 }
 
                 this.activeAsset = data.asset;
+                this.activeBottomTab = 'my_assets';
                 alert('Berhasil! Visual promosi platform selesai dirender.');
                 window.location.reload();
             } catch (error) {
