@@ -62,6 +62,36 @@ final class AttendanceService
     {
         $today = $data['date'] ?? now()->toDateString();
 
+        // 0. Anti-Fraud & Mock Location Rejection
+        $isMock = filter_var($data['is_mock'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        if ($isMock) {
+            throw ValidationException::withMessages([
+                'gps' => 'Presensi ditolak: Terdeteksi manipulasi lokasi (Mock Location / Fake GPS). Nonaktifkan aplikasi lokasi palsu pada perangkat Anda.',
+            ]);
+        }
+
+        $isDevMode = filter_var($data['is_dev_mode'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        $isRooted = filter_var($data['is_rooted'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        $deviceId = isset($data['device_id']) && $data['device_id'] !== '' ? (string) $data['device_id'] : null;
+
+        $playIntegrityToken = $data['play_integrity_token'] ?? null;
+        $playIntegrityStatus = 'unverified_local_fallback';
+        if ($playIntegrityToken) {
+            $playIntegrityStatus = $this->evaluatePlayIntegrityToken((string) $playIntegrityToken);
+        }
+
+        $securityFlags = [
+            'is_dev_mode' => $isDevMode,
+            'is_rooted' => $isRooted,
+            'is_mock' => $isMock,
+            'device_id' => $deviceId,
+            'play_integrity_status' => $playIntegrityStatus,
+            'recorded_at' => now()->toIso8601String(),
+        ];
+        if (isset($data['security_flags']) && is_array($data['security_flags'])) {
+            $securityFlags = array_merge($securityFlags, $data['security_flags']);
+        }
+
         // 1. Anti-spoofing GPS accuracy verification
         $accuracy = isset($data['accuracy']) ? (float) $data['accuracy'] : null;
         if ($accuracy !== null && $accuracy > self::MAX_GPS_ACCURACY_METERS) {
@@ -253,7 +283,13 @@ final class AttendanceService
             $shiftName,
             $scheduledStartAt,
             $scheduledEndAt,
-            $targetLocationTz
+            $targetLocationTz,
+            $isMock,
+            $isDevMode,
+            $isRooted,
+            $deviceId,
+            $accuracy,
+            $securityFlags
         ): Attendance {
             // Check for existing open or today's attendance
             $attendance = Attendance::where('business_id', $business->id)
@@ -305,11 +341,21 @@ final class AttendanceService
             $attendance->face_verified = $faceVerified;
             $attendance->face_similarity_score = $faceScore;
             $attendance->exception_policy_id = $exceptionPolicyId;
+            $attendance->device_id = $deviceId;
+            $attendance->is_mock = $isMock;
+            $attendance->is_dev_mode = $isDevMode;
+            $attendance->is_rooted = $isRooted;
+            $attendance->accuracy = $accuracy;
+            $attendance->security_flags = $securityFlags;
             $attendance->save();
 
             // Immutable Audit Log
             $localTimeFormatted = $currentTime->copy()->setTimezone($targetLocationTz)->format('H:i:s');
             $tzAbbr = TimezoneHelper::abbreviation($targetLocationTz);
+            $auditRisk = ($isDevMode || $isRooted) ? AuditLog::RISK_MEDIUM : AuditLog::RISK_LOW;
+            $auditReason = ($isDevMode || $isRooted)
+                ? 'Pencatatan presensi masuk kerja dengan pengawasan integritas perangkat (Mode Pengembang / Root aktif).'
+                : 'Pencatatan presensi masuk kerja harian.';
 
             AuditLog::create([
                 'id' => (string) Str::uuid(),
@@ -318,9 +364,9 @@ final class AttendanceService
                 'auditable_type' => Attendance::class,
                 'auditable_id' => $attendance->id,
                 'action' => 'attendance.clock_in',
-                'risk_level' => AuditLog::RISK_LOW,
-                'risk_reason' => 'Pencatatan presensi masuk kerja harian.',
-                'notes' => "Presensi masuk oleh {$user->name} jam {$localTimeFormatted} {$tzAbbr} ({$clockInStatus}, shift: " . ($shiftName ?: 'Umum') . "). Jarak: " . ($calculatedDistance !== null ? "{$calculatedDistance}m" : 'Bebas') . ($faceVerified ? ", Wajah Terverifikasi ({$faceScore})" : ''),
+                'risk_level' => $auditRisk,
+                'risk_reason' => $auditReason,
+                'notes' => "Presensi masuk oleh {$user->name} jam {$localTimeFormatted} {$tzAbbr} ({$clockInStatus}, shift: " . ($shiftName ?: 'Umum') . "). Jarak: " . ($calculatedDistance !== null ? "{$calculatedDistance}m" : 'Bebas') . ($faceVerified ? ", Wajah Terverifikasi ({$faceScore})" : '') . ($deviceId ? " [Device: {$deviceId}]" : ''),
                 'new_values' => [
                     'date' => $baseDate,
                     'clock_in_at' => $currentTime->toIso8601String(),
@@ -330,6 +376,11 @@ final class AttendanceService
                     'early_in_minutes' => $earlyInMinutes,
                     'distance_meters' => $calculatedDistance,
                     'face_verified' => $faceVerified,
+                    'device_id' => $deviceId,
+                    'is_dev_mode' => $isDevMode,
+                    'is_rooted' => $isRooted,
+                    'accuracy' => $accuracy,
+                    'security_flags' => $securityFlags,
                 ],
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),
@@ -353,6 +404,36 @@ final class AttendanceService
     {
         $today = $data['date'] ?? now()->toDateString();
 
+        // 0. Anti-Fraud & Mock Location Rejection
+        $isMock = filter_var($data['is_mock'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        if ($isMock) {
+            throw ValidationException::withMessages([
+                'gps' => 'Presensi ditolak: Terdeteksi manipulasi lokasi (Mock Location / Fake GPS). Nonaktifkan aplikasi lokasi palsu pada perangkat Anda.',
+            ]);
+        }
+
+        $isDevMode = filter_var($data['is_dev_mode'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        $isRooted = filter_var($data['is_rooted'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        $deviceId = isset($data['device_id']) && $data['device_id'] !== '' ? (string) $data['device_id'] : null;
+
+        $playIntegrityToken = $data['play_integrity_token'] ?? null;
+        $playIntegrityStatus = 'unverified_local_fallback';
+        if ($playIntegrityToken) {
+            $playIntegrityStatus = $this->evaluatePlayIntegrityToken((string) $playIntegrityToken);
+        }
+
+        $securityFlags = [
+            'is_dev_mode' => $isDevMode,
+            'is_rooted' => $isRooted,
+            'is_mock' => $isMock,
+            'device_id' => $deviceId,
+            'play_integrity_status' => $playIntegrityStatus,
+            'recorded_at' => now()->toIso8601String(),
+        ];
+        if (isset($data['security_flags']) && is_array($data['security_flags'])) {
+            $securityFlags = array_merge($securityFlags, $data['security_flags']);
+        }
+
         // Anti-spoofing accuracy verification
         $accuracy = isset($data['accuracy']) ? (float) $data['accuracy'] : null;
         if ($accuracy !== null && $accuracy > self::MAX_GPS_ACCURACY_METERS) {
@@ -362,7 +443,18 @@ final class AttendanceService
             ]);
         }
 
-        return DB::transaction(function () use ($business, $user, $today, $data): Attendance {
+        return DB::transaction(function () use (
+            $business,
+            $user,
+            $today,
+            $data,
+            $isMock,
+            $isDevMode,
+            $isRooted,
+            $deviceId,
+            $accuracy,
+            $securityFlags
+        ): Attendance {
             // First check for active uncompleted attendance session (supports overnight cross-day shifts)
             $attendance = Attendance::where('business_id', $business->id)
                 ->where('user_id', $user->id)
@@ -513,9 +605,24 @@ final class AttendanceService
             $attendance->overtime_minutes = $overtimeMinutes;
             $attendance->face_verified = $faceVerified;
             $attendance->face_similarity_score = $faceScore;
+            if ($deviceId) {
+                $attendance->device_id = $deviceId;
+            }
+            $attendance->is_mock = $isMock;
+            $attendance->is_dev_mode = $isDevMode;
+            $attendance->is_rooted = $isRooted;
+            if ($accuracy !== null) {
+                $attendance->accuracy = $accuracy;
+            }
+            $attendance->security_flags = $securityFlags;
             $attendance->save();
 
             // Immutable Audit Log
+            $auditRisk = ($isDevMode || $isRooted) ? AuditLog::RISK_MEDIUM : AuditLog::RISK_LOW;
+            $auditReason = ($isDevMode || $isRooted)
+                ? 'Pencatatan presensi pulang kerja dengan pengawasan integritas perangkat (Mode Pengembang / Root aktif).'
+                : 'Pencatatan presensi pulang kerja harian.';
+
             AuditLog::create([
                 'id' => (string) Str::uuid(),
                 'business_id' => $business->id,
@@ -523,15 +630,20 @@ final class AttendanceService
                 'auditable_type' => Attendance::class,
                 'auditable_id' => $attendance->id,
                 'action' => 'attendance.clock_out',
-                'risk_level' => AuditLog::RISK_LOW,
-                'risk_reason' => 'Pencatatan presensi pulang kerja harian.',
-                'notes' => "Presensi pulang oleh {$user->name} jam {$clockOutLocal->format('H:i:s')} {$tzAbbr} ({$clockOutStatus}, durasi {$workDurationMinutes} mnt).",
+                'risk_level' => $auditRisk,
+                'risk_reason' => $auditReason,
+                'notes' => "Presensi pulang oleh {$user->name} jam {$clockOutLocal->format('H:i:s')} {$tzAbbr} ({$clockOutStatus}, durasi {$workDurationMinutes} mnt)." . ($deviceId ? " [Device: {$deviceId}]" : ''),
                 'new_values' => [
                     'date' => $attendance->date?->toDateString() ?: $today,
                     'clock_out_at' => $clockOutTime->toIso8601String(),
                     'work_duration_minutes' => $workDurationMinutes,
                     'overtime_minutes' => $overtimeMinutes,
                     'early_leave_minutes' => $earlyLeaveMinutes,
+                    'device_id' => $deviceId,
+                    'is_dev_mode' => $isDevMode,
+                    'is_rooted' => $isRooted,
+                    'accuracy' => $accuracy,
+                    'security_flags' => $securityFlags,
                 ],
                 'ip_address' => request()->ip(),
                 'user_agent' => request()->userAgent(),

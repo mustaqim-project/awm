@@ -338,6 +338,17 @@ class Business extends Model
         return $this->hasOne(BusinessSubscription::class)->latestOfMany();
     }
 
+    public function hasActivePaidSubscription(): bool
+    {
+        $sub = $this->subscription;
+        if (! $sub) {
+            return false;
+        }
+
+        return $sub->status === BusinessSubscription::STATUS_ACTIVE &&
+            $sub->plan_code !== BusinessSubscription::PLAN_FREE;
+    }
+
     public function landingPage(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(BusinessLandingPage::class);

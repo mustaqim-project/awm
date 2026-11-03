@@ -71,6 +71,12 @@ class Attendance extends Model
         'face_verified',
         'face_similarity_score',
         'exception_policy_id',
+        'device_id',
+        'is_mock',
+        'is_dev_mode',
+        'is_rooted',
+        'accuracy',
+        'security_flags',
     ];
 
     /**
@@ -99,6 +105,11 @@ class Attendance extends Model
             'is_corrected' => 'boolean',
             'face_verified' => 'boolean',
             'face_similarity_score' => 'float',
+            'is_mock' => 'boolean',
+            'is_dev_mode' => 'boolean',
+            'is_rooted' => 'boolean',
+            'accuracy' => 'float',
+            'security_flags' => 'array',
         ];
     }
 

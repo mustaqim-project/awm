@@ -32,7 +32,18 @@ final class PosShiftService
             return $userShift;
         }
 
-        return $query->first();
+        // Only allow supervisor/admin/owner roles to inspect other open shifts if the user has no personal shift
+        $membership = \App\Models\BusinessMembership::where('user_id', $user->id)
+            ->where('business_id', $business->id)
+            ->first();
+        $userRole = strtolower((string) ($membership?->role ?? ''));
+        $isSupervisor = $business->owner_id === $user->id || in_array($userRole, ['owner', 'admin', 'manager', 'supervisor'], true);
+
+        if ($isSupervisor) {
+            return $query->first();
+        }
+
+        return null;
     }
 
     /**
@@ -57,7 +68,10 @@ final class PosShiftService
                 ->first();
 
             if ($existingRegisterShift) {
-                return $existingRegisterShift;
+                if ($existingRegisterShift->user_id === $user->id) {
+                    return $existingRegisterShift;
+                }
+                throw new InvalidArgumentException('Terminal kasir (register) ini sedang digunakan dalam shift lain oleh kasir berbeda.');
             }
         }
 

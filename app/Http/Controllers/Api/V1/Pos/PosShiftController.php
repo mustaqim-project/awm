@@ -134,6 +134,30 @@ final class PosShiftController extends Controller
         $openingCash = (float) ($validated['opening_cash'] ?? 0.0);
         $openingDenominations = (array) ($validated['opening_denominations'] ?? []);
 
+        if (! empty($validated['location_id'])) {
+            $locationBelongs = Location::where('business_id', $business->id)
+                ->where('id', $validated['location_id'])
+                ->exists();
+            if (! $locationBelongs) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Lokasi yang dipilih tidak valid untuk bisnis ini.',
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+        }
+
+        if (! empty($validated['pos_register_id'])) {
+            $registerBelongs = PosRegister::where('business_id', $business->id)
+                ->where('id', $validated['pos_register_id'])
+                ->exists();
+            if (! $registerBelongs) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Register / Terminal POS tidak valid untuk bisnis ini.',
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+        }
+
         $membership = \App\Models\BusinessMembership::where('user_id', $user?->id)
             ->where('business_id', $business->id)
             ->first();
@@ -150,15 +174,22 @@ final class PosShiftController extends Controller
                 ?? Location::where('business_id', $business->id)->value('id');
         }
 
-        $shift = $this->shiftService->openShift(
-            business: $business,
-            user: $user,
-            openingCash: $openingCash,
-            posRegisterId: $validated['pos_register_id'] ?? null,
-            locationId: $locationId,
-            notes: $validated['notes'] ?? null,
-            openingDenominations: $openingDenominations
-        );
+        try {
+            $shift = $this->shiftService->openShift(
+                business: $business,
+                user: $user,
+                openingCash: $openingCash,
+                posRegisterId: $validated['pos_register_id'] ?? null,
+                locationId: $locationId,
+                notes: $validated['notes'] ?? null,
+                openingDenominations: $openingDenominations
+            );
+        } catch (\InvalidArgumentException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         $loadedShift = $shift->load(['user:id,name', 'location:id,name', 'register:id,name']);
 

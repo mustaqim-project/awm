@@ -52,6 +52,12 @@ final class AttendanceApiController extends Controller
             'photo' => ['nullable'],
             'face_data' => ['nullable'],
             'location_id' => ['nullable', 'uuid', 'exists:locations,id'],
+            'is_mock' => ['nullable', 'boolean'],
+            'device_id' => ['nullable', 'string', 'max:255'],
+            'is_dev_mode' => ['nullable', 'boolean'],
+            'is_rooted' => ['nullable', 'boolean'],
+            'play_integrity_token' => ['nullable', 'string'],
+            'security_flags' => ['nullable'],
         ]);
 
         try {
@@ -72,6 +78,11 @@ final class AttendanceApiController extends Controller
                     'face_similarity_score' => $attendance->face_similarity_score,
                     'location_name' => $attendance->location?->name,
                     'exception_policy_id' => $attendance->exception_policy_id,
+                    'device_id' => $attendance->device_id,
+                    'is_mock' => $attendance->is_mock,
+                    'is_dev_mode' => $attendance->is_dev_mode,
+                    'is_rooted' => $attendance->is_rooted,
+                    'accuracy' => $attendance->accuracy,
                 ]),
             ], 200);
         } catch (ValidationException $e) {
@@ -105,6 +116,12 @@ final class AttendanceApiController extends Controller
             'notes' => ['nullable', 'string', 'max:255'],
             'photo' => ['nullable'],
             'face_data' => ['nullable'],
+            'is_mock' => ['nullable', 'boolean'],
+            'device_id' => ['nullable', 'string', 'max:255'],
+            'is_dev_mode' => ['nullable', 'boolean'],
+            'is_rooted' => ['nullable', 'boolean'],
+            'play_integrity_token' => ['nullable', 'string'],
+            'security_flags' => ['nullable'],
         ]);
 
         try {
@@ -121,6 +138,11 @@ final class AttendanceApiController extends Controller
                     'clock_in_at' => $attendance->clock_in_at?->toIso8601String(),
                     'clock_out_at' => $attendance->clock_out_at?->toIso8601String(),
                     'status' => $attendance->status,
+                    'device_id' => $attendance->device_id,
+                    'is_mock' => $attendance->is_mock,
+                    'is_dev_mode' => $attendance->is_dev_mode,
+                    'is_rooted' => $attendance->is_rooted,
+                    'accuracy' => $attendance->accuracy,
                 ]),
             ], 200);
         } catch (ValidationException $e) {

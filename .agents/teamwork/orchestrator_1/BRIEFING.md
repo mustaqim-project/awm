@@ -1,7 +1,7 @@
-# BRIEFING — 2026-11-02T06:27:00Z
+# BRIEFING — 2026-11-03T02:35:00Z
 
 ## Mission
-Implement Phase 1 feature integration across backend `cooca_core` and mobile `cooca_my_own`: Petty Cash / Quick Expense Kasir and Owner Approval Center for production use with full automated tests.
+Comprehensive Mobile Application Audit & OpenShift Bug Remediation across the Flutter mobile app (C:\laragon\www\cooca_my_own), referencing backend contracts at C:\laragon\www\cooca_core and connecting directly to the live production API at https://cooca.id as Single Source of Truth.
 
 ## 🔒 My Identity
 - Archetype: teamwork_orchestrator
@@ -14,29 +14,26 @@ Implement Phase 1 feature integration across backend `cooca_core` and mobile `co
 - **Pattern**: Project Orchestrator (Multi-Milestone Greenfield/Integration)
 - **Scope document**: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
 1. **Decompose**:
-   - Step 0: Survey full scope via 3 parallel Explorers (Backend `cooca_core`, Mobile `cooca_my_own`, Spec Miner contract mapping). [DONE]
-   - Step 1: Synthesize findings and write `PROJECT.md` with Feature Inventory, Milestones, and Interface Contracts. [DONE]
-   - Step 2: Dispatch implementation milestones to sub-orchestrators/workers, along with dual-track E2E/integration testing. [DONE]
+   - Step 0: Survey full scope via 3 parallel Explorers (Backend `cooca_core`, Mobile `cooca_my_own`, Spec Miner contract mapping). [DONE for Phase 1]
+   - Step 1: Synthesize findings and write `PROJECT.md` with Feature Inventory, Milestones, and Interface Contracts. [DONE for Phase 1]
+   - Step 2: Dispatch implementation milestones to sub-orchestrators/workers, along with dual-track E2E/integration testing. [DONE for Phase 1]
 2. **Dispatch & Execute**:
-   - Milestone 1: Backend API Implementation (`cooca_core`) [DONE]
-   - Milestone 2: Mobile UI & State Integration (`cooca_my_own`) [DONE]
-   - Milestone 3: Verification, Stress Testing & Forensic Audit [DONE]
-3. **On failure**:
-   - Retry: nudge stuck agent or re-send task
-   - Replace: spawn fresh agent with partial progress
-   - Skip: proceed without (only if non-critical)
-   - Redistribute: split stuck agent's remaining work
-   - Redesign: re-partition decomposition
-   - Escalate: report to parent as last resort
-4. **Succession**: At 16 spawns, write handoff.md, spawn successor.
-- **Work items**:
-  1. Survey phase (3 parallel explorers) [done]
-  2. PROJECT.md Feature Inventory & Architecture [done]
-  3. Milestone 1: Backend API (Petty Cash & Owner Approval) [done]
-  4. Milestone 2: Mobile UI & Integration (Petty Cash & Owner Approval) [done]
-  5. Milestone 3: Automated Testing & Verification (PHPUnit/Pest + Flutter test/analyze + Forensic Audit) [done]
-- **Current phase**: Complete
-- **Current focus**: Milestone aggregation & final reporting to parent agent
+   - Milestone 1: Backend API Implementation (`cooca_core`) [DONE for Phase 1]
+   - Milestone 2: Mobile UI & State Integration (`cooca_my_own`) [DONE for Phase 1]
+   - Milestone 3: Verification, Stress Testing & Forensic Audit [DONE for Phase 1]
+- **Current Project (Mobile Audit & OpenShift Remediation)**:
+1. **Survey**: 3 parallel Explorers (Survey complete, 23 features inventoried in PROJECT.md).
+2. **Decompose & Plan**: 5 Milestones defined in PROJECT.md.
+3. **Dispatch & Execute**:
+   - Milestone 1: OpenShift Remediation (Stage 1 Critical) [IN_PROGRESS: worker_openshift_m1]
+   - Milestone 2: Android Security & Attendance Fake GPS Prevention (Stage 1 Critical) [IN_PROGRESS: worker_security_m2]
+   - Milestone 3: Comprehensive Mobile Feature Audit & Elimination of Dummy/Hardcoded Data (Stage 2) [PLANNED]
+   - Milestone 4: Android Production Build Configuration & Performance Hardening [PLANNED]
+   - Milestone 5: Verification, Automated Testing, and Audit Documentation (5 Reports) [PLANNED]
+4. **On failure**: Retry -> Replace -> Skip -> Redistribute -> Redesign -> Escalate.
+5. **Succession**: At 16 spawns, write handoff.md, spawn successor.
+- **Current phase**: 2 (Execution: Stage 1 Critical)
+- **Current focus**: Parallel execution of M1 (OpenShift) and M2 (Android Security Attendance)
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
@@ -47,45 +44,39 @@ Implement Phase 1 feature integration across backend `cooca_core` and mobile `co
 - Zero tolerance for mock/cheating implementations; Forensic Auditor must report CLEAN.
 - `flutter analyze` must produce 0 issues/errors; `flutter test` must pass 100%.
 - Backend PHPUnit/Pest tests must pass 100%.
+- Live Single Source of Truth API: https://cooca.id; reference code contracts: C:\laragon\www\cooca_core; mobile target: C:\laragon\www\cooca_my_own.
+- 100% elimination of dummy/mock/hardcoded data across all audited mobile modules.
+- Non-debuggable Android release configuration (`debuggable = false`), HTTPS, and no hardcoded secrets.
+- Full generation of 5 mandatory audit markdown reports with structured finding records.
 
 ## Current Parent
-- Conversation ID: c9711e09-672a-406e-a3b8-bd4fe3fa2091
-- Updated: 2026-11-02T06:27:00Z
+- Conversation ID: 17a2d69c-7ab5-45a1-97b8-668835ae7c58
+- Updated: 2026-11-03T02:14:03Z
 
 ## Key Decisions Made
-- Milestone 1 (Backend API & PHPUnit test suite) completed by `worker_backend_m1` (17 tests, 77 assertions passing).
-- Milestone 2 (Mobile UI, State & Flutter tests) completed by `worker_mobile_m2` (33 tests passing, flutter analyze 0 issues).
-- Milestone 3 (Verification & Gate):
-  - `reviewer_phase1_1` (Backend): APPROVE
-  - `reviewer_phase1_2` (Mobile): APPROVE
-  - `challenger_phase1_1` (Backend): APPROVE (31 adversarial tests passed)
-  - `challenger_phase1_2` (Mobile): APPROVE (11 adversarial tests passed)
-  - `auditor_phase1_1` (Forensic Auditor): CLEAN (Zero integrity violations)
-- Gate Result: PASS.
+- Survey Phase Complete: 3 parallel explorers mapped all requirements into `PROJECT.md` Feature Inventory (23 features).
+- Parallel execution of M1 and M2 initiated with mutually exclusive file ownership:
+  - `worker_openshift_m1` (Conv ID: `453c6132-0043-42a5-8281-fe105159590b`)
+  - `worker_security_m2` (Conv ID: `01ed007f-e699-4353-8b56-c76e98c79a15`)
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| explorer_survey_1 | teamwork_explorer | Backend cooca_core architecture survey | completed | cb4f110d-52dd-460c-9836-e93523e48577 |
-| explorer_survey_2 | teamwork_explorer | Mobile cooca_my_own architecture survey | completed | b4336e98-ca62-4b5b-903e-123571000ced |
-| explorer_survey_3 | teamwork_spec_miner | API contracts & specs mapping | completed | 55d64a3a-d9de-4b18-9a27-d9a4c54b4d78 |
-| worker_backend_m1 | teamwork_worker | Milestone 1 Backend API & PHPUnit tests | completed | f5c88b66-b96d-46e3-9fc2-d00fa2a5a128 |
-| worker_mobile_m2 | teamwork_worker | Milestone 2 Mobile UI, State & Tests | completed | 8602f4dd-0dfe-4936-afdf-df4641b5d145 |
-| reviewer_phase1_1 | teamwork_reviewer | Backend Code Review & Verification | completed | 592c89c8-38ab-480b-b58a-49f7f49c715a |
-| reviewer_phase1_2 | teamwork_reviewer | Mobile Code Review & Verification | completed | c4a7cf28-3a98-47b4-af56-fc1605c5ab7b |
-| challenger_phase1_1 | teamwork_challenger | Backend Adversarial Verification | completed | 57d30617-31ca-46b6-8407-e4924451dc2a |
-| challenger_phase1_2 | teamwork_challenger | Mobile Adversarial Verification | completed | 022ecaf9-ed1a-4763-a2f2-65c5a097600a |
-| auditor_phase1_1 | teamwork_auditor | Forensic Integrity Auditor | completed | 5f5ece19-9306-408d-9af8-ac3505547913 |
+| explorer_survey_openshift_1 | teamwork_explorer | Survey OpenShift bugs & lifecycle | completed | 57c47061-988c-4dee-9fa6-8f35f9c5117d |
+| explorer_survey_security_1 | teamwork_explorer | Survey Android Security & Fake GPS Attendance | completed | b13ba824-f926-4e1b-bdeb-796f6bd13b1e |
+| explorer_survey_modules_1 | teamwork_spec_miner | Survey 14 Mobile Modules & Production Config | completed | c1c84ccb-bd63-4a5b-b858-50d001b6c676 |
+| worker_openshift_m1 | teamwork_worker | Milestone 1 OpenShift Remediation | in-progress | 453c6132-0043-42a5-8281-fe105159590b |
+| worker_security_m2 | teamwork_worker | Milestone 2 Android Security & Fake GPS | in-progress | 01ed007f-e699-4353-8b56-c76e98c79a15 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 10 / 16
-- Pending subagents: none
+- Spawn count: 5 / 16
+- Pending subagents: 453c6132-0043-42a5-8281-fe105159590b, 01ed007f-e699-4353-8b56-c76e98c79a15
 - Predecessor: none
 - Successor: not yet spawned
 
 ## Active Timers
-- Heartbeat cron: cancelled (all subagents completed)
+- Heartbeat cron: 73d9d035-59a2-45d3-a207-90bc9a5adcc4/task-32 (*/10 * * * *)
 - Safety timer: none
 
 ## Artifact Index
@@ -93,6 +84,7 @@ Implement Phase 1 feature integration across backend `cooca_core` and mobile `co
 - `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\DISPATCH.md` — Incoming dispatch log
 - `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\BRIEFING.md` — Working memory
 - `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\progress.md` — Workflow progress and liveness heartbeat
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md` — Structured gate evaluation (PASS)
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md` — Project scope and milestones status
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\handoff.md` — Orchestrator hard handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md` — Global architecture, milestones & inventory
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_openshift_1\handoff.md` — OpenShift Survey Handoff
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_security_1\handoff.md` — Security Survey Handoff
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_modules_1\handoff.md` — Mobile Modules Survey Handoff
