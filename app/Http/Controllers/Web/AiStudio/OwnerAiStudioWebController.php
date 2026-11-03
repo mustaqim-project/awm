@@ -125,6 +125,7 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
                 'exportToCatalog',
                 'exportToSocialMedia',
                 'toggleFavoriteAsset',
+                'destroyAsset',
             ]),
         ];
     }
@@ -160,18 +161,39 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'total_projects' => BusinessInspirationProject::where('business_id', $business->id)->count(),
             'total_generations' => BusinessInspirationGeneration::where('business_id', $business->id)->count(),
             'completed_generations' => BusinessInspirationGeneration::where('business_id', $business->id)->where('status', 'succeeded')->count(),
+            'total_assets' => BusinessInspirationGenerationAsset::where('business_id', $business->id)->count(),
             'credits_balance' => (int) ($business->ai_credits_balance ?? 0),
         ];
+
+        // Katalog Aset Visual Milik Tenant
+        $assetsQuery = BusinessInspirationGenerationAsset::where('business_id', $business->id)
+            ->with(['generation.project'])
+            ->latest();
+
+        $activeTab = (string) $request->query('tab', 'projects');
+        $aspectRatioFilter = (string) $request->query('ratio', 'all');
+        $onlyFavorite = $request->boolean('favorite', false);
+
+        if ($aspectRatioFilter !== 'all' && in_array($aspectRatioFilter, ['1:1', '9:16', '16:9', '4:5'], true)) {
+            $assetsQuery->where('aspect_ratio', $aspectRatioFilter);
+        }
+
+        if ($onlyFavorite) {
+            $assetsQuery->where('is_selected_favorite', true);
+        }
+
+        $aiAssets = $assetsQuery->paginate(16, ['*'], 'assets_page')->withQueryString();
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'data' => $projects,
+                'assets' => $aiAssets,
                 'stats' => $stats,
             ]);
         }
 
-        return view('app.ai-studio.index', compact('projects', 'stats', 'business'));
+        return view('app.ai-studio.index', compact('projects', 'aiAssets', 'stats', 'business', 'activeTab', 'aspectRatioFilter', 'onlyFavorite'));
     }
 
     /**
@@ -773,6 +795,47 @@ final class OwnerAiStudioWebController extends Controller implements HasMiddlewa
             'success' => true,
             'is_favorite' => $asset->is_selected_favorite,
         ]);
+    }
+
+    /**
+     * Hapus berkas dan data output aset visual individual milik bisnis tenant.
+     */
+    public function destroyAsset(Request $request, string $assetId): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+
+        /** @var BusinessInspirationGenerationAsset $asset */
+        $asset = BusinessInspirationGenerationAsset::where('business_id', $business->id)->findOrFail($assetId);
+
+        // Hapus file fisik dari storage jika ada
+        if (! empty($asset->storage_path) && \Illuminate\Support\Facades\Storage::disk('public')->exists($asset->storage_path)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($asset->storage_path);
+        }
+
+        // Hapus thumbnail jika ada
+        if (! empty($asset->thumbnail_url) && ! str_starts_with($asset->thumbnail_url, 'http')) {
+            $thumbPath = str_replace(\Illuminate\Support\Facades\Storage::disk('public')->url(''), '', $asset->thumbnail_url);
+            $thumbPath = ltrim($thumbPath, '/');
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($thumbPath)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($thumbPath);
+            }
+        }
+
+        // Hapus record storage_files jika terdaftar
+        if (! empty($asset->storage_file_id)) {
+            \App\Models\StorageFile::where('id', $asset->storage_file_id)->delete();
+        }
+
+        $asset->delete();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Aset gambar hasil generate AI berhasil dihapus.',
+            ]);
+        }
+
+        return back()->with('success', 'Aset gambar berhasil dihapus dari katalog bisnis.');
     }
 
     /**

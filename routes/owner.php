@@ -716,6 +716,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/assets/{asset}/export-to-catalog', [OwnerAiStudioWebController::class, 'exportToCatalog'])->name('assets.export-to-catalog');
             Route::post('/assets/{asset}/export-to-social-media', [OwnerAiStudioWebController::class, 'exportToSocialMedia'])->name('assets.export-to-social-media');
             Route::post('/assets/{asset}/toggle-favorite', [OwnerAiStudioWebController::class, 'toggleFavoriteAsset'])->name('assets.toggle-favorite');
+            Route::delete('/assets/{asset}', [OwnerAiStudioWebController::class, 'destroyAsset'])->name('assets.destroy');
 
             // Riwayat Ledger Kredit Transaksi & Top-Up
             Route::get('/credit-history', [OwnerAiStudioWebController::class, 'creditHistory'])->name('credit-history');

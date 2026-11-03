@@ -179,6 +179,14 @@
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('admin.unduh') }}</span>
                             </a>
+
+                            <!-- Delete Asset Button -->
+                            <button type="button" @click="deleteActiveAsset()"
+                                class="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-[12px] bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold transition-all cursor-pointer"
+                                title="Hapus aset gambar ini jika tidak sesuai">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                <span>Hapus</span>
+                            </button>
                         </div>
 
                         <div class="text-[11px] text-black/40 dark:text-white/40">
@@ -885,6 +893,37 @@ function aiStudioCanvas(config) {
                 alert('Gagal: ' + e.message);
             } finally {
                 this.socialPosting = false;
+            }
+        },
+
+        async deleteActiveAsset() {
+            if (!this.activeAssetId) {
+                alert('Tidak ada aset gambar yang aktif dipilih.');
+                return;
+            }
+
+            if (!confirm('Apakah Anda yakin ingin menghapus aset gambar ini dari katalog bisnis Anda?')) {
+                return;
+            }
+
+            try {
+                const res = await fetch('{{ url("ai-studio/assets") }}/' + this.activeAssetId, {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || 'Gagal menghapus aset gambar.');
+                }
+
+                alert(data.message || 'Aset gambar berhasil dihapus.');
+                window.location.reload();
+            } catch (e) {
+                alert('Gagal: ' + e.message);
             }
         },
 
