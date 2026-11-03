@@ -958,6 +958,19 @@ final class PinterestAdapter implements InspirationAdapterInterface
                     'suggested_aspect_ratios' => ['4:5', '1:1', '16:9'],
                 ],
             ],
+
+            // ── SaaS Promotion Pinterest Curated Inspiration (12 Items) ──
+            ...$this->getSaasPromotionTemplates(),
         ];
+    }
+
+    /**
+     * Dapatkan koleksi template inspirasi SaaS Promotion Pinterest.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getSaasPromotionTemplates(): array
+    {
+        return (new \Database\Seeders\PinterestSaasPromotionInspirationSeeder)->getSaasPromotionItems();
     }
 }

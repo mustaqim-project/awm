@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             ServicesAndAutomotiveClusterSeeder::class,
             AiPrestigeTestingAccountSeeder::class,
             AiModelRegistrySeeder::class,
+            PinterestSaasPromotionInspirationSeeder::class,
         ]);
     }
 }
