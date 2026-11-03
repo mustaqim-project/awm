@@ -1537,6 +1537,36 @@ Route::prefix('v1')->group(function (): void {
                 Route::get('/pending', [\App\Http\Controllers\Api\V1\Owner\OwnerApprovalApiController::class, 'pending']);
                 Route::post('/{id}/action', [\App\Http\Controllers\Api\V1\Owner\OwnerApprovalApiController::class, 'action']);
             });
+
+            // MOBILE APP API – Social Media Hub & Omnichannel Social Inbox
+            // ──────────────────────────────────────────────────────────────────
+            Route::prefix('social-media')->group(function (): void {
+                Route::get('/overview', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'overview']);
+                Route::get('/posts', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'posts']);
+                Route::post('/posts', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'storePost']);
+                Route::post('/posts/{id}/approve', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'approvePost']);
+                Route::post('/posts/{id}/reject', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'rejectPost']);
+                Route::post('/posts/{id}/publish-now', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'publishNow']);
+                Route::get('/calendar', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'calendar']);
+                Route::get('/inbox', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'inbox']);
+                Route::post('/inbox/send-reply', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'sendReply']);
+                Route::post('/inbox/ai-reply', [\App\Http\Controllers\Api\V1\SocialMedia\SocialMediaApiController::class, 'generateAiReply']);
+            });
+
+            // MOBILE APP API – Marketplace Hub (Shopee, Tokopedia, TikTok Shop)
+            // ──────────────────────────────────────────────────────────────────
+            Route::prefix('marketplace-hub')->group(function (): void {
+                Route::get('/overview', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'overview']);
+                Route::get('/products', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'products']);
+                Route::post('/products/sync-all', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'syncAll']);
+                Route::get('/orders', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'orders']);
+                Route::post('/orders/pull', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'pullOrders']);
+                Route::post('/orders/{id}/ship', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'shipOrder']);
+                Route::get('/chat', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'chat']);
+                Route::get('/chat/{id}', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'chatDetails']);
+                Route::post('/chat/{id}/send', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'sendChatMessage']);
+                Route::post('/chat/{id}/read', [\App\Http\Controllers\Api\V1\Marketplace\MarketplaceApiController::class, 'markChatRead']);
+            });
         });
     });
 });
