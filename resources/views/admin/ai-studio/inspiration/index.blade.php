@@ -146,7 +146,13 @@
                     @forelse($assets as $asset)
                         <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors">
                             <td class="py-3 px-4 w-20">
-                                <img src="{{ $asset->display_url }}" alt="{{ $asset->title }}" class="w-14 h-14 rounded-[8px] object-cover bg-black/5 border border-black/10">
+                                @php
+                                    $imgSrc = $asset->display_url ?? $asset->image_url ?? $asset->thumbnail_url ?? '';
+                                    if (!empty($imgSrc) && !str_starts_with($imgSrc, 'http://') && !str_starts_with($imgSrc, 'https://')) {
+                                        $imgSrc = asset($imgSrc);
+                                    }
+                                @endphp
+                                <img src="{{ $imgSrc ?: asset('images/ai-studio/placeholder.svg') }}" alt="{{ $asset->title }}" class="w-14 h-14 rounded-[8px] object-cover bg-black/5 border border-black/10" onerror="this.onerror=null; this.src='{{ asset('images/ai-studio/placeholder.svg') }}';">
                             </td>
                             <td class="py-3 px-4 max-w-xs">
                                 <div class="font-bold text-black dark:text-white line-clamp-1">{{ $asset->title }}</div>

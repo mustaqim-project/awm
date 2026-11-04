@@ -90,7 +90,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach($favorites as $fav)
                 @php
-                    $displayImg = $fav->asset?->display_url ?: $fav->item?->display_image_url ?: $fav->preview_url;
+                    $rawFav = $fav->asset?->display_url ?: $fav->item?->display_image_url ?: $fav->preview_url;
+                    $displayImg = !empty($rawFav) ? ((str_starts_with($rawFav, 'http://') || str_starts_with($rawFav, 'https://')) ? $rawFav : asset($rawFav)) : asset('images/ai-studio/placeholder.svg');
                     $title = $fav->title ?: $fav->asset?->title ?: $fav->item?->title ?: 'Inspirasi Favorit';
                     $sourceProvider = $fav->source_provider ?: $fav->asset?->source_provider ?: $fav->item?->source?->code ?: 'cooca';
                 @endphp

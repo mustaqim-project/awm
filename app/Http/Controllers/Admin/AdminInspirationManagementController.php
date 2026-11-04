@@ -86,8 +86,14 @@ final class AdminInspirationManagementController extends Controller implements H
         }
 
         $items = $itemsQuery->orderByDesc('created_at')->paginate(24)->withQueryString();
+        $assets = $items;
 
         $stats = [
+            'total' => InspirationItem::count(),
+            'approved' => InspirationItem::where('status', 'active')->count(),
+            'pending' => InspirationItem::where('status', 'pending')->count(),
+            'rejected' => InspirationItem::where('status', 'archived')->count(),
+            'flagged' => InspirationAsset::where('moderation_status', 'flagged')->count(),
             'total_items' => InspirationItem::count(),
             'curated_items' => InspirationItem::where('is_curated', true)->count(),
             'total_collections' => InspirationCollection::where('owner_type', 'global')->count(),
@@ -98,11 +104,12 @@ final class AdminInspirationManagementController extends Controller implements H
         $categories = InspirationCategory::orderBy('sort_order')->get();
 
         if ($request->wantsJson()) {
-            return response()->json(['success' => true, 'items' => $items, 'stats' => $stats]);
+            return response()->json(['success' => true, 'items' => $items, 'assets' => $assets, 'stats' => $stats]);
         }
 
         return view('admin.ai-studio.inspiration.index', compact(
             'items',
+            'assets',
             'stats',
             'sources',
             'categories',

@@ -78,7 +78,8 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach($collection->items as $itemRecord)
                 @php
-                    $displayImg = $itemRecord->display_url;
+                    $rawColl = $itemRecord->display_url ?: $itemRecord->image_url;
+                    $displayImg = !empty($rawColl) ? ((str_starts_with($rawColl, 'http://') || str_starts_with($rawColl, 'https://')) ? $rawColl : asset($rawColl)) : asset('images/ai-studio/placeholder.svg');
                     $title = $itemRecord->title ?: 'Inspirasi Visual';
                     $sourceProvider = $itemRecord->source_provider ?: 'cooca';
                 @endphp

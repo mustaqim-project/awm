@@ -134,6 +134,8 @@ final class ExternalInspirationSearchService
                         'source_name' => $item->source?->name ?? 'Katalog COOCA',
                         'title' => $item->title,
                         'caption' => $item->caption,
+                        'display_url' => $item->display_image_url,
+                        'preview_url' => $item->display_image_url,
                         'image_url' => $item->display_image_url,
                         'thumbnail_url' => $item->thumbnail_url ?: $item->display_image_url,
                         'aspect_ratio' => $item->visualAnalysis?->aspect_ratio ?? '1:1',
@@ -173,6 +175,7 @@ final class ExternalInspirationSearchService
 
                 $personalAssets = $assetQuery->latest()->limit(24)->get();
                 foreach ($personalAssets as $pAsset) {
+                    $pImg = $pAsset->resolved_image_url ?: $pAsset->image_url;
                     $mergedItems[] = [
                         'id' => $pAsset->id,
                         'external_id' => $pAsset->external_asset_id ?? $pAsset->id,
@@ -181,8 +184,10 @@ final class ExternalInspirationSearchService
                         'source_name' => 'Koleksi Bisnis Anda',
                         'title' => $pAsset->title,
                         'caption' => $pAsset->description,
-                        'image_url' => $pAsset->resolved_image_url,
-                        'thumbnail_url' => $pAsset->thumbnail_url ?: $pAsset->resolved_image_url,
+                        'display_url' => $pImg,
+                        'preview_url' => $pImg,
+                        'image_url' => $pImg,
+                        'thumbnail_url' => $pAsset->thumbnail_url ?: $pImg,
                         'aspect_ratio' => $pAsset->aspect_ratio,
                         'author_name' => $business->name,
                         'author_url' => null,
@@ -230,11 +235,17 @@ final class ExternalInspirationSearchService
                             continue;
                         }
 
+                        $extImg = $item['image_url'] ?? $item['display_url'] ?? $item['preview_url'] ?? '';
+
                         $mergedItems[] = array_merge($item, [
                             'id' => $code . '_' . $item['external_id'],
                             'source_type' => 'external',
                             'source_code' => $code,
                             'source_name' => $adapter->getDisplayName(),
+                            'display_url' => $extImg,
+                            'preview_url' => $extImg,
+                            'image_url' => $extImg,
+                            'thumbnail_url' => $item['thumbnail_url'] ?? $extImg,
                             'prompt_hint' => $item['caption'] ?: $item['title'],
                         ]);
                     }

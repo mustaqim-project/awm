@@ -201,11 +201,14 @@
                     $itemId = $item['id'] ?? null;
                     $externalId = $item['external_id'] ?? null;
                     $title = $item['title'] ?? 'Inspirasi Visual';
-                    $imgUrl = $item['display_url'] ?? $item['preview_url'] ?? asset('images/ai-studio/placeholder.svg');
-                    $provider = strtolower($item['source_provider'] ?? 'cooca');
+                    $rawUrl = $item['display_url'] ?? $item['image_url'] ?? $item['preview_url'] ?? $item['thumbnail_url'] ?? '';
+                    $imgUrl = !empty($rawUrl)
+                        ? (str_starts_with($rawUrl, 'http://') || str_starts_with($rawUrl, 'https://') ? $rawUrl : asset($rawUrl))
+                        : asset('images/ai-studio/placeholder.svg');
+                    $provider = strtolower($item['source_provider'] ?? $item['source_code'] ?? 'cooca');
                     $categoryName = $item['category_name'] ?? 'Katalog Visual';
                     $aspectRatio = $item['aspect_ratio'] ?? '1:1';
-                    $stylePrompt = $item['style_prompt'] ?? $item['description'] ?? '';
+                    $stylePrompt = $item['style_prompt'] ?? $item['prompt_hint'] ?? $item['description'] ?? '';
 
                     $isFav = in_array($itemId, $favoritedAssetIds ?? [], true) || in_array($externalId, $favoritedExternalIds ?? [], true);
                 @endphp

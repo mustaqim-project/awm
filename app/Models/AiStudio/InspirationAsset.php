@@ -174,4 +174,9 @@ class InspirationAsset extends Model
 
         return $this->image_url ?? $this->thumbnail_url ?? asset('images/placeholder-image.svg');
     }
+
+    public function getDisplayUrlAttribute(): string
+    {
+        return $this->getResolvedImageUrlAttribute();
+    }
 }

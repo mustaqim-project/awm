@@ -115,10 +115,10 @@ class InspirationItem extends Model
         $url = (string) ($this->thumbnail_url ?: $this->canonical_url);
 
         // 1. Cek jika URL menunjuk ke file storage lokal
-        if (str_starts_with($url, '/storage/')) {
-            $relPath = ltrim(substr($url, 9), '/');
+        if (str_starts_with($url, '/storage/') || str_starts_with($url, 'storage/')) {
+            $relPath = ltrim(preg_replace('#^/?storage/#', '', $url), '/');
             if (\Illuminate\Support\Facades\Storage::disk('public')->exists($relPath) || file_exists(public_path('storage/' . $relPath))) {
-                return $url;
+                return asset('storage/' . $relPath);
             }
 
             // Jika file lokal tidak ada, gunakan URL canonical jika berupa http/https eksternal
@@ -131,10 +131,10 @@ class InspirationItem extends Model
         $sourceCode = $this->source?->code ?? 'general';
         $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $this->external_id);
 
-        foreach (['jpg', 'jpeg', 'png', 'webp', 'svg'] as $ext) {
+        foreach (['webp', 'jpg', 'jpeg', 'png', 'svg'] as $ext) {
             $localRelPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.{$ext}";
             if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localRelPath) || file_exists(public_path('storage/' . $localRelPath))) {
-                return "/storage/{$localRelPath}";
+                return asset("storage/{$localRelPath}");
             }
         }
 
@@ -145,42 +145,42 @@ class InspirationItem extends Model
 
         // 4. Jika URL path relatif (/images/...)
         if (!empty($url) && str_starts_with($url, '/')) {
-            return $url;
+            return asset(ltrim($url, '/'));
         }
 
-        return '/images/ai-studio/placeholder.svg';
+        return asset('images/ai-studio/placeholder.svg');
     }
 
     public function getThumbnailUrlAttribute(?string $value): string
     {
         if (empty($value)) {
-            return '/images/ai-studio/placeholder.svg';
+            return asset('images/ai-studio/placeholder.svg');
         }
 
-        if (str_starts_with($value, '/storage/')) {
-            $relPath = ltrim(substr($value, 9), '/');
+        if (str_starts_with($value, '/storage/') || str_starts_with($value, 'storage/')) {
+            $relPath = ltrim(preg_replace('#^/?storage/#', '', $value), '/');
             if (\Illuminate\Support\Facades\Storage::disk('public')->exists($relPath) || file_exists(public_path('storage/' . $relPath))) {
-                return $value;
+                return asset('storage/' . $relPath);
             }
             if (!empty($this->canonical_url) && str_starts_with($this->canonical_url, 'http')) {
                 return $this->canonical_url;
             }
-            return '/images/ai-studio/placeholder.svg';
+            return asset('images/ai-studio/placeholder.svg');
         }
 
         if (str_starts_with($value, 'http')) {
             $sourceCode = $this->source?->code ?? 'general';
             $safeId = preg_replace('/[^a-zA-Z0-9_\-]/', '_', (string) $this->external_id);
-            foreach (['jpg', 'jpeg', 'png', 'webp', 'svg'] as $ext) {
+            foreach (['webp', 'jpg', 'jpeg', 'png', 'svg'] as $ext) {
                 $localPath = "ai-studio/inspirations/{$sourceCode}/{$safeId}.{$ext}";
                 if (\Illuminate\Support\Facades\Storage::disk('public')->exists($localPath) || file_exists(public_path('storage/' . $localPath))) {
-                    return "/storage/{$localPath}";
+                    return asset("storage/{$localPath}");
                 }
             }
             return $value;
         }
 
-        return $value;
+        return str_starts_with($value, '/') ? asset(ltrim($value, '/')) : asset($value);
     }
 
     public function getCanonicalUrlAttribute(?string $value): string
