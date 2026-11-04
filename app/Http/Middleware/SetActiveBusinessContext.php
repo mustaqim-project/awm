@@ -6,9 +6,11 @@ namespace App\Http\Middleware;
 
 use App\Models\Business;
 use App\Models\BusinessMembership;
+use App\Models\User;
 use App\Support\Context;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 final class SetActiveBusinessContext
@@ -20,9 +22,15 @@ final class SetActiveBusinessContext
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Platform admin and customer routes do not operate within tenant business context
+        if ($request->is('admin') || $request->is('admin/*') || $request->is('customer') || $request->is('customer/*')) {
+            return $next($request);
+        }
+
         $user = $request->user();
 
-        if ($user !== null) {
+        // Only authenticated tenant users (App\Models\User) have business contexts
+        if ($user instanceof User) {
             $businessId = $request->header('X-Business-Id')
                 ?: ($request->hasSession() ? $request->session()->get('active_business_id') : null)
                 ?: $user->active_business_id;
@@ -55,24 +63,32 @@ final class SetActiveBusinessContext
                     }
                 } else {
                     $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
-                    $newBiz = Business::create([
-                        'name' => $bizName,
-                        'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::lower(\Illuminate\Support\Str::random(5)),
-                        'currency' => 'IDR',
-                        'currency_symbol' => 'Rp',
-                        'currency_precision' => 0,
-                        'is_active' => true,
-                        'template_code' => 'retail_reseller',
-                        'industry_category' => 'retail',
-                    ]);
-                    $newMembership = BusinessMembership::create([
-                        'id' => (string) \Illuminate\Support\Str::uuid(),
-                        'business_id' => $newBiz->id,
-                        'user_id' => $user->id,
-                        'role' => 'owner',
-                    ]);
-                    $user->updateQuietly(['active_business_id' => $newBiz->id]);
-                    Context::setBusiness($newBiz, $newMembership);
+                    $newBiz = null;
+                    $newMembership = null;
+
+                    DB::transaction(function () use ($user, &$newBiz, &$newMembership, $bizName): void {
+                        $newBiz = Business::create([
+                            'name' => $bizName,
+                            'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::lower(\Illuminate\Support\Str::random(5)),
+                            'currency' => 'IDR',
+                            'currency_symbol' => 'Rp',
+                            'currency_precision' => 0,
+                            'is_active' => true,
+                            'template_code' => 'retail_reseller',
+                            'industry_category' => 'retail',
+                        ]);
+                        $newMembership = BusinessMembership::create([
+                            'id' => (string) \Illuminate\Support\Str::uuid(),
+                            'business_id' => $newBiz->id,
+                            'user_id' => $user->id,
+                            'role' => 'owner',
+                        ]);
+                        $user->updateQuietly(['active_business_id' => $newBiz->id]);
+                    });
+
+                    if ($newBiz !== null && $newMembership !== null) {
+                        Context::setBusiness($newBiz, $newMembership);
+                    }
                 }
             }
         }

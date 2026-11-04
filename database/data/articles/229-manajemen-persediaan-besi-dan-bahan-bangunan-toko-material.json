@@ -1,0 +1,37 @@
+{
+  "id": 229,
+  "title": "Manajemen Persediaan Besi dan Bahan Bangunan Toko Material",
+  "slug": "manajemen-persediaan-besi-dan-bahan-bangunan-toko-material",
+  "category": "Inventori & Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "manajemen persediaan besi dan bahan bangunan toko material",
+  "secondary_keywords": "stok toko bangunan material, tata kelola gudang besi beton, cara simpan semen agar tidak beku, manajemen piutang proyek, dead stock material",
+  "meta_title": "Manajemen Persediaan Toko Material dan Bangunan Rapi",
+  "meta_description": "Panduan manajemen persediaan besi dan bahan bangunan toko material. Cara hitung safety stock, cegah karat, dan kontrol piutang kontraktor.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/manajemen-persediaan-besi-dan-bahan-bangunan-toko-material.jpg",
+  "local_image_asset": "public/images/blog/manajemen-persediaan-besi-dan-bahan-bangunan-toko-material.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "krakatau steel",
+  "word_count": 897,
+  "faqs": [
+    {
+      "q": "Berapa lama semen sak aman disimpan di gudang toko material sebelum mengeras?",
+      "a": "Dalam kondisi gudang kering dengan sirkulasi udara baik dan beralaskan palet kayu, semen sak umumnya aman disimpan maksimal selama 2 sampai 3 bulan."
+    },
+    {
+      "q": "Apakah besi beton yang sedikit berkarat permukaan masih layak dijual?",
+      "a": "Karat tipis di permukaan (flash rust) wajar terjadi karena kelembapan udara dan tidak mengurangi kekuatan struktural. Namun jika karat sudah mengelupas dan memakan diameter besi, barang tersebut masuk kategori rusak."
+    },
+    {
+      "q": "Bagaimana cara menentukan batas plafon kredit bagi kontraktor langganan?",
+      "a": "Evaluasi rekam jejak pembayaran proyek sebelumnya, batasi kredit maksimal 30 persen dari rata-rata nilai belanja bulanan, dan minta jaminan pembayaran tertulis."
+    },
+    {
+      "q": "Mengapa toko bahan bangunan wajib memiliki sistem inventori multi-gudang?",
+      "a": "Karena material berat seperti pasir dan besi sering disimpan di gudang terbuka terpisah dari toko display, sehingga sistem multi-gudang diperlukan untuk sinkronisasi stok riil."
+    }
+  ],
+  "created_at": "2026-11-04T11:28:42+07:00"
+}

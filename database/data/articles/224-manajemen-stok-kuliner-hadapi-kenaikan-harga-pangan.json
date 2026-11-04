@@ -1,0 +1,37 @@
+{
+  "id": 224,
+  "title": "Manajemen Stok Kuliner Hadapi Kenaikan Harga Pangan Pasar",
+  "slug": "manajemen-stok-kuliner-hadapi-kenaikan-harga-pangan",
+  "category": "Inventori & Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "manajemen stok kuliner hadapi kenaikan harga pangan",
+  "secondary_keywords": "stok bahan baku restoran, pengendalian food cost, metode fifo kuliner, reorder point bahan segar, cara cegah bahan basi",
+  "meta_title": "Manajemen Stok Kuliner Hadapi Kenaikan Harga Pangan",
+  "meta_description": "Panduan manajemen stok kuliner hadapi kenaikan harga pangan. Pelajari cara kontrol food cost, kunci kontrak supplier, dan amankan persediaan.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/manajemen-stok-kuliner-hadapi-kenaikan-harga-pangan.jpg",
+  "local_image_asset": "public/images/blog/manajemen-stok-kuliner-hadapi-kenaikan-harga-pangan.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "krisis pangan",
+  "word_count": 884,
+  "faqs": [
+    {
+      "q": "Apakah boleh menyetok sayuran segar dalam jumlah banyak saat harga sedang murah?",
+      "a": "Tidak disarankan kecuali Anda memiliki fasilitas blast chiller atau teknik blanching dan vacuum pack yang benar, karena sayuran segar rentan layu dan susut bobot."
+    },
+    {
+      "q": "Bagaimana cara mengatasi kenaikan harga daging sapi atau ayam yang tajam?",
+      "a": "Anda dapat mengunci kontrak pasokan dengan rumah potong hewan, membuat menu bundling dengan hidangan pendamping bermargin tinggi, atau menyesuaikan gramasi porsi secara proporsional."
+    },
+    {
+      "q": "Berapa hari sekali restoran harus melakukan stok opname bahan baku?",
+      "a": "Untuk bahan baku segar berputar cepat (daging, seafood, sayur), stok opname sebaiknya dilakukan harian atau dua hari sekali saat pergantian shift dapur."
+    },
+    {
+      "q": "Apa indikator utama bahwa manajemen stok dapur Anda sudah efisien?",
+      "a": "Tingkat sisa bahan baku yang terbuang (food waste) berada di bawah 2 persen dan persentase food cost stabil sesuai target resep standar."
+    }
+  ],
+  "created_at": "2026-11-04T11:28:42+07:00"
+}
