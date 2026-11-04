@@ -192,3 +192,4 @@ final class SyncAllInspirationsToCoocaAssetsCommand extends Command
         return self::SUCCESS;
     }
 }
+
