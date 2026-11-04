@@ -114,11 +114,13 @@
                 <select name="source" onchange="this.form.submit()"
                     class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     <option value="all">Semua Sumber</option>
-                    <option value="cooca_curated" {{ request('source') === 'cooca_curated' ? 'selected' : '' }}>Kurasi COOCA</option>
+                    <option value="civitai" {{ request('source') === 'civitai' ? 'selected' : '' }}>Civitai</option>
+                    <option value="copasprompt" {{ request('source') === 'copasprompt' ? 'selected' : '' }}>CopasPrompt</option>
+                    <option value="pinterest" {{ request('source') === 'pinterest' ? 'selected' : '' }}>Pinterest</option>
+                    <option value="grok" {{ request('source') === 'grok' ? 'selected' : '' }}>Grok Image</option>
                     <option value="pexels" {{ request('source') === 'pexels' ? 'selected' : '' }}>Pexels</option>
                     <option value="pixabay" {{ request('source') === 'pixabay' ? 'selected' : '' }}>Pixabay</option>
                     <option value="unsplash" {{ request('source') === 'unsplash' ? 'selected' : '' }}>Unsplash</option>
-                    <option value="pinterest" {{ request('source') === 'pinterest' ? 'selected' : '' }}>Pinterest</option>
                 </select>
             </div>
 

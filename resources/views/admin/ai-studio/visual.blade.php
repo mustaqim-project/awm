@@ -1,7 +1,7 @@
 @extends('layouts.admin', [
     'title' => 'AI Studio Visual Creator - Admin Console',
     'headerTitle' => 'Studio Visual & Materi Media Sosial AI',
-    'headerSubtitle' => 'Rancang konten visual promosi platform, jelajahi 460+ gambar referensi gaya, dan publikasikan langsung ke media sosial',
+    'headerSubtitle' => 'Rancang konten visual promosi platform, jelajahi 430+ gambar referensi gaya, dan publikasikan langsung ke media sosial',
 ])
 
 @section('content')
@@ -210,7 +210,7 @@
                             :class="refMode === 'catalog' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
                             class="py-1.5 px-2 rounded-[8px] text-xs transition-all flex items-center justify-center gap-1.5">
                             <i data-lucide="compass" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                            <span>Katalog COOCA ({{ $totalInspirationsCount ?? 463 }}+)</span>
+                            <span>Katalog COOCA ({{ $totalInspirationsCount ?? 437 }}+)</span>
                         </button>
                         <button type="button" @click="refMode = 'upload'"
                             :class="refMode === 'upload' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/60 dark:text-white/60 font-medium'"
@@ -751,7 +751,7 @@
                         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
                             <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'all', 'insp_category' => $inspCategory]) }}"
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'all' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Semua ({{ $totalInspirationsCount ?? 463 }})
+                                Semua ({{ $totalInspirationsCount ?? 437 }})
                             </a>
                             <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'pinterest', 'insp_category' => $inspCategory]) }}"
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'pinterest' ? 'bg-[#E60023] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
@@ -765,9 +765,9 @@
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'copasprompt' ? 'bg-[#34C759] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
                                 CopasPrompt (133)
                             </a>
-                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'cooca_curated', 'insp_category' => $inspCategory]) }}"
-                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'cooca_curated' ? 'bg-[#AF52DE] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Cooca Curated (26)
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'grok', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'grok' ? 'bg-[#AF52DE] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Grok (8)
                             </a>
                         </div>
 
