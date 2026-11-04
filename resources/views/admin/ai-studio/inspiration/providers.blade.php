@@ -249,3 +249,4 @@ function adminInspirationProviders() {
 </script>
 @endpush
 @endsection
+

@@ -137,3 +137,4 @@ interface ExternalProviderAdapterInterface
      */
     public function validateUsagePolicy(): array;
 }
+

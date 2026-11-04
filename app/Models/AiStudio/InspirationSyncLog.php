@@ -58,3 +58,4 @@ class InspirationSyncLog extends Model
         return $this->belongsTo(InspirationSource::class, 'source_id');
     }
 }
+

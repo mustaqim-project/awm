@@ -205,3 +205,4 @@ function adminInspirationCollections() {
 </script>
 @endpush
 @endsection
+

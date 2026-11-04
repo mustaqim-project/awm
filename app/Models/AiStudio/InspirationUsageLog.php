@@ -89,3 +89,4 @@ class InspirationUsageLog extends Model
         ]);
     }
 }
+

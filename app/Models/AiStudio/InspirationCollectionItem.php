@@ -100,3 +100,4 @@ class InspirationCollectionItem extends Model
         return 'Item Koleksi';
     }
 }
+

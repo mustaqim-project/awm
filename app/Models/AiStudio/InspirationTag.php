@@ -38,3 +38,4 @@ class InspirationTag extends Model
         });
     }
 }
+

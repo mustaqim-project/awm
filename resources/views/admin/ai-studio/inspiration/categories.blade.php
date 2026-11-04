@@ -224,3 +224,4 @@ function adminInspirationCategories() {
 </script>
 @endpush
 @endsection
+

@@ -251,3 +251,4 @@ function adminInspirationModeration() {
 </script>
 @endpush
 @endsection
+
