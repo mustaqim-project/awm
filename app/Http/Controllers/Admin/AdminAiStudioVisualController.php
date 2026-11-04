@@ -410,7 +410,11 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             ->values()
             ->toArray();
 
-        $sources = InspirationSource::where('is_active', true)->orderBy('name')->get();
+        $sources = InspirationSource::withCount(['items' => fn($q) => $q->where('status', 'active')])
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+        $sourceCounts = $sources->pluck('items_count', 'code')->toArray();
         $categories = InspirationCategory::orderBy('sort_order')->get();
         $totalInspirationsCount = InspirationItem::where('status', 'active')->count();
 
@@ -436,6 +440,7 @@ final class AdminAiStudioVisualController extends Controller implements HasMiddl
             'inspirationReferences',
             'quickReferences',
             'sources',
+            'sourceCounts',
             'categories',
             'totalInspirationsCount',
             'inspSource',

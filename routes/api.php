@@ -972,7 +972,7 @@ Route::prefix('v1')->group(function (): void {
             ->middleware('business.active', 'require.role:owner,admin');
 
         // Tenant-Aware Routes (Requires Active Business Context)
-        Route::middleware('business.active')->group(function (): void {
+        Route::middleware(['business.context', 'business.active'])->group(function (): void {
             Route::get('/context/current', function (): JsonResponse {
                 $business = Context::requireBusiness();
 

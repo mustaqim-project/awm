@@ -87,7 +87,7 @@ final class CommunityApiController extends Controller implements HasMiddleware
 
         $postsQuery = CommunityPost::with([
             'owner:id,name,avatar',
-            'business:id,name,business_type',
+            'business:id,name,industry_category,template_code',
             'comments.user:id,name,avatar',
             'reposts.user:id,name',
         ])->withCount(['likes', 'comments', 'reposts']);
@@ -152,7 +152,7 @@ final class CommunityApiController extends Controller implements HasMiddleware
                 'business' => [
                     'id' => (string) ($post->business?->id ?? ''),
                     'name' => $post->business?->name ?? 'Usaha Mitra',
-                    'business_type' => $post->business?->business_type ?? 'UMKM',
+                    'business_type' => $post->business?->industry_category ?? $post->business?->template_code ?? 'UMKM',
                 ],
                 'comments' => $post->comments->take(10)->map(fn (CommunityComment $c): array => [
                     'id' => (string) $c->id,
@@ -206,11 +206,14 @@ final class CommunityApiController extends Controller implements HasMiddleware
         abort_unless($user !== null, 403);
 
         if (! $this->entitlementService->canParticipateInCommunity($business, $user)) {
-            return response()->json([
-                'success' => false,
-                'code' => 'SUBSCRIPTION_REQUIRED',
-                'message' => 'Akses membuat postingan komunitas khusus untuk member yang telah berlangganan (subscribe) paket Cooca.',
-            ], 403);
+            // Allow active registered businesses to publish on mobile community
+            if (! ($business->is_active ?? true)) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 'SUBSCRIPTION_REQUIRED',
+                    'message' => 'Akses membuat postingan komunitas khusus untuk member yang telah berlangganan (subscribe) paket Cooca.',
+                ], 403);
+            }
         }
 
         $validated = $request->validate([
@@ -302,7 +305,7 @@ final class CommunityApiController extends Controller implements HasMiddleware
             'image_path' => $imagePath,
         ]);
 
-        $post->load(['owner:id,name,avatar', 'business:id,name,business_type']);
+        $post->load(['owner:id,name,avatar', 'business:id,name,industry_category,template_code']);
 
         return response()->json([
             'success' => true,
@@ -329,7 +332,7 @@ final class CommunityApiController extends Controller implements HasMiddleware
                 'business' => [
                     'id' => (string) ($post->business?->id ?? ''),
                     'name' => $post->business?->name ?? 'Usaha Mitra',
-                    'business_type' => $post->business?->business_type ?? 'UMKM',
+                    'business_type' => $post->business?->industry_category ?? $post->business?->template_code ?? 'UMKM',
                 ],
                 'comments' => [],
             ],
@@ -426,11 +429,13 @@ final class CommunityApiController extends Controller implements HasMiddleware
         $business = $this->resolveBusiness($request);
 
         if (! $this->entitlementService->canParticipateInCommunity($business, $user)) {
-            return response()->json([
-                'success' => false,
-                'code' => 'SUBSCRIPTION_REQUIRED',
-                'message' => 'Akses repost postingan komunitas khusus untuk member yang telah berlangganan (subscribe).',
-            ], 403);
+            if (! ($business->is_active ?? true)) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 'SUBSCRIPTION_REQUIRED',
+                    'message' => 'Akses repost postingan komunitas khusus untuk member yang telah berlangganan (subscribe).',
+                ], 403);
+            }
         }
 
         $repost = CommunityRepost::where('post_id', $post->id)
@@ -476,11 +481,13 @@ final class CommunityApiController extends Controller implements HasMiddleware
         $business = $this->resolveBusiness($request);
 
         if (! $this->entitlementService->canParticipateInCommunity($business, $user)) {
-            return response()->json([
-                'success' => false,
-                'code' => 'SUBSCRIPTION_REQUIRED',
-                'message' => 'Akses komentar komunitas khusus untuk member yang telah berlangganan (subscribe).',
-            ], 403);
+            if (! ($business->is_active ?? true)) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 'SUBSCRIPTION_REQUIRED',
+                    'message' => 'Akses komentar komunitas khusus untuk member yang telah berlangganan (subscribe).',
+                ], 403);
+            }
         }
 
         $validated = $request->validate([

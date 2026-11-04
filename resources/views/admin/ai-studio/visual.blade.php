@@ -724,7 +724,7 @@
                             :class="activeBottomTab === 'inspirations' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04]'"
                             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9px] text-xs font-bold transition-all cursor-pointer">
                             <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                            <span>Koleksi 460+ Gambar Inspirasi</span>
+                            <span>Koleksi {{ number_format($totalInspirationsCount ?? 2000, 0, ',', '.') }}+ Gambar Inspirasi</span>
                         </button>
                         <button type="button" @click="activeBottomTab = 'my_assets'"
                             :class="activeBottomTab === 'my_assets' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-black/70 dark:text-white/70 hover:bg-black/[0.04]'"
@@ -735,7 +735,7 @@
                     </div>
 
                     <span class="text-[11px] text-black/50 dark:text-white/50">
-                        <span x-show="activeBottomTab === 'inspirations'">Pinterest, Civitai, CopasPrompt</span>
+                        <span x-show="activeBottomTab === 'inspirations'">Pinterest, Civitai, CopasPrompt ({{ number_format($totalInspirationsCount ?? 0, 0, ',', '.') }} aset)</span>
                         <span x-show="activeBottomTab === 'my_assets'">Hasil Generate Platform</span>
                     </span>
                 </div>
@@ -751,23 +751,23 @@
                         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
                             <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'all', 'insp_category' => $inspCategory]) }}"
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'all' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Semua ({{ $totalInspirationsCount ?? 437 }})
-                            </a>
-                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'pinterest', 'insp_category' => $inspCategory]) }}"
-                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'pinterest' ? 'bg-[#E60023] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Pinterest (34)
-                            </a>
-                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'civitai', 'insp_category' => $inspCategory]) }}"
-                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'civitai' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Civitai (262)
+                                Semua ({{ number_format($totalInspirationsCount ?? 0, 0, ',', '.') }})
                             </a>
                             <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'copasprompt', 'insp_category' => $inspCategory]) }}"
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'copasprompt' ? 'bg-[#34C759] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                CopasPrompt (133)
+                                CopasPrompt ({{ number_format($sourceCounts['copasprompt'] ?? 0, 0, ',', '.') }})
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'civitai', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'civitai' ? 'bg-[#007AFF] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Civitai ({{ number_format($sourceCounts['civitai'] ?? 0, 0, ',', '.') }})
+                            </a>
+                            <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'pinterest', 'insp_category' => $inspCategory]) }}"
+                                class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'pinterest' ? 'bg-[#E60023] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
+                                Pinterest ({{ number_format($sourceCounts['pinterest'] ?? 0, 0, ',', '.') }})
                             </a>
                             <a href="{{ route('admin.ai-studio.visual.index', ['insp_source' => 'grok', 'insp_category' => $inspCategory]) }}"
                                 class="px-2.5 py-1 rounded-[8px] text-[11px] font-bold shrink-0 {{ $inspSource === 'grok' ? 'bg-[#AF52DE] text-white' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/70 dark:text-white/70' }}">
-                                Grok (8)
+                                Grok ({{ number_format($sourceCounts['grok'] ?? 0, 0, ',', '.') }})
                             </a>
                         </div>
 

@@ -18,6 +18,10 @@ final class EnsureActiveBusiness
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (! Context::hasBusiness() && $request->user() !== null) {
+            app(SetActiveBusinessContext::class)->handle($request, fn ($req) => new Response());
+        }
+
         if (! Context::hasBusiness()) {
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([

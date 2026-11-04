@@ -20,9 +20,18 @@ class ContentModerationService
      */
     public function getActiveFilters(): Collection
     {
-        return Cache::rememberForever(self::CACHE_KEY, function (): Collection {
-            return CommunityWordFilter::active()->get();
-        });
+        $cached = Cache::get(self::CACHE_KEY);
+        if (! ($cached instanceof Collection)) {
+            Cache::forget(self::CACHE_KEY);
+            $cached = CommunityWordFilter::active()->get();
+            try {
+                Cache::forever(self::CACHE_KEY, $cached);
+            } catch (\Throwable $e) {
+                // Ignore cache write error
+            }
+        }
+
+        return $cached;
     }
 
     /**
