@@ -724,9 +724,20 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/topup', [OwnerAiStudioWebController::class, 'orderTopup'])->name('topup.order');
             Route::get('/topup/{payment}/status', [OwnerAiStudioWebController::class, 'checkTopupStatus'])->name('topup.status');
 
-            // Penjelajahan Katalog Inspirasi Legal
+            // COOCA AI Inspiration Library (Hybrid: Curated, External Providers, Personal, & AI Generated)
             Route::get('/inspiration', [OwnerInspirationWebController::class, 'index'])->name('inspiration.index');
             Route::get('/inspiration/search', [OwnerInspirationWebController::class, 'search'])->name('inspiration.search');
+            Route::get('/inspiration/categories', [OwnerInspirationWebController::class, 'categories'])->name('inspiration.categories');
+            Route::get('/inspiration/collections', [OwnerInspirationWebController::class, 'collections'])->name('inspiration.collections');
+            Route::post('/inspiration/collections', [OwnerInspirationWebController::class, 'storeCollection'])->name('inspiration.collections.store');
+            Route::get('/inspiration/collections/{collection}', [OwnerInspirationWebController::class, 'showCollection'])->name('inspiration.collections.show');
+            Route::post('/inspiration/collections/{collection}/items', [OwnerInspirationWebController::class, 'addItemToCollection'])->name('inspiration.collections.items.store');
+            Route::delete('/inspiration/collections/{collection}/items/{item}', [OwnerInspirationWebController::class, 'removeItemFromCollection'])->name('inspiration.collections.items.destroy');
+            Route::get('/inspiration/favorites', [OwnerInspirationWebController::class, 'favorites'])->name('inspiration.favorites');
+            Route::post('/inspiration/favorites/toggle', [OwnerInspirationWebController::class, 'toggleFavorite'])->name('inspiration.favorites.toggle');
+            Route::get('/inspiration/my-library', [OwnerInspirationWebController::class, 'myLibrary'])->name('inspiration.my-library');
+            Route::post('/inspiration/my-library/upload', [OwnerInspirationWebController::class, 'uploadAsset'])->name('inspiration.my-library.upload');
+            Route::post('/inspiration/use-as-reference', [OwnerInspirationWebController::class, 'useAsReference'])->name('inspiration.use-as-reference');
             Route::get('/inspiration/{inspiration}', [OwnerInspirationWebController::class, 'show'])->name('inspiration.show');
         });
 

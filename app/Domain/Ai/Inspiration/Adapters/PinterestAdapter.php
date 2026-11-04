@@ -4,973 +4,336 @@ declare(strict_types=1);
 
 namespace App\Domain\Ai\Inspiration\Adapters;
 
+use App\Domain\Ai\Inspiration\Contracts\ExternalProviderAdapterInterface;
 use App\Domain\Ai\Inspiration\Contracts\InspirationAdapterInterface;
+use App\Models\AiStudio\InspirationSource;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
-final class PinterestAdapter implements InspirationAdapterInterface
+final class PinterestAdapter implements ExternalProviderAdapterInterface, InspirationAdapterInterface
 {
     public const SOURCE_CODE = 'pinterest';
+    private const BASE_URL = 'https://api.pinterest.com/v5';
+
+    public function __construct(
+        private ?string $accessToken = null
+    ) {}
+
+    public function getProviderKey(): string
+    {
+        return self::SOURCE_CODE;
+    }
 
     public function getSourceCode(): string
     {
         return self::SOURCE_CODE;
     }
 
-    /**
-     * Cari konten inspirasi visual dari Pinterest (E-Commerce & Commercial Photography).
-     *
-     * @param array<string, mixed> $filters
-     * @return array<int, array<string, mixed>>
-     */
-    public function search(string $query, array $filters = []): array
+    public function getDisplayName(): string
     {
-        $limit = (int) ($filters['limit'] ?? 100);
-        $templates = $this->getCuratedPinterestTemplates();
-
-        if (!empty($query)) {
-            $q = strtolower($query);
-            $templates = array_filter($templates, function ($item) use ($q) {
-                return str_contains(strtolower($item['title']), $q)
-                    || str_contains(strtolower($item['caption'] ?? ''), $q)
-                    || in_array($q, array_map('strtolower', $item['tags'] ?? []));
-            });
-        }
-
-        return array_values(array_slice($templates, 0, $limit));
+        return 'Pinterest Official API v5';
     }
 
-    /**
-     * Ambil detail spesifik satu item inspirasi Pinterest.
-     *
-     * @return array<string, mixed>|null
-     */
+    public function isConfigured(): bool
+    {
+        return !empty($this->resolveAccessToken());
+    }
+
+    public function search(string $query, array $filters = []): array
+    {
+        $token = $this->resolveAccessToken();
+        if (empty($token)) {
+            $templates = (new \Database\Seeders\PinterestSaasPromotionInspirationSeeder())->getSaasPromotionItems();
+            if (!empty($query)) {
+                $q = strtolower($query);
+                $templates = array_filter($templates, function ($item) use ($q) {
+                    return str_contains(strtolower($item['title']), $q)
+                        || str_contains(strtolower($item['caption'] ?? ''), $q)
+                        || in_array($q, array_map('strtolower', $item['tags'] ?? []));
+                });
+            }
+            return array_values($templates);
+        }
+
+        $res = $this->searchImages($query, $filters);
+        return $res['items'] ?? [];
+    }
+
     public function getItem(string $externalId): ?array
     {
-        $templates = $this->getCuratedPinterestTemplates();
-        foreach ($templates as $item) {
-            if ($item['external_id'] === $externalId) {
-                return $item;
+        return $this->getAssetDetails($externalId);
+    }
+
+    public function searchImages(string $query, array $filters = []): array
+    {
+        $token = $this->resolveAccessToken();
+        if (empty($token)) {
+            return [
+                'success' => false,
+                'provider' => $this->getProviderKey(),
+                'total_results' => 0,
+                'page' => (int) ($filters['page'] ?? 1),
+                'per_page' => (int) ($filters['per_page'] ?? 15),
+                'items' => [],
+                'error_message' => 'Pinterest API resmi v5 belum dikonfigurasi. Sesuai kebijakan kepatuhan COOCA, dilarang melakukan scraping.',
+            ];
+        }
+
+        $pageSize = min(100, max(1, (int) ($filters['per_page'] ?? 25)));
+
+        try {
+            $response = Http::withToken($token)
+                ->timeout(10)
+                ->get(self::BASE_URL . '/pins', [
+                    'page_size' => $pageSize,
+                ]);
+
+            if (!$response->successful()) {
+                Log::warning('[PinterestAdapter] API v5 error: ' . $response->status() . ' - ' . $response->body());
+                return [
+                    'success' => false,
+                    'provider' => $this->getProviderKey(),
+                    'total_results' => 0,
+                    'page' => 1,
+                    'per_page' => $pageSize,
+                    'items' => [],
+                    'error_message' => 'Pinterest API HTTP ' . $response->status(),
+                ];
             }
+
+            $json = $response->json();
+            $normalized = $this->normalizeResponse($json);
+
+            return [
+                'success' => true,
+                'provider' => $this->getProviderKey(),
+                'total_results' => count($normalized),
+                'page' => 1,
+                'per_page' => $pageSize,
+                'items' => $normalized,
+            ];
+        } catch (Throwable $e) {
+            Log::error('[PinterestAdapter] Exception: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'provider' => $this->getProviderKey(),
+                'total_results' => 0,
+                'page' => 1,
+                'per_page' => $pageSize,
+                'items' => [],
+                'error_message' => 'Pinterest connection timeout: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    public function searchVideos(string $query, array $filters = []): array
+    {
+        return ['success' => false, 'error' => 'Pinterest Video Search not enabled without extended video scope.'];
+    }
+
+    public function getAssetDetails(string $assetId): ?array
+    {
+        $token = $this->resolveAccessToken();
+        if (empty($token)) {
+            return null;
+        }
+
+        try {
+            $response = Http::withToken($token)
+                ->timeout(8)
+                ->get(self::BASE_URL . "/pins/{$assetId}");
+
+            if ($response->successful()) {
+                $p = $response->json();
+                $imgUrl = (string) ($p['media']['images']['originals']['url'] ?? $p['media']['images']['600x']['url'] ?? '');
+                $w = (int) ($p['media']['images']['originals']['width'] ?? 1024);
+                $h = (int) ($p['media']['images']['originals']['height'] ?? 1024);
+
+                return [
+                    'external_id' => (string) $p['id'],
+                    'title' => (string) ($p['title'] ?: 'Pinterest Pin #' . $p['id']),
+                    'caption' => (string) ($p['description'] ?? ''),
+                    'image_url' => $imgUrl,
+                    'thumbnail_url' => (string) ($p['media']['images']['150x150']['url'] ?? $imgUrl),
+                    'width' => $w,
+                    'height' => $h,
+                    'aspect_ratio' => $this->calculateAspectRatio($w, $h),
+                    'author_name' => (string) ($p['board_owner']['username'] ?? 'Pinterest Creator'),
+                    'author_url' => 'https://www.pinterest.com/' . ($p['board_owner']['username'] ?? ''),
+                    'source_url' => (string) ($p['link'] ?? 'https://www.pinterest.com/pin/' . $p['id']),
+                    'license_name' => 'Pinterest Rights (Source Reference Only)',
+                    'commercial_use_allowed' => false, // Reference only
+                    'require_attribution' => true,
+                    'attribution_text' => 'Pin by ' . ($p['board_owner']['username'] ?? 'User') . ' on Pinterest',
+                    'tags' => [],
+                    'raw_metadata' => $p,
+                ];
+            }
+        } catch (Throwable) {
+            // Ignore
         }
 
         return null;
     }
 
-    public function getAttribution(string $externalId): array
+    public function validateConnection(): array
     {
+        $token = $this->resolveAccessToken();
+        if (empty($token)) {
+            return [
+                'success' => false,
+                'status_code' => 401,
+                'message' => 'Pinterest Access Token belum dikonfigurasi (Belum Terhubung).',
+                'latency_ms' => 0,
+            ];
+        }
+
+        $start = microtime(true);
+        try {
+            $res = Http::withToken($token)->timeout(6)->get(self::BASE_URL . '/user_account');
+            $latency = (int) round((microtime(true) - $start) * 1000);
+
+            if ($res->successful()) {
+                return [
+                    'success' => true,
+                    'status_code' => $res->status(),
+                    'message' => 'Koneksi Pinterest API v5 Resmi Terhubung & Valid.',
+                    'latency_ms' => $latency,
+                ];
+            }
+
+            return [
+                'success' => false,
+                'status_code' => $res->status(),
+                'message' => 'Pinterest API v5 menolak token: HTTP ' . $res->status(),
+                'latency_ms' => $latency,
+            ];
+        } catch (Throwable $e) {
+            return [
+                'success' => false,
+                'status_code' => 500,
+                'message' => 'Koneksi ke Pinterest gagal: ' . $e->getMessage(),
+                'latency_ms' => (int) round((microtime(true) - $start) * 1000),
+            ];
+        }
+    }
+
+    public function normalizeResponse(mixed $response): array
+    {
+        if (!is_array($response) || empty($response['items'])) {
+            return [];
+        }
+
+        $items = [];
+        foreach ($response['items'] as $p) {
+            $imgUrl = (string) ($p['media']['images']['originals']['url'] ?? $p['media']['images']['600x']['url'] ?? '');
+            $thumbUrl = (string) ($p['media']['images']['150x150']['url'] ?? $imgUrl);
+            $w = (int) ($p['media']['images']['originals']['width'] ?? 1024);
+            $h = (int) ($p['media']['images']['originals']['height'] ?? 1024);
+
+            $items[] = [
+                'external_id' => (string) $p['id'],
+                'title' => !empty($p['title']) ? (string) $p['title'] : 'Pin Inspirasi #' . $p['id'],
+                'caption' => (string) ($p['description'] ?? ''),
+                'image_url' => $imgUrl,
+                'thumbnail_url' => $thumbUrl,
+                'width' => $w,
+                'height' => $h,
+                'aspect_ratio' => $this->calculateAspectRatio($w, $h),
+                'author_name' => (string) ($p['board_owner']['username'] ?? 'Pinterest User'),
+                'author_url' => 'https://www.pinterest.com/' . ($p['board_owner']['username'] ?? ''),
+                'source_url' => (string) ($p['link'] ?? 'https://www.pinterest.com/pin/' . $p['id']),
+                'license_name' => 'Pinterest Reference',
+                'commercial_use_allowed' => false,
+                'require_attribution' => true,
+                'attribution_text' => 'Pin oleh ' . ($p['board_owner']['username'] ?? 'User') . ' di Pinterest',
+                'tags' => [],
+                'raw_metadata' => [
+                    'board_id' => $p['board_id'] ?? null,
+                ],
+            ];
+        }
+
+        return $items;
+    }
+
+    public function getAttribution(string $assetId): array
+    {
+        $details = $this->getAssetDetails($assetId);
+
         return [
-            'license' => 'Commercial Public Domain / Royalty-Free Design Concept',
-            'allow_commercial_use' => true,
-            'require_attribution' => false,
-            'attribution_text' => 'Pinterest E-Commerce Commercial Design Board',
-            'source_url' => 'https://www.pinterest.com',
+            'photographer_name' => $details['author_name'] ?? 'Pinterest Creator',
+            'photographer_url' => $details['author_url'] ?? null,
+            'source_name' => 'Pinterest',
+            'source_url' => $details['source_url'] ?? 'https://www.pinterest.com',
+            'attribution_text' => $details['attribution_text'] ?? 'Pin referensi bersumber dari Pinterest',
+            'license_name' => 'Pinterest Copyright (Visual Reference Only)',
+            'license_url' => 'https://policy.pinterest.com/terms-of-service',
         ];
     }
 
-    /**
-     * Koleksi curated template fotografi produk & poster viral Pinterest.
-     *
-     * @return array<int, array<string, mixed>>
-     */
-    public function getCuratedPinterestTemplates(): array
+    public function getLicenseMetadata(string $assetId): array
     {
         return [
-            // F&B 1: Iced Coffee
-            [
-                'external_id' => 'pin-fnb-001',
-                'title' => 'Artisanal Iced Coffee with Liquid Splash & Roasted Beans',
-                'caption' => 'Ultra-crisp commercial beverage photoshoot, dynamic cold brew splash frozen in mid-air with condensation droplets on fluted glassware, warm natural morning backlight.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['coffee', 'beverage', 'splash', 'commercial', 'summer', 'fnb'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Product Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'Makanan & Minuman (F&B)',
-                'visual_analysis' => [
-                    'composition' => 'dynamic_splash_center',
-                    'lighting' => 'backlit_rim_sunlight',
-                    'color_palette' => ['#4A2E18', '#C89D76', '#FFFFFF', '#1A1A1A'],
-                    'color_mood' => 'warm_invigorating',
-                    'extracted_style_prompt' => 'Commercial iced beverage photography, crystal fluted glass filled with dark espresso and milk swirl, frozen liquid splash with droplets catching warm morning rim light, scattered roasted coffee beans on dark walnut wood table, 85mm f/2.0 macro focus, cinematic atmosphere.',
-                    'negative_style_prompt' => 'blurry, artificial plastic look, lowres, distorted cup, unappetizing flat lighting',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // F&B 2: Bakso Nusantara
-            [
-                'external_id' => 'pin-fnb-002',
-                'title' => 'Gourmet Steaming Bakso Nusantara in Artisanal Stoneware Bowl',
-                'caption' => 'Culinary hero shot of authentic Indonesian meatball soup, delicate aromatic steam wisps rising, golden glistening broth, fresh spring onions, crispy fried shallots, and spicy sambal spoon.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['bakso', 'kuliner', 'indonesia', 'steaming', 'fnb', 'comfort_food'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Culinary Board',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'Makanan & Minuman (F&B)',
-                'visual_analysis' => [
-                    'composition' => 'top_down_three_quarter_hero',
-                    'lighting' => 'soft_diffused_warm_side',
-                    'color_palette' => ['#8C5835', '#2E4C1E', '#E6C687', '#1F1A17'],
-                    'color_mood' => 'appetizing_cozy',
-                    'extracted_style_prompt' => 'Appetizing Indonesian meatball bakso soup served in a handcrafted dark matte ceramic bowl, rich golden translucent broth with oil droplets, tender textured meatballs, yellow noodles, crisp green scallions, delicate steam rising gracefully, soft directional window lighting, rustic dark wood table, 50mm f/1.8 lens.',
-                    'negative_style_prompt' => 'cold soup, artificial colors, cartoonish, greasy unappetizing surface, uncentered',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // F&B 3: Artisan Bakery Croissant
-            [
-                'external_id' => 'pin-fnb-003',
-                'title' => 'Golden Flaky French Croissant on Marble with Butter Curls',
-                'caption' => 'Artisanal morning bakery photography, perfectly laminated golden flaky croissant dusting with delicate flour crumbs, curls of French butter, warm morning sunlight streaming in.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['croissant', 'bakery', 'flaky', 'pastry', 'breakfast', 'fnb'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Artisan Baker',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'Makanan & Minuman (F&B)',
-                'visual_analysis' => [
-                    'composition' => 'diagonal_hero_shot',
-                    'lighting' => 'golden_hour_side_sunlight',
-                    'color_palette' => ['#D97706', '#F59E0B', '#F8FAFC', '#78350F'],
-                    'color_mood' => 'warm_buttery_inviting',
-                    'extracted_style_prompt' => 'Commercial artisanal bakery packshot, golden brown flaky layered croissant with delicate glistening glaze, fine crumbs scattered on Italian Carrara white marble slab, curls of creamy butter on side, soft morning side-light creating long gentle shadows, 85mm macro lens.',
-                    'negative_style_prompt' => 'burnt, pale doughy crust, flat lighting, cluttered background, cartoon',
-                    'suggested_aspect_ratios' => ['4:5', '1:1'],
-                ],
-            ],
-            // F&B 4: Matcha Latte Art
-            [
-                'external_id' => 'pin-fnb-004',
-                'title' => 'Ceremonial Matcha Latte with Swan Foam Art & Bamboo Whisk',
-                'caption' => 'Zen aesthetic beverage packshot, vibrant emerald green ceremonial matcha latte in a coarse wabi-sabi ceramic cup, intricate latte art, traditional bamboo chasen whisk.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['matcha', 'latte_art', 'zen', 'ceramic', 'tea', 'fnb'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Tea House',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'Makanan & Minuman (F&B)',
-                'visual_analysis' => [
-                    'composition' => 'overhead_flatlay_zen',
-                    'lighting' => 'soft_diffuse_cloudy_window',
-                    'color_palette' => ['#15803D', '#F0FDF4', '#A16207', '#27272A'],
-                    'color_mood' => 'zen_serene_refreshing',
-                    'extracted_style_prompt' => 'High-end cafe photography, rich emerald green ceremonial matcha latte with velvety microfoam swan art in a handcrafted speckled stone cup, raw bamboo whisk and scattered green tea powder on a raw concrete surface, serene minimalist aesthetic, crisp focus.',
-                    'negative_style_prompt' => 'watery, pale green, messy foam bubbles, harsh flash, lowres',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // F&B 5: Gourmet Burger
-            [
-                'external_id' => 'pin-fnb-005',
-                'title' => 'Gourmet Smash Burger with Melting Cheddar & Brioche Bun',
-                'caption' => 'Juicy double beef patty smash burger with dripping golden cheddar cheese, crispy bacon, caramelized onions in a glossy toasted brioche bun, dark slate background.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['burger', 'smash_burger', 'beef', 'cheddar', 'gourmet', 'fnb'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Gourmet Kitchen',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'Makanan & Minuman (F&B)',
-                'visual_analysis' => [
-                    'composition' => 'low_angle_monumental_hero',
-                    'lighting' => 'dramatic_warm_rim_softbox',
-                    'color_palette' => ['#B45309', '#FBBF24', '#1C1917', '#DC2626'],
-                    'color_mood' => 'succulent_bold_craveable',
-                    'extracted_style_prompt' => 'Commercial burger advertising shot, towering double patty smash burger with crispy seared edges, thick dripping melted yellow cheddar cheese, glossy golden toasted brioche bun with sesame seeds, fresh crisp lettuce and red tomato, low angle heroic perspective, dramatic dark studio backdrop, 70mm f/2.8.',
-                    'negative_style_prompt' => 'dry patty, squished bun, sloppy cold look, flat overhead angle, plastic toy',
-                    'suggested_aspect_ratios' => ['4:5', '1:1'],
-                ],
-            ],
-            // Beauty 1: Skincare Serum
-            [
-                'external_id' => 'pin-beauty-001',
-                'title' => 'Botanical Skincare Serum Bottle on Travertine Stone Podium',
-                'caption' => 'Clean aesthetic skincare packshot, amber glass dropper bottle with botanical olive branch shadows, soft neutral beige background, pristine spa atmosphere.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['skincare', 'serum', 'minimalist', 'cosmetics', 'travertine', 'beauty'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Aesthetic Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'beauty',
-                'industry_target' => 'Kecantikan & Skincare',
-                'visual_analysis' => [
-                    'composition' => 'minimalist_podium_centered',
-                    'lighting' => 'gentle_morning_sun_dappled',
-                    'color_palette' => ['#D8CBB5', '#8C7A6B', '#F5EFEB', '#4A3B32'],
-                    'color_mood' => 'organic_clean_luxury',
-                    'extracted_style_prompt' => 'High-end cosmetic photography, luxury skincare bottle standing proudly on textured natural travertine stone slab, delicate soft botanical eucalyptus shadows on cream plaster wall, dewy mist in the air, morning natural sunlight, minimal aesthetic, premium Korean beauty branding.',
-                    'negative_style_prompt' => 'harsh shadows, distorted label, cluttered props, low quality, oversaturated',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // Beauty 2: Luxury Lipstick Swatch
-            [
-                'external_id' => 'pin-beauty-002',
-                'title' => 'Velvet Matte Lipstick with Creamy Texture Swatch & Gold Cap',
-                'caption' => 'Macro beauty packshot of luxury bullet lipstick in gold packaging standing next to a smooth curved velvet ribbon swatch of rich terracotta red cream.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['lipstick', 'cosmetics', 'swatch', 'matte', 'gold', 'beauty'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Makeup Lab',
-                'allow_commercial_use' => true,
-                'category_code' => 'beauty',
-                'industry_target' => 'Kecantikan & Skincare',
-                'visual_analysis' => [
-                    'composition' => 'macro_diagonal_product_swatch',
-                    'lighting' => 'studio_glamour_ringlight',
-                    'color_palette' => ['#991B1B', '#D4AF37', '#FEF2F2', '#18181B'],
-                    'color_mood' => 'glamorous_sophisticated',
-                    'extracted_style_prompt' => 'Macro luxury cosmetics product photography, satin gold lipstick casing open showing deep terracotta red bullet, beside an artistic thick textural smear swatch of velvety matte lipstick pigment on frosted glass, studio beauty lighting with razor-sharp micro details, 100mm f/2.8 lens.',
-                    'negative_style_prompt' => 'blurry texture, smudged fingerprint, cheap plastic, distorted packaging',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Beauty 3: Cleansing Foam Splash
-            [
-                'external_id' => 'pin-beauty-003',
-                'title' => 'Fresh Cleansing Gel with Water Splash Wave & Mint Leaves',
-                'caption' => 'Ultra-fresh skincare splash visual, translucent tube surrounded by crystal clear dynamic water splash and vibrant organic mint leaves against powder blue backdrop.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['cleanser', 'skincare', 'water_splash', 'fresh', 'mint', 'beauty'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Fresh Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'beauty',
-                'industry_target' => 'Kecantikan & Skincare',
-                'visual_analysis' => [
-                    'composition' => 'splash_wave_envelope',
-                    'lighting' => 'bright_clean_studio_strobe',
-                    'color_palette' => ['#0284C7', '#BAE6FD', '#15803D', '#FFFFFF'],
-                    'color_mood' => 'pure_hydrating_invigorating',
-                    'extracted_style_prompt' => 'Commercial skincare advertising, minimalist cosmetic bottle encircled by a dynamic frozen wave of translucent water splash with glistening droplets, floating green botanical leaves, pure soft powder-blue gradient studio background, high speed flash sync 1/4000s.',
-                    'negative_style_prompt' => 'murky water, distorted bottle label, dark moody lighting, oversaturated',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // Fashion 1: Streetwear Apparel
-            [
-                'external_id' => 'pin-fashion-001',
-                'title' => 'Minimalist Streetwear Apparel Mockup on Industrial Concrete',
-                'caption' => 'Heavyweight cotton oversized t-shirt laid flat on raw architectural concrete with subtle shadow cast, neutral tone editorial streetwear branding.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['fashion', 'streetwear', 'apparel', 'minimalist', 'concrete', 'clothing'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Fashion Board',
-                'allow_commercial_use' => true,
-                'category_code' => 'fashion',
-                'industry_target' => 'Fashion & Konveksi',
-                'visual_analysis' => [
-                    'composition' => 'flatlay_architectural_grid',
-                    'lighting' => 'diffused_cloudy_daylight',
-                    'color_palette' => ['#E5E5E5', '#222222', '#7D7D7D', '#B0A89F'],
-                    'color_mood' => 'urban_monochrome',
-                    'extracted_style_prompt' => 'Contemporary urban fashion catalog shoot, premium heavy-cotton apparel piece positioned flat on smooth industrial raw concrete surface, crisp garment texture and stitch details visible, natural diffused soft light from overhead, high fashion editorial layout.',
-                    'negative_style_prompt' => 'wrinkled messy fabric, cartoonish, lowres, blurry stitching, oversaturated',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Fashion 2: Silk Scarf / Hijab
-            [
-                'external_id' => 'pin-fashion-002',
-                'title' => 'Flowing Silk Hijab Fabric with Natural Drapes & Golden Sunlight',
-                'caption' => 'Editorial modest fashion visual, lustrous pastel silk scarf gently draped over a sand dune with soft flowing wave folds catching golden afternoon light.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['hijab', 'silk', 'modest_fashion', 'drapery', 'luxury', 'fashion'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Modest Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'fashion',
-                'industry_target' => 'Fashion & Konveksi',
-                'visual_analysis' => [
-                    'composition' => 'flowing_curvilinear_waves',
-                    'lighting' => 'golden_hour_raking_light',
-                    'color_palette' => ['#E2B8A0', '#C59B82', '#FDF8F5', '#8C5A42'],
-                    'color_mood' => 'graceful_luxurious_warm',
-                    'extracted_style_prompt' => 'High-fashion modest apparel editorial, premium mulberry silk scarf draping in graceful fluid sculptural folds, iridescent sheen catching warm low-angle golden sunset light, fine woven texture in ultra-sharp detail, minimalist sand background, Vogue Arabia aesthetic.',
-                    'negative_style_prompt' => 'stiff polyester look, crumpled messy cloth, dull lighting, low quality',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // Fashion 3: Leather Handbag
-            [
-                'external_id' => 'pin-fashion-003',
-                'title' => 'Artisanal Genuine Leather Bag on Monolithic Sandstone Block',
-                'caption' => 'Luxury handcrafted leather bag packshot, warm caramel tan leather with polished brass hardware resting on architectural sandstone pedestal under harsh architectural shadow.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['leather', 'handbag', 'luxury', 'sandstone', 'craftsmanship', 'fashion'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Leather Atelier',
-                'allow_commercial_use' => true,
-                'category_code' => 'fashion',
-                'industry_target' => 'Fashion & Konveksi',
-                'visual_analysis' => [
-                    'composition' => 'architectural_pedestal_standing',
-                    'lighting' => 'sharp_direct_sunlight_geometric_shadows',
-                    'color_palette' => ['#9A5B32', '#D8B896', '#EFE3D5', '#2C1D11'],
-                    'color_mood' => 'classic_timeless_craft',
-                    'extracted_style_prompt' => 'Luxury leather goods advertising, bespoke full-grain caramel leather handbag with precision edge stitching and gleam of solid brass buckles, sitting atop an architectural carved sandstone block, sharp geometric shadows on warm terracotta stucco wall, 85mm f/4.0 sharp.',
-                    'negative_style_prompt' => 'fake plastic pleather, floppy shape, blurry stitch lines, dirty surface',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Gadget 1: Minimalist Desk Setup
-            [
-                'external_id' => 'pin-gadget-001',
-                'title' => 'Sleek Matte Tech Gadget on Minimalist Wooden Desk Setup',
-                'caption' => 'Clean desk setup featuring smart device accessories on oak desk mat with warm ambient desk lamp glow and succulent plant.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['gadget', 'desk_setup', 'electronics', 'tech', 'minimalist'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Tech Space',
-                'allow_commercial_use' => true,
-                'category_code' => 'gadget',
-                'industry_target' => 'Gadget & Elektronik',
-                'visual_analysis' => [
-                    'composition' => 'wide_isometric_desk_angle',
-                    'lighting' => 'ambient_warm_led_softbox',
-                    'color_palette' => ['#1A1A1A', '#C9A984', '#FFFFFF', '#3B3B3B'],
-                    'color_mood' => 'productive_refined',
-                    'extracted_style_prompt' => 'Modern tech lifestyle product photography, sleek gadget device resting on premium wool felt desk mat and solid oak desktop, subtle warm ambient backlighting, razor-sharp metallic edges, immaculate workspace aesthetics, 35mm f/2.8 lens.',
-                    'negative_style_prompt' => 'messy cables, dust, scratches, blurry focus, distorted proportions',
-                    'suggested_aspect_ratios' => ['16:9', '1:1', '4:5'],
-                ],
-            ],
-            // Gadget 2: Smartwatch
-            [
-                'external_id' => 'pin-gadget-002',
-                'title' => 'Smartwatch on Brushed Steel Stand with OLED Screen Glow',
-                'caption' => 'Precision electronics packshot, premium smartwatch mounted on custom matte black steel stand, vibrant crisp screen graphics, subtle blue rim lighting.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['smartwatch', 'wearables', 'tech', 'screen', 'metal', 'gadget'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Hardware Lab',
-                'allow_commercial_use' => true,
-                'category_code' => 'gadget',
-                'industry_target' => 'Gadget & Elektronik',
-                'visual_analysis' => [
-                    'composition' => 'side_three_quarter_pedestal',
-                    'lighting' => 'soft_studio_key_with_blue_accent',
-                    'color_palette' => ['#111827', '#3B82F6', '#9CA3AF', '#F3F4F6'],
-                    'color_mood' => 'sleek_modern_precise',
-                    'extracted_style_prompt' => 'High-end wearable product commercial packshot, smartwatch with brushed aerospace-grade titanium chassis and fluoroelastomer strap, floating crystal-clear vibrant display, dark gradient studio cyclorama background with subtle neon edge glow, 100mm macro.',
-                    'negative_style_prompt' => 'cracked screen, fingerprint smudges, unaligned bezel, cheap plastic',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Home Decor 1: Scented Candle
-            [
-                'external_id' => 'pin-home-001',
-                'title' => 'Scented Aromatherapy Candle in Handmade Ceramic Tumbler',
-                'caption' => 'Hygge cozy home ambiance, lit soy wax scented candle with gentle golden flame on linen cloth next to dried flowers.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['candle', 'home_decor', 'aromatherapy', 'ceramic', 'hygge'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Lifestyle Decor',
-                'allow_commercial_use' => true,
-                'category_code' => 'home_decor',
-                'industry_target' => 'Dekorasi & Rumah Tangga',
-                'visual_analysis' => [
-                    'composition' => 'cozy_intimate_closeup',
-                    'lighting' => 'warm_candlelight_glow',
-                    'color_palette' => ['#EFE7DD', '#BFA588', '#D97706', '#3D312A'],
-                    'color_mood' => 'warm_serene_cozy',
-                    'extracted_style_prompt' => 'Artisanal soy candle in a speckled stoneware ceramic vessel, warm dancing flame casting soft golden glow on textured beige linen tablecloth, dried pampas grass in soft blur background, hygge lifestyle product shot, cozy peaceful atmosphere.',
-                    'negative_style_prompt' => 'smoke billowing, harsh direct flash, cheap plastic container, blurry foreground',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Retail / Kemasan: Kopi Kemasan Pouch
-            [
-                'external_id' => 'pin-retail-001',
-                'title' => 'Artisan Roasted Coffee Pouch with Matte Finish & Wood Tray',
-                'caption' => 'E-commerce packaging hero shot, craft matte white stand-up pouch of single origin coffee beans standing on a rustic teakwood tray surrounded by roasted beans.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['coffee_pouch', 'packaging', 'stand_pouch', 'coffee_beans', 'retail', 'umkm'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Packshot Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'retail',
-                'industry_target' => 'Ritel & Produk Kemasan',
-                'visual_analysis' => [
-                    'composition' => 'standing_center_hero_packshot',
-                    'lighting' => 'diffused_softbox_45_degree',
-                    'color_palette' => ['#FFFFFF', '#451A03', '#B45309', '#1C1917'],
-                    'color_mood' => 'authentic_premium_craft',
-                    'extracted_style_prompt' => 'Commercial product packaging shot, premium matte white stand-up zipper pouch standing firmly on a solid Indonesian teak board, scattered dark shiny roasted Arabica coffee beans around the base, neutral off-white textured backdrop, sharp brand label visibility, 50mm f/2.8.',
-                    'negative_style_prompt' => 'wrinkled crumpled pouch, crooked label, distorted bag seams, harsh glare',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Jasa / Services: Barbershop Styling Kit
-            [
-                'external_id' => 'pin-service-001',
-                'title' => 'Vintage Gentleman Barbershop Tools on Dark Leather Mat',
-                'caption' => 'Craft service photoshoot, precision chrome hair clippers, vintage straight razor, wooden beard brush, and amber pomade jar arranged on stitched dark leather.',
-                'canonical_url' => 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80',
-                'thumbnail_url' => 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80',
-                'media_type' => 'image',
-                'media_urls' => ['https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&q=80'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['barbershop', 'grooming', 'razor', 'service', 'vintage', 'craftsmanship'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Barber Heritage',
-                'allow_commercial_use' => true,
-                'category_code' => 'service',
-                'industry_target' => 'Jasa & Layanan Profesional',
-                'visual_analysis' => [
-                    'composition' => 'flatlay_curated_artisan_grid',
-                    'lighting' => 'moody_warm_edison_glow',
-                    'color_palette' => ['#18181B', '#78350F', '#D4D4D8', '#B45309'],
-                    'color_mood' => 'heritage_masculine_craft',
-                    'extracted_style_prompt' => 'Artisanal service branding photography, professional chrome barber tools, classic wooden-handle straight razor, and grooming balm jar meticulously arranged on a dark saddle-stitched leather mat, moody atmospheric warm filament lighting, shallow depth of field, 50mm f/1.8.',
-                    'negative_style_prompt' => 'messy hairs, rusty blades, plastic cheap tools, overexposed flash',
-                    'suggested_aspect_ratios' => ['16:9', '1:1', '4:5'],
-                ],
-            ],
-            // Event & Wedding 1: Kotak Cincin Mahar Akrilik
-            [
-                'external_id' => 'pin-event-001',
-                'title' => 'Kotak Cincin Mahar Pernikahan Akrilik Transparan Berhias Bunga Kering',
-                'caption' => 'Fotografi komersial mahar dan seserahan pernikahan modern. Kotak kaca akrilik transparan berisi sepasang cincin emas di atas hamparan preserved dried flowers dan lumut hijau alami, pencahayaan lembut golden hour.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-event-001.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['event', 'wedding', 'mahar', 'cincin', 'seserahan', 'rustic', 'pernikahan', 'organizer'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wedding Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'event',
-                'industry_target' => 'event',
-                'visual_analysis' => [
-                    'composition' => 'macro_center_top_angle',
-                    'lighting' => 'soft_golden_hour_diffused',
-                    'color_palette' => ['#D4AF37', '#F5EBE0', '#588157', '#FFFFFF'],
-                    'color_mood' => 'romantic_timeless_elegant',
-                    'extracted_style_prompt' => 'Commercial wedding jewelry and dowry photography, exquisite transparent hexagonal glass ring box containing gold wedding bands resting on preserved baby breath and moss, soft golden window side-lighting, creamy dreamy bokeh, 90mm macro f/2.8 lens, high-end bridal magazine aesthetics.',
-                    'negative_style_prompt' => 'scratched acrylic, dusty glass, harsh flash, plastic artificial look',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // Event & Wedding 2: Undangan Pernikahan Minimalis Foil Emas
-            [
-                'external_id' => 'pin-event-002',
-                'title' => 'Undangan Pernikahan Minimalis Modern Foil Emas & Lilin Segel Wax Stamp',
-                'caption' => 'Flatlay tata letak undangan pernikahan premium berbahan kertas katun bertekstur lembut, foil emas berkilau, wax seal cap stempel lilin merah marun, dan tangkai eucalyptus segar.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-002.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-002.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-event-002.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['event', 'wedding', 'undangan', 'invitation', 'wax_seal', 'stationery', 'gold_foil'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wedding Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'event',
-                'industry_target' => 'event',
-                'visual_analysis' => [
-                    'composition' => 'editorial_flatlay_stationery_grid',
-                    'lighting' => 'overhead_softbox_diffused',
-                    'color_palette' => ['#FDFBF7', '#B8860B', '#800020', '#2E4057'],
-                    'color_mood' => 'classic_sophisticated',
-                    'extracted_style_prompt' => 'Top-down flatlay wedding stationery mockup, premium heavy textured deckle-edge cotton cardstock invitation with shiny gold foil typography, custom deep burgundy wax seal with dried floral botanicals, linen ribbon, 50mm f/4.0 sharp overhead focus, clean luxury wedding branding.',
-                    'negative_style_prompt' => 'blurry text, skewed angles, harsh shadows, crumpled paper',
-                    'suggested_aspect_ratios' => ['4:5', '1:1'],
-                ],
-            ],
-            // Event & Wedding 3: Buket Bunga Pengantin
-            [
-                'external_id' => 'pin-event-003',
-                'title' => 'Buket Bunga Pengantin Mawar Putih & Baby\'s Breath Segar',
-                'caption' => 'Detail fotografi rangkaian buket bunga tangan pengantin (bridal hand bouquet) mawar putih, hydrangea pastel, dan baby breath yang diikat pita satin sutra putih gading.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-003.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-003.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-event-003.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['event', 'wedding', 'buket', 'bunga', 'bouquet', 'florist', 'bridal'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wedding Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'event',
-                'industry_target' => 'event',
-                'visual_analysis' => [
-                    'composition' => 'portrait_floral_centered',
-                    'lighting' => 'natural_soft_morning_light',
-                    'color_palette' => ['#FFFFFF', '#E8F5E9', '#A3B18A', '#FAF0CA'],
-                    'color_mood' => 'pure_delicate_serene',
-                    'extracted_style_prompt' => 'Bridal hand bouquet close-up, fresh blooming white avalanche roses, ranunculus, and delicate baby breath tightly arranged with trailing ivory silk ribbon, gentle diffused natural morning sunlight, shallow depth of field, 85mm f/1.8 lens.',
-                    'negative_style_prompt' => 'wilted petals, brown edges, artificial plastic flowers, dark grim tone',
-                    'suggested_aspect_ratios' => ['4:5', '9:16', '1:1'],
-                ],
-            ],
-            // Event & Wedding 4: Jamuan Meja Resepsi Intimate Outdoor
-            [
-                'external_id' => 'pin-event-004',
-                'title' => 'Jamuan Meja Pernikahan Intimate Outdoor dengan Lampu Gantung Fairy Light',
-                'caption' => 'Tata letak meja makan pesta pernikahan luar ruangan (intimate garden reception). Meja kayu panjang berhias piring keramik, gelas kristal, lilin kaca, dan lampu gantung warm white yang hangat.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-004.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-004.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-event-004.jpg'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['event', 'wedding', 'meja_resepsi', 'table_setting', 'garden_party', 'fairy_lights', 'catering'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wedding Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'event',
-                'industry_target' => 'event',
-                'visual_analysis' => [
-                    'composition' => 'leading_lines_table_depth',
-                    'lighting' => 'twilight_warm_fairy_lights',
-                    'color_palette' => ['#FFD166', '#073B4C', '#F4F1DE', '#E07A5F'],
-                    'color_mood' => 'magical_intimate_celebration',
-                    'extracted_style_prompt' => 'Romantic garden wedding banquet table setup at twilight, rustic long teak wood table with flowing linen runner, gold-rimmed wine glasses, glowing glass taper candles, overhead suspended warm Edison bulbs and fairy lights creating golden canopy bokeh, 35mm f/1.8 lens.',
-                    'negative_style_prompt' => 'empty dirty plates, messy cables, pitch black darkness, blurry noisy night photo',
-                    'suggested_aspect_ratios' => ['16:9', '4:5'],
-                ],
-            ],
-            // Event & Wedding 5: Backdrop Pelaminan Rustic
-            [
-                'external_id' => 'pin-event-005',
-                'title' => 'Backdrop Pelaminan Rustic Kayu Alam dengan Bunga Segar & Kain Sifon',
-                'caption' => 'Dekorasi panggung pelaminan minimalis bertema rustic modern. Rangka lengkung kayu alam dipermanis untaian kain sifon putih mengalir dan rangkaian bunga pampas grass eksotis.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-005.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-event-005.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-event-005.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['event', 'wedding', 'backdrop', 'pelaminan', 'dekorasi', 'rustic', 'pampas'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wedding Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'event',
-                'industry_target' => 'event',
-                'visual_analysis' => [
-                    'composition' => 'symmetrical_arch_stage',
-                    'lighting' => 'warm_fill_ambient_diffused',
-                    'color_palette' => ['#DDB892', '#EDE0D4', '#7F5539', '#FFFFFF'],
-                    'color_mood' => 'earthy_boho_warmth',
-                    'extracted_style_prompt' => 'Modern bohemian rustic wedding arch backdrop, geometric wooden arch draped in soft translucent white chiffon fabric, adorned with fluffy dried pampas grass and blush pink roses, warm cinematic ambient lighting, professional wide-angle 24mm f/2.8 lens.',
-                    'negative_style_prompt' => 'cluttered background, crooked arch, bad plastic flowers, dull flat flash',
-                    'suggested_aspect_ratios' => ['4:5', '16:9', '1:1'],
-                ],
-            ],
-            // Fashion 4: Batik Modern Pria Studio
-            [
-                'external_id' => 'pin-fashion-004',
-                'title' => 'Kemeja Batik Tulis Pria Modern Photoshoot Studio Editorial',
-                'caption' => 'Fotografi katalog fashion pria Indonesia. Kemeja batik tulis katun halus motif kontemporer potong slim fit pada model profesional dengan latar belakang studio minimalis abu-abu netral.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-fashion-004.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-fashion-004.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-fashion-004.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['fashion', 'batik', 'kemeja', 'pria', 'konveksi', 'apparel', 'indonesia'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Fashion Lookbook',
-                'allow_commercial_use' => true,
-                'category_code' => 'fashion',
-                'industry_target' => 'fashion',
-                'visual_analysis' => [
-                    'composition' => 'three_quarter_fashion_pose',
-                    'lighting' => 'editorial_octabox_rim_light',
-                    'color_palette' => ['#1E293B', '#C2410C', '#E2E8F0', '#0F172A'],
-                    'color_mood' => 'regal_contemporary_masculine',
-                    'extracted_style_prompt' => 'Editorial men fashion photography, handsome male model wearing tailored modern Indonesian batik silk shirt, intricate geometric motif, confident pose, seamless neutral slate gray studio backdrop, high-fashion octabox soft key light with subtle rim lighting, Hasselblad 100mm f/2.8.',
-                    'negative_style_prompt' => 'wrinkled shirt, stiff mannequin look, bad anatomy, overblown highlights',
-                    'suggested_aspect_ratios' => ['4:5', '9:16', '1:1'],
-                ],
-            ],
-            // Fashion 5: Tote Bag Kanvas Estetik
-            [
-                'external_id' => 'pin-fashion-005',
-                'title' => 'Tote Bag Kanvas Estetik Minimalis Flatlay Gaya Urban Pinterest',
-                'caption' => 'Tata letak produk tas jinjing kanvas katun organik berhias tipografi minimalis, kacamata hitam vintage, buku catatan jilid benang, dan kopi kaleng cold brew.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-fashion-005.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-fashion-005.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-fashion-005.jpg'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['fashion', 'totebag', 'tas', 'kanvas', 'aksesoris', 'streetwear', 'lifestyle'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Fashion Lookbook',
-                'allow_commercial_use' => true,
-                'category_code' => 'fashion',
-                'industry_target' => 'fashion',
-                'visual_analysis' => [
-                    'composition' => 'flatlay_organized_aesthetic',
-                    'lighting' => 'diffused_window_daylight',
-                    'color_palette' => ['#F5F5F0', '#1C1917', '#78716C', '#D6D3D1'],
-                    'color_mood' => 'clean_effortless_urban',
-                    'extracted_style_prompt' => 'Minimalist urban lifestyle flatlay, natural heavy cotton canvas tote bag with crisp clean typography print, paired with tortoise sunglasses and brown kraft sketchbook, smooth light micro-cement surface, soft angled morning daylight, sharp overhead 35mm f/4.0.',
-                    'negative_style_prompt' => 'dirty stains, deformed straps, cluttered composition, harsh digital glare',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // F&B 6: Ayam Geprek Sambal Bawang
-            [
-                'external_id' => 'pin-fnb-006',
-                'title' => 'Ayam Geprek Crispy Sambal Bawang Korek Pedas Menggugah Selera',
-                'caption' => 'Fotografi makanan komersial close-up makro. Potongan ayam goreng renyah keemasan berlumur ulekan sambal bawang merah cabai rawit pedas dan daun kemangi segar di atas cobek batu.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-fnb-006.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-fnb-006.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-fnb-006.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['fnb', 'kuliner', 'ayam_geprek', 'sambal', 'makanan', 'pedas', 'resto'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Food Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'fnb',
-                'visual_analysis' => [
-                    'composition' => 'macro_appetite_angle_45',
-                    'lighting' => 'warm_side_softbox_with_glimmer',
-                    'color_palette' => ['#DC2626', '#EA580C', '#FBBF24', '#1C1917'],
-                    'color_mood' => 'fiery_savory_appetizing',
-                    'extracted_style_prompt' => 'Commercial Indonesian food photography, extra crispy golden fried chicken crushed with vibrant red and green bird-eye chili onion sambal, glossy oil sheen, fresh basil garnish, served on traditional black volcanic stone mortar, warm appetizing directional sidelight, 90mm macro f/2.8 focus.',
-                    'negative_style_prompt' => 'burnt black meat, greasy muddy mess, unappetizing dull lighting, soggy crust',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // F&B 7: Dessert Box Cokelat Ganache
-            [
-                'external_id' => 'pin-fnb-007',
-                'title' => 'Dessert Box Cake Cokelat Lumer dengan Topping Ganache Mengkilap',
-                'caption' => 'Kue dessert box layer bertingkat dengan lelehan cokelat belgia lumer, serpihan biskuit karamel, dan taburan cocoa powder di atas piring marmer estetik.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-fnb-007.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-fnb-007.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-fnb-007.jpg'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['fnb', 'dessert', 'cake', 'cokelat', 'bakery', 'manis', 'kuliner'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Food Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'fnb',
-                'industry_target' => 'fnb',
-                'visual_analysis' => [
-                    'composition' => 'centered_macro_slice_packshot',
-                    'lighting' => 'high_contrast_studio_rim_light',
-                    'color_palette' => ['#3E2723', '#4E342E', '#D7CCC8', '#FFF8E1'],
-                    'color_mood' => 'indulgent_decadent_luxury',
-                    'extracted_style_prompt' => 'Artisan chocolate dessert box packshot, decadent layers of moist dark chocolate sponge and silky mousse topped with glossy mirror-finish chocolate ganache, gentle gold flake dusting, white marble countertop backdrop, 85mm macro f/2.0 lens with luscious rich shadows.',
-                    'negative_style_prompt' => 'melted messy box, fingerprints, artificial plastic frosting, stale crust',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Beauty 4: Sunscreen Tube Gel
-            [
-                'external_id' => 'pin-beauty-004',
-                'title' => 'Tube Gel Sunscreen SPF 50 dengan Tetesan Air Segar & Refleksi Lembut',
-                'caption' => 'Packshot kosmetik skincare modern. Tube sunscreen tabir surya warna pastel mint bertengger di atas genangan air jernih beriak lembut dengan percikan air segar di bawah sinar matahari tropis.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-beauty-004.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-beauty-004.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-beauty-004.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['beauty', 'skincare', 'sunscreen', 'kosmetik', 'kecantikan', 'serum'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Beauty Lab',
-                'allow_commercial_use' => true,
-                'category_code' => 'beauty',
-                'industry_target' => 'beauty',
-                'visual_analysis' => [
-                    'composition' => 'minimalist_packshot_water_reflection',
-                    'lighting' => 'bright_crisp_sunlit_caustics',
-                    'color_palette' => ['#E0F2FE', '#38BDF8', '#FFFFFF', '#0284C7'],
-                    'color_mood' => 'hydrating_refreshing_pure',
-                    'extracted_style_prompt' => 'Commercial cosmetics skincare photoshoot, sleek matte mint blue sunscreen tube standing submerged slightly in crystal-clear water with organic ripples and sunlight water caustic reflections, scattered micro water droplets clinging to the packaging, 90mm macro f/2.8.',
-                    'negative_style_prompt' => 'cloudy water, dirty stains, distorted branding label, plastic blur',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '9:16'],
-                ],
-            ],
-            // Retail 2: Hampers Bambu Tradisional
-            [
-                'external_id' => 'pin-retail-002',
-                'title' => 'Parcel Hampers Anyaman Bambu Tradisional Eksklusif UMKM',
-                'caption' => 'Katalog produk bingkisan hampers hari raya dan kado UMKM. Keranjang anyaman besek bambu natural dengan pita renda goni dan toples kue kering keemasan berbaris rapi.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-retail-002.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-retail-002.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-retail-002.jpg'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['retail', 'hampers', 'kado', 'bambu', 'oleholeh', 'gift_box', 'lebaran'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Retail Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'retail',
-                'industry_target' => 'retail',
-                'visual_analysis' => [
-                    'composition' => 'gift_basket_three_quarter',
-                    'lighting' => 'warm_diffused_festive_light',
-                    'color_palette' => ['#D4A373', '#FAEDCD', '#CCD5AE', '#606C38'],
-                    'color_mood' => 'warm_grateful_festive',
-                    'extracted_style_prompt' => 'Indonesian artisanal gift hamper packshot, woven natural bamboo basket overflowing with premium glass jars of golden nastar and cookies, tied with rustic burlap ribbon, festive festive greeting card, warm ambient studio lighting, 50mm f/2.8 lens.',
-                    'negative_style_prompt' => 'broken cookies, crumpled ribbon, messy arrangement, harsh dark background',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Furniture 2: Meja Kayu Jati Solid
-            [
-                'external_id' => 'pin-furniture-002',
-                'title' => 'Meja Makan Kayu Jati Solid Desain Minimalis Skandinavia',
-                'caption' => 'Fotografi katalog mebel dan interior rumah. Meja makan kayu jati solid dengan serat urat kayu alami berpadu kursi makan lengkung minimalis di ruang santai bermandikan cahaya jendela.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-furniture-002.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-furniture-002.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-furniture-002.jpg'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['furniture', 'kayu_jati', 'meja', 'interior', 'skandinavia', 'mebel', 'craft'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Furniture Catalog',
-                'allow_commercial_use' => true,
-                'category_code' => 'furniture',
-                'industry_target' => 'furniture',
-                'visual_analysis' => [
-                    'composition' => 'interior_wide_architectural',
-                    'lighting' => 'large_window_soft_daylight',
-                    'color_palette' => ['#8B5A2B', '#D2B48C', '#F5F5DC', '#2F4F4F'],
-                    'color_mood' => 'organic_warmth_craftsmanship',
-                    'extracted_style_prompt' => 'Architectural interior furniture photography, solid teak dining table showing beautiful authentic organic wood grains, paired with sleek Danish modern chairs, natural light flooding from large Scandinavian floor-to-ceiling windows, 35mm f/2.8 architectural lens.',
-                    'negative_style_prompt' => 'cheap laminate plastic, warped perspective, cluttered floor, dark shadows',
-                    'suggested_aspect_ratios' => ['16:9', '4:5'],
-                ],
-            ],
-            // Automotive 1: Car Detailing Studio
-            [
-                'external_id' => 'pin-automotive-001',
-                'title' => 'Studio Car Detailing & Paint Protection Kilau Ekstrem Cermin',
-                'caption' => 'Fotografi komersial bengkel perawatan otomotif. Mobil sport warna hitam metalik dengan pantulan cahaya neon LED honeycomb garis tajam di atas kap mesin hasil coating keramik.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-automotive-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-automotive-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-automotive-001.jpg'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['automotive', 'bengkel', 'otomotif', 'detailing', 'coating', 'mobil', 'motor'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Auto Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'automotive',
-                'industry_target' => 'automotive',
-                'visual_analysis' => [
-                    'composition' => 'car_hood_specular_reflection',
-                    'lighting' => 'overhead_hexagon_led_strip_arrays',
-                    'color_palette' => ['#0F172A', '#38BDF8', '#F8FAFC', '#1E293B'],
-                    'color_mood' => 'high_tech_precision_sleek',
-                    'extracted_style_prompt' => 'Commercial automotive detailing studio photoshoot, glossy mirror-finish deep black metallic car hood reflecting clean geometric white LED hexagonal ceiling lights, flawless ceramic nano coating, ultra-sharp reflections, 50mm f/2.0 commercial lens.',
-                    'negative_style_prompt' => 'swirl marks, water spots, dust, scratches, washed out reflections',
-                    'suggested_aspect_ratios' => ['16:9', '4:5'],
-                ],
-            ],
-            // Printing 1: Packaging Box Kraft & Custom Sticker
-            [
-                'external_id' => 'pin-printing-001',
-                'title' => 'Packaging Box Kardus Kraft & Stiker Vinyl Hologram Custom Brand',
-                'caption' => 'Mockup kemasan kotak kardus pengiriman e-commerce kraft cokelat alami dengan segel stiker vinil berlogo brand UMKM modern.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-printing-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-printing-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-printing-001.jpg'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['printing', 'kemasan', 'packaging', 'stiker', 'box', 'percetakan', 'kraft'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Pack Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'printing',
-                'industry_target' => 'printing',
-                'visual_analysis' => [
-                    'composition' => 'isometric_box_packshot',
-                    'lighting' => 'diffused_neutral_light',
-                    'color_palette' => ['#B45309', '#FDE68A', '#1E293B', '#F3F4F6'],
-                    'color_mood' => 'eco_conscious_clean',
-                    'extracted_style_prompt' => 'Eco-friendly kraft cardboard shipping mailer box mockup, crisp vinyl brand label sticker applied neatly on top surface, standing on smooth terrazzo stone surface, clean bright commercial studio lighting, 50mm f/3.2 lens.',
-                    'negative_style_prompt' => 'crushed corners, dented cardboard, crooked sticker, messy shadows',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Pharmacy 1: Botol Kaca Amber Serum Herbal
-            [
-                'external_id' => 'pin-pharmacy-001',
-                'title' => 'Botol Kaca Amber Serum Herbal & Rempah Obat Tradisional Alami',
-                'caption' => 'Fotografi produk jamu dan farmasi herbal UMKM. Botol kaca pipet cokelat amber di antara potongan kayu manis, cengkeh, dan bunga lawang segar.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-pharmacy-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-pharmacy-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-pharmacy-001.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['pharmacy', 'herbal', 'apotek', 'jamu', 'rempah', 'obat', 'madu'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Herbalist',
-                'allow_commercial_use' => true,
-                'category_code' => 'pharmacy',
-                'industry_target' => 'pharmacy',
-                'visual_analysis' => [
-                    'composition' => 'apothecary_still_life_macro',
-                    'lighting' => 'warm_sunlit_amber_glow',
-                    'color_palette' => ['#78350F', '#B45309', '#FEF3C7', '#14532D'],
-                    'color_mood' => 'healing_authentic_organic',
-                    'extracted_style_prompt' => 'Authentic herbal apothecary product shot, dark amber glass dropper bottle with minimalist label surrounded by fresh raw ginger, star anise, and cinnamon sticks on a stone slab, warm sunlight glowing through the amber liquid, 85mm macro f/2.8.',
-                    'negative_style_prompt' => 'dusty bottle, smudged glass, rotten spices, dark murky tone',
-                    'suggested_aspect_ratios' => ['4:5', '1:1'],
-                ],
-            ],
-            // Contractor 1: Kitchen Set Modern Japandi
-            [
-                'external_id' => 'pin-contractor-001',
-                'title' => 'Kitchen Set Interior Rumah Modern Japandi Kayu Hangat & Marmer',
-                'caption' => 'Katalog desain interior kontraktor dan renovasi rumah. Dapur bergaya Japandi minimalis dengan kabinet kayu ek hangat, meja marmer putih, dan pencahayaan tersembunyi LED under-cabinet.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-contractor-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-contractor-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-contractor-001.jpg'],
-                'aspect_ratio' => '16:9',
-                'tags' => ['contractor', 'kontraktor', 'kitchen_set', 'interior', 'renovasi', 'bangunan', 'japandi'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Architecture Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'contractor',
-                'industry_target' => 'contractor',
-                'visual_analysis' => [
-                    'composition' => 'architectural_one_point_perspective',
-                    'lighting' => 'balanced_warm_recessed_led_and_daylight',
-                    'color_palette' => ['#E5E5E5', '#A3795A', '#FFFFFF', '#404040'],
-                    'color_mood' => 'zen_clean_modern_living',
-                    'extracted_style_prompt' => 'High-end architectural kitchen interior photography, minimalist Japandi style kitchen with seamless oak wood cabinetry, white polished marble countertops, recessed warm LED under-shelf lighting, clean clutter-free countertop with ceramic vase, 24mm tilt-shift f/8.0 lens.',
-                    'negative_style_prompt' => 'messy dishes, dirty stove, distorted wide-angle fisheye, noisy shadows',
-                    'suggested_aspect_ratios' => ['16:9', '4:5'],
-                ],
-            ],
-            // Agriculture 1: Selada Hidroponik Segar
-            [
-                'external_id' => 'pin-agriculture-001',
-                'title' => 'Selada Hijau Hidroponik Segar dengan Butiran Embun Pagi Kebun',
-                'caption' => 'Fotografi produk pertanian modern agro dan sayuran hidroponik. Selada daun hijau ranum dengan butiran embun air berkilau di rumah kaca modern.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-agriculture-001.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-agriculture-001.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-agriculture-001.jpg'],
-                'aspect_ratio' => '1:1',
-                'tags' => ['agriculture', 'pertanian', 'hidroponik', 'sayur', 'organik', 'kebun', 'agro'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Agro Nature',
-                'allow_commercial_use' => true,
-                'category_code' => 'agriculture',
-                'industry_target' => 'agriculture',
-                'visual_analysis' => [
-                    'composition' => 'vibrant_vegetable_macro',
-                    'lighting' => 'crisp_morning_diffused_sunlight',
-                    'color_palette' => ['#22C55E', '#16A34A', '#86EFAC', '#FFFFFF'],
-                    'color_mood' => 'fresh_crisp_nutritious',
-                    'extracted_style_prompt' => 'Commercial agricultural photography, head of vibrant fresh butterhead green lettuce with sparkling morning water dew droplets on crisp wavy leaves, bright airy greenhouse natural backlighting, 90mm macro f/2.8 lens.',
-                    'negative_style_prompt' => 'wilted yellow leaves, mud stains, insect holes, dull artificial light',
-                    'suggested_aspect_ratios' => ['1:1', '4:5'],
-                ],
-            ],
-            // Service 2: Spa Aromaterapi
-            [
-                'external_id' => 'pin-service-002',
-                'title' => 'Set Perawatan Spa Aromaterapi Lilin Hangat & Batu Basalt Alami',
-                'caption' => 'Fotografi branding jasa salon & relaksasi spa. Lilin kedelai aromaterapi menyala hangat, batu pijat basalt hitam halus, dan bunga kamboja putih di atas nampan kayu.',
-                'canonical_url' => '/storage/ai-studio/inspirations/pinterest/pin-service-002.jpg',
-                'thumbnail_url' => '/storage/ai-studio/inspirations/pinterest/pin-service-002.jpg',
-                'media_type' => 'image',
-                'media_urls' => ['/storage/ai-studio/inspirations/pinterest/pin-service-002.jpg'],
-                'aspect_ratio' => '4:5',
-                'tags' => ['service', 'jasa', 'spa', 'salon', 'lilin', 'relaksasi', 'wellness'],
-                'license' => 'Royalty-Free Commercial',
-                'photographer_name' => 'Pinterest Wellness Studio',
-                'allow_commercial_use' => true,
-                'category_code' => 'service',
-                'industry_target' => 'service',
-                'visual_analysis' => [
-                    'composition' => 'zen_spa_still_life',
-                    'lighting' => 'candlelit_warm_soft_glow',
-                    'color_palette' => ['#1F2937', '#FBBF24', '#F3F4F6', '#D97706'],
-                    'color_mood' => 'tranquil_rejuvenating_calm',
-                    'extracted_style_prompt' => 'Luxury wellness and spa service photography, smooth dark basalt massage stones stacked beside flickering warm scented candle in glass votive, fresh white frangipani plumeria flower, warm tranquil ambient lighting, 85mm f/2.0 lens.',
-                    'negative_style_prompt' => 'melted wax mess, dirty stones, noisy dark background, smoke haze',
-                    'suggested_aspect_ratios' => ['4:5', '1:1', '16:9'],
-                ],
-            ],
-
-            // ── SaaS Promotion Pinterest Curated Inspiration (12 Items) ──
-            ...$this->getSaasPromotionTemplates(),
+            'license' => 'Pinterest Standard Copyright',
+            'license_url' => 'https://policy.pinterest.com/terms-of-service',
+            'allow_commercial_use' => false, // Hanya acuan ide/komposisi
+            'allow_redistribution' => false,
+            'require_attribution' => true,
+            'disclaimer' => 'Pin Pinterest adalah hak cipta pemilik asli dan hanya boleh digunakan sebagai inspirasi referensi visual, bukan untuk didistribusikan ulang atau dipublikasikan langsung.',
         ];
     }
 
-    /**
-     * Dapatkan koleksi template inspirasi SaaS Promotion Pinterest.
-     *
-     * @return array<int, array<string, mixed>>
-     */
-    protected function getSaasPromotionTemplates(): array
+    public function recordDownload(string $assetId): bool
     {
-        return (new \Database\Seeders\PinterestSaasPromotionInspirationSeeder)->getSaasPromotionItems();
+        return true;
+    }
+
+    public function validateUsagePolicy(): array
+    {
+        return [
+            'allowed' => false,
+            'reason' => 'Gambar Pinterest hanya diizinkan sebagai tautan ide dan referensi visual, dilarang diunduh sebagai aset komersial mentah.',
+        ];
+    }
+
+    private function resolveAccessToken(): ?string
+    {
+        if (!empty($this->accessToken)) {
+            return $this->accessToken;
+        }
+
+        try {
+            $source = InspirationSource::where('code', 'pinterest')->first();
+            $cred = $source?->credentials()->where('status', 'active')->first();
+            if ($cred && !empty($cred->credentials_encrypted)) {
+                $raw = Crypt::decryptString($cred->credentials_encrypted);
+                $decoded = json_decode($raw, true);
+                if (is_array($decoded) && !empty($decoded['access_token'])) {
+                    return (string) $decoded['access_token'];
+                }
+                if (!empty($raw) && !str_starts_with($raw, '{')) {
+                    return $raw;
+                }
+            }
+        } catch (Throwable) {
+            // Fallback
+        }
+
+        return config('services.pinterest.access_token') ?: env('PINTEREST_ACCESS_TOKEN');
+    }
+
+    private function calculateAspectRatio(int $w, int $h): string
+    {
+        if ($w <= 0 || $h <= 0) return '1:1';
+        $ratio = $w / $h;
+
+        if ($ratio > 1.4) return '16:9';
+        if ($ratio > 1.1) return '4:3';
+        if ($ratio >= 0.9 && $ratio <= 1.1) return '1:1';
+        if ($ratio >= 0.7) return '4:5';
+        return '9:16';
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminAccountRecoveryController;
 use App\Http\Controllers\Admin\AdminAiStudioPricingController;
 use App\Http\Controllers\Admin\AdminAiStudioSourceController;
 use App\Http\Controllers\Admin\AdminAiStudioVisualController;
+use App\Http\Controllers\Admin\AdminInspirationManagementController;
 use App\Http\Controllers\Admin\AdminAiTokenController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBillingPackageController;
@@ -116,6 +117,23 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/visual/{asset}/send-to-social-media', [AdminAiStudioVisualController::class, 'sendToSocialMedia'])->name('visual.send-to-social-media');
             Route::post('/visual/{asset}/favorite', [AdminAiStudioVisualController::class, 'toggleFavorite'])->name('visual.favorite');
             Route::delete('/visual/{asset}', [AdminAiStudioVisualController::class, 'destroy'])->name('visual.destroy');
+
+            // AI Inspiration Library Catalog & Moderation (Global Library, Moderation, Collections, Categories, Providers)
+            Route::prefix('inspiration')->name('inspiration.')->group(function (): void {
+                Route::get('/', [AdminInspirationManagementController::class, 'index'])->name('index');
+                Route::post('/{asset}/moderate', [AdminInspirationManagementController::class, 'moderateAsset'])->name('moderate');
+                Route::get('/providers', [AdminInspirationManagementController::class, 'providers'])->name('providers');
+                Route::post('/providers/{provider}/credentials', [AdminInspirationManagementController::class, 'saveProviderCredentials'])->name('providers.credentials');
+                Route::post('/providers/{provider}/test', [AdminInspirationManagementController::class, 'testProviderConnection'])->name('providers.test');
+                Route::get('/categories', [AdminInspirationManagementController::class, 'categories'])->name('categories.index');
+                Route::post('/categories', [AdminInspirationManagementController::class, 'storeCategory'])->name('categories.store');
+                Route::put('/categories/{category}', [AdminInspirationManagementController::class, 'updateCategory'])->name('categories.update');
+                Route::delete('/categories/{category}', [AdminInspirationManagementController::class, 'destroyCategory'])->name('categories.destroy');
+                Route::get('/collections', [AdminInspirationManagementController::class, 'collections'])->name('collections.index');
+                Route::post('/collections', [AdminInspirationManagementController::class, 'storeCollection'])->name('collections.store');
+                Route::put('/collections/{collection}', [AdminInspirationManagementController::class, 'updateCollection'])->name('collections.update');
+                Route::delete('/collections/{collection}', [AdminInspirationManagementController::class, 'destroyCollection'])->name('collections.destroy');
+            });
 
             // Sumber Inspirasi & Lisensi
             Route::get('/sources', [AdminAiStudioSourceController::class, 'index'])->name('sources.index');

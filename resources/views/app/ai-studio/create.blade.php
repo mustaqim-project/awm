@@ -408,6 +408,7 @@
                     </div>
 
                     <input type="hidden" name="inspiration_item_id" :value="selectedInspirationId">
+                    <input type="hidden" name="preload_reference_url" :value="customReferencePreview">
 
                     <!-- TAB A: Galeri Template COOCA -->
                     <div x-show="referenceTab === 'gallery'" class="space-y-3">
@@ -513,14 +514,20 @@
 
 </div>
 
+@php
+    $preloadRef = session('ai_studio_reference_preload');
+@endphp
+
 <script>
 function aiStudioCreateProject() {
+    const preload = @json($preloadRef);
+
     return {
-        projectName: @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ($selectedProduct ? 'Fotografi ' . $selectedProduct->name : '')),
+        projectName: preload?.title ? ('Replikasi - ' + preload.title) : @json($selectedInspiration ? 'Replikasi - ' . $selectedInspiration->title : ($selectedProduct ? 'Fotografi ' . $selectedProduct->name : '')),
         targetChannel: @json(($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '9:16' ? 'tiktok' : ((($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '16:9') ? 'banner' : ((($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '') === '4:5') ? 'facebook' : 'instagram'))),
-        aspectRatio: @json($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '1:1'),
+        aspectRatio: preload?.aspect_ratio || @json($selectedInspiration?->visualAnalysis?->suggested_aspect_ratios[0] ?? '1:1'),
         stylePreset: 'clean_commercial',
-        customNotes: @json($selectedInspiration?->visualAnalysis?->extracted_style_prompt ?? ''),
+        customNotes: preload?.prompt_hint || @json($selectedInspiration?->visualAnalysis?->extracted_style_prompt ?? ''),
         selectedProductId: @json($selectedProduct?->id ?? ''),
         productRole: 'hero_product',
         selectedInspirationId: @json($selectedInspiration?->id ?? ''),
@@ -536,8 +543,8 @@ function aiStudioCreateProject() {
         customProductPreview: null,
 
         // Referensi Visual & Upload State
-        referenceTab: 'gallery',
-        customReferencePreview: null,
+        referenceTab: preload?.image_url ? 'upload' : 'gallery',
+        customReferencePreview: preload?.image_url || null,
 
         // Prompt Preview Modal State
         promptModalOpen: false,

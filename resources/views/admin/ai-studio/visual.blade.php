@@ -62,6 +62,11 @@
                 <i data-lucide="coins" class="w-3.5 h-3.5"></i>
                 <span>Model Registry &amp; Tarif</span>
             </a>
+            <a href="{{ route('admin.ai-studio.inspiration.index') }}"
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-xs font-semibold text-black/70 dark:text-white/70 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                <span>Katalog &amp; Moderasi</span>
+            </a>
         </div>
     </div>
 
@@ -246,12 +251,19 @@
                                     @endforeach
                                 </div>
 
-                                <!-- Tombol Navigasi ke Galeri Lengkap di Bawah -->
-                                <button type="button" @click="scrollOrOpenGallery()"
-                                    class="w-full py-2 px-3 rounded-[10px] border border-dashed border-[#007AFF]/40 hover:border-[#007AFF] bg-[#007AFF]/5 hover:bg-[#007AFF]/10 text-[#007AFF] text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer">
-                                    <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-                                    <span>Lihat &amp; Cari di 460+ Koleksi Gambar Lengkap &darr;</span>
-                                </button>
+                                <!-- Tombol Navigasi ke Modal Pemilih Cepat & Hub Lengkap -->
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button type="button" @click="openInspirationPickerModal()"
+                                        class="py-2 px-3 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                                        <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                                        <span>Buka Modal Pemilih</span>
+                                    </button>
+                                    <a href="{{ route('admin.ai-studio.inspiration.index') }}"
+                                        class="py-2 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black/80 dark:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+                                        <i data-lucide="compass" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                                        <span>Inspiration Hub &rarr;</span>
+                                    </a>
+                                </div>
                             </div>
                         </template>
 
@@ -1251,6 +1263,26 @@ function adminAiStudioVisual() {
         isPostingSocial: false,
 
         init() {
+            // Cek parameter referensi dari URL (misal diarahkan dari Inspiration Library)
+            const urlParams = new URLSearchParams(window.location.search);
+            const refUrl = urlParams.get('ref_url') || urlParams.get('image_url');
+            const refTitle = urlParams.get('ref_title') || urlParams.get('title');
+            const refPrompt = urlParams.get('style_prompt') || urlParams.get('prompt');
+            const refSource = urlParams.get('source') || 'Inspiration';
+
+            if (refUrl) {
+                this.selectedInspiration = {
+                    title: refTitle || 'Gambar Referensi Terpilih',
+                    display_image_url: refUrl,
+                    source_name: refSource,
+                    source_code: refSource,
+                    prompt_hint: refPrompt || ''
+                };
+                if (refPrompt && (!this.customPrompt || !this.customPrompt.trim())) {
+                    this.customPrompt = refPrompt;
+                }
+            }
+
             this.$nextTick(() => {
                 if (window.lucide) window.lucide.createIcons();
             });

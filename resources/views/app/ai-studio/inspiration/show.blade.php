@@ -46,12 +46,29 @@
                 </div>
             </div>
 
-            <!-- Primary Action Button -->
-            <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
-                class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-sm font-bold shadow-md shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
-                <i data-lucide="wand-2" class="w-4 h-4"></i>
-                <span>{{ __('ai.gunakan_gaya_visual_ini_untuk_produk') }}</span>
-            </a>
+            <!-- Primary Action Buttons -->
+            <div class="space-y-2">
+                <form method="POST" action="{{ route('ai-studio.inspiration.use-as-reference') }}">
+                    @csrf
+                    <input type="hidden" name="item_id" value="{{ $item->id }}">
+                    <input type="hidden" name="image_url" value="{{ $item->display_image_url }}">
+                    <input type="hidden" name="title" value="{{ $item->title }}">
+                    <input type="hidden" name="source" value="{{ $item->source?->code ?? 'cooca' }}">
+                    <input type="hidden" name="style_prompt" value="{{ $item->visualAnalysis?->extracted_style_prompt ?: $item->caption ?: '' }}">
+                    <input type="hidden" name="negative_prompt" value="{{ $item->visualAnalysis?->negative_style_prompt ?: '' }}">
+                    <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-sm font-bold shadow-md shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
+                        <i data-lucide="wand-2" class="w-4 h-4"></i>
+                        <span>Gunakan Sebagai Referensi di AI Studio</span>
+                    </button>
+                </form>
+
+                <a href="{{ route('ai-studio.create', ['inspiration_id' => $item->id]) }}"
+                    class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white text-xs font-semibold transition-all">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                    <span>Buka Pembuat Proyek AI Studio</span>
+                </a>
+            </div>
         </div>
 
         <!-- Column Right: Information, Specs & Attribution (7 Cols) -->

@@ -291,6 +291,7 @@ class ProcessImageGenerationJob implements ShouldQueue
     protected function resolveProviderAdapter(string $provider): ImageGenerationProviderInterface
     {
         return match (strtolower($provider)) {
+            'grok', 'xai' => app(\App\Domain\Ai\Studio\Adapters\GrokImageAdapter::class),
             default => app(OpenAiImageAdapter::class),
         };
     }

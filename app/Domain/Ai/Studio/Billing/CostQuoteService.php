@@ -70,6 +70,18 @@ class CostQuoteService
             ],
             'upscale_cost' => 5,
         ],
+        'grok-2-image' => [
+            'provider' => 'grok',
+            'base_cost' => 15,
+            'aspect_ratio_multipliers' => [
+                '1:1' => 1.0,
+                '4:5' => 1.0,
+                '9:16' => 1.25,
+                '16:9' => 1.25,
+                '4:3' => 1.0,
+            ],
+            'upscale_cost' => 0,
+        ],
     ];
 
     public function __construct(
