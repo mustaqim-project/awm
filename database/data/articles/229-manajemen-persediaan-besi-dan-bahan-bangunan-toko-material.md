@@ -27,7 +27,7 @@ Pertama, Bobot Fisik Ekstrem dan Jalur Manuver: Memerlukan penataan tata letak (
 Kedua, Sensitivitas Tinggi Terhadap Cuaca: Besi beton akan mengalami korosi dini jika terpapar genangan air, semen bubuk akan mengeras menjadi batu jika diletakkan langsung di atas lantai lembap, dan keramik lantai rentan retak jika disusun tanpa memperhatikan batas tumpukan beban.
 Ketiga, Siklus Pembayaran Proyek yang Panjang: Pembelian material konstruksi oleh mandor dan kontraktor pemborong kerap dilakukan menggunakan sistem kredit tempo, yang berpotensi memicu piutang macet jika tidak dibatasi dengan plafon yang ketat. Mengantisipasi ketiga risiko ini sejak awal akan menjaga kesehatan finansial toko.
 
-## Tahapan Praktis Tata Kelola Gudang Bahan Bangunan Konstruksi
+## Tahapan Praktis manajemen persediaan besi dan bahan bangunan toko material
 
 Kerusakan material di gudang adalah kebocoran kas modal yang paling merugikan pemilik toko bangunan. Untuk mencegah hal tersebut, terapkan standar penataan fisik berikut ini:
 
@@ -44,6 +44,15 @@ Karena harga besi beton dapat berubah sewaktu-waktu mengikuti dinamika pasar ind
 - Material Lambat Bergerak (Slow Moving): Keramik motif khusus, genteng glazur, dan pipa berdiameter besar. Pengadaan barang kategori ini sebaiknya menggunakan sistem uang muka (down payment) dari pelanggan proyek untuk menghindari dana kas mati mengendap di gudang.
 
 Selain perputaran fisik, pengelolaan piutang proyek adalah urat nadi bisnis bahan bangunan. Terapkan perjanjian tempo yang jelas maksimal 14 hingga 30 hari sesuai panduan [syarat pembayaran net 30](https://cooca.id/blog/syarat-pembayaran-net-30), batasi plafon utang mandor, dan lakukan penagihan berkala sesuai [cara menagih piutang pelanggan](https://cooca.id/blog/cara-menagih-piutang-pelanggan). Tegas dalam penagihan piutang adalah kunci menjaga likuiditas belanja barang grosir.
+
+Checklist Keselamatan Kerja dan Bongkar Muat Gudang Toko Material:
+Menjaga keselamatan staf gudang dan keamanan material konstruksi berbobot berat membutuhkan prosedur bongkar muat yang disiplin dan terstandarisasi:
+1. Penggunaan Alat Pelindung Diri (APD): Wajibkan seluruh staf gudang menggunakan sepatu safety berujung baja, sarung tangan kulit tebal, dan helm pelindung saat proses bongkar muatan besi beton atau semen berlangsung.
+2. Penataan Jalur Evakuasi dan Manuver Forklift: Pastikan lorong gudang utama bebas dari tumpukan pipa paralon atau balok kayu agar mobilitas gerobak dorong, forklift, dan mobil pikap tidak terganggu saat jam sibuk.
+3. Pengecekan Kualitas Material Tiba: Periksa diameter besi beton dengan jangka sorong presisi dan pastikan sak semen tidak dalam kondisi lembap atau robek sebelum menandatangani surat tanda terima supplier pabrik.
+4. Batasi Ketinggian Tumpukan Material: Jangan menumpuk keramik atau semen melebihi batas aman 10 sak untuk mencegah keruntuhan material yang membahayakan keselamatan karyawan.
+5. Dokumentasi Surat Jalan Digital: Simpan salinan digital faktur penerimaan barang ke dalam sistem gudang untuk mempermudah audit fisik bulanan.
+Prosedur penerimaan barang yang ketat dan aman melindungi toko dari risiko kecelakaan kerja dan kerugian modal akibat menerima material cacat produksi.
 
 ## Sistem Pengawasan Multi Lokasi Toko dan Gudang Terbuka
 

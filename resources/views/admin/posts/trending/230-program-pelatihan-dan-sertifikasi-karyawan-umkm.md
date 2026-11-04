@@ -42,6 +42,17 @@ Selain mengirimkan karyawan ke pelatihan eksternal, setiap gerai toko wajib memi
 - Hari 8-10: Pengoperasian Perangkat Sistem Kasir Digital: Pelatihan memproses pembayaran non-tunai, input pesanan, dan verifikasi stok barang melalui panduan [cara pindah ke aplikasi kasir](https://cooca.id/blog/cara-pindah-ke-aplikasi-kasir).
 - Hari 11-14: Simulasi Penanganan Komplain Pelanggan dan Uji Praktik Mandiri. Melalui bimbingan langsung ini, karyawan baru dapat beradaptasi cepat tanpa kebingungan di meja kasir.
 
+Matriks Evaluasi Kinerja Pasca-Pelatihan Karyawan Toko:
+Untuk mengukur dampak nyata program pelatihan staf terhadap efisiensi operasional gerai, lakukan evaluasi berkala setelah 30 hari pelatihan berlangsung secara terstruktur:
+1. Evaluasi Kecepatan Transaksi Kasir: Ukur rata-rata waktu yang dibutuhkan kasir untuk menyelesaikan satu transaksi pembayaran non-tunai dan pencetakan struk belanja, dengan target di bawah 45 detik per pelanggan.
+2. Audit Selisih Kas Harian: Bandingkan persentase selisih uang kas fisik di laci kasir dengan laporan sistem sebelum dan sesudah staf mengikuti pelatihan SOP kasir, dengan batas toleransi selisih mendekati nol rupiah.
+3. Penilaian Skor Kepuasan Pelanggan: Tinjau umpan balik konsumen seputar keramahan staf meja kasir, kerapian seragam, dan kecepatan pelayanan di area display toko melalui survei sederhana di kasir.
+4. Uji Pengetahuan Produk (Product Knowledge): Berikan kuis singkat bulanan kepada staf mengenai varian barang dagangan terlaris, lokasi penataan barang di rak etalase, dan ketentuan retur barang rusak.
+5. Pemberian Penghargaan Staf Terbaik: Berikan sertifikat penghargaan dan bonus insentif bulanan bagi karyawan yang meraih performa pelayanan terbaik sebagai motivasi positif bagi tim.
+6. Pelatihan Kejuruan Lanjutan: Sediakan kesempatan belajar teknik penjualan daring atau pengelolaan stok inventori bagi karyawan berprestasi agar jalur karier tim semakin terbuka lebar.
+7. Rapat Evaluasi Mingguan: Adakan sesi sharing mingguan berdurasi 15 menit untuk mendengarkan masukan staf lapangan mengenai kendala pelayanan yang dihadapi saat jam sibuk.
+Pengukuran kinerja berbasis data ini membuktikan bahwa investasi pelatihan SDM memberikan dampak langsung pada pertumbuhan omzet, loyalitas tim kerja, dan citra positif bisnis Anda di mata para pelanggan setia.
+
 ## Membangun Loyalitas Tim Melalui Budaya Kerja yang Apresiatif
 
 Mendorong staf senior atau kepala gerai toko untuk mengikuti sertifikasi profesi resmi dari Badan Nasional Sertifikasi Profesi (BNSP) memberikan nilai keunggulan kompetitif tersendiri bagi citra usaha Anda.

@@ -47,6 +47,14 @@ Langkah konkret dalam menjalankan strategi efisiensi biaya listrik di lingkungan
 
 4. Pemasangan Timer Otomatis pada Stop Kontak: Pasang peranti pengatur waktu otomatis pada papan nama toko, lampu etalase malam, dan dispenser pemanas air agar peralatan tersebut padam secara otomatis saat toko selesai beroperasi. Langkah preventif ini diulas tuntas pada panduan [efisiensi energi dan listrik untuk menekan biaya operasional umkm](https://cooca.id/blog/efisiensi-energi-dan-listrik-untuk-menekan-biaya-operasional-umkm).
 
+Checklist Audit Pemakaian Daya Listrik Gerai Usaha:
+Terapkan daftar periksa sederhana ini bagi kepala toko sebelum menutup operasional gerai setiap malam:
+1. Pastikan seluruh sakelar lampu display luar dan lampu neon plang nama toko sudah dipadamkan setelah jam operasional berakhir.
+2. Cek apakah pintu kulkas showcase minuman dan chiller daging sudah tertutup rapat sempurna tanpa celah udara.
+3. Cabut colokan kabel peralatan elektronik yang tidak digunakan dari stop kontak untuk menghentikan konsumsi daya siaga (phantom load).
+4. Pastikan sakelar utama unit pendingin ruangan (AC) telah dimatikan dan tidak dibiarkan menyala di ruangan kosong.
+Pemeriksaan rutin setiap malam ini terbukti mampu menghemat rekening listrik bulanan gerai usaha hingga 10 persen secara konsisten.
+
 ## Membangun Budaya Disiplin Energi di Kalangan Staf Toko
 
 Beban rekening listrik bulanan tidak boleh sekadar dicatat sebagai biaya umum yang kabur tanpa pertanggungjawaban per lini produk. Dalam tata kelola keuangan modern, pengusaha wajib menghitung kontribusi beban daya listrik ke dalam modal produksi setiap unit barang dagangan.

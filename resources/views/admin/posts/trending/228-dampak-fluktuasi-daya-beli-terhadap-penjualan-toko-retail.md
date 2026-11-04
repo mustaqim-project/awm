@@ -38,7 +38,7 @@ Jangan pernah menunggu hingga laporan keuangan akhir bulan memerah untuk menyada
 
 Dalam merespons situasi ini, penetapan promosi diskon harus dihitung secara presisi menggunakan panduan [cara hitung diskon agar tidak rugi](https://cooca.id/blog/cara-hitung-diskon-agar-tidak-rugi) agar gerai tidak mengalami defisit kas modal. Setiap potongan harga harus memiliki target volume yang jelas.
 
-## Solusi Praktis Menghadapi Perubahan Pasar Retail Modern
+## Langkah Menghadapi dampak fluktuasi daya beli terhadap penjualan toko retail
 
 Langkah taktis yang paling ampuh untuk mengimbangi kelesuan pasar adalah menciptakan kombinasi paket bundling yang cerdas dan solutif.
 
@@ -46,6 +46,15 @@ Konsep paket bundling yang sukses:
 Padukan produk kebutuhan pokok yang perputarannya sangat cepat (fast moving) dengan produk pendamping yang memiliki persentase margin keuntungan tebal. Sebagai ilustrasi praktis: Toko merilis Paket Dapur Ceria yang berisi 1 liter minyak goreng, 1 kilogram gula pasir, dan 1 botol saus sambal dengan harga paket Rp38.000 (konsumen hemat Rp2.500 dibanding membeli satuan).
 
 Di mata pembeli, paket ini memberikan solusi penghematan uang belanja dapur yang nyata, sedangkan bagi pemilik toko, strategi ini berhasil mengerek nilai total transaksi kasir dan mempercepat perputaran barang dagangan di rak etalase. Untuk memperluas jangkauan pasar, toko juga dapat menerapkan penjualan lintas saluran sebagaimana diuraikan dalam [strategi omnichannel toko online umkm jual lintas kanal](https://cooca.id/blog/strategi-omnichannel-toko-online-umkm-jual-lintas-kanal). Menggabungkan kanal fisik dan online menjaga stabilitas omzet harian Anda.
+
+Panduan Desain Tata Letak Rak Toko untuk Menggugah Minat Belanja:
+Menghadapi fluktuasi daya beli konsumen, penataan visual merchandising di area gerai memegang peranan penting dalam mendorong keputusan pembelian impulsif:
+1. Tempatkan Produk Kebutuhan Pokok di Area Belakang: Letakkan beras, gula, dan minyak goreng di bagian belakang gerai agar pembeli melewati lorong produk lain terlebih dahulu sebelum mengambil kebutuhan utama.
+2. Pajang Paket Bundling Hemat di Area Depan Pintu Masuk: Pasang papan promosi paket hemat tepat di dekat pintu masuk untuk langsung menarik perhatian konsumen yang baru melangkah masuk ke dalam toko.
+3. Maksimalkan Rak Kasir untuk Produk Impulsif: Pajang produk permen, makanan ringan kemasan kecil, tisu saset, dan minuman dingin di dekat meja kasir untuk menambah nominal belanja akhir struk.
+4. Gunakan Label Harga Promo yang Kontras: Pasang label diskon berwarna cerah seperti kuning atau merah dengan ukuran tulisan yang mudah terbaca dari jarak dua meter.
+5. Evaluasi Penempatan Barang Setiap Minggu: Rotasikan posisi barang slow moving ke rak dengan pencahayaan terbaik untuk menguji daya tarik visual produk tersebut.
+Tata letak rak yang strategis dan dinamis terbukti efektif menaikkan nilai rata-rata belanja konsumen tanpa membutuhkan anggaran promosi yang mahal.
 
 ## Membangun Kedekatan Pelanggan Melalui WhatsApp dan Program Membership
 

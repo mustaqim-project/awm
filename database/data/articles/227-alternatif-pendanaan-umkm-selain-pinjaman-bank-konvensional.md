@@ -40,6 +40,17 @@ Selain instrumen urun dana saham, beberapa sumber pendanaan non-bank berikut pat
 3. Program Bantuan Hibah dan Kompetisi Usaha: Mengikuti kompetisi wirausaha yang diselenggarakan kementerian, BUMN, atau korporasi swasta yang menawarkan modal hibah tanpa kewajiban pengembalian dana.
 4. Akses Modal Ventura Tahap Awal: Pelajari kriterianya dalam [cara akses modal ventura untuk startup umkm siapa sangka bisa](https://cooca.id/blog/cara-akses-modal-ventura-untuk-startup-umkm-siapa-sangka-bisa) serta penguatan dewan penasihat dalam [tata kelola usaha dan peran dewan penasihat bagi umkm naik kelas](https://cooca.id/blog/tata-kelola-usaha-dan-peran-dewan-penasihat-bagi-umkm-naik-kelas). Rute pendanaan ini menuntut komitmen tata kelola yang profesional.
 
+Tahapan Verifikasi Uji Tuntas (Due Diligence) Calon Investor Bisnis:
+Ketika bisnis Anda mulai menarik perhatian investor perorangan maupun platform urun dana securities crowdfunding, persiapkan langkah verifikasi berikut:
+1. Verifikasi Rekening Bank Usaha Terpisah: Tunjukkan riwayat mutasi rekening bank resmi atas nama entitas bisnis minimal 12 bulan terakhir untuk membuktikan arus kas masuk yang sehat dan bebas dari transaksi pribadi yang mencurigakan.
+2. Uji Kelayakan Unit Usaha: Berikan akses bagi tim analis pemodal untuk meninjau langsung operasional harian gerai toko, sistem kasir, dan interaksi pelayanan pelanggan pada jam kerja normal.
+3. Penyusunan Perjanjian Pemegang Saham (Shareholders Agreement): Tuangkan hak dividen, mekanisme transfer kepemilikan saham, dan batasan tanggung jawab operasional dalam akta notaris yang berkekuatan hukum tetap.
+4. Simulasi Proyeksi Keuangan: Buat proyeksi laporan laba rugi konservatif untuk 2 sampai 3 tahun ke depan yang mencakup estimasi pertumbuhan omzet, penambahan cabang baru, serta jangka waktu pengembalian modal investasi.
+5. Keterbukaan Informasi Risiko: Sampaikan tantangan operasional dan risiko kompetisi pasar secara transparan agar calon investor memiliki ekspektasi bisnis yang realistis.
+6. Penataan Tata Kelola Dokumen Legal: Lengkapi seluruh izin operasional dasar termasuk nomor izin edar pangan dari dinas kesehatan atau BPOM serta sertifikat kepatuhan tata ruang lingkungan.
+7. Evaluasi Tim Manajemen: Tunjukkan profil keahlian dan rekam jejak tim operasional gerai yang membuktikan bahwa bisnis siap dikembangkan ke skala yang jauh lebih luas.
+Kesiapan berkas uji tuntas yang lengkap ini akan mempercepat proses pencairan dana investasi ke rekening bisnis Anda tanpa hambatan birokrasi perbankan yang berbelit-belit.
+
 ## Membangun Tata Kelola Bisnis yang Kredibel di Hadapan Calon Investor
 
 Agar para pemodal dan platform urun dana bersedia menaruh kepercayaan pada bisnis Anda, pengusaha wajib menyiapkan tiga berkas fundamental:

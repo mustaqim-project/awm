@@ -47,6 +47,13 @@ Maka Reorder Point beras adalah:
 (25 kg x 2 hari) + 20 kg = 70 kg beras.
 Begitu jumlah karung beras di area gudang tersisa 70 kilogram, staf gudang wajib segera menerbitkan formulir purchase order ke pemasok. Panduan teknis rumus ini dapat Anda pelajari dalam [cara menghitung reorder point](https://cooca.id/blog/cara-menghitung-reorder-point). Jangan lupa pula memperhitungkan faktor penyusutan bahan saat proses pembersihan dan penyiangan melalui artikel [cara menghitung susut bahan baku](https://cooca.id/blog/cara-menghitung-susut-bahan-baku). Disiplin ambang batas ini mengamankan operasional dapur dari kekacauan stok.
 
+Standar Operasional Penanganan Bahan Baku Dapur Harian:
+Untuk memaksimalkan efisiensi persediaan dapur saat harga komoditas pangan sedang melonjak tinggi, staf dapur wajib mematuhi panduan teknis berikut:
+1. Pembersihan dan Penyiangan Bahan Segar: Bersihkan sayuran daun dan potong daging sesuai standar gramasi resep tanpa membuang bagian bahan yang masih layak konsumsi.
+2. Penyimpanan Bersuhu Presisi: Atur temperatur chiller penyimpanan daging pada 0 hingga 4 derajat Celsius dan freezer beku pada minus 18 derajat Celsius untuk menjaga kesegaran seluler makanan.
+3. Pelabelan Wadah Kedap Udara: Tempelkan label tanggal kedatangan dan batas kedaluwarsa pada setiap wadah bahan makanan olahan sebelum disimpan ke dalam rak pendingin.
+Penerapan prosedur higienis ini meminimalkan angka susut bahan baku dapur dan menjaga stabilitas margin laba kotor menu kuliner Anda.
+
 ## Strategi Mengunci Kontrak Pasokan Jangka Panjang Bersama Supplier
 
 Membangun hubungan kemitraan yang erat dengan supplier bahan mentah lokal adalah benteng pertahanan terbaik saat krisis pangan melanda.

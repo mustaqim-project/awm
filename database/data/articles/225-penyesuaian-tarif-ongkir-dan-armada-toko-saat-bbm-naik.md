@@ -50,6 +50,13 @@ Jika pelanggan berjarak 5 kilometer dari toko (jarak pulang-pergi adalah 10 kilo
 
 Agar pelanggan tidak merasa terbebani oleh kenaikan tarif, Anda dapat menerapkan sistem zonasi jarak bertingkat (misalnya radius 0-3 km tarif flat Rp8.000, radius 3-6 km tarif flat Rp15.000) atau memberlakukan program gratis ongkir bersyarat dengan batas belanja tertentu. Pengaturan zona ini mempermudah kasir menghitung ongkir secara transparan.
 
+SOP Manajemen Armada dan Pemeriksaan Kendaraan Kurir Toko:
+Agar biaya operasional pengiriman barang tetap efisien dan armada selalu prima saat harga bahan bakar berfluktuasi, staf kurir wajib menerapkan jadwal perawatan berkala:
+1. Pemeriksaan Tekanan Angin Ban: Pastikan tekanan ban motor kurir berada pada standar pabrikan setiap dua hari sekali. Ban yang kempes dapat meningkatkan konsumsi bahan bakar hingga 5 persen.
+2. Pengecekan Oli Mesin dan Rantai Roda: Lakukan penggantian oli mesin setiap 2.000 kilometer dan lumasi rantai roda secara berkala untuk menjaga efisiensi transmisi daya mesin.
+3. Pengaturan Beban Muatan Barang: Hindari membawa muatan barang melebihi kapasitas standar sepeda motor kurir, karena beban berlebih membahayakan keselamatan staf dan memboroskan konsumsi bensin.
+Armada pengiriman yang terawat rapi menjamin ketepatan waktu pengantaran pesanan ke tangan pembeli tanpa memicu lonjakan biaya bahan bakar.
+
 ## Menjaga Hubungan Baik dengan Pelanggan Saat Tarif Mengalami Kenaikan
 
 Selain menaikkan tarif ongkir, menata efisiensi rute perjalanan kurir adalah strategi tercerdas untuk menekan konsumsi bensin harian toko Anda.

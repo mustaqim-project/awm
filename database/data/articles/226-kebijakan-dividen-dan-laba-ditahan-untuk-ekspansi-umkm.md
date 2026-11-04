@@ -45,6 +45,13 @@ Praktik terbaik pembagian rasio laba bersih tahunan berdasarkan fase kedewasaan 
 
 Struktur alokasi bertahap ini sejalan dengan strategi pemupukan modal yang dibahas dalam [strategi penguatan modal dan buyback kepemilikan bisnis umkm](https://cooca.id/blog/strategi-penguatan-modal-dan-buyback-kepemilikan-bisnis-umkm) serta filosofi investasi jangka panjang dalam [pelajaran investasi lo kheng hong untuk mengelola laba umkm](https://cooca.id/blog/pelajaran-investasi-lo-kheng-hong-untuk-mengelola-laba-umkm). Pola alokasi terencana ini menghindarkan kemitraan dari perselisihan finansial yang merusak persaudaraan.
 
+Penyusunan Berita Acara Rapat Pembagian Keuntungan Pemilik Usaha:
+Agar kebijakan dividen dan laba ditahan memiliki keabsahan hukum dan mencegah kesalahpahaman antarpemodal di kemudian hari, dokumentasikan keputusan pembagian laba dalam notula tertulis:
+1. Catat Total Laba Bersih yang Diaudit: Tuliskan secara transparan total keuntungan bersih riil yang diperoleh bisnis selama satu tahun buku penuh.
+2. Sepakati Persentase Dividen dan Cadangan Kas: Cantumkan nominal rupiah dividen yang dicairkan ke masing-masing rekening pemilik serta nominal laba ditahan yang tetap disetor di rekening kas usaha.
+3. Tetapkan Jadwal Pencairan Dana: Tentukan tanggal pencairan dividen secara tertib agar penarikan dana tidak mengganggu likuiditas pembayaran gaji karyawan dan belanja modal awal tahun.
+Dokumen berita acara pembagian laba ini adalah bukti tata kelola bisnis yang matang dan siap bermitra dengan pemodal skala nasional.
+
 ## Membangun Tata Kelola Keuangan Usaha yang Akuntabel dan Transparan
 
 Manfaat terbesar dari membangun saldo laba ditahan yang tebal adalah kemampuan membiayai ekspansi usaha secara mandiri (bootstrapping). Ketika Anda berencana membuka gerai cabang kedua di lokasi strategis, memperluas area makan kafe, atau mendatangkan mesin pengemas otomatis berkapasitas industri, Anda dapat membiayai seluruh kebutuhan modal belanja tersebut langsung dari kas internal usaha.

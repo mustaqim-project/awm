@@ -52,6 +52,13 @@ Komponen pengeluaran operasional toko umumnya mencakup lima kelompok utama:
 
 Pencatatan pos-pos pengeluaran ini harus dilakukan secara tertib dalam [cara membuat laporan laba rugi sederhana](https://cooca.id/blog/cara-membuat-laporan-laba-rugi-sederhana) agar pemilik usaha tidak pernah kehilangan jejak uang kas harian. Mengabaikan satu nota pengeluaran kecil bisa membuat laporan keuangan Anda melenceng jauh dari kenyataan.
 
+Tahapan Evaluasi Keuangan Mingguan Pemilik Toko:
+Untuk memastikan perhitungan laba bersih dan laba kotor tidak melenceng di akhir bulan, luangkan waktu 30 menit setiap hari Minggu sore untuk melakukan rekonsiliasi kas:
+1. Rekapitulasi Faktur Kulakan: Kumpulkan seluruh nota pembelian barang dagangan selama satu minggu dan pastikan seluruh harga beli telah tercatat sesuai faktur supplier.
+2. Cek Saldo Kas Fisik vs Laporan Kasir: Hitung uang tunai di laci meja kasir dan cocokkan dengan total transaksi pada sistem Point of Sale (POS).
+3. Identifikasi Pengeluaran Tak Terduga: Catat setiap pengeluaran kecil seperti pembelian air galon, bensin kurir, atau konsumsi lembur karyawan agar tidak ada pos pengeluaran yang luput dari pembukuan laba rugi.
+Kedisiplinan pencatatan mingguan ini akan meringankan beban pembukuan akhir bulan dan menjamin akurasi laporan laba bersih usaha Anda.
+
 ## Simulasi Kasus Nyata Perhitungan Finansial pada Usaha Kuliner
 
 Mari kita bedah simulasi perhitungan lengkap pada sebuah usaha kedai kopi lokal:
