@@ -6,15 +6,16 @@
   "cluster": "tutorial",
   "primary_keyword": "sop kasir saat pembeli transfer tapi uang belum masuk",
   "secondary_keywords": "transfer bank pending kasir, bukti transfer palsu toko, cara cek mutasi rekening kasir, sop pembayaran darurat toko, rekonsiliasi kasir harian",
+  "search_intent": "informational",
   "meta_title": "SOP Kasir Saat Pembeli Transfer tapi Uang Belum Masuk",
   "meta_description": "Panduan SOP kasir saat pembeli transfer tapi uang belum masuk ke toko. Pelajari cara cek mutasi rekening kasir, cegah struk palsu, dan amankan kasir.",
-  "reading_time": "8 menit",
+  "reading_time": "9 menit",
   "cover_image": "https://cooca.id/images/blog/sop-kasir-saat-pembeli-transfer-tapi-uang-belum-masuk.jpg",
   "local_image_asset": "public/images/blog/sop-kasir-saat-pembeli-transfer-tapi-uang-belum-masuk.jpg",
   "author": "Tim Edukasi COOCA",
   "trending_source": "Google Trends Indonesia (Category 3 - Business)",
   "trending_query": "mnc bank tidak bisa transfer",
-  "word_count": 1020,
+  "word_count": 1241,
   "faqs": [
     {
       "q": "Berapa lama kasir boleh meminta pembeli menunggu mutasi transfer masuk?",
@@ -33,5 +34,5 @@
       "a": "Tim keuangan toko melakukan transfer balik ke nomor rekening asal pembeli maksimal dalam 1x24 jam disertai bukti mutasi resmi via WhatsApp."
     }
   ],
-  "created_at": "2026-11-04T11:28:42+07:00"
+  "published_at": "2026-11-04T11:28:42+07:00"
 }

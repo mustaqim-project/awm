@@ -6,6 +6,7 @@
   "cluster": "tutorial",
   "primary_keyword": "manajemen stok kuliner hadapi kenaikan harga pangan",
   "secondary_keywords": "stok bahan baku restoran, pengendalian food cost, metode fifo kuliner, reorder point bahan segar, cara cegah bahan basi",
+  "search_intent": "informational",
   "meta_title": "Manajemen Stok Kuliner Hadapi Kenaikan Harga Pangan",
   "meta_description": "Panduan manajemen stok kuliner hadapi kenaikan harga pangan. Pelajari cara kontrol food cost, kunci kontrak supplier, dan amankan persediaan.",
   "reading_time": "9 menit",
@@ -14,24 +15,24 @@
   "author": "Tim Edukasi COOCA",
   "trending_source": "Google Trends Indonesia (Category 3 - Business)",
   "trending_query": "krisis pangan",
-  "word_count": 884,
+  "word_count": 1103,
   "faqs": [
     {
-      "q": "Apakah boleh menyetok sayuran segar dalam jumlah banyak saat harga sedang murah?",
-      "a": "Tidak disarankan kecuali Anda memiliki fasilitas blast chiller atau teknik blanching dan vacuum pack yang benar, karena sayuran segar rentan layu dan susut bobot."
+      "q": "Apakah disarankan memborong sayuran segar dalam jumlah besar saat harganya sedang murah?",
+      "a": "Sangat tidak disarankan kecuali gerai Anda memiliki mesin vacuum sealer dan fasilitas pendingin bersuhu konstan, karena sayuran segar rentan layu, busuk, dan menyusut bobot timbangannya."
     },
     {
-      "q": "Bagaimana cara mengatasi kenaikan harga daging sapi atau ayam yang tajam?",
-      "a": "Anda dapat mengunci kontrak pasokan dengan rumah potong hewan, membuat menu bundling dengan hidangan pendamping bermargin tinggi, atau menyesuaikan gramasi porsi secara proporsional."
+      "q": "Bagaimana cara menyiasati lonjakan harga daging sapi atau ayam yang sangat ekstrem?",
+      "a": "Anda dapat mengunci kontrak pasokan harga grosir, merancang menu paket bundling dengan produk pelengkap bermargin tinggi, atau menyesuaikan gramasi porsi lauk secara bijak tanpa mengubah rasa."
     },
     {
-      "q": "Berapa hari sekali restoran harus melakukan stok opname bahan baku?",
-      "a": "Untuk bahan baku segar berputar cepat (daging, seafood, sayur), stok opname sebaiknya dilakukan harian atau dua hari sekali saat pergantian shift dapur."
+      "q": "Berapa frekuensi ideal melakukan stok opname untuk bahan baku kuliner?",
+      "a": "Untuk bahan segar berputar cepat (daging, makanan laut, sayuran), stok opname sebaiknya dilakukan harian atau dua hari sekali pada saat serah terima pergantian giliran kerja dapur."
     },
     {
-      "q": "Apa indikator utama bahwa manajemen stok dapur Anda sudah efisien?",
-      "a": "Tingkat sisa bahan baku yang terbuang (food waste) berada di bawah 2 persen dan persentase food cost stabil sesuai target resep standar."
+      "q": "Apa tolak ukur bahwa manajemen stok dapur restoran sudah berjalan efisien?",
+      "a": "Persentase bahan terbuang (waste ratio) berada di bawah 2 persen dari total belanja bahan baku, dan rasio food cost konsisten berada dalam target anggaran menu standar."
     }
   ],
-  "created_at": "2026-11-04T11:28:42+07:00"
+  "published_at": "2026-11-04T11:28:42+07:00"
 }

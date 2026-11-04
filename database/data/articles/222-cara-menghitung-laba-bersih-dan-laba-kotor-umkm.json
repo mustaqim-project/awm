@@ -6,6 +6,7 @@
   "cluster": "tutorial",
   "primary_keyword": "cara menghitung laba bersih dan laba kotor",
   "secondary_keywords": "rumus laba kotor usaha, perhitungan laba bersih umkm, margin keuntungan warung, pembukuan laba rugi praktis, arus kas usaha",
+  "search_intent": "informational",
   "meta_title": "Cara Menghitung Laba Bersih dan Laba Kotor UMKM Praktis",
   "meta_description": "Panduan cara menghitung laba bersih dan laba kotor untuk usaha UMKM. Pahami perbedaan margin, rumus laba, dan tips pembukuan agar kas tidak tekor.",
   "reading_time": "9 menit",
@@ -14,24 +15,24 @@
   "author": "Tim Edukasi COOCA",
   "trending_source": "Google Trends Indonesia (Category 3 - Business)",
   "trending_query": "laba",
-  "word_count": 940,
+  "word_count": 1157,
   "faqs": [
     {
-      "q": "Apakah uang kas yang ada di laci kasir bisa langsung dianggap sebagai laba bersih?",
-      "a": "Tidak. Uang kas di laci kasir adalah penerimaan kotor yang masih harus disisihkan untuk membeli kembali bahan baku (HPP) dan membayar beban operasional bulanan."
+      "q": "Apakah uang kas di laci kasir pada sore hari boleh langsung dianggap sebagai keuntungan bersih?",
+      "a": "Sama sekali tidak boleh. Uang di laci kasir adalah omzet kotor yang sebagian besarnya harus disisihkan untuk membeli kembali stok barang dagangan dan membayar biaya operasional."
     },
     {
-      "q": "Berapa standar persentase laba bersih yang sehat untuk UMKM kuliner dan retail?",
-      "a": "Untuk industri kuliner, margin laba bersih yang sehat berada di kisaran 15 persen sampai 25 persen, sedangkan untuk toko retail kebutuhan pokok berkisar antara 8 persen sampai 15 persen."
+      "q": "Berapa standar persentase margin laba bersih yang tergolong sehat bagi bisnis kuliner?",
+      "a": "Di industri makanan dan minuman, margin laba bersih yang sehat umumnya berada di kisaran 15 persen sampai 25 persen dari total omzet penjualan."
     },
     {
-      "q": "Apa yang harus dilakukan jika laba kotor positif tetapi laba bersih minus?",
-      "a": "Kondisi tersebut menunjukkan bahwa beban operasional Anda terlalu besar. Evaluasi biaya sewa, pangkas pemborosan utilitas, atau optimalkan produktivitas staf."
+      "q": "Apa yang harus dievaluasi jika omzet toko sangat tinggi tetapi laba bersihnya minus?",
+      "a": "Anda perlu mengevaluasi beban biaya tetap, seperti menyusutkan biaya sewa tempat, menertibkan pemborosan listrik, atau menegosiasikan harga bahan baku dengan distributor."
     },
     {
-      "q": "Apakah gaji pemilik usaha dihitung ke dalam beban operasional?",
-      "a": "Ya, gaji pemilik usaha yang aktif mengelola bisnis wajib dimasukkan ke dalam pos beban gaji operasional agar perhitungan laba bersih bisnis objektif."
+      "q": "Apakah gaji pemilik toko wajib dimasukkan ke dalam pos beban operasional usaha?",
+      "a": "Ya, pemilik yang aktif mengelola operasional harian toko wajib digaji secara profesional agar perhitungan laba bersih bisnis tidak bias oleh kebutuhan hidup pribadi."
     }
   ],
-  "created_at": "2026-11-04T11:28:42+07:00"
+  "published_at": "2026-11-04T11:28:42+07:00"
 }

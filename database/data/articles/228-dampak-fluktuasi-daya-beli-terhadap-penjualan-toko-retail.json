@@ -6,7 +6,8 @@
   "cluster": "edukasi",
   "primary_keyword": "dampak fluktuasi daya beli terhadap penjualan toko retail",
   "secondary_keywords": "penjualan toko retail sepi, daya beli konsumen menurun, strategi promosi toko kelontong, paket hemat bundling produk, program loyalitas pelanggan",
-  "meta_title": "Dampak Fluktuasi Daya Beli terhadap Toko Retail UMKM",
+  "search_intent": "informational",
+  "meta_title": "Dampak Fluktuasi Daya Beli terhadap Penjualan Toko Retail",
   "meta_description": "Pahami dampak fluktuasi daya beli terhadap penjualan toko retail. Strategi promosi hemat, paket bundling, dan cara menjaga loyalitas pelanggan.",
   "reading_time": "9 menit",
   "cover_image": "https://cooca.id/images/blog/dampak-fluktuasi-daya-beli-terhadap-penjualan-toko-retail.jpg",
@@ -14,24 +15,24 @@
   "author": "Tim Edukasi COOCA",
   "trending_source": "Google Trends Indonesia (Category 3 - Business)",
   "trending_query": "saham ihsg",
-  "word_count": 837,
+  "word_count": 1027,
   "faqs": [
     {
-      "q": "Apakah memotong harga jual secara besar-besaran solusi tepat saat pembeli sepi?",
-      "a": "Tidak tepat. Perang harga hanya memangkas margin keuntungan tanpa jaminan loyalitas pembeli. Lebih baik gunakan paket bundling hemat atau hadiah produk langsung."
+      "q": "Apakah memotong harga jual produk secara drastis solusi tepat saat toko sepi pembeli?",
+      "a": "Tidak tepat. Perang harga yang tidak terukur hanya akan mengikis margin laba kotor tanpa menjamin kesetiaan pembeli. Lebih bijak gunakan strategi paket bundling hemat."
     },
     {
-      "q": "Bagaimana cara menentukan stok barang yang harus dikurangi saat daya beli turun?",
-      "a": "Analisis data laporan perputaran stok (inventory turnover). Kurangi pemesanan barang lambat laku (slow moving) dan fokuskan modal kerja pada barang kebutuhan pokok yang cepat berputar."
+      "q": "Bagaimana cara memilih barang dagangan yang harus dikurangi stoknya saat daya beli turun?",
+      "a": "Pantau laporan perputaran inventori (inventory turnover). Pangkas pengadaan barang lambat laku (slow moving) dan fokuskan likuiditas kas pada barang kebutuhan pokok harian."
     },
     {
-      "q": "Apakah toko kelontong di pemukiman warga perlu menyediakan sistem pembayaran non-tunai?",
-      "a": "Sangat perlu. Menyediakan QRIS mempermudah konsumen yang memanfaatkan dompet digital atau paylater untuk belanja harian saat uang tunai mereka sedang menipis."
+      "q": "Apakah toko retail di lingkungan pemukiman perlu menyediakan QRIS?",
+      "a": "Sangat perlu. Kehadiran QRIS memudahkan konsumen yang memanfaatkan saldo dompet digital atau fasilitas paylater saat uang tunai di dompet mereka sedang menipis."
     },
     {
-      "q": "Bagaimana cara menarik minat pembeli tanpa mengeluarkan biaya promosi besar?",
-      "a": "Manfaatkan status WhatsApp bisnis harian, pajang produk promo di rak etalase paling depan dekat kasir, dan berikan pelayanan kasir yang ramah serta cepat."
+      "q": "Bagaimana cara menjaga omzet toko tetap stabil tanpa modal promosi yang besar?",
+      "a": "Manfaatkan status promosi berkala di WhatsApp bisnis toko, pajang paket produk hemat di etalase terdepan kasir, serta berikan pelayanan kasir yang ramah, cepat, dan solutif."
     }
   ],
-  "created_at": "2026-11-04T11:28:42+07:00"
+  "published_at": "2026-11-04T11:28:42+07:00"
 }
