@@ -145,6 +145,14 @@ class StorageFile extends Model
         if (! $this->file_path) {
             return null;
         }
-        return Storage::disk($this->disk ?? 'public')->url($this->file_path);
+        return 'https://cooca.id/storage/' . ltrim($this->file_path, '/');
+    }
+
+    public function getFileUrlAttribute(): string
+    {
+        if (! $this->file_path) {
+            return '';
+        }
+        return 'https://cooca.id/storage/' . ltrim($this->file_path, '/');
     }
 }

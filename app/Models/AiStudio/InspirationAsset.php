@@ -164,15 +164,24 @@ class InspirationAsset extends Model
     }
 
     /**
-     * Dapatkan URL gambar yang siap ditampilkan.
+     * Dapatkan URL gambar yang siap ditampilkan dengan domain resmi COOCA.
      */
     public function getResolvedImageUrlAttribute(): string
     {
         if ($this->media !== null) {
-            return $this->media->file_url ?? asset('storage/' . $this->media->file_path);
+            return $this->media->file_url ?? ('https://cooca.id/storage/' . ltrim($this->media->file_path, '/'));
         }
 
-        return $this->image_url ?? $this->thumbnail_url ?? asset('images/placeholder-image.svg');
+        $url = (string) ($this->image_url ?? $this->thumbnail_url ?? '');
+        if (str_starts_with($url, 'https://cooca.id') || str_starts_with($url, 'http://cooca.id')) {
+            return $url;
+        }
+
+        if (str_starts_with($url, '/storage/') || str_starts_with($url, 'storage/')) {
+            return 'https://cooca.id/storage/' . ltrim(preg_replace('#^/?storage/#', '', $url), '/');
+        }
+
+        return $url ?: 'https://cooca.id/images/placeholder-image.svg';
     }
 
     public function getDisplayUrlAttribute(): string
