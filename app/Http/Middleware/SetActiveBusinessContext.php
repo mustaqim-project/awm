@@ -49,7 +49,30 @@ final class SetActiveBusinessContext
                     $fallbackBusiness = Business::find($fallbackMembership->business_id);
                     if ($fallbackBusiness !== null) {
                         Context::setBusiness($fallbackBusiness, $fallbackMembership);
+                        if (! $user->active_business_id) {
+                            $user->updateQuietly(['active_business_id' => $fallbackBusiness->id]);
+                        }
                     }
+                } else {
+                    $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+                    $newBiz = Business::create([
+                        'name' => $bizName,
+                        'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::lower(\Illuminate\Support\Str::random(5)),
+                        'currency' => 'IDR',
+                        'currency_symbol' => 'Rp',
+                        'currency_precision' => 0,
+                        'is_active' => true,
+                        'template_code' => 'retail_reseller',
+                        'industry_category' => 'retail',
+                    ]);
+                    $newMembership = BusinessMembership::create([
+                        'id' => (string) \Illuminate\Support\Str::uuid(),
+                        'business_id' => $newBiz->id,
+                        'user_id' => $user->id,
+                        'role' => 'owner',
+                    ]);
+                    $user->updateQuietly(['active_business_id' => $newBiz->id]);
+                    Context::setBusiness($newBiz, $newMembership);
                 }
             }
         }

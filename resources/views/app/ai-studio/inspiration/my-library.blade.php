@@ -102,9 +102,15 @@
     @else
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             @foreach($assets as $asset)
+                @php
+                    $rawMyUrl = $asset->display_url ?? $asset->image_url ?? $asset->thumbnail_url ?? '';
+                    $myImgUrl = !empty($rawMyUrl)
+                        ? ((str_starts_with($rawMyUrl, 'http://') || str_starts_with($rawMyUrl, 'https://')) ? $rawMyUrl : asset($rawMyUrl))
+                        : asset('images/ai-studio/placeholder.svg');
+                @endphp
                 <div class="group rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 overflow-hidden flex flex-col justify-between transition-all hover:shadow-md hover:border-black/15">
                     <div class="relative aspect-[4/5] w-full bg-black/[0.04] dark:bg-white/[0.04] overflow-hidden">
-                        <img src="{{ $asset->display_url }}" alt="{{ $asset->title }}" loading="lazy"
+                        <img src="{{ $myImgUrl }}" alt="{{ $asset->title }}" loading="lazy"
                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                             onerror="this.onerror=null; this.src='{{ asset('images/ai-studio/placeholder.svg') }}';">
 
@@ -121,7 +127,7 @@
                             <form method="POST" action="{{ route('ai-studio.inspiration.use-as-reference') }}">
                                 @csrf
                                 <input type="hidden" name="asset_id" value="{{ $asset->id }}">
-                                <input type="hidden" name="image_url" value="{{ $asset->display_url }}">
+                                <input type="hidden" name="image_url" value="{{ $myImgUrl }}">
                                 <input type="hidden" name="title" value="{{ $asset->title }}">
                                 <button type="submit"
                                     class="w-full py-2 px-3 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold shadow-xs transition-all">
@@ -173,7 +179,7 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Berkas Foto (JPG, PNG, WEBP max 10MB)</label>
-                    <input type="file" name="file" required accept="image/png,image/jpeg,image/webp"
+                    <input type="file" name="image" required accept="image/png,image/jpeg,image/webp"
                         class="w-full text-xs text-black/60 dark:text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded-[8px] file:border-0 file:text-xs file:font-semibold file:bg-[#007AFF] file:text-white hover:file:bg-[#0071E3] file:cursor-pointer">
                 </div>
 

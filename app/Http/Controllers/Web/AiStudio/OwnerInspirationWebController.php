@@ -491,11 +491,22 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
     {
         $business = Context::requireBusiness();
 
-        // Unggahan Personal
-        $personalAssets = InspirationAsset::query()
+        // Unggahan & Aset Personal Bisnis
+        $assets = InspirationAsset::query()
             ->where('business_id', $business->id)
             ->latest()
             ->paginate(12, ['*'], 'assets_page');
+
+        $personalAssets = $assets;
+
+        $totalUploaded = InspirationAsset::query()
+            ->where('business_id', $business->id)
+            ->where('source_type', '!=', 'ai_generated')
+            ->count();
+
+        $totalGenerated = BusinessInspirationGenerationAsset::query()
+            ->where('business_id', $business->id)
+            ->count();
 
         // Hasil Generasi AI Studio Bisnis
         $aiGenerations = BusinessInspirationGenerationAsset::query()
@@ -512,14 +523,20 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
+                'assets' => $assets,
                 'personal_assets' => $personalAssets,
                 'ai_generations' => $aiGenerations,
                 'collections' => $collections,
+                'total_uploaded' => $totalUploaded,
+                'total_generated' => $totalGenerated,
             ]);
         }
 
         return view('app.ai-studio.inspiration.my-library', compact(
+            'assets',
             'personalAssets',
+            'totalUploaded',
+            'totalGenerated',
             'aiGenerations',
             'collections',
             'business'
@@ -534,13 +551,15 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
         $business = Context::requireBusiness();
         $user = $request->user();
 
+        $fileField = $request->hasFile('file') ? 'file' : 'image';
         $request->validate([
-            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,webp', 'max:10240'], // Max 10MB
+            $fileField => ['required', 'file', 'image', 'mimes:jpeg,png,webp', 'max:10240'], // Max 10MB
             'title' => ['nullable', 'string', 'max:180'],
             'description' => ['nullable', 'string', 'max:500'],
+            'aspect_ratio' => ['nullable', 'string', 'max:20'],
         ]);
 
-        $file = $request->file('image');
+        $file = $request->file($fileField);
         $title = trim((string) $request->input('title', $file->getClientOriginalName()));
 
         $slug = TenantStorage::slugForBusiness($business);
@@ -551,6 +570,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
         $imageInfo = @getimagesize($file->getRealPath());
         $width = $imageInfo ? (int) $imageInfo[0] : 1024;
         $height = $imageInfo ? (int) $imageInfo[1] : 1024;
+        $aspectRatio = $request->input('aspect_ratio') ?: $this->calculateAspectRatio($width, $height);
 
         // Daftarkan ke StorageFile Media Library COOCA
         $storageFile = StorageFile::create([
@@ -583,7 +603,7 @@ final class OwnerInspirationWebController extends Controller implements HasMiddl
             'thumbnail_url' => Storage::disk('public')->url($path),
             'width' => $width,
             'height' => $height,
-            'aspect_ratio' => $this->calculateAspectRatio($width, $height),
+            'aspect_ratio' => $aspectRatio,
             'mime_type' => $file->getMimeType(),
             'file_size' => $file->getSize(),
             'author_name' => $business->name,

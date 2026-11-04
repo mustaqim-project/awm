@@ -367,4 +367,38 @@ final class InspirationLibraryTest extends TestCase
             'moderation_status' => 'approved',
         ]);
     }
+
+    public function test_owner_can_access_my_library_view_without_errors(): void
+    {
+        Context::setBusiness($this->businessA);
+        $this->actingAs($this->userA);
+
+        $response = $this->get(route('ai-studio.inspiration.my-library'));
+
+        $response->assertOk();
+        $response->assertViewIs('app.ai-studio.inspiration.my-library');
+        $response->assertViewHas(['assets', 'personalAssets', 'totalUploaded', 'totalGenerated', 'business']);
+    }
+
+    public function test_owner_can_upload_asset_to_my_library(): void
+    {
+        Storage::fake('public');
+        Context::setBusiness($this->businessA);
+        $this->actingAs($this->userA);
+
+        $file = UploadedFile::fake()->image('produk_sample.jpg', 800, 800);
+
+        $response = $this->post(route('ai-studio.inspiration.my-library.upload'), [
+            'image' => $file,
+            'title' => 'Foto Kemasan Produk Kopi',
+            'aspect_ratio' => '1:1',
+        ]);
+
+        $response->assertRedirect(route('ai-studio.inspiration.my-library'));
+        $this->assertDatabaseHas('inspiration_assets', [
+            'business_id' => $this->businessA->id,
+            'title' => 'Foto Kemasan Produk Kopi',
+            'aspect_ratio' => '1:1',
+        ]);
+    }
 }
