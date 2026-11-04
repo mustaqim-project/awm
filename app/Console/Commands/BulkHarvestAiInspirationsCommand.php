@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Models\AiStudio\InspirationAsset;
 use App\Models\AiStudio\InspirationCategory;
 use App\Models\AiStudio\InspirationItem;
 use App\Models\AiStudio\InspirationSource;
 use App\Models\AiStudio\InspirationSourcePolicy;
 use App\Models\AiStudio\InspirationTrendScore;
 use App\Models\AiStudio\InspirationVisualAnalysis;
+use App\Models\StorageFile;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\DB;
@@ -439,8 +442,13 @@ final class BulkHarvestAiInspirationsCommand extends Command
 
         $title = $this->deriveTitle($rawPrompt, $tags);
         $aspectRatioStr = is_string($data['aspect_ratio']) ? $data['aspect_ratio'] : '1:1';
+        $cleanRelPath = ltrim(preg_replace('#^/?storage/#', '', $localPath), '/');
+        $coocaAssetUrl = "https://cooca.id/storage/{$cleanRelPath}";
 
-        DB::transaction(function () use ($source, $data, $localPath, $category, $title, $rawPrompt, $tags, $industry, $aspectRatioStr) {
+        $ownerUser = User::where('email', 'cooca.idn@gmail.com')->first() ?? User::first();
+        $ownerId = $ownerUser?->id ?? '3ad65a2b-5da7-47d9-a129-c63efc3fc74c';
+
+        DB::transaction(function () use ($source, $data, $cleanRelPath, $coocaAssetUrl, $ownerId, $category, $title, $rawPrompt, $tags, $industry, $aspectRatioStr) {
             $item = InspirationItem::updateOrCreate(
                 [
                     'source_id' => $source->id,
@@ -450,10 +458,10 @@ final class BulkHarvestAiInspirationsCommand extends Command
                     'category_id' => $category?->id,
                     'title' => $title,
                     'caption' => Str::limit($rawPrompt, 500),
-                    'canonical_url' => $localPath,
-                    'thumbnail_url' => $localPath,
+                    'canonical_url' => $coocaAssetUrl,
+                    'thumbnail_url' => $coocaAssetUrl,
                     'media_type' => 'image',
-                    'media_urls' => [$localPath],
+                    'media_urls' => [$coocaAssetUrl],
                     'tags' => array_values(array_unique(array_filter($tags))),
                     'industry_target' => $industry,
                     'view_count' => (int) ($data['views'] ?? 100),
@@ -465,6 +473,74 @@ final class BulkHarvestAiInspirationsCommand extends Command
                     'curated_notes' => 'Aset komersial resmi AI Studio COOCA.',
                     'status' => 'active',
                     'collected_at' => now(),
+                ]
+            );
+
+            // Upsert ke Media Library (StorageFile)
+            $storageFile = StorageFile::updateOrCreate(
+                [
+                    'file_path' => $cleanRelPath,
+                    'disk' => 'public',
+                ],
+                [
+                    'owner_id' => $ownerId,
+                    'business_id' => null,
+                    'user_id' => $ownerId,
+                    'file_name' => basename($cleanRelPath),
+                    'mime_type' => 'image/jpeg',
+                    'file_size' => 250000,
+                    'category' => StorageFile::CATEGORY_SOCIAL_MEDIA,
+                    'module' => 'ai_studio',
+                    'is_temporary' => false,
+                    'status' => StorageFile::STATUS_ACTIVE,
+                    'metadata' => [
+                        'source' => $source->code,
+                        'title' => $title,
+                        'industry' => $industry,
+                        'cooca_asset' => true,
+                    ],
+                    'uploaded_at' => now(),
+                ]
+            );
+
+            // Upsert ke COOCA Curated Assets (InspirationAsset)
+            InspirationAsset::updateOrCreate(
+                [
+                    'external_asset_id' => (string) $data['external_id'],
+                ],
+                [
+                    'source_type' => InspirationAsset::SOURCE_CURATED,
+                    'source_id' => $source->id,
+                    'media_id' => $storageFile->id,
+                    'business_id' => null,
+                    'user_id' => $ownerId,
+                    'title' => $title,
+                    'description' => $rawPrompt,
+                    'source_url' => "https://cooca.id/ai-studio/inspiration/{$item->id}",
+                    'image_url' => $coocaAssetUrl,
+                    'thumbnail_url' => $coocaAssetUrl,
+                    'width' => 1024,
+                    'height' => 1024,
+                    'aspect_ratio' => $aspectRatioStr,
+                    'mime_type' => 'image/jpeg',
+                    'file_size' => 250000,
+                    'author_name' => 'COOCA Studio',
+                    'author_profile_url' => 'https://cooca.id',
+                    'source_name' => 'COOCA Curated Library',
+                    'license_name' => 'COOCA Commercial License',
+                    'license_url' => 'https://cooca.id/terms',
+                    'attribution_text' => 'Koleksi Aset Resmi COOCA Studio',
+                    'usage_policy' => 'Komersial & Bebas Royalti untuk seluruh pengguna platform COOCA.',
+                    'commercial_usage_allowed' => true,
+                    'redistribution_allowed' => true,
+                    'storage_policy' => 'permanent',
+                    'moderation_status' => InspirationAsset::MODERATION_APPROVED,
+                    'metadata' => [
+                        'item_id' => $item->id,
+                        'industry' => $industry,
+                        'tags' => $tags,
+                        'cooca_asset' => true,
+                    ],
                 ]
             );
 
