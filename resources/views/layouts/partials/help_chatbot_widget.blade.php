@@ -1,9 +1,10 @@
 {{--
-    COOCA In-App Help Chatbot Widget (Bento Apple HIG Aesthetic)
-    Asisten Panduan Penggunaan Fitur & Bantuan Operasional Panel Bisnis
-    - Tanpa form pendaftaran pengunjung (langsung pakai untuk semua pengguna terotentikasi)
-    - Terisolasi 100% per tenant (business_id)
-    - Menegakkan kontrol wewenang RBAC (Role-Based Access Control)
+    COOCA In-App Help Chatbot & AI Business Assistant Widget (Apple HIG Aesthetic)
+    - Mode Switcher: Help Center (Panduan Fitur) vs Business Assistant (Analisis Data Bisnis)
+    - High Traffic Queue Management: Real-time antrean, background polling, retry indicator
+    - Isolasi Data Multi-Tenant 100% aman (Zero Operational Data Leakage pada Help Center)
+    - Kontrol Otorisasi RBAC granular (Permission-gated untuk Business Assistant)
+    - Tanpa form pendaftaran (langsung pakai untuk seluruh pengguna terotentikasi)
 --}}
 
 <div id="cooca-help-chatbot-root"
@@ -12,7 +13,7 @@
      x-cloak
      class="print:hidden">
 
-    {{-- 1. FLOATING ACTION BUTTON (FAB) & GREETING PILL --}}
+    {{-- 1. FLOATING ACTION BUTTON (FAB) & GREETING TOOLTIP PILL --}}
     <div class="fixed right-4 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-6 z-40 flex flex-col items-end gap-2.5 pointer-events-none select-none">
 
         {{-- Greeting Tooltip Pill (Desktop & Tablet only, auto-hide on dismiss) --}}
@@ -23,7 +24,7 @@
              x-transition:leave="transition ease-in duration-200 transform"
              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
              x-transition:leave-end="opacity-0 translate-y-2 scale-95"
-             class="hidden sm:block pointer-events-auto bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.12)] rounded-2xl p-3 max-w-[270px] text-left relative cursor-pointer hover:shadow-xl transition-all"
+             class="hidden sm:block pointer-events-auto bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_8px_25px_rgba(0,0,0,0.12)] rounded-2xl p-3 max-w-[280px] text-left relative cursor-pointer hover:shadow-xl transition-all"
              @click="toggleChat()">
             <button type="button"
                     @click.stop="dismissGreeting()"
@@ -36,7 +37,7 @@
                 <span class="text-[10px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">Asisten Panduan Cooca</span>
             </div>
             <p class="text-[12px] font-medium text-black/80 dark:text-white/90 leading-snug">
-                Bingung cara pakai fitur? Tanyakan cara kerja Kasir, HPP, Stok, atau Toko Online di sini! 👋
+                Bingung cara pakai fitur atau butuh analisis bisnis? Tanyakan langsung di sini! 👋
             </p>
         </div>
 
@@ -45,7 +46,7 @@
             <button type="button"
                     @click="toggleChat()"
                     :aria-expanded="isOpen"
-                    aria-label="Buka Asisten Panduan Cooca"
+                    aria-label="Buka Asisten AI Cooca"
                     class="group relative w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#007AFF] via-[#5856D6] to-[#AF52DE] text-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,122,255,0.4)] hover:shadow-[0_12px_40px_rgba(0,122,255,0.6)] hover:scale-105 active:scale-95 transition-all cursor-pointer">
 
                 {{-- Ambient Pulse Glow when closed --}}
@@ -84,7 +85,7 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 translate-y-6 scale-95"
-         class="fixed right-3 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-22 z-50 w-[calc(100vw-1.5rem)] sm:w-[410px] h-[550px] sm:h-[600px] max-h-[calc(100vh-6.5rem)] bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 flex flex-col overflow-hidden backdrop-blur-2xl">
+         class="fixed right-3 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-22 z-50 w-[calc(100vw-1.5rem)] sm:w-[420px] h-[580px] sm:h-[630px] max-h-[calc(100vh-6.5rem)] bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 flex flex-col overflow-hidden backdrop-blur-2xl">
 
         {{-- WINDOW HEADER BAR --}}
         <div class="px-4 py-3 bg-gradient-to-r from-[#007AFF] via-[#5856D6] to-[#AF52DE] text-white flex items-center justify-between shadow-xs shrink-0 select-none">
@@ -100,8 +101,10 @@
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5">
-                        <h3 class="text-[14px] font-bold text-white tracking-tight truncate">Asisten Panduan Cooca</h3>
-                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-white/20 text-white border border-white/30 uppercase">24/7 AI</span>
+                        <h3 class="text-[14px] font-bold text-white tracking-tight truncate"
+                            x-text="activeMode === 'business_assistant' ? 'COOCA Business Assistant' : 'Asisten Panduan Cooca'"></h3>
+                        <span class="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-white/20 text-white border border-white/30 uppercase"
+                              x-text="activeMode === 'business_assistant' ? 'BI & DATA' : '24/7 AI'"></span>
                     </div>
                     <p class="text-[11px] text-white/80 truncate">
                         {{ \App\Support\Context::business()->name ?? 'Bisnis Aktif' }} &bull; Peran: {{ \App\Support\Context::role() ?? 'Staff' }}
@@ -110,6 +113,17 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
+                {{-- New Conversation (+) Button --}}
+                <button type="button"
+                        @click="startNewConversation()"
+                        title="Percakapan Baru"
+                        class="w-7 h-7 rounded-lg hover:bg-white/15 active:scale-95 text-white/80 hover:text-white flex items-center justify-center transition cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </button>
+
                 {{-- Reset / Clear Conversation --}}
                 <button type="button"
                         @click="clearChat()"
@@ -135,11 +149,42 @@
             </div>
         </div>
 
+        {{-- APPLE HIG SEGMENTED CONTROL MODE SWITCHER (BAGIAN 8 & 9) --}}
+        <div class="px-3 py-2 bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/5 dark:border-white/10 flex items-center gap-1.5 select-none shrink-0">
+            <button type="button"
+                    @click="switchMode('help_center')"
+                    :class="activeMode === 'help_center'
+                        ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] dark:text-[#0A84FF] shadow-xs font-bold border-black/5 dark:border-white/10'
+                        : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium border-transparent'"
+                    class="flex-1 py-1.5 px-2 rounded-xl text-[11px] border transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Help Center (Panduan)</span>
+            </button>
+
+            <button type="button"
+                    @click="switchMode('business_assistant')"
+                    :class="activeMode === 'business_assistant'
+                        ? 'bg-white dark:bg-[#2C2C2E] text-[#007AFF] dark:text-[#0A84FF] shadow-xs font-bold border-black/5 dark:border-white/10'
+                        : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium border-transparent'"
+                    class="flex-1 py-1.5 px-2 rounded-xl text-[11px] border transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+                <span>Business Assistant (Data)</span>
+            </button>
+        </div>
+
         {{-- MESSAGE STREAM BODY --}}
         <div id="cooca-chatbot-messages"
              class="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3.5 text-xs text-black dark:text-white scrollbar-thin scrollbar-thumb-black/10 dark:scrollbar-thumb-white/10">
 
-            {{-- 1. Initial Greeting Card (Always present) --}}
+            {{-- 1. Mode-Aware Welcome Card --}}
             <div class="p-3.5 rounded-2xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/10 space-y-2">
                 <div class="flex items-center gap-2 text-black/75 dark:text-white/85 font-bold text-xs">
                     <span class="w-5 h-5 rounded-lg bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center text-[10px]">
@@ -147,44 +192,87 @@
                     </span>
                     <span>Halo Kak {{ Auth::user()->name ?? 'Pengguna' }}!</span>
                 </div>
-                <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
-                    Saya asisten panduan pintar Cooca. Tanyakan cara penggunaan modul apa saja (Kasir POS, kalkulasi HPP resep, stok gudang, penjualan B2B, atau toko online).
-                </p>
 
-                {{-- Quick Prompt Chips --}}
-                <div class="pt-1.5 space-y-1.5">
-                    <span class="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider block">Pertanyaan Populer:</span>
-                    <div class="flex flex-wrap gap-1.5">
-                        <button type="button"
-                                @click="askQuestion('Bagaimana cara buka dan tutup shift kasir POS?')"
-                                class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                            🧾 Buka &amp; Tutup Shift Kasir
-                        </button>
-                        <button type="button"
-                                @click="askQuestion('Bagaimana cara menghitung HPP resep dan margin jual?')"
-                                class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                            ⚖️ Hitung HPP Resep BOM
-                        </button>
-                        <button type="button"
-                                @click="askQuestion('Bagaimana cara transfer stok antar gudang dan cabang?')"
-                                class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                            📦 Transfer Stok Gudang
-                        </button>
-                        <button type="button"
-                                @click="askQuestion('Bagaimana cara memilih tema toko online dari 42 tema?')"
-                                class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                            🌐 42 Tema Toko Online
-                        </button>
-                        <button type="button"
-                                @click="askQuestion('Berapa omzet kasir penjualan hari ini?')"
-                                class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                            📊 Cek Omzet (Izin Khusus)
-                        </button>
+                {{-- Help Center Mode Greeting --}}
+                <template x-if="activeMode === 'help_center'">
+                    <div class="space-y-2">
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
+                            Saya asisten panduan pintar Cooca. Tanyakan cara penggunaan modul apa saja (Kasir POS, kalkulasi HPP resep, stok gudang, penjualan B2B, atau toko online).
+                        </p>
+                        <div class="pt-1.5 space-y-1.5">
+                            <span class="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider block">Pertanyaan Populer:</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <button type="button"
+                                        @click="askQuestion('Bagaimana cara buka & tutup shift kasir POS?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    🧾 Buka &amp; Tutup Shift Kasir
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Bagaimana cara menghitung HPP resep makanan/minuman?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    ⚖️ Hitung HPP Resep BOM
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Bagaimana cara transfer stok antar gudang?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    📦 Transfer Stok Gudang
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Bagaimana cara mengganti tema toko online?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    🌐 42 Tema Toko Online
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Apa saja pintasan tombol keyboard di Cooca?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    ⌨️ Pintasan Keyboard
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </template>
+
+                {{-- Business Assistant Mode Greeting --}}
+                <template x-if="activeMode === 'business_assistant'">
+                    <div class="space-y-2">
+                        <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
+                            Saya COOCA AI Business Assistant. Siap membantu Anda menganalisis performa penjualan, omzet harian/bulanan, stok menipis, dan efisiensi operasional bisnis.
+                        </p>
+                        <div class="pt-1.5 space-y-1.5">
+                            <span class="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider block">Analisis Cepat:</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <button type="button"
+                                        @click="askQuestion('Berapa total omzet dan penjualan hari ini?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    📊 Cek Omzet Hari Ini
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Produk apa saja yang stoknya habis atau menipis?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    📦 Produk Stok Menipis
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Apa saja 5 produk terlaris bulan ini?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    🔥 5 Produk Terlaris
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Berapa total pengeluaran operasional bulan ini?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    💳 Pengeluaran Bulan Ini
+                                </button>
+                                <button type="button"
+                                        @click="askQuestion('Bagaimana status absensi dan kehadiran karyawan hari ini?')"
+                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
+                                    👥 Absensi Karyawan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
 
-            {{-- 2. Message History Loop --}}
+            {{-- 2. Message History Stream Loop --}}
             <template x-for="(msg, index) in messages" :key="index">
                 <div :class="msg.sender === 'user' ? 'flex justify-end' : 'flex justify-start'">
                     <div :class="msg.sender === 'user'
@@ -200,22 +288,46 @@
                                         <circle cx="8" cy="14" r="1.5" fill="currentColor"></circle>
                                         <circle cx="16" cy="14" r="1.5" fill="currentColor"></circle>
                                     </svg>
-                                    <span>Cooca AI Assistant</span>
+                                    <span x-text="msg.is_data_query ? 'COOCA Business Assistant' : 'Cooca AI Assistant'"></span>
                                 </div>
-                                <span x-show="msg.ai_model" x-text="msg.ai_model" class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]"></span>
+                                <div class="flex items-center gap-1">
+                                    <span x-show="msg.is_queued" class="text-[9px] font-semibold px-1.5 py-0.2 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400">Antrean Aktif</span>
+                                    <span x-show="msg.ai_model" x-text="msg.ai_model" class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]"></span>
+                                </div>
                             </div>
                         </template>
 
-                        {{-- Message Content Text (Supports HTML/Markdown formatting) --}}
-                        <div class="text-[12px] leading-relaxed break-words chatbot-markdown"
-                             x-html="formatMessage(msg.text)"></div>
+                        {{-- HIGH TRAFFIC QUEUE CARD INDICATOR (BAGIAN 4) --}}
+                        <template x-if="msg.is_queued">
+                            <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                                    </svg>
+                                    <span class="text-[11px] font-bold" x-text="msg.status === 'processing' ? 'Sedang Diproses Sistem...' : 'Menunggu Antrean Sistem...'"></span>
+                                </div>
+                                <p class="text-[11px] leading-relaxed opacity-90" x-text="msg.text"></p>
+                            </div>
+                        </template>
 
-                        {{-- Quick Navigation Action Links (if any) --}}
+                        {{-- Regular Message Content (Markdown Rendered) --}}
+                        <template x-if="!msg.is_queued">
+                            <div class="text-[12px] leading-relaxed break-words chatbot-markdown"
+                                 x-html="formatMessage(msg.text)"></div>
+                        </template>
+
+                        {{-- Quick Navigation Action Links & Support Contacts --}}
                         <template x-if="msg.quick_links && msg.quick_links.length > 0">
                             <div class="pt-2 border-t border-black/5 dark:border-white/10 flex flex-wrap gap-1.5">
                                 <template x-for="(link, lIdx) in msg.quick_links" :key="lIdx">
                                     <a :href="link.url"
-                                       class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#007AFF]/10 dark:bg-[#0A84FF]/20 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF] hover:text-white text-[11px] font-bold transition-all active:scale-95 shadow-2xs">
+                                       :class="link.icon === 'whatsapp' ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white' : (link.icon === 'email' ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white' : 'bg-[#007AFF]/10 dark:bg-[#0A84FF]/20 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF] hover:text-white')"
+                                       class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all active:scale-95 shadow-2xs">
                                         <span x-text="link.label"></span>
                                         <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                             <path d="M5 12h14"></path>
@@ -235,7 +347,8 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-[#007AFF] animate-bounce"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-[#5856D6] animate-bounce [animation-delay:0.2s]"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-[#AF52DE] animate-bounce [animation-delay:0.4s]"></span>
-                    <span class="text-[11px] font-medium text-black/50 dark:text-white/50 ml-1">Menyiapkan jawaban...</span>
+                    <span class="text-[11px] font-medium text-black/50 dark:text-white/50 ml-1"
+                          x-text="activeMode === 'business_assistant' ? 'Menganalisis data bisnis...' : 'Menyiapkan panduan...'"></span>
                 </div>
             </div>
         </div>
@@ -247,7 +360,7 @@
                        x-ref="chatInput"
                        x-model="inputQuery"
                        :disabled="isLoading"
-                       placeholder="Tanya cara pakai fitur Cooca..."
+                       :placeholder="activeMode === 'business_assistant' ? 'Tanya omzet, stok menipis, atau absensi...' : 'Tanya cara pakai fitur Cooca...'"
                        class="w-full h-10 pl-3.5 pr-11 rounded-xl bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:border-[#007AFF] transition disabled:opacity-50">
 
                 <button type="submit"
@@ -263,7 +376,10 @@
 
             <div class="flex items-center justify-between text-[10px] text-black/40 dark:text-white/40 px-1 select-none">
                 <span>Tekan <kbd class="font-mono bg-black/5 dark:bg-white/10 px-1 py-0.2 rounded text-[9px]">Enter</kbd> untuk mengirim</span>
-                <span>Isolasi Multi-Tenant Aktif</span>
+                <span class="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    Isolasi Tenant &amp; RBAC Aktif
+                </span>
             </div>
         </div>
 
@@ -277,13 +393,26 @@ function coocaHelpChatbot() {
         isOpen: false,
         showGreeting: true,
         isLoading: false,
+        activeMode: 'help_center', // 'help_center' | 'business_assistant'
+        activeConversationId: null,
         inputQuery: '',
         messages: [],
+        pollingTimers: {},
 
         init() {
             // Load saved conversation state from session storage
             try {
-                const saved = sessionStorage.getItem('cooca_help_chat_history');
+                const savedMode = sessionStorage.getItem('cooca_chat_active_mode');
+                if (savedMode && (savedMode === 'help_center' || savedMode === 'business_assistant')) {
+                    this.activeMode = savedMode;
+                }
+
+                const savedConv = sessionStorage.getItem('cooca_chat_conversation_id');
+                if (savedConv) {
+                    this.activeConversationId = savedConv;
+                }
+
+                const saved = sessionStorage.getItem('cooca_help_chat_history_' + this.activeMode);
                 if (saved) {
                     this.messages = JSON.parse(saved);
                 }
@@ -292,6 +421,27 @@ function coocaHelpChatbot() {
             // Dismiss greeting if closed previously
             if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
                 this.showGreeting = false;
+            }
+        },
+
+        switchMode(mode) {
+            if (this.activeMode === mode) return;
+            this.activeMode = mode;
+            try {
+                sessionStorage.setItem('cooca_chat_active_mode', mode);
+            } catch (e) {}
+
+            // Load mode-specific conversation history
+            try {
+                const saved = sessionStorage.getItem('cooca_help_chat_history_' + mode);
+                this.messages = saved ? JSON.parse(saved) : [];
+            } catch (e) {
+                this.messages = [];
+            }
+
+            this.scrollToBottom();
+            if (this.$refs.chatInput) {
+                this.$refs.chatInput.focus();
             }
         },
 
@@ -318,9 +468,40 @@ function coocaHelpChatbot() {
         clearChat() {
             this.messages = [];
             try {
-                sessionStorage.removeItem('cooca_help_chat_history');
+                sessionStorage.removeItem('cooca_help_chat_history_' + this.activeMode);
+                sessionStorage.removeItem('cooca_chat_conversation_id');
             } catch (e) {}
+            this.activeConversationId = null;
             this.inputQuery = '';
+        },
+
+        async startNewConversation() {
+            this.clearChat();
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                const res = await fetch('{{ route('help-chatbot.conversations.new') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({ type: this.activeMode })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    this.activeConversationId = data.conversation_id;
+                    try {
+                        sessionStorage.setItem('cooca_chat_conversation_id', data.conversation_id);
+                    } catch (e) {}
+                }
+            } catch (e) {}
+
+            this.scrollToBottom();
+            if (this.$refs.chatInput) {
+                this.$refs.chatInput.focus();
+            }
         },
 
         askQuestion(query) {
@@ -350,6 +531,16 @@ function coocaHelpChatbot() {
                     text: m.text
                 }));
 
+                const payload = {
+                    message: query,
+                    type: this.activeMode,
+                    history: historyPayload
+                };
+
+                if (this.activeConversationId) {
+                    payload.conversation_id = this.activeConversationId;
+                }
+
                 const res = await fetch('{{ route('help-chatbot.ask') }}', {
                     method: 'POST',
                     headers: {
@@ -357,28 +548,47 @@ function coocaHelpChatbot() {
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
-                    body: JSON.stringify({
-                        message: query,
-                        history: historyPayload
-                    })
+                    body: JSON.stringify(payload)
                 });
 
                 if (res.ok) {
                     const data = await res.json();
+                    if (data.conversation_id) {
+                        this.activeConversationId = data.conversation_id;
+                        try {
+                            sessionStorage.setItem('cooca_chat_conversation_id', data.conversation_id);
+                        } catch (e) {}
+                    }
+
+                    const isQueued = (data.status === 'queued' || data.status === 'pending');
+                    const msgIndex = this.messages.length;
+
                     this.messages.push({
                         sender: 'assistant',
                         text: data.reply || 'Maaf, saya tidak dapat memahami pertanyaan tersebut.',
+                        status: data.status || 'completed',
+                        is_queued: isQueued,
+                        message_id: data.message_id || null,
+                        is_data_query: !!data.is_data_query,
                         quick_links: data.quick_links || [],
                         ai_model: data.ai_model || null,
                         provider: data.provider || null,
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                     });
+
+                    // Jika masuk antrean, mulai polling background status
+                    if (isQueued && data.message_id) {
+                        this.startPollingStatus(msgIndex, data.message_id);
+                    }
                 } else {
                     const errData = await res.json().catch(() => ({}));
                     this.messages.push({
                         sender: 'assistant',
-                        text: errData.message || 'Terjadi gangguan saat memproses jawaban. Silakan coba sesaat lagi.',
-                        quick_links: [],
+                        text: errData.message || 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.',
+                        quick_links: [
+                            { label: 'Hubungi Support via WhatsApp', url: 'https://wa.me/6285287864176?text=Halo%20Tim%20Support%20COOCA%2C%20saya%20butuh%20bantuan', icon: 'whatsapp' },
+                            { label: 'Hubungi Support via Email', url: 'mailto:support@cooca.id?subject=Bantuan%20Sistem%20COOCA', icon: 'email' }
+                        ],
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                     });
                 }
@@ -396,9 +606,61 @@ function coocaHelpChatbot() {
             }
         },
 
+        startPollingStatus(msgIndex, messageId) {
+            let attempts = 0;
+            const maxAttempts = 30; // Max 60 seconds of polling
+
+            const check = async () => {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    if (this.messages[msgIndex]) {
+                        this.messages[msgIndex].is_queued = false;
+                        this.messages[msgIndex].text = 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.';
+                        this.messages[msgIndex].quick_links = [
+                            { label: 'Hubungi Support via WhatsApp', url: 'https://wa.me/6285287864176?text=Halo%20Tim%20Support%20COOCA%2C%20saya%20butuh%20bantuan', icon: 'whatsapp' },
+                            { label: 'Hubungi Support via Email', url: 'mailto:support@cooca.id?subject=Bantuan%20Sistem%20COOCA', icon: 'email' }
+                        ];
+                    }
+                    this.saveHistory();
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/help-chatbot/status/${messageId}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (this.messages[msgIndex]) {
+                            this.messages[msgIndex].status = data.status;
+                            if (data.is_completed) {
+                                this.messages[msgIndex].is_queued = false;
+                                this.messages[msgIndex].text = data.reply;
+                                this.messages[msgIndex].quick_links = data.quick_links || [];
+                                this.messages[msgIndex].ai_model = data.ai_model || null;
+                                this.saveHistory();
+                                this.scrollToBottom();
+                                return; // Stop polling
+                            } else if (data.is_failed) {
+                                this.messages[msgIndex].is_queued = false;
+                                this.messages[msgIndex].text = data.reply;
+                                this.messages[msgIndex].quick_links = data.quick_links || [];
+                                this.saveHistory();
+                                this.scrollToBottom();
+                                return; // Stop polling
+                            }
+                        }
+                    }
+                } catch (e) {}
+
+                // Next poll in 2 seconds
+                setTimeout(check, 2000);
+            };
+
+            setTimeout(check, 2000);
+        },
+
         saveHistory() {
             try {
-                sessionStorage.setItem('cooca_help_chat_history', JSON.stringify(this.messages.slice(-15)));
+                sessionStorage.setItem('cooca_help_chat_history_' + this.activeMode, JSON.stringify(this.messages.slice(-15)));
             } catch (e) {}
         },
 
@@ -449,4 +711,3 @@ function coocaHelpChatbot() {
     };
 }
 </script>
-

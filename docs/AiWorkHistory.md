@@ -33,6 +33,58 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-379] Optimalisasi AI Chatbot COOCA & Implementasi AI Business Assistant
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** In-App Help Center AI, Business Assistant AI, Queue & High Traffic Management, Role-Based Access Control (RBAC), Multi-Tenant Security, Apple HIG UI
+- **Feature:** Optimalisasi Menyeluruh AI Chatbot COOCA & Implementasi AI Business Assistant (15 Bagian Mandat):
+  1. **Audit Sistem Chatbot Existing:** Mengevaluasi alur pesan, integrasi provider (`AiProviderManager`), batas token, session, mitigasi timeout, dan perbaikan akar masalah otorisasi/isolasi multi-tenant.
+  2. **AI Response Intelligence & Decision Tree:** Menerapkan alur Intent Detection ketat: memvalidasi identitas sesi pengguna, mendeteksi maksud pertanyaan (Panduan Fitur vs Kueri Data Bisnis vs Penolakan Izin vs Ambigu), grounding database aktual, dan sintesis balasan tanpa halusinasi.
+  3. **Penanganan Kegagalan Provider & Error Handshake Standar:** Deteksi kegagalan API key, timeout, quota habis, dan gangguan provider dengan respons standar: *"Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan."* dilengkapi tautan dinamis WhatsApp dan Email dari konfigurasi sistem.
+  4. **High Traffic & Queue Management (Laravel Database Queue):** Membatasi concurrent AI requests per tenant (`MAX_CONCURRENT_PER_BUSINESS = 2`). Saat antrean penuh atau traffic tinggi, sistem menyimpan pesan dalam status `pending` dan men-dispatch `ProcessAiChatbotMessageJob` dengan respons: *"Saat ini COOCA sedang menerima banyak permintaan. Pesan Anda sedang menunggu antrean. Silakan tunggu, kami akan segera memprosesnya."* Disertai polling status endpoint (`GET /help-chatbot/status/{messageId}`).
+  5. **Help Center AI (Panduan Pengguna / How-To):** Layanan panduan mandiri bebas form kontak, tampil langsung di Owner Panel. **Batasan Keamanan Mutlak (Zero Operational Data Leakage):** Dilarang keras menampilkan data penjualan, karyawan, gaji, atau stok riil. Jika ditanya data bisnis, wajib merujuk: *"Untuk pertanyaan mengenai data bisnis, silakan gunakan COOCA AI Business Assistant yang tersedia pada akun Anda."*
+  6. **COOCA AI Business Assistant:** Layanan analitik kecerdasan bisnis untuk pemilik usaha dan manajer berwenang. Mengambil dan menganalisis data aktual dari modul POS, Penjualan, Produk, Inventori/Stok Menipis, Pengeluaran/Biaya, dan Absensi Tim.
+  7. **Integrasi Role & Permission Ketat (Anti-IDOR & Zero Bypass):** Menggunakan Single Source of Truth `Context::isOwner()` dan `Context::hasPermission()`. Jika pengguna tidak memiliki izin (`reports.view`, `reports.financial`, `pos.reports`, `users.view`, `inventory.view`), sistem menolak tegas: *"🔒 **Akses Ditolak:**\n\nMaaf, Anda tidak memiliki izin untuk mengakses informasi tersebut. Silakan hubungi administrator bisnis Anda untuk mendapatkan akses."*
+  8. **Pemisahan Tegas 2 Sistem Chatbot:** Arsitektur terpisah secara independen antara `HelpCenterAiService` dan `BusinessAssistantAiService` yang diorkestrasi secara cerdas oleh `HelpChatbotService`.
+  9. **Pembaruan Antarmuka Widget Apple HIG:** Menghadirkan segmented control pill switcher di header, adaptive quick prompt chips per mode, indikator visual antrean realtime, tombol "Percakapan Baru" (+), tombol kontak support, dan rendering Markdown yang aman dan responsif.
+  10. **Automated Testing Suite (100% Passed):** 12 unit & feature tests di `tests/Feature/InAppHelpChatbotTest.php` (51 assertions lolos 100%, 0 failures, 0 errors).
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha dan staf membutuhkan dua kapabilitas AI yang berbeda dalam operasional harian: panduan cara penggunaan modul aplikasi (Help Center) dan wawasan analitik bisnis berbasis data riil (Business Assistant).
+- **Masalah/Target:** Mengatasi potensi kebocoran data bisnis ke staf non-otoritatif (seperti kasir), menangani lonjakan traffic dengan antrean asinkron tanpa membebani server, dan mengeliminasi ketergantungan live chat admin manual.
+
+#### 2. What Was Done
+- Membuat migrasi `database/migrations/2026_11_05_140000_create_ai_chatbot_conversations_and_messages_tables.php` dan menjalankan migrasi ke tabel `ai_chatbot_conversations` dan `ai_chatbot_messages`.
+- Membuat model `App\Models\AiChatbotConversation` dan `App\Models\AiChatbotMessage`.
+- Membuat service `App\Domain\Ai\Chatbot\HelpCenterAiService` untuk panduan fitur in-app berorientasi how-to dengan larangan akses data bisnis.
+- Membuat service `App\Domain\Ai\Chatbot\BusinessAssistantAiService` untuk analitik data riil berpagar RBAC (`reports.view`, `users.view`, `inventory.view`, dll.) dan grounding database aktual.
+- Membuat background worker job `App\Jobs\ProcessAiChatbotMessageJob` untuk pemrosesan antrean asinkron saat kapasitas penuh.
+- Merefaktor `App\Domain\Ai\HelpChatbotService` sebagai Master Orchestrator dengan pembatasan concurrent request per tenant dan delegasi mode.
+- Memperluas `App\Http\Controllers\Web\HelpChatbotWebController` dan mendaftarkan 5 route endpoint di `routes/owner.php`.
+- Memperbarui komponen widget `resources/views/layouts/partials/help_chatbot_widget.blade.php` dengan Segmented Mode Switcher, Quick Chips dinamis, Queue Card real-time, dan tombol percakapan baru.
+- Menulis dan memverifikasi 12 skenario pengujian di `tests/Feature/InAppHelpChatbotTest.php` (12 passed, 51 assertions).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `database/migrations/2026_11_05_140000_create_ai_chatbot_conversations_and_messages_tables.php` (created)
+  - `app/Models/AiChatbotConversation.php` (created)
+  - `app/Models/AiChatbotMessage.php` (created)
+  - `app/Domain/Ai/Chatbot/HelpCenterAiService.php` (created)
+  - `app/Domain/Ai/Chatbot/BusinessAssistantAiService.php` (created)
+  - `app/Jobs/ProcessAiChatbotMessageJob.php` (created)
+  - `app/Domain/Ai/HelpChatbotService.php` (refactored)
+  - `app/Http/Controllers/Web/HelpChatbotWebController.php` (expanded)
+  - `routes/owner.php` (modified)
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (redesigned)
+  - `tests/Feature/InAppHelpChatbotTest.php` (expanded to 12 tests)
+  - `docs/AiWorkHistory.md` (modified)
+- **Database Changes:**
+  - Tabel baru `ai_chatbot_conversations` (UUID id, business_id, user_id, type [help_center, business_assistant], title, timestamps).
+  - Tabel baru `ai_chatbot_messages` (UUID id, conversation_id, sender [user, assistant, system], content, intent, is_data_query, permission_granted, status [pending, processing, completed, failed], metadata JSON, timestamps).
+
+---
+
 ### [WORK-2026-11-05-378] Implementasi In-App Help Chatbot dengan Isolasi Multi-Tenant Ketat & Penegakan Otorisasi RBAC Peran Pengguna
 
 - **Date:** 2026-11-05
@@ -23785,6 +23837,7 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   6. `tests/Feature/AdminB2bTest.php`: **Passed (100% Success)**.
   7. `tests/Feature/AdminFinanceTest.php`: **Passed (100% Success)**.
 - **Production Readiness Gate:** **PASSED (Super Lengkap, Production Hardened, Zero Vulnerability)**.
+
 
 
 

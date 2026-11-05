@@ -336,4 +336,133 @@ final class InAppHelpChatbotTest extends TestCase
             'provider' => 'openai',
         ]);
     }
+
+    public function test_help_center_mode_strictly_rejects_business_data_and_refers_to_business_assistant(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->postJson(route('help-chatbot.ask'), [
+                'type' => 'help_center',
+                'message' => 'Berapa omzet hari ini dan data penjualan toko kita?',
+            ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'is_data_query' => true,
+            'permission_granted' => false,
+        ]);
+
+        $reply = $response->json('reply');
+        $this->assertStringContainsString('Untuk pertanyaan mengenai data bisnis, silakan gunakan COOCA AI Business Assistant yang tersedia pada akun Anda.', $reply);
+    }
+
+    public function test_high_traffic_queue_dispatches_job_and_can_be_polled(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        // Send query with force_queue to simulate high traffic load
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->postJson(route('help-chatbot.ask'), [
+                'message' => 'Bagaimana cara menambahkan kategori produk baru?',
+                'force_queue' => true,
+            ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'status' => 'queued',
+        ]);
+
+        $reply = $response->json('reply');
+        $this->assertStringContainsString('Saat ini COOCA sedang menerima banyak permintaan. Pesan Anda sedang menunggu antrean.', $reply);
+
+        $messageId = $response->json('message_id');
+        $conversationId = $response->json('conversation_id');
+        $this->assertNotNull($messageId);
+
+        // Poll status endpoint
+        $pollRes = $this->actingAs($user, 'web')
+            ->withSession(['active_business_id' => $business->id])
+            ->getJson(route('help-chatbot.status', ['messageId' => $messageId]));
+
+        $pollRes->assertOk();
+
+        // In test environment with sync queue driver, the job may complete immediately on dispatch.
+        // If not completed yet (e.g. database/redis queue), execute handle manually and verify completion.
+        if ($pollRes->json('is_completed')) {
+            $this->assertSame('completed', $pollRes->json('status'));
+            $this->assertStringContainsString('cooca', strtolower($pollRes->json('reply')));
+        } else {
+            $this->assertSame('pending', $pollRes->json('status'));
+
+            $job = new \App\Jobs\ProcessAiChatbotMessageJob(
+                $messageId,
+                $conversationId,
+                $business->id,
+                $user->id,
+                'Bagaimana cara menambahkan kategori produk baru?',
+                'help_center'
+            );
+            $job->handle();
+
+            $completedPoll = $this->actingAs($user, 'web')
+                ->withSession(['active_business_id' => $business->id])
+                ->getJson(route('help-chatbot.status', ['messageId' => $messageId]));
+
+            $completedPoll->assertOk();
+            $this->assertTrue($completedPoll->json('is_completed'));
+            $this->assertSame('completed', $completedPoll->json('status'));
+            $this->assertStringContainsString('cooca', strtolower($completedPoll->json('reply')));
+        }
+    }
+
+    public function test_system_busy_response_contains_mandatory_whatsapp_and_email_links(): void
+    {
+        $busyResponse = \App\Domain\Ai\Chatbot\HelpCenterAiService::buildSystemBusyResponse();
+
+        $this->assertSame('busy', $busyResponse['status']);
+        $this->assertStringContainsString('Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.', $busyResponse['reply']);
+
+        $urls = array_column($busyResponse['quick_links'], 'url');
+        $this->assertTrue(collect($urls)->contains(fn ($u) => str_contains($u, 'wa.me')));
+        $this->assertTrue(collect($urls)->contains(fn ($u) => str_contains($u, 'mailto:')));
+    }
+
+    public function test_user_can_create_new_conversation_and_retrieve_history(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        // Create new conversation
+        $createRes = $this->actingAs($user, 'web')
+            ->withSession(['active_business_id' => $business->id])
+            ->postJson(route('help-chatbot.conversations.new'), [
+                'type' => 'business_assistant',
+                'title' => 'Analisis Mingguan Kafe',
+            ]);
+
+        $createRes->assertOk();
+        $conversationId = $createRes->json('conversation_id');
+        $this->assertNotNull($conversationId);
+        $this->assertSame('business_assistant', $createRes->json('type'));
+
+        // Fetch history
+        $historyRes = $this->actingAs($user, 'web')
+            ->withSession(['active_business_id' => $business->id])
+            ->getJson(route('help-chatbot.history', ['conversationId' => $conversationId]));
+
+        $historyRes->assertOk();
+        $this->assertSame($conversationId, $historyRes->json('conversation.id'));
+        $this->assertSame('business_assistant', $historyRes->json('conversation.type'));
+        $this->assertIsArray($historyRes->json('messages'));
+    }
 }

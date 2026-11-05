@@ -127,6 +127,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
     Route::middleware(['business.active', 'profile.complete', 'verified'])->group(function (): void {
         // Interactive In-App Help Chatbot (Feature How-To & Permission-Gated Data Assistance)
         Route::post('/help-chatbot/ask', [HelpChatbotWebController::class, 'ask'])->name('help-chatbot.ask');
+        Route::get('/help-chatbot/status/{messageId}', [HelpChatbotWebController::class, 'checkJobStatus'])->name('help-chatbot.status');
+        Route::get('/help-chatbot/conversations', [HelpChatbotWebController::class, 'getConversations'])->name('help-chatbot.conversations');
+        Route::get('/help-chatbot/history/{conversationId}', [HelpChatbotWebController::class, 'getHistory'])->name('help-chatbot.history');
+        Route::post('/help-chatbot/conversations/new', [HelpChatbotWebController::class, 'newConversation'])->name('help-chatbot.conversations.new');
 
         // Staff Personal Portal & Attendance Hub (Accessible to all authenticated members)
         Route::get('/portal', [PortalWebController::class, 'index'])->name('portal');
