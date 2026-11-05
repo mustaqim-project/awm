@@ -261,6 +261,18 @@
                             </span>
                             <span class="truncate tracking-tight font-medium text-[12px]">Loyalitas &amp; WhatsApp Gateway</span>
                         </a>
+
+                        <!-- Toko Online & 42 Tema Storefront -->
+                        <a href="#sec-storefront" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-indigo-500/15 text-indigo-500 dark:bg-indigo-400/20 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Toko Online &amp; 42 Tema</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">6 Arketipe</span>
+                            </div>
+                        </a>
                     </div>
 
                     <!-- KLASTER 5: SYSTEM & SETTINGS -->
@@ -721,6 +733,12 @@
                     </div>
                 </div>
             </section>
+
+            <!-- ===================================================== -->
+            <!-- SECTION: TOKO ONLINE & 42 TEMA STOREFRONT UNIVERSAL    -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & 6 ARKETIPE DESAIN)   -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_storefront')
 
             <!-- ===================================================== -->
             <!-- SECTION 9: KOMUNITAS BISNIS & EVENT UMKM COOCA        -->

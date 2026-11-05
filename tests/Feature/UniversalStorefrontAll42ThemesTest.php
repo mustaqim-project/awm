@@ -190,7 +190,7 @@ final class UniversalStorefrontAll42ThemesTest extends TestCase
     }
 
     /**
-     * Test 4: Verify preview rendering succeeds for each theme.
+     * Test 4: Verify preview rendering succeeds for each theme and honors landing page settings.
      */
     public function test_all_42_themes_render_successfully_on_preview(): void
     {
@@ -200,6 +200,12 @@ final class UniversalStorefrontAll42ThemesTest extends TestCase
             $response = $this->get('/' . $this->business->slug . '?preview=1&preview_theme=' . $themeKey);
             $response->assertStatus(200);
             $response->assertSee('Universal Nusantara Group', false);
+            // Verify Headline is rendered from landing page CMS across all 42 themes (handles &amp; HTML entity)
+            $response->assertSee('Koleksi Produk & Layanan Unggulan');
+            // Verify Primary CTA is rendered from landing page CMS across all 42 themes
+            $response->assertSee('Buka Katalog Lengkap', false);
+            // Verify Universal Value Pillar 1 is rendered across all 42 themes
+            $response->assertSee('Kualitas Standar ISO', false);
         }
     }
 

@@ -33,6 +33,58 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-377] Audit Sistemik Landing Page CMS & Rekonstruksi Penuh 21 Hero Tema Storefront Universal
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** Storefront, Landing Page CMS, Design System, Multi-Industry & i18n
+- **Feature:** Audit Menyeluruh Arsitektur Landing Page dan Standardisasi Universal 42 Tema Storefront:
+  1. **Audit Sistemik Landing Page CMS (`resources/views/app/landing_page/edit.blade.php`):** Menganalisis alur pengelolaan tema melalui 11 Studio Tabs di backoffice owner. Memverifikasi bahwa seluruh pilihan tema (42 tema terbagi dalam 6 Arketipe Desain), penyesuaian warna aksen (`--theme-primary`), font tipografi Google Fonts, Dark Mode, visibilitas 12 seksi, navigasi multi-halaman dinamis auto-hide, serta konten hero/pilar/katalog/layanan/galeri/testimoni/FAQ/kontak/footer benar-benar terhubung dan mengontrol presentasi toko publik.
+  2. **Temuan Kritis & Rekonstruksi 21 Hero Tema Storefront:** Menemukan bahwa pada refactoring Batch 3 & 4 sebelumnya, 21 berkas `hero.blade.php` terpotong (hanya menyisakan 51 baris kolom kanan `lg:col-span-5` tanpa `@php`, `<section>`, dan kolom kiri `lg:col-span-7`). Melakukan rekonstruksi penuh pada ke-21 tema tersebut (`booking_appointment`, `construction_property`, `education_courses`, `event_wedding`, `hospitality_accommodation`, `logistics_transportation`, `manufacturing_factory`, `personal_brand`, `portfolio_creative`, `product_showcase`, `professional_services`, `retail_pharmacy`, `service_agency`, `service_beauty`, `service_business`, `service_carwash`, `service_fitness`, `service_laundry`, `service_petshop`, `service_printing`, `wholesale_distributor`) dengan gaya visual otentik masing-masing, dipadukan dengan Universal Blade Contract penuh.
+  3. **Penegakan Universal Blade Contract:** Menjamin 100% dari 42 tema storefront bebas dari hardcoded copy komoditas industri kaku, bebas URL foto statis eksternal (Unsplash), menerapkan 3-tier fallback hierarchy (`$landingPage` → `$business` → `__('storefront...')`), menginjeksi 4 pilar nilai via `$landingPage->getUniversalValues()`, dan patuh pada toggle navigasi `isPageActive()`.
+  4. **Peningkatan Automated Testing & Verifikasi 100%:** Memperketat test suite `tests/Feature/UniversalStorefrontAll42ThemesTest.php` untuk memvalidasi bahwa setiap dari 42 tema berhasil me-render custom headline, primary CTA, dan pilar keunggulan yang dikonfigurasi melalui Landing Page CMS (951 assertions lolos 100%, 0 failures, 0 errors).
+
+#### 1. Business Context & Objective
+- **Konteks:** Merchant membutuhkan kepastian bahwa tema storefront yang dipilih di Landing Page CMS dapat langsung diterapkan dan dikonfigurasi secara visual, serta seluruh tema bersifat universal dan fleksibel untuk industri apapun tanpa terkunci oleh teks/foto bawaan template.
+- **Masalah/Target:** Mengaudit menyeluruh sistem landing page dan 42 temanya, mendeteksi dan memperbaiki cacat struktural pada template tema, menjamin seluruh kontrol CMS bekerja mulus ke tema publik, dan memverifikasi kepatuhan universal contract dengan bukti nyata.
+
+#### 2. What Was Done
+- Mengaudit end-to-end model `BusinessLandingPage`, controller `BusinessLandingPageWebController`, service `StorefrontThemeService`, view editor `resources/views/app/landing_page/edit.blade.php`, controller publik `PublicStorefrontController`, serta seluruh 256 berkas Blade di `resources/views/public/storefront/themes/`.
+- Merekonstruksi keutuhan 21 berkas `hero.blade.php` yang sebelumnya terpotong separuh, mengembalikan ambient glow, struktur `<section>`, dan kolom kiri berstandar universal contract.
+- Menjalankan `php -l` pada seluruh 256 berkas Blade storefront themes (0 syntax error).
+- Memperbarui dan menjalankan test suite `tests/Feature/UniversalStorefrontAll42ThemesTest.php` (951 assertions passed).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `resources/views/public/storefront/themes/booking_appointment/hero.blade.php`
+  - `resources/views/public/storefront/themes/construction_property/hero.blade.php`
+  - `resources/views/public/storefront/themes/education_courses/hero.blade.php`
+  - `resources/views/public/storefront/themes/event_wedding/hero.blade.php`
+  - `resources/views/public/storefront/themes/hospitality_accommodation/hero.blade.php`
+  - `resources/views/public/storefront/themes/logistics_transportation/hero.blade.php`
+  - `resources/views/public/storefront/themes/manufacturing_factory/hero.blade.php`
+  - `resources/views/public/storefront/themes/personal_brand/hero.blade.php`
+  - `resources/views/public/storefront/themes/portfolio_creative/hero.blade.php`
+  - `resources/views/public/storefront/themes/product_showcase/hero.blade.php`
+  - `resources/views/public/storefront/themes/professional_services/hero.blade.php`
+  - `resources/views/public/storefront/themes/retail_pharmacy/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_agency/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_beauty/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_business/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_carwash/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_fitness/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_laundry/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_petshop/hero.blade.php`
+  - `resources/views/public/storefront/themes/service_printing/hero.blade.php`
+  - `resources/views/public/storefront/themes/wholesale_distributor/hero.blade.php`
+  - `tests/Feature/UniversalStorefrontAll42ThemesTest.php`
+  - `resources/views/app/docs/partials/sec_storefront.blade.php`
+  - `resources/views/app/docs/index.blade.php`
+  - `docs/system/modules/landing-page-and-universal-storefront.md`
+  - `docs/system/INDEX.md`
+  - `docs/SYSTEM_GUIDE.md`
+- **Database Changes:** Tidak ada.
+
 ### [WORK-2026-11-05-376] Transformasi 42 Tema Storefront Universal & Sentralisasi Pengaturan Landing Page CMS
 
 - **Date:** 2026-11-05

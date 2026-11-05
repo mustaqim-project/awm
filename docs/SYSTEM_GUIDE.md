@@ -64,6 +64,7 @@
    - [4.32 Matriks Hak Akses & Kunci Fitur Dinamis Admin (Admin-Configurable Feature Gates) & Penegakan Zero-Hardcoding Limitasi](#432-matriks-hak-akses--kunci-fitur-dinamis-admin-admin-configurable-feature-gates--penegakan-zero-hardcoding-limitasi)
    - [4.33 Batas Waktu Pembayaran Tagihan Langganan (24 Jam) & Standardisasi Zona Waktu WIB (UTC+7)](#433-batas-waktu-pembayaran-tagihan-langganan-24-jam--standardisasi-zona-waktu-wib-utc7)
    - [4.34 Arsitektur Hardening Multi-Tenant IDOR, Penegakan Entitlement Universal & Integritas Jurnal Double-Entry Pembulatan Kasir (PRD-35)](#434-arsitektur-hardening-multi-tenant-idor-penegakan-entitlement-universal--integritas-jurnal-double-entry-pembulatan-kasir-prd-35)
+   - [4.35 Arsitektur Universal Storefront, 42 Tema Adaptif & Integrasi Landing Page CMS (Universal Blade Contract, 3-Tier Fallback, 6 Visual Archetypes & Auto-Hide Dynamic Navigation)](#435-arsitektur-universal-storefront-42-tema-adaptif--integrasi-landing-page-cms-universal-blade-contract-3-tier-fallback-6-visual-archetypes--auto-hide-dynamic-navigation)
 
 ---
 
@@ -196,20 +197,36 @@ Aplikasi ini dirancang untuk dapat dioperasikan secara percaya diri oleh **gener
   - **Penenang Jiwa Saat Menghapus:** Menjamin keamanan data historis masa lalu pada setiap dialog konfirmasi hapus bahan maupun jasa.
 
 ### 3.8 Toko Online (Storefront Hub) & Website Landing Page Studio
-* **Kapan Digunakan?** Saat Anda ingin mempublikasikan profil bisnis digital, menampilkan etalase produk & layanan ke publik, menerima pesanan mandiri pelanggan via web, menetapkan ongkir kurir toko, serta mengelola reservasi meja/jadwal.
+* **Kapan Digunakan?** Saat Anda ingin mempublikasikan profil bisnis digital, menampilkan etalase produk fisik POS & layanan jasa ke publik, memilih dari 42 tema desain toko profesional, menerima pesanan mandiri pelanggan via web, menetapkan ongkir kurir toko, serta mengelola reservasi meja/jadwal.
 * **Fitur Utama & Keunggulan Operasional:**
   - **Bento Cockpit Pengaturan Toko:** Memantau visibilitas etalase, status direktori `/jelajah`, rekening aktif, serta mode transaksi (Langsung, Terjadwal, PO B2B, Reservasi).
-  - **Integritas Saklar Non-Destruktif:** Setiap switch etalase dikawal input hidden deterministik agar status penonaktifan tersimpan sempurna tanpa merusak pengaturan lainnya.
-  - **Dialog Konfirmasi Penenang Jiwa:** Hapus rekening pembayaran, hapus aturan ongkir, dan pembatalan reservasi tamu dilindungi dialog konfirmasi Apple Alert yang menjamin transaksi dan riwayat masa lalu tetap aman tercatat.
-  - **Verifikasi Pembayaran 1-Klik:** Verifikasi bukti transfer pelanggan secara visual di modal Apple Alert dengan alokasi pemotongan stok otomatis yang sah di pembukuan.
-  - **Aturan Ongkir Adaptif:** Menghitung ongkos kirim berbasis tarif flat, radius jarak (KM), dan promo bebas ongkir otomatis berdasarkan ambang belanja minimum.
-  - **CMS Studio Landing Page 11 Bagian:** Mengatur identitas brand, warna aksen kustom, banner hero, ulasan pelanggan, galeri foto suasana, jam operasional, dan optimasi SEO Google dengan dukungan preset instan 25 industri.
-  - **Pengalaman Halaman Publik Pelanggan (`/b/{slug}` & `business_landing.blade.php`):** 
-    - **Apple HIG Bento Modal Architecture:** Modal Checkout (`max-w-5xl`), Reservasi (`max-w-4xl`), Request Order (`max-w-4xl`), dan Customer PO (`max-w-4xl`) mengadopsi tata letak responsif: Full-layout 2 kolom Bento Dialog di desktop (kolom kiri untuk input formulir/jadwal & kolom kanan untuk ringkasan biaya/metode bayar/submit) dan native Apple Bottom Sheet meluncur dari bawah di mobile (`items-end`, `rounded-t-[28px]`, grab bar halus).
-    - **Anti-AI-Template & Tipografi Murni:** Menggunakan *Pure Typographic Overline* tanpa badge pill dekoratif, eliminasi ikon clutters (seperti sparkles), dan penggunaan kata kerja aksi padat (*Pesan*, *Reservasi*, *WhatsApp*).
-    - **Ergonomi Aksesibilitas:** Seluruh input formulir berukuran minimal 16px di mobile anti-auto-zoom iOS, touch target 48px–52px, tombol mengambang WhatsApp terbebas dari fake unread dots, dan safe-area padding bawah (`pb-28 sm:pb-32 md:pb-28`).
-    - **Anti-FOUC Theme Synchronizer:** Inisialisasi tema instan berbasis database CMS toko (`var isLandingDark`) yang mencegah kedipan kontras saat halaman dimuat.
-    - **Model Referensi FnB & Katering (Dapur Sedap Rasa):** Melalui `DapurSedapRasaSeeder.php` (`/dapur-sedap-rasa`), platform mendemonstrasikan kapabilitas ganda operasional: Order Offline (Kasir POS, 12 Meja Dine-in Indoor/Outdoor/VIP, Takeaway) dan Pre-Order (PO) Online Katering (Nasi Box, Tumpeng, Prasmanan, kuota pesanan, batch schedule delivery, transfer bank BCA/Mandiri & QRIS).
+  - **CMS Studio Landing Page 11 Bagian (`/landing-page`):**
+    1. *Tab 1: Identitas & Warna:* Pemilih 42 tema storefront terintegrasi dengan filter 6 arketipe desain, HEX Color Picker kustom (12 swatch cepat), pemilih tipografi Google Fonts, toggle Dark Mode publik, serta panel pengaturan navigasi dinamis auto-hide.
+    2. *Tab 2: Hero & Banner Utama:* Pengaturan judul sambutan (*Headline*), deskripsi (*Subheadline*), badge pengumuman bergerak, tombol aksi utama & sekunder, serta upload foto banner.
+    3. *Tab 3: Keunggulan Bisnis:* Manajemen 4 pilar nilai keunggulan (ikon Lucide, judul, deskripsi) yang otomatis mengisi badge hero dan banner fitur di toko.
+    4. *Tab 4: Etalase Produk POS:* Sakelar sinkronisasi otomatis produk barang fisik aktif dari kasir POS ke etalase publik.
+    5. *Tab 5: Layanan & Jasa:* Katalog jasa dan perawatan spesialis dengan tarif, estimasi durasi pengerjaan, dan foto layanan.
+    6. *Tab 6: Galeri Foto Suasana:* Unggah hingga 20 dokumentasi aktivitas usaha dilengkapi teks keterangan foto (*caption*).
+    7. *Tab 7: Ulasan & Testimoni Pelanggan:* Etalase bukti sosial kredibilitas usaha dengan rating bintang 1-5 dan testimoni pembeli terverifikasi.
+    8. *Tab 8: Tanya Jawab (FAQ):* Panduan jawaban atas pertanyaan umum pelanggan dalam format akordeon interaktif.
+    9. *Tab 9: Visibilitas Seksi:* Kendali presisi untuk menampilkan atau menyembunyikan 12 seksi di halaman depan toko secara modular.
+    10. *Tab 10: Kontak & Jam Operasional:* Tautan chat WhatsApp otomatis dengan pesan pembuka ramah, nomor telepon, alamat fisik, sematan Google Maps, serta jadwal buka/tutup mingguan (Senin-Minggu).
+    11. *Tab 11: Footer & Legalitas/SEO:* Deskripsi penutup, navigasi legal, hak cipta resmi, dan meta tags SEO Google (title, description, keywords, Open Graph image).
+  - **Koleksi 42 Tema Universal & 6 Arketipe Desain Visual:**
+    - Membebaskan pemilik usaha memilih gaya visual apa pun tanpa terbelenggu kategori usaha:
+      - *Clean Bento (7 tema):* Grid modern Apple HIG, tata letak lapang, sans-serif kontemporer.
+      - *Warm Artisan (7 tema):* Kehangatan nada kayu & bumi, tipografi serif artistik, sentuhan personal.
+      - *Luxe Editorial (7 tema):* Kemewahan majalah editorial haute-couture, font Didone anggun, aksen emas.
+      - *Dark Carbon (7 tema):* Nuansa gelap premium, aksen neon tajam, aura maskulin berpresisi tinggi.
+      - *Playful Fresh (7 tema):* Ceria, ramah keluarga, kurva membulat lembut, visual menggugah selera.
+      - *Institutional Trust (7 tema):* Kredibilitas formal korporat, biru navy kokoh, penataan simetris B2B.
+    - Dilengkapi fitur *Terapkan Desain & Palet Saja* (mengubah layout tanpa merusak teks bisnis yang sudah diketik) dan *Terapkan Desain + Copywriting* (menerapkan layout sekaligus saran copy awal).
+  - **Universal Blade Contract (Jaminan Anti-Bocor Sektor):** Seluruh tema dijamin bebas dari teks komoditas sektor yang kaku berkat penerapan hierarki fallback 3-tingkat (`$landingPage` → `$business` → `__('storefront...')`) dan injeksi otomatis pilar nilai melalui `$landingPage->getUniversalValues()`. Jika foto belum diunggah, sistem otomatis menampilkan *Bento Graphic Showcase* bergradasi dengan inisial brand dan warna aksen toko.
+  - **Apple HIG Bento Modal Architecture & Storefront Runtime:**
+    - Modal Checkout (`max-w-5xl`), Reservasi (`max-w-4xl`), Request Order (`max-w-4xl`), dan Customer PO (`max-w-4xl`) mengadopsi tata letak responsif: Full-layout 2 kolom Bento Dialog di desktop dan native Apple Bottom Sheet meluncur dari bawah di mobile (`items-end`, `rounded-t-[28px]`, grab bar halus).
+    - Ergonomi mobile-first: Input formulir minimal 16px (anti-auto-zoom iOS), touch target 48px–52px, tombol mengambang WhatsApp terbebas dari fake unread dots, dan safe-area padding bawah (`pb-28 sm:pb-32 md:pb-28`).
+    - Aturan ongkir adaptif: Menghitung ongkir berbasis tarif flat, radius jarak (KM), dan bebas ongkir otomatis berdasarkan ambang belanja minimum.
+    - Verifikasi pembayaran 1-klik: Verifikasi bukti transfer pelanggan secara visual di modal Apple Alert dengan alokasi pemotongan stok otomatis yang sah di pembukuan kas dan buku besar.
 
 ### 3.9 Saluran WhatsApp Resmi (WhatsApp Cloud API Meta & Broadcast Hub)
 * **Kapan Digunakan?** Saat Anda ingin mengirimkan struk kasir digital otomatis, faktur tagihan (invoice), kode OTP, notifikasi pesanan resmi, serta blast promosi massal langsung ke nomor WhatsApp pelanggan tanpa risiko blokir nomor.
@@ -1131,6 +1148,63 @@ Berdasarkan hasil audit sistem mendalam repositori COOCA:
    - Mengganti fallback password default `'password123'` pada penambahan staf baru (`SettingWebController::storeMember`) dengan generator sandi acak kuat 12 karakter (`Str::password(12)`), dilengkapi pemberitahuan flash kredensial satu kali bagi pemilik usaha.
    - Menambahkan composite index `['account_id', 'created_at']` pada tabel `journal_entry_lines` guna mengeliminasi full table scan pada penarikan laporan Buku Besar per akun.
    - Mengunci endpoint vertikal F&B (Meja dan KDS) menggunakan `abort_unless($business->hasDineInFeature() || $business->isFoodIndustry(), 404)` untuk menjamin *Zero Feature Leakage* pada sektor ritel dan jasa.
+
+### 4.35 Arsitektur Universal Storefront, 42 Tema Adaptif & Integrasi Landing Page CMS (Universal Blade Contract, 3-Tier Fallback, 6 Visual Archetypes & Auto-Hide Dynamic Navigation)
+
+Sistem etalase publik (*Universal Storefront*) dan pengelola landing page backoffice (*Landing Page CMS Studio*) di COOCA dirancang untuk memberikan kebebasan kustomisasi visual tingkat tinggi bagi 25 sektor industri UMKM Indonesia tanpa menimbulkan *vendor lock-in* tema atau kebocoran komoditas (*commodity copy leakage*).
+
+#### 1. Universal Blade Contract & 3-Tier Fallback Hierarchy
+Seluruh 42 tema storefront terikat pada kontrak data seragam (*Universal Blade Contract*). Setiap variabel teks, warna, tautan, dan gambar dievaluasi dengan hierarki resolusi 3-tier:
+```text
+Tier 1: Nilai Kustom CMS ($landingPage->headline, $landingPage->cta_primary_text, dsb.)
+        ↓ (jika kosong / null)
+Tier 2: Identitas Bisnis Real ($business->name, $business->description, $business->phone)
+        ↓ (jika kosong / null)
+Tier 3: Kamus Bahasa Semantik i18n (__('storefront.catalog_title'), __('storefront.contact_us'))
+```
+
+Aturan arsitektur kunci kontrak ini:
+- **Zero Hardcoded Commodity Copy:** Tidak ada teks statis komoditas tertentu seperti *"Bunga Mawar Segar"*, *"Kopi Arabika Pilihan"*, *"Roti Hangat Baru Dipanggang"*, atau *"Bengkel Mobil Terpercaya"* di dalam template Blade tema. Jika bisnis bergerak di bidang Percetakan memilih tema `culinary_modern` atau Apotek memilih tema `fashion_boutique`, seluruh teks etalase otomatis mengalir dari identitas bisnis dan konfigurasi landing page bisnis tersebut.
+- **Universal Value Pillars:** Panggilan `$landingPage->getUniversalValues()` mengembalikan array 3 pilar nilai keunggulan bisnis dengan struktur `['icon', 'title', 'desc']`. Tema wajib merender pilar ini pada Hero atau section Keunggulan.
+- **Section Visibility Enforcement:** Setiap seksi utama (Hero, Produk, Review, Kontak, FAQ, Banner Promosi) dibungkus pengecekan visibilitas `$landingPage->isSectionVisible('{section_key}')`. Jika dinonaktifkan di CMS, seluruh DOM seksi tersebut tidak di-render ke browser.
+- **Eliminasi URL Unsplash Eksternal:** Seluruh ketergantungan pada gambar placeholder acak eksternal `images.unsplash.com` dihilangkan 100%, digantikan oleh Bento Graphic Showcase geometris SVG berlatar warna dinamis tema atau gambar riil yang diunggah pengguna.
+
+#### 2. Klasifikasi 6 Arketipe Desain Visual (Design Archetypes)
+Ke-42 tema storefront dikelompokkan ke dalam 6 arketipe desain visual:
+1. **Minimalist Clean (10 Tema):** `minimal_mono`, `craft_artisan`, `health_clinic`, `personal_brand`, `organic_grocery`, dll. Dominasi whitespace lapang, tipografi sans-serif modern, border hairline halus, dan tata letak tenang.
+2. **Brutalist Bold (6 Tema):** `streetwear_culture`, `automotive_service`, `hardware_tools`, `construction_property`, dll. Kontras tinggi, tipografi uppercase tegas, sudut tajam, border 2px-3px, dan aksen warna ekspresif.
+3. **Editorial Serif (6 Tema):** `luxury_jewelry`, `wedding_organizer`, `bookstore_stationery`, `hospitality_resort`, dll. Tipografi serif elegan (Playfair/Cinzel look), layout majalah asimetris, dan ornamen mewah bersahaja.
+4. **Modern Tech / Cyber Dark (8 Tema):** `tech_gadget`, `gaming_gear`, `saas_digital`, `cloud_hosting`, dll. Skema warna dark mode Apple, ambient radial glow, border gradasi halus, dan badge status futuristik.
+5. **Soft Warm / Pastel (7 Tema):** `baby_kids`, `beauty_cosmetics`, `pet_supplies`, `bakery_pastry`, dll. Sudut membulat lembut (`rounded-3xl`), warna pastel hangat, dan atmosfer ramah keluarga.
+6. **Industrial Heavy (5 Tema):** `manufacturing_plant`, `logistics_freight`, `chemical_cleaning`, `wholesale_bulk`, dll. Tata letak grid fungsional, indikator kapasitas pabrik/armada, dan kartu spesifikasi teknis.
+
+#### 3. Rekonstruksi & Integritas 21 Hero Tema (Bug Fix Batch 3 & 4)
+Pada audit sistem ditemukan bahwa 21 berkas `hero.blade.php` tema storefront sempat mengalami kerusakan di mana berkas hanya berisi fragmen kolom kanan (51 baris), menghilangkan tag `<section>`, blok inisialisasi `@php`, dan kolom kiri `lg:col-span-7` yang memuat Headline dan Call-To-Action (CTA).
+Seluruh 21 hero tema telah direkonstruksi penuh:
+- Mempertahankan ambient background styling spesifik per arketipe dari riwayat git master.
+- Menyuntikkan kolom kiri dinamis dengan badge rating, headline responsif, body text, primary CTA, secondary CTA, dan 3 kartu Bento Value Pillars.
+- Menyematkan Bento Graphic Showcase interaktif di kolom kanan dengan status operasional real-time, lencana bisnis terverifikasi, dan visualisasi arketipe SVG murni.
+
+#### 4. Integrasi Landing Page CMS Backoffice (`/landing-page/edit`)
+Pemilik usaha mengelola etalase melalui antarmuka Bento 11 Studio Tabs:
+1. **Branding & Identitas:** Nama brand, logo, favicon, slogan, deskripsi bisnis, nomor kontak WhatsApp, dan domain/slug toko.
+2. **Tipografi & Warna Tema:** Pemilih palet warna aksen primer/sekunder, preset font, dan selector interaktif 42 tema storefront dengan pratinjau thumbnail.
+3. **Hero Section:** Headline dinamis, sub-headline, teks tombol utama, tautan tombol, dan visualisasi banner.
+4. **Katalog Produk & Layanan:** Pilihan mode katalog (Grid, Masonry, List), jumlah item per halaman, dan toggle filter kategori.
+5. **Testimoni & Review:** Manajemen daftar testimoni pelanggan dengan rating bintang 5, foto avatar, dan kutipan kepuasan.
+6. **Formulir Lead & Kontak:** Pengaturan form pemesanan langsung, alamat Google Maps, dan jam operasional cabang.
+7. **FAQ (Frequently Asked Questions):** Daftar pertanyaan umum interaktif bergaya accordion Apple HIG.
+8. **Banner Promosi & Pengumuman:** Ticker pengumuman berjalan (*marquee* / top bar) dan banner diskon musiman.
+9. **Galeri Portofolio:** Grid foto kegiatan, fasilitas usaha, sertifikasi, dan hasil karya.
+10. **Footer & Media Sosial:** Tautan Instagram, TikTok, Facebook, YouTube, LinkedIn, serta catatan hak cipta.
+11. **Pengaturan SEO & Visibilitas:** Title tag, meta description, open-graph image, serta toggle on/off visibilitas per seksi.
+
+Iframe live preview di sisi kanan studio secara real-time me-render rute `/s/{slug}?preview=1&theme={theme_key}`, memungkinkan pemilik usaha melihat perubahan estetika secara instan sebelum menyimpannya ke publik.
+
+#### 5. Navigasi Dinamis Auto-Hide & Isolasi Multi-Industri
+- **Pembersihan Tautan Rusak (*Zero Broken Anchors*):** Menu navigasi storefront (`nav.blade.php`) secara cerdas memeriksa ketersediaan data. Jika suatu usaha tidak memiliki portofolio galeri atau dinonaktifkan di CMS, tautan navigasi *"Galeri"* otomatis disembunyikan. Hal yang sama berlaku untuk tautan *"Layanan"*, *"Produk"*, *"FAQ"*, dan *"Testimoni"*.
+- **Multi-Industry Zero Leakage:** Fitur F&B (Reservasi Meja / Dine-in QR) hanya muncul jika `$business->hasDineInFeature() || $business->isFoodIndustry()`, mencegah kebocoran fitur restoran pada etalase bengkel motor, apotek, atau toko grosir bahan bangunan.
+
 
 
 
