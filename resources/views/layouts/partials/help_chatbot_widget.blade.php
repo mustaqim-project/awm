@@ -193,13 +193,16 @@
 
                         {{-- Assistant Header Identifier --}}
                         <template x-if="msg.sender !== 'user'">
-                            <div class="flex items-center gap-1.5 pb-1 border-b border-black/5 dark:border-white/10 text-[10.5px] font-bold text-[#007AFF] dark:text-[#0A84FF]">
-                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="8" width="18" height="12" rx="4"></rect>
-                                    <circle cx="8" cy="14" r="1.5" fill="currentColor"></circle>
-                                    <circle cx="16" cy="14" r="1.5" fill="currentColor"></circle>
-                                </svg>
-                                <span>Cooca AI</span>
+                            <div class="flex items-center justify-between pb-1 border-b border-black/5 dark:border-white/10 text-[10.5px] font-bold text-[#007AFF] dark:text-[#0A84FF]">
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="8" width="18" height="12" rx="4"></rect>
+                                        <circle cx="8" cy="14" r="1.5" fill="currentColor"></circle>
+                                        <circle cx="16" cy="14" r="1.5" fill="currentColor"></circle>
+                                    </svg>
+                                    <span>Cooca AI Assistant</span>
+                                </div>
+                                <span x-show="msg.ai_model" x-text="msg.ai_model" class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]"></span>
                             </div>
                         </template>
 
@@ -366,6 +369,8 @@ function coocaHelpChatbot() {
                         sender: 'assistant',
                         text: data.reply || 'Maaf, saya tidak dapat memahami pertanyaan tersebut.',
                         quick_links: data.quick_links || [],
+                        ai_model: data.ai_model || null,
+                        provider: data.provider || null,
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                     });
                 } else {

@@ -47,6 +47,8 @@ final class HelpChatbotWebController extends Controller
                 'is_data_query' => $result['is_data_query'] ?? false,
                 'permission_granted' => $result['permission_granted'] ?? true,
                 'quick_links' => $result['quick_links'] ?? [],
+                'ai_model' => $result['ai_model'] ?? 'cooca-ai-engine',
+                'provider' => $result['provider'] ?? 'cooca',
             ]);
         } catch (Throwable $e) {
             return response()->json([

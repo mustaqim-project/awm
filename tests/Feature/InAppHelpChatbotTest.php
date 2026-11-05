@@ -260,4 +260,53 @@ final class InAppHelpChatbotTest extends TestCase
         $reply = $response->json('reply');
         $this->assertStringContainsString('Permintaan Tidak Diizinkan', $reply);
     }
+
+    public function test_live_ai_provider_is_invoked_when_configured(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        // Create mock live AI provider
+        $mockProvider = $this->createMock(\App\Domain\Ai\Providers\AiProviderInterface::class);
+        $mockProvider->method('getProviderName')->willReturn('openai');
+        $mockProvider->expects($this->once())
+            ->method('chat')
+            ->willReturn([
+                'content' => 'Halo Kak! Ini adalah jawaban dari model AI cerdas Cooca.',
+                'raw' => [],
+                'usage' => ['total_tokens' => 42],
+            ]);
+
+        $manager = new \App\Domain\Ai\Providers\AiProviderManager();
+        $manager->registerProvider($mockProvider);
+
+        \App\Models\AiProviderConfig::create([
+            'id' => (string) Str::uuid(),
+            'business_id' => $business->id,
+            'provider' => 'openai',
+            'api_key' => 'sk-test-live-ai-key',
+            'model' => 'gpt-4o-mini',
+            'is_active' => true,
+            'is_default' => true,
+        ]);
+
+        $chatbotService = new \App\Domain\Ai\HelpChatbotService($manager);
+        $this->app->instance(\App\Domain\Ai\HelpChatbotService::class, $chatbotService);
+
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->postJson(route('help-chatbot.ask'), [
+                'message' => 'Bagaimana cara menggunakan fitur multi-cabang di Cooca?',
+            ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'reply' => 'Halo Kak! Ini adalah jawaban dari model AI cerdas Cooca.',
+            'ai_model' => 'gpt-4o-mini',
+            'provider' => 'openai',
+        ]);
+    }
 }
