@@ -91,6 +91,7 @@ class BusinessLandingPageWebController extends Controller
         $publicUrl = route('public.business.landing', Str::slug($business->name));
         $themeService = app(\App\Domain\Storefront\StorefrontThemeService::class);
         $themePresets = $themeService->getAllThemes();
+        $archetypes   = $themeService->getAllArchetypes();
         $curatedFonts = array_keys($themeService->getCuratedFonts());
 
         return view('app.landing_page.edit', compact(
@@ -101,6 +102,7 @@ class BusinessLandingPageWebController extends Controller
             'serviceProducts',
             'publicUrl',
             'themePresets',
+            'archetypes',
             'curatedFonts'
         ));
     }

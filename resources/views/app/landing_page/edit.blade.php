@@ -369,101 +369,42 @@
                             </label>
                         </div>
 
-                        <!-- SUB-CARD 5: KOLEKSI 42 TEMA INDUSTRI OTENTIK & STOREFRONT -->
+                        <!-- SUB-CARD 5: KOLEKSI 42 TEMA UNIVERSAL & 6 ARKETIPE DESAIN -->
                         <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-5 shadow-xs space-y-4">
-<!-- ============================================================ -->
-                            <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
-                            <!-- ============================================================ -->
-                            <!-- ============================================================ -->
-                            <!-- 21 TEMPLATE TEMA INDUSTRI OTENTIK & UNIVERSAL STOREFRONT        -->
-                            <!-- ============================================================ -->
                             @php
-                                $themeCategoryMap = [
-                                    // Kuliner & Minuman (8)
-                                    'food_restaurant'           => 'fnb',
-                                    'coffee_beverage'           => 'fnb',
-                                    'bakery_cake'               => 'fnb',
-                                    'fnb_bakery'                => 'fnb',
-                                    'fnb_cafe'                  => 'fnb',
-                                    'fnb_catering'              => 'fnb',
-                                    'fnb_fastfood'              => 'fnb',
-                                    'fnb_resto'                 => 'fnb',
-
-                                    // Retail & Toko (11)
-                                    'online_store'              => 'retail',
-                                    'product_showcase'          => 'retail',
-                                    'wholesale_distributor'     => 'retail',
-                                    'modern_umkm'               => 'retail',
-                                    'retail_bookstore'          => 'retail',
-                                    'retail_building'           => 'retail',
-                                    'retail_electronics'        => 'retail',
-                                    'retail_fashion'            => 'retail',
-                                    'retail_florist'            => 'retail',
-                                    'retail_grocery'            => 'retail',
-                                    'retail_pharmacy'           => 'retail',
-
-                                    // Jasa & Layanan & Reservasi (10)
-                                    'service_business'          => 'service',
-                                    'booking_appointment'       => 'service',
-                                    'event_wedding'             => 'service',
-                                    'hospitality_accommodation' => 'service',
-                                    'service_beauty'            => 'service',
-                                    'service_carwash'           => 'service',
-                                    'service_laundry'           => 'service',
-                                    'service_petshop'           => 'service',
-                                    'service_printing'          => 'service',
-                                    'service_workshop'          => 'service',
-
-                                    // Industri, Logistik, Properti & Agro (4)
-                                    'manufacturing_factory'     => 'industry',
-                                    'agriculture_farm'          => 'industry',
-                                    'logistics_transportation'  => 'industry',
-                                    'construction_property'     => 'industry',
-
-                                    // Kesehatan, Kebugaran, Edukasi & Personal (4)
-                                    'health_beauty'             => 'lifestyle',
-                                    'education_courses'         => 'lifestyle',
-                                    'personal_brand'            => 'lifestyle',
-                                    'service_fitness'           => 'lifestyle',
-
-                                    // Korporat, Agensi & Universal (5)
-                                    'business_corporate'        => 'corporate',
-                                    'professional_services'     => 'corporate',
-                                    'portfolio_creative'        => 'corporate',
-                                    'service_agency'            => 'corporate',
-                                    'universal_storefront'      => 'corporate',
-                                ];
-
-                                $categoryCounts = [
-                                    'all'       => count($themePresets),
-                                    'fnb'       => 0,
-                                    'retail'    => 0,
-                                    'service'   => 0,
-                                    'industry'  => 0,
-                                    'lifestyle' => 0,
-                                    'corporate' => 0,
+                                $archetypeCounts = [
+                                    'all' => count($themePresets),
+                                    'clean_bento' => 0,
+                                    'warm_artisan' => 0,
+                                    'luxe_editorial' => 0,
+                                    'dark_carbon' => 0,
+                                    'playful_fresh' => 0,
+                                    'institutional' => 0,
                                 ];
 
                                 foreach ($themePresets as $k => $preset) {
-                                    $cat = $themeCategoryMap[$k] ?? 'corporate';
-                                    if (isset($categoryCounts[$cat])) {
-                                        $categoryCounts[$cat]++;
+                                    $arc = $preset['archetype'] ?? 'clean_bento';
+                                    if (isset($archetypeCounts[$arc])) {
+                                        $archetypeCounts[$arc]++;
+                                    } else {
+                                        $archetypeCounts[$arc] = 1;
                                     }
                                 }
                             @endphp
+
                             <div class="pt-5 border-t border-black/5 dark:border-white/5 space-y-4">
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                     <div>
                                         <div class="flex items-center gap-2">
                                             <h3 class="text-[15px] font-semibold text-black dark:text-white">
-                                                Koleksi {{ count($themePresets) }} Tema Industri Otentik &amp; Storefront
+                                                Koleksi {{ count($themePresets) }} Tema Universal &amp; 6 Arketipe Desain
                                             </h3>
                                             <span class="text-[10px] font-mono font-bold text-[#007AFF] bg-[#007AFF]/10 px-2 py-0.5 rounded-full">
-                                                {{ count($themePresets) }} Tema Tersedia
+                                                {{ count($themePresets) }} Tema Universal
                                             </span>
                                         </div>
                                         <p class="text-[12px] text-black/55 dark:text-white/55 mt-0.5">
-                                            Seluruh {{ count($themePresets) }} tema visual dirancang spesifik dengan font Google Fonts, palet warna otentik, dan arsitektur hero per sektor usaha.
+                                            Seluruh tema dirancang universal dan dapat disesuaikan untuk segala jenis industri bisnis UMKM (Kuliner, Retail, Jasa, Pabrik, Properti, dsb).
                                         </p>
                                     </div>
 
@@ -471,6 +412,15 @@
                                     <div class="flex items-center gap-2 text-[11px] bg-black/[0.03] dark:bg-white/[0.04] px-3 py-1.5 rounded-[10px] border border-black/5 dark:border-white/5 shrink-0">
                                         <span class="text-black/45 dark:text-white/45">Tema Aktif:</span>
                                         <strong class="text-[#007AFF] font-semibold uppercase font-mono" x-text="form.theme_preset"></strong>
+                                    </div>
+                                </div>
+
+                                <!-- Universal Adaptive Tip Banner -->
+                                <div class="p-3.5 rounded-[12px] bg-sky-500/10 border border-sky-500/20 text-sky-950 dark:text-sky-200 flex items-start gap-3">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5"></i>
+                                    <div class="text-[12px] leading-relaxed">
+                                        <strong class="font-semibold">Bebas Pilih Arketipe Apapun:</strong>
+                                        Setiap tema di bawah ini bersifat netral dan fleksibel. Anda bebas memilih gaya visual (Bento, Artisan, Luxe, dsb.) sesuai karakter brand Anda. Konten hero, pilar keunggulan, produk, dan warna otomatis beradaptasi dengan profil bisnis Anda.
                                     </div>
                                 </div>
 
@@ -484,7 +434,7 @@
                                         <div>
                                             <div class="flex items-center gap-2">
                                                 <span class="text-[11px] font-bold uppercase tracking-wider text-[#007AFF]"
-                                                      x-text="allThemesMap[form.theme_preset]?.industry || 'UMKM & Bisnis'"></span>
+                                                      x-text="allThemesMap[form.theme_preset]?.archetype_name || allThemesMap[form.theme_preset]?.industry || 'Clean Bento'"></span>
                                                 <span class="w-1 h-1 rounded-full bg-black/20 dark:bg-white/20"></span>
                                                 <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">Tema Terpasang</span>
                                             </div>
@@ -511,44 +461,44 @@
                                     </div>
                                 </div>
 
-                                <!-- Filter Controls: Search & Category Tabs -->
+                                <!-- Filter Controls: Search & Archetype Tabs -->
                                 <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-1">
-                                    <!-- Category Segmented Control -->
+                                    <!-- 6 Design Archetypes Segmented Control -->
                                     <div class="flex items-center gap-1 overflow-x-auto no-scrollbar p-1 bg-black/[0.03] dark:bg-white/[0.04] rounded-[11px] border border-black/5 dark:border-white/5 text-[11px]">
-                                        <button type="button" @click="themeFilterCategory = 'all'"
-                                            :class="themeFilterCategory === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'all'"
+                                            :class="themeFilterArchetype === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            {{ __('common.all') }} ({$categoryCounts['all'] })
+                                            Semua ({{ $archetypeCounts['all'] }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'fnb'"
-                                            :class="themeFilterCategory === 'fnb' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'clean_bento'"
+                                            :class="themeFilterArchetype === 'clean_bento' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Kuliner ({{ $categoryCounts['fnb'] }})
+                                            Clean Bento ({{ $archetypeCounts['clean_bento'] ?? 0 }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'retail'"
-                                            :class="themeFilterCategory === 'retail' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'warm_artisan'"
+                                            :class="themeFilterArchetype === 'warm_artisan' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Retail &amp; Toko ({{ $categoryCounts['retail'] }})
+                                            Warm Artisan ({{ $archetypeCounts['warm_artisan'] ?? 0 }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'service'"
-                                            :class="themeFilterCategory === 'service' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'luxe_editorial'"
+                                            :class="themeFilterArchetype === 'luxe_editorial' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Jasa &amp; Reservasi ({{ $categoryCounts['service'] }})
+                                            Luxe Editorial ({{ $archetypeCounts['luxe_editorial'] ?? 0 }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'industry'"
-                                            :class="themeFilterCategory === 'industry' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'dark_carbon'"
+                                            :class="themeFilterArchetype === 'dark_carbon' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Industri &amp; Agro ({{ $categoryCounts['industry'] }})
+                                            Dark Carbon ({{ $archetypeCounts['dark_carbon'] ?? 0 }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'lifestyle'"
-                                            :class="themeFilterCategory === 'lifestyle' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'playful_fresh'"
+                                            :class="themeFilterArchetype === 'playful_fresh' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Kesehatan &amp; Edu ({{ $categoryCounts['lifestyle'] }})
+                                            Playful Fresh ({{ $archetypeCounts['playful_fresh'] ?? 0 }})
                                         </button>
-                                        <button type="button" @click="themeFilterCategory = 'corporate'"
-                                            :class="themeFilterCategory === 'corporate' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                                        <button type="button" @click="themeFilterArchetype = 'institutional'"
+                                            :class="themeFilterArchetype === 'institutional' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                                             class="px-2.5 py-1 rounded-[8px] transition whitespace-nowrap cursor-pointer">
-                                            Korporat &amp; Kreatif ({{ $categoryCounts['corporate'] }})
+                                            Institutional Trust ({{ $archetypeCounts['institutional'] ?? 0 }})
                                         </button>
                                     </div>
 
@@ -565,14 +515,14 @@
                                     </div>
                                 </div>
 
-                                <!-- Grid of All 21 Themes -->
+                                <!-- Grid of All 42 Themes -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pt-1">
                                     @foreach ($themePresets as $tKey => $tPreset)
                                         @php
-                                            $tCat = $themeCategoryMap[$tKey] ?? 'all';
-                                            $searchIndex = strtolower($tPreset['name'] . ' ' . $tPreset['industry'] . ' ' . $tKey . ' ' . $tPreset['description']);
+                                            $tArc = $tPreset['archetype'] ?? 'clean_bento';
+                                            $searchIndex = strtolower($tPreset['name'] . ' ' . $tPreset['industry'] . ' ' . ($tPreset['archetype_name'] ?? '') . ' ' . $tKey . ' ' . $tPreset['description']);
                                         @endphp
-                                        <div x-show="(themeFilterCategory === 'all' || themeFilterCategory === '{{ $tCat }}') && (!themeSearch || '{{ addslashes($searchIndex) }}'.toLowerCase().includes(themeSearch.toLowerCase().trim()))"
+                                        <div x-show="(themeFilterArchetype === 'all' || themeFilterArchetype === '{{ $tArc }}') && (!themeSearch || '{{ addslashes($searchIndex) }}'.toLowerCase().includes(themeSearch.toLowerCase().trim()))"
                                              x-transition:enter="transition ease-out duration-150"
                                              x-transition:enter-start="opacity-0 scale-95"
                                              x-transition:enter-end="opacity-100 scale-100"
@@ -584,7 +534,7 @@
                                                 <div class="flex items-center justify-between gap-2 mb-2">
                                                     <span class="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
                                                           style="background-color: {{ $tPreset['primary_color'] }}20; color: {{ $tPreset['primary_color'] }};">
-                                                        {{ $tPreset['industry'] }}
+                                                        {{ $tPreset['archetype_name'] ?? 'Bento' }}
                                                     </span>
                                                     <div x-show="form.theme_preset === '{{ $tKey }}'" x-cloak class="w-4 h-4 rounded-full bg-[#007AFF] text-white flex items-center justify-center text-[10px] shadow-xs">
                                                         <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
@@ -598,6 +548,10 @@
                                                 </div>
                                                 <div class="text-[11px] text-black/50 dark:text-white/50 line-clamp-2 mt-1 leading-snug">
                                                     {{ $tPreset['description'] }}
+                                                </div>
+                                                <div class="text-[10px] text-black/40 dark:text-white/40 mt-1.5 font-mono flex items-center gap-1">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                    <span>Saran awal: {{ $tPreset['industry'] }}</span>
                                                 </div>
                                             </div>
 
@@ -1013,10 +967,17 @@
                         <!-- 4 VALUE PILLARS CARD -->
                         <div
                             class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 sm:p-6 space-y-4 transition-colors">
-                            <div class="border-b border-black/5 dark:border-white/5 pb-3">
-                                <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.4_pilar_keunggulan_utama_bisnis') }}</h3>
-                                <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Alasan kuat mengapa calon
-                                    pelanggan harus memilih produk atau layanan Anda dibanding kompetitor.</p>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-black/5 dark:border-white/5 pb-3">
+                                <div>
+                                    <h3 class="text-[16px] font-semibold text-black dark:text-white">{{ __('landing_page.4_pilar_keunggulan_utama_bisnis') }}</h3>
+                                    <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">Alasan kuat mengapa calon
+                                        pelanggan harus memilih produk atau layanan Anda dibanding kompetitor.</p>
+                                </div>
+                                <label class="flex items-center gap-2 text-[12px] font-semibold text-black/80 dark:text-white/80 cursor-pointer bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 rounded-[8px] shrink-0">
+                                    <input type="checkbox" x-model="sectionVisibility.features_banner"
+                                        class="rounded-[4px] border-black/20 dark:border-white/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                    <span>Tampilkan Section Pilar</span>
+                                </label>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1284,12 +1245,20 @@
                                         master POS langsung di landing page lengkap dengan tombol pesan instan via WhatsApp.
                                     </p>
                                 </div>
-                                <label
-                                    class="flex items-center gap-2 text-[12px] font-semibold text-black/80 dark:text-white/80 cursor-pointer bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 rounded-[8px]">
-                                    <input type="checkbox" x-model="sectionVisibility.products"
-                                        class="rounded-[4px] border-black/20 dark:border-white/20 text-[#007AFF] focus:ring-[#007AFF]">
-                                    <span>Tampilkan Section Produk</span>
-                                </label>
+                                <div class="flex items-center gap-2">
+                                    <label
+                                        class="flex items-center gap-2 text-[12px] font-semibold text-black/80 dark:text-white/80 cursor-pointer bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 rounded-[8px]">
+                                        <input type="checkbox" x-model="sectionVisibility.products"
+                                            class="rounded-[4px] border-black/20 dark:border-white/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                        <span>Tampilkan Produk</span>
+                                    </label>
+                                    <label
+                                        class="flex items-center gap-2 text-[12px] font-semibold text-black/80 dark:text-white/80 cursor-pointer bg-black/[0.04] dark:bg-white/[0.06] px-3 py-1.5 rounded-[8px]">
+                                        <input type="checkbox" x-model="sectionVisibility.category_chips"
+                                            class="rounded-[4px] border-black/20 dark:border-white/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                        <span>Filter Kategori</span>
+                                    </label>
+                                </div>
                             </div>
 
                             <!-- Toggle Sinkron POS -->
@@ -2574,19 +2543,23 @@
     @php
         $sectionVisibilityDefaults = array_merge(
             [
-                'hero' => true,
-                'about' => true,
-                'products' => true,
-                'services' => true,
-                'gallery' => true,
-                'testimonials' => true,
-                'faq' => true,
-                'contact' => true,
-                'footer' => true,
-                'footer_brand' => true,
+                'hero'              => true,
+                'features_banner'   => true,
+                'category_chips'    => true,
+                'about'             => true,
+                'products'          => true,
+                'services'          => true,
+                'reservation'       => true,
+                'gallery'           => true,
+                'testimonials'      => true,
+                'faq'               => true,
+                'blog'              => true,
+                'contact'           => true,
+                'footer'            => true,
+                'footer_brand'      => true,
                 'footer_navigation' => true,
-                'footer_services' => true,
-                'footer_contact' => true,
+                'footer_services'   => true,
+                'footer_contact'    => true,
             ],
             $landingPage->section_visibility ?? [],
         );
@@ -2606,6 +2579,7 @@
                 saveError: '',
                 isPublished: @json((bool) $landingPage->is_published),
                 themeFilterCategory: 'all',
+                themeFilterArchetype: 'all',
                 themeSearch: '',
 
                 tabs: [{
