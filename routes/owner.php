@@ -1112,4 +1112,3 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
     });
 });
-     
