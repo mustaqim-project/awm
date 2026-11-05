@@ -38,41 +38,47 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Date:** 2026-11-05
 - **Status:** COMPLETED
 - **Module:** In-App Help Chatbot & AI Business Assistant
-- **Feature:** Full Conversation History Management (`/help-chatbot/conversations`)
+- **Feature:** Full Conversation History Management, Intent Analysis, Live Chat Concept Parity & RBAC Isolation
 - **Work Type:** Feature | UI/UX | Security | Architecture
 
 #### 1. Business Context & Objective
-- **Konteks:** Pemilik bisnis (Owner) dan staf memerlukan visibilitas terhadap dialog panduan fitur dan analisis data bisnis yang pernah dilakukan dengan AI Assistant tanpa harus kehilangan konteks saat berpindah halaman atau browser tab.
-- **Masalah/Target:** Mengatasi masalah direct browser access pada URL `https://cooca.id/help-chatbot/conversations` yang sebelumnya mengembalikan teks mentah JSON hitam-putih, menghadirkan antarmuka Bento Apple HIG untuk manajemen riwayat sesi percakapan, mengintegrasikan drawer riwayat interaktif langsung di dalam widget chat popup, menyediakan kapabilitas penghapusan sesi (delete conversation), serta deep-linking untuk melanjutkan obrolan secara instan.
+- **Konteks:** Pemilik bisnis (Owner) dan seluruh staf di Owner Panel membutuhkan asisten chatbot cerdas yang langsung aktif (bebas form input pendaftaran seperti pada live chat publik) untuk memandu penggunaan fitur-fitur COOCA (`resources/views/app`), dengan proteksi ketat agar tidak terjadi kebocoran data operasional dan penolakan hak akses bila pengguna tidak berwenang.
+- **Masalah/Target:**
+  1. Analisa intent pertanyaan user sebelum membalas: membedakan panduan fitur (how-to) vs kueri data operasional.
+  2. Penanganan AI limit (429/quota/exhausted) atau belum terhubung (offline fallback) dengan balasan standar: *"Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan."*
+  3. Pengelolaan antrean saat high traffic dengan respons: *"Saat ini COOCA sedang menerima banyak permintaan. Pesan Anda sedang menunggu antrean. Silakan tunggu, kami akan segera memprosesnya."* disertai background job dan real-time status polling.
+  4. Menerapkan konsep floating widget dari `live_chat_widget.blade.php` (header gradient, WhatsApp support shortcut, active dot, greeting tooltip) tanpa form registrasi dan tanpa route admin.
+  5. Isolasi multi-tenant 100% berdasarkan `business_id` dan otorisasi hak akses (role & permission RBAC), serta menolak tegas jika user tidak berwenang.
 
 #### 2. What Was Done
-1. **Dukungan Dual-Mode Response pada `HelpChatbotWebController::getConversations`:**
-   - Permintaan via AJAX / JSON API tetap mengembalikan JSON response terstruktur untuk widget dan integrasi programmatic.
-   - Permintaan langsung via web browser (`GET /help-chatbot/conversations`) kini merender tampilan web penuh Bento Apple HIG `resources/views/app/help_chatbot/conversations.blade.php`.
-2. **Pembuatan Tampilan Manajemen Riwayat (`conversations.blade.php`):**
-   - Menggunakan header `x-module-header` dengan breadcrumb dan tombol cepat "Percakapan Baru".
-   - Tiga kartu Bento metrik statistik: Total Percakapan, Panduan Fitur (How-To), dan Business Assistant (BI).
-   - Filter segmented tabs per kategori dan pencarian real-time berdasarkan judul/topik.
-   - Tampilan adaptif (Mobile card stack & Desktop data table) dengan indikator mode, jumlah pesan, waktu relatif, dan aksi.
-   - Modal popup interaktif untuk mengintip isi pesan percakapan lampau tanpa reload halaman.
-3. **Penyempurnaan Widget Chat In-App (`help_chatbot_widget.blade.php`):**
-   - Menambahkan tombol "Riwayat" (Clock Icon) di header bar widget.
-   - Menyediakan Drawer Riwayat di dalam widget untuk memuat, memilih, dan melanjutkan sesi percakapan yang tersimpan di database.
-   - Menambahkan tombol hapus percakapan per sesi langsung dari drawer widget.
-   - Menambahkan penanganan event `cooca-open-chatbot` dan pembacaan parameter URL `?open_chatbot={id}` untuk deep-linking otomatis.
-4. **Implementasi Endpoint Hapus Percakapan (`DELETE /help-chatbot/conversations/{id}`):**
-   - Mendaftarkan route di `routes/owner.php` dengan isolasi multi-tenant (`business_id`) dan proteksi anti-IDOR (`Context::isOwner()` / `$conversation->user_id === $user->id`).
-5. **Verifikasi Test Suite Otomatis:**
-   - Menambahkan 4 test case baru di `tests/Feature/InAppHelpChatbotTest.php` untuk memastikan direct browser hit mengembalikan HTML view, request AJAX mengembalikan JSON terisolasi per tenant, serta penegakan hak akses hapus sesi.
+1. **Penerapan Konsep `live_chat_widget.blade.php` Tanpa Form & Tanpa Admin:**
+   - Tombol shortcut WhatsApp langsung di header widget chatbot menggunakan nomor resmi support dari `SystemSetting`.
+   - Mengeliminasi form input nama, nomor HP, dan email karena identitas pengguna dan bisnis telah terverifikasi di Owner Panel.
+   - Menyediakan floating greeting tooltip interaktif di sudut kanan bawah.
+2. **Decision Tree & Intent Analysis Sebelum Membalas:**
+   - Pada mode Help Center (Panduan Fitur), kueri data operasional langsung ditolak untuk menjaga *Zero Operational Data Leakage*.
+   - Pada kueri data operasional (karyawan, penjualan, omzet, pengeluaran, stok), sistem mengecek izin RBAC (`reports.view`, `pos.reports`, `users.view`, `inventory.view`). Jika user tidak berwenang, sistem menolak tegas: *"🔒 Akses Ditolak: Maaf, Anda tidak memiliki izin untuk mengakses informasi tersebut..."*.
+3. **Penanganan AI Limit & Provider Belum Terhubung:**
+   - Deteksi rate limit (429), quota habis, atau ketiadaan kredensial langsung mengembalikan respons standar *"Sistem Sedang Sibuk"* dengan tombol dinamis WhatsApp dan Email.
+4. **Queue Management & High Traffic:**
+   - Pembatasan concurrent request per tenant (`MAX_CONCURRENT_PER_BUSINESS = 2`) dengan antrean database Laravel Queue dan polling status real-time di UI.
+5. **Dukungan Dual-Mode Response pada `/help-chatbot/conversations` & In-Widget Drawer:**
+   - Browser biasa merender halaman penuh Bento Apple HIG `resources/views/app/help_chatbot/conversations.blade.php`.
+   - Permintaan API/AJAX mengembalikan JSON untuk widget drawer riwayat.
+   - Ditambahkan endpoint `DELETE /help-chatbot/conversations/{id}`.
+6. **Verifikasi Test Otomatis (100% Lolos):**
+   - 16 test cases di `tests/Feature/InAppHelpChatbotTest.php` lulus sempurna (68 assertions).
 
 #### 3. Technical Changes
 - **Files Modified:**
-  - `routes/owner.php` (menambahkan route DELETE `/help-chatbot/conversations/{id}`)
+  - `routes/owner.php` (rute DELETE `/help-chatbot/conversations/{id}`)
   - `app/Http/Controllers/Web/HelpChatbotWebController.php` (dual-mode view/json pagination & delete method)
-  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (riwayat drawer, history button, deep-link handler)
-  - `tests/Feature/InAppHelpChatbotTest.php` (test view render, isolation, & delete)
+  - `app/Domain/Ai/Chatbot/HelpCenterAiService.php` (intent & rate-limit handling)
+  - `app/Domain/Ai/Chatbot/BusinessAssistantAiService.php` (intent & rate-limit handling)
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (WhatsApp header link, riwayat drawer, deep-link handler)
+  - `tests/Feature/InAppHelpChatbotTest.php` (16 test cases)
 - **Files Created:**
-  - `resources/views/app/help_chatbot/conversations.blade.php` (Bento Apple HIG management page & message preview modal)
+  - `resources/views/app/help_chatbot/conversations.blade.php` (halaman manajemen riwayat)
 
 ---
 

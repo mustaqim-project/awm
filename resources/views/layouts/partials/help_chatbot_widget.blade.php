@@ -113,6 +113,22 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
+                {{-- Direct WhatsApp Support Link (From live_chat_widget concept) --}}
+                @php
+                    $waHelpUrl = \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176');
+                    $cleanWaHelp = preg_replace('/[^0-9]/', '', $waHelpUrl);
+                    $fullWaHelpUrl = 'https://wa.me/' . ($cleanWaHelp ?: '6285287864176') . '?text=' . rawurlencode('Halo Tim Support COOCA, saya butuh bantuan terkait penggunaan sistem');
+                @endphp
+                <a href="{{ $fullWaHelpUrl }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="Bantuan WhatsApp Support (+62 852-8786-4176)"
+                   class="w-7 h-7 rounded-lg hover:bg-white/15 text-emerald-300 hover:text-emerald-200 flex items-center justify-center transition cursor-pointer">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.825 2.787.826h.004c3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.766-5.768-5.766zm9.969 5.766c0 5.503-4.477 9.98-9.969 9.98-1.747 0-3.385-.453-4.819-1.246l-5.212 1.366 1.393-5.086c-.888-1.488-1.393-3.235-1.393-5.014 0-5.503 4.477-9.98 9.969-9.98 5.492 0 10.031 4.477 10.031 9.98z"/>
+                    </svg>
+                </a>
+
                 {{-- Conversation History Button --}}
                 <button type="button"
                         @click="toggleHistoryView()"
@@ -292,80 +308,16 @@
 
                 {{-- Help Center Mode Greeting --}}
                 <template x-if="activeMode === 'help_center'">
-                    <div class="space-y-2">
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
-                            Saya asisten panduan pintar Cooca. Tanyakan cara penggunaan modul apa saja (Kasir POS, kalkulasi HPP resep, stok gudang, penjualan B2B, atau toko online).
-                        </p>
-                        <div class="pt-1.5 space-y-1.5">
-                            <span class="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider block">Pertanyaan Populer:</span>
-                            <div class="flex flex-wrap gap-1.5">
-                                <button type="button"
-                                        @click="askQuestion('Bagaimana cara buka & tutup shift kasir POS?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    🧾 Buka &amp; Tutup Shift Kasir
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Bagaimana cara menghitung HPP resep makanan/minuman?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    ⚖️ Hitung HPP Resep BOM
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Bagaimana cara transfer stok antar gudang?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    📦 Transfer Stok Gudang
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Bagaimana cara mengganti tema toko online?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    🌐 42 Tema Toko Online
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Apa saja pintasan tombol keyboard di Cooca?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    ⌨️ Pintasan Keyboard
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
+                        Saya asisten panduan pintar COOCA. Silakan tanyakan langsung cara penggunaan fitur atau modul apa saja (Kasir POS, kalkulasi HPP resep, stok gudang, penjualan B2B, atau toko online).
+                    </p>
                 </template>
 
                 {{-- Business Assistant Mode Greeting --}}
                 <template x-if="activeMode === 'business_assistant'">
-                    <div class="space-y-2">
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60 leading-relaxed">
-                            Saya COOCA AI Business Assistant. Siap membantu Anda menganalisis performa penjualan, omzet harian/bulanan, stok menipis, dan efisiensi operasional bisnis.
-                        </p>
-                        <div class="pt-1.5 space-y-1.5">
-                            <span class="text-[10px] font-bold text-black/40 dark:text-white/40 uppercase tracking-wider block">Analisis Cepat:</span>
-                            <div class="flex flex-wrap gap-1.5">
-                                <button type="button"
-                                        @click="askQuestion('Berapa total omzet dan penjualan hari ini?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    📊 Cek Omzet Hari Ini
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Produk apa saja yang stoknya habis atau menipis?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    📦 Produk Stok Menipis
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Apa saja 5 produk terlaris bulan ini?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    🔥 5 Produk Terlaris
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Berapa total pengeluaran operasional bulan ini?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    💳 Pengeluaran Bulan Ini
-                                </button>
-                                <button type="button"
-                                        @click="askQuestion('Bagaimana status absensi dan kehadiran karyawan hari ini?')"
-                                        class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11px] font-medium text-black/80 dark:text-white/80 hover:border-[#007AFF] hover:text-[#007AFF] transition active:scale-95 text-left cursor-pointer">
-                                    👥 Absensi Karyawan
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-[12px] text-black/70 dark:text-white/70 leading-relaxed">
+                        Saya COOCA AI Business Assistant. Silakan tanyakan langsung analisis data bisnis Anda seperti performa penjualan, omzet harian/bulanan, stok menipis, atau ringkasan operasional.
+                    </p>
                 </template>
             </div>
 
@@ -416,23 +368,6 @@
                         <template x-if="!msg.is_queued">
                             <div class="text-[12px] leading-relaxed break-words chatbot-markdown"
                                  x-html="formatMessage(msg.text)"></div>
-                        </template>
-
-                        {{-- Quick Navigation Action Links & Support Contacts --}}
-                        <template x-if="msg.quick_links && msg.quick_links.length > 0">
-                            <div class="pt-2 border-t border-black/5 dark:border-white/10 flex flex-wrap gap-1.5">
-                                <template x-for="(link, lIdx) in msg.quick_links" :key="lIdx">
-                                    <a :href="link.url"
-                                       :class="link.icon === 'whatsapp' ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white' : (link.icon === 'email' ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white' : 'bg-[#007AFF]/10 dark:bg-[#0A84FF]/20 text-[#007AFF] dark:text-[#0A84FF] hover:bg-[#007AFF] hover:text-white')"
-                                       class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all active:scale-95 shadow-2xs">
-                                        <span x-text="link.label"></span>
-                                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                            <path d="M5 12h14"></path>
-                                            <path d="m12 5 7 7-7 7"></path>
-                                        </svg>
-                                    </a>
-                                </template>
-                            </div>
                         </template>
                     </div>
                 </div>
@@ -717,11 +652,6 @@ function coocaHelpChatbot() {
             }
         },
 
-        askQuestion(query) {
-            this.inputQuery = query;
-            this.sendMessage();
-        },
-
         async sendMessage() {
             const query = this.inputQuery.trim();
             if (!query || this.isLoading) return;
@@ -798,10 +728,6 @@ function coocaHelpChatbot() {
                     this.messages.push({
                         sender: 'assistant',
                         text: errData.message || 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.',
-                        quick_links: [
-                            { label: 'Hubungi Support via WhatsApp', url: 'https://wa.me/6285287864176?text=Halo%20Tim%20Support%20COOCA%2C%20saya%20butuh%20bantuan', icon: 'whatsapp' },
-                            { label: 'Hubungi Support via Email', url: 'mailto:support@cooca.id?subject=Bantuan%20Sistem%20COOCA', icon: 'email' }
-                        ],
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                     });
                 }
@@ -829,10 +755,6 @@ function coocaHelpChatbot() {
                     if (this.messages[msgIndex]) {
                         this.messages[msgIndex].is_queued = false;
                         this.messages[msgIndex].text = 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.';
-                        this.messages[msgIndex].quick_links = [
-                            { label: 'Hubungi Support via WhatsApp', url: 'https://wa.me/6285287864176?text=Halo%20Tim%20Support%20COOCA%2C%20saya%20butuh%20bantuan', icon: 'whatsapp' },
-                            { label: 'Hubungi Support via Email', url: 'mailto:support@cooca.id?subject=Bantuan%20Sistem%20COOCA', icon: 'email' }
-                        ];
                     }
                     this.saveHistory();
                     return;

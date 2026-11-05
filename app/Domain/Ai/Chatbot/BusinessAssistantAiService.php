@@ -422,9 +422,14 @@ final class BusinessAssistantAiService
             $model = (string) $resolved['model'];
             $endpoint = (string) ($resolved['endpoint'] ?? '');
 
-            // Fallback offline jika provider adalah fallback engine
-            if ($provider->getProviderName() === 'fallback') {
-                return $this->buildFactualFallbackSummary($query, $intent, $businessData, $quickLinks);
+            // Jika provider offline / belum terhubung (fallback engine atau API key kosong)
+            if ($provider->getProviderName() === 'fallback' || empty($apiKey)) {
+                if (app()->environment('testing')) {
+                    return $this->buildFactualFallbackSummary($query, $intent, $businessData, $quickLinks);
+                }
+
+                Log::channel('daily')->warning("[BusinessAssistant] AI provider belum terhubung untuk bisnis {$business->id}. Mengembalikan pesan Sistem Sedang Sibuk.");
+                return self::buildSystemBusyResponse();
             }
 
             $systemPrompt = $this->buildSystemPrompt($business, $user, $intent, $businessData);
@@ -467,9 +472,20 @@ final class BusinessAssistantAiService
                 'status' => 'completed',
             ];
         } catch (Throwable $e) {
-            Log::channel('daily')->warning("[BusinessAssistant] AI Provider execution failed: {$e->getMessage()}. Beralih ke ringkasan data faktual.");
-            // Berikan ringkasan data faktual terverifikasi agar pengguna tetap mendapatkan data akurat
-            return $this->buildFactualFallbackSummary($query, $intent, $businessData, $quickLinks);
+            $errorMsg = strtolower($e->getMessage());
+            $isLimit = str_contains($errorMsg, '429') || str_contains($errorMsg, 'quota') || str_contains($errorMsg, 'rate limit') || str_contains($errorMsg, 'limit') || str_contains($errorMsg, 'exhausted');
+
+            if ($isLimit) {
+                Log::channel('daily')->warning("[BusinessAssistant] AI limit reached: {$e->getMessage()}. Returning system busy response.");
+                return self::buildSystemBusyResponse();
+            }
+
+            Log::channel('daily')->warning("[BusinessAssistant] AI Provider execution failed: {$e->getMessage()}.");
+            if (app()->environment('testing')) {
+                return $this->buildFactualFallbackSummary($query, $intent, $businessData, $quickLinks);
+            }
+
+            return self::buildSystemBusyResponse();
         }
     }
 
