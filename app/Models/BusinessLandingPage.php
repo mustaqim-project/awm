@@ -130,6 +130,200 @@ class BusinessLandingPage extends Model
     }
 
     /**
+     * Default section visibility states for universal storefront.
+     * All 12 core sections are enabled by default.
+     *
+     * @var array<string, bool>
+     */
+    public const DEFAULT_SECTION_VISIBILITY = [
+        'hero'            => true,
+        'features_banner' => true,
+        'category_chips'  => true,
+        'products'        => true,
+        'services'        => true,
+        'gallery'         => true,
+        'testimonials'    => true,
+        'faq'             => true,
+        'stats'           => true,
+        'about'           => true,
+        'contact'         => true,
+        'footer'          => true,
+    ];
+
+    /**
+     * Retrieve the merged section visibility array with default fallbacks.
+     *
+     * @return array<string, bool>
+     */
+    public function getSectionVisibility(): array
+    {
+        $visibility = $this->section_visibility;
+        if (is_string($visibility)) {
+            $decoded = json_decode($visibility, true);
+            $visibility = is_array($decoded) ? $decoded : [];
+        }
+
+        return array_merge(self::DEFAULT_SECTION_VISIBILITY, (array) ($visibility ?? []));
+    }
+
+    /**
+     * Check if a specific storefront section should be displayed.
+     *
+     * @param string $section Section identifier (e.g. 'hero', 'features_banner', 'products')
+     * @param bool $default Fallback value if section is not explicitly configured
+     * @return bool
+     */
+    public function isSectionVisible(string $section, bool $default = true): bool
+    {
+        $visibility = $this->section_visibility;
+        if (is_string($visibility)) {
+            $decoded = json_decode($visibility, true);
+            $visibility = is_array($decoded) ? $decoded : [];
+        }
+
+        if (is_array($visibility)) {
+            // 1. Direct key match
+            if (array_key_exists($section, $visibility)) {
+                return (bool) $visibility[$section];
+            }
+
+            // 2. Legacy / alternate alias match
+            $alias = $this->resolveSectionAlias($section);
+            if ($alias !== null && array_key_exists($alias, $visibility)) {
+                return (bool) $visibility[$alias];
+            }
+        }
+
+        // 3. Constant fallback or caller-supplied default
+        if (array_key_exists($section, self::DEFAULT_SECTION_VISIBILITY)) {
+            return (func_num_args() > 1) ? $default : self::DEFAULT_SECTION_VISIBILITY[$section];
+        }
+
+        return $default;
+    }
+
+    /**
+     * Resolve legacy or alternative section key aliases.
+     */
+    private function resolveSectionAlias(string $section): ?string
+    {
+        $aliases = [
+            'products'          => 'featured_products',
+            'featured_products' => 'products',
+            'category_chips'    => 'catalog_filter',
+            'catalog_filter'    => 'category_chips',
+            'faq'               => 'faqs',
+            'faqs'              => 'faq',
+            'testimonials'      => 'reviews',
+            'reviews'           => 'testimonials',
+            'about'             => 'about_story',
+            'about_story'       => 'about',
+        ];
+
+        return $aliases[$section] ?? null;
+    }
+
+    /**
+     * Retrieve normalized 4 universal value proposition pillars.
+     * Guarantees exactly 4 items with both 'desc' and 'description' keys.
+     *
+     * @return array<int, array{icon: string, title: string, desc: string, description: string}>
+     */
+    public function getUniversalValues(): array
+    {
+        $rawValues = $this->values;
+        if (is_string($rawValues)) {
+            $decoded = json_decode($rawValues, true);
+            $rawValues = is_array($decoded) ? $decoded : [];
+        }
+        if (! is_array($rawValues)) {
+            $rawValues = [];
+        }
+
+        // Filter only sequential/numeric elements to exclude legacy structures like 'stats'
+        $cmsItems = [];
+        foreach ($rawValues as $key => $item) {
+            if (is_numeric($key) && is_array($item)) {
+                $cmsItems[] = $item;
+            }
+        }
+
+        $defaultPillars = self::getDefaultUniversalValues();
+
+        $normalized = [];
+        for ($i = 0; $i < 4; $i++) {
+            $userItem = $cmsItems[$i] ?? null;
+            $default = $defaultPillars[$i];
+
+            $icon = ! empty($userItem['icon']) ? (string) $userItem['icon'] : $default['icon'];
+            $title = ! empty($userItem['title']) ? (string) $userItem['title'] : $default['title'];
+
+            $rawDesc = ! empty($userItem['desc'])
+                ? (string) $userItem['desc']
+                : (! empty($userItem['description']) ? (string) $userItem['description'] : '');
+
+            $desc = $rawDesc !== '' ? $rawDesc : $default['desc'];
+
+            $normalized[] = [
+                'icon'        => $icon,
+                'title'       => $title,
+                'desc'        => $desc,
+                'description' => $desc,
+            ];
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Get default 4 universal pillars with i18n translation support and safe static fallbacks.
+     *
+     * @return array<int, array{icon: string, title: string, desc: string, description: string}>
+     */
+    public static function getDefaultUniversalValues(): array
+    {
+        $hasI18n = function (string $key): bool {
+            return function_exists('trans') && trans()->has($key);
+        };
+
+        $t = function (string $key, string $fallback) use ($hasI18n): string {
+            return $hasI18n($key) ? (string) __($key) : $fallback;
+        };
+
+        $p1Desc = $t('storefront.features.official_desc', 'Jaminan produk original dengan standar kualitas terbaik.');
+        $p2Desc = $t('storefront.features.payment_desc', 'Mendukung QRIS, transfer bank, dan aneka metode pembayaran aman.');
+        $p3Desc = $t('storefront.features.delivery_desc', 'Pesanan diproses segera dan dikirim tepat waktu dengan aman.');
+        $p4Desc = $t('storefront.features.care_desc', 'Tim ramah dan responsif siap melayani konsultasi serta kebutuhan Anda.');
+
+        return [
+            [
+                'icon'        => 'shield-check',
+                'title'       => $t('storefront.features.official_store', 'Toko Resmi Terpercaya'),
+                'desc'        => $p1Desc,
+                'description' => $p1Desc,
+            ],
+            [
+                'icon'        => 'credit-card',
+                'title'       => $t('storefront.features.easy_payment', 'Transaksi Aman & Mudah'),
+                'desc'        => $p2Desc,
+                'description' => $p2Desc,
+            ],
+            [
+                'icon'        => 'truck',
+                'title'       => $t('storefront.features.secure_delivery', 'Layanan Cepat & Terpercaya'),
+                'desc'        => $p3Desc,
+                'description' => $p3Desc,
+            ],
+            [
+                'icon'        => 'headset',
+                'title'       => $t('storefront.features.customer_care', 'Dukungan Pelanggan Prima'),
+                'desc'        => $p4Desc,
+                'description' => $p4Desc,
+            ],
+        ];
+    }
+
+    /**
      * Retrieve custom navigation label for a page, falling back to default.
      */
     public function getNavLabel(string $page, string $default): string

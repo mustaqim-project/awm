@@ -7,9 +7,11 @@
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
                 <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-white">
-                    Koleksi Skincare &amp; Menu Treatment
+                    {{ $landingPage->services_title ?: __('storefront.kategori_pilihan') }}
                 </h2>
-                <p class="text-xs text-slate-500 dark:text-teal-200/70">Pilih formulasi aktif atau rangkaian treatment sesuai kebutuhan kondisi kulit Anda</p>
+                <p class="text-xs text-slate-500 dark:text-teal-200/70">
+                    {{ __('storefront.pilih_kategori_filter') }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-teal-700 dark:text-teal-300 hover:underline flex items-center gap-1">
@@ -19,13 +21,27 @@
         </div>
 
         <div class="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide">
-            @foreach ($productCategories->take(10) as $cat)
+            {{-- All / Semua Produk Chip --}}
+            @php
+                $isAllActive = !request()->filled('category');
+            @endphp
+            <a href="{{ url('/' . $business->slug . '/katalog') }}"
+                class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold transition min-h-[44px] {{ $isAllActive ? 'theme-btn-primary shadow-xs' : 'border border-teal-200 dark:border-teal-900/60 bg-white dark:bg-[#111C20] text-slate-800 dark:text-teal-100 hover:border-teal-400 shadow-2xs' }}">
+                <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                <span>{{ __('storefront.semua_produk') }}</span>
+            </a>
+
+            @foreach ($productCategories->take(12) as $cat)
+                @php
+                    $isActive = request('category') == $cat->id;
+                @endphp
                 <a href="{{ url('/' . $business->slug . '/katalog?category=' . $cat->id) }}"
-                    class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold transition border border-teal-200 dark:border-teal-900/60 bg-white dark:bg-[#111C20] text-slate-800 dark:text-teal-100 hover:border-teal-500 hover:text-teal-700 dark:hover:text-teal-300 shadow-2xs">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-teal-500"></i>
+                    class="flex-shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold transition min-h-[44px] {{ $isActive ? 'theme-btn-primary shadow-xs' : 'border border-teal-200 dark:border-teal-900/60 bg-white dark:bg-[#111C20] text-slate-800 dark:text-teal-100 hover:border-teal-400 shadow-2xs' }}">
+                    <i data-lucide="tag" class="w-3.5 h-3.5 text-teal-500"></i>
                     <span>{{ $cat->name }}</span>
                 </a>
             @endforeach
         </div>
     </section>
 @endif
+

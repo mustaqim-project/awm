@@ -1554,7 +1554,203 @@ final class StorefrontThemeService
     ];
 
     /**
-     * Get all available theme presets (42 distinct themes with recommendations).
+     * Map of 6 Visual Design Archetypes organizing the 42 Storefront Themes.
+     * Used for CMS cockpit filtering, design token defaults, and archetype metadata.
+     *
+     * @var array<string, array<string, mixed>>
+     */
+    public const ARCHETYPES = [
+        'clean_bento' => [
+            'id' => 'clean_bento',
+            'name' => 'Clean Bento & Modern Tech',
+            'badge' => '8 Tema',
+            'icon' => 'layout-grid',
+            'character' => 'Flat card, Plus Jakarta Sans/Inter, squircle, minimalis, rapi.',
+            'description' => 'Arsitektur modular Bento Grid Apple HIG dengan kepadatan informasi optimal, sudut squircle elegan, dan tipografi sans-serif modern yang presisi.',
+            'default_font_heading' => 'Plus Jakarta Sans',
+            'default_font_body' => 'Inter',
+            'default_primary' => '#007AFF',
+            'default_bg' => '#FFFFFF',
+            'themes' => [
+                'universal_storefront',
+                'modern_umkm',
+                'online_store',
+                'service_agency',
+                'retail_electronics',
+                'retail_building',
+                'professional_services',
+                'retail_grocery',
+            ],
+        ],
+        'warm_artisan' => [
+            'id' => 'warm_artisan',
+            'name' => 'Earthy & Warm Artisan',
+            'badge' => '7 Tema',
+            'icon' => 'coffee',
+            'character' => 'Playfair Display/DM Serif, palet zaitun/cokelat, hangat.',
+            'description' => 'Estetika hangat kerajinan otentik dengan palet bumi (earthy tones), tipografi serif klasik yang ramah, dan tekstur organik yang menenangkan.',
+            'default_font_heading' => 'Playfair Display',
+            'default_font_body' => 'Inter',
+            'default_primary' => '#8B5A2B',
+            'default_bg' => '#FAF7F2',
+            'themes' => [
+                'coffee_beverage',
+                'agriculture_farm',
+                'bakery_cake',
+                'fnb_bakery',
+                'fnb_cafe',
+                'retail_florist',
+                'hospitality_accommodation',
+            ],
+        ],
+        'luxe_editorial' => [
+            'id' => 'luxe_editorial',
+            'name' => 'High-End Luxe & Editorial',
+            'badge' => '6 Tema',
+            'icon' => 'sparkles',
+            'character' => 'Cormorant Garamond/Syne, monokrom, spasi luas, elegan.',
+            'description' => 'Tampilan editorial majalah mewah (lookbook) dengan spasi bernapas luas, kontras monokrom tinggi, tipografi display kurasi, dan aura prestisius.',
+            'default_font_heading' => 'Cormorant Garamond',
+            'default_font_body' => 'Inter',
+            'default_primary' => '#0A0A0A',
+            'default_bg' => '#FDFBF7',
+            'themes' => [
+                'retail_fashion',
+                'health_beauty',
+                'product_showcase',
+                'event_wedding',
+                'personal_brand',
+                'portfolio_creative',
+            ],
+        ],
+        'dark_carbon' => [
+            'id' => 'dark_carbon',
+            'name' => 'Dark Carbon & High Impact',
+            'badge' => '7 Tema',
+            'icon' => 'zap',
+            'character' => 'Dark #0B0F19, Chakra Petch/Orbitron, aksen kontras neon.',
+            'description' => 'Nuansa dark mode berani dengan latar karbon #0B0F19, aksen neon tajam bertenaga, geometri tegas, dan tipografi industrial berkekuatan tinggi.',
+            'default_font_heading' => 'Chakra Petch',
+            'default_font_body' => 'Inter',
+            'default_primary' => '#EA580C',
+            'default_bg' => '#0B0F19',
+            'themes' => [
+                'service_workshop',
+                'service_carwash',
+                'service_fitness',
+                'service_laundry',
+                'construction_property',
+                'manufacturing_factory',
+                'logistics_transportation',
+            ],
+        ],
+        'playful_fresh' => [
+            'id' => 'playful_fresh',
+            'name' => 'Playful, Fresh & Appetite',
+            'badge' => '7 Tema',
+            'icon' => 'smile',
+            'character' => 'Soft rounded, warna cerah menggugah, Urbanist, ramah.',
+            'description' => 'Visual ceria penuh energi dengan sudut lengkung lembut (soft rounded), palet warna segar menggugah selera, dan tipografi bersahaja yang mengundang interaksi.',
+            'default_font_heading' => 'DM Serif Display',
+            'default_font_body' => 'Plus Jakarta Sans',
+            'default_primary' => '#991B1B',
+            'default_bg' => '#FFFBEB',
+            'themes' => [
+                'food_restaurant',
+                'fnb_resto',
+                'fnb_fastfood',
+                'fnb_catering',
+                'retail_bookstore',
+                'service_petshop',
+                'service_beauty',
+            ],
+        ],
+        'institutional_trust' => [
+            'id' => 'institutional_trust',
+            'name' => 'Institutional & Trust',
+            'badge' => '7 Tema',
+            'icon' => 'shield-check',
+            'character' => 'Formal, navy/emerald korporat, Plus Jakarta Sans, terpercaya.',
+            'description' => 'Arsitektur tata kelola resmi dengan palet biru/zamrud korporat, kartu sertifikasi kredibilitas tinggi, dan struktur navigasi berstandar institusional.',
+            'default_font_heading' => 'Plus Jakarta Sans',
+            'default_font_body' => 'Inter',
+            'default_primary' => '#2563EB',
+            'default_bg' => '#F8FAFC',
+            'themes' => [
+                'business_corporate',
+                'education_courses',
+                'retail_pharmacy',
+                'service_business',
+                'service_printing',
+                'booking_appointment',
+                'wholesale_distributor',
+            ],
+        ],
+    ];
+
+    /**
+     * O(1) direct reverse lookup mapping all 42 theme IDs to their design archetype key.
+     *
+     * @var array<string, string>
+     */
+    public const THEME_ARCHETYPE_MAP = [
+        // 1. Clean Bento & Modern Tech (8)
+        'universal_storefront'       => 'clean_bento',
+        'modern_umkm'               => 'clean_bento',
+        'online_store'              => 'clean_bento',
+        'service_agency'            => 'clean_bento',
+        'retail_electronics'        => 'clean_bento',
+        'retail_building'           => 'clean_bento',
+        'professional_services'     => 'clean_bento',
+        'retail_grocery'            => 'clean_bento',
+
+        // 2. Earthy & Warm Artisan (7)
+        'coffee_beverage'           => 'warm_artisan',
+        'agriculture_farm'          => 'warm_artisan',
+        'bakery_cake'               => 'warm_artisan',
+        'fnb_bakery'                => 'warm_artisan',
+        'fnb_cafe'                  => 'warm_artisan',
+        'retail_florist'            => 'warm_artisan',
+        'hospitality_accommodation' => 'warm_artisan',
+
+        // 3. High-End Luxe & Editorial (6)
+        'retail_fashion'            => 'luxe_editorial',
+        'health_beauty'             => 'luxe_editorial',
+        'product_showcase'          => 'luxe_editorial',
+        'event_wedding'             => 'luxe_editorial',
+        'personal_brand'            => 'luxe_editorial',
+        'portfolio_creative'        => 'luxe_editorial',
+
+        // 4. Dark Carbon & High Impact (7)
+        'service_workshop'          => 'dark_carbon',
+        'service_carwash'           => 'dark_carbon',
+        'service_fitness'           => 'dark_carbon',
+        'service_laundry'           => 'dark_carbon',
+        'construction_property'     => 'dark_carbon',
+        'manufacturing_factory'     => 'dark_carbon',
+        'logistics_transportation'  => 'dark_carbon',
+
+        // 5. Playful, Fresh & Appetite (7)
+        'food_restaurant'           => 'playful_fresh',
+        'fnb_resto'                 => 'playful_fresh',
+        'fnb_fastfood'              => 'playful_fresh',
+        'fnb_catering'              => 'playful_fresh',
+        'retail_bookstore'          => 'playful_fresh',
+        'service_petshop'           => 'playful_fresh',
+        'service_beauty'            => 'playful_fresh',
+
+        // 6. Institutional & Trust (7)
+        'business_corporate'        => 'institutional_trust',
+        'education_courses'         => 'institutional_trust',
+        'retail_pharmacy'           => 'institutional_trust',
+        'service_business'          => 'institutional_trust',
+        'service_printing'          => 'institutional_trust',
+        'booking_appointment'       => 'institutional_trust',
+        'wholesale_distributor'     => 'institutional_trust',
+    ];
+
+    /**
+     * Get all available theme presets (42 distinct themes with recommendations and archetypes).
      *
      * @return array<string, array<string, mixed>>
      */
@@ -1563,10 +1759,160 @@ final class StorefrontThemeService
         $themes = self::THEMES;
         foreach ($themes as $key => &$theme) {
             $theme['recommendation'] = self::RECOMMENDATIONS[$key] ?? self::RECOMMENDATIONS['modern_umkm'];
+            $archetype = $this->getThemeArchetype($key);
+            $theme['archetype'] = $archetype['id'];
+            $theme['archetype_name'] = $archetype['name'];
         }
         unset($theme);
 
         return $themes;
+    }
+
+    /**
+     * Get all 6 Design Archetypes with their theme lists, counts, and metadata.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function getAllArchetypes(): array
+    {
+        $archetypes = self::ARCHETYPES;
+        foreach ($archetypes as &$archetype) {
+            $archetype['count'] = count($archetype['themes']);
+        }
+        unset($archetype);
+
+        return $archetypes;
+    }
+
+    /**
+     * Get the design archetype definition for a specific theme key or alias.
+     * Resolves aliases and falls back gracefully to 'clean_bento'.
+     *
+     * @param string $themeKey Theme ID or alias (e.g. 'retail_fashion', 'artisan_brew', 'modern_umkm')
+     * @return array<string, mixed> Archetype definition array containing id, name, icon, themes, etc.
+     */
+    public function getThemeArchetype(string $themeKey): array
+    {
+        $key = trim($themeKey);
+
+        // 1. Direct O(1) hit on THEME_ARCHETYPE_MAP
+        if (isset(self::THEME_ARCHETYPE_MAP[$key])) {
+            $archetypeKey = self::THEME_ARCHETYPE_MAP[$key];
+            return self::ARCHETYPES[$archetypeKey] ?? self::ARCHETYPES['clean_bento'];
+        }
+
+        // 2. Check aliases directly
+        if (isset(self::ALIASES[$key]) && isset(self::THEME_ARCHETYPE_MAP[self::ALIASES[$key]])) {
+            $archetypeKey = self::THEME_ARCHETYPE_MAP[self::ALIASES[$key]];
+            return self::ARCHETYPES[$archetypeKey] ?? self::ARCHETYPES['clean_bento'];
+        }
+
+        // 3. Check template code map directly
+        if (isset(self::TEMPLATE_CODE_MAP[$key]) && isset(self::THEME_ARCHETYPE_MAP[self::TEMPLATE_CODE_MAP[$key]])) {
+            $archetypeKey = self::THEME_ARCHETYPE_MAP[self::TEMPLATE_CODE_MAP[$key]];
+            return self::ARCHETYPES[$archetypeKey] ?? self::ARCHETYPES['clean_bento'];
+        }
+
+        // 4. Scan bundle_dir inside THEMES
+        foreach (self::THEMES as $id => $t) {
+            if (($t['bundle_dir'] ?? null) === $key) {
+                $archetypeKey = self::THEME_ARCHETYPE_MAP[$id] ?? 'clean_bento';
+                return self::ARCHETYPES[$archetypeKey] ?? self::ARCHETYPES['clean_bento'];
+            }
+        }
+
+        // 5. Fallback to clean_bento
+        return self::ARCHETYPES['clean_bento'];
+    }
+
+    /**
+     * Get guaranteed universal fallback dictionary for a given theme.
+     * Backed by universal i18n translation keys and neutral Apple HIG styling,
+     * ensuring ZERO sector-specific text leakage even if CMS fields are empty.
+     *
+     * @param string $themeKey Theme ID or alias
+     * @return array<string, mixed> Universal fallback data contract
+     */
+    public function getUniversalFallback(string $themeKey): array
+    {
+        $theme = $this->getTheme($themeKey);
+        $archetype = $this->getThemeArchetype($themeKey);
+
+        $featureOfficial = __('storefront.features.official_store');
+        $featureOfficialDesc = __('storefront.features.official_desc');
+        $featurePayment = __('storefront.features.easy_payment');
+        $featurePaymentDesc = __('storefront.features.payment_desc');
+        $featureDelivery = __('storefront.features.secure_delivery');
+        $featureDeliveryDesc = __('storefront.features.delivery_desc');
+        $featureCare = __('storefront.features.customer_care');
+        $featureCareDesc = __('storefront.features.care_desc');
+
+        $features = [
+            [
+                'icon'        => 'shield-check',
+                'title'       => $featureOfficial,
+                'desc'        => $featureOfficialDesc,
+                'description' => $featureOfficialDesc,
+            ],
+            [
+                'icon'        => 'credit-card',
+                'title'       => $featurePayment,
+                'desc'        => $featurePaymentDesc,
+                'description' => $featurePaymentDesc,
+            ],
+            [
+                'icon'        => 'truck',
+                'title'       => $featureDelivery,
+                'desc'        => $featureDeliveryDesc,
+                'description' => $featureDeliveryDesc,
+            ],
+            [
+                'icon'        => 'headset',
+                'title'       => $featureCare,
+                'desc'        => $featureCareDesc,
+                'description' => $featureCareDesc,
+            ],
+        ];
+
+        $badges = [
+            [
+                'icon'  => 'shield-check',
+                'title' => __('storefront.badges.quality_guaranteed'),
+            ],
+            [
+                'icon'  => 'credit-card',
+                'title' => __('storefront.badges.secure_transaction'),
+            ],
+            [
+                'icon'  => 'truck',
+                'title' => __('storefront.badges.fast_service'),
+            ],
+        ];
+
+        return [
+            'theme_id'           => $theme['id'] ?? $themeKey,
+            'theme_name'         => $theme['name'] ?? 'Storefront Theme',
+            'archetype'          => $archetype['id'],
+            'archetype_name'     => $archetype['name'],
+            'headline'           => __('storefront.hero.welcome'),
+            'subheadline'        => __('storefront.hero.tagline'),
+            'announcement_badge' => __('storefront.hero.verified_official'),
+            'active_status'      => __('storefront.hero.active_status'),
+            'cta_primary_text'   => __('storefront.hero.explore_catalog'),
+            'cta_secondary_text' => __('storefront.hero.contact_us'),
+            'hero_badges'        => $badges,
+            'badges'             => $badges,
+            'features'           => $features,
+            'pillars'            => $features,
+            'catalog'            => [
+                'title'        => __('storefront.kategori_pilihan'),
+                'subtitle'     => __('storefront.pilih_kategori_filter'),
+                'semua_produk' => __('storefront.semua_produk'),
+                'view_all'     => __('storefront.view_all'),
+            ],
+            'empty_catalog_title' => __('storefront.catalog.empty_title'),
+            'empty_catalog_desc'  => __('storefront.catalog.empty_desc'),
+        ];
     }
 
     /**
@@ -1638,6 +1984,9 @@ final class StorefrontThemeService
 
         $id = $resolved['id'] ?? $presetKey;
         $resolved['recommendation'] = self::RECOMMENDATIONS[$id] ?? self::RECOMMENDATIONS['modern_umkm'];
+        $archetype = $this->getThemeArchetype($id);
+        $resolved['archetype'] = $archetype['id'];
+        $resolved['archetype_name'] = $archetype['name'];
 
         return $resolved;
     }

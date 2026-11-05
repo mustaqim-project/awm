@@ -1,0 +1,38 @@
+{
+  "id": 236,
+  "title": "Manajemen Kas UMKM pada Surat Berharga Syariah Negara",
+  "slug": "manajemen-kas-umkm-pada-surat-berharga-syariah-negara",
+  "category": "Keuangan",
+  "cluster": "edukasi",
+  "primary_keyword": "manajemen kas umkm pada surat berharga syariah negara",
+  "secondary_keywords": "investasi sukuk ritel bisnis kecil, penempatan idle cash toko, instrumen kas halal pedagang, sbsn tabungan modal usaha, yield obligasi syariah umkm",
+  "search_intent": "informational",
+  "meta_title": "Manajemen Kas UMKM pada Surat Berharga Syariah Negara",
+  "meta_description": "Strategi manajemen kas UMKM pada surat berharga syariah negara (SBSN). Dapatkan imbal hasil halal, aman dijamin undang-undang, dan jaga arus kas toko.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/manajemen-kas-umkm-pada-surat-berharga-syariah-negara.jpg",
+  "local_image_asset": "public/images/blog/manajemen-kas-umkm-pada-surat-berharga-syariah-negara.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "surat berharga syariah negara",
+  "word_count": 1254,
+  "faqs": [
+    {
+      "q": "Apakah badan usaha seperti CV atau PT boleh membeli instrumen SBSN ritel?",
+      "a": "Untuk SBSN seri ritel seperti SR dan ST, kuota dialokasikan bagi Warga Negara Indonesia perorangan. Namun pemilik bisnis dapat membelinya atas nama pribadi pemilik yang ditugaskan sebagai pengelola dana cadangan perusahaan, atau badan usaha dapat membeli SBSN seri non-ritel (lelang) melalui perbankan mitra pemerintah."
+    },
+    {
+      "q": "Berapa lama jangka waktu jatuh tempo instrumen Sukuk Negara ritel?",
+      "a": "Tenor SBSN ritel umumnya berkisar antara 2 tahun hingga 4 tahun, dengan fasilitas pencairan lebih awal (early redemption) sebesar 50 persen setelah berjalan satu tahun."
+    },
+    {
+      "q": "Bagaimana aspek perpajakan atas kupon imbal hasil SBSN bagi pembukuan usaha?",
+      "a": "Pajak penghasilan (PPh) atas bunga atau imbal hasil obligasi negara bersifat final sebesar 10 persen, lebih rendah dibandingkan pajak bunga deposito perbankan yang mencapai 20 persen."
+    },
+    {
+      "q": "Bagaimana software Cooca mencatat penerimaan kupon sukuk negara dalam laporan kas toko?",
+      "a": "Penerimaan kupon bulanan diinput ke dalam akun Pendapatan Investasi / Pendapatan di Luar Usaha melalui menu Kas & Bank Cooca, sehingga tidak tercampur dengan omzet penjualan kasir barang dagangan."
+    }
+  ],
+  "published_at": "2026-11-05T08:00:00+07:00"
+}

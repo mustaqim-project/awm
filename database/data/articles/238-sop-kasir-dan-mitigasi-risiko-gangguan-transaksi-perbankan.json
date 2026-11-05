@@ -1,0 +1,38 @@
+{
+  "id": 238,
+  "title": "SOP Kasir dan Mitigasi Risiko Gangguan Transaksi Perbankan",
+  "slug": "sop-kasir-dan-mitigasi-risiko-gangguan-transaksi-perbankan",
+  "category": "Kasir & POS",
+  "cluster": "tutorial",
+  "primary_keyword": "sop kasir dan mitigasi risiko gangguan transaksi perbankan",
+  "secondary_keywords": "penanganan sistem bank offline di kasir, verifikasi mutasi rekening toko tertunda, mitigasi struk pembayaran transfer gantung, solusi kasir saat bank down, sop kasir toko ritel",
+  "search_intent": "informational",
+  "meta_title": "SOP Kasir dan Mitigasi Risiko Gangguan Transaksi Perbankan",
+  "meta_description": "Panduan SOP kasir dan mitigasi risiko gangguan transaksi perbankan di toko retail. Solusi transaksi pending, verifikasi mutasi, dan layanan kasir cepat.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/sop-kasir-dan-mitigasi-risiko-gangguan-transaksi-perbankan.jpg",
+  "local_image_asset": "public/images/blog/sop-kasir-dan-mitigasi-risiko-gangguan-transaksi-perbankan.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "nasabah bank mnc",
+  "word_count": 1243,
+  "faqs": [
+    {
+      "q": "Apa yang harus dilakukan kasir jika pembeli bersikeras membawa barang padahal mutasi bank belum masuk?",
+      "a": "Kasir secara sopan meminta izin memanggil supervisor atau penanggung jawab gerai untuk memberikan penjelasan resmi mengenai SOP verifikasi dana perbankan serta menawarkan opsi solusi pembayaran pengganti."
+    },
+    {
+      "q": "Berapa lama batas waktu maksimal pengembalian dana pembeli jika terjadi pembayaran ganda akibat transfer pending?",
+      "a": "Toko yang profesional wajib menyelesaikan proses pengembalian dana (refund) maksimal dalam 1x24 jam kerja disertai bukti transfer resmi yang dikirimkan ke nomor WhatsApp pelanggan."
+    },
+    {
+      "q": "Apakah foto KTP pelanggan boleh dijadikan jaminan agar barang belanjaan bisa dibawa pulang?",
+      "a": "Sangat tidak disarankan. Foto KTP bukan instrumen pembayaran sah dan toko berisiko tinggi menanggung kerugian piutang macet yang sulit ditagih."
+    },
+    {
+      "q": "Bagaimana Cooca mendeteksi transaksi transfer bank yang sudah berhasil masuk ke rekening merchant?",
+      "a": "Cooca dapat diintegrasikan dengan payment gateway resmi yang secara instan mengirimkan sinyal notifikasi sukses (webhook callback) ke layar POS kasir tanpa menuntut kasir login ke aplikasi mobile banking berkali-kali."
+    }
+  ],
+  "published_at": "2026-11-05T08:00:00+07:00"
+}

@@ -1,0 +1,38 @@
+{
+  "id": 231,
+  "title": "Kebijakan Subsidi Energi untuk UMKM dan Efisiensi Operasional",
+  "slug": "kebijakan-subsidi-energi-untuk-umkm-dan-efisiensi-operasional",
+  "category": "Operasional",
+  "cluster": "edukasi",
+  "primary_keyword": "kebijakan subsidi energi untuk umkm",
+  "secondary_keywords": "efisiensi listrik usaha kecil, subsidi tarif bbm toko, cara hitung hpp listrik, audit pemakaian listrik gerai, penghematan operasional toko",
+  "search_intent": "informational",
+  "meta_title": "Kebijakan Subsidi Energi untuk UMKM dan Efisiensi Biaya",
+  "meta_description": "Panduan kebijakan subsidi energi untuk UMKM. Pelajari cara menekan biaya listrik, hitung ulang HPP usaha, dan jaga margin laba bisnis kecil.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/kebijakan-subsidi-energi-untuk-umkm-dan-efisiensi-operasional.jpg",
+  "local_image_asset": "public/images/blog/kebijakan-subsidi-energi-untuk-umkm-dan-efisiensi-operasional.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "subsidi",
+  "word_count": 1329,
+  "faqs": [
+    {
+      "q": "Bagaimana cara memastikan apakah toko saya berhak menerima tarif listrik subsidi B1?",
+      "a": "Pemilik usaha dapat memeriksa struk pembayaran listrik PLN atau aplikasi PLN Mobile untuk melihat kode tarif meteran. Jika masih tertera R1 (Rumah Tangga) atau B2 nonsubsidi, pemilik bisnis dapat mengajukan migrasi tarif bisnis kecil B1 dengan melampirkan Nomor Induk Berusaha (NIB) dan izin operasional toko."
+    },
+    {
+      "q": "Apakah kenaikan tarif listrik harus selalu diimbangi dengan menaikkan harga jual produk?",
+      "a": "Tidak selalu. Langkah prioritas adalah melakukan efisiensi jam operasional mesin berdaya besar, pembersihan chiller rutin, serta optimalisasi porsi bahan baku sebelum memutuskan menaikkan harga di tingkat konsumen."
+    },
+    {
+      "q": "Berapa persen batas wajar alokasi biaya listrik terhadap total omzet bulanan toko ritel atau kafe?",
+      "a": "Untuk kafe dan usaha kuliner berbasis pendingin, batas aman biaya energi umumnya berkisar antara 4 sampai 8 persen dari total pendapatan kotor. Jika melampaui 10 persen, audit kompresor dan kebocoran suhu wajib segera dilakukan."
+    },
+    {
+      "q": "Bagaimana software Cooca membantu memantau pengeluaran listrik gerai cabang?",
+      "a": "Cooca menyediakan modul manajemen pengeluaran multi-outlet yang mencatat pembayaran tagihan utilitas tiap cabang secara terpisah, lengkap dengan laporan komparasi efisiensi biaya per lokasi."
+    }
+  ],
+  "published_at": "2026-11-05T08:00:00+07:00"
+}

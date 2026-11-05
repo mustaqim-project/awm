@@ -1,43 +1,38 @@
-# BRIEFING — 2026-11-03T05:34:00Z
+# BRIEFING — 2026-11-05T02:12:10Z
 
 ## Mission
-Sentinel overseeing Comprehensive Mobile Application Audit & OpenShift Bug Remediation across Flutter mobile app (C:\laragon\www\cooca_my_own) and backend API contracts (C:\laragon\www\cooca_core / https://cooca.id).
+Execute universal storefront theme standardization and CMS landing page integration (Phases 1-5) via teamwork_orchestrator.
 
 ## 🔒 My Identity
 - Archetype: sentinel
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork
-- Orchestrator: 73d9d035-59a2-45d3-a207-90bc9a5adcc4
-- Victory Auditor: 2ae63081-20bf-40cb-b2f0-012349c733b0
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\
+- Orchestrator: e91189e4-1570-496d-bd95-cdbf6361301a
+- Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints
 - No technical decisions — relay only
 - Victory Audit is MANDATORY before reporting completion
-- Working directory of mobile application: C:\laragon\www\cooca_my_own
-- Backend API contract reference: C:\laragon\www\cooca_core; Live API Single Source of Truth: https://cooca.id
-- R1: Root cause fix for OpenShift lifecycle (cash retrieval, outlet/user validation, duplicate/conflict prevention, status sync)
-- R2: Android security & Fake GPS / Mock Location prevention for attendance (developer options, mock detection, pre-submission checks, backend validation)
-- R3: Comprehensive feature audit and 100% elimination of dummy/mock/hardcoded business data across all modules
-- R4: Android production build non-debuggable (`debuggable = false`), performance & stability hardening
-- R5: Full automated testing and authoring of the 5 required audit reports
+- Execute per blueprint and artifact C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\5699ea93-e022-47d8-82fe-e47b3a657b52\STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md
+- Strictly follow technical specs, Do's & Don'ts, universal Blade data contracts, and tasks Phase 1 to Phase 5
+
+## Routing Decision
+- **Chosen Path**: General (`teamwork_orchestrator`)
+- **Rationale**: Full-stack multi-file software engineering project covering 42 theme views, models, services, views, and automated tests across 5 phases. Does not match Document Review, Math/Proof, or single-change SWE Light.
 
 ## User Context
-- **Last user request**: Approved task prompt for Mobile Audit & OpenShift Remediation
+- **Last user request**: Silakan langsung mulai eksekusi penuh sesuai cetak biru dan rencana kerja pada file artefak...
 - **Pending clarifications**: none
-- **Delivered results**: Milestones 1-5 100% delivered; 5 audit documentation reports generated; Victory Audit Round 2 completed with VICTORY CONFIRMED verdict.
+- **Delivered results**: Milestone 1 complete (Gate 1 PASS), Milestone 2A complete (Gate 2A PASS: 10 themes refactored, audited CLEAN)
 
 ## Project Status
-- **Phase**: complete
+- **Phase**: in progress (Orchestrator Gen 2 active: continuing Milestone 2B remaining 4 themes, followed by Batch 3, Batch 4, Milestone 3, 4, 5)
 
 ## Victory Audit Status
-- **Triggered**: yes
-- **Verdict**: VICTORY CONFIRMED
-- **Retry count**: 1
+- **Triggered**: no
+- **Verdict**: pending
+- **Retry count**: 0
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user intent and approved prompt
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\mobile_comprehensive_audit_report.md — Report 1
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\mobile_bug_fix_report.md — Report 2
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\mobile_api_integration_audit.md — Report 3
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\android_security_attendance_report.md — Report 4
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\mobile_testing_results.md — Report 5
-- c:\laragon\www\cooca_core\.agents\teamwork\victory_auditor_2\handoff.md — Victory Audit Report (VICTORY CONFIRMED)
+- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user intent record
+- C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\5699ea93-e022-47d8-82fe-e47b3a657b52\STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md — Planning artifact & blueprint
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\progress.md — Active orchestrator progress tracking

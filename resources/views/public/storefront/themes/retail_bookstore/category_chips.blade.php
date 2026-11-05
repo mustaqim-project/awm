@@ -2,14 +2,18 @@
     Toko Buku & Stationery Category Chips (`retail_bookstore` / `bibliotheca`)
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
-    <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+    <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
                 <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">
-                    Klasifikasi Rak Buku
+                    {{ $catHeading }}
                 </h2>
                 <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
-                    Fiksi, non-fiksi, pengembangan diri, komik &amp; stationery
+                    {{ $catSubtitle }}
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
@@ -20,39 +24,30 @@
         </div>
 
         <div class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap scrollbar-hide">
-            @php
-                $catIcons = [
-                    'fiksi' => 'book',
-                    'novel' => 'book-open',
-                    'non-fiksi' => 'file-text',
-                    'bisnis' => 'trending-up',
-                    'self-help' => 'compass',
-                    'anak' => 'smile',
-                    'komik' => 'image',
-                    'stationery' => 'pen-tool',
-                    'alat tulis' => 'pen-tool',
-                    'musik' => 'disc',
-                    'agama' => 'heart',
-                ];
-            @endphp
+            {{-- Semua Produk Chip --}}
+            <a href="{{ url('/' . $business->slug . '/katalog') }}"
+                class="flex-shrink-0 inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 hover:shadow-md min-h-[46px] {{ !request()->filled('category') ? 'bg-slate-900 text-white shadow-md' : 'bg-white dark:bg-[#181E2A] border border-slate-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 hover:border-slate-800' }}">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center {{ !request()->filled('category') ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200' }}">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                </div>
+                <span>{{ __('storefront.semua_produk') }}</span>
+            </a>
 
-            @foreach ($productCategories->take(8) as $cat)
+            @foreach ($productCategories->take(12) as $cat)
                 @php
-                    $catNameLower = strtolower($cat->name);
-                    $catIcon = 'book-open';
-                    foreach ($catIcons as $key => $icon) {
-                        if (str_contains($catNameLower, $key)) {
-                            $catIcon = $icon;
-                            break;
-                        }
-                    }
+                    $isActive = request('category') == $cat->id;
                 @endphp
                 <a href="{{ url('/' . $business->slug . '/katalog?category=' . $cat->id) }}"
-                    class="flex-shrink-0 inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 hover:shadow-md hover:scale-[1.02] bg-white dark:bg-[#181E2A] border border-slate-200 dark:border-white/10 hover:border-slate-800 text-neutral-800 dark:text-neutral-200 min-h-[46px]">
-                    <div class="w-7 h-7 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center">
-                        <i data-lucide="{{ $catIcon }}" class="w-4 h-4"></i>
+                    class="flex-shrink-0 inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 hover:shadow-md hover:scale-[1.02] min-h-[46px] {{ $isActive ? 'bg-slate-900 text-white shadow-md' : 'bg-white dark:bg-[#181E2A] border border-slate-200 dark:border-white/10 text-neutral-800 dark:text-neutral-200 hover:border-slate-800' }}">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center {{ $isActive ? 'bg-white/20 text-white' : 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300' }}">
+                        <i data-lucide="tag" class="w-4 h-4"></i>
                     </div>
                     <span>{{ $cat->name }}</span>
+                    @if (isset($cat->products_count))
+                        <span class="text-[10px] px-2 py-0.5 rounded-full font-mono tabular-nums {{ $isActive ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200' }}">
+                            {{ $cat->products_count }}
+                        </span>
+                    @endif
                 </a>
             @endforeach
         </div>

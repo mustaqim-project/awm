@@ -1,7 +1,28 @@
 {{--
     Restoran & Rumah Makan Hero Section (`fnb_resto` / `nusantara_feast`)
-    Terracotta warm spice ambiance, DM Serif Display, dine-in & table reservation.
+    Terracotta warm spice ambiance, DM Serif Display, adaptive to any business.
 --}}
+@php
+    $heroHeadline = $landingPage->headline ?: $business->name;
+    $heroSubheadline = $landingPage->subheadline ?: ($business->description ?: __('storefront.hero.tagline'));
+    $heroEyebrow = $landingPage->announcement_badge ?: ($activeTheme['industry'] ?? __('storefront.hero.verified_official'));
+
+    $primaryCtaText = $landingPage->cta_primary_text ?: __('storefront.hero.explore_catalog');
+    $primaryCtaUrl  = $landingPage->cta_primary_url ?: url('/' . $business->slug . '/katalog');
+    $secondaryCtaText = $landingPage->cta_secondary_text ?: __('storefront.hero.contact_us');
+    $secondaryCtaUrl  = $landingPage->cta_secondary_url ?: $landingPage->getWhatsAppUrl();
+
+    $universalValues = $landingPage->getUniversalValues();
+    $badgePill1 = $universalValues[0]['title'];
+    $badgeIcon1 = $universalValues[0]['icon'];
+    $badgePill2 = $universalValues[1]['title'];
+    $badgeIcon2 = $universalValues[1]['icon'];
+    $badgePill3 = $universalValues[2]['title'];
+    $badgeIcon3 = $universalValues[2]['icon'];
+
+    $heroImage = $landingPage->hero_image_url ?: ($landingPage->about_image_url ?: null);
+@endphp
+
 <section class="relative overflow-hidden pt-8 pb-16 sm:pt-16 sm:pb-24">
     <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -9,51 +30,51 @@
             {{-- Text & Actions --}}
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold"
-                    style="background: {{ $activeTheme['badge_bg'] ?? '#991B1B15' }}; color: {{ $activeTheme['badge_text'] ?? '#991B1B' }};">
-                    <i data-lucide="utensils" class="w-4 h-4"></i>
-                    <span>{{ $activeTheme['industry'] ?? 'Restoran & Kuliner Nusantara' }}</span>
+                    style="background: {{ $activeTheme['badge_bg'] ?? 'rgba(153, 27, 27, 0.1)' }}; color: {{ $activeTheme['badge_text'] ?? 'var(--theme-primary, #991B1B)' }};">
+                    <span class="w-2 h-2 rounded-full bg-current animate-pulse"></span>
+                    <span>{{ $heroEyebrow }}</span>
                 </div>
 
                 <h1 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-neutral-900 dark:text-white tracking-tight leading-[1.12]">
-                    {{ $landingPage->headline ?: 'Cita Rasa Otentik Rempah Warisan Tradisi' }}
+                    {{ $heroHeadline }}
                 </h1>
 
                 <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                    {{ $landingPage->subheadline ?: 'Nikmati hidangan istimewa racikan bumbu segar pilihan, dimasak langsung saat dipesan dengan kehangatan suasana santap bersama keluarga.' }}
+                    {{ $heroSubheadline }}
                 </p>
 
                 {{-- Badges --}}
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/40">
-                        <i data-lucide="award" class="w-3.5 h-3.5"></i>
-                        <span>Resep Otentik Turun-Temurun</span>
+                        <i data-lucide="{{ $badgeIcon1 }}" class="w-3.5 h-3.5"></i>
+                        <span>{{ $badgePill1 }}</span>
                     </span>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200/60 dark:border-red-800/40">
-                        <i data-lucide="flame" class="w-3.5 h-3.5"></i>
-                        <span>Bumbu Rempah Segar Asli</span>
+                        <i data-lucide="{{ $badgeIcon2 }}" class="w-3.5 h-3.5"></i>
+                        <span>{{ $badgePill2 }}</span>
                     </span>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/40">
-                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                        <span>100% Halal Certified</span>
+                        <i data-lucide="{{ $badgeIcon3 }}" class="w-3.5 h-3.5"></i>
+                        <span>{{ $badgePill3 }}</span>
                     </span>
                 </div>
 
                 {{-- CTA Buttons --}}
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-3">
                     @if ($landingPage->isPageActive('catalog'))
-                        <a href="{{ url('/' . $business->slug . '/katalog') }}"
+                        <a href="{{ $primaryCtaUrl }}"
                             class="px-7 py-3.5 text-sm sm:text-base font-semibold rounded-2xl text-white shadow-lg transition-all duration-300 flex items-center gap-2 min-h-[48px] hover:-translate-y-0.5 active:scale-[0.98]"
-                            style="background: linear-gradient(135deg, #991B1B, #B45309);">
-                            <span>{{ $landingPage->cta_primary_text ?: 'Buka Menu Santap' }}</span>
+                            style="background: linear-gradient(135deg, var(--theme-primary, #991B1B), #B45309);">
+                            <span>{{ $primaryCtaText }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
                     @endif
 
-                    @if ($landingPage->isPageActive('reservation'))
-                        <a href="{{ url('/' . $business->slug . '/reservasi') }}"
+                    @if ($hasWhatsapp)
+                        <a href="{{ $secondaryCtaUrl }}" target="_blank" rel="noopener"
                             class="px-6 py-3.5 text-sm sm:text-base font-semibold rounded-2xl border-2 shadow-sm transition-all duration-300 flex items-center gap-2 min-h-[48px] bg-white dark:bg-[#181E2A] text-neutral-800 dark:text-white border-amber-300 dark:border-amber-800/50 hover:bg-amber-50/50">
-                            <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
-                            <span>{{ __('storefront.reservasi_meja') }}</span>
+                            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
+                            <span>{{ $secondaryCtaText }}</span>
                         </a>
                     @endif
                 </div>
@@ -62,21 +83,49 @@
             {{-- Visual Showcase --}}
             <div class="lg:col-span-5">
                 <div class="relative mx-auto max-w-md lg:max-w-none">
-                    @php
-                        $heroImg = $landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000&auto=format&fit=crop&q=80';
-                    @endphp
-                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-amber-100 dark:border-white/10 aspect-square bg-amber-50 dark:bg-amber-950/20">
-                        <img src="{{ $heroImg }}" alt="{{ $business->name }}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    @if ($heroImage)
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-amber-100 dark:border-white/10 aspect-square bg-amber-50 dark:bg-amber-950/20">
+                            <img src="{{ $heroImage }}" alt="{{ $business->name }}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
-                        <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border border-white/20 text-xs shadow-lg flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span class="font-semibold text-neutral-900 dark:text-white">Dine-in &amp; Takeaway Buka</span>
+                            <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border border-white/20 text-xs shadow-lg flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span class="font-semibold text-neutral-900 dark:text-white">{{ __('storefront.hero.active_status') }}</span>
+                                </div>
+                                <span class="text-amber-700 dark:text-amber-400 font-bold font-mono">{{ __('storefront.hero.verified_official') }}</span>
                             </div>
-                            <span class="text-amber-700 dark:text-amber-400 font-bold font-mono">Meja Tersedia</span>
                         </div>
-                    </div>
+                    @else
+                        {{-- Brand Bento Graphic Showcase Card (Universal Fallback) --}}
+                        <div class="rounded-3xl p-7 sm:p-8 bg-gradient-to-br from-[#7F1D1D] via-[#9A3412] to-[#450A0A] text-white shadow-2xl border border-amber-500/30 relative overflow-hidden aspect-square flex flex-col justify-between">
+                            <div class="absolute -right-10 -bottom-10 w-56 h-56 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+                            <div class="flex items-center justify-between relative z-10">
+                                <span class="w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-2xl text-white shadow-md" style="background-color: var(--theme-primary, #991B1B);">
+                                    {{ strtoupper(substr($business->name, 0, 2)) }}
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-400/20 text-amber-200 border border-amber-400/30">
+                                    {{ __('storefront.hero.active_status') }}
+                                </span>
+                            </div>
+
+                            <div class="relative z-10 space-y-2 my-auto">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-amber-300">{{ __('storefront.hero.verified_official') }}</span>
+                                <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-white">{{ $business->name }}</h3>
+                                <p class="text-xs text-amber-100/80 leading-relaxed">{{ $heroSubheadline }}</p>
+                            </div>
+
+                            <div class="relative z-10 flex flex-wrap gap-2 pt-2 border-t border-amber-400/20 text-xs text-amber-100">
+                                @foreach ($universalValues as $val)
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/10 backdrop-blur-md">
+                                        <i data-lucide="{{ $val['icon'] }}" class="w-3.5 h-3.5 text-amber-300"></i>
+                                        <span>{{ $val['title'] }}</span>
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 

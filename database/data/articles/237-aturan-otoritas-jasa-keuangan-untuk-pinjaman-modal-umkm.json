@@ -1,0 +1,38 @@
+{
+  "id": 237,
+  "title": "Aturan Otoritas Jasa Keuangan untuk Pinjaman Modal UMKM",
+  "slug": "aturan-otoritas-jasa-keuangan-untuk-pinjaman-modal-umkm",
+  "category": "Legalitas",
+  "cluster": "edukasi",
+  "primary_keyword": "aturan otoritas jasa keuangan untuk pinjaman modal umkm",
+  "secondary_keywords": "fintech p2p lending berizin ojk, cek status slik ojk toko, pinjaman usaha legal tanpa jaminan, mitigasi risiko kredit macet gerai, regulasi pembiayaan usaha",
+  "search_intent": "informational",
+  "meta_title": "Aturan Otoritas Jasa Keuangan untuk Pinjaman Modal UMKM",
+  "meta_description": "Pahami aturan Otoritas Jasa Keuangan untuk pinjaman modal UMKM. Kenali fintech legal, syarat SLIK OJK perbankan, dan hindari pinjol ilegal berbahaya.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/aturan-otoritas-jasa-keuangan-untuk-pinjaman-modal-umkm.jpg",
+  "local_image_asset": "public/images/blog/aturan-otoritas-jasa-keuangan-untuk-pinjaman-modal-umkm.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "otoritas jasa keuangan",
+  "word_count": 1215,
+  "faqs": [
+    {
+      "q": "Bagaimana cara cepat memeriksa legalitas fintech lending di OJK?",
+      "a": "Pemilik usaha dapat memeriksa daftar fintech berizin melalui situs resmi www.ojk.go.id, menghubungi kontak OJK 157, atau mengirim pesan WhatsApp resmi ke nomor layanan OJK di 081-157-157-157."
+    },
+    {
+      "q": "Berapa batas bunga maksimal fintech lending produktif yang diatur oleh OJK?",
+      "a": "Sesuai peta jalan OJK, bunga pinjaman produktif dibatasi secara bertahap pada rentang 0,1 persen per hari dan wajib mencantumkan seluruh biaya tambahan secara transparan dalam ringkasan informasi produk."
+    },
+    {
+      "q": "Apakah catatan kredit macet di SLIK OJK bisa langsung bersih setelah utang dilunasi?",
+      "a": "Setelah pelunasan dilakukan, bank kreditur wajib memperbarui data ke sistem SLIK OJK pada periode pelaporan berikutnya (maksimal tanggal 10 bulan berikutnya). Peminjam juga dapat meminta surat keterangan lunas resmi dari bank terkait."
+    },
+    {
+      "q": "Bagaimana Cooca membantu toko mengontrol tanggal jatuh tempo pinjaman supplier dan bank?",
+      "a": "Cooca menyediakan modul Accounts Payable (Utang Usaha) dengan kalender pengingat jatuh tempo otomatis, sehingga staf keuangan tidak pernah terlambat melakukan pembayaran cicilan."
+    }
+  ],
+  "published_at": "2026-11-05T08:00:00+07:00"
+}

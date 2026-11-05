@@ -1,92 +1,102 @@
-# BRIEFING — 2026-11-03T05:15:00Z
+# BRIEFING — 2026-11-05T01:41:00Z
 
 ## Mission
-Comprehensive Mobile Application Audit & OpenShift Bug Remediation across the Flutter mobile app (C:\laragon\www\cooca_my_own), referencing backend contracts at C:\laragon\www\cooca_core and connecting directly to the live production API at https://cooca.id as Single Source of Truth.
+Eksekusi penuh standarisasi dan implementasi 42 tema storefront menjadi universal dan terintegrasi penuh dengan CMS Landing Page sesuai cetak biru STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md.
 
 ## 🔒 My Identity
-- Archetype: teamwork_orchestrator
+- Archetype: orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
 - Working directory: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1
-- Original parent: sentinel
-- Original parent conversation ID: c9711e09-672a-406e-a3b8-bd4fe3fa2091
+- Original parent: parent (Goal Runner)
+- Original parent conversation ID: 1af07087-84cd-48eb-8ae2-38199e6c7c7d
 
 ## 🔒 My Workflow
-- **Pattern**: Project Orchestrator (Multi-Milestone Greenfield/Integration)
+- **Pattern**: Project
 - **Scope document**: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
-1. **Decompose**:
-   - Step 0: Survey full scope via 3 parallel Explorers (Backend `cooca_core`, Mobile `cooca_my_own`, Spec Miner contract mapping). [DONE]
-   - Step 1: Synthesize findings and write `PROJECT.md` with Feature Inventory, Milestones, and Interface Contracts. [DONE]
-   - Step 2: Dispatch implementation milestones to sub-orchestrators/workers, along with dual-track E2E/integration testing. [DONE]
+1. **Decompose**: Decomposed into 5 phases (Phase 1: Backend & Service Normalization, Phase 2: Refactoring 42 Storefront Themes across 4 batches, Phase 3: Home & Layout Visibility Enforcement, Phase 4: CMS Cockpit Enhancement, Phase 5: QA & Full Test Verification).
 2. **Dispatch & Execute**:
-   - Milestone 1: OpenShift Remediation (Stage 1 Critical) [DONE: 15/15 tests passed]
-   - Milestone 2: Android Security & Attendance Fake GPS Prevention (Stage 1 Critical) [DONE: 13/13 tests passed]
-   - Milestone 3: Comprehensive Mobile Feature Audit & Elimination of Dummy/Hardcoded Data (Stage 2) [DONE: 7/7 tests passed]
-   - Milestone 4: Android Production Build Configuration & Performance Hardening [DONE: Build verified, 0 issues]
-   - Milestone 5: Verification, Automated Testing, and Audit Documentation (5 Reports) [DONE: 105 tests passed, 5 reports generated]
-3. **Iteration 2 (Post-Audit Remediation)**:
-   - Received Victory Audit Report with test suite discrepancies (`flutter analyze` undefined method in test file, 6 test expectation mismatches).
-   - Dispatched `worker_remediation_tests` to fix test compilation and expectations in `social_and_marketplace_test.dart` and `ui_glitch_and_receipt_watermark_test.dart`.
-4. **Current phase**: Iteration 2 (Test Remediation)
-5. **Current focus**: Executing clean `flutter analyze` and full `flutter test` pass across all tests.
+   - Survey: 3 Explorers [DONE - Gate PASS]
+   - Milestone 1: Backend & Service Normalization [DONE - Gate PASS]
+   - Milestone 2A: Batch 1 Themes Refactoring (10 themes) [DONE - Gate PASS]
+   - Milestone 2B: Batch 2 Themes Refactoring (11 themes) [IN-PROGRESS - 3 Explorers dispatched]
+3. **On failure**:
+   - Retry -> Replace -> Skip (non-critical) -> Redistribute -> Redesign -> Escalate
+4. **Succession**:
+   - Active orchestrator handling execution up to 128 spawn limit
+- **Work items**:
+  1. Survey & Scope Mapping [done]
+  2. Phase 1: Backend & Service Normalization [done]
+  3. Phase 2A: Refactoring Batch 1 Themes (10 themes) [done]
+  4. Phase 2B: Refactoring Batch 2 Themes (11 themes) [in-progress]
+  5. Phase 2C: Refactoring Batch 3 Themes (11 themes) [pending]
+  6. Phase 2D: Refactoring Batch 4 Themes (10 themes) [pending]
+  7. Phase 3: Home.blade.php & Layout Visibility [pending]
+  8. Phase 4: CMS Cockpit edit.blade.php [pending]
+  9. Phase 5: QA, Automated Testing & Verification [pending]
+- **Current phase**: 2B (Batch 2 Themes Refactoring)
+- **Current focus**: Milestone 2B Explorer investigation for 11 F&B & Retail themes
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
-- NEVER run build/test commands yourself — require workers to do so.
-- NEVER investigate or explore the problem at the code level — dispatch Explorers for technical investigation.
-- You MAY use file-editing tools ONLY for metadata/state files (.md) in your .agents/teamwork/ folder.
-- Mandate strict adherence to `ORIGINAL_REQUEST.md` and `plan_core_to_mobile_features.md`.
-- Zero tolerance for mock/cheating implementations; Forensic Auditor must report CLEAN.
-- `flutter analyze` must produce 0 issues/errors; `flutter test` must pass 100%.
-- Backend PHPUnit/Pest tests must pass 100%.
-- Live Single Source of Truth API: https://cooca.id; reference code contracts: C:\laragon\www\cooca_core; mobile target: C:\laragon\www\cooca_my_own.
-- 100% elimination of dummy/mock/hardcoded data across all audited mobile modules.
-- Non-debuggable Android release configuration (`debuggable = false`), HTTPS, and no hardcoded secrets.
-- Full generation of 5 mandatory audit markdown reports with structured finding records.
+- NEVER run build/test commands yourself — dispatch subagents.
+- File edits allowed ONLY for metadata (.md) in .agents/teamwork/ folder.
+- ZERO hardcoded sector text in themes; maintain unique visual taste of each theme archetype.
+- Maintain backwards compatibility (no broken routes/files, preserve Alpine.js/cart/checkout logic).
+- Mandatory integrity warning in Worker dispatch.
+- Binary veto on Auditor integrity violations.
 
 ## Current Parent
-- Conversation ID: 17a2d69c-7ab5-45a1-97b8-668835ae7c58
-- Updated: 2026-11-03T05:13:43Z
+- Conversation ID: 1af07087-84cd-48eb-8ae2-38199e6c7c7d
+- Updated: 2026-11-05T01:41:00Z
 
 ## Key Decisions Made
-- All functional remediations (OpenShift, Fake GPS, Dummy Data, Release Build) confirmed genuine in Victory Audit Phase B.
-- Victory Audit Phase C rejected victory due to 3 `flutter analyze` issues in test files and 6 `flutter test` failures.
-- Dispatched `worker_remediation_tests` (Conv ID: `4146057c-a7fe-42de-9bae-2d12a2c081ee`) to fix `setCurrentBusinessForTesting`, tab label expectations, and widget test viewport constraints.
+- Milestone 2A passed Gate 2A with unanimous approval and CLEAN forensic audit.
+- Milestone 2B initiated for 11 F&B and Retail themes: `bakery_cake`, `fnb_bakery`, `fnb_cafe`, `fnb_catering`, `fnb_fastfood`, `fnb_resto`, `retail_bookstore`, `retail_building`, `retail_electronics`, `retail_florist`, `retail_grocery`.
+- Dispatched 3 parallel Explorers for Milestone 2B.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| explorer_survey_openshift_1 | teamwork_explorer | Survey OpenShift bugs & lifecycle | completed | 57c47061-988c-4dee-9fa6-8f35f9c5117d |
-| explorer_survey_security_1 | teamwork_explorer | Survey Android Security & Fake GPS Attendance | completed | b13ba824-f926-4e1b-bdeb-796f6bd13b1e |
-| explorer_survey_modules_1 | teamwork_spec_miner | Survey 14 Mobile Modules & Production Config | completed | c1c84ccb-bd63-4a5b-b858-50d001b6c676 |
-| worker_openshift_m1 | teamwork_worker | Milestone 1 OpenShift Remediation | completed | 453c6132-0043-42a5-8281-fe105159590b |
-| worker_security_m2 | teamwork_worker | Milestone 2 Android Security & Fake GPS | completed | 01ed007f-e699-4353-8b56-c76e98c79a15 |
-| worker_modules_m3 | teamwork_worker | Milestone 3 Dummy Data Elimination | terminated (timeout) | 65bf5016-243d-4dd7-9d64-1a228e895b8e |
-| worker_build_m4 | teamwork_worker | Milestone 4 Android Production Build | completed | 444ed8bb-726a-48fe-bb48-1809b5487a2e |
-| worker_modules_m3_gen2 | teamwork_worker | Milestone 3 Dummy Data Elimination (Replacement) | completed | 5cc229de-c3d7-4e19-b6a5-693f8ae2d67f |
-| worker_audit_reports_m5 | teamwork_worker | Milestone 5 Verification & 5 Audit Reports | completed | 04d33a4e-5f7c-487c-a138-10accd0fdddc |
-| reviewer_v_1 | teamwork_reviewer | Code Review M1 & M2 | completed (APPROVE) | 60bbc381-94ac-41af-8b11-236f6246a317 |
-| reviewer_v_2 | teamwork_reviewer | Code Review M3, M4 & M5 | completed (APPROVE) | 00ae2d77-f4f2-4b22-88df-c5c74b34fed8 |
-| challenger_v_1 | teamwork_challenger | Adversarial Verification M1 & M2 | completed (APPROVE) | de50888e-c536-43f9-8289-6995eaee8959 |
-| challenger_v_2 | teamwork_challenger | Adversarial Verification M3 & M4 | completed (APPROVE) | 4c6b1286-2004-451a-911a-9b4b1274f075 |
-| auditor_v_1 | teamwork_auditor | Forensic Integrity Auditor | completed (CLEAN) | 4b42b389-859e-40e4-b293-ff2c74379376 |
-| worker_remediation_tests | teamwork_worker | Iteration 2 Test Suite Remediation | in-progress | 4146057c-a7fe-42de-9bae-2d12a2c081ee |
+| explorer_survey_1 | teamwork_explorer | Backend Survey Explorer | completed | de571fff-bf5e-4212-b63d-f7a108ef1cc6 |
+| explorer_survey_2 | teamwork_explorer | Storefront Views Survey Explorer | completed | 4a902e87-b7e3-4469-b0e8-5527c86ad8d4 |
+| explorer_survey_3 | teamwork_explorer | CMS Cockpit & Test Explorer | completed | 58ec1705-b398-4f9b-ad3f-3d2a0a6494ce |
+| explorer_m1_1 | teamwork_explorer | M1 Translation Explorer | completed | 54739d1f-f6dd-46ab-86e2-3829e502c6b6 |
+| explorer_m1_2 | teamwork_explorer | M1 Model Explorer | completed | adf47647-ae84-4552-8157-ffc61c097251 |
+| explorer_m1_3 | teamwork_explorer | M1 Service Explorer | completed | 5a0a11cf-b063-406b-aa17-fc2f897ee9cd |
+| worker_m1_1 | teamwork_worker | M1 Backend Worker | completed | 70fbb43e-8adf-4d9c-9036-81d72e573dda |
+| reviewer_m1_1 | teamwork_reviewer | M1 Translations & Model Reviewer | completed | 4519a67d-155f-4d57-9139-f38840d25f02 |
+| reviewer_m1_2 | teamwork_reviewer | M1 Service & Tests Reviewer | completed | 98cff606-102f-49f2-8428-da2a51dd7d5f |
+| challenger_m1_1 | teamwork_challenger | M1 Model & Service Challenger | completed | b4d86c20-cd32-4f69-8d7d-421367525511 |
+| challenger_m1_2 | teamwork_challenger | M1 i18n Parity Challenger | completed | ad1855e3-8cfd-452d-b73a-bbe31edd3392 |
+| auditor_m1_1 | teamwork_auditor | M1 Forensic Auditor | completed | 7af141ce-344d-42ef-9fa4-8abd6b68f043 |
+| explorer_m2a_1 | teamwork_explorer | M2A Explorer Themes 1-4 | completed | 5698e6f3-7666-44b0-b248-8acbcf77484f |
+| explorer_m2a_2 | teamwork_explorer | M2A Explorer Themes 5-7 | completed | 386f3ef3-5cff-441b-8587-f5b146a08d8e |
+| explorer_m2a_3 | teamwork_explorer | M2A Explorer Themes 8-10 | completed | fc6e9445-37c4-4b2e-b650-582c5e696130 |
+| worker_m2a_1 | teamwork_worker | M2A Batch 1 Worker | completed | 8b3a4da7-0b8a-4d56-8c67-9afd81bac9b1 |
+| reviewer_m2a_1 | teamwork_reviewer | M2A Reviewer Themes 1-5 | completed | d06728c4-6bff-449a-a7cf-a94dc2baf31b |
+| reviewer_m2a_2 | teamwork_reviewer | M2A Reviewer Themes 6-10 | completed | f71d3f8b-7a79-4580-9372-8776100febf3 |
+| challenger_m2a_1 | teamwork_challenger | M2A Challenger Themes 1-5 | completed | 8c6ced2c-cdfa-4143-ac25-318e43d6846c |
+| challenger_m2a_2 | teamwork_challenger | M2A Challenger Themes 6-10 | completed | 5fc67dfc-8cd6-4155-a68e-4d7806311e84 |
+| auditor_m2a_1 | teamwork_auditor | M2A Forensic Auditor | completed | 1b19fafe-e15b-494b-8c7a-a2e50767093a |
+| explorer_m2b_1 | teamwork_explorer | M2B Explorer Themes 1-4 | completed | 60b4477c-ee36-46b5-a63b-23aa4e87a6a0 |
+| explorer_m2b_2 | teamwork_explorer | M2B Explorer Themes 5-7 | completed | f73c1017-2e4b-402e-a4d7-9862c4e7cdc6 |
+| explorer_m2b_3 | teamwork_explorer | M2B Explorer Themes 8-11 | completed | 859d6229-7e88-4692-b2e3-480f58c642e4 |
+| worker_m2b_1 | teamwork_worker | M2B Batch 2 Worker (11 Themes) | in-progress | 50de0fdf-951e-4b45-bc65-47d8abdc44f4 |
 
 ## Succession Status
-- Succession required: no
-- Spawn count: 15 / 16
-- Pending subagents: 4146057c-a7fe-42de-9bae-2d12a2c081ee
-- Predecessor: none
-- Successor: not yet spawned
+- Succession required: no (runtime orchestrator active, limit 128)
+- Spawn count: 25 / 128
+- Pending subagents: 50de0fdf-951e-4b45-bc65-47d8abdc44f4
 
 ## Active Timers
-- Heartbeat cron: 73d9d035-59a2-45d3-a207-90bc9a5adcc4/task-432 (*/10 * * * *)
+- Heartbeat cron: 3e6ffd97-6534-466f-a0f2-f2278f17c1fe/task-243
 - Safety timer: none
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` — Authoritative original request
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\DISPATCH.md` — Incoming dispatch log
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\BRIEFING.md` — Working memory
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\progress.md` — Workflow progress and liveness heartbeat
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md` — Global architecture, milestones & inventory
-- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md` — Gate evaluation status
-- `c:\laragon\www\cooca_core\.agents\teamwork\victory_auditor_2\handoff.md` — Victory Audit Report
+- Blueprint: C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\5699ea93-e022-47d8-82fe-e47b3a657b52\STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md
+- Original Request: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+- Dispatch Log: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\DISPATCH.md
+- Scope/Project: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
+- Briefing: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\BRIEFING.md
+- Progress: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\progress.md
+- Gate Status: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md
