@@ -39,7 +39,6 @@ use App\Http\Controllers\Web\MasterDataWebController;
 use App\Http\Controllers\Web\MaterialCategoryWebController;
 use App\Http\Controllers\Web\MaterialUnitConversionWebController;
 use App\Http\Controllers\Web\MaterialWebController;
-use App\Http\Controllers\Web\OnboardingWebController;
 use App\Http\Controllers\Web\Pos\ModifierWebController;
 use App\Http\Controllers\Web\Pos\PosKitchenWebController;
 use App\Http\Controllers\Web\Pos\PosOrderWebController;
@@ -122,11 +121,6 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
     Route::post('/profile/contact/verify/resend', [ProfileWebController::class, 'resendContactChange'])->middleware('throttle:3,1')->name('profile.contact.verify.resend');
     Route::put('/profile/password', [ProfileWebController::class, 'updatePassword'])->name('profile.password');
 
-    // 2. Onboarding / Guided Product Tour Persistence Routes
-    Route::get('/onboarding/status', [OnboardingWebController::class, 'status'])->name('onboarding.status');
-    Route::post('/onboarding/step', [OnboardingWebController::class, 'updateStep'])->name('onboarding.step');
-    Route::post('/onboarding/complete', [OnboardingWebController::class, 'complete'])->name('onboarding.complete');
-    Route::post('/onboarding/restart', [OnboardingWebController::class, 'restart'])->name('onboarding.restart');
 
     // 3. Tenant Protected Core Web Panel
     Route::middleware(['business.active', 'profile.complete', 'verified'])->group(function (): void {

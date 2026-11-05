@@ -1315,11 +1315,6 @@
         },
         storagePruningOpen: false,
         init() {
-            window.addEventListener('tour-open-sidebar', () => {
-                this.sidebarOpen = true;
-                this.sidebarCollapsed = false;
-            });
-            window.addEventListener('tour-close-sidebar', () => { this.sidebarOpen = false; });
             window.addEventListener('cooca-coming-soon', (e) => { this.openComingSoon(e.detail); });
             window.addEventListener('open-storage-pruning-modal', () => { this.storagePruningOpen = true; });
         }
@@ -2754,10 +2749,6 @@
             }, true);
         })();
     </script>
-
-    <!-- Guided Product Tour Engine -->
-    <script src="{{ asset('js/onboarding/tour-config.js') }}"></script>
-    <script src="{{ asset('js/onboarding/product-tour.js') }}"></script>
 
     <!-- AppAlert Session Flash Notifications (Deduplicated) -->
     @php

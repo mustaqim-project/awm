@@ -33,6 +33,40 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-378] Penghapusan Total Fitur Onboarding Product Tour Engine (`public/js/onboarding`)
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** Layout, UI/UX, Onboarding, Routes
+- **Feature:** Penghapusan Total Fitur Onboarding Product Tour Engine:
+  1. **Penghapusan File Aset JS (`public/js/onboarding`):** Menghapus folder `public/js/onboarding` beserta seluruh berkas di dalamnya (`product-tour.js` dan `tour-config.js`).
+  2. **Pembersihan Layout Shell (`resources/views/layouts/app.blade.php`):** Menghapus pemanggilan tag script `asset('js/onboarding/tour-config.js')` dan `asset('js/onboarding/product-tour.js')` serta menghapus listener event `tour-open-sidebar` dan `tour-close-sidebar` pada inisialisasi Alpine.js.
+  3. **Pembersihan Dropdown Profil (`resources/views/layouts/partials/topbar.blade.php`):** Menghapus tombol formulir "Mulai Ulang Panduan" (`route('onboarding.restart')`).
+  4. **Pembersihan Rute & Backend Controller:** Menghapus rute `/onboarding/status`, `/onboarding/step`, `/onboarding/complete`, dan `/onboarding/restart` dari `routes/owner.php` serta menghapus `app/Http/Controllers/Web/OnboardingWebController.php` dan pengujian `tests/Feature/GuidedProductTourTest.php`.
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha dan developer tidak lagi menginginkan modul overlay/spotlight product tour otomatis muncul mengganggu layar dashboard dan navigasi operasional kasir.
+- **Masalah/Target:** Mengeliminasi seluruh skrip, event listener, rute, dan controller tour onboarding tanpa meninggalkan tautan rusak (*zero broken links*) dan tanpa 404 script loading error di konsol browser.
+
+#### 2. What Was Done
+- Menghapus direktori `public/js/onboarding/` secara rekursif.
+- Menghapus tag script dan listener di `resources/views/layouts/app.blade.php`.
+- Menghapus opsi restart tour di `resources/views/layouts/partials/topbar.blade.php`.
+- Membersihkan rute owner di `routes/owner.php`.
+- Menghapus `OnboardingWebController.php` dan `GuidedProductTourTest.php`.
+- Memvalidasi seluruh sintaks Blade dan rute aplikasi dengan `php artisan route:clear` dan `php artisan view:clear`.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `public/js/onboarding/product-tour.js` (DELETED)
+  - `public/js/onboarding/tour-config.js` (DELETED)
+  - `app/Http/Controllers/Web/OnboardingWebController.php` (DELETED)
+  - `tests/Feature/GuidedProductTourTest.php` (DELETED)
+  - `resources/views/layouts/app.blade.php` (MODIFIED)
+  - `resources/views/layouts/partials/topbar.blade.php` (MODIFIED)
+  - `routes/owner.php` (MODIFIED)
+- **Database Changes:** Tidak ada.
+
 ### [WORK-2026-11-05-377] Audit Sistemik Landing Page CMS & Rekonstruksi Penuh 21 Hero Tema Storefront Universal
 
 - **Date:** 2026-11-05

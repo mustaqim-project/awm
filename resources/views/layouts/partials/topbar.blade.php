@@ -470,16 +470,6 @@
                             <span>{{ __('navigation.support_help') }}</span>
                         </a>
                     @endif
-
-                    <form method="POST" action="{{ route('onboarding.restart') }}">
-                        @csrf
-                        <button type="submit" @click="profileOpen = false"
-                            class="w-full px-2.5 py-1.5 rounded-[7px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2 transition active:scale-98 text-left cursor-pointer">
-                            <i data-lucide="help-circle"
-                                class="w-3.5 h-3.5 text-black/45 dark:text-white/45 shrink-0"></i>
-                            <span>{{ __('navigation.restart_tour') }}</span>
-                        </button>
-                    </form>
                 </div>
 
                 <!-- Desktop Language Switcher (Inside Profile as Well) -->
