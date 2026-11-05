@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-378] Implementasi In-App Help Chatbot dengan Isolasi Multi-Tenant Ketat & Penegakan Otorisasi RBAC Peran Pengguna
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** In-App Help, AI Assistant, Role-Based Access Control (RBAC), Multi-Tenant Security, UI/UX
+- **Feature:** Implementasi Asisten Chatbot Panduan Penggunaan Fitur In-App & Penegakan Guardrail Data Sensitif:
+  1. **Konsep Live Chat In-App Bebas Form:** Mentransformasikan konsep widget live chat (`live_chat_widget.blade.php`) menjadi chatbot internal operasional (`resources/views/layouts/partials/help_chatbot_widget.blade.php`) yang terpasang langsung di panel owner/app (`resources/views/layouts/app.blade.php`). Karena pengguna sudah terotentikasi, widget langsung aktif tanpa form input nama/email/HP.
+  2. **Tujuan Utama: Panduan Penggunaan Seluruh Fitur Cooca:** Melayani seluruh pengguna (owner, admin, manajer, kasir, staf gudang, staf keuangan) untuk bertanya cara penggunaan seluruh fitur di `resources/views/app` (POS Kasir, Buka-Tutup Shift, HPP Resep BOM 3-Pilar, Stok & Mutasi Gudang, Pembelian PO, Penjualan B2B, Toko Online 42 Tema, Pintasan Keyboard, dan Portal Staf).
+  3. **Penegakan Isolasi Multi-Tenant & RBAC Permission Guardrail:**
+     - Pertanyaan data riil bisnis (omzet/penjualan, rincian gaji karyawan, daftar stok gudang) wajib diisolasi berdasarkan `business_id` aktif.
+     - Penegakan izin berbasis peran via `Context::hasPermission` & `Context::isOwner`: jika staf (seperti kasir) menanyakan data omzet atau data gaji, permintaan ditolak secara tegas namun sopan (`status: denied`, `permission_granted: false`), dengan arahan bahwa wewenang tersebut memerlukan izin `reports.view` / `finance.view` / `users.manage`.
+     - Jika owner atau staf berwenang bertanya, data riil disajikan secara terangkum dan terisolasi 100% dari tenant lain.
+     - Deteksi anti-prompt injection dan pemblokiran percobaan akses data bisnis lain (*cross-tenant attempt*).
+  4. **Pembersihan Modul Usang:** Menghapus direktori `public/js/onboarding` sesuai instruksi pengguna demi merampingkan bundle aset statis.
+  5. **Automated Testing Suite (100% Passed):** Mengimplementasikan `tests/Feature/InAppHelpChatbotTest.php` yang memvalidasi 6 skenario pengujian: pemblokiran request unauthenticated, penyajian panduan fitur untuk semua staf, penolakan akses omzet bagi kasir tanpa izin, penyajian data omzet terisolasi bagi owner, penolakan akses gaji bagi staf tanpa wewenang, dan penolakan prompt injection/cross-tenant (6 passed, 22 assertions).
+
+#### 1. Business Context & Objective
+- **Konteks:** Pengguna aplikasi bisnis di lingkungan panel internal membutuhkan bantuan interaktif cepat saat mengoperasikan berbagai modul tanpa harus keluar dari alur kerja. Namun, berbeda dengan live chat CS publik, chatbot internal ini harus mematuhi batas kerahasiaan data bisnis dan wewenang pengguna (RBAC).
+- **Masalah/Target:** Menyediakan asisten in-app yang siap membantu semua peran pengguna bertanya cara penggunaan fitur, namun secara ketat menolak kebocoran data sensitif antar tenant dan mencegah staf non-otoritatif mengakses data finansial atau gaji rahasia.
+
+#### 2. What Was Done
+- Membuat service `app/Domain/Ai/HelpChatbotService.php` dengan logika klasifikasi intent, deteksi injection, multi-tenant guardrail, role permission checking, query data aman, dan panduan fitur.
+- Membuat controller `app/Http/Controllers/Web/HelpChatbotWebController.php` dengan validasi payload aman.
+- Mendaftarkan route `POST /help-chatbot/ask` di `routes/owner.php` dalam middleware group tenant yang terverifikasi.
+- Membuat komponen widget Blade `resources/views/layouts/partials/help_chatbot_widget.blade.php` dengan UI Apple HIG, floating action button anti-overlap, quick suggestions, dan Markdown renderer.
+- Menyematkan widget ke `resources/views/layouts/app.blade.php`.
+- Menghapus folder usang `public/js/onboarding`.
+- Menulis dan memverifikasi unit & feature test di `tests/Feature/InAppHelpChatbotTest.php`.
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `app/Domain/Ai/HelpChatbotService.php` (created)
+  - `app/Http/Controllers/Web/HelpChatbotWebController.php` (created)
+  - `routes/owner.php` (modified)
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (created)
+  - `resources/views/layouts/app.blade.php` (modified)
+  - `public/js/onboarding` (deleted)
+  - `tests/Feature/InAppHelpChatbotTest.php` (created)
+- **Database Changes:** Tidak ada perubahan skema database (menggunakan model dan tabel `pos_orders`, `users`, `business_memberships`, `products`, `materials` yang sudah ada).
+
+---
+
 ### [WORK-2026-11-05-377] Audit Sistemik Landing Page CMS & Rekonstruksi Penuh 21 Hero Tema Storefront Universal
 
 - **Date:** 2026-11-05
