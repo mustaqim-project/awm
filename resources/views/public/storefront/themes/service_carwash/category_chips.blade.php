@@ -2,12 +2,19 @@
     Cuci Mobil & Detailing Category Chips (`service_carwash` / `hydro_shield`)
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
-                <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">{{ __('storefront.pilihan_paket_cuci_coating') }}</h2>
+                <h2 class="font-heading font-bold text-xl sm:text-2xl text-neutral-900 dark:text-white">
+                    {{ $catHeading }}
+                </h2>
                 <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
-                    Cuci salju, poles bodi, detailing interior, jamur kaca &amp; coating
+                    {{ $catSubtitle }}
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

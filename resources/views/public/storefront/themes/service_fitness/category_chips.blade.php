@@ -2,12 +2,19 @@
     Fitness & Gym Category Chips (`service_fitness` / `titan_kinetic`)
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
-                <h2 class="font-heading font-black text-2xl text-neutral-900 dark:text-white uppercase tracking-tight">{{ __('storefront.program_paket_latihan') }}</h2>
+                <h2 class="font-heading font-black text-2xl text-neutral-900 dark:text-white uppercase tracking-tight">
+                    {{ $catHeading }}
+                </h2>
                 <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
-                    Membership gym, personal trainer, kelas yoga, suplemen &amp; whey protein
+                    {{ $catSubtitle }}
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

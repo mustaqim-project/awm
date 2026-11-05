@@ -3,14 +3,21 @@
 {{-- ========================================================================= --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
     @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
+    @php
         $selectedCatId = request()->query('category');
     @endphp
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 dark:text-purple-100 leading-tight">{{ __('storefront.pilihan_kategori_sesi_layanan') }}</h2>
+                <h2 class="font-heading font-extrabold text-lg sm:text-xl text-slate-900 dark:text-purple-100 leading-tight">
+                    {{ $catHeading }}
+                </h2>
                 <p class="text-xs text-slate-500 dark:text-purple-300/70 mt-0.5">
-                    Pilih jenis perawatan atau sesi konsultasi yang ingin Anda reservasi
+                    {{ $catSubtitle }}
                 </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"

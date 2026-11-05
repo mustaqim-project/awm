@@ -3,13 +3,20 @@
     Resort & villa category navigation: Suite, Private Pool Villa, Family Cottage, Glamping Tent.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
                 <h2 class="font-heading font-normal text-2xl sm:text-3xl text-slate-900 dark:text-sky-50">
-                    Tipe Kamar &amp; Villa
+                    {{ $catHeading }}
                 </h2>
-                <p class="text-xs text-slate-500 dark:text-sky-200/70">Pilih akomodasi yang sesuai dengan rencana liburan keluarga atau perjalanan Anda</p>
+                <p class="text-xs text-slate-500 dark:text-sky-200/70">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-sky-700 dark:text-sky-300 hover:underline flex items-center gap-1">
