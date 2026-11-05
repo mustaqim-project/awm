@@ -118,6 +118,33 @@ final class InAppHelpChatbotTest extends TestCase
         $this->assertNotEmpty($response->json('quick_links'));
     }
 
+    public function test_greeting_query_replies_conversationally_without_repeating_popular_questions(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('cashier');
+
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->postJson(route('help-chatbot.ask'), [
+                'message' => 'hallo',
+            ]);
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'is_data_query' => false,
+            'permission_granted' => true,
+        ]);
+
+        $reply = $response->json('reply');
+        $this->assertStringContainsString('Halo', $reply);
+        // Ensure it does NOT repeat the 5 popular questions list since opening card already has them
+        $this->assertStringNotContainsString('Berikut beberapa topik panduan yang sering ditanyakan', $reply);
+        $this->assertStringNotContainsString('Bagaimana cara buka & tutup shift kasir POS', $reply);
+    }
+
     public function test_cashier_without_reports_permission_is_denied_sales_financial_data(): void
     {
         [$business, $user] = $this->createBusinessWithUser('cashier');

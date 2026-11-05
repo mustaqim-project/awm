@@ -47,8 +47,8 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
      - Jika owner atau staf berwenang bertanya, data riil disajikan secara terangkum dan terisolasi 100% dari tenant lain.
      - Deteksi anti-prompt injection dan pemblokiran percobaan akses data bisnis lain (*cross-tenant attempt*).
   4. **Pembersihan Modul Usang:** Menghapus direktori `public/js/onboarding` sesuai instruksi pengguna demi merampingkan bundle aset statis.
-  5. **Integrasi Penuh AI Chatbot Engine (Sama seperti live_chat_widget.blade.php):** Menghubungkan chatbot ke pipeline LLM resmi Cooca via `AiProviderManager` (Gemini, OpenAI, Anthropic, OpenRouter, atau platform engine), dilengkapi grounding dokumentasi Markdown dari `docs/user-guides` via `AdminInboxAiService::getRelevantUserGuides()`, badge model AI di antarmuka pesan, dan mekanisme fallback deterministik otomatis yang menjamin ketersediaan 100% tanpa downtime.
-  6. **Automated Testing Suite (100% Passed):** Mengimplementasikan `tests/Feature/InAppHelpChatbotTest.php` yang memvalidasi 7 skenario pengujian: pemblokiran request unauthenticated, penyajian panduan fitur untuk semua staf, penolakan akses omzet bagi kasir tanpa izin, penyajian data omzet terisolasi bagi owner, penolakan akses gaji bagi staf tanpa wewenang, penolakan prompt injection/cross-tenant, serta pemanggilan provider AI live saat terkonfigurasi (7 passed, 25 assertions).
+  5. **Integrasi Penuh AI Chatbot Engine & Eliminasi Pengulangan Opening Card:** Menghubungkan chatbot ke pipeline LLM resmi Cooca via `AiProviderManager` (Gemini, OpenAI, Anthropic, OpenRouter, atau platform engine), dilengkapi grounding dokumentasi Markdown dari `docs/user-guides` via `AdminInboxAiService::getRelevantUserGuides()`. Mengeliminasi pengulangan daftar topik pembuka (opening card); pembuka kartu sambutan statis hanya muncul sekali di antarmuka, sedangkan pesan yang diketik pengguna dijawab secara langsung, kontekstual, dan personal oleh AI.
+  6. **Automated Testing Suite (100% Passed):** Mengimplementasikan `tests/Feature/InAppHelpChatbotTest.php` yang memvalidasi 8 skenario pengujian: pemblokiran request unauthenticated, penyajian panduan fitur untuk semua staf, penolakan akses omzet bagi kasir tanpa izin, penyajian data omzet terisolasi bagi owner, penolakan akses gaji bagi staf tanpa wewenang, penolakan prompt injection/cross-tenant, pemanggilan provider AI live saat terkonfigurasi, dan balasan sapaan ramah tanpa menduplikasi daftar pertanyaan populer (8 passed, 30 assertions).
 
 #### 1. Business Context & Objective
 - **Konteks:** Pengguna aplikasi bisnis di lingkungan panel internal membutuhkan bantuan interaktif cepat saat mengoperasikan berbagai modul tanpa harus keluar dari alur kerja. Namun, berbeda dengan live chat CS publik, chatbot internal ini harus mematuhi batas kerahasiaan data bisnis dan wewenang pengguna (RBAC).
@@ -23785,5 +23785,7 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   6. `tests/Feature/AdminB2bTest.php`: **Passed (100% Success)**.
   7. `tests/Feature/AdminFinanceTest.php`: **Passed (100% Success)**.
 - **Production Readiness Gate:** **PASSED (Super Lengkap, Production Hardened, Zero Vulnerability)**.
+
+
 
 
