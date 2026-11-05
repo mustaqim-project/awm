@@ -465,4 +465,125 @@ final class InAppHelpChatbotTest extends TestCase
         $this->assertSame('business_assistant', $historyRes->json('conversation.type'));
         $this->assertIsArray($historyRes->json('messages'));
     }
+
+    public function test_get_conversations_returns_html_view_for_direct_browser_request(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->get(route('help-chatbot.conversations'));
+
+        $response->assertOk();
+        $response->assertViewIs('app.help_chatbot.conversations');
+        $response->assertSee('Riwayat Asisten AI & Panduan');
+    }
+
+    public function test_get_conversations_returns_json_for_ajax_request_with_isolation(): void
+    {
+        [$businessA, $ownerA] = $this->createBusinessWithUser('owner');
+        [$businessB, $ownerB] = $this->createBusinessWithUser('owner');
+
+        // Create conversation in business A
+        \App\Models\AiChatbotConversation::create([
+            'business_id' => $businessA->id,
+            'user_id' => $ownerA->id,
+            'type' => 'business_assistant',
+            'title' => 'Analisis Kafe Bisnis A',
+        ]);
+
+        // Create conversation in business B
+        \App\Models\AiChatbotConversation::create([
+            'business_id' => $businessB->id,
+            'user_id' => $ownerB->id,
+            'type' => 'business_assistant',
+            'title' => 'Analisis Kafe Bisnis B Rahasia',
+        ]);
+
+        // Request as Owner A
+        $response = $this->actingAs($ownerA, 'web')
+            ->withSession([
+                'active_business_id' => $businessA->id,
+                'auth_wa_otp_verified_user_id' => $ownerA->id,
+            ])
+            ->getJson(route('help-chatbot.conversations'));
+
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'success',
+            'conversations',
+            'meta' => ['current_page', 'last_page', 'total'],
+        ]);
+
+        $conversations = $response->json('conversations');
+        $titles = array_column($conversations, 'title');
+        $this->assertContains('Analisis Kafe Bisnis A', $titles);
+        $this->assertNotContains('Analisis Kafe Bisnis B Rahasia', $titles);
+    }
+
+    public function test_user_can_delete_own_conversation(): void
+    {
+        [$business, $user] = $this->createBusinessWithUser('owner');
+
+        $conv = \App\Models\AiChatbotConversation::create([
+            'business_id' => $business->id,
+            'user_id' => $user->id,
+            'type' => 'help_center',
+            'title' => 'Percakapan Yang Akan Dihapus',
+        ]);
+
+        $response = $this->actingAs($user, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $user->id,
+            ])
+            ->deleteJson(route('help-chatbot.conversations.delete', ['conversationId' => $conv->id]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'success' => true,
+            'message' => 'Percakapan berhasil dihapus.',
+        ]);
+
+        $this->assertDatabaseMissing('ai_chatbot_conversations', [
+            'id' => $conv->id,
+        ]);
+    }
+
+    public function test_non_owner_cannot_delete_other_users_conversation(): void
+    {
+        [$business, $owner] = $this->createBusinessWithUser('owner');
+        $cashier = $this->createUser();
+        $role = \App\Models\Role::where('name', 'cashier')->first();
+
+        \App\Models\BusinessMembership::create([
+            'id' => (string) \Illuminate\Support\Str::uuid(),
+            'business_id' => $business->id,
+            'user_id' => $cashier->id,
+            'role' => 'cashier',
+            'role_id' => $role?->id,
+        ]);
+
+        $ownerConv = \App\Models\AiChatbotConversation::create([
+            'business_id' => $business->id,
+            'user_id' => $owner->id,
+            'type' => 'business_assistant',
+            'title' => 'Percakapan Rahasia Owner',
+        ]);
+
+        $response = $this->actingAs($cashier, 'web')
+            ->withSession([
+                'active_business_id' => $business->id,
+                'auth_wa_otp_verified_user_id' => $cashier->id,
+            ])
+            ->deleteJson(route('help-chatbot.conversations.delete', ['conversationId' => $ownerConv->id]));
+
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('ai_chatbot_conversations', [
+            'id' => $ownerConv->id,
+        ]);
+    }
 }

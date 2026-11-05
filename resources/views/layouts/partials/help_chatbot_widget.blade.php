@@ -113,6 +113,18 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
+                {{-- Conversation History Button --}}
+                <button type="button"
+                        @click="toggleHistoryView()"
+                        :title="showHistoryView ? 'Kembali ke Chat' : 'Daftar Riwayat Percakapan'"
+                        :class="showHistoryView ? 'bg-white/25 text-white' : 'text-white/80 hover:text-white hover:bg-white/15'"
+                        class="w-7 h-7 rounded-lg active:scale-95 flex items-center justify-center transition cursor-pointer">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </button>
+
                 {{-- New Conversation (+) Button --}}
                 <button type="button"
                         @click="startNewConversation()"
@@ -148,6 +160,91 @@
                 </button>
             </div>
         </div>
+
+        {{-- IN-WIDGET CONVERSATION HISTORY DRAWER / VIEW --}}
+        <div x-show="showHistoryView"
+             x-cloak
+             class="flex-1 flex flex-col min-h-0 overflow-hidden bg-black/[0.01] dark:bg-white/[0.01]">
+            <div class="px-3.5 py-2.5 bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+                <span class="text-xs font-bold text-black dark:text-white flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-[#007AFF]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Riwayat Sesi Percakapan</span>
+                </span>
+                <button type="button"
+                        @click="toggleHistoryView()"
+                        class="text-[11px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
+                    &larr; Chat Aktif
+                </button>
+            </div>
+
+            <div class="flex-1 p-3 overflow-y-auto space-y-2 text-xs scrollbar-thin">
+                <template x-if="historyLoading">
+                    <div class="py-12 text-center text-black/50 dark:text-white/50 space-y-2">
+                        <div class="w-5 h-5 border-2 border-[#007AFF] border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p class="text-[11px]">Memuat riwayat percakapan...</p>
+                    </div>
+                </template>
+
+                <template x-if="!historyLoading && conversationList.length === 0">
+                    <div class="py-12 text-center text-black/40 dark:text-white/40 space-y-2">
+                        <svg class="w-8 h-8 mx-auto opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <p class="text-[11px]">Belum ada riwayat tersimpan.</p>
+                    </div>
+                </template>
+
+                <template x-for="item in conversationList" :key="item.id">
+                    <div class="p-2.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/5 dark:border-white/10 hover:border-[#007AFF]/30 transition flex items-center justify-between gap-2 group">
+                        <div class="min-w-0 flex-1 cursor-pointer" @click="loadConversationFromHistory(item.id, item.type)">
+                            <div class="flex items-center gap-1.5 mb-0.5">
+                                <span class="w-1.5 h-1.5 rounded-full shrink-0" :class="item.type === 'business_assistant' ? 'bg-purple-500' : 'bg-[#007AFF]'"></span>
+                                <span class="font-bold text-[11.5px] text-black dark:text-white truncate" x-text="item.title || 'Percakapan'"></span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[10px] text-black/40 dark:text-white/40">
+                                <span x-text="item.type === 'business_assistant' ? 'Business Assistant' : 'Panduan Fitur'"></span>
+                                <span x-show="item.messages_count" x-text="'&bull; ' + item.messages_count + ' pesan'"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button type="button"
+                                    @click="loadConversationFromHistory(item.id, item.type)"
+                                    title="Buka percakapan"
+                                    class="p-1 rounded-lg bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] transition active:scale-95 cursor-pointer">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                            <button type="button"
+                                    @click.stop="deleteConversationFromHistory(item.id)"
+                                    title="Hapus sesi"
+                                    class="p-1 rounded-lg text-rose-500/60 hover:text-rose-500 hover:bg-rose-500/10 transition active:scale-95 cursor-pointer">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <div class="p-2.5 bg-black/[0.02] dark:bg-white/[0.03] border-t border-black/5 dark:border-white/10 text-center">
+                <a href="{{ route('help-chatbot.conversations') }}"
+                   class="text-[11px] font-semibold text-[#007AFF] hover:underline inline-flex items-center gap-1">
+                    <span>Lihat Halaman Lengkap Riwayat</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </div>
+
+        {{-- MAIN ACTIVE CHAT VIEW WRAPPER --}}
+        <div x-show="!showHistoryView" class="flex-1 flex flex-col min-h-0 overflow-hidden">
 
         {{-- APPLE HIG SEGMENTED CONTROL MODE SWITCHER (BAGIAN 8 & 9) --}}
         <div class="px-3 py-2 bg-black/[0.03] dark:bg-white/[0.04] border-b border-black/5 dark:border-white/10 flex items-center gap-1.5 select-none shrink-0">
@@ -382,6 +479,7 @@
                 </span>
             </div>
         </div>
+        </div> {{-- End of MAIN ACTIVE CHAT VIEW WRAPPER --}}
 
     </div>
 
@@ -393,6 +491,9 @@ function coocaHelpChatbot() {
         isOpen: false,
         showGreeting: true,
         isLoading: false,
+        showHistoryView: false,
+        historyLoading: false,
+        conversationList: [],
         activeMode: 'help_center', // 'help_center' | 'business_assistant'
         activeConversationId: null,
         inputQuery: '',
@@ -422,6 +523,117 @@ function coocaHelpChatbot() {
             if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
                 this.showGreeting = false;
             }
+
+            // Listen for custom event from other pages/components
+            window.addEventListener('cooca-open-chatbot', (e) => {
+                const detail = e.detail || {};
+                this.isOpen = true;
+                this.dismissGreeting();
+                if (detail.newSession) {
+                    this.showHistoryView = false;
+                    this.startNewConversation();
+                } else if (detail.conversationId) {
+                    this.loadConversationFromHistory(detail.conversationId, detail.mode);
+                }
+            });
+
+            // Check URL search params for deep linking
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('open_chatbot')) {
+                    this.isOpen = true;
+                    this.dismissGreeting();
+                    const convId = urlParams.get('open_chatbot');
+                    if (convId && convId !== '1' && convId !== 'new') {
+                        this.loadConversationFromHistory(convId, urlParams.get('mode'));
+                    } else if (convId === 'new') {
+                        this.startNewConversation();
+                    }
+                }
+            } catch(e) {}
+        },
+
+        async toggleHistoryView() {
+            this.showHistoryView = !this.showHistoryView;
+            if (this.showHistoryView) {
+                await this.fetchConversationList();
+            }
+        },
+
+        async fetchConversationList() {
+            this.historyLoading = true;
+            try {
+                const res = await fetch('{{ route('help-chatbot.conversations') }}', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    this.conversationList = data.conversations || [];
+                }
+            } catch (e) {
+                this.conversationList = [];
+            } finally {
+                this.historyLoading = false;
+            }
+        },
+
+        async loadConversationFromHistory(conversationId, type) {
+            this.isLoading = true;
+            try {
+                const res = await fetch(`/help-chatbot/history/${conversationId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    this.activeConversationId = conversationId;
+                    if (type) {
+                        this.activeMode = type;
+                        try { sessionStorage.setItem('cooca_chat_active_mode', type); } catch(e){}
+                    }
+                    try { sessionStorage.setItem('cooca_chat_conversation_id', conversationId); } catch(e){}
+
+                    this.messages = (data.messages || []).map(m => {
+                        const meta = m.metadata || {};
+                        return {
+                            sender: m.sender,
+                            text: m.content,
+                            status: m.status || 'completed',
+                            is_queued: (m.status === 'pending' || m.status === 'processing'),
+                            message_id: m.id,
+                            is_data_query: !!m.is_data_query,
+                            quick_links: meta.quick_links || [],
+                            ai_model: meta.ai_model || null,
+                            time: new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                        };
+                    });
+
+                    this.saveHistory();
+                    this.showHistoryView = false;
+                    this.scrollToBottom();
+                }
+            } catch (e) {
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        async deleteConversationFromHistory(conversationId) {
+            if (!confirm('Hapus sesi percakapan ini?')) return;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                const res = await fetch(`/help-chatbot/conversations/${conversationId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                });
+                if (res.ok) {
+                    this.conversationList = this.conversationList.filter(c => c.id !== conversationId);
+                    if (this.activeConversationId === conversationId) {
+                        this.clearChat();
+                    }
+                }
+            } catch (e) {}
         },
 
         switchMode(mode) {
@@ -476,6 +688,7 @@ function coocaHelpChatbot() {
         },
 
         async startNewConversation() {
+            this.showHistoryView = false;
             this.clearChat();
             try {
                 const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';

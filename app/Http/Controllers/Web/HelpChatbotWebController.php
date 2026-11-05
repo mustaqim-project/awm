@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AiChatbotConversation;
 use App\Models\AiChatbotMessage;
 use App\Support\Context;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -107,16 +109,18 @@ final class HelpChatbotWebController extends Controller
     }
 
     /**
-     * Dapatkan daftar riwayat percakapan pengguna pada bisnis aktif.
+     * Dapatkan daftar riwayat percakapan pengguna pada bisnis aktif (JSON API & View).
      */
-    public function getConversations(Request $request): JsonResponse
+    public function getConversations(Request $request): JsonResponse|View
     {
         $business = Context::requireBusiness();
         $user = Context::user() ?? auth()->user();
 
         $type = $request->query('type');
+        $search = trim((string) $request->query('search', ''));
 
-        $query = AiChatbotConversation::where('business_id', $business->id);
+        $query = AiChatbotConversation::where('business_id', $business->id)
+            ->withCount('messages');
 
         if ($user && ! Context::isOwner()) {
             $query->where('user_id', $user->id);
@@ -126,14 +130,95 @@ final class HelpChatbotWebController extends Controller
             $query->where('type', $type);
         }
 
-        $conversations = $query->orderByDesc('updated_at')
-            ->limit(20)
-            ->get(['id', 'type', 'title', 'created_at', 'updated_at']);
+        if ($search !== '') {
+            $query->where('title', 'like', "%{$search}%");
+        }
 
-        return response()->json([
-            'success' => true,
+        $conversations = $query->orderByDesc('updated_at')
+            ->paginate(15)
+            ->withQueryString();
+
+        // Jika request via API / AJAX (misal dari widget floating chat)
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'conversations' => $conversations->items(),
+                'meta' => [
+                    'current_page' => $conversations->currentPage(),
+                    'last_page' => $conversations->lastPage(),
+                    'total' => $conversations->total(),
+                ],
+            ]);
+        }
+
+        // Stats ringkasan untuk Bento cards
+        $statsQuery = AiChatbotConversation::where('business_id', $business->id);
+        if ($user && ! Context::isOwner()) {
+            $statsQuery->where('user_id', $user->id);
+        }
+
+        $totalCount = (clone $statsQuery)->count();
+        $helpCenterCount = (clone $statsQuery)->where('type', 'help_center')->count();
+        $businessAssistantCount = (clone $statsQuery)->where('type', 'business_assistant')->count();
+
+        return view('app.help_chatbot.conversations', [
             'conversations' => $conversations,
+            'activeType' => $type,
+            'search' => $search,
+            'stats' => [
+                'total' => $totalCount,
+                'help_center' => $helpCenterCount,
+                'business_assistant' => $businessAssistantCount,
+            ],
         ]);
+    }
+
+    /**
+     * Hapus sesi percakapan chatbot.
+     */
+    public function deleteConversation(Request $request, string $conversationId): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        $user = Context::user() ?? auth()->user();
+
+        /** @var AiChatbotConversation|null $conversation */
+        $conversation = AiChatbotConversation::where('id', $conversationId)
+            ->where('business_id', $business->id)
+            ->first();
+
+        if (! $conversation) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sesi percakapan tidak ditemukan.',
+                ], 404);
+            }
+
+            return back()->with('error', 'Sesi percakapan tidak ditemukan.');
+        }
+
+        // Isolasi keamanan: jika bukan owner, pastikan milik user yang bersangkutan
+        if (! Context::isOwner() && $user && $conversation->user_id !== $user->id) {
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Akses untuk menghapus percakapan ditolak.',
+                ], 403);
+            }
+
+            return back()->with('error', 'Akses untuk menghapus percakapan ditolak.');
+        }
+
+        $conversation->delete();
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Percakapan berhasil dihapus.',
+            ]);
+        }
+
+        return back()->with('success', 'Percakapan berhasil dihapus.');
     }
 
     /**

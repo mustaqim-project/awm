@@ -129,6 +129,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::post('/help-chatbot/ask', [HelpChatbotWebController::class, 'ask'])->name('help-chatbot.ask');
         Route::get('/help-chatbot/status/{messageId}', [HelpChatbotWebController::class, 'checkJobStatus'])->name('help-chatbot.status');
         Route::get('/help-chatbot/conversations', [HelpChatbotWebController::class, 'getConversations'])->name('help-chatbot.conversations');
+        Route::delete('/help-chatbot/conversations/{conversationId}', [HelpChatbotWebController::class, 'deleteConversation'])->name('help-chatbot.conversations.delete');
         Route::get('/help-chatbot/history/{conversationId}', [HelpChatbotWebController::class, 'getHistory'])->name('help-chatbot.history');
         Route::post('/help-chatbot/conversations/new', [HelpChatbotWebController::class, 'newConversation'])->name('help-chatbot.conversations.new');
 

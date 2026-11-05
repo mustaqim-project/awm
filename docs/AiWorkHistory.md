@@ -33,6 +33,49 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-380] Perbaikan & Integrasi Penuh Riwayat Percakapan Chatbot AI Owner Panel
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** In-App Help Chatbot & AI Business Assistant
+- **Feature:** Full Conversation History Management (`/help-chatbot/conversations`)
+- **Work Type:** Feature | UI/UX | Security | Architecture
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik bisnis (Owner) dan staf memerlukan visibilitas terhadap dialog panduan fitur dan analisis data bisnis yang pernah dilakukan dengan AI Assistant tanpa harus kehilangan konteks saat berpindah halaman atau browser tab.
+- **Masalah/Target:** Mengatasi masalah direct browser access pada URL `https://cooca.id/help-chatbot/conversations` yang sebelumnya mengembalikan teks mentah JSON hitam-putih, menghadirkan antarmuka Bento Apple HIG untuk manajemen riwayat sesi percakapan, mengintegrasikan drawer riwayat interaktif langsung di dalam widget chat popup, menyediakan kapabilitas penghapusan sesi (delete conversation), serta deep-linking untuk melanjutkan obrolan secara instan.
+
+#### 2. What Was Done
+1. **Dukungan Dual-Mode Response pada `HelpChatbotWebController::getConversations`:**
+   - Permintaan via AJAX / JSON API tetap mengembalikan JSON response terstruktur untuk widget dan integrasi programmatic.
+   - Permintaan langsung via web browser (`GET /help-chatbot/conversations`) kini merender tampilan web penuh Bento Apple HIG `resources/views/app/help_chatbot/conversations.blade.php`.
+2. **Pembuatan Tampilan Manajemen Riwayat (`conversations.blade.php`):**
+   - Menggunakan header `x-module-header` dengan breadcrumb dan tombol cepat "Percakapan Baru".
+   - Tiga kartu Bento metrik statistik: Total Percakapan, Panduan Fitur (How-To), dan Business Assistant (BI).
+   - Filter segmented tabs per kategori dan pencarian real-time berdasarkan judul/topik.
+   - Tampilan adaptif (Mobile card stack & Desktop data table) dengan indikator mode, jumlah pesan, waktu relatif, dan aksi.
+   - Modal popup interaktif untuk mengintip isi pesan percakapan lampau tanpa reload halaman.
+3. **Penyempurnaan Widget Chat In-App (`help_chatbot_widget.blade.php`):**
+   - Menambahkan tombol "Riwayat" (Clock Icon) di header bar widget.
+   - Menyediakan Drawer Riwayat di dalam widget untuk memuat, memilih, dan melanjutkan sesi percakapan yang tersimpan di database.
+   - Menambahkan tombol hapus percakapan per sesi langsung dari drawer widget.
+   - Menambahkan penanganan event `cooca-open-chatbot` dan pembacaan parameter URL `?open_chatbot={id}` untuk deep-linking otomatis.
+4. **Implementasi Endpoint Hapus Percakapan (`DELETE /help-chatbot/conversations/{id}`):**
+   - Mendaftarkan route di `routes/owner.php` dengan isolasi multi-tenant (`business_id`) dan proteksi anti-IDOR (`Context::isOwner()` / `$conversation->user_id === $user->id`).
+5. **Verifikasi Test Suite Otomatis:**
+   - Menambahkan 4 test case baru di `tests/Feature/InAppHelpChatbotTest.php` untuk memastikan direct browser hit mengembalikan HTML view, request AJAX mengembalikan JSON terisolasi per tenant, serta penegakan hak akses hapus sesi.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `routes/owner.php` (menambahkan route DELETE `/help-chatbot/conversations/{id}`)
+  - `app/Http/Controllers/Web/HelpChatbotWebController.php` (dual-mode view/json pagination & delete method)
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (riwayat drawer, history button, deep-link handler)
+  - `tests/Feature/InAppHelpChatbotTest.php` (test view render, isolation, & delete)
+- **Files Created:**
+  - `resources/views/app/help_chatbot/conversations.blade.php` (Bento Apple HIG management page & message preview modal)
+
+---
+
 ### [WORK-2026-11-05-379] Optimalisasi AI Chatbot COOCA & Implementasi AI Business Assistant
 
 - **Date:** 2026-11-05
