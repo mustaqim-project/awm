@@ -1,0 +1,38 @@
+{
+  "id": 241,
+  "title": "SOP Operasional Toko Kelontong dan Ritel UMKM Praktis",
+  "slug": "sop-operasional-toko-kelontong-dan-ritel-umkm",
+  "category": "Strategi & Operasional",
+  "cluster": "tutorial",
+  "primary_keyword": "sop operasional toko kelontong dan ritel umkm",
+  "secondary_keywords": "prosedur buka tutup toko sembako, checklist harian pramuniaga kasir, sop penerimaan barang supplier gerai, pencegahan selisih kas kasir, standarisasi display fifo toko",
+  "search_intent": "informational",
+  "meta_title": "SOP Operasional Toko Kelontong dan Ritel UMKM Praktis",
+  "meta_description": "Panduan menyusun SOP operasional toko kelontong dan ritel UMKM praktis. Atur prosedur buka tutup toko, kasir, penerimaan stok, dan cegah kecurangan kasir.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/sop-operasional-toko-kelontong-dan-ritel-umkm.jpg",
+  "local_image_asset": "public/images/blog/sop-operasional-toko-kelontong-dan-ritel-umkm.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "sop operasional toko ritel",
+  "word_count": 1250,
+  "faqs": [
+    {
+      "q": "Berapa lembar halaman dokumen SOP yang ideal untuk toko kelontong skala kecil?",
+      "a": "Untuk usaha kelontong dengan 1 sampai 5 karyawan, dokumen SOP cukup dibuat 1 sampai 3 halaman berupa daftar periksa langkah kerja harian. Hindari bahasa hukum atau istilah teknis yang sulit dipahami pramuniaga."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika ditemukan selisih kas kecil di laci kasir saat tutup toko?",
+      "a": "Batas toleransi selisih kas yang wajar biasanya berkisar Rp1.000 sampai Rp3.000 akibat pembulatan uang receh kembalian. Namun jika selisih kas mencapai puluhan ribu rupiah secara berulang, pemilik toko wajib menelusuri rekaman struk transaksi dan mutasi kasir pada sistem POS bersama staf kasir terkait."
+    },
+    {
+      "q": "Bagaimana cara melatih karyawan toko baru agar cepat menguasai SOP gerai?",
+      "a": "Berikan pendampingan langsung selama 3 hari pertama oleh karyawan senior atau pemilik toko. Tempelkan lembar ringkasan SOP pelayanan kasir dan penerimaan barang di dinding belakang kasir agar mudah dibaca saat mereka bertugas."
+    },
+    {
+      "q": "Mengapa sistem FIFO dan FEFO sangat penting ditegakkan dalam SOP toko ritel?",
+      "a": "Prinsip FIFO dan FEFO mencegah produk sembako dan makanan ringan basi di dalam rak display. Barang yang masuk lebih awal atau memiliki kedaluwarsa lebih cepat akan terjual lebih dulu, menghindarkan toko dari kerugian dead stock."
+    }
+  ],
+  "published_at": "2026-11-05T08:00:00+07:00"
+}
