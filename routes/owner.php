@@ -29,6 +29,7 @@ use App\Http\Controllers\Web\Finance\PosFinanceWebController;
 use App\Http\Controllers\Web\Finance\StoreEdcTerminalWebController;
 use App\Http\Controllers\Web\Finance\ExternalReconciliationWebController;
 
+use App\Http\Controllers\Web\HelpChatbotWebController;
 use App\Http\Controllers\Web\Hrm\HrmWebController;
 use App\Http\Controllers\Web\ImportWebController;
 use App\Http\Controllers\Web\Inventory\InventoryWebController;
@@ -124,6 +125,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
     // 3. Tenant Protected Core Web Panel
     Route::middleware(['business.active', 'profile.complete', 'verified'])->group(function (): void {
+        // Interactive In-App Help Chatbot (Feature How-To & Permission-Gated Data Assistance)
+        Route::post('/help-chatbot/ask', [HelpChatbotWebController::class, 'ask'])->name('help-chatbot.ask');
+
         // Staff Personal Portal & Attendance Hub (Accessible to all authenticated members)
         Route::get('/portal', [PortalWebController::class, 'index'])->name('portal');
         Route::get('/portal/payslips/{item}', [PortalWebController::class, 'showPayslip'])->name('portal.payslips.show');
@@ -1108,3 +1112,4 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
     });
 });
+     

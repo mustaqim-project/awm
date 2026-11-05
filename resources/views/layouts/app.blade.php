@@ -2779,6 +2779,9 @@
     {{-- Reusable Quota & Lock Modal (Bento Apple HIG) --}}
     <x-quota-modal />
 
+    {{-- Interactive In-App Help Chatbot Widget (Feature How-To & Permission-Gated Data Assistance) --}}
+    @include('layouts.partials.help_chatbot_widget')
+
     @stack('scripts')
 </body>
 
