@@ -45,40 +45,46 @@
     <div class="space-y-16 sm:space-y-24 pb-20">
 
         {{-- ========================================================================= --}}
-        {{-- HERO SECTION (Theme Hero Preset Architecture per 21 Industry Themes)       --}}
+        {{-- HERO SECTION (Theme Hero Preset Architecture per 42 Universal Themes)     --}}
         {{-- ========================================================================= --}}
-        @if (view()->exists("public.storefront.themes.{$bundleDir}.hero"))
-            @include("public.storefront.themes.{$bundleDir}.hero")
-        @elseif (view()->exists("public.storefront.themes.modern_umkm.hero"))
-            @include("public.storefront.themes.modern_umkm.hero")
-        @elseif (view()->exists("public.storefront.themes.universal_storefront.hero"))
-            @include("public.storefront.themes.universal_storefront.hero")
+        @if ($landingPage->isSectionVisible('hero'))
+            @if (view()->exists("public.storefront.themes.{$bundleDir}.hero"))
+                @include("public.storefront.themes.{$bundleDir}.hero")
+            @elseif (view()->exists("public.storefront.themes.modern_umkm.hero"))
+                @include("public.storefront.themes.modern_umkm.hero")
+            @elseif (view()->exists("public.storefront.themes.universal_storefront.hero"))
+                @include("public.storefront.themes.universal_storefront.hero")
+            @endif
         @endif
 
         {{-- ========================================================================= --}}
-        {{-- SECTOR FEATURES BANNER (Distinct Highlights per 21 Industry Themes)       --}}
+        {{-- SECTOR FEATURES BANNER (Universal Value Pillars per 42 Themes)            --}}
         {{-- ========================================================================= --}}
-        @if (view()->exists("public.storefront.themes.{$bundleDir}.features_banner"))
-            @include("public.storefront.themes.{$bundleDir}.features_banner")
-        @elseif (view()->exists("public.storefront.themes.modern_umkm.features_banner"))
-            @include("public.storefront.themes.modern_umkm.features_banner")
+        @if ($landingPage->isSectionVisible('features_banner'))
+            @if (view()->exists("public.storefront.themes.{$bundleDir}.features_banner"))
+                @include("public.storefront.themes.{$bundleDir}.features_banner")
+            @elseif (view()->exists("public.storefront.themes.modern_umkm.features_banner"))
+                @include("public.storefront.themes.modern_umkm.features_banner")
+            @endif
         @endif
 
         {{-- ========================================================================= --}}
-        {{-- CATEGORY SHORTCUT CHIPS (Sector-specific or Universal Fallback)           --}}
+        {{-- CATEGORY SHORTCUT CHIPS (Universal Category Navigator)                    --}}
         {{-- ========================================================================= --}}
-        @if (view()->exists("public.storefront.themes.{$bundleDir}.category_chips"))
-            @include("public.storefront.themes.{$bundleDir}.category_chips")
-        @elseif (view()->exists("public.storefront.themes.modern_umkm.category_chips"))
-            @include("public.storefront.themes.modern_umkm.category_chips")
-        @elseif (view()->exists("public.storefront.themes.universal_storefront.category_chips"))
-            @include("public.storefront.themes.universal_storefront.category_chips")
+        @if ($landingPage->isSectionVisible('category_chips') && $productCategories->isNotEmpty())
+            @if (view()->exists("public.storefront.themes.{$bundleDir}.category_chips"))
+                @include("public.storefront.themes.{$bundleDir}.category_chips")
+            @elseif (view()->exists("public.storefront.themes.modern_umkm.category_chips"))
+                @include("public.storefront.themes.modern_umkm.category_chips")
+            @elseif (view()->exists("public.storefront.themes.universal_storefront.category_chips"))
+                @include("public.storefront.themes.universal_storefront.category_chips")
+            @endif
         @endif
 
         {{-- ========================================================================= --}}
         {{-- FEATURED PRODUCTS GRID (Dynamic 21 Themes Product Cards)                  --}}
         {{-- ========================================================================= --}}
-        @if ($featuredProducts->isNotEmpty())
+        @if ($landingPage->isSectionVisible('products') && $featuredProducts->isNotEmpty())
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
                     <div>
@@ -118,7 +124,7 @@
         {{-- ========================================================================= --}}
         {{-- SERVICES HIGHLIGHT (If Merchant provides services)                        --}}
         {{-- ========================================================================= --}}
-        @if ($services->isNotEmpty())
+        @if ($landingPage->isSectionVisible('services') && $services->isNotEmpty())
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div
                     class="p-6 sm:p-10 rounded-theme bg-white dark:bg-neutral-800/60 border border-black/5 dark:border-white/10 shadow-sm">
@@ -183,6 +189,7 @@
         {{-- RESERVATION QUICK BOOKING SECTION (If Enabled & Has Tables)               --}}
         {{-- ========================================================================= --}}
         @if (
+            $landingPage->isSectionVisible('reservation') &&
             ($storeSetting?->allow_reservation || $landingPage->isPageActive('reservation')) &&
                 (!empty($posTables) && $posTables->isNotEmpty()))
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -234,7 +241,7 @@
                 ? $landingPage->getNormalizedOperationalHours()
                 : [];
         @endphp
-        @if ($landingPage->isPageActive('about') || !empty($normalizedHours))
+        @if ($landingPage->isSectionVisible('about') && ($landingPage->isPageActive('about') || !empty($normalizedHours)))
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div class="{{ !empty($normalizedHours) ? 'lg:col-span-7' : 'lg:col-span-6' }} space-y-4">
@@ -292,7 +299,7 @@
                         <div class="lg:col-span-6">
                             <div
                                 class="rounded-[20px] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg aspect-video bg-neutral-100 dark:bg-neutral-800">
-                                <img src="{{ $landingPage->about_image_url ?: ($landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&auto=format&fit=crop&q=80') }}"
+                                <img src="{{ $landingPage->about_image_url ?: ($landingPage->hero_image_url ?: asset('assets/seo/cooca-og-default.jpg')) }}"
                                     alt="{{ __('storefront.tentang_business_name') }}" class="w-full h-full object-cover">
                             </div>
                         </div>
@@ -304,7 +311,7 @@
         {{-- ========================================================================= --}}
         {{-- RECENT ARTICLES TEASER (SEO Organic Content (§PRD-07 §2.A.8))             --}}
         {{-- ========================================================================= --}}
-        @if ($landingPage->isPageActive('blog') && !empty($recentArticles) && count($recentArticles) > 0)
+        @if ($landingPage->isSectionVisible('blog') && $landingPage->isPageActive('blog') && !empty($recentArticles) && count($recentArticles) > 0)
             <section class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-end justify-between gap-4 mb-6">
                     <div>
