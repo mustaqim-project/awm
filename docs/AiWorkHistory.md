@@ -58,24 +58,28 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 2. **Decision Tree & Intent Analysis Sebelum Membalas:**
    - Pada mode Help Center (Panduan Fitur), kueri data operasional langsung ditolak untuk menjaga *Zero Operational Data Leakage*.
    - Pada kueri data operasional (karyawan, penjualan, omzet, pengeluaran, stok), sistem mengecek izin RBAC (`reports.view`, `pos.reports`, `users.view`, `inventory.view`). Jika user tidak berwenang, sistem menolak tegas: *"🔒 Akses Ditolak: Maaf, Anda tidak memiliki izin untuk mengakses informasi tersebut..."*.
-3. **Penanganan AI Limit & Provider Belum Terhubung:**
-   - Deteksi rate limit (429), quota habis, atau ketiadaan kredensial langsung mengembalikan respons standar *"Sistem Sedang Sibuk"* dengan tombol dinamis WhatsApp dan Email.
+3. **Penanganan AI Limit & Provider Belum Terhubung (Zero Template Responses):**
+   - Menghapus 100% balasan template kaku/statis (canned responses) di `HelpCenterAiService`.
+   - AI menganalisis setiap pertanyaan pengguna secara dinamis berlandaskan dokumentasi resmi `docs/user-guides`.
+   - Deteksi rate limit (429), quota habis, atau ketiadaan kredensial langsung mengembalikan respons standar *"Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan."* beserta tautan resmi WhatsApp dan Email.
 4. **Queue Management & High Traffic:**
    - Pembatasan concurrent request per tenant (`MAX_CONCURRENT_PER_BUSINESS = 2`) dengan antrean database Laravel Queue dan polling status real-time di UI.
 5. **Dukungan Dual-Mode Response pada `/help-chatbot/conversations` & In-Widget Drawer:**
    - Browser biasa merender halaman penuh Bento Apple HIG `resources/views/app/help_chatbot/conversations.blade.php`.
    - Permintaan API/AJAX mengembalikan JSON untuk widget drawer riwayat.
    - Ditambahkan endpoint `DELETE /help-chatbot/conversations/{id}`.
-6. **Verifikasi Test Otomatis (100% Lolos):**
+6. **Eliminasi Total Quick Buttons (Anti-Slop UI):**
+   - Seluruh *quick buttons* (chips pertanyaan populer, chips analisis cepat, dan quick link action pills di bawah bubble pesan asisten) dihilangkan secara tuntas agar antarmuka bersih dan murni percakapan alami.
+7. **Verifikasi Test Otomatis (100% Lolos):**
    - 16 test cases di `tests/Feature/InAppHelpChatbotTest.php` lulus sempurna (68 assertions).
 
 #### 3. Technical Changes
 - **Files Modified:**
   - `routes/owner.php` (rute DELETE `/help-chatbot/conversations/{id}`)
   - `app/Http/Controllers/Web/HelpChatbotWebController.php` (dual-mode view/json pagination & delete method)
-  - `app/Domain/Ai/Chatbot/HelpCenterAiService.php` (intent & rate-limit handling)
+  - `app/Domain/Ai/Chatbot/HelpCenterAiService.php` (eliminasi total static templates, dynamic AI analysis & rate-limit handling)
   - `app/Domain/Ai/Chatbot/BusinessAssistantAiService.php` (intent & rate-limit handling)
-  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (WhatsApp header link, riwayat drawer, deep-link handler)
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php` (WhatsApp header link, riwayat drawer, eliminasi quick buttons)
   - `tests/Feature/InAppHelpChatbotTest.php` (16 test cases)
 - **Files Created:**
   - `resources/views/app/help_chatbot/conversations.blade.php` (halaman manajemen riwayat)
