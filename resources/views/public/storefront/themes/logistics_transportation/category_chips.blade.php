@@ -3,11 +3,20 @@
     Fleet type and logistics service pills for CDD, FTL, reefer trucks, inter-island cargo, and moving services.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-black text-2xl sm:text-3xl text-slate-900 dark:text-white uppercase">{{ __('storefront.kategori_armada_layanan_kargo') }}</h2>
-                <p class="text-xs text-slate-500 dark:text-amber-100/70">Pilih jenis armada pengangkutan atau rute pengiriman yang sesuai dengan muatan bisnis Anda</p>
+                <h2 class="font-heading font-black text-2xl sm:text-3xl text-slate-900 dark:text-white uppercase">
+                    {{ $catHeading }}
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-amber-100/70">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-bold text-amber-700 dark:text-amber-300 hover:underline flex items-center gap-1 uppercase">

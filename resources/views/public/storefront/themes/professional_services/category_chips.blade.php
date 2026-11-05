@@ -3,13 +3,20 @@
     Formal practice area tabs for legal, tax, accounting, and advisory solutions.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
                 <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-white">
-                    Bidang Praktik &amp; Spesialisasi
+                    {{ $catHeading }}
                 </h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Pilih bidang penugasan advisory yang dibutuhkan perusahaan Anda</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">

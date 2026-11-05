@@ -3,15 +3,24 @@
     Utilitarian industrial division filters for manufactured goods and OEM services.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
-                <h2 class="font-heading font-black text-lg sm:text-xl text-slate-950 dark:text-white uppercase">{{ __('storefront.divisi_manufaktur_produk') }}</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Pilih lini produk atau spesifikasi produksi yang dibutuhkan</p>
+                <h2 class="font-heading font-black text-lg sm:text-xl text-slate-950 dark:text-white uppercase">
+                    {{ $catHeading }}
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-1">
-                <span>Seluruh Katalog</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

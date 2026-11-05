@@ -3,17 +3,24 @@
     Elegant capsule navigation for boutique series and formulations.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-5">
             <div>
                 <h2 class="font-heading font-bold text-lg sm:text-xl text-slate-900 dark:text-rose-50">
-                    Rangkaian Seri Pilihan
+                    {{ $catHeading }}
                 </h2>
-                <p class="text-xs text-slate-500 dark:text-rose-300/70">Pilih kategori koleksi untuk menemukan solusi terbaik</p>
+                <p class="text-xs text-slate-500 dark:text-rose-300/70">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-rose-700 dark:text-rose-300 hover:underline flex items-center gap-1">
-                <span>Seluruh Seri</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>

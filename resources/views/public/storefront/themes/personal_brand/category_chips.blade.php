@@ -3,17 +3,24 @@
     Advisory & creator category pills for private sessions, masterclasses, digital tools, and brand partnerships.
 --}}
 @if ($productCategories->isNotEmpty() && $landingPage->isPageActive('catalog'))
+    @php
+        $catHeading = $landingPage->services_title ?: __('storefront.kategori_pilihan');
+        $catSubtitle = $landingPage->services_subtitle ?: __('storefront.kategori_pilihan_sub');
+    @endphp
+
     <section class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4 mb-4">
             <div>
                 <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-zinc-900 dark:text-white">
-                    Program, Sesi &amp; Karya Pilihan
+                    {{ $catHeading }}
                 </h2>
-                <p class="text-xs text-zinc-500 dark:text-zinc-400">Pilih format kolaborasi, konsultasi personal, atau akses pustaka resource digital</p>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                    {{ $catSubtitle }}
+                </p>
             </div>
             <a href="{{ url('/' . $business->slug . '/katalog') }}"
                 class="text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1">
-                <span>Seluruh Program</span>
+                <span>{{ __('storefront.view_all') }}</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </a>
         </div>
