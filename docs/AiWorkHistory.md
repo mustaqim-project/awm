@@ -33,6 +33,44 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-05-376] Transformasi 42 Tema Storefront Universal & Sentralisasi Pengaturan Landing Page CMS
+
+- **Date:** 2026-11-05
+- **Status:** COMPLETED
+- **Module:** Storefront, Landing Page CMS, Design System, Multi-Industry & i18n
+- **Feature:** Transformasi Arsitektur Tema Storefront Universal & Pengaturan Terpadu Landing Page:
+  1. **Universal Blade Contract (42 Tema):** Menghapus seluruh hardcoded copy sektor industri kaku dan foto statis Unsplash di 126 berkas template (`hero.blade.php`, `features_banner.blade.php`, `category_chips.blade.php`). Seluruh tema kini bersifat universal, adaptif, dan dapat dipakai lintas sektor bisnis UMKM mana pun.
+  2. **Smart 3-Tier Fallback Hierarchy:** Mengimplementasikan fallback berjenjang `$landingPage` (Input CMS) → `$business` (Profil Usaha) → `__('storefront...')` (Kamus Universal i18n ID/EN) pada seluruh headline, subheadline, eyebrow badge, tombol CTA, dan kategori.
+  3. **Universal Value Pillars Injection:** Mengintegrasikan `$landingPage->getUniversalValues()` untuk mengisi 3 badge hero dan 4 kartu nilai keunggulan secara dinamis, dilengkapi grafik Bento Showcase responsif bergradasi dan inisial brand bila foto belum diunggah.
+  4. **Penegakan Visibilitas Seksi (`home.blade.php`):** Menegakkan `$landingPage->isSectionVisible(...)` pada seksi `hero`, `features_banner`, `category_chips`, `products`, `services`, `reservation`, `about`, dan `blog`.
+  5. **Cockpit CMS 6 Arketipe Desain:** Memperbarui pemilih tema di `resources/views/app/landing_page/edit.blade.php` dengan filter 6 arketipe desain visual (*Clean Bento & Modern Tech*, *Earthy & Warm Artisan*, *High-End Luxe & Editorial*, *Dark Carbon & High Impact*, *Playful, Fresh & Appetite*, *Institutional & Trust*), banner garansi tema universal, serta toggle visibilitas seksi pilar dan filter kategori.
+  6. **Automated Testing & 100% Zero-Regression:** Membangun test suite `tests/Feature/UniversalStorefrontAll42ThemesTest.php` yang memverifikasi registrasi 42 tema, 6 arketipe, keutuhan 6 komponen Blade per tema, zero URL Unsplash, kelancaran render preview, dan penegakan visibilitas seksi (825 assertions passed).
+
+#### 1. Business Context & Objective
+- **Konteks:** Sebelumnya, tema-tema storefront memiliki teks hardcoded berbasis sektor tertentu (misal: "Tune-up Mesin", "Specialty Roastery", "Petik Segar") serta URL foto Unsplash eksternal, sehingga merchant dari sektor berbeda merasa terkunci dan tidak dapat memanfaatkan tema yang disukai gaya visualnya.
+- **Masalah/Target:** Mengubah seluruh tema menjadi netral dan universal (dapat digunakan dan diatur penuh melalui CMS Landing Page), menyediakan pengelompokan 6 arketipe gaya desain, serta menjamin seluruh konfigurasi visibilitas seksi bekerja optimal di toko publik.
+
+#### 2. What Was Done
+- Menambahkan kamus universal badges, features, dan empty states di `lang/id/storefront.php` & `lang/en/storefront.php`.
+- Menambahkan method `isSectionVisible()`, `getSectionVisibility()`, dan `getUniversalValues()` pada `app/Models/BusinessLandingPage.php`.
+- Menambahkan registrasi 6 Arketipe Desain (`ARCHETYPES`, `THEME_ARCHETYPE_MAP`, `getAllArchetypes()`) dan universal fallback pada `app/Domain/Storefront/StorefrontThemeService.php`.
+- Merefaktor 42 tema storefront (Batch 1 Core, Batch 2 F&B & Retail, Batch 3 Services, Batch 4 Industry & Corporate).
+- Menegakkan `isSectionVisible()` di `resources/views/public/storefront/home.blade.php`.
+- Memperbarui CMS Cockpit di `resources/views/app/landing_page/edit.blade.php` & `BusinessLandingPageWebController.php`.
+- Menulis dan memverifikasi test suite `UniversalStorefrontAll42ThemesTest.php` (825 assertions passed).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `lang/id/storefront.php` & `lang/en/storefront.php`
+  - `app/Models/BusinessLandingPage.php`
+  - `app/Domain/Storefront/StorefrontThemeService.php`
+  - `resources/views/public/storefront/home.blade.php`
+  - `resources/views/app/landing_page/edit.blade.php`
+  - `app/Http/Controllers/Web/BusinessLandingPageWebController.php`
+  - 126 berkas tema di `resources/views/public/storefront/themes/*/`
+  - `tests/Feature/UniversalStorefrontAll42ThemesTest.php`
+- **Database Changes:** Tidak ada perubahan skema tabel (memanfaatkan kolom `section_visibility`, `values`, `theme_preset` yang sudah ada).
+
 ### [WORK-2026-10-31-375] Transformasi Navigasi Modul: Dari Tab Horizontal Atas Menjadi Apple HIG Dual Sidebar (Secondary Sidebar)
 
 - **Date:** 2026-10-31
