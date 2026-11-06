@@ -432,6 +432,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                             <img src="{{ $featuredPost->cover_image ?? 'https://cooca.id/images/blog/photo-1555396273-367ea4eb4db5.jpg' }}"
                                 alt="{{ $featuredPost->title }}"
                                 loading="lazy"
+                                onerror="this.onerror=null;this.src='https://cooca.id/images/blog/photo-1555396273-367ea4eb4db5.jpg';"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 width="800" height="450">
                         </div>
@@ -450,6 +451,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
                                     <img src="{{ $post->cover_image ?? 'https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg' }}"
                                         alt="{{ $post->title }}"
                                         loading="lazy"
+                                        onerror="this.onerror=null;this.src='https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg';"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         width="800" height="450">
                                     <span class="absolute top-3 left-3 px-2.5 py-1.5 rounded-[8px] text-xs font-bold uppercase tracking-wider {{ $post->cluster === 'tutorial' ? 'bg-emerald-600 text-white' : 'bg-[#007AFF] text-white' }}">

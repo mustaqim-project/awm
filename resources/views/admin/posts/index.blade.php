@@ -219,7 +219,8 @@
                                                 <a href="{{ route('blog.show', $post->slug) }}" target="_blank" class="shrink-0 group">
                                                     <img src="{{ $post->cover_image }}" alt="{{ $post->title }}"
                                                         class="w-12 h-12 rounded-[10px] object-cover border border-black/10 dark:border-white/10 group-hover:opacity-90 transition-opacity shadow-sm"
-                                                        loading="lazy">
+                                                        loading="lazy"
+                                                        onerror="this.onerror=null;this.src='https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg';">
                                                 </a>
                                             @else
                                                 <div class="w-12 h-12 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center shrink-0 text-black/30 dark:text-white/30">

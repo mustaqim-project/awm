@@ -543,7 +543,8 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
     @if ($post->cover_image)
         <div class="max-w-[1280px] mx-auto px-0 sm:px-6 lg:px-8 -mt-1 sm:mt-0">
             <div class="sm:rounded-b-[20px] lg:rounded-b-[24px] overflow-hidden aspect-[16/9] sm:aspect-[2/1] lg:aspect-[2.5/1] w-full bg-slate-100 dark:bg-[#1C1C1E] sm:border sm:border-t-0 border-black/[0.06] dark:border-white/[0.08]">
-                <img src="{{ $post->cover_image }}" alt="{{ $post->title }}" class="w-full h-full object-cover" loading="eager" width="1280" height="512">
+                <img src="{{ $post->cover_image }}" alt="{{ $post->title }}" class="w-full h-full object-cover" loading="eager" width="1280" height="512"
+                    onerror="this.onerror=null;this.src='https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg';">
             </div>
         </div>
     @endif
@@ -783,7 +784,8 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                             {{-- Thumbnail --}}
                             @if ($rel->cover_image)
                                 <div class="h-36 sm:h-40 overflow-hidden bg-slate-100 dark:bg-[#2C2C2E]">
-                                    <img src="{{ $rel->cover_image }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" width="400" height="200">
+                                    <img src="{{ $rel->cover_image }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" width="400" height="200"
+                                        onerror="this.onerror=null;this.src='https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg';">
                                 </div>
                             @endif
 
