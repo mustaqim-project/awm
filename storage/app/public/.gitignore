@@ -1,2 +1,6 @@
 *
 !.gitignore
+!admin/
+!admin/**
+!content-assets/
+!content-assets/**

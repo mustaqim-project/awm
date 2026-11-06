@@ -1,0 +1,43 @@
+{
+  "id": 256,
+  "title": "Panduan Migrasi Coretax DJP bagi Pengusaha Toko dan UMKM Ritel",
+  "slug": "panduan-migrasi-coretax-djp-bagi-pengusaha-umkm",
+  "category": "Pajak & Legalitas",
+  "cluster": "edukasi",
+  "primary_keyword": "panduan migrasi coretax djp bagi pengusaha",
+  "secondary_keywords": "pemadanan nik menjadi npwp usaha, sistem prepopulated spt tahunan umkm, jadwal maintenance coretax djp, administrasi faktur elektronik terpadu, sanksi administrasi keterlambatan spt",
+  "search_intent": "informational",
+  "meta_title": "Panduan Migrasi Coretax DJP bagi Pengusaha Toko UMKM",
+  "meta_description": "Langkah praktis panduan migrasi Coretax DJP bagi pengusaha UMKM dalam validasi NIK-NPWP, kelola faktur elektronik, dan cegah denda administrasi pajak usaha.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/panduan-migrasi-coretax-djp-bagi-pengusaha-umkm.jpg",
+  "local_image_asset": "public/images/blog/panduan-migrasi-coretax-djp-bagi-pengusaha-umkm.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "coretax djp untuk umkm",
+  "word_count": 1472,
+  "faqs": [
+    {
+      "q": "Apakah pengusaha toko kecil yang omzetnya belum Rp500 juta wajib memiliki akun Coretax?",
+      "a": "Ya, setiap wajib pajak yang telah memiliki NPWP atau NIK terdaftar sebagai Wajib Pajak Orang Pribadi pengusaha disarankan mengaktivasi akun di portal Coretax DJP untuk memantau status profil pajak dan mempermudah pelaporan SPT Tahunan nihil secara digital."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika NIK pemilik usaha gagal terintegrasi di sistem Coretax?",
+      "a": "Periksa kesesuaian data e-KTP Anda dengan data kependudukan Dukcapil. Jika terdapat perbedaan nama gelar, ejaan huruf, atau alamat domisili, segera lakukan pembaruan profil di portal DJP atau kunjungi kantor pelayanan pajak terdekat untuk verifikasi manual."
+    },
+    {
+      "q": "Apakah aplikasi lama seperti e-Faktur desktop masih bisa digunakan setelah Coretax berjalan?",
+      "a": "Sesuai peta jalan implementasi DJP, aplikasi perpajakan lama yang terpisah secara bertahap dinonaktifkan dan seluruh fungsinya disatukan ke dalam portal web tunggal Coretax guna mempermudah akses wajib pajak."
+    },
+    {
+      "q": "Bagaimana cara membuat faktur penjualan bagi pembeli yang tidak memiliki NPWP?",
+      "a": "Dalam sistem Coretax, transaksi dengan pembeli perorangan yang tidak memiliki NPWP dapat dicatat menggunakan 16 digit NIK pembeli yang tertera pada e-KTP, sehingga faktur penjualan tetap sah dan terverifikasi secara hukum."
+    },
+    {
+      "q": "Kapan batas waktu terakhir pelaporan SPT Tahunan bagi Wajib Pajak Orang Pribadi di sistem Coretax?",
+      "a": "Batas waktu pelaporan SPT Tahunan bagi Wajib Pajak Orang Pribadi tetap mengacu pada ketentuan perundang-undangan, yaitu paling lambat tanggal 31 Maret tahun berikutnya setelah tahun pajak berakhir."
+    }
+  ],
+  "created_at": "2026-11-06T09:00:00+07:00",
+  "published_at": "2026-11-06T09:00:00+07:00"
+}

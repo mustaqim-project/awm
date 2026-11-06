@@ -1,0 +1,31 @@
+[
+  {
+    "feature_id": "inventory",
+    "feature_name": "Manajemen Stok & Low-Stock Alert",
+    "slot": "evening",
+    "scheduled_at": "2026-11-06 19:00:00",
+    "image_filename": "2026-11-06-danastri-fashion-1080x1350.png",
+    "image_relative_path": "admin/social-media-assets/platform/2026-11-06-danastri-fashion-1080x1350.png",
+    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-06-danastri-fashion-1080x1350.png",
+    "caption": "Stok fisik di rak toko sering tidak sesuai dengan catatan pembukuan saat akhir bulan?\n\nBagi pemilik usaha ritel dan toko seperti Danastri Fashion & Apparel di Solo yang dikelola oleh Danang Danastri, selisih stok bukan cuma bikin pusing saat stock opname, tapi juga merupakan kebocoran modal yang menggerus keuntungan bersih secara diam-diam.\n\nBiasanya, selisih stok terjadi karena beberapa faktor umum:\n1. Transaksi penjualan kasir tidak langsung memotong stok gudang secara otomatis.\n2. Barang retur, barang rusak, atau sampel display tidak dicatat mutasinya.\n3. Kesalahan input kode atau salah ambil barang saat toko sedang ramai.\n4. Jadwal stock opname ditunda terlalu lama sampai selisih menumpuk.\n\nSolusinya adalah membangun kebiasaan pencatatan mutasi otomatis dan disiplin audit berkala. Dengan modul Manajemen Stok & Inventori COOCA, setiap pergerakan barang langsung tercatat akurat dan terhubung dengan kasir POS.\n\nManfaat utama menggunakan sistem inventori terintegrasi COOCA:\n- Mengontrol stok barang secara real-time dari satu sistem terpadu.\n- Memantau riwayat mutasi barang masuk dan keluar tanpa rekap manual.\n- Mendapatkan notifikasi otomatis saat stok barang mulai menipis.\n- Mengurangi risiko selisih fisik saat melakukan stock opname berkala.\n\nMulai rapikan operasional dan kendalikan stok bisnis Anda bersama COOCA. Kunjungi website resmi kami di: https://cooca.id\n\n#CoocaERP #EdukasiBisnis #UMKMIndonesia #TipsUsaha #ManajemenStok",
+    "keywords": [
+      "cara mengatasi stok barang selisih",
+      "kenapa stok fisik berbeda dengan catatan",
+      "manajemen stok toko umkm",
+      "cara stock opname toko"
+    ],
+    "hashtags": [
+      "#CoocaERP",
+      "#EdukasiBisnis",
+      "#UMKMIndonesia",
+      "#TipsUsaha",
+      "#ManajemenStok"
+    ],
+    "platforms": [
+      "instagram",
+      "facebook",
+      "linkedin",
+      "tiktok"
+    ]
+  }
+]

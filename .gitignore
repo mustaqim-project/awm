@@ -69,6 +69,10 @@ whatsapp-web.js/
 !/storage/app/public/.gitignore
 !/storage/app/public/ai-studio
 !/storage/app/public/ai-studio/**
+!/storage/app/public/admin
+!/storage/app/public/admin/**
+!/storage/app/public/content-assets
+!/storage/app/public/content-assets/**
 
 /storage/framework/cache/*
 !/storage/framework/cache/.gitignore
