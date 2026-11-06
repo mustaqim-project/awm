@@ -239,4 +239,80 @@ class PublicWebsiteThemeIsolationTest extends TestCase
 
         $this->assertStringContainsString('sandbox="allow-scripts allow-same-origin allow-forms allow-popups"', $editorContent);
     }
+
+    /**
+     * Test F: Comprehensive Dark Mode & Light Mode Theme Compatibility Audit
+     * Asserts that both Public Marketing and Storefront ecosystems fully support
+     * seamless dark and light modes with anti-FOUC scripts, CSS variables, and toggles.
+     */
+    public function test_dark_and_light_mode_theme_compatibility(): void
+    {
+        // 1. Audit Public Marketing Layout for Dark & Light Mode
+        $publicMarketingHtml = $this->get('/')->getContent();
+
+        // Check Anti-FOUC synchronous head script
+        $this->assertStringContainsString("localStorage.getItem('cooca-theme')", $publicMarketingHtml);
+        $this->assertStringContainsString("document.documentElement.classList.add('dark')", $publicMarketingHtml);
+        $this->assertStringContainsString("document.documentElement.classList.remove('dark')", $publicMarketingHtml);
+
+        // Check Tailwind darkMode: 'class'
+        $this->assertStringContainsString("darkMode: 'class'", $publicMarketingHtml);
+
+        // Check CSS variables for both light and dark modes
+        $this->assertStringContainsString('--apple-bg: #F5F5F7', $publicMarketingHtml);
+        $this->assertStringContainsString('--apple-text: #1D1D1F', $publicMarketingHtml);
+        $this->assertStringContainsString('--apple-card: #FFFFFF', $publicMarketingHtml);
+        $this->assertStringContainsString('--apple-bg: #000000', $publicMarketingHtml);
+        $this->assertStringContainsString('--apple-text: #F5F5F7', $publicMarketingHtml);
+        $this->assertStringContainsString('--apple-card: #1C1C1E', $publicMarketingHtml);
+
+        // Check accessible dark mode select options
+        $this->assertStringContainsString('html.dark select option', $publicMarketingHtml);
+
+        // Check Theme Switcher button presence
+        $this->assertStringContainsString('toggleTheme()', $publicMarketingHtml);
+
+        // 2. Audit Storefront Layout for Dark & Light Mode
+        $businessLight = Business::create([
+            'name' => 'Toko Mode Terang',
+            'slug' => 'toko-mode-terang',
+            'is_active' => true,
+        ]);
+        BusinessLandingPage::create([
+            'business_id' => $businessLight->id,
+            'headline' => 'Toko Siang Terang',
+            'dark_mode' => false,
+            'is_published' => true,
+        ]);
+
+        $responseLight = $this->get('/toko-mode-terang');
+        $responseLight->assertStatus(200);
+        $contentLight = $responseLight->getContent();
+
+        // Light mode HTML should NOT have initial 'dark' class
+        $this->assertMatchesRegularExpression('/<html[^>]*class="[^"]*(?<!\bdark\b)scroll-smooth[^"]*"[^>]*>/', $contentLight);
+        $this->assertStringContainsString("localStorage.getItem('storefront_dark_mode')", $contentLight);
+        $this->assertStringContainsString('window.toggleDarkMode', $contentLight);
+
+        // 3. Test Storefront Default Dark Mode
+        $businessDark = Business::create([
+            'name' => 'Toko Mode Gelap',
+            'slug' => 'toko-mode-gelap',
+            'is_active' => true,
+        ]);
+        BusinessLandingPage::create([
+            'business_id' => $businessDark->id,
+            'headline' => 'Toko Malam Gelap',
+            'dark_mode' => true,
+            'is_published' => true,
+        ]);
+
+        $responseDark = $this->get('/toko-mode-gelap');
+        $responseDark->assertStatus(200);
+        $contentDark = $responseDark->getContent();
+
+        // Dark mode HTML must have 'dark' class
+        $this->assertMatchesRegularExpression('/<html[^>]*class="[^"]*\bdark\b[^"]*"[^>]*>/', $contentDark);
+        $this->assertStringContainsString('dark:text-neutral-100', $contentDark);
+    }
 }

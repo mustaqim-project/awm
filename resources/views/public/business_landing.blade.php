@@ -8621,7 +8621,7 @@
                                     <a :href="groupOrder.orderTrackingUrl || '#'"
                                         class="h-11 rounded-[14px] bg-brand-primary hover:opacity-90 text-white text-[12.5px] font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                         <i data-lucide="truck" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('storefront.nav.tracking') }}</span>
+                                        <span>{{ __('storefront.tracking') }}</span>
                                     </a>
                                 </div>
                             </template>
