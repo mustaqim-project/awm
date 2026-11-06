@@ -1,0 +1,38 @@
+{
+  "id": 246,
+  "title": "Cara Menghitung Cash Conversion Cycle UMKM untuk Arus Kas Sehat",
+  "slug": "cara-menghitung-cash-conversion-cycle-umkm",
+  "category": "Keuangan & Pembukuan",
+  "cluster": "tutorial",
+  "primary_keyword": "cara menghitung cash conversion cycle umkm",
+  "secondary_keywords": "rumus siklus konversi kas usaha, perputaran kas toko ritel, days inventory outstanding umkm, days sales outstanding piutang, days payable outstanding supplier",
+  "search_intent": "informational",
+  "meta_title": "Cara Menghitung Cash Conversion Cycle UMKM untuk Arus Kas",
+  "meta_description": "Panduan lengkap cara menghitung cash conversion cycle UMKM dengan rumus DIO, DSO, dan DPO agar perputaran modal lancar dan bisnis terhindar dari krisis kas.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-menghitung-cash-conversion-cycle-umkm.jpg",
+  "local_image_asset": "public/images/blog/cara-menghitung-cash-conversion-cycle-umkm.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "cash conversion cycle umkm",
+  "word_count": 1502,
+  "faqs": [
+    {
+      "q": "Berapa angka siklus konversi kas yang ideal bagi bisnis UMKM?",
+      "a": "Angka ideal sangat bergantung pada sektor industri Anda. Untuk toko ritel makanan cepat saji atau kelontong tunai, angka ideal berkisar antara 0 sampai 15 hari. Sedangkan untuk manufaktur konveksi atau distributor grosir, angka 30 sampai 45 hari masih tergolong wajar asalkan cadangan kas operasional mencukupi."
+    },
+    {
+      "q": "Apakah nilai siklus konversi kas bisa bernilai negatif?",
+      "a": "Bisa. Siklus kas bernilai negatif terjadi saat tempo pembayaran utang ke supplier jauh lebih panjang daripada waktu yang dibutuhkan untuk menjual barang secara tunai. Bisnis dengan nilai siklus negatif pada dasarnya beroperasi menggunakan modal gratis dari pemasok tanpa perlu menguras uang kas sendiri."
+    },
+    {
+      "q": "Apa perbedaan mendasar antara siklus operasi dan siklus konversi kas?",
+      "a": "Siklus operasi adalah total waktu dari pembelian persediaan hingga piutang penjualan berhasil ditagih (DIO + DSO). Sementara itu, siklus konversi kas memperhitungkan waktu pelonggaran pembayaran utang dari supplier (DIO + DSO dikurangi DPO), sehingga mencerminkan beban kas bersih yang harus ditanggung modal pemilik."
+    },
+    {
+      "q": "Bagaimana jika angka DIO toko saya sangat tinggi tetapi produk tidak basi?",
+      "a": "Meskipun produk tidak mudah kedaluwarsa seperti peralatan besi atau tekstil, angka DIO yang terlampau tinggi tetap merugikan karena mengunci modal tunai yang seharusnya bisa dipakai belanja barang cepat laku. Selain itu, stok yang terlalu lama disimpan berisiko mengalami penyusutan fisik, kerusakan kemasan, atau penurunan harga pasar."
+    }
+  ],
+  "published_at": "2026-11-06T08:00:00+07:00"
+}

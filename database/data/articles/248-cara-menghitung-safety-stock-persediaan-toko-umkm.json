@@ -1,0 +1,38 @@
+{
+  "id": 248,
+  "title": "Cara Menghitung Safety Stock Persediaan Toko UMKM dan Rumusnya",
+  "slug": "cara-menghitung-safety-stock-persediaan-toko-umkm",
+  "category": "Manajemen Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "cara menghitung safety stock persediaan toko umkm",
+  "secondary_keywords": "rumus stok pengaman toko ritel, perhitungan buffer stock barang dagang, lead time supplier pengiriman bahan, reorder point stok barang, antisipasi stockout produk terlaris",
+  "search_intent": "informational",
+  "meta_title": "Cara Menghitung Safety Stock Persediaan Toko UMKM dan Rumus",
+  "meta_description": "Panduan praktis cara menghitung safety stock persediaan toko UMKM dengan rumus lead time untuk mencegah kehabisan barang dagangan tanpa menumpuk modal gudang.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-menghitung-safety-stock-persediaan-toko-umkm.jpg",
+  "local_image_asset": "public/images/blog/cara-menghitung-safety-stock-persediaan-toko-umkm.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "cara menghitung safety stock",
+  "word_count": 1248,
+  "faqs": [
+    {
+      "q": "Apakah semua barang yang dijual di toko wajib dibuatkan safety stock?",
+      "a": "Tidak. Anda sebaiknya memprioritaskan perhitungan safety stock untuk barang-barang kategori fast moving (produk laris yang menyumbang omzet terbesar) dan barang dengan waktu pengiriman pemasok yang tidak menentu. Untuk barang yang perputarannya sangat lambat atau mudah dicari di pasar lokal, Anda cukup menyetok dalam kuantitas secukupnya."
+    },
+    {
+      "q": "Kapan saat yang tepat untuk menggunakan persediaan safety stock?",
+      "a": "Safety stock hanya boleh digunakan dalam kondisi luar biasa, yaitu ketika pengiriman dari supplier mengalami keterlambatan melebihi batas waktu normal atau ketika terjadi lonjakan pembelian yang tidak terduga. Segera setelah kiriman baru tiba, kuantitas persediaan pengaman harus langsung diisi kembali ke jumlah semula."
+    },
+    {
+      "q": "Bagaimana jika daya tampung gudang toko tidak muat untuk menampung seluruh safety stock?",
+      "a": "Jika kapasitas ruangan toko terbatas, Anda dapat memperpendek lead time dengan mencari pemasok lokal alternatif yang lokasinya lebih dekat, atau menegosiasikan jadwal pengiriman yang lebih sering dengan kuantitas yang lebih kecil (misalnya pengiriman dua kali seminggu alih-alih dua minggu sekali)."
+    },
+    {
+      "q": "Apa tanda bahwa angka safety stock di toko saya ditetapkan terlalu tinggi?",
+      "a": "Tanda utamanya adalah barang menumpuk berdebu di gudang, rak toko terasa sesak, arus kas operasional sering tekor karena modal habis untuk belanja stok, dan ada barang yang mendekati tanggal kedaluwarsa sebelum sempat dipajang ke rak penjualan."
+    }
+  ],
+  "published_at": "2026-11-06T10:00:00+07:00"
+}
