@@ -21,13 +21,13 @@
     "route": "/products",
     "viewport": { "width": 1440, "height": 900 },
     "slot": "evening",
-    "headline": "Uang Usaha Menguap Gara-Gara Stok Bocor?",
-    "subheadline": "Ketahui posisi stok secara akurat dan dapatkan notifikasi otomatis saat barang favorit mulai menipis. Bebas drama selisih fisik.",
-    "badges": ["🔔 Peringatan Stok Otomatis", "📦 Kartu Stok Real-Time", "🔍 Audit & Opname Cepat"],
-    "keywords": ["cara atasi stok barang hilang", "aplikasi stok gudang gratis", "notifikasi stok menipis", "manajemen inventori umkm"],
-    "caption_hook": "Berapa banyak keuntungan usaha Anda yang hilang setiap bulan cuma karena stok barang selisih tanpa jejak?",
-    "caption_body": "Catatan di buku bilang ada 10, pas dicek di rak fisik sisa 3. Mau restock bingung, mau audit pusing.\n\nCOOCA hadir dengan sistem inventori cerdas:\n✅ Pengurangan stok otomatis setiap kali kasir membunyikan transaksi\n✅ Notifikasi otomatis (Low Stock Alert) sebelum barang kehabisan\n✅ Riwayat kartu stok lengkap: siapa yang ubah, kapan, dan berapa jumlahnya\n✅ Bebas dari drama barang hilang atau modal mati menumpuk di gudang\n\nKendalikan inventori bisnis Anda dari ujung jari.",
-    "hashtags": ["#ManajemenStok", "#InventoriBisnis", "#CoocaERP", "#BisnisUMKM", "#OperasionalRapi"]
+    "headline": "Stok Baju Laris Ludes Pas Harbolnas Tanpa Sadar?",
+    "subheadline": "Amankan stok produk terlaris dengan Low-Stock Alert otomatis dan kartu stok real-time. Bebas drama pesanan batal atau barang selisih di gudang.",
+    "badges": ["🔔 Peringatan Stok Menipis", "📦 Kartu Stok Real-Time", "⚡ Terhubung Kasir & Gudang"],
+    "keywords": ["manajemen stok umkm", "notifikasi stok menipis", "aplikasi stok gudang gratis", "cara atasi barang habis harbolnas"],
+    "caption_hook": "Stok produk favorit tiba-tiba habis saat pesanan Harbolnas 11.11 lagi banjir-banjirnya?",
+    "caption_body": "Menjelang puncak pesta belanja online dan promo tanggal kembar, lonjakan transaksi sering kali berubah jadi bumerang bagi pemilik toko ritel dan fashion seperti Danastri Fashion & Apparel di Solo yang dikelola oleh Danang Danastri. Masalah klasik yang sering berulang: catatan stok di buku kasir terlihat masih ada, tapi saat pesanan masuk, barang di rak fisik ternyata sudah ludes (stockout). Akibatnya, pesanan terpaksa dibatalkan, pembeli kecewa, dan momentum promo terbuang sia-sia.\n\nMelalui sistem Manajemen Stok & Inventori COOCA, operasional toko jadi jauh lebih tenang dan terkontrol:\n✅ Peringatan Stok Menipis (Low-Stock Alert) otomatis memberi sinyal sebelum barang terlaris kehabisan\n✅ Kartu stok real-time memperbarui jumlah barang setiap kali kasir POS menyelesaikan transaksi\n✅ Sinkronisasi multi-lokasi antara toko fisik dan gudang penyimpanan tanpa rekap manual\n✅ Riwayat mutasi stok transparan untuk mendeteksi selisih fisik secara cepat\n\nKelola stok bisnis lebih mudah dan cegah boncos akibat barang hilang bersama COOCA.",
+    "hashtags": ["#CoocaERP", "#ManajemenStok", "#BisnisUMKM", "#Harbolnas2026", "#OperasionalBisnis"]
   },
   {
     "id": "finance",

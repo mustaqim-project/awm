@@ -1,0 +1,333 @@
+{
+  "research_date": "2026-11-06",
+  "timezone": "Asia/Jakarta",
+  "platform": "Cooca (cooca.id)",
+  "target_audience": [
+    "Pemilik dan calon pemilik UMKM",
+    "Pengusaha F&B dan kuliner",
+    "Pemilik toko retail dan minimarket",
+    "Pedagang marketplace dan bisnis online",
+    "Pengelola gudang dan inventori",
+    "Pemilik bisnis jasa",
+    "Entrepreneur yang ingin meningkatkan profesionalisme pengelolaan bisnis"
+  ],
+  "topical_coverage_map": {
+    "core_pillar": "Business Operating System UMKM Indonesia",
+    "clusters": [
+      {
+        "cluster": "HPP & Finansial Kuliner",
+        "article": "Cara Menghitung Food Cost Usaha Kuliner dan Menentukan Harga Jual Menu",
+        "relation": "Fondasi margin keuntungan dan penetapan harga jual berbasis resep baku untuk mencegah kebocoran modal di dapur."
+      },
+      {
+        "cluster": "Manajemen Inventori & Gudang",
+        "article": "Cara Stock Opname Tanpa Tutup Toko dengan Metode Cycle Counting",
+        "relation": "Pengawasan stok fisik berkala tanpa menghentikan penjualan gerai, menjaga akurasi persediaan barang dagangan."
+      },
+      {
+        "cluster": "Sistem Kasir & Tata Kelola Toko",
+        "article": "SOP Serah Terima Shift Kasir dan Cara Rekonsiliasi Uang Kas Toko",
+        "relation": "Standarisasi pergantian giliran kerja kasir, pencegahan selisih kas fisik vs sistem POS, dan rekonsiliasi non-tunai QRIS."
+      },
+      {
+        "cluster": "Kepatuhan Pajak & Hukum Usaha",
+        "article": "Panduan Menghitung Pajak UMKM PP 55 2022 dan Batas Bebas Pajak",
+        "relation": "Kepatuhan regulasi fiskal PPh final 0,5 persen, pemanfaatan omzet bebas pajak hingga 500 juta, dan tata cara pelaporan SPT."
+      },
+      {
+        "cluster": "CRM, Retensi & Pertumbuhan Penjualan",
+        "article": "Strategi CRM UMKM untuk Meningkatkan Repeat Order Tanpa Spam",
+        "relation": "Pengelolaan basis data pembeli, re-engagement pelanggan lama via WhatsApp resmi, dan pembentukan loyalitas pembeli."
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": 251,
+      "topic_title": "Cara Menghitung Food Cost Usaha Kuliner dan Menentukan Harga Jual Menu",
+      "slug": "cara-menghitung-food-cost-usaha-kuliner",
+      "category": "HPP & Harga Jual",
+      "cluster": "tutorial",
+      "primary_keyword": "cara menghitung food cost usaha kuliner",
+      "secondary_keywords": [
+        "rumus food cost per porsi",
+        "persentase food cost ideal resto",
+        "cara menentukan harga jual makanan",
+        "perbedaan food cost ideal dan aktual",
+        "cara mengatasi food waste dapur",
+        "simulasi food cost chicken rice bowl",
+        "evaluasi food cost bulanan restoran"
+      ],
+      "long_tail_keywords": [
+        "cara menghitung food cost usaha kuliner makanan dan minuman",
+        "rumus food cost ideal untuk kafe dan restoran",
+        "cara menghitung hpp porsi kuliner dengan bumbu dan kemasan",
+        "penyebab food cost aktual membengkak pada bisnis kuliner",
+        "langkah menentukan harga jual dari target food cost 30 persen",
+        "cara mencatat susut bahan baku kuliner agar tidak boncos"
+      ],
+      "semantic_keywords": [
+        "standard recipe",
+        "yield percentage",
+        "over-portioning",
+        "cost of goods sold kuliner",
+        "shrinkage bahan baku",
+        "resep baku porsi",
+        "titik impas kuliner"
+      ],
+      "search_intent": "informational",
+      "search_demand_indicator": "Tinggi (Kueri inti pengusaha F&B pemula dan pemilik kafe yang mengalami kendala kas boncos)",
+      "data_sources": [
+        "Google Search Engine Result Pages (SERP) Indonesia",
+        "Pedoman Standar Industri Kuliner F&B Indonesia",
+        "Data Riset Industri F&B (Digisolf, Jurnal Mekari, Tantri.id, ESB)"
+      ],
+      "people_also_ask": [
+        "Berapa persentase food cost yang ideal untuk bisnis kuliner?",
+        "Apa perbedaan food cost ideal dan food cost aktual?",
+        "Bagaimana rumus menghitung food cost per porsi?",
+        "Mengapa food cost aktual di restoran sering membengkak?",
+        "Bagaimana cara menentukan harga jual makanan berdasarkan food cost?"
+      ],
+      "related_searches": [
+        "rumus food cost excel",
+        "standar food cost cafe",
+        "cara menghitung hpp makanan per porsi",
+        "contoh tabel food cost restoran",
+        "template food cost kuliner gratis"
+      ],
+      "competitor_analysis": "Artikel kompetitor rata-rata hanya memberikan rumus teoritis singkat tanpa memperhitungkan konversi satuan belanja grosir ke satuan resep gram/ml, mengabaikan biaya kemasan bawa pulang (takeaway packaging), dan tidak memisahkan antara food cost per porsi dengan evaluasi food cost aktual bulanan.",
+      "content_gap": "Belum ada panduan komprehensif yang menyajikan simulasi konversi satuan bahan secara matematis rinci, integrasi biaya bumbu marinasi dan packaging langsung, analisis variance 5 sumber kebocoran dapur (over-portioning, theft, waste, shrinkage, supplier price creeping), dan panduan aksi koreksi operasional.",
+      "reason_for_selection": "Topik evergreen bernilai tinggi dengan relevansi langsung terhadap fitur kalkulasi HPP dan resep baku Cooca POS F&B, membantu ribuan pengusaha kuliner menghentikan kebocoran margin."
+    },
+    {
+      "id": 252,
+      "topic_title": "Cara Stock Opname Tanpa Tutup Toko dengan Metode Cycle Counting",
+      "slug": "cara-stock-opname-tanpa-tutup-toko",
+      "category": "Inventori & Stok",
+      "cluster": "tutorial",
+      "primary_keyword": "cara stock opname tanpa tutup toko",
+      "secondary_keywords": [
+        "metode cycle counting toko retail",
+        "analisis abc persediaan toko",
+        "cara mengatasi selisih stok barang",
+        "sop stock opname harian ritel",
+        "cut off transaksi saat stock opname",
+        "jadwal penghitungan stok berkala",
+        "aplikasi stok opname toko barcode"
+      ],
+      "long_tail_keywords": [
+        "cara stock opname tanpa tutup toko metode cycle counting",
+        "langkah menghitung stok fisik toko ritel tanpa mengganggu pembeli",
+        "cara membagi zona rak toko untuk audit stok bergilir",
+        "solusi selisih stok fisik dan sistem pada minimarket",
+        "frekuensi hitung stok barang fast moving kelas a",
+        "formulir rekonsiliasi stock opname toko kelontong modern"
+      ],
+      "semantic_keywords": [
+        "cycle count frequency",
+        "stock discrepancy",
+        "stock adjustment log",
+        "inventory shrinkage",
+        "blind count audit",
+        "perpetual inventory system"
+      ],
+      "search_intent": "informational",
+      "search_demand_indicator": "Tinggi (Kueri esensial pemilik toko retail, kelontong, fashion, dan distributor yang enggan rugi omzet harian karena tutup gerai)",
+      "data_sources": [
+        "Google Autocomplete dan PAA Retail Management Indonesia",
+        "Studi Praktek Operasional Retail Supply Chain",
+        "Benchmarking Manajemen Persediaan (BoxHero, Mekari, Bocaja)"
+      ],
+      "people_also_ask": [
+        "Apakah stock opname harus selalu menutup toko?",
+        "Apa itu metode cycle counting dalam inventori toko?",
+        "Bagaimana cara membagi prioritas barang dengan analisis ABC?",
+        "Bagaimana menangani penjualan barang saat proses hitung stok berjalan?",
+        "Apa penyebab utama terjadinya selisih stok barang di toko retail?"
+      ],
+      "related_searches": [
+        "sop stock opname toko kelontong",
+        "contoh jadwal cycle counting toko",
+        "aplikasi stock opname android offline",
+        "cara mengatasi barang hilang saat stock opname",
+        "cara rekonsiliasi stok sistem dan fisik"
+      ],
+      "competitor_analysis": "Artikel yang beredar kebanyakan berfokus pada stock opname tahunan berskala masif yang mewajibkan toko tutup total selama 1 sampai 2 hari, minim panduan teknis perlakuan freeze/cut-off transaksi saat gerai buka.",
+      "content_gap": "Kurangnya panduan implementasi teknis cycle counting harian berdurasi 15 menit, pembagian zona rak fisik, matriks frekuensi hitung berdasarkan kecepatan putar barang (kelas A, B, C), dan SOP mitigasi transaksi aktif saat audit berjalan.",
+      "reason_for_selection": "Menyelesaikan ketakutan terbesar pemilik toko retail Indonesia terhadap kehilangan omzet saat audit stok, selaras dengan modul inventori multi-gudang dan barcode scanner Cooca."
+    },
+    {
+      "id": 253,
+      "topic_title": "SOP Serah Terima Shift Kasir dan Cara Rekonsiliasi Uang Kas Toko",
+      "slug": "sop-serah-terima-shift-kasir",
+      "category": "Kasir & POS",
+      "cluster": "tutorial",
+      "primary_keyword": "sop serah terima shift kasir",
+      "secondary_keywords": [
+        "cara rekonsiliasi uang kasir",
+        "serah terima shift kasir toko",
+        "metode blind counting kasir",
+        "sop penanganan selisih kas",
+        "rekonsiliasi pembayaran non tunai qris",
+        "formulir serah terima kasir harian",
+        "modal awal kembalian laci kasir"
+      ],
+      "long_tail_keywords": [
+        "sop serah terima shift kasir toko retail dan restoran",
+        "cara rekonsiliasi kas tunai fisik dengan laporan sistem pos",
+        "langkah mengatasi uang kasir minus atau lebih saat closing",
+        "prosedur serah terima modal kasir antara shift pagi dan sore",
+        "berita acara serah terima shift kasir dan pembagian tanggung jawab",
+        "cara mencocokkan settlement qris edc dengan laporan penjualan"
+      ],
+      "semantic_keywords": [
+        "cash drawer reconciliation",
+        "blind drop counting",
+        "shortage and overage log",
+        "float cash management",
+        "settlement batch",
+        "audit trail pos"
+      ],
+      "search_intent": "informational",
+      "search_demand_indicator": "Sedang hingga Tinggi (Kueri operasional kritis bagi pemilik usaha dengan 2 atau lebih karyawan kasir)",
+      "data_sources": [
+        "Google Related Searches operasional kasir ritel",
+        "Praktek SOP Kasir Minimarket dan Kafe Indonesia",
+        "Riset Operasional Kasir POS (Labamu, Accurate, Jurnal)"
+      ],
+      "people_also_ask": [
+        "Apa saja tahapan dalam serah terima shift kasir?",
+        "Bagaimana cara melakukan blind counting pada laci kasir?",
+        "Apa yang harus dilakukan jika uang kasir mengalami selisih kurang (shortage)?",
+        "Berapa modal awal kasir yang ideal untuk uang kembalian?",
+        "Bagaimana cara rekonsiliasi transaksi QRIS dan EDC saat pergantian shift?"
+      ],
+      "related_searches": [
+        "contoh formulir serah terima shift kasir excel",
+        "sop kasir restoran lengkap",
+        "cara mengatasi kasir nakal dan selisih uang",
+        "berita acara selisih kas kasir",
+        "tata cara closing kasir pos"
+      ],
+      "competitor_analysis": "Kompetitor hanya membagikan template formulir kosong atau instruksi umum tanpa menjelaskan alur pencegahan kecurangan blind count, pemisahan uang modal awal (float cash), serta rekonsiliasi multi-channel (tunai, QRIS, transfer bank).",
+      "content_gap": "Penjelasan detail mekanisme verifikasi independen dua kasir tanpa saling melihat angka harapan sistem, rumus matematika rekonsiliasi saldo laci kasir, dan penegakan akuntabilitas hukum operasional tanpa menciptakan konflik internal tim.",
+      "reason_for_selection": "Menjawab titik rawan fraud dan perselisihan karyawan di garda depan bisnis UMKM, sangat mendukung modul Kasir POS dan laporan shift kasir harian Cooca."
+    },
+    {
+      "id": 254,
+      "topic_title": "Panduan Menghitung Pajak UMKM PP 55 2022 dan Batas Bebas Pajak",
+      "slug": "panduan-menghitung-pajak-umkm-pp-55-2022",
+      "category": "Pajak & Legalitas",
+      "cluster": "edukasi",
+      "primary_keyword": "panduan menghitung pajak umkm pp 55 2022",
+      "secondary_keywords": [
+        "tarif pph final umkm 0 koma 5 persen",
+        "batas omzet 500 juta bebas pajak",
+        "cara menghitung pph final pp 55 tahun 2022",
+        "cara bayar pajak umkm lewat e billing",
+        "kode akun pajak 411128 420 pph final",
+        "jangka waktu pemanfaatan tarif pph final",
+        "pelaporan spt tahunan 1770 umkm"
+      ],
+      "long_tail_keywords": [
+        "panduan menghitung pajak umkm pp 55 2022 orang pribadi dan badan",
+        "simulasi perhitungan pph final omzet diatas 500 juta setahun",
+        "cara membuat kode billing pajak umkm 0 5 persen di djp online",
+        "batas waktu pemanfaatan tarif final pph 0 5 persen untuk cv dan pt",
+        "kewajiban pencatatan omzet bulanan umkm sesuai undang undang hpp",
+        "perbedaan aturan pajak umkm perorangan dan badan usaha pt"
+      ],
+      "semantic_keywords": [
+        "peredaran bruto kumulatif",
+        "pajak penghasilan final",
+        "surat setoran pajak elektronik",
+        "npwp pengusaha",
+        "norma penghitungan penghasilan neto",
+        "uu harmonisasi peraturan perpajakan"
+      ],
+      "search_intent": "informational",
+      "search_demand_indicator": "Sangat Tinggi (Kueri regulasi legal perpajakan paling dicari pemilik usaha mikro dan kecil sepanjang tahun)",
+      "data_sources": [
+        "Peraturan Pemerintah Nomor 55 Tahun 2022",
+        "Undang-Undang Nomor 7 Tahun 2021 tentang HPP",
+        "Portal Resmi Direktorat Jenderal Pajak (pajak.go.id)",
+        "Analisis Pajak Resmi (Klikpajak, Ortax, Pajakku)"
+      ],
+      "people_also_ask": [
+        "Apakah UMKM dengan omzet di bawah 500 juta wajib membayar pajak?",
+        "Berapa tarif PPh final UMKM terbaru menurut PP 55 Tahun 2022?",
+        "Bagaimana cara menghitung pajak jika omzet sudah melebihi 500 juta?",
+        "Berapa lama batas waktu berlakunya tarif PPh final 0,5 persen?",
+        "Kapan batas waktu pembayaran dan pelaporan SPT tahunan pajak UMKM?"
+      ],
+      "related_searches": [
+        "cara bayar pajak umkm online",
+        "contoh perhitungan pajak umkm badan cv",
+        "kode billing pph final umkm",
+        "tata cara lapor spt tahunan umkm 1770",
+        "tabel perhitungan pph final 0.5 persen excel"
+      ],
+      "competitor_analysis": "Banyak artikel lama di internet yang masih mengutip PP 23 Tahun 2018 tanpa mencantumkan fasilitas pembebasan omzet 500 juta pertama untuk orang pribadi dari UU HPP / PP 55 Tahun 2022, sehingga membingungkan wajib pajak.",
+      "content_gap": "Simulasi matematis kronologis bulan demi bulan saat omzet melewati batas 500 juta di pertengahan tahun, perbedaan tegas antara wajib pajak orang pribadi vs badan (CV/PT), serta panduan langkah demi langkah teknis pembuatan kode billing e-Billing di DJP Online.",
+      "reason_for_selection": "Topik kepatuhan hukum paling krusial bagi UMKM yang ingin tertib administrasi, menghindarkan sanksi denda pajak, dan relevan dengan laporan omzet otomatis Cooca."
+    },
+    {
+      "id": 255,
+      "topic_title": "Strategi CRM UMKM untuk Meningkatkan Repeat Order Tanpa Spam",
+      "slug": "strategi-crm-umkm-untuk-meningkatkan-repeat-order",
+      "category": "CRM & Loyalty",
+      "cluster": "edukasi",
+      "primary_keyword": "strategi crm umkm untuk meningkatkan repeat order",
+      "secondary_keywords": [
+        "cara meningkatkan repeat order pelanggan",
+        "database pelanggan toko umkm",
+        "segmentasi pelanggan baru dan loyal",
+        "whatsapp marketing etis tanpa blokir",
+        "program loyalitas poin pelanggan ritel",
+        "penanganan komplain retensi pembeli",
+        "metrik repeat order rate toko"
+      ],
+      "long_tail_keywords": [
+        "strategi crm umkm untuk meningkatkan repeat order toko dan resto",
+        "cara mengumpulkan database pelanggan dari transaksi kasir pos",
+        "langkah segmentasi pelanggan baru pelanggan setia dan pelanggan pasif",
+        "cara broadcast whatsapp bisnis yang dipersonalisasi tanpa dianggap spam",
+        "skema program loyalitas stamp card digital untuk usaha kuliner",
+        "rumus menghitung repeat order rate bulanan bisnis ritel kecil"
+      ],
+      "semantic_keywords": [
+        "customer lifetime value",
+        "customer retention cost",
+        "dormant customer re-engagement",
+        "service recovery paradox",
+        "rfm analysis recency frequency monetary",
+        "loyalty tier rewards"
+      ],
+      "search_intent": "informational",
+      "search_demand_indicator": "Tinggi (Kueri strategi pertumbuhan bisnis yang sangat dicari pemilik usaha yang lelah membakar biaya akuisisi pelanggan baru)",
+      "data_sources": [
+        "Google Trends Digital Marketing UMKM Indonesia",
+        "Riset Customer Relationship Management Ritel",
+        "Studi Kasus Retensi Pelanggan (Mekari, Doku, Ivosights, Everpro)"
+      ],
+      "people_also_ask": [
+        "Apa itu CRM untuk usaha kecil dan bagaimana cara memulainya?",
+        "Mengapa mempertahankan pelanggan lama lebih murah daripada mencari pelanggan baru?",
+        "Bagaimana cara mengumpulkan data pelanggan toko secara sopan?",
+        "Bagaimana cara membagi segmentasi pelanggan agar pesan promosi tidak dianggap spam?",
+        "Bagaimana cara menghitung persentase repeat order usaha ritel?"
+      ],
+      "related_searches": [
+        "contoh crm sederhana excel umkm",
+        "template database pelanggan toko",
+        "kata kata broadcast whatsapp yang menarik pelanggan",
+        "cara membuat stamp card digital toko kopi",
+        "contoh loyalty program untuk cafe"
+      ],
+      "competitor_analysis": "Artikel kompetitor cenderung berorientasi pada software CRM enterprise mahal (seperti Salesforce/Hubspot) yang tidak aplikatif bagi UMKM Indonesia, atau menyarankan blast WhatsApp massal yang berisiko pemblokiran nomor akun.",
+      "content_gap": "Strategi CRM praktis berbasis kasir POS dan WhatsApp Business, framework 3 segmen actionable (pelanggan baru, loyal, tidur), script komunikasi santun humanis, dan panduan program loyalty murah meriah yang langsung dapat dieksekusi hari ini.",
+      "reason_for_selection": "Melengkapi pilar pertumbuhan penjualan omnichannel Cooca, mengedukasi pengusaha cara mengonversi data transaksi kasir menjadi mesin repeat order berkelanjutan."
+    }
+  ]
+}

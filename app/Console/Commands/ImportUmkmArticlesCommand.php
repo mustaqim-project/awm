@@ -294,31 +294,39 @@ final class ImportUmkmArticlesCommand extends Command
                 $coverImage = $imgPool[$idx % count($imgPool)];
             }
 
-            // Publication date spread over the past 100 days
-            $publishedAt = (clone $now)->subDays($totalFiles - $idx)->setHour(8 + ($idx % 12))->setMinute(($idx * 7) % 60);
+            // Publication date spread over the past 100 days (or explicit from frontmatter/json)
+            $publishedAt = !empty($parsed['published_at'])
+                ? Carbon::parse($parsed['published_at'], 'Asia/Jakarta')
+                : (clone $now)->subDays($totalFiles - $idx)->setHour(8 + ($idx % 12))->setMinute(($idx * 7) % 60);
 
             // Starting organic views
             $viewsCount = 180 + (($idx * 17) % 650);
 
+            $postAttributes = [
+                'title' => $parsed['title'],
+                'slug' => $parsed['slug'],
+                'cluster' => $clusterCode,
+                'cluster_id' => $clusterId,
+                'category' => $catName,
+                'category_id' => $categoryObj->id,
+                'excerpt' => $parsed['excerpt'] ?? '',
+                'content' => $parsed['content'] ?? '',
+                'cover_image' => $coverImage,
+                'meta_title' => $parsed['meta_title'] ?? $parsed['title'],
+                'meta_description' => $parsed['meta_description'] ?? $parsed['excerpt'] ?? '',
+                'author_name' => $parsed['author'] ?? 'Tim Edukasi COOCA',
+                'views_count' => $viewsCount,
+                'is_published' => true,
+                'published_at' => $publishedAt,
+            ];
+
+            if (!empty($parsed['created_at'])) {
+                $postAttributes['created_at'] = Carbon::parse($parsed['created_at'], 'Asia/Jakarta');
+            }
+
             Post::updateOrCreate(
                 ['slug' => $parsed['slug']],
-                [
-                    'title' => $parsed['title'],
-                    'slug' => $parsed['slug'],
-                    'cluster' => $clusterCode,
-                    'cluster_id' => $clusterId,
-                    'category' => $catName,
-                    'category_id' => $categoryObj->id,
-                    'excerpt' => $parsed['excerpt'] ?? '',
-                    'content' => $parsed['content'] ?? '',
-                    'cover_image' => $coverImage,
-                    'meta_title' => $parsed['meta_title'] ?? $parsed['title'],
-                    'meta_description' => $parsed['meta_description'] ?? $parsed['excerpt'] ?? '',
-                    'author_name' => $parsed['author'] ?? 'Tim Edukasi COOCA',
-                    'views_count' => $viewsCount,
-                    'is_published' => true,
-                    'published_at' => $publishedAt,
-                ]
+                $postAttributes
             );
 
             $importedSlugs[] = $parsed['slug'];
@@ -374,6 +382,22 @@ final class ImportUmkmArticlesCommand extends Command
             $data['meta_description'] = $yaml['meta_description'] ?? '';
             $data['author'] = $yaml['author'] ?? 'Tim Edukasi COOCA';
             $data['excerpt'] = $yaml['meta_description'] ?? '';
+            $data['published_at'] = $yaml['published_at'] ?? null;
+            $data['created_at'] = $yaml['created_at'] ?? null;
+
+            // Also check corresponding .json metadata file if exists
+            $jsonFile = preg_replace('/\.md$/', '.json', $filename);
+            if (file_exists($jsonFile)) {
+                $metaJson = json_decode(file_get_contents($jsonFile), true);
+                if (is_array($metaJson)) {
+                    if (empty($data['published_at']) && !empty($metaJson['published_at'])) {
+                        $data['published_at'] = $metaJson['published_at'];
+                    }
+                    if (empty($data['created_at']) && !empty($metaJson['created_at'])) {
+                        $data['created_at'] = $metaJson['created_at'];
+                    }
+                }
+            }
 
             // Strip any editorial note / internal link planning / raw JSON-LD block from public article body
             $body = preg_replace('/\r?\n##\s*Rencana\s+internal\s+link.*$/usi', '', $body);
@@ -452,6 +476,22 @@ final class ImportUmkmArticlesCommand extends Command
 
         $base = basename($filename, '.md');
         $data['slug'] = preg_replace('/^\d+-/', '', $base);
+
+        $jsonPath = preg_replace('/\.md$/i', '.json', $filename);
+        if (file_exists($jsonPath)) {
+            $jsonData = json_decode((string)file_get_contents($jsonPath), true);
+            if (is_array($jsonData)) {
+                if (!empty($jsonData['published_at']) && empty($data['published_at'])) {
+                    $data['published_at'] = $jsonData['published_at'];
+                }
+                if (!empty($jsonData['created_at']) && empty($data['created_at'])) {
+                    $data['created_at'] = $jsonData['created_at'];
+                }
+                if (!empty($jsonData['cover_image']) && empty($data['cover_image'])) {
+                    $data['cover_image'] = $jsonData['cover_image'];
+                }
+            }
+        }
 
         return $data;
     }

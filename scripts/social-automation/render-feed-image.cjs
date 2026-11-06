@@ -9,10 +9,15 @@ function getBase64Image(filePath) {
   return `data:image/${ext};base64,${buf.toString('base64')}`;
 }
 
-async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
+async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona }) {
   const logoPath = path.resolve('public/assets/image/cooca-logo-landscape_inv.png');
   const logoDataUri = getBase64Image(logoPath);
   const screenshotDataUri = getBase64Image(screenshotPath);
+
+  const businessName = (persona && persona.business_name) || feature.business_name || 'Danastri Fashion & Apparel';
+  const ownerName = (persona && persona.owner_name) || feature.owner_name || 'Danang Danastri';
+  const location = (persona && persona.location) || feature.location || 'Solo, Jawa Tengah';
+  const categoryTag = (persona && persona.category) || feature.category || 'INVENTORI & GUDANG';
 
   const html = `<!DOCTYPE html>
 <html lang="id">
@@ -119,6 +124,39 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
       padding: 6px 14px;
       border-radius: 9999px;
       border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .business-persona-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+      max-width: fit-content;
+    }
+
+    .persona-biz {
+      color: #38BDF8;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .persona-sep {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .persona-owner {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .persona-loc {
+      color: rgba(255, 255, 255, 0.65);
     }
 
     /* Headline Section */
@@ -355,7 +393,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
       </div>
       <div class="tag-pill">
         <span class="tag-dot"></span>
-        <span>${feature.category}</span>
+        <span>${categoryTag}</span>
       </div>
       <div class="verified-pill">
         <span>cooca.id</span>
@@ -369,6 +407,13 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
       </div>
       <h1 class="main-title">${feature.headline.replace('?', '? <span class="highlight">').concat(feature.headline.includes('?') ? '</span>' : '')}</h1>
       <p class="sub-title">${feature.subheadline}</p>
+      <div class="business-persona-pill">
+        <span class="persona-biz">${businessName}</span>
+        <span class="persona-sep">&bull;</span>
+        <span class="persona-owner">Dikelola oleh ${ownerName}</span>
+        <span class="persona-sep">&bull;</span>
+        <span class="persona-loc">${location}</span>
+      </div>
     </div>
 
     <!-- 3. Central Window Mockup with Actual Screen -->
@@ -386,7 +431,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
           </div>
           <div class="window-store-badge">
             <span class="store-dot"></span>
-            <span>Nama Usaha Kamu</span>
+            <span>${businessName}</span>
           </div>
         </div>
         <div class="window-body">
@@ -402,7 +447,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath }) {
     <!-- 4. Footer CTA -->
     <div class="footer">
       <div class="footer-left">
-        <span class="slogan">Bisnis Lebih Rapi &amp; Bebas Boncos Bersama COOCA</span>
+        <span class="slogan">Kelola Bisnis Lebih Mudah dengan COOCA</span>
         <span class="desc">#1 Operating System Bisnis All-In-One untuk UMKM Indonesia</span>
       </div>
       <div class="cta-button">

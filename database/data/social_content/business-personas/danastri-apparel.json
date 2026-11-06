@@ -1,0 +1,37 @@
+{
+  "slug": "danastri-apparel",
+  "business_name": "Danastri Fashion & Apparel",
+  "owner_name": "Danang Danastri",
+  "category": "Retail Fashion & Busana Muslim",
+  "business_field": "Pakaian Jadi, Hijab, dan Fashion Ready-to-Wear",
+  "location": "Solo, Jawa Tengah",
+  "description": "Toko retail fashion lokal dan busana muslim ready-to-wear yang melayani penjualan langsung di toko fisik serta online marketplace.",
+  "outlet_count": "2 Outlet (Toko Utama Laweyan & Gudang Distribusi Solo)",
+  "operational_challenges": "Menjelang lonjakan kampanye belanja Harbolnas 11.11, stok pakaian model favorit sering tiba-tiba habis tanpa disadari (stockout), sementara catatan stok di buku kasir sering selisih dengan stok fisik di gudang.",
+  "cooca_goal": "Mengotomatiskan peringatan stok menipis (Low Stock Alert), mencatat kartu stok real-time dari setiap transaksi kasir POS, dan mencegah pembatalan pesanan akibat selisih stok saat promo belanja.",
+  "modules_used": [
+    "Inventory (Manajemen Stok & Produk)",
+    "Kasir POS Pintar",
+    "Laporan Penjualan & Analitik"
+  ],
+  "campaign": {
+    "date": "2026-11-06",
+    "topic": "Manajemen Stok & Low-Stock Alert Menghadapi Lonjakan Pesanan Harbolnas 11.11",
+    "primary_keyword": "manajemen stok umkm",
+    "secondary_keywords": [
+      "notifikasi stok menipis",
+      "aplikasi stok gudang gratis",
+      "cara atasi barang habis harbolnas"
+    ],
+    "long_tail_keyword": "cara kelola stok toko saat lonjakan pesanan harbolnas tanpa selisih barang",
+    "search_intent": "Commercial Investigation & Informational",
+    "route": "/products",
+    "headline": "Stok Baju Laris Ludes Pas Harbolnas Tanpa Sadar?",
+    "subheadline": "Amankan stok produk terlaris dengan Low-Stock Alert otomatis dan kartu stok real-time. Bebas drama pesanan batal atau barang selisih di gudang.",
+    "badges": [
+      "🔔 Peringatan Stok Menipis",
+      "📦 Kartu Stok Real-Time",
+      "⚡ Terhubung Kasir & Gudang"
+    ]
+  }
+}
