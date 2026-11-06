@@ -58,6 +58,9 @@ rm -f "$SCRIPT_DIR/bootstrap/cache/routes"*.php 2>/dev/null || true
 # Auto-apply pending database migrations if any
 "$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
 
+# Auto-import daily social media content into production Admin Social Media Center
+"$PHP_BIN" artisan cooca:import-social-content >> "$SCRIPT_DIR/storage/logs/social_import.log" 2>&1 || true
+
 # Auto-retry pending failed TikTok post with automatic fallback to TikTok Inbox
 if [ ! -f "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" ]; then
     "$PHP_BIN" artisan social-media:retry-post 0b21a626-00e2-4d1f-980c-b652fe621736 >> "$SCRIPT_DIR/storage/logs/tiktok_retry.log" 2>&1 || true
