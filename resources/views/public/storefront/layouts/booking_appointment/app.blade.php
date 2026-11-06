@@ -7,7 +7,7 @@
     $bundleDir = 'booking_appointment';
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', $currentLocale) }}" class="scroll-smooth {{ $initialDarkMode ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', $currentLocale) }}" class="scroll-smooth {{ $initialDarkMode ? 'dark' : '' }} cooca-storefront" data-theme-system="cooca-storefront">
 
 <head>
     <meta charset="UTF-8">
@@ -57,6 +57,8 @@
         $defaultBrandImg = $business->logo_url ?: ($landingPage->logo_url ?: $landingPage->hero_image_url);
     @endphp
     @include('public.partials.seo', [
+        'isStorefront' => true,
+        'isPublicMarketing' => false,
         'siteName' => $business->name,
         'fallbackImage' => $defaultBrandImg ?: asset('assets/seo/cooca-og-default.jpg'),
         'url' => $canonicalUrl ?? (View::hasSection('canonical') ? trim((string) View::yieldContent('canonical')) : url('/' . $business->slug)),
@@ -212,7 +214,7 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen flex flex-col text-slate-900 dark:text-purple-100 bg-booking-pattern transition-colors duration-300 antialiased selection:bg-purple-600 selection:text-white"
+<body class="cooca-storefront min-h-screen flex flex-col text-slate-900 dark:text-purple-100 bg-booking-pattern transition-colors duration-300 antialiased selection:bg-purple-600 selection:text-white" data-theme-system="cooca-storefront"
     x-data="{
         mobileMenuOpen: false
     }">

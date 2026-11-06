@@ -38,6 +38,8 @@ final class ReservedSlugService
         'app',
         'up',
         '_laravel-brain',
+        'mcp',
+        'docs',
 
         // 3. Modules & Workspaces
         'dashboard',
@@ -79,6 +81,7 @@ final class ReservedSlugService
         'whatsapp',
         'storefront',
         'settlements',
+        'payments',
         'feedback',
         'community',
         'patungan',
@@ -101,13 +104,19 @@ final class ReservedSlugService
         'simulator',
         'calculator',
         'template',
+        'templates',
         'template-pembukuan-gratis',
         'solusi',
+        'solutions',
         'blog',
         'kontak',
         'contact',
         'sitemap',
         'sitemap.xml',
+        'sitemap_pages.xml',
+        'sitemap_blog.xml',
+        'sitemap_marketplace.xml',
+        'sitemap_tools.xml',
         'robots.txt',
         'privacy',
         'kebijakan-privasi',
@@ -119,6 +128,7 @@ final class ReservedSlugService
         'onboarding',
         'businesses',
         'storage',
+        'public',
         'assets',
         'css',
         'js',
@@ -130,7 +140,54 @@ final class ReservedSlugService
         'order',
         'cart',
         'checkout',
+
+        // 5. Core Public Marketing Ecosystem & Subpages
+        'about',
+        'tentang',
+        'pricing',
+        'harga',
+        'demo',
+        'support',
+        'bantuan',
+        'security',
+        'keamanan',
+        'marketplace',
+        'business-operating-system',
+        'omnichannel-erp',
+        'omnichannel',
+        'content-automation',
+        'resources',
+        'download',
+        'track',
+        'geo',
+        'live-chat',
+        'data-deletion',
+        'penghapusan-data',
+        'aplikasi-kasir-gratis',
+        'aplikasi-kasir-android',
+        'aplikasi-kasir-offline',
+        'integrations',
     ];
+
+    /**
+     * Get route regex pattern for negative lookahead matching.
+     * Prevents any storefront route from capturing platform reserved paths.
+     */
+    public static function getRouteRegex(): string
+    {
+        // Extract slugs that are path segments (no file extensions like .xml)
+        $cleanSlugs = array_values(array_filter(
+            self::RESERVED_SLUGS,
+            fn (string $s): bool => ! str_contains($s, '.')
+        ));
+
+        // Deduplicate and escape
+        $unique = array_values(array_unique($cleanSlugs));
+        $escaped = array_map(fn (string $s): string => preg_quote($s, '/'), $unique);
+        $joined = implode('|', $escaped);
+
+        return '^(?!(' . $joined . ')$)[a-z0-9]+(?:-[a-z0-9]+)*$';
+    }
 
     /**
      * Check whether a given slug collides with a reserved platform keyword.

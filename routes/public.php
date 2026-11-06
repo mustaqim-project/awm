@@ -180,7 +180,7 @@ Route::prefix('resources')->name('public.resources.')->group(function (): void {
 });
 
 // 7. Canonical Public Storefront Tracking, Multipage Pages, Table QR & Calculation (cooca.id/{slug-bisnis})
-Route::prefix('{slug}')->where(['slug' => '^(?!(pos|admin|api|mcp|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community)$)[a-z0-9]+(?:-[a-z0-9]+)*$'])->group(function (): void {
+Route::prefix('{slug}')->where(['slug' => \App\Domain\Shared\ReservedSlugService::getRouteRegex()])->group(function (): void {
     // Dedicated Multipage Storefront Pages (§PRD-07)
     Route::get('/katalog', [PublicStorefrontController::class, 'catalog'])->name('public.storefront.catalog');
     Route::get('/produk/{product}', [PublicStorefrontController::class, 'productDetail'])->name('public.storefront.product.detail');
@@ -383,18 +383,6 @@ Route::get('/track/{token}', function (string $token) {
 
 // Official Cooca brand direct alias and canonical home fallback
 Route::get('/cooca-indonesia', function () {
-    $business = \App\Models\Business::where('slug', 'cooca-indonesia')
-        ->where('is_active', true)
-        ->whereNull('suspended_at')
-        ->first();
-
-    if ($business) {
-        $landingPage = \App\Models\BusinessLandingPage::where('business_id', $business->id)->first();
-        if ($landingPage && $landingPage->is_published) {
-            return app(\App\Http\Controllers\Web\Storefront\PublicStorefrontController::class)->home('cooca-indonesia');
-        }
-    }
-
     return redirect('/', 301);
 });
 
@@ -404,6 +392,6 @@ Route::get('/cooca', function () {
 
 // 15. Public business landing pages using business name as direct URL slug (Must be last)
 Route::get('/{slug}', [PublicStorefrontController::class, 'home'])
-    ->where('slug', '^(?!(pos|admin|api|mcp|dashboard|auth|login|register|profile|calculator|settings|billing|customer|public|storage|up|settlements|payments|community|live-chat)$)[a-z0-9]+(?:-[a-z0-9]+)*$')
+    ->where('slug', \App\Domain\Shared\ReservedSlugService::getRouteRegex())
     ->name('public.business.landing');
 

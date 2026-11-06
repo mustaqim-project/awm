@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth cooca-public" data-theme-system="cooca-public">
 
 <head>
     <meta charset="utf-8">
@@ -67,6 +67,8 @@
         'fallbackImage' => asset('assets/seo/cooca-og-default.jpg'),
         'noindex' => $noindex ?? false,
         'robots' => $robots ?? null,
+        'isPublicMarketing' => true,
+        'isStorefront' => false,
     ])
 
     <!-- Multilingual Hreflang Tags -->
@@ -205,7 +207,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
-        :root {
+        :root,
+        .cooca-public {
             --apple-blue: #007AFF;
             --apple-green: #34C759;
             --apple-orange: #FF9500;
@@ -217,7 +220,10 @@
             --apple-text-muted: #6E6E73;
         }
 
-        .dark {
+        .dark,
+        .dark.cooca-public,
+        .cooca-public.dark,
+        .cooca-public .dark {
             --apple-blue: #0A84FF;
             --apple-green: #30D158;
             --apple-orange: #FF9F0A;
@@ -282,7 +288,9 @@
             color: rgba(235, 235, 245, 0.38) !important;
         }
 
-        body {
+        body,
+        body.cooca-public,
+        .cooca-public body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -510,7 +518,8 @@
 </head>
 
 <body
-    class="min-h-screen flex flex-col justify-between bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] antialiased transition-colors duration-200 overflow-x-hidden w-full max-w-full"
+    class="cooca-public min-h-screen flex flex-col justify-between bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] antialiased transition-colors duration-200 overflow-x-hidden w-full max-w-full"
+    data-theme-system="cooca-public"
     x-data="marketingLayout()">
 
     @php

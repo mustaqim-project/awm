@@ -214,15 +214,15 @@ class CanonicalStorefrontSlugRoutingTest extends TestCase
         $response = $this->actingAs($customer, 'customer')
             ->post(route('customer.cart.checkout', ['slug' => $this->business->slug]));
 
-        // Assert redirect to canonical route 'public.business.landing' (which is /{slug})
-        $response->assertRedirect(route('public.business.landing', ['slug' => $this->business->slug]));
-        $this->assertEquals(url('/' . $this->business->slug), route('public.business.landing', ['slug' => $this->business->slug]));
+        // Assert redirect to canonical checkout page (/{slug}/checkout)
+        $response->assertRedirect(route('public.storefront.checkout.page', ['slug' => $this->business->slug]));
+        $this->assertEquals(url('/' . $this->business->slug . '/checkout'), route('public.storefront.checkout.page', ['slug' => $this->business->slug]));
     }
 
     public function test_sitemap_outputs_canonical_urls_without_b_prefix(): void
     {
         $sitemapService = new SitemapService();
-        $xml = $sitemapService->generateXml();
+        $xml = $sitemapService->generateMarketplaceXml();
 
         // Must contain canonical storefront URL
         $this->assertStringContainsString('https://cooca.id/' . $this->business->slug, $xml);

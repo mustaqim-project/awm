@@ -20,6 +20,10 @@ class PublicBusinessLandingController extends Controller
      */
     public function show(string $slug): View
     {
+        if (\App\Domain\Shared\ReservedSlugService::isReserved($slug)) {
+            abort(404);
+        }
+
         $business = Business::where('slug', $slug)
             ->where('is_active', true)
             ->first();

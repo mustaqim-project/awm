@@ -10,7 +10,7 @@
 @if (view()->exists("public.storefront.layouts.{$bundleDir}.app"))
     @include("public.storefront.layouts.{$bundleDir}.app")
 @else
-<html lang="{{ str_replace('_', '-', $currentLocale) }}" class="scroll-smooth {{ $initialDarkMode ? 'dark' : '' }}">
+<html lang="{{ str_replace('_', '-', $currentLocale) }}" class="scroll-smooth cooca-storefront {{ $initialDarkMode ? 'dark' : '' }}" data-theme-system="cooca-storefront">
 
 <head>
     <meta charset="UTF-8">
@@ -66,6 +66,8 @@
         'title' => $pageTitle ?? (View::hasSection('title') ? trim((string) View::yieldContent('title')) : ($landingPage->meta_title ?: $business->name . ' - ' . ($landingPage->headline ?: 'Toko Online Resmi'))),
         'description' => $ogDescription ?? (View::hasSection('description') ? trim((string) View::yieldContent('description')) : ($landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Belanja aneka produk dan layanan berkualitas langsung dari ' . $business->name . ' dengan jaminan kualitas dan pengiriman terpercaya.')))),
         'keywords' => View::hasSection('keywords') ? trim((string) View::yieldContent('keywords')) : ($landingPage->meta_keywords ?? null),
+        'isStorefront' => true,
+        'isPublicMarketing' => false,
     ])
 
     @stack('seo')
@@ -128,7 +130,8 @@
             display: none !important;
         }
 
-        :root {
+        :root,
+        .cooca-storefront {
             --theme-primary: {{ $activeTheme['primary_color'] }};
             --theme-accent: {{ $activeTheme['accent_color'] }};
             --theme-bg: {{ $activeTheme['bg_color'] }};
@@ -143,13 +146,18 @@
         }
 
         html.dark,
-        .dark {
+        .dark,
+        .dark.cooca-storefront,
+        .cooca-storefront.dark,
+        .cooca-storefront .dark {
             color-scheme: dark;
             --theme-bg: {{ $activeTheme['dark_bg'] ?? '#0B0F19' }};
             --theme-card: {{ $activeTheme['dark_card'] ?? '#181E2A' }};
         }
 
-        .dark body {
+        .dark body,
+        .dark body.cooca-storefront,
+        .cooca-storefront.dark body {
             background-color: var(--theme-bg);
         }
 
@@ -197,15 +205,22 @@
             color: rgba(235, 235, 245, 0.38) !important;
         }
 
-        body {
+        body,
+        body.cooca-storefront,
+        .cooca-storefront body {
             font-family: var(--font-body);
             background-color: var(--theme-bg);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
-        h1, h2, h3, h4, .font-heading {
-            font-family: var(--font-heading);
+        h1, h2, h3, h4, .font-heading,
+        .cooca-storefront h1,
+        .cooca-storefront h2,
+        .cooca-storefront h3,
+        .cooca-storefront h4,
+        .cooca-storefront .font-heading {
+            font-family: var(--font-heading) !important;
         }
 
         .font-mono, .tabular-nums {
@@ -254,7 +269,8 @@
     @stack('styles')
 </head>
 
-<body class="min-h-screen flex flex-col text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased selection:bg-theme-primary selection:text-white"
+<body class="cooca-storefront min-h-screen flex flex-col text-neutral-900 dark:text-neutral-100 transition-colors duration-300 antialiased selection:bg-theme-primary selection:text-white"
+    data-theme-system="cooca-storefront"
     x-data="{
         mobileMenuOpen: false
     }">

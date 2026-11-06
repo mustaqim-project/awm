@@ -88,7 +88,7 @@ class BusinessLandingPageWebController extends Controller
             ->services()
             ->get();
 
-        $publicUrl = route('public.business.landing', Str::slug($business->name));
+        $publicUrl = route('public.business.landing', $business->slug ?: Str::slug($business->name));
         $themeService = app(\App\Domain\Storefront\StorefrontThemeService::class);
         $themePresets = $themeService->getAllThemes();
         $archetypes   = $themeService->getAllArchetypes();

@@ -61,6 +61,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Global View Composer for Public & Marketing Views (Single Source of Truth)
         \Illuminate\Support\Facades\View::composer(['public.*', 'layouts.public_marketing', 'landing'], function ($view) {
+            // Strictly isolate: Do not execute public marketing view composer on storefront views
+            if (str_starts_with($view->getName(), 'public.storefront.') || $view->getName() === 'public.business_landing') {
+                return;
+            }
+
             $entitlement = app(\App\Domain\Billing\EntitlementService::class);
             $pricingService = app(\App\Domain\Billing\EarlyAdopterPricingService::class);
 

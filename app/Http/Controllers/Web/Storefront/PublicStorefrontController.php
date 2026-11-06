@@ -402,6 +402,10 @@ final class PublicStorefrontController extends Controller
      */
     private function resolveContext(string $slug, ?string $requiredPage = null): array|RedirectResponse
     {
+        if (\App\Domain\Shared\ReservedSlugService::isReserved($slug)) {
+            abort(404);
+        }
+
         $business = Business::where('slug', $slug)
             ->where('is_active', true)
             ->whereNull('suspended_at')

@@ -33,8 +33,15 @@
         $fallbackImage ?? null
     );
 
-    // 5. Resolve Site Name & Locale
-    $resolvedSiteName = $siteName ?? ($business->name ?? \App\Models\SystemSetting::get('app_name', 'COOCA'));
+    // 5. Resolve Site Name & Locale (Strict Isolation: Never leak tenant $business to Public Marketing)
+    $isStorefrontContext = empty($isPublicMarketing) && (
+        !empty($isStorefront) ||
+        isset($landingPage) ||
+        request()->routeIs('public.storefront.*') ||
+        request()->routeIs('public.business.landing*') ||
+        request()->routeIs('public.qr.*')
+    );
+    $resolvedSiteName = $siteName ?? ($isStorefrontContext ? ($business->name ?? \App\Models\SystemSetting::get('app_name', 'COOCA')) : \App\Models\SystemSetting::get('app_name', 'COOCA'));
     $resolvedLocale = $locale ?? 'id_ID';
 
     // 6. Resolve OG Type
@@ -51,16 +58,21 @@
     $resolvedTwitterCard = $twitterCard ?? (View::hasSection('twitter_card') ? View::yieldContent('twitter_card') : 'summary_large_image');
     $resolvedTwitterSite = $twitterSite ?? \App\Models\SystemSetting::get('seo_twitter_site', '@cooca_id');
 
-    // 9. Resolve Robots (Enforces noindex for test & demo stores - Prompt 3 & 5 compliant)
-    $isDemoStore = isset($business) && (bool) ($business->is_demo ?? false);
-    $isTestStore = (isset($business) && (bool) ($business->is_test ?? false)) || !empty($noindex);
+    // 9. Resolve Robots (Strict Isolation: Enforces noindex for test & demo stores ONLY in Storefront context)
+    if ($isStorefrontContext) {
+        $isDemoStore = isset($business) && (bool) ($business->is_demo ?? false);
+        $isTestStore = (isset($business) && (bool) ($business->is_test ?? false)) || !empty($noindex);
 
-    if ($isTestStore) {
-        $resolvedRobots = 'noindex, nofollow';
-    } elseif ($isDemoStore) {
-        $resolvedRobots = 'noindex, follow';
+        if ($isTestStore) {
+            $resolvedRobots = 'noindex, nofollow';
+        } elseif ($isDemoStore) {
+            $resolvedRobots = 'noindex, follow';
+        } else {
+            $resolvedRobots = SeoMetadataService::resolveRobots($robots ?? null, false);
+        }
     } else {
-        $resolvedRobots = SeoMetadataService::resolveRobots($robots ?? null, false);
+        // Public Marketing context: Never leak tenant demo/test status to public marketing robots!
+        $resolvedRobots = !empty($noindex) ? 'noindex, nofollow' : SeoMetadataService::resolveRobots($robots ?? null, false);
     }
 
     // 10. Resolve Author (Keywords removed per SEO best practices)

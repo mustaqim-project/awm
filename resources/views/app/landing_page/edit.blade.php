@@ -2317,6 +2317,7 @@
                         </div>
                     </div>
                     <iframe :src="previewUrl" title="{{ __('landing_page.preview_halaman_publik_bisnis') }}"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
                         class="w-full h-full border-0 bg-white"></iframe>
                 </div>
             </div>

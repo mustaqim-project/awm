@@ -3,7 +3,7 @@
     $initialDarkMode = filter_var($landingPage->dark_mode ?? false, FILTER_VALIDATE_BOOLEAN);
 @endphp
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth {{ $initialDarkMode ? 'dark' : '' }}">
+<html lang="id" class="scroll-smooth cooca-storefront {{ $initialDarkMode ? 'dark' : '' }}" data-theme-system="cooca-storefront">
 
 <head>
     <meta charset="UTF-8">
@@ -26,6 +26,8 @@
         'url' => $bizCanonical,
         'image' => $bizOgImage,
         'keywords' => $landingPage->meta_keywords ?? null,
+        'isStorefront' => true,
+        'isPublicMarketing' => false,
     ])
 
     {{-- Schema.org JSON-LD LocalBusiness Structured Data --}}
@@ -3339,7 +3341,8 @@
 </head>
 
 <body
-    class="bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#FFFFFF] antialiased selection:bg-brand-primary selection:text-white pb-28 sm:pb-32 md:pb-28 transition-colors duration-300"
+    class="cooca-storefront bg-[#F5F5F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#FFFFFF] antialiased selection:bg-brand-primary selection:text-white pb-28 sm:pb-32 md:pb-28 transition-colors duration-300"
+    data-theme-system="cooca-storefront"
     x-data="landingPageState()">
 
     {{-- Mode Preview Indicator (Hanya saat diakses preview oleh pemilik sebelum terbit) --}}
@@ -8618,7 +8621,7 @@
                                     <a :href="groupOrder.orderTrackingUrl || '#'"
                                         class="h-11 rounded-[14px] bg-brand-primary hover:opacity-90 text-white text-[12.5px] font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                         <i data-lucide="truck" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('storefront.tracking') }}</span>
+                                        <span>{{ __('storefront.nav.tracking') }}</span>
                                     </a>
                                 </div>
                             </template>
