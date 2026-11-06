@@ -14,10 +14,10 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
   const logoDataUri = getBase64Image(logoPath);
   const screenshotDataUri = getBase64Image(screenshotPath);
 
-  const businessName = (persona && persona.business_name) || feature.business_name || 'Danastri Fashion & Apparel';
-  const ownerName = (persona && persona.owner_name) || feature.owner_name || 'Danang Danastri';
-  const location = (persona && persona.location) || feature.location || 'Solo, Jawa Tengah';
-  const categoryTag = (persona && persona.category) || feature.category || 'INVENTORI & GUDANG';
+  const businessName = (persona && persona.business_name) || feature.business_name || 'Toko Saya';
+  const ownerName = (persona && persona.owner_name) || feature.owner_name || 'Cooca Indonesia';
+  const location = (persona && persona.location) || feature.location || 'Indonesia';
+  const categoryTag = (persona && persona.category) || feature.category || 'BISNIS OPERATING SYSTEM';
 
   const html = `<!DOCTYPE html>
 <html lang="id">
