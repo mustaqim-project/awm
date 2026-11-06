@@ -1,0 +1,42 @@
+{
+  "id": 251,
+  "title": "Cara Menghitung Food Cost Usaha Kuliner dan Menentukan Harga Jual Menu",
+  "slug": "cara-menghitung-food-cost-usaha-kuliner",
+  "category": "HPP & Harga Jual",
+  "cluster": "tutorial",
+  "primary_keyword": "cara menghitung food cost usaha kuliner",
+  "secondary_keywords": "rumus food cost per porsi, persentase food cost ideal resto, cara menentukan harga jual makanan, perbedaan food cost ideal dan aktual, cara mengatasi food waste dapur, simulasi food cost chicken rice bowl, evaluasi food cost bulanan restoran",
+  "search_intent": "informational",
+  "meta_title": "Cara Menghitung Food Cost Usaha Kuliner dan Harga Menu",
+  "meta_description": "Panduan lengkap cara menghitung food cost usaha kuliner mulai dari rumus food cost per porsi, evaluasi aktual, hingga penentuan harga jual menu resto.",
+  "reading_time": "10 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-menghitung-food-cost-usaha-kuliner.jpg",
+  "local_image_asset": "public/images/blog/cara-menghitung-food-cost-usaha-kuliner.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google SERP & PAA Indonesia",
+  "trending_query": "cara menghitung food cost usaha kuliner",
+  "faqs": [
+    {
+      "q": "Berapa persentase food cost yang ideal untuk bisnis kuliner?",
+      "a": "Secara umum, standar industri kuliner yang sehat berada di kisaran 28 persen hingga 35 persen dari harga jual menu. Kedai kopi modern biasanya berada pada level 20 hingga 25 persen, sedangkan restoran yang menyajikan hidangan laut segar atau daging sapi impor dapat mencapai 35 hingga 38 persen."
+    },
+    {
+      "q": "Apa perbedaan mendasar antara food cost ideal dan food cost aktual?",
+      "a": "Food cost ideal adalah biaya bahan baku teoretis murni berdasarkan standar gramatur resep tertulis, sedangkan food cost aktual adalah biaya riil yang dihitung dari total pemakaian persediaan barang di lapangan setelah memperhitungkan faktor susut, tumpahan, dan bahan sisa."
+    },
+    {
+      "q": "Bagaimana rumus menghitung food cost per porsi hidangan?",
+      "a": "Rumus food cost per porsi adalah total penjumlahan dari seluruh bahan baku yang digunakan (berat takaran x harga beli per satuan terkecil) ditambah dengan biaya kemasan langsung untuk penyajian menu tersebut."
+    },
+    {
+      "q": "Mengapa food cost aktual di restoran sering kali membengkak?",
+      "a": "Penyebab utamanya meliputi ukuran porsi koki yang tidak konsisten, pemborosan bahan baku akibat teknik memotong yang salah, pembusukan bahan di lemari pendingin, kenaikan harga bahan baku dari supplier, serta pencurian stok di dapur."
+    },
+    {
+      "q": "Bagaimana cara menentukan harga jual menu makanan dari target food cost?",
+      "a": "Bagi total biaya food cost per porsi dengan target persentase food cost dalam bentuk desimal. Sebagai contoh, jika modal bahan satu porsi adalah Rp15.000 dan target food cost adalah 30 persen (0,30), maka harga jual yang ditetapkan adalah Rp15.000 / 0,30 = Rp50.000."
+    }
+  ],
+  "published_at": "2026-11-06T10:00:00+07:00",
+  "created_at": "2026-11-06T10:00:00+07:00"
+}

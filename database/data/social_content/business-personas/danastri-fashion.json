@@ -1,0 +1,75 @@
+{
+  "slug": "danastri-fashion",
+  "business_name": "Danastri Fashion & Apparel",
+  "owner_name": "Danang Danastri",
+  "owner_email": "demo@cooca.id",
+  "business_category": "Retail & Fashion Apparel",
+  "business_type": "Butik Busana & Toko Retail Fashion Muslim",
+  "location": "Surakarta (Solo), Jawa Tengah",
+  "address": "Toko Utama Danastri - Solo",
+  "description": "Usaha retail busana muslim modern dan apparel yang menjual 6 lini produk utama (gamis silk, tunik brokat, kemeja linen, celana kulot, outer kimono batik, dan hijab voal) melalui toko fisik dan pemesanan digital.",
+  "outlet_count": 1,
+  "operational_problems": "Sering terjadi perbedaan antara stok fisik di display toko dengan catatan penjualan kasir. Barang yang diambil untuk keperluan display manekin atau dicoba di ruang pas (fitting room) sering terlambat dicatat, sehingga kasir mengira barang habis padahal masih ada, atau sebaliknya sistem mencatat stok masih ada tetapi fisiknya sudah kosong saat dicari pembeli.",
+  "cooca_goal": "Menerapkan sistem manajemen stok otomatis terintegrasi kasir POS, memantau batas minimum stok (Low Stock Alert), mencatat mutasi stok secara real-time, serta melakukan penyesuaian stok (stock adjustment) dan opname berkala tanpa rekap manual Excel.",
+  "modules_used": [
+    "Inventory & Stock Multi-Gudang (/inventory/stocks)",
+    "Katalog Produk & Harga (/products)",
+    "Kasir Pintar POS (/pos)"
+  ],
+  "simulated_sku_list": [
+    {
+      "code": "DNS-KLT-05",
+      "name": "Celana Kulot Danastri Linen Pants - Broken White",
+      "stock": 4,
+      "min_stock": 12,
+      "cost": 65000,
+      "price": 145000,
+      "status": "Menipis"
+    },
+    {
+      "code": "DNS-GMS-01",
+      "name": "Gamis Silk Danastri Premium - Sage Green",
+      "stock": 3,
+      "min_stock": 10,
+      "cost": 140000,
+      "price": 285000,
+      "status": "Menipis"
+    },
+    {
+      "code": "DNS-HJB-02",
+      "name": "Hijab Voal Danastri Scarf Floral - Mocca",
+      "stock": 2,
+      "min_stock": 15,
+      "cost": 35000,
+      "price": 89000,
+      "status": "Menipis"
+    },
+    {
+      "code": "DNS-KMJ-03",
+      "name": "Kemeja Linen Oversized Danastri - Olive",
+      "stock": 28,
+      "min_stock": 10,
+      "cost": 85000,
+      "price": 175000,
+      "status": "Aman"
+    },
+    {
+      "code": "DNS-OTR-06",
+      "name": "Outer Kimono Danastri Batik Cap Solo",
+      "stock": 15,
+      "min_stock": 5,
+      "cost": 90000,
+      "price": 195000,
+      "status": "Aman"
+    },
+    {
+      "code": "DNS-TNK-04",
+      "name": "Tunik Brokat Modern Danastri - Dusty Pink",
+      "stock": 18,
+      "min_stock": 8,
+      "cost": 110000,
+      "price": 220000,
+      "status": "Aman"
+    }
+  ]
+}

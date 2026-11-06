@@ -81,6 +81,8 @@ final class SecurityHardeningAuditTest extends TestCase
         $this->assertStringContainsString('https://*.doubleclick.net', $csp);
         $this->assertStringContainsString('https://*.google.com', $csp);
         $this->assertStringContainsString('https://*.google.co.id', $csp);
+        $this->assertStringContainsString('https://js.pusher.com', $csp);
+        $this->assertStringContainsString('https://*.pusher.com', $csp);
     }
 
     public function test_cooca_indonesia_brand_route_redirects_gracefully_when_no_published_storefront(): void

@@ -447,8 +447,8 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
     <!-- 4. Footer CTA -->
     <div class="footer">
       <div class="footer-left">
-        <span class="slogan">Kelola Bisnis Lebih Mudah dengan COOCA</span>
-        <span class="desc">#1 Operating System Bisnis All-In-One untuk UMKM Indonesia</span>
+        <span class="slogan">Kelola Bisnis Lebih Terarah dengan COOCA</span>
+        <span class="desc">#1 Operating System Bisnis All-In-One untuk UMKM Indonesia &bull; cooca.id</span>
       </div>
       <div class="cta-button">
         <span>Coba Gratis Sekarang</span>
@@ -467,7 +467,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
 
   const page = await browser.newPage({
     viewport: { width: 1080, height: 1350 },
-    deviceScaleFactor: 2 // High retina crispness
+    deviceScaleFactor: 1 // Exact 1080x1350 dimensions
   });
 
   await page.setContent(html, { waitUntil: 'networkidle' });

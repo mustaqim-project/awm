@@ -99,6 +99,13 @@
                     <span
                         class="px-1.5 py-0.5 rounded-full text-[10px] font-bold {{ $activeTab === 'clusters' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ $totalClusters }}</span>
                 </a>
+                <a href="{{ route('admin.posts.index', ['tab' => 'trending']) }}"
+                    class="px-4 py-2 rounded-[10px] text-[13px] font-medium transition-all inline-flex items-center gap-2 {{ $activeTab === 'trending' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                    <i data-lucide="trending-up" class="w-4 h-4" stroke-width="1.5"></i>
+                    <span>Google Trends</span>
+                    <span
+                        class="px-1.5 py-0.5 rounded-full text-[10px] font-bold {{ $activeTab === 'trending' ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">{{ count($trendingReports[0]['topics'] ?? []) }}</span>
+                </a>
             </div>
 
             @if ($activeTab === 'posts')
@@ -113,6 +120,11 @@
                     <i data-lucide="plus" class="w-4 h-4" stroke-width="2"></i>
                     <span>{{ __('admin.tambah_kategori') }}</span>
                 </button>
+            @elseif($activeTab === 'trending')
+                <div class="h-10 px-3.5 rounded-[12px] text-[12px] font-semibold text-black/60 dark:text-white/60 bg-black/5 dark:bg-white/10 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span>10 Topik Bisnis Terhangat</span>
+                </div>
             @else
                 <button type="button" onclick="openClusterModal()"
                     class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] shrink-0">
@@ -576,6 +588,11 @@
                     </table>
                 </div>
             </div>
+        @endif
+
+        <!-- TAB 4: GOOGLE TRENDS ARTICLES -->
+        @if ($activeTab === 'trending')
+            @include('admin.posts.trending.index')
         @endif
 
     </div>

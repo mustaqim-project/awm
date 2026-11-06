@@ -1,0 +1,259 @@
+{
+  "date": "2026-11-06",
+  "geo": "ID",
+  "category": 3,
+  "category_name": "Bisnis (Business & Industrial / Finance)",
+  "source": "Google Trends Indonesia (trends.google.co.id/trending?geo=ID&category=3)",
+  "total_topics": 10,
+  "topics": [
+    {
+      "id": 251,
+      "topic": "Klarifikasi Isu Pajak Transaksi Digital dan E-Commerce DJP",
+      "trending_query": "pajak transaksi digital djp",
+      "primary_keyword": "pajak transaksi digital dan marketplace",
+      "secondary_keywords": [
+        "aturan djp pajak transfer bank",
+        "fasilitas bebas pajak umkm 500 juta",
+        "pph final umkm marketplace",
+        "sistem prepopulated coretax djp",
+        "kepatuhan pajak toko online"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Lonjakan pencarian dan perbincangan viral menyusul isu pemotongan pajak otomatis pada transfer bank dan marketplace)",
+      "trending_reason": "Beredar kabar viral awal November 2026 bahwa transfer antarbank dan e-wallet akan dikenakan pajak otomatis. Direktorat Jenderal Pajak (DJP) dan Kementerian Keuangan memberikan klarifikasi resmi bahwa tidak ada pajak baru atas transfer antarbank dan pelaku UMKM dengan omzet di bawah Rp500 juta per tahun tetap berhak atas fasilitas bebas PPh (0%).",
+      "credible_sources": [
+        "Direktorat Jenderal Pajak (DJP) Kemenkeu RI (pajak.go.id)",
+        "Antara News - Klarifikasi Pajak Transaksi Digital dan Rekening Bank",
+        "DDTC News - Penegasan Ketentuan Pemungutan Pajak Platform Digital SPP-TDLN"
+      ],
+      "msme_opportunity": "Pelaku usaha mikro dan toko online perlu memahami batasan omzet bebas pajak, pemisahan rekening pribadi dengan rekening bisnis, dan kewajiban pelaporan SPT agar tidak panik oleh isu hoaks di media sosial.",
+      "article_angle": "Panduan edukatif dan menenangkan yang mengupas aturan resmi DJP, hak fasilitas bebas PPh omzet di bawah Rp500 juta, serta langkah praktis merapikan pencatatan omzet toko online.",
+      "slug": "isu-pajak-transaksi-digital-dan-marketplace-umkm",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 252,
+      "topic": "Pertumbuhan Ekonomi Indonesia Q3 2026 Tembus 5,47% dan Peluang Belanja Akhir Tahun",
+      "trending_query": "pertumbuhan ekonomi indonesia q3 2026",
+      "primary_keyword": "strategi umkm tangkap peluang pertumbuhan ekonomi",
+      "secondary_keywords": [
+        "pertumbuhan ekonomi indonesia q3 2026 bps",
+        "konsumsi rumah tangga kuartal 3",
+        "peluang belanja akhir tahun ritel",
+        "tren penjualan f&b nasional",
+        "ekspansi modal usaha mikro"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Peningkatan tajam setelah rilis resmi data pertumbuhan ekonomi oleh BPS awal November 2026)",
+      "trending_reason": "Badan Pusat Statistik (BPS) merilis data pertumbuhan ekonomi Indonesia Kuartal III-2026 sebesar 5,47% (yoy), melampaui kuartal sebelumnya (5,29%) dan estimasi analis pasar, didorong kuat oleh konsumsi rumah tangga dan aktivitas perdagangan ritel.",
+      "credible_sources": [
+        "Badan Pusat Statistik (BPS) RI (bps.go.id)",
+        "Bank Indonesia - Laporan Kinerja Pertumbuhan Ekonomi Domestik",
+        "CNN Indonesia & Metro TV News - Rilis Ekonomi Triwulan III-2026"
+      ],
+      "msme_opportunity": "Pemilik toko kelontong, minimarket, fesyen, dan resto/kafe dapat memanfaatkan momentum penguatan daya beli masyarakat menjelang musim liburan dan pergantian tahun untuk melipatgandakan omzet.",
+      "article_angle": "Strategi taktis operasional bagi pemilik UMKM untuk mengamankan stok produk terlaris, menyusun paket bundling akhir tahun, dan mengoptimalkan promosi penjualan.",
+      "slug": "strategi-umkm-tangkap-peluang-pertumbuhan-ekonomi-q3-2026",
+      "assigned_category": "Strategi & Operasional"
+    },
+    {
+      "id": 253,
+      "topic": "Terobosan Credit Scoring Berbasis Transaksi QRIS Bank Indonesia",
+      "trending_query": "credit scoring qris umkm",
+      "primary_keyword": "credit scoring qris untuk pinjaman bank",
+      "secondary_keywords": [
+        "skor kredit riwayat transaksi qris bi",
+        "pinjaman modal tanpa agunan fisik",
+        "rekam jejak kasir digital usaha",
+        "integrasi qris merchant unbankable",
+        "pembiayaan mikro perbankan"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Minat penelusuran melonjak seiring pengumuman kebijakan Bank Indonesia dalam memanfaatkan big data QRIS untuk inklusi keuangan)",
+      "trending_reason": "Bank Indonesia menyiapkan pemanfaatan data historis volume dan frekuensi transaksi QRIS merchant sebagai indikator penilaian kelayakan kredit (credit scoring) alternatif bagi pelaku UMKM yang selama ini unbankable dan tidak memiliki agunan fisik sertifikat.",
+      "credible_sources": [
+        "Bank Indonesia (bi.go.id) - Siaran Pers Akselerasi Digitalisasi Keuangan & QRIS",
+        "Infobank News - Credit Scoring Berbasis Transaksi QRIS untuk UMKM",
+        "BeritaSatu & Tirto.id - Pemanfaatan Big Data Pembayaran Digital"
+      ],
+      "msme_opportunity": "Pedagang warung, booth makanan, dan toko retail kecil kini memiliki jalan formal mendapatkan kredit modal kerja perbankan dengan cara disiplin mengalihkan pembayaran tunai ke kasir QRIS.",
+      "article_angle": "Edukasi praktis bagi merchant tentang cara membangun rekam jejak keuangan digital yang sehat lewat POS kasir dan QRIS agar skor kredit bank tinggi.",
+      "slug": "pemanfaatan-credit-scoring-qris-untuk-pinjaman-bank-umkm",
+      "assigned_category": "Modal"
+    },
+    {
+      "id": 254,
+      "topic": "Program Go Public Academy BEI dan Kementerian UMKM untuk Usaha Menengah",
+      "trending_query": "go public academy umkm bei",
+      "primary_keyword": "program go public academy bei untuk pendanaan",
+      "secondary_keywords": [
+        "kementerian umkm go public academy",
+        "bursa efek indonesia papan akselerasi",
+        "alternatif modal kerja non bank",
+        "tata kelola laporan keuangan usaha",
+        "persiapan ipo bisnis menengah"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sedang - Tinggi (Ramai dibahas oleh komunitas scale-up bisnis dan pengusaha rintisan pasca peresmian program inkubasi bursa)",
+      "trending_reason": "Kementerian UMKM bersama PT Bursa Efek Indonesia (BEI) meluncurkan Go Public Academy for SMEs guna membina usaha skala menengah agar mampu melakukan initial public offering (IPO) dan mencatatkan saham di Papan Akselerasi BEI.",
+      "credible_sources": [
+        "Kementerian UMKM RI (umkm.go.id) - Peluncuran Go Public Academy",
+        "Bursa Efek Indonesia (IDX) - Panduan Pencatatan Saham Papan Akselerasi",
+        "Kontan & CNBC Indonesia - Edukasi Pasar Modal bagi Pelaku Usaha"
+      ],
+      "msme_opportunity": "Bisnis menengah yang membutuhkan modal ekspansi ratusan juta hingga miliaran rupiah kini memiliki alternatif pendanaan tanpa harus terjebak beban bunga pinjaman bank konvensional.",
+      "article_angle": "Panduan langkah demi langkah membenahi transparansi pembukuan, SOP operasional, dan struktur kepemilikan usaha agar siap melantai di bursa efek.",
+      "slug": "program-go-public-academy-bei-alternatif-pendanaan-umkm",
+      "assigned_category": "Scale-up"
+    },
+    {
+      "id": 255,
+      "topic": "Penegakan Sidak Wajib Halal Ritel Modern dan Rantai Pasok Kuliner oleh BPJPH",
+      "trending_query": "sidak sertifikasi halal bpjph ritel",
+      "primary_keyword": "sidak wajib halal ritel dan rantai pasok",
+      "secondary_keywords": [
+        "pengawasan pasar bpjph oktober 2026",
+        "sertifikasi halal produk makanan minuman",
+        "logistik pergudangan halal umkm",
+        "pemisahan bahan baku non halal",
+        "sanksi peredaran produk tanpa halal"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Peningkatan pengawasan lapangan dan sidak terpadu di pusat perbelanjaan serta minimarket pasca batas waktu Oktober 2026)",
+      "trending_reason": "Setelah batas akhir kewajiban sertifikasi halal makanan-minuman per Oktober 2026 (PP No. 42/2024), BPJPH dan dinas terkait mengintensifkan pengawasan lapangan di ritel modern dan rantai pasok kuliner, menimbulkan kekhawatiran produk UMKM ditarik dari peredaran jika belum bersertifikat.",
+      "credible_sources": [
+        "Badan Penyelenggara Jaminan Produk Halal (BPJPH) Kemenag RI (halal.go.id)",
+        "Kementerian Perdagangan & Antara News - Pengawasan Produk Halal di Ritel",
+        "LPPOM MUI - Standar Jaminan Produk Halal untuk Rantai Pasok"
+      ],
+      "msme_opportunity": "UMKM kuliner dan pemasok bahan baku yang telah memiliki sertifikat halal dapat memanfaatkan momentum ini untuk mengambil alih pangsa pasar rak ritel modern yang ditinggalkan kompetitor tak bersertifikat.",
+      "article_angle": "Checklist audit kepatuhan mandiri untuk dapur resto dan produsen makanan kemasan agar aman dari sanksi serta lolos kurasi minimarket.",
+      "slug": "sidak-wajib-halal-ritel-dan-rantai-pasok-kuliner-umkm",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 256,
+      "topic": "Implementasi Penuh Sistem Coretax DJP dan Validasi NIK-NPWP Usaha",
+      "trending_query": "coretax djp untuk umkm",
+      "primary_keyword": "panduan migrasi coretax djp bagi pengusaha",
+      "secondary_keywords": [
+        "pemadanan nik menjadi npwp usaha",
+        "sistem prepopulated spt tahunan umkm",
+        "jadwal maintenance coretax djp",
+        "administrasi faktur elektronik terpadu",
+        "sanksi administrasi keterlambatan spt"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kueri pencarian meningkat tajam menjelang periode tutup tahun dan jadwal integrasi data Coretax DJP)",
+      "trending_reason": "DJP mengoptimalkan sistem administrasi perpajakan baru Coretax DJP yang memadukan data transaksi faktur elektronik, prepopulated SPT, serta validasi 16 digit NIK sebagai NPWP bagi wajib pajak orang pribadi pengusaha.",
+      "credible_sources": [
+        "Direktorat Jenderal Pajak (pajak.go.id) - Panduan Coretax",
+        "Ortax.org - Analisis Implementasi Coretax DJP dan Integrasi Faktur",
+        "Hukumonline & DDTC - Reformasi Administrasi Perpajakan Nasional"
+      ],
+      "msme_opportunity": "Pengusaha yang mengintegrasikan pencatatan penjualan dan pembelian dengan sistem invoice digital tidak akan lagi kerepotan saat pelaporan SPT tahunan karena seluruh faktur sudah terisi secara otomatis (prepopulated).",
+      "article_angle": "Panduan komprehensif tanpa jargon rumit bagi pemilik toko tentang cara memeriksa status aktivasi NIK-NPWP, mengunggah faktur penjualan, dan mencegah error administrasi perpajakan.",
+      "slug": "panduan-migrasi-coretax-djp-bagi-pengusaha-umkm",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 257,
+      "topic": "Pembahasan Kenaikan UMP 2027 dan Strategi Pengelolaan Biaya Gaji UMKM",
+      "trending_query": "kenaikan ump 2027 kspi apindo",
+      "primary_keyword": "antisipasi kenaikan ump 2027 dan efisiensi gaji",
+      "secondary_keywords": [
+        "pembahasan dewan pengupahan kspi apindo",
+        "tuntutan kenaikan upah buruh 2027",
+        "simulasi kenaikan biaya operasional toko",
+        "manajemen shift kerja hemat lembur",
+        "produktivitas karyawan usaha mikro"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Sorotan tajam berita nasional sepanjang November seputar rapat penetapan upah minimum provinsi oleh Dewan Pengupahan)",
+      "trending_reason": "Serikat buruh (KSPI/Partai Buruh) menuntut kenaikan UMP 2027 di kisaran 7,5% sampai 9,5% berdasarkan inflasi dan pertumbuhan ekonomi, sementara asosiasi pengusaha (Apindo/Kadin) mengusulkan formula indeks alfa moderat untuk mencegah tekanan biaya operasional usaha.",
+      "credible_sources": [
+        "Kementerian Ketenagakerjaan RI (kemnaker.go.id)",
+        "Asosiasi Pengusaha Indonesia (Apindo) - Pernyataan Kebijakan Pengupahan",
+        "CNN Indonesia & CNBC Indonesia - Liputan Sidang Dewan Pengupahan Daerah"
+      ],
+      "msme_opportunity": "Pemilik usaha skala kecil dapat mengevaluasi efektivitas jam kerja karyawan, meniadakan lembur tidak produktif, dan merancang sistem bonus berbasis omzet untuk menjaga kepuasan staf tanpa membengkakkan pengeluaran tetap.",
+      "article_angle": "Simulasi matematis dan trik manajerial bagi pemilik toko dan gerai F&B untuk menata shift kerja dan meningkatkan output penjualan per karyawan.",
+      "slug": "antisipasi-kenaikan-ump-2027-dan-efisiensi-biaya-gaji-umkm",
+      "assigned_category": "Operasional"
+    },
+    {
+      "id": 258,
+      "topic": "Percepatan Penyaluran Kuota KUR 2026 Sektor Produksi Tanpa Jaminan",
+      "trending_query": "syarat kur mikro tanpa jaminan 2026",
+      "primary_keyword": "syarat pengajuan kur 2026 sektor produksi",
+      "secondary_keywords": [
+        "plafon kur mikro 100 juta tanpa agunan",
+        "permenko perekonomian nomor 1 2026",
+        "bunga kur super mikro 3 persen",
+        "bank penyalur bri mandiri bni bsi",
+        "proposal pencairan modal kerja umkm"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Tingginya antusiasme pelaku usaha mencari tambahan modal kerja akhir tahun dengan subsidi bunga pemerintah)",
+      "trending_reason": "Kemenko Perekonomian mendorong percepatan realisasi kuota Rp290 triliun KUR 2026 menjelang tutup tahun dengan prioritas sektor produksi pertanian, peternakan, perikanan, dan industri pengolahan melalui skema bunga rendah 3% sampai 6% dan plafon tanpa agunan hingga Rp100 juta.",
+      "credible_sources": [
+        "Kementerian Koordinator Bidang Perekonomian (ekon.go.id)",
+        "Bank BRI, Bank Mandiri, BNI, dan BSI - Panduan Pengajuan KUR 2026",
+        "Peraturan Menko Perekonomian (Permenko) No. 1 Tahun 2026"
+      ],
+      "msme_opportunity": "UMKM yang memiliki pembukuan rapi dan izin NIB aktif dapat mencairkan pinjaman modal bunga murah untuk pengadaan mesin produksi, pembelian bahan baku grosir, atau renovasi gerai.",
+      "article_angle": "Panduan praktis syarat dokumen, kelayakan BI Checking/SLIK OJK, serta cara menyajikan catatan omzet toko agar pengajuan KUR disetujui mantri bank dalam hitungan hari.",
+      "slug": "syarat-pengajuan-kur-2026-sektor-produksi-tanpa-agunan",
+      "assigned_category": "Modal"
+    },
+    {
+      "id": 259,
+      "topic": "Aturan Pembelian Gas LPG 3 Kg Bersubsidi Pakai NIK di Pangkalan Resmi",
+      "trending_query": "beli lpg 3 kg pakai nik pangkalan",
+      "primary_keyword": "aturan beli lpg 3 kg pakai nik untuk usaha",
+      "secondary_keywords": [
+        "pendaftaran pangkalan resmi pertamina nik",
+        "merchant apps pertamina lpg 3 kg",
+        "verifikasi kuota gas warung makan",
+        "penetapan het lpg melon esdm",
+        "efisiensi konsumsi gas dapur resto"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pencarian harian meningkat pesat dari pengelola warung makan dan pedagang kuliner yang terdampak penertiban pengecer liar)",
+      "trending_reason": "Kementerian ESDM dan Pertamina menertibkan rantai distribusi LPG 3 kg tabung melon dengan mewajibkan pencatatan NIK pada aplikasi Merchant Apps di pangkalan resmi guna memastikan subsidi tepat sasaran bagi rumah tangga pra-sejahtera dan usaha mikro kuliner.",
+      "credible_sources": [
+        "Kementerian Energi dan Sumber Daya Mineral (esdm.go.id)",
+        "PT Pertamina Patra Niaga - Sosialisasi Pendataan Subsidi Tepat LPG 3 Kg",
+        "InfoPublik & Kumparan - Penertiban Jalur Distribusi Gas Melon"
+      ],
+      "msme_opportunity": "Pengusaha warung makan, katering rumahan, dan pedagang gorengan yang terdaftar resmi dapat memperoleh kepastian harga eceran tertinggi (HET) stabil di pangkalan tanpa markup spekulatif pedagang pengecer.",
+      "article_angle": "Panduan pendaftaran NIK usaha mikro di pangkalan, trik efisiensi perawatan regulator kompor gas, dan kalkulasi biaya operasional energi dapur kuliner.",
+      "slug": "aturan-beli-lpg-3-kg-pakai-nik-untuk-usaha-mikro-kuliner",
+      "assigned_category": "Operasional"
+    },
+    {
+      "id": 260,
+      "topic": "Strategi Omnichannel Live Shopping TikTok Tokopedia Pasca-Konsolidasi",
+      "trending_query": "live streaming tiktok shop tokopedia",
+      "primary_keyword": "strategi omnichannel live shopping bagi penjual",
+      "secondary_keywords": [
+        "live streaming tiktok shop belanja interaktif, integrasi stok toko fisik dan keranjang kuning",
+        "pembukuan penjualan omnichannel e commerce",
+        "kepatuhan pajak merchant marketplace",
+        "konversi pesanan siaran langsung"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Tren belanja siaran langsung mendominasi kampanye festival belanja online akhir tahun 11.11 dan 12.12)",
+      "trending_reason": "Integrasi ekosistem TikTok Shop dan Tokopedia yang matang pasca-regulasi social commerce memicu lonjakan omzet live shopping di Indonesia, mendorong pelaku UMKM merumuskan strategi jualan siaran langsung yang tersinkronisasi dengan persediaan toko fisik.",
+      "credible_sources": [
+        "Kementerian Perdagangan RI - Evaluasi Kepatuhan Social Commerce Permendag 31",
+        "Warta Ekonomi & Katadata - Riset Tren Live Commerce Indonesia 2026",
+        "TikTok for Business & Seller Center Tokopedia"
+      ],
+      "msme_opportunity": "Pelaku usaha fesyen, kecantikan, kerajinan, dan kuliner kemasan dapat mendongkrak penjualan kilat (flash sale) hingga puluhan kali lipat tanpa harus mengorbankan pengelolaan stok toko fisik.",
+      "article_angle": "Strategi sinkronisasi inventori real-time antara gudang fisik dan keranjang kuning marketplace agar terhindar dari pembatalan pesanan akibat stok fiktif (overselling).",
+      "slug": "strategi-omnichannel-live-shopping-tiktok-tokopedia-umkm",
+      "assigned_category": "Marketing"
+    }
+  ]
+}

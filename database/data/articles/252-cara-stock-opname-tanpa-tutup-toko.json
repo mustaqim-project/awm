@@ -1,0 +1,42 @@
+{
+  "id": 252,
+  "title": "Cara Stock Opname Tanpa Tutup Toko dengan Metode Cycle Counting",
+  "slug": "cara-stock-opname-tanpa-tutup-toko",
+  "category": "Inventori & Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "cara stock opname tanpa tutup toko",
+  "secondary_keywords": "metode cycle counting toko retail, analisis abc persediaan toko, cara mengatasi selisih stok barang, sop stock opname harian ritel, cut off transaksi saat stock opname, jadwal penghitungan stok berkala, aplikasi stok opname toko barcode",
+  "search_intent": "informational",
+  "meta_title": "Cara Stock Opname Tanpa Tutup Toko dengan Cycle Counting",
+  "meta_description": "Pelajari cara stock opname tanpa tutup toko memakai metode cycle counting dan analisis ABC agar data persediaan akurat tanpa kehilangan omzet harian.",
+  "reading_time": "10 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-stock-opname-tanpa-tutup-toko.jpg",
+  "local_image_asset": "public/images/blog/cara-stock-opname-tanpa-tutup-toko.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Autocomplete dan PAA Retail Indonesia",
+  "trending_query": "cara stock opname tanpa tutup toko",
+  "faqs": [
+    {
+      "q": "Apakah stock opname harus selalu menutup toko?",
+      "a": "Tidak harus. Dengan menggunakan metode cycle counting atau penghitungan stok bergilir, Anda dapat membagi gerai menjadi beberapa zona kecil dan menghitungnya dalam durasi 15 menit setiap hari saat toko belum dibuka atau di jam lengang."
+    },
+    {
+      "q": "Apa itu metode cycle counting dalam inventori toko ritel?",
+      "a": "Cycle counting adalah prosedur audit fisik berkala di mana sekelompok barang tertentu dihitung secara bergiliran sepanjang tahun dengan jadwal terencana, sehingga seluruh persediaan toko tetap terkontrol tanpa menghentikan operasional gerai."
+    },
+    {
+      "q": "Bagaimana cara membagi prioritas barang dengan analisis ABC?",
+      "a": "Barang dikelompokkan berdasarkan kontribusi nilainya: Kategori A adalah barang bernilai tinggi atau fast-moving yang dihitung tiap minggu, Kategori B adalah barang bernilai sedang yang dihitung sebulan sekali, dan Kategori C adalah barang lambat laku yang dihitung 3 sampai 6 bulan sekali."
+    },
+    {
+      "q": "Bagaimana menangani pembeli yang mengambil barang saat audit stok sedang berlangsung?",
+      "a": "Terapkan lembar catatan transaksi berjalan. Staf yang sedang menghitung rak mencatat barang apa saja yang diambil pembeli selama proses hitung, lalu menambahkan angka tersebut ke hasil hitung fisik sebelum dicocokkan ke sistem kasir."
+    },
+    {
+      "q": "Apa perbedaan mendasar antara blind count dan open count saat stock opname?",
+      "a": "Blind count adalah metode di mana staf menghitung stok fisik tanpa mengetahui berapa angka yang tercatat di sistem kasir, sehingga hasilnya lebih jujur dan objektif. Open count mencantumkan angka sistem di lembar kerja yang sering memicu kecerobohan staf karena hanya mencocokkan angka di atas kertas."
+    }
+  ],
+  "published_at": "2026-11-06T10:00:00+07:00",
+  "created_at": "2026-11-06T10:00:00+07:00"
+}

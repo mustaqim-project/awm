@@ -1,0 +1,25 @@
+{
+  "cookies": [
+    {
+      "name": "XSRF-TOKEN",
+      "value": "eyJpdiI6ImQ2T3VyODB3THFPdzdSZUxCZE9hMVE9PSIsInZhbHVlIjoia0NjdlhUQjhHTlI2K1prYmpNUUVHOGdlN0ttb3d6WXVTT21WM2NCTVF0T01zNDhVMUZDQStNQlRYa1JtSG1xRzJZanJJaUhxY1MvUlRCUUkvMWw2aWpNYThwaG12SVJjK0hoeUV0M2xWaVpoc2p0Zmc3WjVpV1VUaWFKN0MrenciLCJtYWMiOiIxNWRkZTlkYzM3YmRlNTc2MDc4ZWIzODY3NzZhY2E3N2ZlZGIwOThiNjJiZDFhNDFkMzJmNDExMTYwZTI1YzUwIiwidGFnIjoiIn0%3D",
+      "domain": "cooca_core.test",
+      "path": "/",
+      "expires": 1793945403.514339,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "cooca-session",
+      "value": "eyJpdiI6ImIrWTJ1K3ZlVWc2aHZJaENHaTYxWFE9PSIsInZhbHVlIjoiMkNWT2RvdDc5RnBrYzlVZ0ZKOXBKUWRuZnRJcW9ad2VCbHQ4RFRXSk5JWDRFZ0l1b2tIYkJ4Lys3a2lGS2lSdVpVelVkTStzQ24rNkxMcDkwY2cyQ1BKakZYQjZub0NMRGtyQTlzc0Q4azE1UEx5YUpuWmNkSnd1c0VVS3pHNTAiLCJtYWMiOiI5MmZiZjY4NzdjMTRiMDM5YzZjOTllMDlmZmUxMTExMGIwODU5NGE5NjM3OTIxZDFjNzI5NDhmMWQ4Y2VmMTgyIiwidGFnIjoiIn0%3D",
+      "domain": "cooca_core.test",
+      "path": "/",
+      "expires": 1793945403.514509,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

@@ -80,7 +80,20 @@ final class AdminPostController extends Controller implements HasMiddleware
             ->orderBy('name')
             ->get();
 
+        $trendingReports = [];
+        $trendingFiles = glob(database_path('data/articles/trending-research-*.json'));
+        if (!empty($trendingFiles)) {
+            rsort($trendingFiles);
+            foreach ($trendingFiles as $tFile) {
+                $decoded = json_decode((string)file_get_contents($tFile), true);
+                if (is_array($decoded)) {
+                    $trendingReports[] = $decoded;
+                }
+            }
+        }
+
         return view('admin.posts.index', [
+            'trendingReports' => $trendingReports,
             'activeTab' => $activeTab,
             'posts' => $posts,
             'categories' => $categories,

@@ -1,0 +1,42 @@
+{
+  "id": 253,
+  "title": "SOP Serah Terima Shift Kasir dan Cara Rekonsiliasi Uang Kas Toko",
+  "slug": "sop-serah-terima-shift-kasir",
+  "category": "Kasir & POS",
+  "cluster": "tutorial",
+  "primary_keyword": "sop serah terima shift kasir",
+  "secondary_keywords": "cara rekonsiliasi uang kasir, serah terima shift kasir toko, metode blind counting kasir, sop penanganan selisih kas, rekonsiliasi pembayaran non tunai qris, formulir serah terima kasir harian, modal awal kembalian laci kasir",
+  "search_intent": "informational",
+  "meta_title": "SOP Serah Terima Shift Kasir dan Rekonsiliasi Kas Toko",
+  "meta_description": "Panduan SOP serah terima shift kasir toko retail dan F&B lengkap dengan formulir serah terima, blind counting kasir, dan rekonsiliasi non-tunai QRIS.",
+  "reading_time": "10 menit",
+  "cover_image": "https://cooca.id/images/blog/sop-serah-terima-shift-kasir.jpg",
+  "local_image_asset": "public/images/blog/sop-serah-terima-shift-kasir.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Related Searches operasional kasir ritel",
+  "trending_query": "sop serah terima shift kasir",
+  "faqs": [
+    {
+      "q": "Apa saja tahapan utama dalam serah terima shift kasir toko?",
+      "a": "Tahapan utamanya meliputi penguncian transaksi sementara, pencetakan laporan kasir interim (X-Report), penghitungan fisik uang laci dengan metode blind count, verifikasi bersama kasir shift pengganti, pemisahan uang setoran dengan uang modal awal, serta penandatanganan formulir berita acara serah terima."
+    },
+    {
+      "q": "Mengapa metode blind counting sangat dianjurkan untuk kasir toko?",
+      "a": "Metode blind counting mencegah manipulasi data karena kasir diwajibkan menghitung dan menuliskan jumlah fisik uang nyata tanpa melihat angka ekspektasi sistem kasir terlebih dahulu. Ini menjamin penghitungan yang jujur, akurat, dan dapat dipertanggungjawabkan."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika ditemukan selisih uang kasir saat closing shift?",
+      "a": "Lakukan pemeriksaan ulang nota pengeluaran kas kecil, cek kemungkinan kesalahan input metode pembayaran (tunai tertukar non-tunai), periksa laci kasir secara teliti, dan tinjau rekaman CCTV kasir jika selisih bernilai signifikan. Catat selisih tersebut dalam berita acara."
+    },
+    {
+      "q": "Berapa nominal modal awal kasir yang ideal untuk uang kembalian toko?",
+      "a": "Nominal modal awal yang ideal bervariasi antara Rp300.000 hingga Rp1.000.000 tergantung jenis usaha dan rata-rata nilai transaksi harian toko. Hal yang terpenting adalah ketersediaan pecahan uang kecil (Rp2.000, Rp5.000, Rp10.000, dan Rp20.000) yang memadai."
+    },
+    {
+      "q": "Bagaimana cara rekonsiliasi transaksi pembayaran non-tunai QRIS saat pergantian shift?",
+      "a": "Bandingkan total transaksi QRIS yang tercatat pada laporan sistem POS dengan riwayat settlement sukses pada aplikasi merchant perbankan atau dashboard payment gateway. Pastikan seluruh transaksi sukses sudah terbit nomor referensi (NMID/RRN) yang valid."
+    }
+  ],
+  "published_at": "2026-11-06T10:00:00+07:00",
+  "created_at": "2026-11-06T10:00:00+07:00"
+}

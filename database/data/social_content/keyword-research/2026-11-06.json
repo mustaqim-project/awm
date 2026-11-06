@@ -1,0 +1,190 @@
+{
+  "research_date": "2026-11-06",
+  "market": "Indonesia (UMKM / Toko Retail / F&B)",
+  "language": "id-ID",
+  "categories_analyzed": [
+    {
+      "category": "Manajemen Stok dan Inventori",
+      "primary_keyword": "cara mengatasi stok barang selisih",
+      "secondary_keywords": [
+        "kenapa stok fisik berbeda dengan catatan",
+        "cara mengelola stok gudang umkm",
+        "cara melakukan stock opname",
+        "sistem fifo dan fefo toko"
+      ],
+      "long_tail_keywords": [
+        "cara mengatasi perbedaan stok fisik dan catatan aplikasi kasir",
+        "penyebab stok fisik selisih dengan pembukuan toko",
+        "cara menghindari stok barang hilang di toko retail"
+      ],
+      "search_intent": "Informational & Problem-Solution",
+      "core_problem": "Pemilik usaha sering mendapati stok fisik di rak toko lebih sedikit dari catatan pembukuan saat opname, menyebabkan kebocoran modal tanpa diketahui penyebab pastinya.",
+      "people_also_ask": [
+        "Kenapa stok fisik sering berbeda dengan catatan buku?",
+        "Bagaimana cara mencari penyebab selisih stok barang?",
+        "Berapa kali sebaiknya toko UMKM melakukan stock opname?",
+        "Apa yang harus dilakukan jika stok barang hilang atau selisih minus?"
+      ],
+      "organic_potential": "Sangat Tinggi (topik fundamental harian setiap pemilik toko retail, fashion, minimarket, dan kuliner)",
+      "cooca_feature_relevance": "Sangat Tinggi (Modul Inventory & Stock Multi-Gudang /inventory/stocks, Kartu Mutasi Stok, dan Alert Stok Menipis)",
+      "education_angle": "Bongkar 4 penyebab umum selisih stok fisik vs catatan buku serta panduan menerapkan kartu stok otomatis terintegrasi kasir.",
+      "social_content_opportunity": "Tinggi (sangat relatable, memancing engagement pemilik toko yang lelah menghitung selisih manual setiap akhir bulan)."
+    },
+    {
+      "category": "Kasir dan Pencegahan Kecurangan",
+      "primary_keyword": "cara mencegah kecurangan kasir",
+      "secondary_keywords": [
+        "cara audit uang kasir setiap shift",
+        "cara mengetahui selisih uang kasir",
+        "fitur pin supervisor kasir"
+      ],
+      "long_tail_keywords": [
+        "cara mencegah manipulasi transaksi kasir toko retail",
+        "sop tutup kasir blind settlement toko"
+      ],
+      "search_intent": "Problem-Solution & Practical Guide",
+      "core_problem": "Kekhawatiran pemilik toko terhadap manipulasi transaksi pembatalan (void), manipulasi struk, atau selisih uang tunai saat tutup shift.",
+      "people_also_ask": [
+        "Bagaimana cara mengetahui kasir curang?",
+        "Apa itu sistem blind settlement kasir?",
+        "Mengapa fitur void kasir harus dikunci PIN?"
+      ],
+      "organic_potential": "Tinggi",
+      "cooca_feature_relevance": "Tinggi (Modul POS, PIN Supervisor, dan Role Access Control /roles)",
+      "education_angle": "Penerapan SOP tutup kasir buta (blind cash count) dan penguncian hak akses void transaksi.",
+      "social_content_opportunity": "Tinggi (topik emosional yang menyentuh proteksi keuntungan usaha)."
+    },
+    {
+      "category": "Keuangan dan Profitabilitas",
+      "primary_keyword": "cara memisahkan uang pribadi dan uang usaha",
+      "secondary_keywords": [
+        "cara menghitung keuntungan bersih bisnis",
+        "cara membuat laporan laba rugi umkm",
+        "perbedaan omzet dan laba bersih"
+      ],
+      "long_tail_keywords": [
+        "cara memisahkan rekening pribadi dan bisnis toko kecil",
+        "mengapa omzet ramai tapi uang kas toko selalu habis"
+      ],
+      "search_intent": "Educational & Financial Literacy",
+      "core_problem": "Pemilik usaha mencampur arus kas rumah tangga dengan modal dagang, sehingga laba bersih semu dan kas operasional sering tekor.",
+      "people_also_ask": [
+        "Bagaimana cara memisahkan uang pribadi dan usaha kecil?",
+        "Berapa persen gaji untuk pemilik usaha UMKM?",
+        "Bagaimana cara menghitung laba bersih bulanan?"
+      ],
+      "organic_potential": "Tinggi",
+      "cooca_feature_relevance": "Tinggi (Modul Keuangan, Kas & Bank, serta Laporan Laba Rugi Real-Time /reports)",
+      "education_angle": "Struktur 3 rekening sederhana untuk UMKM dan pencatatan laba rugi otomatis tanpa rumus excel.",
+      "social_content_opportunity": "Tinggi (topik edukasi finansial UMKM yang selalu viral)."
+    },
+    {
+      "category": "Perhitungan HPP dan Resep",
+      "primary_keyword": "cara menghitung hpp makanan",
+      "secondary_keywords": [
+        "rumus food cost restoran",
+        "cara menentukan harga jual makanan",
+        "cara mengelola resep dan bahan baku"
+      ],
+      "long_tail_keywords": [
+        "cara menghitung hpp menu cafe dan bakery",
+        "rumus food cost ideal bisnis kuliner umkm"
+      ],
+      "search_intent": "Practical Tutorial & Calculator",
+      "core_problem": "Pebisnis kuliner menetapkan harga jual hanya berdasarkan intuisi atau harga kompetitor tanpa menghitung yield, waste, dan porsi bahan baku secara presisi.",
+      "people_also_ask": [
+        "Berapa persen food cost yang wajar untuk restoran?",
+        "Bagaimana cara menghitung bahan baku yang menyusut saat dimasak?",
+        "Rumus markup harga jual makanan dari HPP?"
+      ],
+      "organic_potential": "Tinggi",
+      "cooca_feature_relevance": "Tinggi (Modul COGS & Margin Calculator /calculator dan Resep / BOM)",
+      "education_angle": "Panduan menghitung cost per portion dengan memperhitungkan waste bahan baku.",
+      "social_content_opportunity": "Tinggi di kalangan pengusaha kuliner dan cafe."
+    },
+    {
+      "category": "Manajemen Multi-Cabang",
+      "primary_keyword": "cara mengontrol banyak cabang toko",
+      "secondary_keywords": [
+        "aplikasi kasir multi outlet",
+        "cara memantau penjualan cabang dari hp",
+        "cara mengontrol stok antar cabang"
+      ],
+      "long_tail_keywords": [
+        "cara memantau stok banyak cabang toko tanpa keliling setiap hari",
+        "sistem mutasi stok antar cabang toko retail"
+      ],
+      "search_intent": "Commercial & Expansion Guide",
+      "core_problem": "Pemilik usaha kesulitan membagi waktu saat mulai membuka cabang kedua atau ketiga; stok sering tertukar dan laporan terlambat dikirim staf.",
+      "people_also_ask": [
+        "Bagaimana cara mengontrol keuangan banyak cabang toko?",
+        "Software apa yang cocok untuk toko retail multi cabang?"
+      ],
+      "organic_potential": "Sedang",
+      "cooca_feature_relevance": "Tinggi (Modul Multi-Warehouse & Multi-Branch Management)",
+      "education_angle": "Sentralisasi inventori dan pemantauan omzet konsolidasi dari genggaman tangan.",
+      "social_content_opportunity": "Sedang hingga Tinggi untuk audiens pebisnis bertumbuh."
+    },
+    {
+      "category": "Digital CRM dan Customer Management",
+      "primary_keyword": "cara meningkatkan repeat order pelanggan",
+      "secondary_keywords": [
+        "cara membuat database pelanggan",
+        "struk digital melalui whatsapp",
+        "strategi mempertahankan pelanggan toko"
+      ],
+      "long_tail_keywords": [
+        "cara mengumpulkan kontak wa pembeli di kasir toko offline",
+        "cara kirim struk belanja langsung ke whatsapp pelanggan"
+      ],
+      "search_intent": "Strategic & Growth",
+      "core_problem": "Toko offline melayani pembeli setiap hari tetapi tidak pernah menyimpan kontak mereka, sehingga tidak bisa melakukan retargeting promo.",
+      "people_also_ask": [
+        "Bagaimana cara mengumpulkan data pelanggan toko retail?",
+        "Apakah struk whatsapp efektif menggantikan kertas thermal?"
+      ],
+      "organic_potential": "Sedang",
+      "cooca_feature_relevance": "Tinggi (Struk Digital WhatsApp & Modul CRM Pelanggan)",
+      "education_angle": "Mengubah biaya cetak kertas thermal menjadi aset database pelanggan melalui struk WhatsApp otomatis.",
+      "social_content_opportunity": "Tinggi untuk audiens modern dan efisiensi biaya."
+    }
+  ],
+  "selected_winning_topic": {
+    "topic_title": "Penyebab Stok Fisik Toko Berbeda dengan Catatan dan Solusi Pencegahannya",
+    "primary_keyword": "cara mengatasi stok barang selisih",
+    "secondary_keywords": [
+      "kenapa stok fisik berbeda dengan catatan",
+      "manajemen stok toko umkm",
+      "cara stock opname toko"
+    ],
+    "long_tail_keywords": [
+      "cara mengatasi perbedaan stok fisik dan catatan aplikasi kasir",
+      "penyebab stok fisik selisih dengan pembukuan toko",
+      "cara menghindari stok barang hilang di toko retail"
+    ],
+    "search_intent": "Informational & Problem-Solution",
+    "target_audience": "Pemilik toko retail, butik fashion, minimarket, dan manajer operasional toko UMKM di Indonesia",
+    "core_problem": "Selisih barang antara catatan kasir/buku dan stok fisik di rak yang baru terdeteksi saat akhir bulan, mengikis laba bersih secara diam-diam akibat barang tidak tercatat, salah SKU, atau kehilangan.",
+    "people_also_ask_selected": [
+      "Kenapa stok fisik sering berbeda dengan catatan buku?",
+      "Bagaimana cara mencari penyebab selisih stok barang?",
+      "Berapa kali sebaiknya toko UMKM melakukan stock opname?"
+    ],
+    "content_format": "Problem-Solution & Practical Tutorial",
+    "headline": "Stok Fisik Sering Tidak Sesuai Catatan?",
+    "subheadline": "Kenali penyebab utamanya dan mulai kendalikan inventori bisnis dengan sistem terintegrasi bebas drama selisih fisik.",
+    "education_angle": "Edukasi mentor bisnis: mengidentifikasi 4 celah kebocoran stok (salah input, retur tidak tercatat, display tidak termonitor, dan keterlambatan pencatatan) serta langkah sistematis memperbaikinya dengan kartu stok real-time.",
+    "practical_solution": [
+      "Gunakan pencatatan stok digital otomatis yang langsung terpotong saat kasir memproses transaksi.",
+      "Terapkan kartu stok real-time untuk merekam tanggal, jam, dan penanggung jawab setiap mutasi masuk dan keluar.",
+      "Pasang batas minimum stok (Reorder Point / Low Stock Alert) agar tidak pernah kehabisan barang cepat laku.",
+      "Jadwalkan stock opname berkala (cycle counting mingguan) per kategori produk daripada menunggu akhir tahun."
+    ],
+    "cooca_features": [
+      "Inventory & Stock Multi-Gudang (/inventory/stocks)",
+      "Kartu Mutasi Stok Real-Time (/inventory/movements)",
+      "Peringatan Otomatis Stok Menipis (Low Stock Alert)"
+    ],
+    "call_to_action": "Kelola Bisnis Lebih Terarah dengan COOCA di cooca.id"
+  }
+}

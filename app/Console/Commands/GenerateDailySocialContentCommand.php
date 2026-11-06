@@ -20,6 +20,7 @@ class GenerateDailySocialContentCommand extends Command
     protected $signature = 'cooca:daily-content
                             {--date= : Target date in YYYY-MM-DD format (defaults to today)}
                             {--feature= : Specific feature ID to generate (pos, inventory, finance, whatsapp, multi_outlet, fraud_prevention)}
+                            {--persona= : Specific persona slug to load from database/data/social_content/business-personas}
                             {--slot=both : Slot to generate (morning, evening, or both)}
                             {--dry-run : Only generate and render feed graphics without scheduling to database}';
 
@@ -42,18 +43,23 @@ class GenerateDailySocialContentCommand extends Command
 
         $targetDate = $this->option('date') ?: Carbon::today()->toDateString();
         $feature = $this->option('feature');
+        $persona = $this->option('persona');
         $slot = $this->option('slot') ?: 'both';
         $dryRun = (bool) $this->option('dry-run');
 
         $this->line("Target Date   : <comment>{$targetDate}</comment>");
         $this->line("Slot          : <comment>{$slot}</comment>");
         $this->line("Feature Opt   : <comment>" . ($feature ?: 'Rotating Automatically (2 posts/day)') . "</comment>");
+        $this->line("Persona Opt   : <comment>" . ($persona ?: 'Auto from database/data/social_content/business-personas') . "</comment>");
         $this->line("Dry Run Mode  : <comment>" . ($dryRun ? 'YES (Files only)' : 'NO (Will schedule to DB)') . "</comment>\n");
 
         // 1. Run Node.js Automation Pipeline
         $cmd = ['node', 'scripts/social-automation/pipeline.cjs', "--date={$targetDate}", "--slot={$slot}"];
         if ($feature) {
             $cmd[] = "--feature={$feature}";
+        }
+        if ($persona) {
+            $cmd[] = "--persona={$persona}";
         }
 
         $this->info('Launching Playwright Screen Capture & Retina Graphic Generator...');
@@ -108,18 +114,31 @@ class GenerateDailySocialContentCommand extends Command
 
             $this->line("\nRegistering post to Admin Social Media Center for [<comment>{$item['feature_name']}</comment>]...");
 
-            $post = $adminSocialMediaService->createAndPublishPlatformPost($admin, [
-                'platforms'             => $item['platforms'],
-                'platform'              => $item['platforms'][0],
-                'timing_mode'           => 'schedule_all',
-                'platform_timing'       => [],
-                'platform_scheduled_at' => [],
-                'content'               => $item['caption'],
-                'media_type'            => 'image',
-                'media_urls'            => [$publicUrl],
-                'local_media_paths'     => [$localRelPath],
-                'scheduled_at'          => $scheduledAtCarbon->toDateTimeString(),
-            ]);
+            // Anti-duplicate protection: check if an identical post is already registered
+            $existingPost = \App\Models\SocialMediaPost::where('is_platform', true)
+                ->where(function ($q) use ($item, $localRelPath) {
+                    $q->where('content', $item['caption'])
+                      ->orWhereJsonContains('local_media_paths', $localRelPath);
+                })
+                ->first();
+
+            if ($existingPost) {
+                $this->warn("Post for [{$item['feature_name']}] already registered in Admin Center (ID: {$existingPost->id}). Preventing duplicate entry.");
+                $post = $existingPost;
+            } else {
+                $post = $adminSocialMediaService->createAndPublishPlatformPost($admin, [
+                    'platforms'             => $item['platforms'],
+                    'platform'              => $item['platforms'][0],
+                    'timing_mode'           => 'schedule_all',
+                    'platform_timing'       => [],
+                    'platform_scheduled_at' => [],
+                    'content'               => $item['caption'],
+                    'media_type'            => 'image',
+                    'media_urls'            => [$publicUrl],
+                    'local_media_paths'     => [$localRelPath],
+                    'scheduled_at'          => $scheduledAtCarbon->toDateTimeString(),
+                ]);
+            }
 
             $scheduledCount++;
             $tableRows[] = [
