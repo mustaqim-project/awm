@@ -58,7 +58,10 @@ rm -f "$SCRIPT_DIR/bootstrap/cache/routes"*.php 2>/dev/null || true
 # Auto-apply pending database migrations if any
 "$PHP_BIN" artisan migrate --force >> "$SCRIPT_DIR/storage/logs/migrations.log" 2>&1
 
-# Auto-import daily social media content into production Admin Social Media Center
+# Auto-import newly published blog articles into production database (https://cooca.id/admin/posts)
+"$PHP_BIN" artisan blog:import-articles >> "$SCRIPT_DIR/storage/logs/blog_import.log" 2>&1 || true
+
+# Auto-import daily social media content into production Admin Social Media Center (https://cooca.id/admin/social-media)
 "$PHP_BIN" artisan cooca:import-social-content >> "$SCRIPT_DIR/storage/logs/social_import.log" 2>&1 || true
 
 # Auto-retry pending failed TikTok post with automatic fallback to TikTok Inbox

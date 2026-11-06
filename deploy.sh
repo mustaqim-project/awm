@@ -35,6 +35,7 @@ $PHP_BIN artisan db:seed --class=DefaultCostCategorySeeder --force
 $PHP_BIN artisan db:seed --class=BusinessTemplateSeeder --force
 $PHP_BIN artisan db:seed --class=CoffeeShopThreeConditionsSeeder --force
 $PHP_BIN artisan db:seed --class=PostSeeder --force
+$PHP_BIN artisan blog:import-articles || true
 $PHP_BIN artisan cooca:import-social-content || true
 
 # 5. Clear and cache configuration, routes, and views for maximum production performance
