@@ -18,7 +18,10 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        // Call the dedicated artisan import command to load all 100 articles from database/data/articles
+        // Call the dedicated artisan import command to load all articles from database/data/articles
         Artisan::call('blog:import-articles', ['--force' => true]);
+
+        // Call the dedicated social media content importer for production Admin Social Media Center
+        Artisan::call('cooca:import-social-content');
     }
 }
