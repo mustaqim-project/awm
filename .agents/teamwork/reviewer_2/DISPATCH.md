@@ -1,35 +1,36 @@
-# Dispatch: Reviewer 2 — UX Flow, Component Architecture & Remediation Review
+## 2026-11-07T10:16:35Z
+You are Reviewer 2: UI & Documentation Reviewer.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2\
 
-## Objective
-Independently review the Master UI/UX Audit Report in `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md` produced by `worker_audit_1`.
-Evaluate:
-1. Information architecture and UX flows: Are the usability assessments for cashier/POS, sales workflows, form density, and mobile touch targets sound and actionable?
-2. Shared component consistency and design tokens: Is the analysis of `<x-module-header>`, `<x-breadcrumb>`, Double Header redundancy, and Apple Bento squircle tokens accurate?
-3. Practicality of the 4-phase remediation roadmap: Are the recommendations concrete, well-scoped, and technically feasible for Laravel Blade developers?
-4. Verification of Read-Only status: Verify that no codebase files in `resources/views/app` were modified.
-5. Provide a clear verdict: `APPROVE` or `REQUEST_CHANGES`.
+MANDATORY INSTRUCTIONS:
+1. Read the authoritative request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+2. Read the project scope document at: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
+3. Read the worker handoffs at:
+   - c:\laragon\www\cooca_core\.agents\teamwork\worker_m2_ui\handoff.md
+   - c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\handoff.md
 
-## Input Files
-- Original user request: `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` (MUST read first)
-- Scope document: `c:\laragon\www\cooca_core\PROJECT.md`
-- Master audit deliverable: `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md`
-- Worker handoff: `c:\laragon\www\cooca_core\.agents\teamwork\worker_audit_1\handoff.md`
-
-## Scope Boundaries
-- STRICTLY READ-ONLY. DO NOT modify any code or the report.
-- Your working directory is `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2`.
-- Write your final review report with an explicit verdict (`APPROVE` or `REQUEST_CHANGES`) to `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2\handoff.md`.
-
-
-## 2026-10-31T11:16:19Z
-[Message] timestamp=2026-10-31T11:16:19Z sender=aa2ef6eb-6969-4758-9898-c916a6745d73 priority=MESSAGE_PRIORITY_HIGH content=You are Reviewer 2 for the COOCA UI/UX Audit project.
-Working directory: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2
-Read your dispatch at: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2\DISPATCH.md
-Read the original request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-Read the master audit deliverable at: c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md
-
-TASK:
-Review the UX workflows, component architectures, double header analysis, remediation roadmap feasibility, and read-only status in `docs/UI_UX_AUDIT_REPORT.md`.
-Write your full review report to: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2\handoff.md
-Your handoff report MUST include an explicit verdict: APPROVE or REQUEST_CHANGES.
-Send a message back when done.
+SCOPE OF REVIEW:
+Objectively review the UI layout simplification and the Business Owner documentation:
+1. UI Layout & Ergonomics:
+   - Inspect `analytics/index.blade.php`, `approvals/inbox.blade.php`, `approvals/history.blade.php`, `approvals/rules.blade.php`, `billing/limits.blade.php`.
+   - Verify elimination of double header redundancy (no duplicate `<h1>` or duplicate subtitles inside view body).
+   - Verify mobile horizontal swipe snap slider on KPI cards in `analytics/index.blade.php`.
+   - Verify symmetric 2-col mobile grid and >= 44px tap targets on `approvals/inbox.blade.php`.
+   - Verify storage topup semantic icon `database` in `billing/limits.blade.php`.
+   - Verify zero visual overlap, no broken horizontal overflow on 375px mobile and 1280px desktop.
+2. Business Owner Documentation:
+   - Inspect `resources/views/app/docs/partials/sec_analytics.blade.php`, `sec_approvals.blade.php`, `sec_billing.blade.php`, and `resources/views/app/docs/index.blade.php`.
+   - Verify compliance with `/business-owner-doc-generator`:
+     - Executive summary from Business Owner POV.
+     - 4 practical steps.
+     - 20-industry application matrix across 6 clusters.
+     - Anti-fraud & security rules.
+     - Verified interactive route links (`route('...')`).
+     - Left Sidebar TOC integration and searchability in `index.blade.php`.
+3. Verification:
+   - `php -l` on all reviewed Blade views.
+   - `php artisan view:clear; php artisan view:cache; php artisan view:clear`.
+   - `php artisan test tests/Feature/DocumentationFeatureTest.php`.
+4. Provide a clear verdict: APPROVE or REQUEST_CHANGES.
+5. Write complete review report to: `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2\handoff.md`.
+6. Send completion message back to orchestrator.

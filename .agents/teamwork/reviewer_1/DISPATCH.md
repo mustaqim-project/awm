@@ -33,3 +33,33 @@ Review the scope, layout evaluations, Apple HIG compliance, and findings in `doc
 Write your full review report to: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_1\handoff.md
 Your handoff report MUST include an explicit verdict: APPROVE or REQUEST_CHANGES.
 Send a message back when done.
+
+
+## 2026-11-07T10:16:24Z
+You are Reviewer 1: Security & RBAC Reviewer.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_1\
+
+MANDATORY INSTRUCTIONS:
+1. Read the authoritative request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+2. Read the project scope document at: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
+3. Read the worker handoffs at:
+   - c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac\handoff.md
+   - c:\laragon\www\cooca_core\.agents\teamwork\worker_m2_ui\handoff.md
+
+SCOPE OF REVIEW:
+Objectively and rigorously review the Role-Based Access Control (RBAC) implementation and security across `analytics`, `approvals`, and `billing`:
+1. Check `database/seeders/RbacSeeder.php`: Verify that `analytics.view` is registered and properly mapped to roles (`owner`, `manager`, `admin`), and that `approvals.view`, `approvals.manage`, `billing.view`, and `billing.manage` are present.
+2. Check `app/Http/Controllers/Web/AnalyticsWebController.php`: Verify `HasMiddleware` with `require.permission:analytics.view,reports.view`.
+3. Check `ApprovalWebController`, `BillingAndLimitWebController`, and `SubscriptionCheckoutWebController` for controller-level middleware and tenant scoping (`business_id`).
+4. Check View Guards in:
+   - `resources/views/app/approvals/inbox.blade.php`: Verify "Tolak" and "Setujui" buttons and "Kelola Aturan" link are guarded by `@can('approvals.manage')`.
+   - `resources/views/app/approvals/rules.blade.php`: Verify "Tambah Aturan" buttons and rule cards are guarded by `@can('approvals.manage')`.
+   - `resources/views/app/analytics/index.blade.php`: Verify report links and export buttons are guarded by `@can('reports.view')` / `@can('reports.export')`, and profit metrics guarded with `@can('reports.financial')`.
+   - `resources/views/app/billing/limits.blade.php`: Verify upgrade buttons and delete file buttons are guarded by `billing.manage`.
+5. Run verification tests:
+   `php artisan config:clear`
+   `php artisan test tests/Feature/AnalyticsWebTest.php tests/Feature/ApprovalModuleAuditTest.php tests/Feature/DocumentApprovalWorkflowTest.php tests/Feature/BillingModuleAuditTest.php tests/Feature/BillingSubmoduleSecurityAndErgonomicsTest.php`
+   `php -l` on modified files.
+6. Provide a clear verdict: APPROVE or REQUEST_CHANGES.
+7. Write complete review report to: `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_1\handoff.md`.
+8. Send completion message back to orchestrator.

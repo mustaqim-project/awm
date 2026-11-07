@@ -1,0 +1,170 @@
+{
+  "date": "2026-11-09",
+  "target_seconds": 30,
+  "pillar": "masalah harian",
+  "primary_keyword": "cara mencegah kecurangan kasir",
+  "secondary_keywords": [
+    "kunci pin supervisor kasir",
+    "trik atasi kebocoran kasir toko",
+    "aplikasi kasir anti void sembarangan",
+    "cara tutup shift kasir toko ritel",
+    "solusi kasir selisih saat tutup toko"
+  ],
+  "content_brief": {
+    "objective": "Edukasi pemilik toko ritel tentang titik rawan kebocoran kas dan kunci pengaman PIN Supervisor",
+    "audience": "Pemilik toko ritel, warung modern, dan UMKM yang kasirnya sering selisih saat tutup shift",
+    "key_message": "Kebocoran kasir terjadi jika transaksi void tidak dikunci PIN Supervisor",
+    "angle": "Tunjuk celah manipulasi transaksi tunai kasir, lalu demo kunci PIN Supervisor Cooca",
+    "tone": "Tegas, solutif, edukatif, bersahabat",
+    "platforms": [
+      "tiktok",
+      "instagram",
+      "facebook",
+      "linkedin",
+      "threads"
+    ],
+    "risks": "Angka kerugian Rp20.000 per hari dan Rp600.000 sebulan adalah contoh hitung terbuka berlabel contoh"
+  },
+  "trend_notes": [
+    "Format edukasi operasional kasir dan trik anti boncos ramai di FYP TikTok (terverifikasi, 2 sumber)",
+    "Pencarian solusi kasir selisih dan audit toko ritel meningkat menjelang akhir tahun (indikasi, 1 sumber)"
+  ],
+  "fingerprint": {
+    "topic": "keamanan kasir dan anti void supervisor",
+    "pain_point": "transaksi tunai dibatalkan tanpa izin dan uang kasir selisih pas tutup shift",
+    "hook_formula": "kerugian-tersembunyi",
+    "visual_concept": "layar pos kasir terkunci modal supervisor pin dan rekap shift otomatis",
+    "format": "demo layar dan adegan teks bento",
+    "pillar": "masalah harian",
+    "primary_keyword": "cara mencegah kecurangan kasir",
+    "cta": "coba gratis di cooca.id"
+  },
+  "hook": "Uang kasir sering kurang? Cek celah ini.",
+  "hook_alternatives": [
+    "Jam 9 malam toko tutup, uang kas kurang Rp100.000 dan tidak tahu kenapa.",
+    "Kasir masih bisa hapus transaksi sendiri? Tokomu rawan bocor tiap hari."
+  ],
+  "vo_lines": [
+    {
+      "start": 0,
+      "end": 3,
+      "text": "Uang kasir sering kurang? Cek celah ini."
+    },
+    {
+      "start": 3,
+      "end": 9,
+      "text": "Di banyak toko, kasir bisa klik void atau hapus transaksi sesuka hati setelah pembeli bayar tunai."
+    },
+    {
+      "start": 9,
+      "end": 14,
+      "text": "Bocor Rp20.000 sehari saja, sebulan sudah lenyap Rp600.000 uang hasil keringatmu."
+    },
+    {
+      "start": 14,
+      "end": 23,
+      "text": "Di Toko Kamu bareng Cooca, menu hapus transaksi dikunci PIN Supervisor. Kasir tidak bisa manipulasi, dan rekap kas langsung cocok tiap pergantian shift."
+    },
+    {
+      "start": 24,
+      "end": 30,
+      "text": "Amankan omzet tokomu sekarang. Kunci meja kasirmu dengan coba gratis di cooca.id."
+    }
+  ],
+  "beat_sheet": [
+    {
+      "start": 0,
+      "end": 3,
+      "beat": "Hook",
+      "hero": "kartu bento peringatan selisih kas toko",
+      "motion": "kartu masuk cepat dengan pulsasi merah halus",
+      "camera": "push-in pelan ke teks pertanyaan",
+      "text": "Uang kasir sering selisih? (Cek 1 celah ini)",
+      "sound": "hit bass rendah teredam"
+    },
+    {
+      "start": 3,
+      "end": 9,
+      "beat": "Masalah",
+      "hero": "simulasi tombol void kasir terbuka tanpa kunci",
+      "motion": "animasi klik tombol void dan struk terhapus",
+      "camera": "tahan pada layar kasir POS",
+      "text": "Celah: Tombol Void Ditekan Tanpa Izin",
+      "sound": "efek klik keyboard kasir"
+    },
+    {
+      "start": 9,
+      "end": 14,
+      "beat": "Hitung Terbuka",
+      "hero": "kalkulasi kebocoran kas akumulatif bulanan",
+      "motion": "angka Rp20.000 bergulir menjadi Rp600.000",
+      "camera": "pan horizontal ke kartu akumulasi",
+      "text": "Rp20.000 / hari = Rp600.000 / bulan (Contoh hitung terbuka)",
+      "sound": "tick angka naik"
+    },
+    {
+      "start": 14,
+      "end": 24,
+      "beat": "Solusi Demo",
+      "hero": "popup modal PIN Supervisor Cooca aktif di rute roles",
+      "motion": "kunci gembok 3D mengunci tombol void, rekap kas shift tampil hijau",
+      "camera": "push-in halus ke status terverifikasi",
+      "text": "Solusi: Wajib PIN Supervisor + Rekap Kas Otomatis",
+      "sound": "chime sukses nada tinggi"
+    },
+    {
+      "start": 24,
+      "end": 30,
+      "beat": "CTA",
+      "hero": "logo Cooca, alamat website, dan badge gratis 14 hari",
+      "motion": "elemen brand memudar masuk dengan rapi",
+      "camera": "tahan di tengah",
+      "text": "Kunci Meja Kasir Toko Kamu di cooca.id",
+      "sound": "resolusi nada penutup"
+    }
+  ],
+  "captions": {
+    "tiktok": "Cara mencegah kecurangan kasir toko ritel agar bebas dari selisih uang kas setiap hari!\n\nKasir kamu masih bisa hapus transaksi sesuka hati? Bahaya banget! Kunci hak akses kasir pakai PIN Supervisor COOCA seperti di Toko Kamu. Aman dan transparan! Cek di https://cooca.id\n\n#KeamananToko #AntiFraudKasir #CoocaERP #AuditBisnis #SistemUsaha #TokoKamu",
+    "instagram": "Cara mencegah kecurangan kasir dan selisih uang saat tutup shift toko.\n\nDi Toko Kamu yang dikelola bersama Cooca Indonesia, seluruh transaksi batal wajib otorisasi PIN Supervisor dan rekap kas harian tercatat otomatis secara real-time.\n\nCoba demo kasir pintar sekarang di cooca.id (link di bio)\n\n#KasirPintar #AntiFraud #CoocaERP #ManajemenToko #TokoKamu",
+    "facebook": "Bagi rekan-rekan pemilik toko dan grosir ritel, salah satu titik rawan kebocoran kas adalah transaksi batal yang tidak terpantau. Pastikan sistem kasir Anda dilengkapi verifikasi PIN Supervisor seperti yang diterapkan Toko Kamu bersama Cooca Indonesia.\n\nPelajari caranya di: https://cooca.id",
+    "linkedin": "Kebocoran meja kasir merupakan risiko operasional riil bagi bisnis ritel modern. Penerapan Role-Based Access Control dan otorisasi PIN Supervisor pada sistem POS COOCA memastikan setiap pembatalan transaksi memiliki audit trail yang dapat dipertanggungjawabkan.\n\nPelajari modul keamanan operasional di: https://cooca.id",
+    "threads": "Uang kasir sering selisih pas tutup toko? Cek apakah kasir masih bisa void transaksi tanpa PIN Supervisor. Kunci sistem kasirmu bareng Cooca di cooca.id"
+  },
+  "pinned_comment": "Di tokomu, kasir wajib lapor ke siapa kalau mau batalkan transaksi?",
+  "hashtags": [
+    "#KeamananToko",
+    "#AntiFraudKasir",
+    "#CoocaERP",
+    "#AuditBisnis",
+    "#SistemUsaha"
+  ],
+  "cta": "Coba gratis di cooca.id",
+  "claims_verified": [
+    "Rp20.000 (angka contoh hitung terbuka kebocoran harian)",
+    "Rp600.000 (hasil perkalian contoh Rp20.000 dikali 30 hari)",
+    "Rp100.000 (angka contoh situasi selisih kas pada hook cadangan)",
+    "Fitur PIN Supervisor dan kontrol hak akses live di cooca.id/roles",
+    "Coba gratis 14 hari tanpa kartu kredit tersedia di cooca.id"
+  ],
+  "design_system": {
+    "palette": "biru laut gelap (#0A0D14, #0F172A), aksen hijau verifikasi (#34C759), teks putih (#FFFFFF)",
+    "type": "Plus Jakarta Sans dan Bricolage Grotesque ala Apple HIG",
+    "tempo": "dinamis dan tegas pada hook, stabil pada demo solusi",
+    "easing": "ease-out cubic-bezier(0.16, 1, 0.3, 1)",
+    "camera": "push-in bertahap dan tahan pada CTA",
+    "transitions": "geser bento squircle dan fade halus",
+    "sound": "bass impact teredam, tick kalkulasi, chime sukses"
+  },
+  "dedup": {
+    "inventory_count": 1,
+    "mode": "penuh",
+    "nearest_match": "Instagram Carousel: Solusi Selisih Kas & Rekonsiliasi",
+    "verdict": "PASS"
+  },
+  "approval": {
+    "status": "pending",
+    "approved_at": "",
+    "user_message": "",
+    "revision_count": 0
+  }
+}

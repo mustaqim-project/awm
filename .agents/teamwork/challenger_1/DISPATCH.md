@@ -42,3 +42,33 @@ Message:
 **Context**: Empirical & Quantitative Challenge of docs/UI_UX_AUDIT_REPORT.md
 **Content**: Status check. Please report your progress on Tests 1-6.
 **Action**: Please complete your verification tests and deliver handoff.md with your verdict.
+
+
+## 2026-11-07T10:16:48Z
+From: 58fe913b-8bbe-4705-a472-1a575b67e3a5
+Message:
+You are Challenger 1: RBAC Adversarial Challenger.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\challenger_1\
+
+MANDATORY INSTRUCTIONS:
+1. Read the authoritative request at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+2. Read the project scope document at: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
+3. Read the worker handoffs at:
+   - c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac\handoff.md
+
+SCOPE & CHALLENGE:
+Conduct empirical adversarial verification on the RBAC implementation for Analytics, Approvals, and Billing:
+1. Attempt unauthorized operations:
+   - Unauthenticated access to `/analytics`, `/approvals`, `/billing`.
+   - Access by a user with NO permissions -> must be redirected or 403.
+   - Access to `/approvals` with view-only (`approvals.view`) attempting POST `/approvals/{id}/approve` and `/approvals/{id}/reject` -> must be denied with 403 Forbidden.
+   - Access to `/settings/approval-rules` with view-only (`approvals.view`) attempting POST/PUT/DELETE -> must be denied with 403 Forbidden.
+   - Access to `/billing/upgrade` or `/billing/checkout` without `billing.manage` -> must be denied with 403 Forbidden.
+2. View Rendering Checks:
+   - Verify that when a user with only `approvals.view` renders `approvals/inbox.blade.php`, the Approve and Reject buttons are NOT present in the HTML.
+   - Verify that when a user without `reports.financial` renders `analytics/index.blade.php`, confidential margin/profit data is locked/hidden.
+   - Verify that when a user without `billing.manage` renders `billing/limits.blade.php`, upgrade buttons and delete file buttons are locked/hidden.
+3. Execute empirical tests and assertions.
+4. Provide a clear verdict: APPROVE or REQUEST_CHANGES.
+5. Write complete challenge report to: `c:\laragon\www\cooca_core\.agents\teamwork\challenger_1\handoff.md`.
+6. Send completion message back to orchestrator.

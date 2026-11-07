@@ -1,16 +1,20 @@
-# Progress — Challenger 1 (Empirical & Quantitative Verification)
+# Progress — Challenger 1 (RBAC Adversarial Verification)
 
-Last visited: 2026-10-31T11:29:00Z
+Last visited: 2026-11-07T10:31:00Z
 
 ## Status
 - [x] Initialized BRIEFING.md and DISPATCH.md
-- [x] Test 1: Verify exact Blade files count in `resources/views/app` (Claim: 185) -> VERIFIED (185 Blade files, 0 non-blade)
-- [x] Test 2: Verify submodules enumeration in `resources/views/app` vs Report Section 4 (Claim: 44) -> VERIFIED (43 subdirs + 1 root module = 44)
-- [x] Test 3: Verify total LOC and file size claims (Claim: 134,824 lines, 7,158 lines for pos/terminal) -> VERIFIED (134,596 splitlines, pos/terminal exactly 7,158 lines / 532 KB)
-- [x] Test 4: Verify view path citations & line numbers in Section 5 (Sampled 20 citations) -> VERIFIED (All 20 defect classes confirmed)
-- [x] Test 5: Verify Git status read-only guarantee (`git status resources/views/app`) -> VERIFIED (Zero files modified)
-- [x] Test 6: Adversarial stress-test of Section 3.2 and Section 8.1 -> FOUND DEFECTS:
-  - 11 of 44 paths in Section 3.2 do not exist on disk
-  - Section 8.1 Command 3 outputs 76 instances (claimed 47)
-- [x] Synthesize empirical findings into handoff.md with verdict: REQUEST_CHANGES
-- [ ] Send completion message to parent agent
+- [x] Inspect codebase & existing tests for Analytics, Approvals, Billing RBAC
+- [x] Adversarial Test Suite Setup: Construct and execute empirical tests for unauthorized operations (`tests/Feature/AdversarialRbacChallengeTest.php`):
+  - [x] Unauthenticated access to `/analytics`, `/approvals`, `/billing` -> strictly rejected (302 redirect to login / 401 Unauthorized)
+  - [x] Access by user with NO permissions -> strictly rejected (302 redirect to portal / 403 Forbidden)
+  - [x] Access to `/approvals` with view-only (`approvals.view`) attempting POST `/approvals/{id}/approve` & `reject` -> 403 Forbidden (JSON) / 302 redirect to portal (Web)
+  - [x] Access to `/settings/approval-rules` and `/settings/rules/approvals` with view-only (`approvals.view`) attempting POST/PUT/DELETE -> 403 Forbidden
+  - [x] Access to `/billing/upgrade` or `/billing/checkout` without `billing.manage` -> 403 Forbidden (JSON) / 302 redirect to portal (Web)
+- [x] Adversarial View Rendering Checks:
+  - [x] User with only `approvals.view` renders `approvals/inbox.blade.php`: Approve & Reject buttons NOT present on card; locked status badge rendered
+  - [x] User without `reports.financial` renders `analytics/index.blade.php`: confidential margin/profit data masked (`••••••••`), lock icons shown, profit headers hidden
+  - [x] User without `billing.manage` renders `billing/limits.blade.php`: upgrade buttons disabled with lock icon, delete file buttons NOT present
+- [x] Run full regression suite across all affected modules
+- [x] Synthesize empirical challenge report in `handoff.md` with explicit verdict: APPROVE
+- [ ] Send completion message to orchestrator

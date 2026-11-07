@@ -27,10 +27,10 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | RBAC Enforcement & Controller/View Guards | F1, F2, F3, F4 | none | PLANNED |
-| 2 | UI Simplification & Layout Cleanliness | F5, F6, F7, F8 | M1 | PLANNED |
-| 3 | Business Owner Documentation | F9, F10, F11, F12 | none | PLANNED |
-| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F13, F14 | M1, M2, M3 | PLANNED |
+| 1 | RBAC Enforcement & Controller/View Guards | F1, F2, F3, F4 | none | DONE |
+| 2 | UI Simplification & Layout Cleanliness | F5, F6, F7, F8 | M1 | DONE |
+| 3 | Business Owner Documentation | F9, F10, F11, F12 | none | DONE |
+| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F13, F14 | M1, M2, M3 | DONE |
 
 ## Interface Contracts
 

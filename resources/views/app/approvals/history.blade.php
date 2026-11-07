@@ -1,6 +1,6 @@
 @extends('layouts.app', [
-    'title' => __('approvals.history_page_title'),
-    'headerTitle' => __('approvals.history_header_title'),
+    'title' => __('approvals.history_title') . ' - Cooca',
+    'headerTitle' => __('approvals.history_title'),
     'headerSubtitle' => __('approvals.history_header_subtitle')
 ])
 
