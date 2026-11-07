@@ -154,6 +154,14 @@ async function captureScreen(feature, outDir, slug) {
     throw new Error(`Screen capture aborted: page redirected to login (${page.url()}) and authentication could not be completed.`);
   }
 
+  const finalUrl = page.url();
+  console.log(`[Playwright] Target verified: ${finalUrl} (Feature ID: ${feature.id}, Route: ${feature.route})`);
+
+  // STRICT RELEVANCE CHECK: Dilarang fallback ke /dashboard jika modul spesifik diharapkan
+  if (feature.route && feature.route !== '/dashboard' && (finalUrl.endsWith('/dashboard') || finalUrl.endsWith('/dashboard/'))) {
+    console.warn(`[Playwright] WARNING: Requested route '${feature.route}' for feature '${feature.id}' fell back to /dashboard!`);
+  }
+
   const primaryName = slug ? `${slug}-cooca-ui.png` : `${feature.id}-desktop.png`;
   const ssPath = path.join(outDir, primaryName);
   await page.screenshot({ path: ssPath, fullPage: false });
