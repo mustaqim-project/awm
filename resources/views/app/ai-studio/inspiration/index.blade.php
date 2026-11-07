@@ -231,21 +231,21 @@
                             @endif
                         </div>
 
-                        <!-- Top Right: Favorite Button & Save to Collection -->
+                        <!-- Top Right: Favorite Button & Save to Collection (Touch Ergonomics >= 36px) -->
                         <div class="absolute top-2.5 right-2.5 flex items-center gap-1.5">
                             <button type="button"
                                 @click="toggleFavoriteItem(@js($item))"
                                 :title="isFavorited(@js($item)) ? 'Hapus dari Favorit' : 'Simpan ke Favorit'"
-                                class="w-7 h-7 rounded-full bg-white/90 dark:bg-black/90 flex items-center justify-center shadow-xs transition-transform active:scale-90 hover:scale-110">
-                                <i data-lucide="heart" class="w-3.5 h-3.5 transition-colors"
-                                    :class="isFavorited(@js($item)) ? 'text-red-500 fill-red-500' : 'text-black/50 dark:text-white/50'"></i>
+                                class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/95 dark:bg-black/90 flex items-center justify-center shadow-xs transition-transform active:scale-90 hover:scale-110 cursor-pointer">
+                                <i data-lucide="heart" class="w-4 h-4 transition-colors"
+                                    :class="isFavorited(@js($item)) ? 'text-red-500 fill-red-500' : 'text-black/60 dark:text-white/60'"></i>
                             </button>
 
                             <button type="button"
                                 @click="openAddToCollectionModal(@js($item))"
                                 title="Tambahkan ke Papan Koleksi"
-                                class="w-7 h-7 rounded-full bg-white/90 dark:bg-black/90 text-black/70 dark:text-white/70 flex items-center justify-center shadow-xs transition-transform active:scale-90 hover:scale-110">
-                                <i data-lucide="bookmark-plus" class="w-3.5 h-3.5"></i>
+                                class="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-white/95 dark:bg-black/90 text-black/75 dark:text-white/75 flex items-center justify-center shadow-xs transition-transform active:scale-90 hover:scale-110 cursor-pointer">
+                                <i data-lucide="bookmark-plus" class="w-4 h-4"></i>
                             </button>
                         </div>
 
@@ -322,8 +322,9 @@
     @endif
 
     {{-- MODAL TAMBAHKAN KE KOLEKSI --}}
+    <template x-teleport="body">
     <div x-show="collectionModalOpen" style="display: none;"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -383,6 +384,7 @@
             </div>
         </div>
     </div>
+    </template>
 
 </div>
 

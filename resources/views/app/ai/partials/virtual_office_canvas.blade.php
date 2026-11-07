@@ -303,7 +303,7 @@
                 class="bg-slate-200/80 dark:bg-[#090d16] overflow-hidden select-none transition-all duration-300 flex flex-col w-full min-w-0"
             >
                 <!-- 3D Room & Status Header HUD (Top Left) -->
-                <div class="absolute top-4 left-4 z-20 flex items-center gap-2 pointer-events-auto max-w-[calc(100%-140px)] flex-nowrap">
+                <div x-show="!isPOVMode || window.innerWidth >= 640" class="absolute top-4 left-4 z-20 flex items-center gap-2 pointer-events-auto max-w-[calc(100%-140px)] flex-nowrap">
                     <div class="px-3 py-1.5 rounded-xl bg-slate-900/85 dark:bg-black/85 backdrop-blur-md border border-white/15 text-white flex items-center gap-2 text-xs shadow-xl truncate">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
                         <span class="font-bold tracking-wide uppercase text-[11px] font-mono truncate">

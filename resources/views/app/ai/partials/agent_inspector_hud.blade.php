@@ -13,7 +13,7 @@
     @click.stop
     @mousedown.stop
     @touchstart.stop
-    class="absolute bottom-20 right-4 sm:right-6 z-50 max-w-sm sm:max-w-md w-full p-5 rounded-3xl bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl border border-black/10 dark:border-white/20 text-slate-800 dark:text-white shadow-2xl space-y-4 select-none transition-colors pointer-events-auto max-h-[calc(100vh-6.5rem)] overflow-y-auto"
+    class="absolute bottom-20 right-3 sm:right-6 z-50 w-[calc(100%-1.5rem)] max-w-sm sm:max-w-md p-4 sm:p-5 rounded-3xl bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl border border-black/10 dark:border-white/20 text-slate-800 dark:text-white shadow-2xl space-y-4 select-none transition-colors pointer-events-auto max-h-[calc(100vh-7rem)] overflow-y-auto"
     style="display: none;"
 >
     <!-- A. AGENT INSPECTION MODE -->

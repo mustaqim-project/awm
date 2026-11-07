@@ -16,36 +16,31 @@
         ]">
 
         <div class="flex items-center gap-2 flex-wrap">
-            {{-- Workflow Quick Triggers --}}
+            {{-- Single Primary Action: Teamwork Workflow --}}
             <button type="button" @click="activeWorkflowTab = 'teamwork'; runTeamworkWorkflow();"
-                class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                 <i data-lucide="users" class="w-4 h-4"></i>
                 <span>Rapat Tim (/teamwork)</span>
             </button>
 
-            <button type="button" @click="activeWorkflowTab = 'goal'; runGoalWorkflow();"
-                class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2DBE50] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)] cursor-pointer">
-                <i data-lucide="target" class="w-4 h-4"></i>
-                <span>Target Bisnis (/goal)</span>
-            </button>
+            {{-- Secondary Tonal Action: Action Center --}}
+            @if(\App\Support\Context::hasPermission('ai.approve') || \App\Support\Context::isAdminOrOwner())
+                <a href="{{ route('cooca-ai.actions') }}"
+                    class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/75 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center gap-1.5">
+                    <i data-lucide="check-square" class="w-4 h-4 text-emerald-500"></i>
+                    <span>Pusat Persetujuan</span>
+                </a>
+            @endif
 
-            <button type="button" @click="activeWorkflowTab = 'grill_me'; runGrillMeWorkflow();"
-                class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(255,149,0,0.25)] cursor-pointer">
-                <i data-lucide="flame" class="w-4 h-4"></i>
-                <span>Diagnosa Usaha (/grill-me)</span>
-            </button>
-
-            <button type="button" @click="activeWorkflowTab = 'boost';"
-                class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#AF52DE] hover:bg-[#9B42C6] active:scale-[0.97] transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(175,82,222,0.25)] cursor-pointer">
-                <i data-lucide="zap" class="w-4 h-4"></i>
-                <span>Analisa Kritis (/boost)</span>
-            </button>
-
-            <button type="button" @click="activeWorkflowTab = 'schedule'; runScheduleWorkflow();"
-                class="min-h-[40px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
-                <i data-lucide="clock" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>Rutinitas (/schedule)</span>
-            </button>
+            {{-- Secondary Tonal Action: Settings --}}
+            @if(\App\Support\Context::hasPermission('ai.manage') || \App\Support\Context::isAdminOrOwner())
+                <a href="{{ route('cooca-ai.providers') }}"
+                    class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/75 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center gap-1.5"
+                    title="Pengaturan Model & Kunci API">
+                    <i data-lucide="settings-2" class="w-4 h-4 text-purple-500"></i>
+                    <span class="hidden sm:inline">Provider AI</span>
+                </a>
+            @endif
         </div>
     </x-module-header>
 
@@ -265,10 +260,14 @@
                                             <div class="text-xs font-bold text-black dark:text-white" x-text="proposal.title"></div>
                                             <div class="text-[11px] text-black/50 dark:text-white/50 font-mono" x-text="'Biaya: ' + proposal.estimated_cost"></div>
                                         </div>
-                                        <button type="button" @click="quickApproveProposal(proposal.id)"
-                                            class="px-3 py-1.5 rounded-[8px] bg-[#34C759] hover:bg-[#2DBE50] text-white text-xs font-semibold shadow-xs transition-all shrink-0 cursor-pointer">
-                                            Setujui
-                                        </button>
+                                        @if(\App\Support\Context::hasPermission('ai.approve') || \App\Support\Context::isAdminOrOwner())
+                                            <button type="button" @click="quickApproveProposal(proposal.id)"
+                                                class="min-h-[38px] px-3.5 py-1.5 rounded-[8px] bg-[#34C759] hover:bg-[#2DBE50] text-white text-xs font-semibold shadow-xs transition-all shrink-0 cursor-pointer">
+                                                Setujui
+                                            </button>
+                                        @else
+                                            <span class="text-[11px] text-black/40 dark:text-white/40 italic">Butuh Izin Owner</span>
+                                        @endif
                                     </div>
                                 </template>
                             </div>

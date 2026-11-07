@@ -64,19 +64,23 @@
                 <span class="text-[10px] text-black/50 dark:text-white/50">Kredit</span>
             </div>
 
-            <!-- Top Up Button -->
-            <button type="button" @click="$dispatch('open-ai-topup-modal')"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
-                <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
-                <span>Top Up</span>
-            </button>
+            <!-- Top Up Button (Secondary Tonal Pill) -->
+            @if(\App\Support\Context::hasPermission('ai_studio.manage') || \App\Support\Context::isAdminOrOwner())
+                <button type="button" @click="$dispatch('open-ai-topup-modal')"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 text-xs font-semibold shadow-2xs transition-all active:scale-[0.98]">
+                    <i data-lucide="zap" class="w-3.5 h-3.5 fill-amber-500/20"></i>
+                    <span>Top Up</span>
+                </button>
+            @endif
 
-            <!-- New Generation Button -->
-            <button type="button" @click="generationDrawerOpen = true"
-                class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>+ Render Variasi Baru</span>
-            </button>
+            <!-- New Generation Button (Primary CTA) -->
+            @if(\App\Support\Context::hasPermission('ai_studio.generate') || \App\Support\Context::isOwner())
+                <button type="button" @click="generationDrawerOpen = true"
+                    class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>Render Variasi Baru</span>
+                </button>
+            @endif
 
             <!-- Back Button -->
             <a href="{{ route('ai-studio.index') }}"
@@ -159,34 +163,38 @@
                     <!-- 1-Click Action Cockpit (Katalog Produk & Media Sosial) -->
                     <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-black/5 dark:border-white/10">
                         <div class="flex flex-wrap items-center gap-2">
-                            <!-- AC-010: Simpan ke Katalog Produk Button -->
-                            <button type="button" @click="openExportModal()"
-                                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2db24f] text-white text-xs font-bold shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98]">
-                                <i data-lucide="package-plus" class="w-4 h-4"></i>
-                                <span>Simpan ke Katalog</span>
-                            </button>
+                            @if(\App\Support\Context::hasPermission('ai_studio.manage') || \App\Support\Context::isOwner())
+                                <!-- Primary Action: Simpan ke Katalog Produk -->
+                                <button type="button" @click="openExportModal()"
+                                    class="inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold shadow-xs transition-all active:scale-[0.98]">
+                                    <i data-lucide="package-plus" class="w-4 h-4"></i>
+                                    <span>Simpan ke Katalog</span>
+                                </button>
 
-                            <!-- Social Media Posting Button -->
-                            <button type="button" @click="openSocialModal()"
-                                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0062cc] text-white text-xs font-bold shadow-sm shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
-                                <i data-lucide="share-2" class="w-4 h-4"></i>
-                                <span>Posting ke Media Sosial</span>
-                            </button>
+                                <!-- Secondary Action: Posting ke Media Sosial -->
+                                <button type="button" @click="openSocialModal()"
+                                    class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] border border-black/5 dark:border-white/10 text-black/80 dark:text-white text-xs font-semibold transition-all active:scale-[0.98]">
+                                    <i data-lucide="share-2" class="w-4 h-4 text-[#007AFF]"></i>
+                                    <span>Posting ke Media Sosial</span>
+                                </button>
+                            @endif
 
                             <!-- Direct Download -->
                             <a :href="activeImageUrl" download="ai-studio-render.png" target="_blank"
-                                class="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
+                                class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white transition-all">
                                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('admin.unduh') }}</span>
                             </a>
 
-                            <!-- Delete Asset Button -->
-                            <button type="button" @click="deleteActiveAsset()"
-                                class="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-[12px] bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold transition-all cursor-pointer"
-                                title="Hapus aset gambar ini jika tidak sesuai">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                <span>Hapus</span>
-                            </button>
+                            @if(\App\Support\Context::hasPermission('ai_studio.manage') || \App\Support\Context::isOwner())
+                                <!-- Delete Asset Button (Quiet Destructive) -->
+                                <button type="button" @click="deleteActiveAsset()"
+                                    class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-[12px] bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold transition-all cursor-pointer ml-auto sm:ml-0"
+                                    title="Hapus aset gambar ini jika tidak sesuai">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    <span>Hapus</span>
+                                </button>
+                            @endif
                         </div>
 
                         <div class="text-[11px] text-black/40 dark:text-white/40">
@@ -989,7 +997,16 @@ function aiStudioCanvas(config) {
         },
 
         pollGenerationStatus(genId) {
+            let attempts = 0;
+            const maxAttempts = 60; // 3 minutes timeout limit
             const interval = setInterval(async () => {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    clearInterval(interval);
+                    this.isRendering = false;
+                    this.errorMessage = 'Waktu render melebihi batas waktu (timeout). Silakan periksa kembali nanti.';
+                    return;
+                }
                 try {
                     const res = await fetch('{{ url("ai-studio/projects") }}/{{ $project->id }}', {
                         headers: { 'Accept': 'application/json' }

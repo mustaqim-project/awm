@@ -125,7 +125,7 @@
                             <span>{{ __('ai.actions.review_detail') }}</span>
                         </button>
 
-                        @if($prop->isPending() || $prop->isApproved())
+                        @if((\App\Support\Context::hasPermission('ai.approve') || \App\Support\Context::isAdminOrOwner()) && ($prop->isPending() || $prop->isApproved()))
                             @if($prop->isPending())
                                 <!-- Reject Button -->
                                 <button type="button" 
@@ -497,6 +497,7 @@
                     {{ __('common.close') }}
                 </button>
 
+                @if(\App\Support\Context::hasPermission('ai.approve') || \App\Support\Context::isAdminOrOwner())
                 <template x-if="selectedProposal?.status === 'pending' || selectedProposal?.status === 'approved'">
                     <div class="flex items-center gap-2">
                         <template x-if="selectedProposal?.status === 'pending'">
@@ -526,6 +527,7 @@
                         </button>
                     </div>
                 </template>
+                @endif
             </div>
 
         </div>

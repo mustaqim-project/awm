@@ -1,7 +1,8 @@
+<template x-teleport="body">
 <div x-data="aiStudioTopupModal()"
     @open-ai-topup-modal.window="openModal($event.detail)"
     x-show="isOpen"
-    class="fixed inset-0 z-50 overflow-y-auto"
+    class="fixed inset-0 z-[200] overflow-y-auto"
     style="display: none;"
     x-cloak>
 
@@ -268,6 +269,7 @@
         </div>
     </div>
 </div>
+</template>
 
 <script>
 function aiStudioTopupModal() {

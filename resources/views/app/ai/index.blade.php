@@ -61,9 +61,9 @@
                     </button>
                 </form>
 
-                <!-- Quick Query Suggestions Chips (min 44px tap target) -->
-                <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-1">
-                    <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold w-full sm:w-auto">{{ __('ai.pos.quick_questions') }}</span>
+                <!-- Quick Query Suggestions Chips (min 44px tap target, mobile swipeable slider) -->
+                <div class="flex items-center gap-2 sm:gap-2.5 pt-1 overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap no-scrollbar">
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold w-full sm:w-auto shrink-0">{{ __('ai.pos.quick_questions') }}</span>
                     <button @click="quickAsk(@js(__('ai.pos.quick_prompts.sales_today')))" class="min-h-[44px] px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs transition border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-2">
                         <i data-lucide="trending-up" class="w-4 h-4 text-emerald-500"></i>
                         <span>{{ __('ai.pos.quick_queries.sales_today') }}</span>
@@ -157,7 +157,7 @@
                 <p class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">{{ __('ai.forecasting.subtitle_decomp') }}</p>
             </div>
             <div class="flex items-center gap-2">
-                <button type="button" @click="exportForecastingCsv()" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5">
+                <button type="button" @click="exportForecastingCsv()" class="min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5 cursor-pointer">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                     <span>{{ __('ai.forecasting.export_csv') }}</span>
                 </button>
@@ -264,7 +264,7 @@
             </div>
             <div class="flex items-center gap-2">
                 @if(count($stockPrediction['products']) > 0)
-                <button type="button" @click="showAllStockModal = true" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5">
+                <button type="button" @click="showAllStockModal = true" class="min-h-[38px] px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-white/10 transition flex items-center gap-1.5 cursor-pointer">
                     <i data-lucide="list" class="w-3.5 h-3.5"></i>
                     <span>{{ __('ai.inventory.view_all', ['count' => count($stockPrediction['products'])]) }}</span>
                 </button>

@@ -154,8 +154,9 @@
     @endif
 
     {{-- MODAL UNGGAH FOTO REFERENSI --}}
+    <template x-teleport="body">
     <div x-show="uploadModalOpen" style="display: none;"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -213,6 +214,7 @@
             </form>
         </div>
     </div>
+    </template>
 
 </div>
 @endsection

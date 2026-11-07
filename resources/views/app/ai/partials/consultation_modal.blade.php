@@ -98,7 +98,7 @@
         <!-- Chat Stream Body (Balon Percakapan Identik Gambar 1) -->
         <div id="cooca-chat-message-stream" class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 bg-[#070B12]/80 scroll-smooth">
             
-            <!-- Alert jika {{ __('ai.belum_ada_provider_ai_aktif') }}>
+            <!-- Alert jika {{ __('ai.belum_ada_provider_ai_aktif') }} -->
             <template x-if="!hasConfiguredProvider">
                 <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs flex items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
@@ -119,7 +119,7 @@
                     <template x-if="msg.sender === 'ai'">
                         <div class="flex flex-col items-start max-w-[85%] space-y-1">
                             <span class="text-[11px] text-white/40 pl-1" x-text="msg.time"></span>
-                            <div class="bg-emerald-600 text-white rounded-2xl rounded-tl-sm px-4 py-3 text-xs leading-relaxed shadow-sm">
+                            <div class="bg-white/10 text-white border border-white/15 rounded-2xl rounded-tl-sm px-4 py-3 text-xs leading-relaxed shadow-xs">
                                 <div class="whitespace-pre-line" x-text="msg.text"></div>
                                 <template x-if="msg.needs_provider">
                                     <div class="mt-2.5 pt-2 border-t border-white/20">
@@ -133,11 +133,11 @@
                         </div>
                     </template>
 
-                    <!-- User Message (Right) -->
+                    <!-- User Message (Right - Solid Cooca Blue) -->
                     <template x-if="msg.sender === 'user'">
                         <div class="flex flex-col items-end max-w-[85%] ml-auto space-y-1">
                             <span class="text-[11px] text-white/40 pr-1" x-text="msg.time"></span>
-                            <div class="bg-emerald-600 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs leading-relaxed shadow-sm font-medium">
+                            <div class="bg-[#007AFF] text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs leading-relaxed shadow-xs font-medium">
                                 <div class="whitespace-pre-line" x-text="msg.text"></div>
                             </div>
                         </div>

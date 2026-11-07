@@ -178,6 +178,18 @@
                             </div>
                         </div>
 
+                        <!-- AI Studio Visual & Inspirasi Viral -->
+                        <a href="#sec-ai-studio" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-bold text-black dark:text-white hover:bg-rose-500/10 dark:hover:bg-rose-500/15 hover:text-rose-500 transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-[#FF2D55]/15 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F] flex items-center justify-center shrink-0">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight text-[12px]">AI Studio &amp; Inspirasi</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">20 Sektor</span>
+                            </div>
+                        </a>
+
                         <!-- Komunitas & Event UMKM -->
                         <a href="#sec-community" @click="if(activeTab !== 'all') activeTab = 'all'"
                             class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
@@ -853,6 +865,12 @@
             <!-- (PANDUAN LENGKAP 20 JENIS USAHA & LINK TUTORIAL)      -->
             <!-- ===================================================== -->
             @include('app.docs.partials.sec_ai')
+
+            <!-- ===================================================== -->
+            <!-- SECTION 12B: AI STUDIO VISUAL & MATERI PROMOSI       -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & LINK TUTORIAL)      -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_ai_studio')
 
             <!-- ===================================================== -->
             <!-- SECTION 13: PINTASAN KEYBOARD (SHORTCUTS)            -->

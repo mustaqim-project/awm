@@ -94,7 +94,7 @@
                     <p class="text-xs text-black/60 dark:text-white/60">Anda belum membuat papan koleksi pribadi.</p>
                     <button type="button" @click="createModalOpen = true"
                         class="text-xs font-bold text-[#007AFF] hover:underline">
-                        + Buat Koleksi Pertama Anda
+                        Buat Koleksi Pertama Anda
                     </button>
                 </div>
             @endforelse
@@ -149,8 +149,9 @@
     </div>
 
     {{-- MODAL BUAT KOLEKSI BARU --}}
+    <template x-teleport="body">
     <div x-show="createModalOpen" style="display: none;"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -206,6 +207,7 @@
             </form>
         </div>
     </div>
+    </template>
 
 </div>
 @endsection

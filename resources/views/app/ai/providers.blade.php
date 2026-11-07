@@ -12,7 +12,7 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 translate-y-2 scale-95"
-         class="fixed bottom-6 right-6 z-50 max-w-md w-full shadow-2xl rounded-2xl p-4 border backdrop-blur-xl"
+         class="fixed bottom-[calc(76px+env(safe-area-inset-bottom))] sm:bottom-6 right-3 sm:right-6 z-[220] w-[calc(100%-1.5rem)] sm:max-w-md shadow-2xl rounded-2xl p-4 border backdrop-blur-xl"
          :class="toast.type === 'success' 
             ? 'bg-emerald-950/90 text-emerald-100 border-emerald-500/30' 
             : 'bg-rose-950/90 text-rose-100 border-rose-500/30'"
@@ -281,10 +281,14 @@
                                 <span x-text="testingProvider === '{{ $slug }}' ? '{{ __('ai.providers.testing') }}' : '{{ __('ai.providers.test_connection') }}'"></span>
                             </button>
 
-                            <button type="submit" 
-                                    class="px-4 py-2 rounded-xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black text-xs font-semibold shadow-sm transition active:scale-95">
-                                {{ __('ai.providers.save_changes') }}
-                            </button>
+                            @if(\App\Support\Context::hasPermission('ai.manage') || \App\Support\Context::isAdminOrOwner())
+                                <button type="submit" 
+                                        class="px-4 py-2 rounded-xl bg-black hover:bg-black/90 dark:bg-white dark:hover:bg-white/90 text-white dark:text-black text-xs font-semibold shadow-sm transition active:scale-95 cursor-pointer">
+                                    {{ __('ai.providers.save_changes') }}
+                                </button>
+                            @else
+                                <span class="text-[11px] text-black/40 dark:text-white/40 italic">Izin simpan terbatas</span>
+                            @endif
                         </div>
                     </form>
                 </div>

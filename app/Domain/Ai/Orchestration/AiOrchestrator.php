@@ -97,12 +97,24 @@ final class AiOrchestrator
             $model = $this->modelRouter->selectModel($provider->getProviderName(), $tier, $resolved['model']);
 
             // 5. Request reasoning & structured decision from provider
-            $structuredOutput = $provider->structuredPrompt(
-                $resolved['api_key'],
-                $model,
-                $systemPrompt,
-                $query
-            );
+            try {
+                $structuredOutput = $provider->structuredPrompt(
+                    $resolved['api_key'],
+                    $model,
+                    $systemPrompt,
+                    $query
+                );
+            } catch (Throwable $providerException) {
+                // Resilient AI Fallback Engine: If cloud provider fails or times out, fallback to native offline rule-based provider
+                $fallbackProvider = $this->providerManager->getProvider('fallback');
+                $structuredOutput = $fallbackProvider->structuredPrompt(
+                    '',
+                    'cooca-rule-engine-v1',
+                    $systemPrompt,
+                    $query
+                );
+                $structuredOutput['raw'] = ($structuredOutput['raw'] ?? '') . "\n[Fallback Activated: " . $providerException->getMessage() . ']';
+            }
 
             // If structured output failed or returned raw, run parsing & repair
             if ((empty($structuredOutput['summary']) && empty($structuredOutput['findings'])) && ! empty($structuredOutput['raw'])) {
