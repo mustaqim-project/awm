@@ -1,25 +1,23 @@
-# BRIEFING — 2026-11-02T10:43:00Z
+# BRIEFING — 2026-11-07T05:25:00Z
 
 ## Mission
-Implement Fase 2 (Logistik & Gudang Toko) and Fase 3 (Customer Piutang & Omnichannel Digital) from the integration plan, fully integrated between backend `cooca_core` and mobile `cooca_my_own` for production use with 100% test passing and 0 flutter analyze issues.
+Refactor and improve the WhatsApp module views in resources/views/app/whatsapp for production, simplifying user interface layouts and enforcing role-based access control (RBAC) across controllers, views, and seeders.
 
 ## 🔒 My Identity
 - Archetype: teamwork_orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
 - Working directory: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator
 - Original parent: Sentinel / Parent Agent
-- Original parent conversation ID: 100f3680-7f80-490d-8ba4-be92986e0858
+- Original parent conversation ID: 2d0330f6-49e8-4b75-b041-e1098c5d7c97
 
 ## 🔒 My Workflow
 - **Pattern**: Project
 - **Scope document**: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
-1. **Decompose**: Survey and map target backend and mobile codebases, then execute across 5 milestones:
-   - Phase 0: Survey & Technical Discovery (3 Explorers in parallel) [DONE]
-   - Milestone 1: Backend Fase 2 (Purchase Orders, Goods Receipt, Stock Transfer APIs) [DONE]
-   - Milestone 2: Mobile Fase 2 (GoodsReceiptScreen & StockTransferScreen with camera barcode scan) [DONE]
-   - Milestone 3: Backend Fase 3 (Customer Debts, WhatsApp Receipt, Storefront/QR Orders APIs) [DONE]
-   - Milestone 4: Mobile Fase 3 (Kasbon payment, PosCustomerDebtSheet, WhatsApp share fallback, Storefront notifications & actions) [IN_PROGRESS]
-   - Milestone 5: Full Automated Verification & Forensic Audit (PHPUnit, Flutter analyze, Flutter test) [PLANNED]
+1. **Decompose**: Survey and map target WhatsApp views, controllers, seeders, and test suites across milestones:
+   - Phase 0: Survey & Technical Discovery (3 Explorers in parallel) [IN_PROGRESS]
+   - Milestone 1: Role-Based Access Control (RBAC) Enforcement (Seeders, Controller guards, 403 authorization checks) [PLANNED]
+   - Milestone 2: UI Simplification & Decluttering for WhatsApp Views (`index`, `broadcast`, `broadcast_detail`, `logs`) [PLANNED]
+   - Milestone 3: Full Automated Verification & Forensic Audit Gate [PLANNED]
 2. **Dispatch & Execute**:
    - Direct iteration loop: Explorer -> Worker -> Reviewers (2) -> Challengers (2) -> Forensic Auditor (1) -> Gate
 3. **On failure** (in this order):
@@ -31,14 +29,12 @@ Implement Fase 2 (Logistik & Gudang Toko) and Fase 3 (Customer Piutang & Omnicha
    - Escalate: report to parent (sub-orchestrators only, last resort)
 4. **Succession**: Spawn count threshold 16 / 16. On threshold, write handoff.md and spawn successor.
 - **Work items**:
-  1. Survey & Technical Discovery [done]
-  2. Milestone 1: Backend Fase 2 (Logistics & Stock APIs) [done]
-  3. Milestone 2: Mobile Fase 2 (Logistics UI & Scanner) [done]
-  4. Milestone 3: Backend Fase 3 (Customer Debts & Omnichannel APIs) [done]
-  5. Milestone 4: Mobile Fase 3 (Customer Debts & Omnichannel UI) [in-progress]
-  6. Milestone 5: Comprehensive Automated Testing & Audit Gate [pending]
-- **Current phase**: Milestone 4 (Mobile Fase 3)
-- **Current focus**: Monitoring `worker_fase3_mobile`.
+  1. Survey & Technical Discovery [in-progress]
+  2. Milestone 1: RBAC Enforcement (Seeders, Controller guards) [pending]
+  3. Milestone 2: UI Simplification & Decluttering for WhatsApp Views [pending]
+  4. Milestone 3: Verification & Forensic Audit Gate [pending]
+- **Current phase**: Phase 0 (Survey & Technical Discovery)
+- **Current focus**: Monitoring 3 parallel Explorers for WhatsApp UI, RBAC, and Test Suites.
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
@@ -50,45 +46,36 @@ Implement Fase 2 (Logistik & Gudang Toko) and Fase 3 (Customer Piutang & Omnicha
 - Hard audit veto: clean forensic audit required.
 
 ## Current Parent
-- Conversation ID: 100f3680-7f80-490d-8ba4-be92986e0858
-- Updated: 2026-11-02T08:38:00Z
+- Conversation ID: 2d0330f6-49e8-4b75-b041-e1098c5d7c97
+- Updated: 2026-11-07T05:25:00Z
 
 ## Key Decisions Made
-- Phase 0 Survey complete (3 Explorers).
-- Milestone 1 complete: Backend Fase 2 (10 tests, 87 assertions passed).
-- Milestone 2 complete: Mobile Fase 2 (40 tests passed, flutter analyze 0 issues).
-- Milestone 3 complete: Backend Fase 3 (22 tests, 73 assertions passed).
-- Dispatched Milestone 4 (`worker_fase3_mobile` on `cooca_my_own`).
+- Initiated Phase 0 Survey with 3 specialized parallel explorers:
+  1. `explorer_wa_ui`: UI layout, visual hierarchy, button placement, responsive styling, and decluttering in `resources/views/app/whatsapp/`.
+  2. `explorer_wa_rbac`: Controller permission guards, route protection, Spatie/Laravel permissions, database seeders, and `@can` integration.
+  3. `explorer_wa_test`: Test suite discovery, PHPUnit test coverage for WhatsApp, view compilation baseline (`php artisan view:cache`), and 403 test plans.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| explorer_fase23_1 | teamwork_explorer | Backend Architecture Survey | completed | 51e660b1-6686-4c63-92fc-17552b774619 |
-| explorer_fase23_2 | teamwork_explorer | Mobile Architecture Survey | completed | 946f1690-c607-41bf-afb3-c1b62eb4f904 |
-| explorer_fase23_3 | teamwork_explorer | Integration Contracts Survey | completed | 10841235-b390-4126-a553-5fe2c184606a |
-| worker_fase2_backend | teamwork_worker | Backend Logistics APIs Implementation | failed | ec0d2f41-5bc2-496d-8c41-063f33ab6d6a |
-| worker_fase2_backend_2 | teamwork_worker | Backend Logistics APIs Implementation (Replacement) | completed | 2f49893d-60b9-44a4-a883-7971d2cb3d74 |
-| worker_fase2_mobile | teamwork_worker | Mobile Logistics UI & Scanner Implementation | completed | a7aa7804-0fbd-4776-b63e-8c0c70288ecf |
-| worker_fase3_backend | teamwork_worker | Backend Omnichannel & Debts APIs Implementation | completed | ae399ee8-3ec0-487b-8177-24bf8a73c3f3 |
-| worker_fase3_mobile | teamwork_worker | Mobile Omnichannel & Debts UI Implementation | in-progress | e458c3d9-c7d3-4301-86c1-aafc5c1c53f2 |
+| explorer_wa_ui | teamwork_explorer | WhatsApp Blade Views UI/UX Survey | in-progress | 2abee926-e76e-46bb-87df-7177e82ccd8b |
+| explorer_wa_rbac | teamwork_explorer | WhatsApp Controller RBAC, Routes & Seeders Survey | in-progress | 3d3ddeb3-8e24-4df9-ab7d-07ab0858adc9 |
+| explorer_wa_test | teamwork_explorer | WhatsApp Test Suite & Verification Baseline Survey | in-progress | 39f94c6b-e0f3-4857-8a66-381885cda046 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 8 / 16
-- Pending subagents: e458c3d9-c7d3-4301-86c1-aafc5c1c53f2
+- Spawn count: 3 / 16
+- Pending subagents: 2abee926-e76e-46bb-87df-7177e82ccd8b, 3d3ddeb3-8e24-4df9-ab7d-07ab0858adc9, 39f94c6b-e0f3-4857-8a66-381885cda046
 - Predecessor: none
 - Successor: not yet spawned
 
 ## Active Timers
-- Heartbeat cron: 87be163a-9630-4504-a803-20f6abd1bf8c/task-40
-- Safety timer: 87be163a-9630-4504-a803-20f6abd1bf8c/task-349
+- Heartbeat cron: 072c1567-fb7e-4663-b29a-0dc2a878655b/task-36
+- Safety timer: 072c1567-fb7e-4663-b29a-0dc2a878655b/task-58
 
 ## Artifact Index
 - c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user request
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\DISPATCH.md — Incoming parent dispatch
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\progress.md — Progress tracking
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md — Gate status record
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md — Integration project scope
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_fase2_backend_2\handoff.md — Milestone 1 handoff
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_fase2_mobile\handoff.md — Milestone 2 handoff
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_fase3_backend\handoff.md — Milestone 3 handoff
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md — WhatsApp module refactor scope
