@@ -115,4 +115,9 @@ return [
     'import_data_pelanggan_massal_dari_file' => 'Import data customer massal dari file Excel',
     'import_pelanggan_via_excel_interac' => 'Import Customer via Excel Interac',
     'import_customers_via_excel' => 'Import Customers via Excel',
+    'terjadi_kesalahan_saat_mengunggah_file' => 'An error occurred while uploading the file.',
+    'terjadi_kesalahan_sistem_saat_mengeksekusi_import' => 'System error occurred while executing import.',
+    'terjadi_kesalahan_sistem' => 'System error occurred.',
+    'unduh_template_excel' => 'Download Template Excel',
+    'unduh_template_xlsx' => 'Download Template (.xlsx)',
 ];

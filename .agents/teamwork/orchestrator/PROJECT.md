@@ -19,22 +19,22 @@
 | F8 | Mobile KPI Horizontal Snap Sliders | Convert vertically stacking Bento KPI cards in `crm/members.blade.php` and `crm/vouchers.blade.php` to responsive horizontal snap sliders on mobile (375px) | M2 | Survey (Explorer 1) |
 | F9 | Community Mobile Feed Ergonomics | Optimize mobile DOM ordering so feed content is prioritized above the left sidebar widget on small screens in `community/index.blade.php` | M2 | Survey (Explorer 1) |
 | F10 | Action Button Ergonomics & Touch Targets | Ensure minimum 44px tap targets for buttons, pagination, carousel controls, and table actions across community, crm, and customers | M2 | Survey (Explorer 1) |
-| F11 | Translation Domain Isolation | Replace 6 `purchasing.*` translation key references in `customers/index.blade.php` with canonical `customers.*` keys | M2 | Survey (Explorer 1) |
+| F11 | Translation Domain Isolation | Replace 6 `purchasing.*` translation key references in `customers/index.blade.php` with canonical `customers.*` keys and register in `lang/id` & `lang/en` | M2 | Survey (Explorer 1, Challenger 2) |
 | F12 | Customers Business Owner Guide | Create `resources/views/app/docs/partials/sec_customers.blade.php` with POV Business Owner, 4-step workflow, 20-industry matrix, debt management, and verified route links | M3 | Survey (Explorer 3) |
 | F13 | CRM & Loyalty Business Owner Guide | Create `resources/views/app/docs/partials/sec_crm.blade.php` covering loyalty points, tiers, voucher generation, WhatsApp receipts, 20-industry matrix, and route links | M3 | Survey (Explorer 3) |
 | F14 | Community Business Owner Guide | Create `resources/views/app/docs/partials/sec_community.blade.php` covering networking, business forums, QRIS events, digital ticket check-in, 20-industry matrix, and route links | M3 | Survey (Explorer 3) |
 | F15 | Docs Navigation TOC Integration | Register `sec-customers`, `sec-crm`, and `sec-community` in `resources/views/app/docs/index.blade.php` Left Sidebar TOC with smooth scrolling links | M3 | Survey (Explorer 3) |
 | F16 | Test Suite Fix & Coverage Verification | Address B2B i18n test assertion in `CrmAndCustomerComprehensiveSecurityTest.php`; run automated test suites for Community, CRM, Customers, and Docs | M4 | Survey (Explorer 3) |
 | F17 | Syntax & Compilation Verification | Validate all modified and newly created Blade and PHP files with `php -l` and Blade compilation checks | M4 | Survey (Explorer 1, 3) |
-| F18 | Multi-Perspective Quality Gate | Conduct independent review (2 Reviewers), adversarial challenge (2 Challengers), and forensic integrity audit (1 Auditor) | M4 | Project Pattern |
+| F18 | Multi-Perspective Quality Gate | Conduct independent review (2 Reviewers), adversarial challenge (2 Challengers), and forensic integrity audit (2 Auditors) | M4 | Project Pattern |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | RBAC Enforcement & Controller/View Guards | F1, F2, F3, F4, F5 | none | PLANNED |
-| 2 | UI Simplification & Layout Optimization | F6, F7, F8, F9, F10, F11 | M1 | PLANNED |
-| 3 | Business Owner Documentation | F12, F13, F14, F15 | none | PLANNED |
-| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F16, F17, F18 | M1, M2, M3 | PLANNED |
+| 1 | RBAC Enforcement & Controller/View Guards | F1, F2, F3, F4, F5 | none | DONE |
+| 2 | UI Simplification & Layout Optimization | F6, F7, F8, F9, F10, F11 | M1 | DONE |
+| 3 | Business Owner Documentation | F12, F13, F14, F15 | none | DONE |
+| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F16, F17, F18 | M1, M2, M3 | DONE |
 
 ## Interface Contracts
 
@@ -80,6 +80,9 @@
 - Routes:
   - `routes/owner.php`
   - `routes/web.php`
+- Language Dictionaries:
+  - `lang/id/customers.php`
+  - `lang/en/customers.php`
 - Blade Views:
   - `resources/views/app/community/index.blade.php`
   - `resources/views/app/community/events.blade.php`
@@ -94,8 +97,14 @@
   - `resources/views/app/docs/partials/sec_community.blade.php` (new)
 - Tests:
   - `tests/Feature/CommunityWebFeatureTest.php`
+  - `tests/Feature/CommunityModuleAuditTest.php`
+  - `tests/Feature/CommunityEventFeatureTest.php`
+  - `tests/Feature/CommunityEventPaymentTest.php`
   - `tests/Feature/CrmWebFeatureTest.php`
-  - `tests/Feature/CustomerWebTest.php`
+  - `tests/Feature/CrmModuleAuditTest.php`
+  - `tests/Feature/CustomerWebFeatureTest.php`
+  - `tests/Feature/CustomerModuleAuditTest.php`
   - `tests/Feature/CrmAndCustomerComprehensiveSecurityTest.php`
-  - `tests/Feature/CommunitySecurityAndFeatureTest.php` (new/extended)
-  - `tests/Feature/ModuleAuditAndDocsTest.php`
+  - `tests/Feature/AdversarialCompilationAndLayoutTest.php` (new)
+  - `tests/Feature/AdversarialCommunityCrmCustomerTest.php` (new)
+  - `tests/Feature/DocumentationFeatureTest.php`

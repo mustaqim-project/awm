@@ -314,10 +314,11 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
 
         $response->assertOk();
 
-        // 1. Modal 2 (Edit Pelanggan template) MUST NOT be rendered
-        $response->assertDontSee('id="editCustomerModal"', false);
-        $response->assertDontSee('customers.edit_customer_desc', false);
-        $response->assertDontSee('showEditModal = true', false);
+        // 1. Modal 2 (Edit Pelanggan template & form) MUST NOT be rendered
+        $response->assertDontSee(':action="\'/customers/\'', false);
+        $response->assertDontSee('x-model="editCustomer.name"', false);
+        $response->assertDontSee('x-model="editCustomer.phone"', false);
+        $response->assertDontSee('x-model="editCustomer.company_name"', false);
 
         // 2. Table row edit button MUST NOT be rendered
         $response->assertDontSee('openEditModal(\'' . $customer->id . '\')', false);
@@ -403,5 +404,98 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
             ]);
         $resPay->assertForbidden();
         $this->assertEquals(200000, $customer->fresh()->current_credit_balance);
+    }
+
+    /**
+     * CHALLENGE 10: Community View Action Guarding: Delete button visibility across roles.
+     */
+    public function test_community_view_delete_button_visibility(): void
+    {
+        $ownerPost = CommunityPost::create([
+            'owner_id' => $this->ownerA->id,
+            'business_id' => $this->businessA->id,
+            'content' => 'Postingan Owner Alpha Unik',
+        ]);
+
+        $staffPost = CommunityPost::create([
+            'owner_id' => $this->staffA->id,
+            'business_id' => $this->businessA->id,
+            'content' => 'Postingan Staff Alpha Unik',
+        ]);
+
+        // 1. Kasir views community feed:
+        // Kasir cannot manage or delete, does not own either post.
+        // Neither post delete button should be visible to Kasir.
+        $resKasir = $this->actingAs($this->kasirA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resKasir->assertOk();
+        $resKasir->assertDontSee(route('community.destroy', $ownerPost));
+        $resKasir->assertDontSee(route('community.destroy', $staffPost));
+
+        // 2. Staff views community feed:
+        // Staff owns staffPost -> delete button visible for staffPost.
+        // Staff does NOT own ownerPost, and has NO community.manage -> delete button MUST NOT be visible for ownerPost.
+        $resStaff = $this->actingAs($this->staffA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resStaff->assertOk();
+        $resStaff->assertSee(route('community.destroy', $staffPost));
+        $resStaff->assertDontSee(route('community.destroy', $ownerPost));
+
+        // 3. Manager views community feed:
+        // Manager has community.manage in Business A -> delete button is visible for staffPost within Business A.
+        $resManager = $this->actingAs($this->managerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resManager->assertOk();
+        $resManager->assertSee(route('community.destroy', $staffPost));
+
+        // 4. Cross-tenant post view observation:
+        // When postB belongs to Business B, what happens if Manager A views it?
+        $postB = CommunityPost::create([
+            'owner_id' => $this->ownerB->id,
+            'business_id' => $this->businessB->id,
+            'content' => 'Postingan Publik Bisnis Beta',
+        ]);
+        // Controller strictly protects this: if Manager A tries to submit DELETE /community/{postB}, it aborts 403.
+        $resCrossDelete = $this->actingAs($this->managerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->deleteJson(route('community.destroy', $postB));
+        $resCrossDelete->assertForbidden();
+    }
+
+    /**
+     * CHALLENGE 11: User without community.events.register cannot register or cancel events.
+     */
+    public function test_user_without_community_events_register_is_blocked(): void
+    {
+        $event = CommunityEvent::create([
+            'title' => 'Webinar UMKM Ekspor',
+            'slug' => 'webinar-umkm-ekspor-' . Str::random(6),
+            'description' => 'Panduan ekspor ke mancanegara.',
+            'event_type' => CommunityEvent::TYPE_ONLINE,
+            'price_type' => CommunityEvent::PRICE_TYPE_FREE,
+            'price' => 0,
+            'location_name' => 'Online Zoom',
+            'checkin_code' => 'EXP-' . Str::upper(Str::random(6)),
+            'start_time' => now()->addDays(3),
+            'end_time' => now()->addDays(3)->addHours(2),
+            'registration_deadline' => now()->addDays(2),
+            'quota' => 50,
+            'status' => CommunityEvent::STATUS_PUBLISHED,
+        ]);
+
+        // CustomerViewOnlyUser has only [customers.view, crm.view, community.view]
+        // They do NOT have community.events.register
+        $resReg = $this->actingAs($this->customerViewOnlyUser)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->post(route('community.events.register', $event));
+
+        $resReg->assertRedirect(route('portal'));
+        $this->assertDatabaseMissing('community_event_registrations', [
+            'event_id' => $event->id,
+            'user_id' => $this->customerViewOnlyUser->id,
+        ]);
     }
 }

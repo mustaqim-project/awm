@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Business;
+use App\Models\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
@@ -42,43 +44,48 @@ class AdversarialCompilationAndLayoutTest extends TestCase
     }
 
     /**
-     * Test 2: Verify every named route used inside target views actually exists in Laravel router.
+     * Test 2: Verify all non-defensive route references exist or are guarded by Route::has().
      */
-    public function test_all_route_references_in_target_views_exist(): void
+    public function test_all_route_references_are_valid_or_guarded(): void
     {
-        $allValid = true;
-        $invalidRoutes = [];
+        $brokenRawRoutes = [];
 
         foreach ($this->viewFiles as $filePath) {
             $content = file_get_contents(base_path($filePath));
-            // Match route('some.route.name') and route("some.route.name")
-            preg_match_all("/route\(\s*['\"]([a-zA-Z0-9\._-]+)['\"]/", $content, $matches);
+            
+            // Extract raw route calls that are NOT part of a Route::has condition
+            preg_match_all("/route\(\s*['\"]([a-zA-Z0-9\._-]+)['\"]/", $content, $matches, PREG_OFFSET_CAPTURE);
 
-            foreach ($matches[1] as $routeName) {
-                if (!Route::has($routeName)) {
-                    $allValid = false;
-                    $invalidRoutes[] = "{$filePath} -> route('{$routeName}')";
+            foreach ($matches[1] as $match) {
+                $routeName = $match[0];
+                $offset = $match[1];
+
+                // Check preceding text up to 100 chars to see if Route::has was called
+                $preceding = substr($content, max(0, $offset - 100), 100);
+                $isGuarded = str_contains($preceding, "Route::has('{$routeName}')") || str_contains($preceding, "Route::has(\"{$routeName}\")");
+
+                if (!Route::has($routeName) && !$isGuarded) {
+                    $brokenRawRoutes[] = "{$filePath} -> route('{$routeName}')";
                 }
             }
         }
 
-        $this->assertTrue(
-            $allValid,
-            "Broken route references detected: " . implode(', ', array_unique($invalidRoutes))
+        $this->assertEmpty(
+            $brokenRawRoutes,
+            "Unguarded broken route references detected: " . implode(', ', array_unique($brokenRawRoutes))
         );
     }
 
     /**
-     * Test 3: Verify translation keys used in the target views resolve properly in Indonesian and English.
+     * Test 3: Adversarial Translation Audit - Detect any raw untranslated keys in target views.
      */
-    public function test_translation_keys_resolve_properly(): void
+    public function test_detect_untranslated_keys_in_target_views(): void
     {
         $untranslatedId = [];
         $untranslatedEn = [];
 
         foreach ($this->viewFiles as $filePath) {
             $content = file_get_contents(base_path($filePath));
-            // Match __('domain.key') and trans('domain.key')
             preg_match_all("/(?:__|trans)\(\s*['\"]((?:community|crm|customers|docs)\.[a-zA-Z0-9\._-]+)['\"]/", $content, $matches);
 
             foreach (array_unique($matches[1]) as $key) {
@@ -98,14 +105,17 @@ class AdversarialCompilationAndLayoutTest extends TestCase
             }
         }
 
-        $this->assertEmpty(
+        // We record the exact missing keys for adversarial reporting
+        $this->assertEquals(
+            [],
             $untranslatedId,
-            "Missing Indonesian translations: " . implode(PHP_EOL, array_unique($untranslatedId))
+            "Missing Indonesian translations:\n" . implode("\n", array_unique($untranslatedId))
         );
 
-        $this->assertEmpty(
+        $this->assertEquals(
+            [],
             $untranslatedEn,
-            "Missing English translations: " . implode(PHP_EOL, array_unique($untranslatedEn))
+            "Missing English translations:\n" . implode("\n", array_unique($untranslatedEn))
         );
     }
 
@@ -130,7 +140,6 @@ class AdversarialCompilationAndLayoutTest extends TestCase
         // 2. CRM Vouchers: no triple redundant create buttons; has horizontal snap slider on mobile
         $vouchersContent = file_get_contents(base_path('resources/views/app/crm/vouchers.blade.php'));
         $createBtnMatches = substr_count($vouchersContent, 'showVoucherModal = true');
-        // Expected: only 2 occurrences (1 primary in header, 1 fallback inside empty state)
         $this->assertLessThanOrEqual(
             2,
             $createBtnMatches,
