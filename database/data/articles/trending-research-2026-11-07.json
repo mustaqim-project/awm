@@ -1,0 +1,264 @@
+{
+  "date": "2026-11-07",
+  "geo": "ID",
+  "category": 3,
+  "category_name": "Bisnis (Business & Industrial / Finance)",
+  "source": "Google Trends Indonesia (trends.google.co.id/trending?geo=ID&category=3)",
+  "total_topics": 10,
+  "topics": [
+    {
+      "id": 261,
+      "topic": "Peluang Kemitraan Dapur Satuan Pelayanan Pemenuhan Gizi (SPPG) Program Makan Bergizi Gratis bagi UMKM Katering",
+      "trending_query": "kemitraan umkm makan bergizi gratis bgn",
+      "primary_keyword": "kemitraan umkm makan bergizi gratis",
+      "secondary_keywords": [
+        "syarat dapur sppg badan gizi nasional",
+        "sertifikat laik higiene sanitasi slhs dinkes",
+        "izin nib kbli 56210 katering",
+        "pasokan bahan baku lokal umkm pangan",
+        "pembiayaan modal kerja dapur sehat"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Lonjakan tajam pencarian dari pemilik usaha katering, warung makan, dan petani lokal menyusul pengumuman skema kemitraan SPPG oleh Badan Gizi Nasional dan Kementerian UMKM)",
+      "trending_reason": "Badan Gizi Nasional (BGN) bersama Kementerian UMKM membuka akses kemitraan bagi unit usaha katering mikro dan kecil untuk menjadi Satuan Pelayanan Pemenuhan Gizi (SPPG) maupun pemasok rantai pasok bahan pangan lokal dengan standar higienitas SLHS dan sertifikasi halal.",
+      "credible_sources": [
+        "Badan Gizi Nasional (BGN) RI",
+        "Kementerian Usaha Mikro, Kecil, dan Menengah (Kemenkop UKM / Kementerian UMKM)",
+        "Asosiasi Pengusaha Jasa Boga Indonesia (APJI)",
+        "Antara News & Kompas - Rantai Pasok Program Makan Bergizi Gratis"
+      ],
+      "msme_opportunity": "Usaha katering rumahan dan jasa boga lokal berkesempatan memperoleh pesanan harian ribuan porsi dengan kontrak terjamin, sekaligus menyerap hasil tani dan ternak dari masyarakat sekitar.",
+      "article_angle": "Panduan langkah demi langkah bagi pemilik katering untuk memenuhi syarat legalitas NIB KBLI 56210, pengurusan Sertifikat Laik Higiene Sanitasi (SLHS), dan kalkulasi HPP porsi bergizi standar BGN.",
+      "slug": "kemitraan-umkm-makan-bergizi-gratis-dapur-sppg",
+      "assigned_category": "Solusi Per Industri"
+    },
+    {
+      "id": 262,
+      "topic": "Kebijakan Hapus Tagih dan Hapus Buku Piutang Macet UMKM di Bank BUMN Berdasarkan PP 47/2024 dan UU No. 4/2026",
+      "trending_query": "hapus utang macet umkm pp 47 2024 bank bumn",
+      "primary_keyword": "penghapusan piutang macet umkm bank bumn",
+      "secondary_keywords": [
+        "kriteria hapus tagih kredit macet pp 47",
+        "batas utang 300 juta perorangan 500 juta badan",
+        "pemutihan slik ojk debitur unbankable",
+        "asesmen internal bank himbara bri mandiri bni",
+        "akses pembiayaan baru usaha mikro"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Diskusi hangat di kalangan debitur perbankan dan asosiasi UMKM pasca penegasan mekanisme hapus buku dan hapus tagih tanpa permohonan mandiri)",
+      "trending_reason": "Pemerintah mempertegas implementasi PP No. 47 Tahun 2024 dan penguatan melalui UU No. 4 Tahun 2026 tentang P2SK untuk menghapusbukukan dan menghapustagihkan piutang macet UMKM sektor pertanian, perkebunan, peternakan, perikanan, serta kuliner dan kriya hingga Rp300 juta perorangan dan Rp500 juta badan usaha.",
+      "credible_sources": [
+        "Sekretariat Kabinet RI (setkab.go.id)",
+        "Kementerian BUMN dan Bank Himbara (BRI, Bank Mandiri, BNI, BTN)",
+        "Otoritas Jasa Keuangan (OJK) - Klarifikasi Status SLIK Debitur",
+        "Hukumonline & Detik Finance - Bedah Aturan PP 47/2024"
+      ],
+      "msme_opportunity": "Pelaku usaha mikro yang usahanya sempat kolaps akibat bencana atau krisis dan riwayat kreditnya macet di bank BUMN dapat kembali bersih dari daftar hitam SLIK OJK sehingga bisa memulai usaha baru dan mengakses modal perbankan.",
+      "article_angle": "Klarifikasi edukatif mengenai kriteria resmi, batas nominal utang, alasan mengapa debitur tidak perlu mendaftar ke calo, dan tahapan verifikasi data internal bank.",
+      "slug": "penghapusan-piutang-macet-umkm-bank-bumn-aturan-dan-kriteria",
+      "assigned_category": "Modal"
+    },
+    {
+      "id": 263,
+      "topic": "Pemanfaatan Fitur QRIS Tap NFC (Tap to Pay) Bank Indonesia untuk Memangkas Antrean Kasir Ritel",
+      "trending_query": "qris tap nfc bank indonesia umkm",
+      "primary_keyword": "qris tap nfc untuk kasir toko ritel",
+      "secondary_keywords": [
+        "transaksi contactless 0.3 detik mesin edc",
+        "mdr qris 0 persen usaha mikro",
+        "integrasi nfc aplikasi kasir pos",
+        "cara kerja qris tap to pay",
+        "efisiensi antrean gerai fnb dan minimarket"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Minat teknologi pembayaran meningkat drastis seiring uji coba dan implementasi QRIS Tap nirsentuh berbasis ponsel NFC oleh Bank Indonesia)",
+      "trending_reason": "Bank Indonesia memperluas adopsi QRIS Tap berbasis teknologi NFC yang memungkinkan pelanggan membayar dalam waktu hanya 0,3 detik cukup dengan menempelkan smartphone, didukung perpanjangan kebijakan MDR 0% bagi merchant mikro.",
+      "credible_sources": [
+        "Bank Indonesia (bi.go.id) - Blueprint Sistem Pembayaran Indonesia",
+        "Asosiasi Sistem Pembayaran Indonesia (ASPI)",
+        "Antara News & Kompas Tekno - Uji Coba QRIS Tap to Pay"
+      ],
+      "msme_opportunity": "Toko ritel, kafe cepat saji, dan kedai minuman dapat melayani pelanggan hingga tiga kali lebih cepat pada jam sibuk tanpa kendala kamera ponsel susah fokus atau koneksi internet pembeli lambat.",
+      "article_angle": "Panduan praktis bagi pemilik toko mengenai cara kerja QRIS Tap NFC, spesifikasi perangkat kasir yang dibutuhkan, serta strategi optimasi alur transaksi kasir.",
+      "slug": "qris-tap-nfc-untuk-kasir-toko-ritel-dan-kuliner",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 264,
+      "topic": "Penegakan Sanksi Bertahap Kewajiban Sertifikasi Halal Makanan dan Minuman oleh BPJPH",
+      "trending_query": "sanksi belum sertifikat halal kuliner bpjph 2026",
+      "primary_keyword": "sanksi sertifikasi halal kuliner umkm bpjph",
+      "secondary_keywords": [
+        "tenggat waktu penahapan regulasi jph makanan minuman",
+        "tahapan sanksi teguran tertulis denda penarikan produk",
+        "pendaftaran sertifikasi halal self declare gratis",
+        "syarat penyelia halal warung makan",
+        "akun sihalal kementerian agama"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pencarian meningkat tajam dari pengusaha kuliner dan warung makan terkait batas akhir penahapan dan regulasi sanksi administratif BPJPH)",
+      "trending_reason": "Badan Penyelenggara Jaminan Produk Halal (BPJPH) Kemenag menegakkan Peraturan BPJPH No. 2 Tahun 2026 yang mengatur mekanisme pengawasan dan penjatuhan sanksi berjenjang (peringatan tertulis hingga penarikan produk) bagi peredaran makanan dan minuman tanpa sertifikat halal.",
+      "credible_sources": [
+        "Badan Penyelenggara Jaminan Produk Halal (halal.go.id)",
+        "Kementerian Agama RI",
+        "Peraturan Pemerintah No. 42 Tahun 2024 dan Peraturan BPJPH No. 2 Tahun 2026",
+        "Detik News & RRI - Pengawasan Jaminan Produk Halal"
+      ],
+      "msme_opportunity": "Warung makan, kafe, dan produsen jajanan yang segera mengurus sertifikasi halal self-declare mendapatkan perlindungan hukum, kepercayaan pelanggan muslim, dan keunggulan kompetitif di pasar kuliner.",
+      "article_angle": "Ulasan mengenai tahapan sanksi BPJPH agar pengusaha tidak panik, dilengkapi panduan pengurusan sertifikasi halal jalur gratis (Sehati) secara mandiri.",
+      "slug": "sanksi-sertifikasi-halal-kuliner-umkm-dan-panduan-self-declare",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 265,
+      "topic": "Penertiban Ketat BPOM atas Kosmetik dan Pangan Tanpa Izin Edar di Marketplace dan Media Sosial",
+      "trending_query": "penertiban bpom kosmetik ilegal marketplace 2026",
+      "primary_keyword": "aturan izin edar bpom toko online dan reseller",
+      "secondary_keywords": [
+        "patroli siber takedown link shopee tokopedia tiktok",
+        "sanksi pidana uu 17 2023 kesehatan pangan kosmetik",
+        "cara cek nomor notifikasi izin edar bpom resmi",
+        "tanggung jawab reseller dan dropshipper barang tie",
+        "panduan izin edar pirt makanan olahan"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Banyak toko online, reseller, dan dropshipper mencari informasi akibat maraknya pemblokiran akun dan sitaan gudang kosmetik ilegal oleh BPOM)",
+      "trending_reason": "BPOM meningkatkan intensitas patroli siber dengan menghapus lebih dari 9.000 tautan penjualan kosmetik tanpa izin edar (TIE) dan membongkar gudang konsolidasi bernilai puluhan miliar rupiah di berbagai kota.",
+      "credible_sources": [
+        "Badan Pengawas Obat dan Makanan RI (pom.go.id)",
+        "Undang-Undang Nomor 17 Tahun 2023 tentang Kesehatan",
+        "Tirto.id & Kontan - Laporan Penindakan Patroli Siber BPOM"
+      ],
+      "msme_opportunity": "Pedagang online dan reseller yang memilih produk berizin resmi BPOM terhindar dari pemblokiran toko online, tuntutan hukum pidana, dan risiko ganti rugi terhadap konsumen.",
+      "article_angle": "Panduan verifikasi izin edar BPOM melalui aplikasi BPOM Mobile, pembedaan izin PIRT vs BPOM MD, dan SOP pemilihan pemasok terpercaya bagi reseller.",
+      "slug": "aturan-izin-edar-bpom-toko-online-dan-reseller",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 266,
+      "topic": "Kebijakan Penyesuaian Tarif PPN 12% dan Perlindungan Sembako serta Fasilitas Usaha Mikro",
+      "trending_query": "penyesuaian tarif ppn 12 persen sembako dpp nilai lain",
+      "primary_keyword": "dampak tarif ppn 12 persen bagi umkm dan sembako",
+      "secondary_keywords": [
+        "barang kebutuhan pokok bebas ppn beras telur daging",
+        "skema dpp nilai lain tarif efektif 11 persen",
+        "batas omzet pengusaha kena pajak pkp 4.8 miliar",
+        "fasilitas pph final 0.5 persen umkm",
+        "antisipasi kenaikan harga pokok bahan baku"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pencarian masyarakat dan pemilik toko sembako melonjak mengenai kabar kenaikan PPN dan kepastian harga bahan pangan pokok)",
+      "trending_reason": "Pemerintah menegaskan bahwa kenaikan tarif PPN 12% sesuai amanat UU HPP difokuskan secara selektif pada barang mewah, sedangkan sembako dan kebutuhan dasar masyarakat tetap bebas PPN (0%), dan UMKM non-PKP tidak memungut PPN.",
+      "credible_sources": [
+        "Kementerian Keuangan RI (kemenkeu.go.id)",
+        "Direktorat Jenderal Pajak (pajak.go.id)",
+        "Undang-Undang Nomor 7 Tahun 2021 tentang HPP",
+        "Indonesia Baik & DDTC News - Analisis Skema PPN dan Kebutuhan Pokok"
+      ],
+      "msme_opportunity": "Pemilik warung sembako, minimarket, dan kuliner dapat mengomunikasikan stabilitas harga kepada konsumen dengan tenang karena pasokan bahan pokok lokal tidak terbebani PPN.",
+      "article_angle": "Edukasi jernih tentang daftar komoditas yang bebas PPN, batas omzet PKP Rp4,8 miliar, dan strategi negosiasi harga dengan distributor grosir.",
+      "slug": "dampak-tarif-ppn-12-persen-bagi-umkm-dan-sembako",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 267,
+      "topic": "Strategi Promo Festival Belanja Harbolnas 11.11 dan 12.12 bagi Toko Online dan Gerai Ritel",
+      "trending_query": "strategi promo 11.11 dan 12.12 marketplace umkm",
+      "primary_keyword": "strategi promo festival belanja harbolnas",
+      "secondary_keywords": [
+        "kalkulasi batas diskon aman hpp",
+        "bundling produk komplementer akhir tahun",
+        "sinkronisasi stok toko fisik dan keranjang marketplace",
+        "manajemen antrean packing ekspedisi kirim",
+        "broadcast whatsapp penawaran eksklusif pelanggan"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Persiapan puncak kampanye festival belanja online terbesar tahunan yang digencarkan platform marketplace dan pedagang ritel)",
+      "trending_reason": "Menjelang momentum festival belanja 11.11 dan Harbolnas 12.12, jutaan pembeli mempersiapkan keranjang belanja mereka, menuntut pelaku usaha menyiapkan promo menarik tanpa membakar modal.",
+      "credible_sources": [
+        "Asosiasi E-Commerce Indonesia (idEA)",
+        "Laporan Tren Belanja Akhir Tahun Pasar Digital Nasional",
+        "Warta Ekonomi & Katadata - Dinamika Harbolnas UMKM"
+      ],
+      "msme_opportunity": "Toko online dan gerai ritel dapat melipatgandakan omzet bulanan, mencairkan dead stock, dan merekrut ribuan pelanggan baru jika memiliki strategi promo berbasis batas aman HPP.",
+      "article_angle": "Formula kalkulasi batas diskon agar tidak rugi, teknik bundling produk laris dengan slow moving, dan SOP pengepakan kilat untuk mencegah komplain pelanggan.",
+      "slug": "strategi-promo-festival-belanja-11-11-dan-12-12-umkm",
+      "assigned_category": "Marketing & WhatsApp"
+    },
+    {
+      "id": 268,
+      "topic": "Cara Menghitung Safety Stock dan Mengantisipasi Keterlambatan Rantai Pasok Musim Libur Akhir Tahun",
+      "trending_query": "manajemen stok safety stock libur akhir tahun",
+      "primary_keyword": "cara menghitung safety stock libur akhir tahun",
+      "secondary_keywords": [
+        "rumus lead time demand variasi pengiriman",
+        "pencegahan stockout produk best seller",
+        "metode reorder point rop multi gudang",
+        "koordinasi jadwal operasional supplier bahan baku",
+        "penataan tata letak gudang fast moving"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Peningkatan pencarian dari pengelola inventori dan pedagang grosir untuk mengantisipasi libur panjang ekspedisi dan lonjakan permintaan)",
+      "trending_reason": "Jadwal tutup operasional pabrik pemasok dan kepadatan jalur logistik pada akhir Desember menuntut pelaku usaha menghitung persediaan pengaman (safety stock) dengan rumus yang akurat.",
+      "credible_sources": [
+        "Asosiasi Logistik Indonesia (ALI)",
+        "Supply Chain Indonesia (SCI) - Manajemen Persediaan Akhir Tahun",
+        "Jurnal Manajemen Rantai Pasok dan Logistik Nasional"
+      ],
+      "msme_opportunity": "Toko yang memiliki ketersediaan barang terjaga di saat toko kompetitor kehabisan stok (stockout) akan memenangkan loyalitas pelanggan dan menikmati margin keuntungan maksimal.",
+      "article_angle": "Rumus matematis sederhana menghitung safety stock dan reorder point (ROP), disertai jadwal batas akhir pemesanan ke pemasok utama.",
+      "slug": "cara-menghitung-safety-stock-libur-akhir-tahun",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 269,
+      "topic": "Strategi Bisnis Hampers dan Parcel Akhir Tahun Natal dan Tahun Baru untuk UMKM Kuliner dan Ritel",
+      "trending_query": "ide bisnis hampers natal tahun baru margin untung",
+      "primary_keyword": "strategi bisnis hampers akhir tahun umkm",
+      "secondary_keywords": [
+        "kalkulasi hpp paket hampers dan kemasan premium",
+        "sistem pre order po anti cancel",
+        "kemasan pengiriman aman ekspedisi luar kota",
+        "penentuan harga paket parcel corporate b2b",
+        "invoice penagihan tempo instansi"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Lonjakan tren pencarian paket bingkisan, hampers kue kering, suvenir, dan parcel korporat menjelang perayaan Natal dan Tahun Baru 2027)",
+      "trending_reason": "Permintaan hampers akhir tahun dari perusahaan, instansi, dan perorangan mulai dibuka sejak awal November dengan potensi margin keuntungan kotor di atas 40%.",
+      "credible_sources": [
+        "Kementerian Perdagangan RI - Data Permintaan Ritel Musiman",
+        "Himpunan Pengusaha Muda Indonesia (HIPMI) Kuliner & Ritel",
+        "Kompas Bisnis - Tren Pasar Hampers Akhir Tahun"
+      ],
+      "msme_opportunity": "Pengusaha kue kering, kriya lokal, kopi, dan makanan kemasan dapat mengemas produk dalam bentuk paket hadiah bernilai jual tinggi dengan uang muka (DP) sistem PO aman.",
+      "article_angle": "Strategi mengemas hampers premium, menghitung modal kemasan, menyusun surat penawaran harga ke instansi, dan SOP pengiriman anti rusak.",
+      "slug": "strategi-bisnis-hampers-akhir-tahun-umkm",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 270,
+      "topic": "SOP Tutup Buku Akhir Tahun Pembukuan UMKM dan Persiapan Perencanaan Anggaran Bisnis 2027",
+      "trending_query": "sop tutup buku akhir tahun pembukuan umkm",
+      "primary_keyword": "sop tutup buku akhir tahun pembukuan umkm",
+      "secondary_keywords": [
+        "rekonsiliasi saldo kas rekening bank qris",
+        "audit selisih stok opname fisik gudang",
+        "pencatatan penyusutan aset peralatan usaha",
+        "penyusunan neraca dan laporan laba rugi tahunan",
+        "budgeting target omzet dan cash flow tahun baru"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Banyak pemilik usaha mencari panduan merapikan pencatatan keuangan tutup tahun kalender untuk evaluasi laba dan persiapan pajak)",
+      "trending_reason": "Menjelang akhir tahun fiskal, pengusaha dituntut menutup buku keuangan tahunan secara akurat, merekonsiliasi kas bank, menghitung nilai aset, dan menetapkan target bisnis tahun berikutnya.",
+      "credible_sources": [
+        "Ikatan Akuntan Indonesia (IAI) - Standar Akuntansi Keuangan Entitas Mikro Kecil Menengah (SAK EMKM)",
+        "Kementerian Keuangan RI - Panduan Pembukuan Sederhana Usaha Kecil",
+        "Majalah Akuntansi Keuangan Indonesia"
+      ],
+      "msme_opportunity": "Pemilik usaha dapat mengetahui laba bersih riil yang diperoleh sepanjang tahun, mencegah kebocoran modal, dan memulai tahun 2027 dengan fondasi anggaran yang sehat.",
+      "article_angle": "Checklist praktis 7 langkah tutup buku tanpa bantuan akuntan mahal, cara merekonsiliasi selisih kas, dan format penyusunan anggaran tahun baru.",
+      "slug": "sop-tutup-buku-akhir-tahun-pembukuan-umkm",
+      "assigned_category": "Keuangan & Pembukuan"
+    }
+  ]
+}

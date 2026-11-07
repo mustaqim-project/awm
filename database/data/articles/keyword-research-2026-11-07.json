@@ -1,0 +1,220 @@
+{
+  "research_date": "2026-11-07",
+  "timezone": "Asia/Jakarta",
+  "platform": "Cooca (cooca.id)",
+  "target_audience": [
+    "Pemilik dan pengelola UMKM kuliner, katering, dan warung makan",
+    "Pemilik toko ritel, minimarket kelontong, dan gerai oleh-oleh",
+    "Pedagang online, reseller marketplace, dan live commerce",
+    "Pengusaha yang memiliki kredit perbankan dan debitur mikro",
+    "Pengelola gudang, logistik, dan persediaan barang dagangan",
+    "Pelaku usaha yang bersiap menghadapi lonjakan penjualan akhir tahun"
+  ],
+  "topical_coverage_map": {
+    "core_pillar": "Business Operating System UMKM Indonesia",
+    "clusters": [
+      {
+        "cluster": "Solusi Per Industri & Kemitraan Pemerintah",
+        "article": "Kemitraan UMKM Makan Bergizi Gratis: Syarat Dapur SPPG dan Katering",
+        "relation": "Peluang kontrak pasokan katering harian skala besar bagi UMKM kuliner dengan standar sanitasi SLHS dan NIB resmi."
+      },
+      {
+        "cluster": "Modal & Perlindungan Finansial Perbankan",
+        "article": "Penghapusan Piutang Macet UMKM Bank BUMN: Aturan dan Kriteria Resmi",
+        "relation": "Kepastian hukum hapus buku dan hapus tagih kredit macet mikro tanpa agunan di bank Himbara untuk memulihkan status SLIK debitur."
+      },
+      {
+        "cluster": "Kasir & Teknologi Pembayaran Digital",
+        "article": "QRIS Tap NFC untuk Kasir Toko Ritel dan Kuliner: Solusi Cepat 0,3 Detik",
+        "relation": "Akselerasi kecepatan kasir minimarket dan kafe dengan transaksi nirsentuh NFC dan pembebasan biaya MDR 0 persen."
+      },
+      {
+        "cluster": "Kepatuhan Hukum & Legalitas Usaha",
+        "article": "Sanksi Sertifikasi Halal Kuliner UMKM dan Panduan Self-Declare BPJPH",
+        "relation": "Mitigasi risiko teguran tertulis dan sanksi administratif melalui pendaftaran sertifikasi halal mandiri secara tepat."
+      },
+      {
+        "cluster": "Perlindungan Produk & Perdagangan Digital",
+        "article": "Aturan Izin Edar BPOM Toko Online dan Reseller: Cegah Takedown Toko",
+        "relation": "Kepatuhan izin edar resmi BPOM bagi penjual skincare dan makanan kemasan guna mencegah pemblokiran akun toko online."
+      },
+      {
+        "cluster": "Perpajakan & Struktur Biaya Usaha",
+        "article": "Dampak Tarif PPN 12 Persen bagi UMKM dan Sembako: Fakta dan Simulasi",
+        "relation": "Penjelasan daftar kebutuhan pokok bebas PPN dan perlindungan omzet di bawah threshold PKP 4,8 miliar rupiah."
+      },
+      {
+        "cluster": "Marketing, Promosi & Penjualan Akhir Tahun",
+        "article": "Strategi Promo Festival Belanja 11.11 dan 12.12 UMKM Tanpa Boncos",
+        "relation": "Kalkulasi batas aman diskon berbasis HPP dan strategi bundling produk komplementer untuk melipatgandakan omzet Harbolnas."
+      },
+      {
+        "cluster": "Manajemen Inventori & Rantai Pasok",
+        "article": "Cara Menghitung Safety Stock Libur Akhir Tahun agar Tidak Kehabisan Barang",
+        "relation": "Rumus persediaan pengaman menghadapi lonjakan permintaan dan masa jeda operasional distributor saat libur panjang."
+      },
+      {
+        "cluster": "HPP, Packaging & Penjualan Musiman",
+        "article": "Strategi Bisnis Hampers Akhir Tahun UMKM: Dari HPP hingga Sistem PO",
+        "relation": "Optimalisasi margin keuntungan penjualan paket parcel Natal dan Tahun Baru dengan kemasan premium dan uang muka aman."
+      },
+      {
+        "cluster": "Tata Kelola Pembukuan & Perencanaan Usaha",
+        "article": "SOP Tutup Buku Akhir Tahun Pembukuan UMKM dan Anggaran Bisnis 2027",
+        "relation": "Penyelarasan saldo riil kas, bank, stok, dan aset usaha untuk evaluasi kinerja laba tahun berjalan dan perancangan target baru."
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": 261,
+      "topic_title": "Kemitraan UMKM Makan Bergizi Gratis: Syarat Dapur SPPG dan Katering",
+      "slug": "kemitraan-umkm-makan-bergizi-gratis-dapur-sppg",
+      "category": "Solusi Per Industri",
+      "cluster": "tutorial",
+      "primary_keyword": "kemitraan umkm makan bergizi gratis",
+      "secondary_keywords": [
+        "syarat dapur sppg badan gizi nasional",
+        "sertifikat laik higiene sanitasi slhs dinkes",
+        "izin nib kbli 56210 katering",
+        "pasokan bahan baku lokal umkm pangan",
+        "pembiayaan modal kerja dapur sehat"
+      ]
+    },
+    {
+      "id": 262,
+      "topic_title": "Penghapusan Piutang Macet UMKM Bank BUMN: Aturan dan Kriteria Resmi",
+      "slug": "penghapusan-piutang-macet-umkm-bank-bumn-aturan-dan-kriteria",
+      "category": "Modal",
+      "cluster": "edukasi",
+      "primary_keyword": "penghapusan piutang macet umkm bank bumn",
+      "secondary_keywords": [
+        "kriteria hapus tagih kredit macet pp 47",
+        "batas utang 300 juta perorangan 500 juta badan",
+        "pemutihan slik ojk debitur unbankable",
+        "asesmen internal bank himbara bri mandiri bni",
+        "akses pembiayaan baru usaha mikro"
+      ]
+    },
+    {
+      "id": 263,
+      "topic_title": "QRIS Tap NFC untuk Kasir Toko Ritel dan Kuliner: Solusi Cepat 0,3 Detik",
+      "slug": "qris-tap-nfc-untuk-kasir-toko-ritel-dan-kuliner",
+      "category": "Kasir & POS",
+      "cluster": "tutorial",
+      "primary_keyword": "qris tap nfc untuk kasir toko ritel",
+      "secondary_keywords": [
+        "transaksi contactless 0.3 detik mesin edc",
+        "mdr qris 0 persen usaha mikro",
+        "integrasi nfc aplikasi kasir pos",
+        "cara kerja qris tap to pay",
+        "efisiensi antrean gerai fnb dan minimarket"
+      ]
+    },
+    {
+      "id": 264,
+      "topic_title": "Sanksi Sertifikasi Halal Kuliner UMKM dan Panduan Self-Declare BPJPH",
+      "slug": "sanksi-sertifikasi-halal-kuliner-umkm-dan-panduan-self-declare",
+      "category": "Pajak & Legalitas",
+      "cluster": "edukasi",
+      "primary_keyword": "sanksi sertifikasi halal kuliner umkm bpjph",
+      "secondary_keywords": [
+        "tenggat waktu penahapan regulasi jph makanan minuman",
+        "tahapan sanksi teguran tertulis denda penarikan produk",
+        "pendaftaran sertifikasi halal self declare gratis",
+        "syarat penyelia halal warung makan",
+        "akun sihalal kementerian agama"
+      ]
+    },
+    {
+      "id": 265,
+      "topic_title": "Aturan Izin Edar BPOM Toko Online dan Reseller: Cegah Takedown Toko",
+      "slug": "aturan-izin-edar-bpom-toko-online-dan-reseller",
+      "category": "Pajak & Legalitas",
+      "cluster": "edukasi",
+      "primary_keyword": "aturan izin edar bpom toko online dan reseller",
+      "secondary_keywords": [
+        "patroli siber takedown link shopee tokopedia tiktok",
+        "sanksi pidana uu 17 2023 kesehatan pangan kosmetik",
+        "cara cek nomor notifikasi izin edar bpom resmi",
+        "tanggung jawab reseller dan dropshipper barang tie",
+        "panduan izin edar pirt makanan olahan"
+      ]
+    },
+    {
+      "id": 266,
+      "topic_title": "Dampak Tarif PPN 12 Persen bagi UMKM dan Sembako: Fakta dan Simulasi",
+      "slug": "dampak-tarif-ppn-12-persen-bagi-umkm-dan-sembako",
+      "category": "Keuangan & Pembukuan",
+      "cluster": "edukasi",
+      "primary_keyword": "dampak tarif ppn 12 persen bagi umkm dan sembako",
+      "secondary_keywords": [
+        "barang kebutuhan pokok bebas ppn beras telur daging",
+        "skema dpp nilai lain tarif efektif 11 persen",
+        "batas omzet pengusaha kena pajak pkp 4.8 miliar",
+        "fasilitas pph final 0.5 persen umkm",
+        "antisipasi kenaikan harga pokok bahan baku"
+      ]
+    },
+    {
+      "id": 267,
+      "topic_title": "Strategi Promo Festival Belanja Harbolnas 11.11 dan 12.12 UMKM: Untung Tanpa Boncos",
+      "slug": "strategi-promo-festival-belanja-11-11-dan-12-12-umkm",
+      "category": "Marketing & WhatsApp",
+      "cluster": "tutorial",
+      "primary_keyword": "strategi promo festival belanja harbolnas",
+      "secondary_keywords": [
+        "kalkulasi batas diskon aman hpp",
+        "bundling produk komplementer akhir tahun",
+        "sinkronisasi stok toko fisik dan keranjang marketplace",
+        "manajemen antrean packing ekspedisi kirim",
+        "broadcast whatsapp penawaran eksklusif pelanggan"
+      ]
+    },
+    {
+      "id": 268,
+      "topic_title": "Cara Menghitung Safety Stock Libur Akhir Tahun agar Tidak Kehabisan Barang",
+      "slug": "cara-menghitung-safety-stock-libur-akhir-tahun",
+      "category": "Inventori & Stok",
+      "cluster": "tutorial",
+      "primary_keyword": "cara menghitung safety stock libur akhir tahun",
+      "secondary_keywords": [
+        "rumus lead time demand variasi pengiriman",
+        "pencegahan stockout produk best seller",
+        "metode reorder point rop multi gudang",
+        "koordinasi jadwal operasional supplier bahan baku",
+        "penataan tata letak gudang fast moving"
+      ]
+    },
+    {
+      "id": 269,
+      "topic_title": "Strategi Bisnis Hampers Akhir Tahun UMKM: Dari HPP hingga Sistem PO",
+      "slug": "strategi-bisnis-hampers-akhir-tahun-umkm",
+      "category": "HPP & Harga Jual",
+      "cluster": "tutorial",
+      "primary_keyword": "strategi bisnis hampers akhir tahun umkm",
+      "secondary_keywords": [
+        "kalkulasi hpp paket hampers dan kemasan premium",
+        "sistem pre order po anti cancel",
+        "kemasan pengiriman aman ekspedisi luar kota",
+        "penentuan harga paket parcel corporate b2b",
+        "invoice penagihan tempo instansi"
+      ]
+    },
+    {
+      "id": 270,
+      "topic_title": "SOP Tutup Buku Akhir Tahun Pembukuan UMKM dan Anggaran Bisnis 2027",
+      "slug": "sop-tutup-buku-akhir-tahun-pembukuan-umkm",
+      "category": "Keuangan & Pembukuan",
+      "cluster": "tutorial",
+      "primary_keyword": "sop tutup buku akhir tahun pembukuan umkm",
+      "secondary_keywords": [
+        "rekonsiliasi saldo kas rekening bank qris",
+        "audit selisih stok opname fisik gudang",
+        "pencatatan penyusutan aset peralatan usaha",
+        "penyusunan neraca dan laporan laba rugi tahunan",
+        "budgeting target omzet dan cash flow tahun baru"
+      ]
+    }
+  ]
+}

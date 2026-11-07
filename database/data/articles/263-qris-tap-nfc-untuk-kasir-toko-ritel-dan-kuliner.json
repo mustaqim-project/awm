@@ -1,0 +1,43 @@
+{
+  "id": 263,
+  "title": "QRIS Tap NFC untuk Kasir Toko Ritel dan Kuliner: Solusi Cepat 0,3 Detik",
+  "slug": "qris-tap-nfc-untuk-kasir-toko-ritel-dan-kuliner",
+  "category": "Kasir & POS",
+  "cluster": "tutorial",
+  "primary_keyword": "qris tap nfc untuk kasir toko ritel",
+  "secondary_keywords": "transaksi contactless 0.3 detik mesin edc, mdr qris 0 persen usaha mikro, integrasi nfc aplikasi kasir pos, cara kerja qris tap to pay, efisiensi antrean gerai fnb dan minimarket",
+  "search_intent": "informational",
+  "meta_title": "QRIS Tap NFC untuk Kasir Toko Ritel: Transaksi Cepat",
+  "meta_description": "Panduan lengkap teknologi QRIS Tap NFC untuk kasir toko ritel dan kuliner, cara kerja transaksi contactless 0,3 detik, dan tarif MDR 0 persen.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1556740738-b6a63e27c4df.jpg",
+  "local_image_asset": "public/images/blog/photo-1556740738-b6a63e27c4df.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "qris tap nfc bank indonesia umkm",
+  "word_count": 1490,
+  "faqs": [
+    {
+      "q": "Apakah semua smartphone konsumen bisa digunakan untuk QRIS Tap?",
+      "a": "Ponsel konsumen harus memiliki cip NFC internal dan fitur NFC dalam kondisi aktif. Sebagian besar smartphone kelas menengah hingga atas keluaran terbaru sudah dilengkapi fitur NFC ini secara bawaan."
+    },
+    {
+      "q": "Bagaimana jika ponsel pembeli belum mendukung fitur NFC?",
+      "a": "Terminal kasir modern tetap menyediakan opsi kode QRIS statis atau dinamis di layar, sehingga pembeli yang ponselnya belum memiliki fitur NFC tetap dapat membayar dengan cara memindai kamera seperti biasa."
+    },
+    {
+      "q": "Apakah ada batas maksimal nominal transaksi yang bisa dilakukan lewat QRIS Tap?",
+      "a": "Bank Indonesia menetapkan batas transaksi nirsentuh tanpa PIN untuk kenyamanan berbelanja harian (biasanya hingga Rp1.000.000 per transaksi), sedangkan untuk nominal yang lebih besar pembeli akan diminta memasukkan PIN keamanan pada aplikasi mereka."
+    },
+    {
+      "q": "Apakah pemilik warung kecil wajib membayar biaya sewa alat EDC yang mahal?",
+      "a": "Tidak harus. Selain mesin EDC konvensional, pelaku usaha mikro dapat memanfaatkan ponsel Android berfitur NFC milik sendiri yang difungsikan sebagai terminal penerima pembayaran (SoftPOS) melalui kerja sama dengan perbankan atau dompet digital."
+    },
+    {
+      "q": "Apakah uang pembayaran QRIS Tap langsung masuk ke rekening pedagang?",
+      "a": "Ya, dana pembayaran akan masuk ke rekening penampung merchant sesuai jadwal settlement penyedia jasa pembayaran, umumnya diproses dalam hitungan menit hingga maksimal pada hari yang sama (same day settlement)."
+    }
+  ],
+  "created_at": "2026-11-07T08:00:00+07:00",
+  "published_at": "2026-11-07T08:00:00+07:00"
+}

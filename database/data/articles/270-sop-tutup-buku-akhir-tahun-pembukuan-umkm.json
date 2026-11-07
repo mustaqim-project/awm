@@ -1,0 +1,43 @@
+{
+  "id": 270,
+  "title": "SOP Tutup Buku Akhir Tahun Pembukuan UMKM dan Anggaran Bisnis 2027",
+  "slug": "sop-tutup-buku-akhir-tahun-pembukuan-umkm",
+  "category": "Keuangan & Pembukuan",
+  "cluster": "tutorial",
+  "primary_keyword": "sop tutup buku akhir tahun pembukuan umkm",
+  "secondary_keywords": "rekonsiliasi saldo kas rekening bank qris, audit selisih stok opname fisik gudang, pencatatan penyusutan aset peralatan usaha, penyusunan neraca dan laporan laba rugi tahunan, budgeting target omzet dan cash flow tahun baru",
+  "search_intent": "informational",
+  "meta_title": "SOP Tutup Buku Akhir Tahun Pembukuan UMKM: Rapi dan Mudah",
+  "meta_description": "Panduan praktis SOP tutup buku akhir tahun pembukuan UMKM, rekonsiliasi kas bank, audit stok fisik, valuasi aset, dan penyusunan anggaran bisnis 2027.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1460925895917-afdab827c52f.jpg",
+  "local_image_asset": "public/images/blog/photo-1460925895917-afdab827c52f.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "sop tutup buku akhir tahun pembukuan umkm",
+  "word_count": 1490,
+  "faqs": [
+    {
+      "q": "Kapan waktu yang paling tepat untuk memulai proses tutup buku tahunan?",
+      "a": "Persiapan dokumen (pengumpulan nota belanja dan rekening koran) sebaiknya dimulai pada minggu ketiga Desember, sedangkan eksekusi stok opname dan penguncian buku dilakukan tepat pada tanggal 31 Desember setelah operasional kasir tutup."
+    },
+    {
+      "q": "Apakah usaha skala mikro wajib membuat neraca keuangan formal?",
+      "a": "Sangat disarankan. Neraca keuangan sederhana memberikan gambaran mengenai rasio utang terhadap modal dan kekayaan bersih riil usaha, yang menjadi syarat utama saat Anda ingin mengajukan pinjaman modal usaha ke bank atau mencari investor."
+    },
+    {
+      "q": "Bagaimana jika saat stok opname akhir tahun ditemukan selisih barang yang cukup besar?",
+      "a": "Lakukan penelusuran ulang bersama staf gudang untuk memeriksa apakah ada barang yang salah hitung, belum tercatat di faktur pembelian, atau terjadi pencurian internal. Nilai selisih yang tidak terlacak wajib dicatat sebagai beban kerugian penyesuaian stok."
+    },
+    {
+      "q": "Apa yang harus dilakukan dengan piutang pelanggan yang sudah macet bertahun-tahun?",
+      "a": "Jika pelanggan sudah tidak bisa dihubungi dan piutang tersebut terbukti tidak tertagih, lakukan penghapusbukuan piutang macet agar laporan keuangan Anda tidak mencatat aset piutang semu yang menyesatkan."
+    },
+    {
+      "q": "Apakah saldo akun laba rugi otomatis menjadi nol setelah tutup buku?",
+      "a": "Ya. Dalam prinsip akuntansi standar, seluruh saldo pendapatan dan beban tahun berjalan akan ditutup dan dipindahkan ke akun Saldo Laba Ditahan (Retained Earnings) pada neraca ekuitas, sehingga akun pendapatan dan beban di awal tahun baru kembali bersih dimulai dari angka nol."
+    }
+  ],
+  "created_at": "2026-11-07T08:00:00+07:00",
+  "published_at": "2026-11-07T08:00:00+07:00"
+}

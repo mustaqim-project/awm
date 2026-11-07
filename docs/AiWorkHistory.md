@@ -33,6 +33,67 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-07-382] Google Trends Business Research, Blog Article Production (10 Artikel SEO Edukasi UMKM ID 261-270) & Production Deployment for COOCA
+
+- **Date:** 2026-11-07
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Indonesia Category 3 (Business & Industrial / Finance) Research, 10 Curated SEO Articles (ID 261-270), Zero Em Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menangkap lonjakan minat pencarian organik di Google Trends Indonesia seputar isu bisnis, regulasi pemerintah, persiapan festival belanja akhir tahun, dan tantangan operasional UMKM Indonesia untuk mendongkrak trafik organik, otoritas domain, dan konversi Cooca.
+- **Target:**
+  1. Melakukan riset komprehensif Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 7 November 2026 dan menghasilkan `trending-research-2026-11-07.json` serta `keyword-research-2026-11-07.json`.
+  2. Memproduksi 10 artikel edukasi bisnis berkualitas tinggi (ID 261 hingga 270) dengan kepatuhan ketat:
+     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tautan internal eksklusif dari `/blog/(slug)` valid di `sitemap_blog.xml` (tanpa link eksternal atau tebakan).
+     - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
+     - Lolos 100% linter konten (`lint_content.py`) dengan status 0 FAIL.
+  3. Mengimpor seluruh artikel ke database sistem melalui `php artisan blog:import-articles` dan memperbarui `sitemap_blog.xml` serta dataset `blog_links.json`.
+  4. Menerapkan perubahan ke remote repository main untuk otomatisasi deploy produksi.
+
+#### 2. What Was Done
+1. **Google Trends & Keyword Research (2026-11-07):**
+   - Mengidentifikasi 10 topik tren bisnis nasional:
+     - ID 261: Peluang Kemitraan Dapur SPPG Program Makan Bergizi Gratis (BGN).
+     - ID 262: Kebijakan Hapus Tagih & Hapus Buku Piutang Macet UMKM Bank BUMN (PP 47/2024 & UU 4/2026).
+     - ID 263: Fitur QRIS Tap NFC (Tap to Pay) Bank Indonesia 0,3 Detik & MDR 0% bagi Ritel.
+     - ID 264: Sanksi Bertahap Kewajiban Sertifikasi Halal Makanan Minuman & Fasilitas Self-Declare BPJPH.
+     - ID 265: Penertiban BPOM atas Kosmetik & Pangan Ilegal TIE di Marketplace dan Medsos.
+     - ID 266: Penyesuaian Tarif PPN 12% dan Perlindungan Sembako Bebas Pajak serta Fasilitas Non-PKP.
+     - ID 267: Strategi Promo Festival Belanja Harbolnas 11.11 & 12.12 Berbasis Batas Aman HPP.
+     - ID 268: Cara Menghitung Safety Stock & Antisipasi Keterlambatan Rantai Pasok Libur Akhir Tahun.
+     - ID 269: Strategi Bisnis Hampers Akhir Tahun UMKM dari HPP hingga Sistem PO Berjenjang.
+     - ID 270: SOP Tutup Buku Akhir Tahun Pembukuan UMKM dan Perencanaan Anggaran Bisnis 2027.
+2. **Produksi Artikel Markdown & Metadata JSON:**
+   - Menghasilkan 10 pasang berkas `.md` dan `.json` di `database/data/articles/`.
+   - Menjalankan script validasi `lint_content.py` dengan hasil 100% lulus (0 FAIL).
+3. **Database Import & Regenerasi Sitemap:**
+   - Menjalankan `php artisan blog:import-articles` (total 285 artikel terverifikasi dalam database).
+   - Memperbarui `public/sitemap_blog.xml` dan `blog_links.json` (275 slug blog aktif).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `docs/AiWorkHistory.md`
+  - `public/sitemap_blog.xml`
+  - `blog_links.json`
+- **Files Created:**
+  - `database/data/articles/trending-research-2026-11-07.json`
+  - `database/data/articles/keyword-research-2026-11-07.json`
+  - `database/data/articles/261-kemitraan-umkm-makan-bergizi-gratis-dapur-sppg.md` & `.json`
+  - `database/data/articles/262-penghapusan-piutang-macet-umkm-bank-bumn-aturan-dan-kriteria.md` & `.json`
+  - `database/data/articles/263-qris-tap-nfc-untuk-kasir-toko-ritel-dan-kuliner.md` & `.json`
+  - `database/data/articles/264-sanksi-sertifikasi-halal-kuliner-umkm-dan-panduan-self-declare.md` & `.json`
+  - `database/data/articles/265-aturan-izin-edar-bpom-toko-online-dan-reseller.md` & `.json`
+  - `database/data/articles/266-dampak-tarif-ppn-12-persen-bagi-umkm-dan-sembako.md` & `.json`
+  - `database/data/articles/267-strategi-promo-festival-belanja-11-11-dan-12-12-umkm.md` & `.json`
+  - `database/data/articles/268-cara-menghitung-safety-stock-libur-akhir-tahun.md` & `.json`
+  - `database/data/articles/269-strategi-bisnis-hampers-akhir-tahun-umkm.md` & `.json`
+  - `database/data/articles/270-sop-tutup-buku-akhir-tahun-pembukuan-umkm.md` & `.json`
+
+---
+
 ### [WORK-2026-11-07-381] Engine Konten Media Sosial Viral (4 Postingan Unik/Hari di Jam Viral Resmi) & Production Deployment
 
 - **Date:** 2026-11-07

@@ -1,0 +1,43 @@
+{
+  "id": 268,
+  "title": "Cara Menghitung Safety Stock Libur Akhir Tahun agar Tidak Kehabisan Barang",
+  "slug": "cara-menghitung-safety-stock-libur-akhir-tahun",
+  "category": "Inventori & Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "cara menghitung safety stock libur akhir tahun",
+  "secondary_keywords": "rumus lead time demand variasi pengiriman, pencegahan stockout produk best seller, metode reorder point rop multi gudang, koordinasi jadwal operasional supplier bahan baku, penataan tata letak gudang fast moving",
+  "search_intent": "informational",
+  "meta_title": "Cara Menghitung Safety Stock Libur Akhir Tahun: Rumus",
+  "meta_description": "Panduan cara menghitung safety stock libur akhir tahun bagi toko UMKM, rumus reorder point, antisipasi keterlambatan ekspedisi, dan cegah stockout.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg",
+  "local_image_asset": "public/images/blog/photo-1553413077-190dd305871c.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business)",
+  "trending_query": "manajemen stok safety stock libur akhir tahun",
+  "word_count": 1490,
+  "faqs": [
+    {
+      "q": "Apa risiko terbesar jika toko tidak menyiapkan safety stock di akhir tahun?",
+      "a": "Risiko terbesar adalah terjadinya kehabisan stok (stockout) pada produk terlaris di saat permintaan sedang memuncak, yang menyebabkan hilangnya potensi laba bersih serta berpindahnya pelanggan setia ke toko pesaing."
+    },
+    {
+      "q": "Kapan batas waktu paling aman bagi toko untuk menyetok barang sebelum libur panjang?",
+      "a": "Batas waktu paling ideal untuk menyelesaikan pengiriman stok barang kering ke gudang toko adalah antara tanggal 10 hingga 15 Desember, sebelum jalur logistik ekspedisi nasional mengalami kepadatan parah."
+    },
+    {
+      "q": "Bagaimana jika setelah liburan usai ternyata sisa safety stock masih cukup banyak?",
+      "a": "Jika Anda menyetok produk fast moving dengan masa simpan panjang, kelebihan stok tersebut akan terserap secara alami oleh penjualan normal di bulan Januari. Itulah mengapa perhitungan safety stock hanya diprioritaskan pada produk yang terbukti laris."
+    },
+    {
+      "q": "Apakah safety stock berlaku sama untuk usaha kuliner makanan segar?",
+      "a": "Untuk makanan segar atau mudah basi, perhitungan safety stock harus disesuaikan dengan kapasitas lemari pendingin (chiller/freezer) dan ketahanan bahan baku, serta prioritaskan penggunaan bahan beku berkualitas standar."
+    },
+    {
+      "q": "Bagaimana cara membedakan produk mana yang wajib dihitung safety stock-nya?",
+      "a": "Gunakan metode Analisis Pareto (Klasifikasi ABC). Fokuskan 80 persen alokasi dana dan perhitungan safety stock pada 20 persen produk terlaris (Kategori A) yang menyumbang mayoritas omzet toko Anda."
+    }
+  ],
+  "created_at": "2026-11-07T08:00:00+07:00",
+  "published_at": "2026-11-07T08:00:00+07:00"
+}

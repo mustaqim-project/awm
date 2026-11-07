@@ -62,6 +62,48 @@ function evaluateViralPotential(feature) {
   };
 }
 
+async function loginAsDemoUser(page, context, authPath) {
+  console.log('[Playwright] Authenticating as demo user (demo@cooca.id)...');
+  try {
+    await page.goto('http://cooca_core.test/login', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    
+    // Check if already authenticated and redirected away from /login
+    if (!page.url().includes('/login')) {
+      console.log(`[Playwright] Already logged in. Current URL: ${page.url()}`);
+      return true;
+    }
+
+    const emailSelector = 'input[name="email"]';
+    await page.waitForSelector(emailSelector, { timeout: 15000 });
+    await page.fill(emailSelector, 'demo@cooca.id');
+    await page.fill('input[name="password"]', 'password123');
+
+    // Check remember me if available
+    const rememberCheckbox = 'input[name="remember"]';
+    if (await page.$(rememberCheckbox)) {
+      await page.check(rememberCheckbox).catch(() => {});
+    }
+
+    console.log('[Playwright] Submitting login form...');
+    await Promise.all([
+      page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 25000 }),
+      page.click('form[action*="login"] button[type="submit"]', { noWaitAfter: true })
+    ]);
+
+    await page.waitForTimeout(2000);
+
+    // Save auth session for future runs
+    const authDir = path.dirname(authPath);
+    if (!fs.existsSync(authDir)) fs.mkdirSync(authDir, { recursive: true });
+    await context.storageState({ path: authPath });
+    console.log(`[Playwright] Login successful! New storageState saved to ${authPath}. Current URL: ${page.url()}`);
+    return true;
+  } catch (err) {
+    console.error(`[Playwright] Failed to log in as demo user: ${err.message}`);
+    return false;
+  }
+}
+
 async function captureScreen(feature, outDir, slug) {
   const browser = await chromium.launch({
     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
@@ -69,8 +111,9 @@ async function captureScreen(feature, outDir, slug) {
   });
 
   const authPath = path.resolve('tests/e2e/.auth/user.json');
+  const hasAuth = fs.existsSync(authPath);
   const context = await browser.newContext({
-    storageState: fs.existsSync(authPath) ? authPath : undefined,
+    storageState: hasAuth ? authPath : undefined,
     viewport: feature.viewport || { width: 1440, height: 900 },
     ignoreHTTPSErrors: true
   });
@@ -80,11 +123,33 @@ async function captureScreen(feature, outDir, slug) {
   
   console.log(`[Playwright] Navigating to ${targetUrl}...`);
   try {
-    await page.goto(targetUrl, { waitUntil: 'networkidle', timeout: 30000 });
-    await page.waitForTimeout(1500); // allow charts/animations to settle
+    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 25000 });
+    await page.waitForTimeout(2000); // allow charts/animations to settle
   } catch (err) {
-    console.warn(`[Playwright] Warning on navigation: ${err.message}. Retrying simple load...`);
-    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+    console.warn(`[Playwright] Warning on navigation: ${err.message}. Retrying load...`);
+    await page.goto(targetUrl, { waitUntil: 'load', timeout: 20000 }).catch(() => {});
+  }
+
+  // DETEKSI SESSION EXPIRED / REDIRECT KE LOGIN
+  if (page.url().includes('/login')) {
+    console.warn(`[Playwright] Target ${targetUrl} redirected to login (${page.url()}). Session expired. Re-authenticating...`);
+    const loginSuccess = await loginAsDemoUser(page, context, authPath);
+    if (loginSuccess) {
+      console.log(`[Playwright] Re-navigating to ${targetUrl} after successful login...`);
+      try {
+        await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 25000 });
+        await page.waitForTimeout(2000);
+      } catch (e) {
+        await page.goto(targetUrl, { waitUntil: 'load', timeout: 20000 }).catch(() => {});
+      }
+    }
+  }
+
+  // STRICT ANTI-LOGIN-LEAK CHECK: Jangan pernah screenshot form login
+  if (page.url().includes('/login')) {
+    console.error(`[Playwright] CRITICAL: Page is STILL at ${page.url()}. Aborting screenshot to prevent login form leak!`);
+    await browser.close();
+    throw new Error(`Screen capture aborted: page redirected to login (${page.url()}) and authentication could not be completed.`);
   }
 
   const primaryName = slug ? `${slug}-cooca-ui.png` : `${feature.id}-desktop.png`;
