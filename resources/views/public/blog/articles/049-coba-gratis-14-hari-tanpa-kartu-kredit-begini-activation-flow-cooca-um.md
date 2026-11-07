@@ -1,7 +1,7 @@
 # Artikel #049
 
 **Judul Artikel \***
-Coba Gratis 14 Hari Tanpa Kartu Kredit: Begini Activation Flow COOCA UMKM
+coba gratis Tanpa Kartu Kredit: Begini Activation Flow COOCA UMKM
 
 **Cluster Konten \***
 Cluster G - Strategi Bisnis
@@ -51,15 +51,15 @@ COOCA.ID menyediakan masa coba gratis untuk pelaku UMKM yang ingin merasakan man
 </ul>
 
 <h2>Kesimpulan</h2>
-<p>Masa coba gratis 14 hari dari COOCA.ID memberi kesempatan bagi pelaku UMKM untuk merasakan langsung manfaat digitalisasi operasional usaha tanpa risiko finansial di awal. Ini adalah langkah awal yang aman untuk mengevaluasi apakah sistem ini benar-benar sesuai kebutuhan usaha Anda.</p>
+<p>Masa coba gratis dari COOCA.ID memberi kesempatan bagi pelaku UMKM untuk merasakan langsung manfaat digitalisasi operasional usaha tanpa risiko finansial di awal. Ini adalah langkah awal yang aman untuk mengevaluasi apakah sistem ini benar-benar sesuai kebutuhan usaha Anda.</p>
 
 ## Pengaturan SEO (Meta Tags)
 
 **Meta Title**
-Coba Gratis 14 Hari Tanpa Kartu Kredit: Begini Activation Flow COOCA UMKM
+coba gratis Tanpa Kartu Kredit: Begini Activation Flow COOCA UMKM
 
 **Meta Description**
-Alur aktivasi coba gratis 14 hari COOCA.ID tanpa kartu kredit untuk pelaku UMKM yang ingin mencoba sistem digital operasional usaha.
+Alur aktivasi coba gratis COOCA.ID tanpa kartu kredit untuk pelaku UMKM yang ingin mencoba sistem digital operasional usaha.
 
 **Meta Keyword**
 coba gratis COOCA UMKM, free trial UMKM, daftar gratis

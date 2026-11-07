@@ -173,7 +173,7 @@ final class AdminInboxAiChatbotTest extends TestCase
                     [
                         'message' => [
                             'role' => 'assistant',
-                            'content' => 'Halo Kak Budi Santoso! Tentu saja bisa, COOCA sangat cocok untuk toko kelontong dengan multi-cabang melalui fitur Multi-Gudang dan transfer stok antar outlet kami. Kakak bisa mencoba uji coba gratis 14 hari di https://cooca.id untuk melihat langsung kemudahannya. 😊',
+                            'content' => 'Halo Kak Budi Santoso! Tentu saja bisa, COOCA sangat cocok untuk toko kelontong dengan multi-cabang melalui fitur Multi-Gudang dan transfer stok antar outlet kami. Kakak bisa mencoba uji coba gratis di https://cooca.id untuk melihat langsung kemudahannya. 😊',
                         ],
                     ],
                 ],

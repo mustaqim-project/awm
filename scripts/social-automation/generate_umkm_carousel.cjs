@@ -1169,7 +1169,7 @@ body {
     <!-- High-Converting Offer Card -->
     <div class="s5-offer-card">
       <div class="s5-offer-top">
-        <span class="s5-offer-badge">UJI COBA GRATIS 14 HARI</span>
+        <span class="s5-offer-badge">UJI coba gratis</span>
         <img class="trophy-badge" src="${iconTrophyBase64}" alt="Trophy">
       </div>
       <div class="s5-offer-title">Siap Bikin Toko Kamu Naik Kelas?</div>

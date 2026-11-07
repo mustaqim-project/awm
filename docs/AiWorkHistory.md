@@ -2393,7 +2393,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
      - Mengintegrasikan seluruh standar fitur master view `cooca_core/resources/views/auth` (`login`, `forgot-password`, `account-recovery`, `register`, `select-business`).
      - Menyempurnakan sheet Lupa Kata Sandi (`_showForgotPasswordSheet`) dengan opsi pemulihan via Email dan via WhatsApp resmi bot Cooca.
      - Mengembangkan Sheet Pemulihan Akun Lanjutan (`_showAccountRecoverySheet`) mengacu pada `account-recovery/create.blade.php` dan `account-recovery/status.blade.php` (kendala nomor hangus / ponsel hilang / email terkunci, dengan pelacakan nomor tiket pemulihan).
-     - Mengembangkan Sheet Pendaftaran Akun Bisnis Baru (`_showRegisterSheet`) dengan pilihan 20 template industri UMKM Indonesia dan uji coba gratis 14 hari.
+     - Mengembangkan Sheet Pendaftaran Akun Bisnis Baru (`_showRegisterSheet`) dengan pilihan 20 template industri UMKM Indonesia dan uji coba gratis.
      - Menambahkan modal pemilih multi-cabang/outlet (`_showSelectBusinessModal`) mengacu pada `select-business.blade.php`.
      - Menambahkan pemilih akun Google SSO interaktif (`_showGoogleSsoInfo`).
      - Menghubungkan penyimpanan sesi profil dan email ke `LocalStorageService().setCachedUserProfile()` saat opsi "Ingat sesi saya" diaktifkan.

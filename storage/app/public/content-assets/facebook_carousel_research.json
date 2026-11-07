@@ -1,0 +1,17 @@
+{
+  "channel": "facebook",
+  "format": "carousel",
+  "topic_id": "cashier_leakage",
+  "topic_name": "Selisih Kas Harian & Kebocoran Meja Kasir",
+  "viral_score": 96.05,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 96.0,
+  "problem_urgency": 98.0,
+  "platform_fit": 95.0,
+  "cta_clarity": 94.0,
+  "caption": "Bagi rekan-rekan pemilik toko ritel, grosir, dan minimarket: Omzet Ramai Tapi Uang Kas Toko Sering Selisih?\n\nBanyak pedagang mengira barang hilang karena dicuri, padahal 80 persen selisih stok terjadi karena masalah pencatatan kasir yang manual. Geser foto album ini untuk melihat 3 solusi praktisnya:\n\n1. Pembukuan kartu stok otomatis setiap kasir scan barcode produk.\n2. Kunci fitur pembatalan (void) kasir hanya dengan izin PIN Supervisor.\n3. Notifikasi otomatis saat stok barang sudah menipis di rak.\n\nDi Toko Kamu yang dikelola bersama Cooca Indonesia, seluruh pembukuan toko berjalan rapi dan otomatis.\n\nSimak panduan dan coba demonya di: https://cooca.id\n\n#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #TokoKamu #CoocaIndonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "dimensions": "1080x1080",
+  "evaluated_at": "2026-11-07 17:46:35"
+}

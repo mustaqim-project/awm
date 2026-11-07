@@ -401,6 +401,8 @@ class AdminSocialMediaService
                     $res = $this->metaClient->publishInstagramStory($igUserId, $igToken, $firstMediaUrl);
                 } elseif ($post->media_type === 'reels') {
                     $res = $this->metaClient->publishInstagramReels($igUserId, $igToken, $content, $firstMediaUrl);
+                } elseif (count($mediaUrls) > 1 || $post->media_type === 'carousel') {
+                    $res = $this->metaClient->publishInstagramCarousel($igUserId, $igToken, $content, $mediaUrls);
                 } else {
                     $igType = in_array($post->media_type, ['video']) ? 'VIDEO' : 'IMAGE';
                     $res = $this->metaClient->publishInstagramPost($igUserId, $igToken, $content, $firstMediaUrl, $igType);
@@ -417,6 +419,9 @@ class AdminSocialMediaService
                 if (in_array($post->media_type, ['video', 'reels']) && ! empty($firstMediaUrl)) {
                     $res = $this->metaClient->publishFacebookVideo($fbPageId, $fbPageToken, $content, $firstMediaUrl, 'Cooca Official Video');
                     $platformPostId = (string) ($res['id'] ?? '');
+                } elseif (count($mediaUrls) > 1 || $post->media_type === 'carousel') {
+                    $res = $this->metaClient->publishFacebookMultiPhoto($fbPageId, $fbPageToken, $content, $mediaUrls);
+                    $platformPostId = (string) ($res['id'] ?? $res['post_id'] ?? '');
                 } elseif (! empty($firstMediaUrl)) {
                     $res = $this->metaClient->publishPagePhoto($fbPageId, $fbPageToken, $content, $firstMediaUrl);
                     $platformPostId = (string) ($res['id'] ?? $res['post_id'] ?? '');

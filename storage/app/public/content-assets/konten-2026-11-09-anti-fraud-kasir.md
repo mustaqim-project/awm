@@ -25,7 +25,7 @@
   - Angka Rp20.000 / hari dan Rp600.000 / bulan adalah contoh hitung terbuka berlabel contoh.
   - Angka Rp100.000 pada hook cadangan adalah contoh ilustrasi selisih shift.
   - Fitur Role-Based Access Control dan PIN Supervisor live di modul `/roles`.
-  - Uji coba gratis 14 hari tanpa kartu kredit tersedia resmi di cooca.id.
+  - Uji coba gratis tanpa kartu kredit tersedia resmi di cooca.id.
 - **Risiko & Asumsi:** Angka kerugian wajib diberi label contoh agar tidak disalahartikan sebagai klaim garansi.
 
 ---

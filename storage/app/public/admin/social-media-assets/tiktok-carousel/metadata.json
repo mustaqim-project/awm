@@ -1,0 +1,42 @@
+[
+  {
+    "slide_index": 1,
+    "id": "slide-01",
+    "file_name": "slide-01.png",
+    "storage_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-01.png",
+    "public_path": "C:\\laragon\\www\\cooca_core\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-01.png",
+    "relative_path": "admin/social-media-assets/tiktok-carousel/slide-01.png"
+  },
+  {
+    "slide_index": 2,
+    "id": "slide-02",
+    "file_name": "slide-02.png",
+    "storage_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-02.png",
+    "public_path": "C:\\laragon\\www\\cooca_core\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-02.png",
+    "relative_path": "admin/social-media-assets/tiktok-carousel/slide-02.png"
+  },
+  {
+    "slide_index": 3,
+    "id": "slide-03",
+    "file_name": "slide-03.png",
+    "storage_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-03.png",
+    "public_path": "C:\\laragon\\www\\cooca_core\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-03.png",
+    "relative_path": "admin/social-media-assets/tiktok-carousel/slide-03.png"
+  },
+  {
+    "slide_index": 4,
+    "id": "slide-04",
+    "file_name": "slide-04.png",
+    "storage_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-04.png",
+    "public_path": "C:\\laragon\\www\\cooca_core\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-04.png",
+    "relative_path": "admin/social-media-assets/tiktok-carousel/slide-04.png"
+  },
+  {
+    "slide_index": 5,
+    "id": "slide-05",
+    "file_name": "slide-05.png",
+    "storage_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-05.png",
+    "public_path": "C:\\laragon\\www\\cooca_core\\public\\admin\\social-media-assets\\tiktok-carousel\\slide-05.png",
+    "relative_path": "admin/social-media-assets/tiktok-carousel/slide-05.png"
+  }
+]
