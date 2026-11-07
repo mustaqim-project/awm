@@ -50,22 +50,17 @@ class DeployUmkmCarouselAndViralPostsCommand extends Command
         $startDateStr = (string) ($this->option('start-date') ?: '2026-11-09');
         $force = (bool) $this->option('force');
 
-        // Clean up any non-Instagram platform posts so automation is strictly Instagram-only
-        $this->info('Menyelaraskan database: Menghapus pos platform non-Instagram agar khusus Instagram saja...');
-        SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', '!=', 'instagram'))->delete();
-        SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', '!=', 'instagram'))->delete();
-        SocialMediaPost::where('is_platform', true)->where('platform', '!=', 'instagram')->delete();
+        // Clean up previous Instagram carousel posts to avoid duplicates on redeployment
+        $this->info('Menyelaraskan jadwal Instagram: Membersihkan postingan carousel Instagram sebelumnya...');
+        SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
+        SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
+        SocialMediaPost::where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel')->delete();
 
         if ($force) {
-            $this->warn('Force mode aktif: Menghapus postingan Instagram carousel sebelumnya...');
+            $this->warn('Force mode aktif: Menghapus seluruh postingan Instagram platform...');
             SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram'))->delete();
             SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram'))->delete();
             SocialMediaPost::where('is_platform', true)->where('platform', 'instagram')->delete();
-        } else {
-            // Delete previous carousel posts to avoid duplicates on redeployment
-            SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
-            SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
-            SocialMediaPost::where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel')->delete();
         }
 
         // =========================================================================
