@@ -1,0 +1,153 @@
+{
+  "research_date": "2026-11-07",
+  "batch": 2,
+  "timezone": "Asia/Jakarta",
+  "platform": "Cooca (cooca.id)",
+  "target_audience": [
+    "Wajib pajak orang pribadi dan pemilik PT Perorangan UMKM",
+    "Pengusaha toko ritel, minimarket, warung makan, dan kafe F&B",
+    "Calon debitur perbankan dan penerima fasilitas pinjaman modal KUR",
+    "Pelaku usaha mikro yang ragu mengurus legalitas izin usaha NIB",
+    "Pedagang online dan brand lokal yang mengirim ribuan paket ke kota besar",
+    "Pengusaha ritel yang ingin menertibkan kasir dan menekan penyusutan barang (shrinkage)",
+    "Distributor, supplier grosir, dan usaha B2B yang memiliki piutang dagang",
+    "Pengusaha kuliner yang menghadapi lonjakan harga bahan pangan musiman"
+  ],
+  "topical_coverage_map": {
+    "core_pillar": "Business Operating System UMKM Indonesia",
+    "clusters": [
+      {
+        "cluster": "Pajak & Regulasi Usaha",
+        "article": "Aturan Baru PPh Final UMKM 0,5 Persen PP No. 20 Tahun 2026",
+        "relation": "Kepastian hukum tarif pajak 0,5% permanen bagi orang pribadi dan PT Perorangan, serta aturan bagi PT/CV baru dan pekerja bebas."
+      },
+      {
+        "cluster": "Ketenagakerjaan & Penggajian",
+        "article": "Aturan Khusus Upah Minimum UMKM 50 Persen UMK",
+        "relation": "Dasar hukum kesepakatan upah mikro minimal 50% UMK dan simulasi struktur skala upah toko ritel."
+      },
+      {
+        "cluster": "Akses Modal & Jaminan Sosial",
+        "article": "Syarat Wajib BPJS Ketenagakerjaan Pengajuan KUR 2026",
+        "relation": "Integrasi perlindungan kerja JKK/JKM bagi debitur pinjaman bank murah KUR berdasarkan Permenko No. 1/2026."
+      },
+      {
+        "cluster": "Legalitas & Perlindungan Hukum",
+        "article": "NIB Usaha Tidak Otomatis Kena Pajak: Klarifikasi Kemenkop UMKM",
+        "relation": "Pemisahan perizinan usaha OSS dengan kewajiban pajak dan aktivasi ekosistem SAPA UMKM."
+      },
+      {
+        "cluster": "Logistik & Rantai Pasok",
+        "article": "Strategi Logistik Hyperlocal UMKM: Pangkas Ongkos Kirim",
+        "relation": "Pemanfaatan gudang penyangga lokal (micro fulfillment) dan sinkronisasi multi-gudang untuk pengiriman hitungan jam."
+      },
+      {
+        "cluster": "Operasional Kasir & Anti-Fraud",
+        "article": "SOP Mencegah Fraud dan Void Kasir Toko Ritel dan F&B",
+        "relation": "Eliminasi manipulasi laci kasir dan nota pembatalan dengan PIN supervisor dan rekonsiliasi POS harian."
+      },
+      {
+        "cluster": "Manajemen Piutang & WhatsApp",
+        "article": "Otomasi Penagihan Piutang UMKM via WhatsApp Gateway",
+        "relation": "Penurunan piutang macet melalui pengingat tempo bertahap otomatis dengan tautan pembayaran QRIS instan."
+      },
+      {
+        "cluster": "Tata Kelola Keuangan & Cash Flow",
+        "article": "Panduan Pemisahan Rekening Bisnis dan Pribadi UMKM",
+        "relation": "Pencegahan sengketa mutasi pajak dan kebocoran dana operasional dengan pembukuan rekening terpisah."
+      },
+      {
+        "cluster": "Audit Stok & Loss Prevention",
+        "article": "SOP Pengendalian Inventory Shrinkage Toko Ritel",
+        "relation": "Pengurangan barang hilang dan rusak di bawah 0,8% melalui barcode scanner dan penyesuaian stok real time."
+      },
+      {
+        "cluster": "Pengendalian Biaya & HPP Kuliner",
+        "article": "Cara Mengunci HPP dan Kontrak Bahan Baku Kuliner",
+        "relation": "Stabilisasi harga menu restoran dari gejolak harga pangan musiman dengan sistem purchase order (PO) berjangka."
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": 271,
+      "slug": "aturan-pph-final-umkm-pp-20-tahun-2026",
+      "primary_keyword": "aturan pph final umkm pp 20 tahun 2026",
+      "meta_title": "Aturan PPh Final UMKM PP 20 Tahun 2026: Syarat dan Batasan",
+      "meta_description": "Pelajari aturan PPh Final UMKM PP 20 Tahun 2026, kriteria wajib pajak yang masih berhak 0,5%, pengecualian PT baru, dan batas bebas pajak 500 juta.",
+      "category": "Pajak & Legalitas"
+    },
+    {
+      "id": 272,
+      "slug": "aturan-upah-minimum-umkm-50-persen-umk",
+      "primary_keyword": "aturan upah minimum umkm 50 persen umk",
+      "meta_title": "Aturan Upah Minimum UMKM 50 Persen UMK dan Cara Hitungnya",
+      "meta_description": "Penjelasan resmi aturan upah minimum UMKM 50 persen UMK sesuai UU Pelindungan Ketenagakerjaan, syarat kesepakatan, dan simulasi gaji pegawai toko.",
+      "category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 273,
+      "slug": "syarat-bpjs-ketenagakerjaan-pengajuan-kur-2026",
+      "primary_keyword": "syarat bpjs ketenagakerjaan pengajuan kur 2026",
+      "meta_title": "Syarat BPJS Ketenagakerjaan Pengajuan KUR 2026: Cara Daftar",
+      "meta_description": "Panduan resmi syarat BPJS Ketenagakerjaan pengajuan KUR 2026 sesuai Permenko 1/2026, skema BPU murah, dan langkah pendaftarannya agar pinjaman disetujui.",
+      "category": "Modal"
+    },
+    {
+      "id": 274,
+      "slug": "nib-usaha-tidak-otomatis-kena-pajak",
+      "primary_keyword": "nib usaha tidak otomatis kena pajak",
+      "meta_title": "NIB Usaha Tidak Otomatis Kena Pajak: Klarifikasi Kemenkop",
+      "meta_description": "Penjelasan resmi bahwa NIB usaha tidak otomatis kena pajak, manfaat legalitas OSS RBA bagi warung mikro, serta cara aktivasi di portal SAPA UMKM.",
+      "category": "Pajak & Legalitas"
+    },
+    {
+      "id": 275,
+      "slug": "strategi-logistik-hyperlocal-umkm",
+      "primary_keyword": "strategi logistik hyperlocal umkm",
+      "meta_title": "Strategi Logistik Hyperlocal UMKM: Pangkas Ongkir Pesanan",
+      "meta_description": "Terapkan strategi logistik hyperlocal UMKM dengan gudang penyangga dan kurir instan agar pesanan sampai dalam hitungan jam dengan ongkos kirim murah.",
+      "category": "Inventori & Stok"
+    },
+    {
+      "id": 276,
+      "slug": "sop-mencegah-fraud-dan-void-kasir",
+      "primary_keyword": "sop mencegah fraud dan void kasir",
+      "meta_title": "SOP Mencegah Fraud dan Void Kasir: Amankan Omzet Toko",
+      "meta_description": "Panduan lengkap SOP mencegah fraud dan void kasir di toko ritel dan kafe, penggunaan PIN supervisor POS, serta audit rekonsiliasi kas harian.",
+      "category": "Kasir & POS"
+    },
+    {
+      "id": 277,
+      "slug": "otomasi-penagihan-piutang-via-whatsapp",
+      "primary_keyword": "otomasi penagihan piutang via whatsapp",
+      "meta_title": "Otomasi Penagihan Piutang via WhatsApp agar Invoice Lunas",
+      "meta_description": "Cara mudah otomasi penagihan piutang via WhatsApp gateway ramah konsumen, integrasi link invoice QRIS, dan tips menurunkan rasio piutang macet toko.",
+      "category": "Marketing & WhatsApp"
+    },
+    {
+      "id": 278,
+      "slug": "panduan-pemisahan-rekening-bisnis-dan-pribadi",
+      "primary_keyword": "panduan pemisahan rekening bisnis dan pribadi",
+      "meta_title": "Pemisahan Rekening Bisnis dan Pribadi: Cegah Masalah Pajak",
+      "meta_description": "Simak panduan pemisahan rekening bisnis dan pribadi untuk UMKM agar terhindar dari salah hitung pajak DJP, kebocoran kas, dan tabungan toko nihil.",
+      "category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 279,
+      "slug": "cara-mengatasi-inventory-shrinkage-toko-ritel",
+      "primary_keyword": "cara mengatasi inventory shrinkage toko ritel",
+      "meta_title": "Cara Mengatasi Inventory Shrinkage Toko Ritel dan Minimarket",
+      "meta_description": "Pelajari cara mengatasi inventory shrinkage toko ritel, langkah audit barang rusak dan hilang, serta SOP penerimaan stok dengan barcode scanner.",
+      "category": "Inventori & Stok"
+    },
+    {
+      "id": 280,
+      "slug": "cara-mengunci-hpp-bahan-baku-kuliner",
+      "primary_keyword": "cara mengunci hpp bahan baku kuliner",
+      "meta_title": "Cara Mengunci HPP Bahan Baku Kuliner Jelang Lonjakan Harga",
+      "meta_description": "Ketahui cara mengunci HPP bahan baku kuliner sebelum lonjakan harga musiman, teknik kontrak pasokan pemasok pangan, dan purchase order berjangka.",
+      "category": "HPP & Harga Jual"
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "date": "2026-11-07",
+  "batch": 2,
+  "geo": "ID",
+  "category": 3,
+  "category_name": "Bisnis (Business & Industrial / Finance / Retail Operations)",
+  "source": "Google Trends Indonesia & Regulatory Analysis November 2026",
+  "total_topics": 10,
+  "topics": [
+    {
+      "id": 271,
+      "topic": "Aturan Baru PPh Final UMKM 0,5 Persen Berdasarkan PP No. 20 Tahun 2026",
+      "trending_query": "aturan baru pph final umkm pp 20 tahun 2026",
+      "primary_keyword": "aturan pph final umkm pp 20 tahun 2026",
+      "secondary_keywords": [
+        "fasilitas pajak umkm perseroan perorangan",
+        "batas omzet 500 juta bebas pph",
+        "tarif umum pph badan pt cv baru",
+        "pajak pekerja bebas freelance influencer",
+        "pelaporan spt tahunan umkm 2026"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Lonjakan pencarian menyusul penetapan PP No. 20 Tahun 2026 yang membatasi fasilitas 0,5% untuk badan usaha baru dan mempertegas hak wajib pajak orang pribadi serta PT perorangan)",
+      "trending_reason": "Pemerintah menerbitkan PP No. 20 Tahun 2026 sebagai pembaruan skema perpajakan UMKM, di mana tarif PPh Final 0,5% difokuskan permanen bagi Wajib Pajak Orang Pribadi dan Perseroan Perorangan, sementara PT/CV baru serta pekerja bebas dialihkan ke tarif umum.",
+      "credible_sources": [
+        "Direktorat Jenderal Pajak (pajak.go.id)",
+        "Kementerian Keuangan RI - Salinan PP No. 20 Tahun 2026",
+        "Pusat Penyuluhan dan Pelayanan Perpajakan DJP",
+        "Hukumonline & DDTC Fiscal Research"
+      ],
+      "msme_opportunity": "Pelaku usaha orang pribadi dan PT Perorangan terlindungi kepastian pajaknya tanpa batas waktu 7 tahun, serta tetap menikmati fasilitas bebas pajak untuk omzet sampai dengan Rp500 juta per tahun.",
+      "article_angle": "Panduan komprehensif membedah siapa yang masih berhak atas fasilitas 0,5%, siapa yang wajib pindah pembukuan, serta simulasi perhitungan pajak tahunan.",
+      "slug": "aturan-pph-final-umkm-pp-20-tahun-2026",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 272,
+      "topic": "Ketentuan Khusus Upah Minimum UMKM 50 Persen UMK Berdasarkan UU Pelindungan Ketenagakerjaan",
+      "trending_query": "aturan upah minimum umkm 50 persen umk",
+      "primary_keyword": "aturan upah minimum umkm 50 persen umk",
+      "secondary_keywords": [
+        "uu pelindungan ketenagakerjaan usaha mikro",
+        "struktur skala upah toko dan warung",
+        "kesepakatan gaji karyawan usaha kecil",
+        "sanksi pelanggaran upah minimum",
+        "budgeting gaji pegawai ritel"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Ramai dibahas seiring pembahasan UMP dan UMK November 2026 jelang tahun 2027 serta pengesahan regulasi ketenagakerjaan baru)",
+      "trending_reason": "Undang-Undang Pelindungan Ketenagakerjaan baru dan aturan pengupahan menegaskan kembali klausul pengecualian upah minimum bagi usaha mikro dan kecil, di mana gaji disepakati antara pengusaha dan pekerja dengan batas minimal 50% dari upah minimum rata-rata daerah.",
+      "credible_sources": [
+        "Kementerian Ketenagakerjaan RI (kemnaker.go.id)",
+        "Dewan Pengupahan Nasional (Depenas)",
+        "Asosiasi UMKM Indonesia (Akumindo)",
+        "BeritaSatu & Kompas Bisnis Ketenagakerjaan"
+      ],
+      "msme_opportunity": "Pemilik warung, toko ritel, dan kafe kecil dapat menyusun kontrak kerja dan struktur skala upah yang legal dan adil tanpa khawatir terjerat pidana ketenagakerjaan.",
+      "article_angle": "Penjelasan landasan hukum kesepakatan upah mikro, batas minimal 50% UMK, cara menyusun surat perjanjian kerja, dan simulasi alokasi anggaran gaji terhadap omzet toko.",
+      "slug": "aturan-upah-minimum-umkm-50-persen-umk",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 273,
+      "topic": "Kewajiban Kepesertaan BPJS Ketenagakerjaan bagi Penerima KUR Menurut Permenko Perekonomian No. 1 Tahun 2026",
+      "trending_query": "syarat bpjs ketenagakerjaan pengajuan kur 2026",
+      "primary_keyword": "syarat bpjs ketenagakerjaan pengajuan kur 2026",
+      "secondary_keywords": [
+        "permenko perekonomian no 1 tahun 2026 kur",
+        "jaminan kecelakaan kerja jkk debitur kur",
+        "iuran bpjs ketenagakerjaan bukan penerima upah bpu",
+        "plafon kur mikro 100 juta",
+        "dokumen kelengkapan pengajuan kur bank bumn"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pencarian melonjak dari calon debitur KUR Mikro dan Kecil di bank BRI, Mandiri, BNI yang diminta kartu BPJS Ketenagakerjaan saat survei bank)",
+      "trending_reason": "Permenko Perekonomian No. 1 Tahun 2026 mewajibkan integrasi perlindungan jaminan sosial ketenagakerjaan (JKK dan JKM) bagi debitur KUR dengan skema kepesertaan Bukan Penerima Upah (BPU) yang sangat terjangkau.",
+      "credible_sources": [
+        "Kemenko Perekonomian RI (ekon.go.id)",
+        "BPJS Ketenagakerjaan (bpjsketenagakerjaan.go.id)",
+        "Bank Himbara (BRI, Bank Mandiri, BNI)",
+        "DDTC News & Kontan Keuangan"
+      ],
+      "msme_opportunity": "Debitur terlindungi dari risiko kecelakaan kerja dan kematian yang berpotensi melumpuhkan ekonomi keluarga, dengan premi mulai Rp16.800 per bulan.",
+      "article_angle": "Panduan praktis pendaftaran BPJS Ketenagakerjaan jalur BPU online, rincian biaya iuran, serta cara melampirkannya dalam berkas aplikasi pinjaman KUR bank.",
+      "slug": "syarat-bpjs-ketenagakerjaan-pengajuan-kur-2026",
+      "assigned_category": "Modal"
+    },
+    {
+      "id": 274,
+      "topic": "Klarifikasi Kemenkop UMKM Mengenai NIB Tidak Otomatis Kena Pajak dan Akses Platform SAPA UMKM",
+      "trending_query": "daftar nib otomatis ditarik pajak benarkah",
+      "primary_keyword": "nib usaha tidak otomatis kena pajak",
+      "secondary_keywords": [
+        "manfaat nomor induk berusaha bagi warung mikro",
+        "pendaftaran sapa umkm kemenkop",
+        "perlindungan hukum usaha mikro oss rba",
+        "mitos pajak pendaftaran usaha baru",
+        "akses pasar dan bantuan modal pemerintah"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Klarifikasi terhadap maraknya hoaks di media sosial yang menakut-nakuti pedagang kecil bahwa membuat NIB akan langsung ditagih pajak besar)",
+      "trending_reason": "Kementerian UMKM bersama Kementerian Investasi/BKPM meluruskan mitos bahwa memiliki NIB membuat usaha otomatis dikejar petugas pajak, menegaskan bahwa NIB adalah legalitas pelindung dan pintu gerbang fasilitas pemerintah seperti sertifikasi halal gratis dan KUR.",
+      "credible_sources": [
+        "Kementerian UMKM RI (kemenkopukm.go.id / umkm.go.id)",
+        "Kementerian Investasi / BKPM (oss.go.id)",
+        "SAPA UMKM Platform Terpadu",
+        "Antara News - Sosialisasi Legalitas Usaha Mikro"
+      ],
+      "msme_opportunity": "Menghilangkan rasa takut pedagang kecil untuk melegalkan usahanya, sehingga berhak atas bantuan permodalan, perlindungan hukum saat penertiban, dan kemudahan sewa tempat.",
+      "article_angle": "Mengupas tuntas pemisahan fungsi izin usaha NIB dengan sistem perpajakan, cara daftar OSS RBA gratis dari ponsel, dan integrasi data SAPA UMKM.",
+      "slug": "nib-usaha-tidak-otomatis-kena-pajak",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 275,
+      "topic": "Strategi Logistik Hyperlocal dan Gudang Penyangga untuk Memangkas Ongkos Kirim Toko Online UMKM",
+      "trending_query": "strategi logistik hyperlocal toko online umkm",
+      "primary_keyword": "strategi logistik hyperlocal umkm",
+      "secondary_keywords": [
+        "gudang penyangga toko online",
+        "micro fulfillment center kota besar",
+        "integrasi pengiriman sameday instan",
+        "manajemen multi gudang inventori",
+        "efisiensi rantai pasok ritel digital"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kebutuhan mendesak pedagang online menghadapi kenaikan biaya logistik antar-pulau dan ekspektasi pembeli akan pengiriman instan di hari yang sama)",
+      "trending_reason": "Konsumen perkotaan kian menuntut pengiriman cepat dalam hitungan 2 sampai 4 jam dengan ongkos kirim murah, mendorong UMKM menempatkan stok di gudang penyangga lokal (micro-fulfillment).",
+      "credible_sources": [
+        "Asosiasi Logistik Indonesia (ALI)",
+        "Survei Perilaku Konsumen E-Commerce Indonesia",
+        "Kementerian Perdagangan RI - Tren Rantai Pasok Digital",
+        "Logistics & Supply Chain Review Indonesia"
+      ],
+      "msme_opportunity": "Toko online daerah dapat melayani pembeli di kota-kota besar dengan tarif kurir lokal instan, meningkatkan conversion rate penjualan hingga 40%.",
+      "article_angle": "Panduan membagi alokasi stok ke gudang transit lokal, memilih mitra fulfillment, dan menyinkronkan data stok multi-gudang secara akurat.",
+      "slug": "strategi-logistik-hyperlocal-umkm",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 276,
+      "topic": "SOP Pencegahan Kecurangan (Fraud) dan Modus Pembatalan Nota (Void) di Kasir Toko Ritel dan Kafe",
+      "trending_query": "sop mencegah fraud void kasir toko pos",
+      "primary_keyword": "sop mencegah fraud dan void kasir",
+      "secondary_keywords": [
+        "otorisasi pin supervisor kasir pos",
+        "modus manipulasi struk penjualan manual",
+        "audit selisih kas harian kasir",
+        "rekonsiliasi qris dan uang fisik kasir",
+        "kontrol hak akses shift kasir"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Kasus kebocoran kas akibat pembatalan transaksi fiktif dan manipulasi laci kasir menjadi keluhan utama pemilik toko dan warung yang mulai mempekerjakan karyawan)",
+      "trending_reason": "Banyak pemilik gerai kuliner dan ritel mengalami kehilangan omzet jutaan rupiah per bulan karena kasir nakal memanfaatkan fitur void nota setelah pelanggan membayar tunai.",
+      "credible_sources": [
+        "Asosiasi Pengusaha Ritel Indonesia (Aprindo)",
+        "Audit Keuangan Forensik Usaha Ritel",
+        "Standar Keamanan Kasir POS Modern",
+        "Retail Management & Loss Prevention Journal"
+      ],
+      "msme_opportunity": "Menutup celah kebocoran pendapatan hingga 100% dengan menerapkan SOP kunci ganda dan pembatasan wewenang kasir di aplikasi POS.",
+      "article_angle": "Membongkar modus-modus void kasir, langkah penyusunan SOP serah terima shift kasir, dan penegakan PIN otorisasi supervisor.",
+      "slug": "sop-mencegah-fraud-dan-void-kasir",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 277,
+      "topic": "Otomasi Penagihan Piutang dan Pengingat Invoice via WhatsApp Gateway untuk Menekan Bad Debt",
+      "trending_query": "cara otomatis menagih piutang invoice whatsapp",
+      "primary_keyword": "otomasi penagihan piutang via whatsapp",
+      "secondary_keywords": [
+        "template pesan pengingat jatuh tempo ramah",
+        "integrasi whatsapp broadcast invoice tempo",
+        "kurangi bad debt piutang dagang b2b",
+        "link pembayaran qris tagihan invoice",
+        "manajemen sales order tempo net 30"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Keluhan pemilik usaha distributor, konveksi, dan supplier makanan yang sering macet arus kasnya karena langganan telat bayar invoice)",
+      "trending_reason": "Menagih piutang secara manual menyita waktu, rawan canggung, dan sering terlupakan hingga berujung pada piutang tak tertagih, sementara saluran WhatsApp terbukti memiliki open rate di atas 90%.",
+      "credible_sources": [
+        "Kamar Dagang dan Industri (KADIN) UMKM B2B",
+        "Studi Manajemen Piutang Usaha Perdagangan Indonesia",
+        "Pedoman Etika Penagihan Ramah Konsumen",
+        "Fintech & Digital Invoice Report Indonesia"
+      ],
+      "msme_opportunity": "Arus kas kembali lancar karena pelanggan membayar 3 sampai 5 hari lebih cepat sebelum tempo berakhir, tanpa perlu perdebatan emosional.",
+      "article_angle": "Strategi pesan berjenjang (H-3, hari H, H+3), etika penagihan santun, integrasi link QRIS pada invoice digital, dan otomasi pengiriman notifikasi.",
+      "slug": "otomasi-penagihan-piutang-via-whatsapp",
+      "assigned_category": "Marketing & WhatsApp"
+    },
+    {
+      "id": 278,
+      "topic": "Panduan Pemisahan Rekening Bisnis dan Pribadi untuk Menghindari Salah Hitung Pajak dan Kebocoran Kas",
+      "trending_query": "cara memisahkan rekening pribadi dan usaha umkm",
+      "primary_keyword": "panduan pemisahan rekening bisnis dan pribadi",
+      "secondary_keywords": [
+        "rekening khusus operasional toko ritel",
+        "rekonsiliasi mutasi bank pembukuan harian",
+        "bahaya campur uang pribadi dan kas toko",
+        "bukti transaksi murni bisnis djp",
+        "manajemen cash flow usaha keluarga"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Banyak pedagang online kebingungan saat mutasi rekening pribadi disangka omzet kena pajak oleh pemeriksa pajak atau uang belanja terpakai modal barang)",
+      "trending_reason": "Pengawasan kepatuhan pajak berbasis integrasi data perbankan mengharuskan pemilik usaha menunjukkan mutasi yang bersih dan transparan, sekaligus mengatasi sindrom 'omzet ramai tapi tabungan nihil'.",
+      "credible_sources": [
+        "Ikatan Akuntan Indonesia (IAI) - Kompartemen Akuntan UMKM",
+        "Otoritas Jasa Keuangan (OJK) - Edukasi Keuangan Rumah Tangga",
+        "DJP - Panduan Pemeriksaan Bukti Permulaan",
+        "Financial Planner Association Indonesia"
+      ],
+      "msme_opportunity": "Pemilik usaha memiliki kepastian laba bersih yang riil, dapat mengambil gaji pemilik (owner drawing) secara sehat, dan terbebas dari sengketa mutasi rekening.",
+      "article_angle": "Langkah praktis membuka rekening operasional terpisah, mekanisme transfer gaji pemilik, serta tata cara rekonsiliasi mutasi harian.",
+      "slug": "panduan-pemisahan-rekening-bisnis-dan-pribadi",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 279,
+      "topic": "SOP Pengendalian Inventory Shrinkage: Menekan Selisih, Kehilangan, dan Kerusakan Barang di Toko Ritel",
+      "trending_query": "cara mengatasi shrinkage selisih stok toko ritel",
+      "primary_keyword": "cara mengatasi inventory shrinkage toko ritel",
+      "secondary_keywords": [
+        "audit fisik barang barcode scanner pos",
+        "selisih stok persediaan gudang ritel",
+        "penghitungan fisik harian per kategori produk",
+        "efisiensi inventori minimarket dan apotek",
+        "penyesuaian stok sistem pos real time"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Tingkat penyusutan persediaan/shrinkage di minimarket dan toko ritel UMKM sering menelan 2 hingga 5 persen dari total omzet tahunan)",
+      "trending_reason": "Penyusutan stok akibat barang kadaluwarsa, kemasan rusak, pencurian eksternal (shoplifting), hingga kekeliruan admin penerimaan barang menggerogoti margin laba bersih toko.",
+      "credible_sources": [
+        "National Retail Federation & Aprindo Loss Prevention Benchmark",
+        "Standar Manajemen Gudang & Logistik Ritel",
+        "Pusat Studi Ritel & Manajemen Distribusi Indonesia",
+        "Supply Chain & Inventory Management Best Practices"
+      ],
+      "msme_opportunity": "Menyelamatkan jutaan rupiah laba bersih per bulan dengan menekan angka shrinkage di bawah standar aman 0,8% dari total nilai persediaan.",
+      "article_angle": "Analisis 4 penyebab utama shrinkage, matriks formulir pencatatan barang rusak/expired, dan SOP cross-check penerimaan barang dari supplier.",
+      "slug": "cara-mengatasi-inventory-shrinkage-toko-ritel",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 280,
+      "topic": "Strategi Mengunci HPP dan Kontrak Bahan Baku Kuliner Sebelum Lonjakan Harga Musiman Libur Panjang",
+      "trending_query": "cara kunci harga bahan baku kuliner lonjakan harga",
+      "primary_keyword": "cara mengunci hpp bahan baku kuliner",
+      "secondary_keywords": [
+        "kontrak pasokan supplier bahan pangan",
+        "antisipasi kenaikan harga musiman sembako",
+        "perhitungan food cost aman fluktuasi harga",
+        "purchase order berjangka umkm resto",
+        "negosiasi tempo pembayaran pemasok"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pengusaha restoran, kafe, dan katering cemas menghadapi lonjakan harga musiman komoditas pangan seperti cabai, daging sapi, telur, dan minyak goreng)",
+      "trending_reason": "Fluktuasi harga bahan pangan segar menjelang akhir tahun dan awal tahun baru kerap menghancurkan margin laba menu kuliner jika pemilik tidak memiliki kesepakatan harga berjangka.",
+      "credible_sources": [
+        "Badan Pangan Nasional (Bapanas) - Panel Harga Pangan",
+        "Perhimpunan Hotel dan Restoran Indonesia (PHRI)",
+        "Kementerian Pertanian RI - Kalender Musim Panen Komoditas",
+        "Culinary Business Strategy & Food Costing Guide"
+      ],
+      "msme_opportunity": "Menu makanan tetap stabil harganya bagi pelanggan setia, sementara margin keuntungan terjaga aman dari goncangan harga pasar.",
+      "article_angle": "Teknik negosiasi kontrak harga tetap dengan pemasok lokal, sistem purchase order (PO) terjadwal, dan simulasi penyesuaian porsi versus harga jual.",
+      "slug": "cara-mengunci-hpp-bahan-baku-kuliner",
+      "assigned_category": "HPP & Harga Jual"
+    }
+  ]
+}

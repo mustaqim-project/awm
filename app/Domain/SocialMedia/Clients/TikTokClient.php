@@ -401,7 +401,10 @@ class TikTokClient
             }
 
             if ($status === 'FAILED' || $status === 'FAIL') {
-                $reason = $data['fail_reason'] ?? 'Gagal dipublikasikan oleh TikTok.';
+                $reason = (string) ($data['fail_reason'] ?? 'Gagal dipublikasikan oleh TikTok.');
+                if ($reason === 'photo_pull_failed') {
+                    $reason = 'photo_pull_failed (Server TikTok gagal mengunduh aset foto dari URL yang diberikan. Pastikan domain URL terdaftar di menu "Manage URL properties" TikTok Developer Portal, URL foto dapat diakses publik tanpa login/403/404, dan Cloudflare/WAF tidak memblokir crawler TikTok)';
+                }
                 throw new \RuntimeException("TikTok Publish Failed: {$reason}");
             }
 

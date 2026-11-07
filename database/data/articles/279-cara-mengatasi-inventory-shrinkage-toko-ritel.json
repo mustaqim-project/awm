@@ -1,0 +1,42 @@
+{
+  "id": 279,
+  "title": "Cara Mengatasi Inventory Shrinkage Toko Ritel dan Minimarket",
+  "slug": "cara-mengatasi-inventory-shrinkage-toko-ritel",
+  "category": "Inventori & Stok",
+  "cluster": "tutorial",
+  "primary_keyword": "cara mengatasi inventory shrinkage toko ritel",
+  "secondary_keywords": "audit fisik barang barcode scanner pos, selisih stok persediaan gudang ritel, penghitungan fisik harian per kategori produk, efisiensi inventori minimarket dan apotek, penyesuaian stok sistem pos real time",
+  "search_intent": "informational",
+  "meta_title": "Cara Mengatasi Inventory Shrinkage Toko Ritel dan Minimarket",
+  "meta_description": "Pelajari cara mengatasi inventory shrinkage toko ritel, langkah audit barang rusak dan hilang, serta SOP penerimaan stok dengan barcode scanner.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1578916171728-46686eac8d58.jpg",
+  "local_image_asset": "public/images/blog/photo-1578916171728-46686eac8d58.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business / Regulatory Nov 2026)",
+  "trending_query": "cara mengatasi inventory shrinkage toko ritel",
+  "faqs": [
+    {
+      "q": "Apa langkah utama dalam mengendalikan penyusutan stok secara permanen?",
+      "a": "Langkah utamanya mencakup penerapan SOP serah terima penerimaan barang yang ketat dari supplier, penataan rak tanpa titik buta, pemindaian barcode pada setiap transaksi POS, dan audit fisik berkala (cycle counting) per kategori barang bernilai tinggi."
+    },
+    {
+      "q": "Berapa persentase standar batas toleransi inventory shrinkage di toko ritel?",
+      "a": "Standar batas toleransi penyusutan persediaan yang sehat di industri ritel minimarket berkisar antara 0,5 hingga 0,8 persen dari total penjualan kotor toko. Jika angka penyusutan menembus 2 persen, gerai Anda berada dalam kondisi bahaya kebocoran tinggi."
+    },
+    {
+      "q": "Apakah kasir atau staf toko wajib menanggung ganti rugi barang yang hilang?",
+      "a": "Tergantung pada kontrak kerja yang disepakati. Toko ritel profesional umumnya menetapkan batas toleransi shrinkage (misalnya 0,5%), dan jika selisih minus melebihi batas toleransi tersebut akibat kelalaian staf, selisihnya dibebankan secara proporsional kepada tim yang bertugas pada shift tersebut."
+    },
+    {
+      "q": "Bagaimana cara membedakan antara barang dicuri pengunjung atau digelapkan karyawan?",
+      "a": "Pencurian pengunjung biasanya menyasar barang bernilai tinggi berukuran kecil yang mudah diselipkan di saku baju. Sedangkan penggelapan oleh karyawan sering kali menyasar barang curah dalam jumlah besar saat proses bongkar muat gudang atau melalui modus manipulasi struk kasir."
+    },
+    {
+      "q": "Bagaimana cara mengelola stok barang yang mendekati tanggal kedaluwarsa (near-expired)?",
+      "a": "Terapkan diskon khusus clearance sale 30 sampai 50 persen pada rak khusus bertanda 'Promo Hemat Segera Habiskan' untuk barang yang memiliki sisa masa kedaluwarsa 1 hingga 2 bulan, sehingga modal barang tetap kembali menjadi uang kas."
+    }
+  ],
+  "created_at": "2026-11-07T10:40:00+07:00",
+  "published_at": "2026-11-07T10:40:00+07:00"
+}

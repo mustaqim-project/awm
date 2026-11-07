@@ -9,6 +9,7 @@ use App\Domain\SocialMedia\Contracts\SocialMediaProviderInterface;
 use App\Models\SocialMediaAccount;
 use App\Models\SocialPostTarget;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class TikTokProvider implements SocialMediaProviderInterface
 {
@@ -144,69 +145,27 @@ class TikTokProvider implements SocialMediaProviderInterface
         // 3. Direct Photo Post (Single photo or Photo carousel mode: 1 to 35 images)
         if (in_array($contentType, ['photo', 'carousel', 'feed', 'image'], true)) {
             $imageUrls = [];
-            foreach ($mediaItems as $m) {
-                $url = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
-                if (! empty($url)) {
-                    // TikTok Photo API strictly rejects PNG format with file_format_check_failed.
-                    // If a PNG URL is passed, resolve to corresponding .jpg or convert on-the-fly.
-                    if (preg_match('/\.png(\?.*)?$/i', $url)) {
-                        $jpgUrl = preg_replace('/\.png(\?.*)?$/i', '.jpg$1', $url);
-                        $parsedPath = parse_url($url, PHP_URL_PATH);
-                        $localFile = public_path(ltrim((string) $parsedPath, '/'));
-                        $localJpg = preg_replace('/\.png$/i', '.jpg', $localFile);
-
-                        if (file_exists($localJpg)) {
-                            $url = $jpgUrl;
-                        } elseif (file_exists($localFile) && function_exists('imagecreatefrompng') && function_exists('imagejpeg')) {
-                            $src = @imagecreatefrompng($localFile);
-                            if ($src) {
-                                $w = imagesx($src);
-                                $h = imagesy($src);
-                                $scale = ($w > 1080 || $h > 1080) ? min(1080 / $w, 1080 / $h) : 1.0;
-                                $newW = (int) round($w * $scale);
-                                $newH = (int) round($h * $scale);
-                                $bg = imagecreatetruecolor($newW, $newH);
-                                $white = imagecolorallocate($bg, 255, 255, 255);
-                                imagefilledrectangle($bg, 0, 0, $newW, $newH, $white);
-                                imagecopyresampled($bg, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
-                                imagejpeg($bg, $localJpg, 92);
-                                imagedestroy($src);
-                                imagedestroy($bg);
-                                $url = $jpgUrl;
-                            }
-                        } else {
-                            $url = $jpgUrl;
-                        }
+            foreach ($mediaItems as $idx => $m) {
+                $rawUrl = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
+                if (! empty($rawUrl)) {
+                    $preparedUrl = $this->preparePhotoUrlForTikTok($rawUrl, $target, (int) $idx);
+                    if (! empty($preparedUrl)) {
+                        $imageUrls[] = $preparedUrl;
                     }
-
-                    // Enforce max 1080px dimension boundary on local JPG to prevent picture_size_check_failed
-                    $parsedPath = parse_url($url, PHP_URL_PATH);
-                    $localJpg = public_path(ltrim((string) $parsedPath, '/'));
-                    if (file_exists($localJpg) && function_exists('imagecreatefromjpeg') && function_exists('imagejpeg')) {
-                        [$w, $h] = @getimagesize($localJpg) ?: [0, 0];
-                        if ($w > 1080 || $h > 1080) {
-                            $scale = min(1080 / $w, 1080 / $h);
-                            $newW = (int) round($w * $scale);
-                            $newH = (int) round($h * $scale);
-                            $src = @imagecreatefromjpeg($localJpg);
-                            if ($src) {
-                                $dst = imagecreatetruecolor($newW, $newH);
-                                imagecopyresampled($dst, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
-                                imagejpeg($dst, $localJpg, 92);
-                                imagedestroy($src);
-                                imagedestroy($dst);
-                                Log::info("[TikTokProvider] Auto-downscaled image {$localJpg} from {$w}x{$h} to {$newW}x{$newH}");
-                            }
-                        }
-                    }
-
-                    $imageUrls[] = $url;
                 }
             }
 
             if (count($imageUrls) < 1) {
                 throw new \InvalidArgumentException('TikTok Photo Mode mewajibkan minimal 1 gambar.');
             }
+
+            Log::info("[TikTokProvider] Initiating TikTok photo post", [
+                'target_id'   => $target->id,
+                'account_id'  => $account->id,
+                'photo_count' => count($imageUrls),
+                'image_urls'  => $imageUrls,
+                'privacy'     => $publishOptions['privacy_level'] ?? null,
+            ]);
 
             $initData = null;
             try {
@@ -250,7 +209,7 @@ class TikTokProvider implements SocialMediaProviderInterface
         foreach ($mediaItems as $m) {
             $url = is_array($m) ? ($m['media_url'] ?? '') : (string) $m;
             if (! empty($url)) {
-                $videoUrl = $url;
+                $videoUrl = $this->normalizePublicUrl($url);
                 break;
             }
         }
@@ -258,6 +217,13 @@ class TikTokProvider implements SocialMediaProviderInterface
         if (empty($videoUrl)) {
             throw new \InvalidArgumentException('TikTok Video mewajibkan berkas video yang valid.');
         }
+
+        Log::info("[TikTokProvider] Initiating TikTok video post", [
+            'target_id'  => $target->id,
+            'account_id' => $account->id,
+            'video_url'  => $videoUrl,
+            'privacy'    => $publishOptions['privacy_level'] ?? null,
+        ]);
 
         $initData = null;
         try {
@@ -339,5 +305,167 @@ class TikTokProvider implements SocialMediaProviderInterface
         }
 
         return $metrics;
+    }
+
+    /**
+     * Prepare, normalize, and validate photo URL for TikTok Content Posting API.
+     * - Enforces JPG format (TikTok rejects PNG with file_format_check_failed).
+     * - Downscales images > 1080px to prevent picture_size_check_failed.
+     * - Normalizes localhost/127.0.0.1 to public canonical URL with HTTPS.
+     */
+    protected function preparePhotoUrlForTikTok(string $rawUrl, ?SocialPostTarget $target = null, int $index = 0): string
+    {
+        $url = trim($rawUrl);
+        if (empty($url)) {
+            return '';
+        }
+
+        // 1. Resolve local physical file if it exists on server
+        $localFile = $this->resolveLocalFile($url, $target, $index);
+
+        // 2. Handle PNG -> JPG conversion
+        $isPng = (bool) preg_match('/\.png(\?.*)?$/i', $url) || ($localFile && str_ends_with(strtolower($localFile), '.png'));
+        if ($isPng) {
+            $jpgUrl = preg_replace('/\.png(\?.*)?$/i', '.jpg$1', $url);
+
+            if ($localFile) {
+                $localJpg = preg_replace('/\.png$/i', '.jpg', $localFile);
+
+                if (file_exists($localJpg) && filesize($localJpg) > 0) {
+                    $url = $jpgUrl;
+                    $localFile = $localJpg;
+                } elseif (function_exists('imagecreatefrompng') && function_exists('imagejpeg')) {
+                    $src = @imagecreatefrompng($localFile);
+                    if ($src) {
+                        $w = imagesx($src);
+                        $h = imagesy($src);
+                        $scale = ($w > 1080 || $h > 1080) ? min(1080 / $w, 1080 / $h) : 1.0;
+                        $newW = (int) round($w * $scale);
+                        $newH = (int) round($h * $scale);
+                        $bg = imagecreatetruecolor($newW, $newH);
+                        $white = imagecolorallocate($bg, 255, 255, 255);
+                        imagefilledrectangle($bg, 0, 0, $newW, $newH, $white);
+                        imagecopyresampled($bg, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
+
+                        @mkdir(dirname($localJpg), 0755, true);
+                        imagejpeg($bg, $localJpg, 92);
+                        imagedestroy($src);
+                        imagedestroy($bg);
+
+                        if (file_exists($localJpg)) {
+                            $url = $jpgUrl;
+                            $localFile = $localJpg;
+                            Log::info("[TikTokProvider] Converted PNG to JPG for TikTok: {$localJpg}");
+                        }
+                    }
+                }
+            } else {
+                $url = $jpgUrl;
+            }
+        }
+
+        // 3. Auto-downscale local JPG if dimensions exceed 1080px
+        if ($localFile && file_exists($localFile) && function_exists('imagecreatefromjpeg') && function_exists('imagejpeg')) {
+            [$w, $h] = @getimagesize($localFile) ?: [0, 0];
+            if ($w > 1080 || $h > 1080) {
+                $scale = min(1080 / $w, 1080 / $h);
+                $newW = (int) round($w * $scale);
+                $newH = (int) round($h * $scale);
+                $src = @imagecreatefromjpeg($localFile);
+                if ($src) {
+                    $dst = imagecreatetruecolor($newW, $newH);
+                    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newW, $newH, $w, $h);
+                    imagejpeg($dst, $localFile, 92);
+                    imagedestroy($src);
+                    imagedestroy($dst);
+                    Log::info("[TikTokProvider] Auto-downscaled image {$localFile} from {$w}x{$h} to {$newW}x{$newH}");
+                }
+            }
+        }
+
+        // 4. Normalize localhost / 127.0.0.1 and enforce HTTPS
+        return $this->normalizePublicUrl($url);
+    }
+
+    /**
+     * Resolve physical file path on local server across public and storage disks.
+     */
+    protected function resolveLocalFile(string $url, ?SocialPostTarget $target = null, int $index = 0): ?string
+    {
+        $post = $target?->post;
+        $localPaths = is_array($post?->local_media_paths) ? $post->local_media_paths : [];
+        $relPath = $localPaths[$index] ?? null;
+
+        if ($relPath) {
+            $diskPath = Storage::disk('public')->path($relPath);
+            if (file_exists($diskPath)) {
+                return $diskPath;
+            }
+            $storageAppPath = storage_path('app/public/' . ltrim($relPath, '/'));
+            if (file_exists($storageAppPath)) {
+                return $storageAppPath;
+            }
+            $pubDirect = public_path(ltrim($relPath, '/'));
+            if (file_exists($pubDirect)) {
+                return $pubDirect;
+            }
+        }
+
+        $parsedPath = parse_url($url, PHP_URL_PATH);
+        if ($parsedPath) {
+            $pubPath = public_path(ltrim((string) $parsedPath, '/'));
+            if (file_exists($pubPath)) {
+                return $pubPath;
+            }
+
+            if (str_starts_with((string) $parsedPath, '/storage/')) {
+                $cleanSub = preg_replace('#^/?storage/#', '', (string) $parsedPath);
+                $storagePath = storage_path('app/public/' . $cleanSub);
+                if (file_exists($storagePath)) {
+                    return $storagePath;
+                }
+                $diskPath = Storage::disk('public')->path($cleanSub);
+                if (file_exists($diskPath)) {
+                    return $diskPath;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Normalize URL for TikTok servers: enforce HTTPS and convert localhost/127.0.0.1
+     * to configured public canonical URL when available.
+     */
+    protected function normalizePublicUrl(string $url): string
+    {
+        $url = trim($url);
+        if (empty($url)) {
+            return '';
+        }
+
+        $parsed = parse_url($url);
+        $host = strtolower($parsed['host'] ?? '');
+
+        if (in_array($host, ['127.0.0.1', 'localhost', '::1'], true)) {
+            $publicBase = config('app.canonical_url') ?: config('app.url');
+            if (! empty($publicBase) && ! preg_match('/localhost|127\.0\.0\.1/i', (string) $publicBase)) {
+                $url = rtrim($publicBase, '/') . '/' . ltrim($parsed['path'] ?? '', '/');
+                if (! empty($parsed['query'])) {
+                    $url .= '?' . $parsed['query'];
+                }
+            } else {
+                throw new \InvalidArgumentException(
+                    "TikTok Content Posting API (PULL_FROM_URL) mewajibkan URL media publik dengan HTTPS. URL lokal '{$url}' tidak dapat diakses oleh server TikTok (photo_pull_failed). Pastikan APP_URL di .env mengarah ke domain publik (https://...)."
+                );
+            }
+        }
+
+        if (str_starts_with(strtolower($url), 'http://') && ! preg_match('/localhost|127\.0\.0\.1/i', $url)) {
+            $url = 'https://' . substr($url, 7);
+        }
+
+        return $url;
     }
 }

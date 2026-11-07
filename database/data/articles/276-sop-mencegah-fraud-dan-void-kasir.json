@@ -1,0 +1,42 @@
+{
+  "id": 276,
+  "title": "SOP Mencegah Fraud dan Void Kasir: Amankan Omzet Toko",
+  "slug": "sop-mencegah-fraud-dan-void-kasir",
+  "category": "Kasir & POS",
+  "cluster": "tutorial",
+  "primary_keyword": "sop mencegah fraud dan void kasir",
+  "secondary_keywords": "otorisasi pin supervisor kasir pos, modus manipulasi struk penjualan manual, audit selisih kas harian kasir, rekonsiliasi qris dan uang fisik kasir, kontrol hak akses shift kasir",
+  "search_intent": "informational",
+  "meta_title": "SOP Mencegah Fraud dan Void Kasir: Amankan Omzet Toko",
+  "meta_description": "Panduan lengkap SOP mencegah fraud dan void kasir di toko ritel dan kafe, penggunaan PIN supervisor POS, serta audit rekonsiliasi kas harian.",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1556742502-ec7c0e9f34b1.jpg",
+  "local_image_asset": "public/images/blog/photo-1556742502-ec7c0e9f34b1.jpg",
+  "author": "Tim Edukasi COOCA",
+  "trending_source": "Google Trends Indonesia (Category 3 - Business / Regulatory Nov 2026)",
+  "trending_query": "sop mencegah fraud dan void kasir",
+  "faqs": [
+    {
+      "q": "Mengapa prosedur pembatalan transaksi kasir mewajibkan otorisasi supervisor?",
+      "a": "Jika kasir memiliki akses bebas untuk melakukan void, mereka dapat dengan mudah membatalkan transaksi belanja pelanggan yang sudah membayar tunai dan mengambil uang tersebut untuk kepentingan pribadi tanpa terdeteksi di pembukuan stok."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika terjadi selisih minus kas pada saat tutup shift?",
+      "a": "SOP standar mewajibkan kasir yang bertugas pada shift tersebut mengganti selisih kas fisik yang hilang dari kantong pribadi pada hari yang sama, serta mengisi berita acara investigasi bersama manajer toko."
+    },
+    {
+      "q": "Bagaimana cara mencegah kasir menempelkan kode QRIS pribadi di meja kasir?",
+      "a": "Gunakan stiker akrilik permanen yang terkunci atau tampilkan kode QRIS dinamis yang muncul langsung di layar mesin kasir POS pada saat checkout belanja, sehingga kasir tidak dapat menukar kode pembayaran secara fisik."
+    },
+    {
+      "q": "Apakah struk kertas masih relevan di era pembayaran digital saat ini?",
+      "a": "Sangat relevan sebagai bukti sah transaksi bagi pelanggan dan alat kontrol audit toko. Namun toko modern juga dapat menyediakan struk digital yang dikirimkan otomatis melalui pesan WhatsApp pelanggan."
+    },
+    {
+      "q": "Bagaimana mengatasi situasi jika pelanggan terlanjur pergi sebelum kasir salah menginput harga?",
+      "a": "Kasir wajib memanggil supervisor untuk melakukan pembatalan resmi dengan mencantumkan alasan kelalaian input, dan nota fisik yang salah wajib disimpan di laci untuk dicocokkan saat rekonsiliasi tutup toko."
+    }
+  ],
+  "created_at": "2026-11-07T10:25:00+07:00",
+  "published_at": "2026-11-07T10:25:00+07:00"
+}
