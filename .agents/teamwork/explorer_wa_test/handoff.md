@@ -307,3 +307,4 @@ This investigation's findings and test plan remain valid unless:
 1. `RequirePermission.php` middleware logic is modified to alter the 403 / redirect behavior.
 2. `RbacSeeder.php` matrix alters permission assignments for `whatsapp.view` or `whatsapp.manage`.
 3. Route definitions in `routes/owner.php` are relocated or altered.
+

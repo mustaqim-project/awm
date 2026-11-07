@@ -1,61 +1,81 @@
-# Project: COOCA Core to Mobile Integration (Fase 2 & Fase 3)
+# Project: WhatsApp Module UI Simplification & RBAC Enforcement
 
 ## Architecture
-- **Backend API**: `c:\laragon\www\cooca_core` (Laravel 11, Laravel Sanctum, Eloquent ORM, PHPUnit 11)
-- **Mobile Client**: `c:\laragon\www\cooca_my_own` (Flutter 3.47 / Dart 3.13, Provider/Listenable `MerchantState`, Apple HIG tokens `ios_tokens.dart`, `ios_adaptive.dart`, `flutter test`, `flutter analyze`)
-- **Fase 2 (Logistik & Gudang Toko)**:
-  - Goods Receipt / Penerimaan Barang Supplier: PO pending list, PO detail, camera barcode scan (`mobile_scanner`), actual vs damaged received qty, batch/lot & exp date tracking in `product_batches`. (BACKEND & MOBILE COMPLETE)
-  - Stock Transfer / Mutasi Antar Cabang: Transfer list, dispatch (pengiriman barang, deduction to in-transit status), receive (penerimaan inbound scan, destination stock increment). (BACKEND & MOBILE COMPLETE)
-- **Fase 3 (Customer Piutang & Omnichannel Digital)**:
-  - Customer Piutang & Kasbon: Debt history, unpaid balance tracking (`current_credit_balance`), repayment recording via `LoyaltyService`, POS "Kasbon / Tempo" payment method. (BACKEND COMPLETE, MOBILE IN_PROGRESS)
-  - Digital WhatsApp Receipt: POS order WhatsApp receipt dispatch API with mobile direct WhatsApp intent fallback via `url_launcher` (`whatsapp://send?phone=...`). (BACKEND COMPLETE, MOBILE IN_PROGRESS)
-  - Storefront & Standee QR Orders: Inbound order polling/events, `MerchantState` listener, dashboard & POS popup badges, order action workflows (Terima Pesanan -> Cetak KDS -> Panggil Kurir). (BACKEND COMPLETE, MOBILE IN_PROGRESS)
-- **Quality Gates**:
-  - Backend: 100% PHPUnit tests passing for all new/modified endpoints.
-  - Mobile: `flutter analyze` with 0 issues, 100% widget & unit tests passing.
-  - Hard forensic audit gate: Clean audit verdict.
+- **Framework**: Laravel 11, PHP 8.2+, Blade Templating, Alpine.js, Tailwind CSS
+- **Module Path**: `resources/views/app/whatsapp/`
+  - `index.blade.php` (Gateway Cockpit, connection cards, service toggles, auto-receipt, test console, Meta message catalog)
+  - `broadcast.blade.php` (Broadcast campaigns hub, delivery metrics, campaign listing, composer modal sheet)
+  - `broadcast_detail.blade.php` (Delivery report, KPI cards, message preview, recipient status table, live polling)
+  - `logs.blade.php` (Message transmission logs, status filters, log inspector sheet, storage pruning modal)
+- **RBAC Architecture**:
+  - Tenant RBAC: `App\Models\Permission`, `App\Models\Role`, `App\Support\Context::hasPermission($ability)`
+  - Permissions: `whatsapp.view` (read-only view access), `whatsapp.manage` (full gateway connection, settings, test send, broadcasts, storage pruning), `reports.export` (Excel export)
+  - Gate Bridge: `Gate::before` in `AppServiceProvider.php` bridging `App\Models\User` to `Context::hasPermission($ability)` for native Blade `@can` support
+  - Controller Guards: Laravel 11 `HasMiddleware` in `WhatsAppWebController`, `WhatsAppBroadcastWebController`, and `MetaWhatsAppOnboardingController`
+  - HTTP 403 Forbidden: `RequirePermission` middleware returns 403 on JSON/API requests (`expectsJson()`); unauthorized web GET requests redirect to `portal`
+- **UI Design System**:
+  - Apple HIG / Bento architecture: clean layout, distinct primary/secondary/destructive action hierarchy, 44×44px minimum touch targets, zero overlapping elements across desktop & mobile.
 
 ## Feature Inventory
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| 1 | Pending Purchase Orders API | `GET /api/v1/inventory/purchase-orders/pending` & `GET /api/v1/inventory/purchase-orders/{id}` | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
-| 2 | Goods Receipt Creation API | `POST /api/v1/inventory/goods-receipts` (update PO received qty, stock mutation, batch & exp date) | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
-| 3 | Stock Transfer API (2-Step) | `GET /api/v1/inventory/transfers`, `POST /api/v1/inventory/transfers/dispatch`, `POST /api/v1/inventory/transfers/{id}/receive` | M1 (Backend Fase 2) | ORIGINAL_REQUEST R1 |
-| 4 | Mobile Goods Receipt Screen | `GoodsReceiptScreen` with camera barcode scanner, actual vs damaged qty, batch & exp date | M2 (Mobile Fase 2) | ORIGINAL_REQUEST R1 |
-| 5 | Mobile Stock Transfer Screen | `StockTransferScreen` with 2 tabs: Dispatch & Inbound Scan | M2 (Mobile Fase 2) | ORIGINAL_REQUEST R1 |
-| 6 | Customer Debts & Kasbon API | `GET /api/v1/customers/{id}/debts` & `POST /api/v1/customers/{id}/repay-debt` | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
-| 7 | WhatsApp Receipt API | `POST /api/v1/pos/orders/{id}/send-whatsapp-receipt` | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
-| 8 | Storefront & QR Orders API | Storefront & table QR orders endpoint and notification support | M3 (Backend Fase 3) | ORIGINAL_REQUEST R2 |
-| 9 | Mobile Kasbon Payment & Debt Sheet | POS payment "Kasbon / Tempo" option & `PosCustomerDebtSheet` modal | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
-| 10 | Mobile WhatsApp Receipt Fallback | `pos_receipt_screen.dart` WhatsApp send button with direct intent fallback | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
-| 11 | Mobile Omnichannel Orders Listener & UI | `MerchantState` listener, dashboard & POS badges/dialogs, action buttons | M4 (Mobile Fase 3) | ORIGINAL_REQUEST R2 |
-| 12 | Comprehensive Test Suite & QA Gate | Backend PHPUnit tests, Mobile flutter tests & flutter analyze (0 issues) | M5 (Test & Verification) | ORIGINAL_REQUEST R3 |
+| 1 | Gate::before User RBAC Bridge | Enable native Blade `@can` for tenant `User` via `Context::hasPermission($ability)` in `AppServiceProvider.php` | M1 (RBAC Core) | survey (all explorers) |
+| 2 | Navigation Registry Permission Fix | Set `whatsapp-gateway` sidebar item permission to `whatsapp.view` so view-only users can access the gateway | M1 (RBAC Core) | survey (explorer_wa_rbac) |
+| 3 | Controller Middleware Guards | Standardize controller-level `HasMiddleware` guards across WhatsApp controllers for strict permission enforcement | M1 (RBAC Core) | survey (explorer_wa_rbac, ORIGINAL_REQUEST R2) |
+| 4 | `index.blade.php` UI Simplification & RBAC | Demote header button, remove duplicate inbox button, guard disconnect/toggle/receipt/test/catalog actions with `@can`, disable read-only form controls | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
+| 5 | `broadcast.blade.php` UI & Touch Targets | Fix table eye action button touch target to 44px (`min-w-[44px] min-h-[44px]`), apply `@can('whatsapp.manage')` on header, empty state & blast submit | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
+| 6 | `broadcast_detail.blade.php` RBAC Guards | Guard header "Buat Siaran Baru" and "Buat Siaran Serupa" CTA with `@can('whatsapp.manage')` | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R2) |
+| 7 | `logs.blade.php` UI & RBAC Enforcement | Fix table eye button to 44px hit area, guard Excel export with `@can('reports.export')`, guard storage pruning button & modal with `@can('whatsapp.manage')` | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
+| 8 | WhatsApp RBAC Security Test Suite | Create `WhatsAppRbacSecurityTest.php` asserting 403 Forbidden on JSON endpoints, redirection on web, and Blade UI element hiding | M3 (Verification) | survey (explorer_wa_test, ORIGINAL_REQUEST R2) |
+| 9 | Blade Compilation & Regression Verification | Verify `php artisan view:cache` and run all 28 existing tests in `MerchantWhatsAppWebFeatureTest.php` without regression | M3 (Verification) | survey (explorer_wa_test, ORIGINAL_REQUEST R1, R2) |
+| 10 | Forensic Integrity Audit Gate | Execute `teamwork_auditor` check verifying genuine implementations, zero dummy facades, and clean RBAC/UI architecture | M3 (Verification) | orchestrator audit gate |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 0 | Phase 0: Survey & Technical Discovery | Survey codebase schemas, existing routes, Flutter widgets, and test setups | none | DONE |
-| 1 | Milestone 1: Backend Fase 2 (Logistics & Stock) | PO pending, PO detail, Goods Receipt, Stock Transfer dispatch & receive | M0 | DONE |
-| 2 | Milestone 2: Mobile Fase 2 (Logistics UI) | `GoodsReceiptScreen` & `StockTransferScreen` with camera & scanner | M1 | DONE |
-| 3 | Milestone 3: Backend Fase 3 (Debts & Omnichannel) | Customer debt/repay, WhatsApp receipt, Storefront/QR orders API | M0 | DONE |
-| 4 | Milestone 4: Mobile Fase 3 (Debts & Omnichannel UI) | Kasbon POS payment, `PosCustomerDebtSheet`, WA receipt fallback, Omnichannel order alerts | M3 | IN_PROGRESS |
-| 5 | Milestone 5: Full E2E & Automated Test Gate | PHPUnit tests, Flutter widget/unit tests, `flutter analyze`, forensic audit | M1, M2, M3, M4 | PLANNED |
+| 0 | Phase 0: Survey & Technical Discovery | Map views, controllers, seeders, and test baseline via 3 parallel Explorers | none | DONE |
+| 1 | Milestone 1: RBAC Core & Controller Guards | `AppServiceProvider.php` Gate bridge, `NavigationRegistry.php`, and WhatsApp controller middleware guards | M0 | PLANNED |
+| 2 | Milestone 2: WhatsApp Views UI Simplification & RBAC | Refactor `index`, `broadcast`, `broadcast_detail`, and `logs` Blade templates per Bento/Apple HIG & `@can` directives | M1 | PLANNED |
+| 3 | Milestone 3: Test Verification & Forensic Audit Gate | `WhatsAppRbacSecurityTest`, `view:cache`, full regression test, and Forensic Audit gate | M1, M2 | PLANNED |
 
 ## Interface Contracts
-### General Standards
-- Authentication: `Bearer <sanctum_token>` via `auth:sanctum` middleware.
-- Tenant Context: `X-Business-Id: <business_uuid>` header, mapped via `SetActiveBusinessContext` middleware.
-- Response Envelope: `{ "success": true, "data": ..., "message": "..." }` or standard Laravel resources.
-- Error Format: HTTP 422 `{ "success": false, "message": "Validation error", "errors": { ... } }`.
+### Gate & Permissions Contract
+- Ability `whatsapp.view`: Read-only access to WhatsApp gateway dashboard, status, and message logs.
+- Ability `whatsapp.manage`: Full operational permissions (connect/disconnect WhatsApp session, update receipt settings, send test message, create and send broadcast campaigns, prune log storage).
+- Ability `reports.export`: Permission to trigger Excel spreadsheet export of message logs.
+- Gate Hook: In `AppServiceProvider.php`:
+  ```php
+  Gate::before(function ($user, string $ability) {
+      if ($user instanceof \App\Models\Admin) {
+          return $user->isSuperAdmin() ? true : ($user->hasPermission($ability) ? true : null);
+      }
+      if ($user instanceof \App\Models\User) {
+          return \App\Support\Context::hasPermission($ability) ? true : null;
+      }
+      return null;
+  });
+  ```
 
-### 10 Authoritative Endpoints
-1. `GET /api/v1/inventory/purchase-orders/pending?location_id={uuid}`: Returns confirmed POs awaiting physical receipt. (VERIFIED IN M1 & M2)
-2. `GET /api/v1/inventory/purchase-orders/{id}`: Returns PO details, ordered qty, received qty, remaining qty per item. (VERIFIED IN M1 & M2)
-3. `POST /api/v1/inventory/goods-receipts`: Creates goods receipt, updates PO items, records stock movement (`TYPE_GOODS_RECEIPT`), creates `product_batches` if batch/expiry provided. (VERIFIED IN M1 & M2)
-4. `GET /api/v1/inventory/transfers?location_id={uuid}&type={all|inbound|outbound}`: Lists stock transfers. (VERIFIED IN M1 & M2)
-5. `POST /api/v1/inventory/transfers/dispatch`: Deducts source stock (`TYPE_TRANSFER_OUT`), sets `STATUS_IN_TRANSIT`. (VERIFIED IN M1 & M2)
-6. `POST /api/v1/inventory/transfers/{id}/receive`: Adds destination stock (`TYPE_TRANSFER_IN`), sets `STATUS_RECEIVED`. (VERIFIED IN M1 & M2)
-7. `GET /api/v1/customers/{id}/debts`: Returns customer credit summary, `credit_limit`, `current_credit_balance`, unpaid invoices. (VERIFIED IN M3)
-8. `POST /api/v1/customers/{id}/repay-debt`: Records repayment via `LoyaltyService::recordCustomerCreditPayment`, creates `CustomerCreditTransaction::TYPE_PAYMENT`, records cash entry. (VERIFIED IN M3)
-9. `POST /api/v1/pos/orders/{id}/send-whatsapp-receipt`: Sends WhatsApp receipt via Meta API / Gateway and returns fallback `whatsapp_url`. (VERIFIED IN M3)
-10. `GET /api/v1/pos/incoming-orders` (or `/api/v1/commerce/orders/incoming`): Returns pending web storefront & QR table orders. (VERIFIED IN M3)
+### HTTP Authorization Contract
+- Unauthorized JSON/AJAX requests (`Accept: application/json` or `isJson()`): HTTP 403 Forbidden with payload:
+  `{ "success": false, "error_code": "FORBIDDEN_PERMISSION", "message": "..." }`
+- Unauthorized Web GET requests: Redirect to `route('portal')` with session error flash.
+
+### UI Layout & Button Hierarchy Contract
+- Primary Actions: Solid `#007AFF` blue, white text, 44px min touch target, reserved for primary CTA per section.
+- Secondary Actions: Tonal gray/white background (`bg-black/[0.05] dark:bg-white/[0.08]`), 44px min touch target.
+- Destructive Actions: Tonal red (`bg-[#FF3B30]/10 text-[#FF3B30]`), 44px min touch target, guarded by confirmation and `@can('whatsapp.manage')`.
+- Table Row Actions: `min-w-[44px] min-h-[44px]` touch target, centered SVG icon.
+- Read-Only State: When user lacks `whatsapp.manage`, mutating form inputs and toggles are disabled (`disabled` attribute, `cursor-not-allowed`, reduced opacity), and action buttons are omitted via `@can`.
+
+## Code Layout
+- `app/Providers/AppServiceProvider.php` (Gate::before bridge)
+- `app/Support/Navigation/NavigationRegistry.php` (sidebar permissions)
+- `app/Http/Controllers/Web/WhatsApp/WhatsAppWebController.php` (controller middleware)
+- `app/Http/Controllers/Web/WhatsApp/WhatsAppBroadcastWebController.php` (controller middleware)
+- `app/Http/Controllers/Web/WhatsApp/MetaWhatsAppOnboardingController.php` (controller middleware)
+- `resources/views/app/whatsapp/index.blade.php` (view refactor)
+- `resources/views/app/whatsapp/broadcast.blade.php` (view refactor)
+- `resources/views/app/whatsapp/broadcast_detail.blade.php` (view refactor)
+- `resources/views/app/whatsapp/logs.blade.php` (view refactor)
+- `tests/Feature/WhatsApp/WhatsAppRbacSecurityTest.php` (new test suite)

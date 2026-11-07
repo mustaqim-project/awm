@@ -492,7 +492,7 @@ final class NavigationRegistry
                         'icon'          => 'message-circle',
                         'route'         => 'whatsapp.index',
                         'active_routes' => ['whatsapp.index', 'whatsapp.status', 'whatsapp.qr', 'whatsapp.logs.*'],
-                        'permission'    => 'whatsapp.manage',
+                        'permission'    => 'whatsapp.view',
                     ],
                     [
                         'key'           => 'whatsapp-broadcast',

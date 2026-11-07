@@ -135,7 +135,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        // Platform Admin RBAC Gate Integration
+        // Platform Admin & Merchant RBAC Gate Integration
         \Illuminate\Support\Facades\Gate::before(function ($user, string $ability) {
             if ($user instanceof \App\Models\Admin) {
                 if ($user->isSuperAdmin()) {
@@ -143,6 +143,10 @@ class AppServiceProvider extends ServiceProvider
                 }
 
                 return $user->hasPermission($ability) ? true : null;
+            }
+
+            if ($user instanceof \App\Models\User) {
+                return \App\Support\Context::hasPermission($ability) ? true : null;
             }
 
             return null;

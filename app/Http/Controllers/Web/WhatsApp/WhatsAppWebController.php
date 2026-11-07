@@ -48,7 +48,7 @@ class WhatsAppWebController extends Controller implements HasMiddleware
             new Middleware('entitlement:export', only: ['exportLogs']),
             new Middleware('require.permission:pos.orders', only: ['sendOrderReceipt']),
             new Middleware('throttle:5,1', only: ['testSend']),
-            new Middleware('throttle:10,1', only: ['startSession', 'verifyMetaCredentials', 'sendOrderReceipt']),
+            new Middleware('throttle:10,1', only: ['startSession', 'disconnect', 'verifyMetaCredentials', 'sendOrderReceipt']),
         ];
     }
 

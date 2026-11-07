@@ -20,3 +20,4 @@ Task:
 7. Update `progress.md` with your status as you progress.
 8. Deliver a comprehensive, structured report in `c:\laragon\www\cooca_core\.agents\teamwork\explorer_wa_test\handoff.md`.
 9. Send a message to your parent when done.
+

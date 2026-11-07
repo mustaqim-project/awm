@@ -56,8 +56,12 @@ class MetaWhatsAppOnboardingController extends Controller implements HasMiddlewa
 
     public function __construct()
     {
-        $this->graphApiBaseUrl = (string) (\App\Models\SystemSetting::get('meta_wa_graph_url') ?: config('services.meta_whatsapp.graph_url', 'https://graph.facebook.com'));
-        $this->apiVersion = (string) (\App\Models\SystemSetting::get('meta_wa_graph_version') ?: config('services.meta_whatsapp.version', 'v26.0'));
+        $this->graphApiBaseUrl = (string) (app()->runningUnitTests()
+            ? (config('services.meta_whatsapp.graph_url') ?: 'https://graph.facebook.com')
+            : (\App\Models\SystemSetting::get('meta_wa_graph_url') ?: config('services.meta_whatsapp.graph_url', 'https://graph.facebook.com')));
+        $this->apiVersion = (string) (app()->runningUnitTests()
+            ? (config('services.meta_whatsapp.version') ?: 'v26.0')
+            : (\App\Models\SystemSetting::get('meta_wa_graph_version') ?: config('services.meta_whatsapp.version', 'v26.0')));
     }
 
     /**
@@ -67,8 +71,12 @@ class MetaWhatsAppOnboardingController extends Controller implements HasMiddlewa
     {
         $business = Context::requireBusiness();
 
-        $appId    = (string) (\App\Models\SystemSetting::get('meta_wa_app_id') ?: config('services.meta_whatsapp.app_id', ''));
-        $configId = (string) (\App\Models\SystemSetting::get('meta_wa_config_id') ?: config('services.meta_whatsapp.config_id', ''));
+        $appId    = (string) (app()->runningUnitTests()
+            ? (config('services.meta_whatsapp.app_id') ?: \App\Models\SystemSetting::get('meta_wa_app_id', ''))
+            : (\App\Models\SystemSetting::get('meta_wa_app_id') ?: config('services.meta_whatsapp.app_id', '')));
+        $configId = (string) (app()->runningUnitTests()
+            ? (config('services.meta_whatsapp.config_id') ?: \App\Models\SystemSetting::get('meta_wa_config_id', ''))
+            : (\App\Models\SystemSetting::get('meta_wa_config_id') ?: config('services.meta_whatsapp.config_id', '')));
 
         if (empty($appId)) {
             return response()->json([

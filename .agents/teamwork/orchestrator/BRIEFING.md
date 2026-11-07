@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T05:25:00Z
+# BRIEFING — 2026-11-07T05:46:00Z
 
 ## Mission
 Refactor and improve the WhatsApp module views in resources/views/app/whatsapp for production, simplifying user interface layouts and enforcing role-based access control (RBAC) across controllers, views, and seeders.
@@ -14,8 +14,8 @@ Refactor and improve the WhatsApp module views in resources/views/app/whatsapp f
 - **Pattern**: Project
 - **Scope document**: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
 1. **Decompose**: Survey and map target WhatsApp views, controllers, seeders, and test suites across milestones:
-   - Phase 0: Survey & Technical Discovery (3 Explorers in parallel) [IN_PROGRESS]
-   - Milestone 1: Role-Based Access Control (RBAC) Enforcement (Seeders, Controller guards, 403 authorization checks) [PLANNED]
+   - Phase 0: Survey & Technical Discovery (3 Explorers in parallel) [DONE]
+   - Milestone 1: Role-Based Access Control (RBAC) Core & Controller Guards [IN_PROGRESS]
    - Milestone 2: UI Simplification & Decluttering for WhatsApp Views (`index`, `broadcast`, `broadcast_detail`, `logs`) [PLANNED]
    - Milestone 3: Full Automated Verification & Forensic Audit Gate [PLANNED]
 2. **Dispatch & Execute**:
@@ -29,12 +29,12 @@ Refactor and improve the WhatsApp module views in resources/views/app/whatsapp f
    - Escalate: report to parent (sub-orchestrators only, last resort)
 4. **Succession**: Spawn count threshold 16 / 16. On threshold, write handoff.md and spawn successor.
 - **Work items**:
-  1. Survey & Technical Discovery [in-progress]
-  2. Milestone 1: RBAC Enforcement (Seeders, Controller guards) [pending]
+  1. Survey & Technical Discovery [done]
+  2. Milestone 1: RBAC Core & Controller Guards [in-progress]
   3. Milestone 2: UI Simplification & Decluttering for WhatsApp Views [pending]
   4. Milestone 3: Verification & Forensic Audit Gate [pending]
-- **Current phase**: Phase 0 (Survey & Technical Discovery)
-- **Current focus**: Monitoring 3 parallel Explorers for WhatsApp UI, RBAC, and Test Suites.
+- **Current phase**: Milestone 1 (RBAC Core & Controller Guards)
+- **Current focus**: Monitoring `worker_wa_m1_rbac` (`7730b75e-29b6-465d-b48a-ae11d96acd66`).
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
@@ -47,31 +47,31 @@ Refactor and improve the WhatsApp module views in resources/views/app/whatsapp f
 
 ## Current Parent
 - Conversation ID: 2d0330f6-49e8-4b75-b041-e1098c5d7c97
-- Updated: 2026-11-07T05:25:00Z
+- Updated: 2026-11-07T05:46:00Z
 
 ## Key Decisions Made
-- Initiated Phase 0 Survey with 3 specialized parallel explorers:
-  1. `explorer_wa_ui`: UI layout, visual hierarchy, button placement, responsive styling, and decluttering in `resources/views/app/whatsapp/`.
-  2. `explorer_wa_rbac`: Controller permission guards, route protection, Spatie/Laravel permissions, database seeders, and `@can` integration.
-  3. `explorer_wa_test`: Test suite discovery, PHPUnit test coverage for WhatsApp, view compilation baseline (`php artisan view:cache`), and 403 test plans.
+- Phase 0 Survey complete (3 Explorers).
+- Feature Inventory cross-check PASSED.
+- Dispatched Milestone 1 (`worker_wa_m1_rbac`) to implement Gate::before User bridge, navigation permission fix, and standardized controller middleware.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| explorer_wa_ui | teamwork_explorer | WhatsApp Blade Views UI/UX Survey | in-progress | 2abee926-e76e-46bb-87df-7177e82ccd8b |
-| explorer_wa_rbac | teamwork_explorer | WhatsApp Controller RBAC, Routes & Seeders Survey | in-progress | 3d3ddeb3-8e24-4df9-ab7d-07ab0858adc9 |
-| explorer_wa_test | teamwork_explorer | WhatsApp Test Suite & Verification Baseline Survey | in-progress | 39f94c6b-e0f3-4857-8a66-381885cda046 |
+| explorer_wa_ui | teamwork_explorer | WhatsApp Blade Views UI/UX Survey | completed | 2abee926-e76e-46bb-87df-7177e82ccd8b |
+| explorer_wa_rbac | teamwork_explorer | WhatsApp Controller RBAC, Routes & Seeders Survey | completed | 3d3ddeb3-8e24-4df9-ab7d-07ab0858adc9 |
+| explorer_wa_test | teamwork_explorer | WhatsApp Test Suite & Verification Baseline Survey | completed | 39f94c6b-e0f3-4857-8a66-381885cda046 |
+| worker_wa_m1_rbac | teamwork_worker | Milestone 1 RBAC Core & Controller Guards Implementation | in-progress | 7730b75e-29b6-465d-b48a-ae11d96acd66 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 3 / 16
-- Pending subagents: 2abee926-e76e-46bb-87df-7177e82ccd8b, 3d3ddeb3-8e24-4df9-ab7d-07ab0858adc9, 39f94c6b-e0f3-4857-8a66-381885cda046
+- Spawn count: 4 / 16
+- Pending subagents: 7730b75e-29b6-465d-b48a-ae11d96acd66
 - Predecessor: none
 - Successor: not yet spawned
 
 ## Active Timers
 - Heartbeat cron: 072c1567-fb7e-4663-b29a-0dc2a878655b/task-36
-- Safety timer: 072c1567-fb7e-4663-b29a-0dc2a878655b/task-58
+- Safety timer: 072c1567-fb7e-4663-b29a-0dc2a878655b/task-114
 
 ## Artifact Index
 - c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user request
@@ -79,3 +79,6 @@ Refactor and improve the WhatsApp module views in resources/views/app/whatsapp f
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\progress.md — Progress tracking
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md — Gate status record
 - c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md — WhatsApp module refactor scope
+- c:\laragon\www\cooca_core\.agents\teamwork\explorer_wa_ui\handoff.md — UI explorer report
+- c:\laragon\www\cooca_core\.agents\teamwork\explorer_wa_rbac\handoff.md — RBAC explorer report
+- c:\laragon\www\cooca_core\.agents\teamwork\explorer_wa_test\handoff.md — Test explorer report
