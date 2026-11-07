@@ -196,7 +196,7 @@ CAPTION;
                 'slot_label'   => 'B2B Morning Insight',
                 'feature_id'   => 'multi_outlet',
                 'feature_name' => 'Multi-Cabang Dari 1 Layar HP',
-                'image_rel'    => 'admin/social-media-assets/pinterest-showcase/slide-01.png',
+                'image_rel'    => 'admin/social-media-assets/carousel/slide-01.png',
                 'viral_score'  => 91.3,
                 'caption'      => <<<TXT
 Tantangan terbesar scale up bisnis ritel bukan membuka cabang baru, melainkan mempertahankan standarisasi dan kontrol stok lintas outlet.
@@ -229,7 +229,7 @@ TXT
                 'slot_label'   => 'Afternoon Community Post',
                 'feature_id'   => 'inventory',
                 'feature_name' => 'Manajemen Stok & Low-Stock Alert',
-                'image_rel'    => 'admin/social-media-assets/pinterest-showcase/slide-02.png',
+                'image_rel'    => 'admin/social-media-assets/carousel/slide-02.png',
                 'viral_score'  => 95.1,
                 'caption'      => <<<TXT
 Bagi rekan-rekan pemilik toko dan grosir ritel, pernahkah mengalami situasi stok di buku masih ada 10 pcs tapi saat dicari di rak barangnya sudah habis?
@@ -252,7 +252,7 @@ TXT
                 'slot_label'   => 'Prime Time FYP Hook',
                 'feature_id'   => 'fraud_prevention',
                 'feature_name' => 'Hak Akses Kasir & Anti-Kecurangan',
-                'image_rel'    => 'admin/social-media-assets/pinterest-showcase/slide-03.png',
+                'image_rel'    => 'admin/social-media-assets/carousel/slide-03.png',
                 'viral_score'  => 96.2,
                 'caption'      => <<<TXT
 3 detik langsung beres! Trik kasir toko anti-bocor kas dan anti-kecurangan.
