@@ -33,6 +33,67 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-07-381] Engine Konten Media Sosial Viral (4 Postingan Unik/Hari di Jam Viral Resmi) & Production Deployment
+
+- **Date:** 2026-11-07
+- **Status:** COMPLETED
+- **Module:** Social Media Automation Engine & Production Deployment
+- **Feature:** 4 Unique Daily Social Content at Official Viral Hours, Viral Gate (>= 80/100), Zero Same-Day Collisions, Brand Safety 'Toko Kamu' & 'Cooca Indonesia', and Automated Production Sync
+- **Work Type:** Feature | Automation | Marketing & Social Media | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjangkau audiens pemilik usaha, ritel, dan UMKM di Indonesia melalui kehadiran multi-platform yang konsisten, berbobot tinggi, dan terhindar dari duplikasi maupun kelelahan audiens (*audience fatigue*).
+- **Target:**
+  1. Menghasilkan 4 postingan konten unik setiap hari untuk 4 saluran utama di jam viral resmi masing-masing (WIB / UTC+7):
+     - **LinkedIn (08:00 WIB)**: *B2B Morning Insight* — Tata Kelola Bisnis, Multi-Outlet, dan Rekonsiliasi Finansial.
+     - **Instagram (12:15 WIB)**: *Lunchtime Visual Carousel* — Edukasi Ritel Toko Kamu dengan visual 3D & Human Cutout.
+     - **Facebook (16:30 WIB)**: *Afternoon Community Post* — Studi Kasus Toko Kamu & Diskusi Komunitas Ritel.
+     - **TikTok (19:45 WIB)**: *Prime Time FYP Hook* — Tips Kilat Anti-Bocor Kas & Solusi Operasional Cepat.
+  2. Menerapkan **Viral Potential Gate (Skor >= 80/100)** berbasis 4 metrik berbobot: Trend Velocity (30%), Hook Urgency (30%), Visual Depth 3D & Cutout (25%), dan CTA Clarity (15%).
+  3. Menegakkan **Zero Same-Day Collisions**: 4 fitur berbeda secara deterministik diputar setiap hari dari katalog fitur terverifikasi.
+  4. Brand Safety terjamin: Persona bisnis wajib menggunakan `Toko Kamu` dengan Pemilik `Cooca Indonesia` (tidak menggunakan nama merchant riil).
+  5. Desain feed 1080x1350 pixel berbasis standar `cooca-feed-design`: Logo resmi Cooca, gradasi biru tua & putih profesional, ikon 3D transparan, foto cutout manusia nyata, tanpa watermark dan lolos anti-AI-slop.
+  6. Sinkronisasi produksi otomatis: Integrasi pipeline dengan `cron.sh`, `deploy.sh`, `PostSeeder`, dan artisan command `cooca:import-social-content`.
+
+#### 2. What Was Done
+1. **Penyempurnaan Engine Otomasi Konten Harian (`scripts/social-automation/`):**
+   - Penambahan `evaluateViralPotential()` dengan threshold ketat >= 80/100.
+   - Penataan matriks 4 konten unik harian `getDailyQuadFeatures()` untuk 4 platform di jam viral resmi.
+   - Generator grafik 1080x1350 `render-feed-image.cjs` dengan logo landscape resmi Cooca dan tipografi SF Pro / Inter.
+   - Pustaka skrip pembersihan aset (`clean_assets.py`, `clean_assets_v2.py`, `create_human_cutouts.py`, `extract_3d_icons.py`).
+2. **Perintah Konsol Laravel (`app/Console/Commands/`):**
+   - `GenerateDailySocialContentCommand.php` (`cooca:daily-content`): Orkestrasi Playwright headless capture, evaluasi viral gate, dan penjadwalan via `AdminSocialMediaService`.
+   - `ImportDailySocialContentCommand.php` (`cooca:import-social-content`): Importer idempoten dari JSON ter-generate ke tabel `social_media_posts` dengan deteksi duplikasi.
+3. **Penyelarasan Server Produksi (`cron.sh` & `deploy.sh`):**
+   - Panggilan otomatis `cooca:import-social-content` pada setiap siklus cron dan script deployment.
+   - Penjadwalan 4 konten harian untuk hari ini (2026-11-07):
+     - LinkedIn: Laporan Laba Rugi Real-Time (Skor: 93.3/100)
+     - Instagram: Hak Akses Kasir & Anti-Kecurangan (Skor: 96.2/100)
+     - Facebook: Multi-Cabang Dari 1 Layar HP (Skor: 91.3/100)
+     - TikTok: Struk Digital & Broadcast WhatsApp (Skor: 90.6/100)
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `docs/AiWorkHistory.md`
+  - `.gitignore`
+  - `database/data/social_content/business-personas/toko-saya.json`
+  - `resources/views/layouts/public_marketing.blade.php`
+  - `resources/views/public/blog/show.blade.php`
+  - `scripts/social-automation/render-feed-image.cjs`
+  - `storage/app/public/content-assets/last-generated.json`
+- **Files Created:**
+  - `database/data/social_content/jadwal.csv`
+  - `scripts/social-automation/clean_assets.py`
+  - `scripts/social-automation/clean_assets_v2.py`
+  - `scripts/social-automation/create_human_cutouts.py`
+  - `scripts/social-automation/extract_3d_icons.py`
+  - `scripts/social-automation/generate_pinterest_examples.py`
+  - `scripts/social-automation/pinterest_showcase.html`
+  - `storage/app/public/admin/social-media-assets/platform/2026-11-07-*.png` (4 file grafis 1080x1350)
+  - `storage/app/public/content-assets/screenshots/*.png`
+
+---
+
 ### [WORK-2026-11-05-380] Perbaikan & Integrasi Penuh Riwayat Percakapan Chatbot AI Owner Panel
 
 - **Date:** 2026-11-05

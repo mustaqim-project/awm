@@ -1,0 +1,101 @@
+{
+  "title": "Cooca Carousel - Toko Ramai Tapi Saldo Kosong",
+  "slides": [
+    {
+      "type": "cover",
+      "tag": "Tips Keuangan",
+      "overline": "Evaluasi Keuangan UMKM",
+      "title": "Toko Ramai Tapi [[Saldo Kosong]]?",
+      "subtitle": "Penyebab klasik uang usaha cepat habis dan cara menghentikan kebocoran kas tanpa ribet.",
+      "icon": "wallet"
+    },
+    {
+      "type": "point",
+      "tag": "Kesalahan 01",
+      "title": "Campur uang pribadi dan [[kas usaha]]",
+      "text": "Uang penjualan dipakai belanja harian. Akibatnya modal belanja stok tergerus tanpa sadar.",
+      "icon": "wallet"
+    },
+    {
+      "type": "point",
+      "tag": "Kesalahan 02",
+      "title": "Bocor halus dari [[biaya harian]]",
+      "text": "Pengeluaran kecil seperti parkir, konsumsi, dan transport sering lupa dicatat di kasir.",
+      "icon": "doc"
+    },
+    {
+      "type": "list",
+      "tag": "Checklist",
+      "overline": "Solusi Praktis",
+      "title": "4 data wajib [[tercatat rapi]]",
+      "items": [
+        {
+          "icon": "pos",
+          "title": "Arus kas masuk",
+          "text": "Total tunai dan QRIS kasir"
+        },
+        {
+          "icon": "box",
+          "title": "Belanja bahan",
+          "text": "Kulakan stok dan operasional"
+        },
+        {
+          "icon": "wallet",
+          "title": "Gaji pemilik",
+          "text": "Jatah pribadi yang terukur"
+        },
+        {
+          "icon": "chart",
+          "title": "Laba bersih",
+          "text": "Sisa kas setelah semua biaya"
+        }
+      ]
+    },
+    {
+      "type": "compare",
+      "tag": "Bandingkan",
+      "overline": "Transformasi Usaha",
+      "title": "Dari tebakan ke [[data riil]]",
+      "left": {
+        "label": "Cara Lama",
+        "items": [
+          "Ambil uang kas sesuka hati",
+          "Catatan di nota mudah hilang",
+          "Untung baru dicek akhir bulan"
+        ]
+      },
+      "right": {
+        "label": "Sistem Cooca",
+        "items": [
+          "Gaji owner terpisah rapi",
+          "Semua transaksi tercatat di POS",
+          "Laba rugi otomatis tiap hari"
+        ]
+      }
+    },
+    {
+      "type": "stat",
+      "tag": "Formula",
+      "number": "3",
+      "accent": ".",
+      "caption": "Pilar keuangan sehat",
+      "title": "Pisahkan kas, catat mutasi, pantau laba.",
+      "items": [
+        "Pisah rekening",
+        "Disiplin nota",
+        "Hitung HPP",
+        "Cek laporan"
+      ],
+      "item_icon": "check",
+      "source": "Kemenkeu RI & Riset UMKM 2026"
+    },
+    {
+      "type": "cta",
+      "overline": "Mulai Sekarang",
+      "title": "Atur kas toko dengan [[Cooca]].",
+      "text": "Kelola kasir POS, stok inventori, dan laporan laba rugi otomatis dalam satu aplikasi.",
+      "button_label": "Coba gratis di",
+      "button_text": "cooca.id"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Cooca Carousel - Toko Ramai Tapi Saldo Kosong</title>
+<style>
+/* ===== Token brand Cooca (ubah di sini jika kode warna resmi berbeda) ===== */
+:root{
+  --navy-950:#050B1F; --navy-900:#0A1433; --navy-800:#0F1F4D; --navy-600:#1B3A8A;
+  --blue-500:#2F6BFF; --blue-300:#8FB3FF;
+  --paper:#FFFFFF; --mist:#EEF3FF; --ink:#0A1433;
+  --m:88px;            /* margin kiri/kanan */
+  --radius:40px;       /* satu radius kartu untuk seluruh feed */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1b1b1f;font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;gap:40px;align-items:center;padding:40px 0;-webkit-font-smoothing:antialiased}
+
+/* ===== Kanvas (default 1080x1350; ubah tinggi untuk 1080x1080 atau 1080x1920) ===== */
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden;color:#fff;background:var(--navy-900);flex:none}
+.slide>*{position:relative;z-index:1}
+.slide>.bg{position:absolute;z-index:0}
+.grain::after{content:"";position:absolute;inset:0;opacity:.07;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ===== Header / footer / watermark: posisi sama di semua slide ===== */
+.logo{position:absolute;left:var(--m);top:96px;height:52px;width:auto;z-index:3}
+.logo.big{height:72px}
+.tag{position:absolute;right:var(--m);top:100px;z-index:3;font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:12px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,.28);color:rgba(255,255,255,.86)}
+.tag.on-light{border-color:rgba(10,20,51,.22);color:rgba(10,20,51,.7)}
+.foot{position:absolute;left:var(--m);right:var(--m);bottom:96px;display:flex;justify-content:space-between;align-items:baseline;z-index:3;font-size:24px;font-weight:500}
+.foot .pg{color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums}
+.foot .wm{font-weight:600;letter-spacing:.02em;color:rgba(255,255,255,.2)}      /* watermark di area dark */
+.foot.on-light .pg{color:rgba(10,20,51,.6)}
+.foot.on-light .wm{color:rgba(10,20,51,.24)}                                     /* watermark di area terang */
+.wm-diag{position:absolute;z-index:0;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-24deg);font-size:210px;font-weight:800;letter-spacing:-.02em;
+  white-space:nowrap;color:rgba(255,255,255,.05);pointer-events:none}
+.cta .wm-diag{color:rgba(255,255,255,.04)}
+.wm-diag.on-light{color:rgba(10,20,51,.05)}
+
+/* ===== Tipografi ===== */
+.over{font-size:26px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-300)}
+.over.on-light{color:var(--blue-500)}
+h1,h2{font-weight:800;letter-spacing:-.035em;line-height:1.02;text-wrap:balance}
+p{font-size:38px;line-height:1.4;font-weight:400;text-wrap:pretty}
+.icon{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== 1. COVER: split diagonal ===== */
+.cover .light{left:0;right:0;bottom:0;height:480px;background:var(--mist);clip-path:polygon(0 38%,100% 0,100% 100%,0 100%)}
+.cover .glow{left:-120px;top:120px;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(47,107,255,.26),transparent 68%)}
+.cover .copy{position:absolute;left:var(--m);right:var(--m);top:236px}
+.cover h1{font-size:108px;margin:28px 0 32px;max-width:900px}
+.cover p{color:rgba(255,255,255,.76);max-width:700px}
+.cover .hero{position:absolute;right:var(--m);bottom:176px;width:340px;height:340px;z-index:2}
+.cover .hero .ring{position:absolute;inset:-70px;border:1.5px solid rgba(47,107,255,.28);border-radius:50%}
+.cover .hero .ring.r2{inset:-130px;border-color:rgba(47,107,255,.14)}
+.cover .hero .plate{position:absolute;inset:0;border-radius:88px;background:var(--navy-900);display:grid;place-items:center;box-shadow:0 40px 80px -30px rgba(10,20,51,.55)}
+.cover .hero .plate::before{content:"";position:absolute;inset:16px;border-radius:72px;border:1.5px solid rgba(143,179,255,.28)}
+.cover .hero svg{width:170px;height:170px;color:var(--blue-300)}
+.cover .swipe{position:absolute;left:var(--m);bottom:200px;z-index:3;display:flex;align-items:center;gap:16px;font-size:28px;font-weight:600;color:var(--ink)}
+.cover .swipe svg{width:40px;height:40px;color:var(--blue-500)}
+
+/* ===== 2. POIN: panel putih di atas dark ===== */
+.point .panel{position:absolute;left:var(--m);right:var(--m);top:300px;bottom:190px;background:var(--paper);border-radius:var(--radius);color:var(--ink);padding:72px 64px;box-shadow:0 50px 90px -40px rgba(0,0,0,.6)}
+.point .num{font-size:168px;font-weight:800;letter-spacing:-.05em;line-height:.9;color:var(--blue-500);font-variant-numeric:tabular-nums}
+.point h2{font-size:80px;margin:0 0 32px;color:var(--ink)}
+.point p{color:rgba(10,20,51,.68);max-width:640px}
+.point .ic{position:absolute;right:64px;bottom:64px;width:176px;height:176px;border-radius:56px;background:var(--mist);display:grid;place-items:center;color:var(--blue-500)}
+.point .ic svg{width:96px;height:96px}
+.point .rule{height:1.5px;background:rgba(10,20,51,.12);margin:44px 0 48px}
+
+/* ===== 3. STATISTIK: blok dark di atas putih ===== */
+.stat{background:var(--mist);color:var(--ink)}
+.stat .top{left:0;right:0;top:0;height:700px;background:var(--navy-900);border-radius:0 0 64px 64px}
+.stat .glow{right:-160px;top:60px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(47,107,255,.3),transparent 68%)}
+.stat .big{position:absolute;left:var(--m);top:215px;font-size:400px;font-weight:800;letter-spacing:-.07em;line-height:.85;color:#fff}
+.stat .big i{font-style:normal;color:var(--blue-500)}
+.stat .cap{position:absolute;left:var(--m);top:580px;font-size:30px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-300)}
+.stat h2{position:absolute;left:var(--m);right:var(--m);top:776px;font-size:64px;color:var(--ink)}
+.stat .grid{position:absolute;left:var(--m);right:var(--m);top:956px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.stat .cell{display:flex;align-items:center;gap:20px;background:var(--paper);border-radius:32px;padding:22px 30px;font-size:34px;font-weight:600;color:var(--ink);box-shadow:0 1px 0 rgba(10,20,51,.06),0 24px 40px -28px rgba(10,20,51,.35)}
+.stat .cell svg{width:44px;height:44px;color:var(--blue-500);flex:none}
+
+/* ===== 4. CTA: gradasi vertikal terkontrol ===== */
+.cta{background:linear-gradient(180deg,var(--navy-900) 0%,var(--navy-800) 54%,#cfdcff 85%,var(--mist) 100%)}
+.cta .glow{left:50%;top:-80px;width:900px;height:900px;margin-left:-450px;border-radius:50%;background:radial-gradient(circle,rgba(47,107,255,.28),transparent 66%)}
+.cta .copy{position:absolute;left:var(--m);right:var(--m);top:280px}
+.cta h2{font-size:112px;margin:28px 0 32px}
+.cta p{color:rgba(255,255,255,.78);max-width:760px}
+.cta .btn{position:absolute;left:var(--m);right:var(--m);bottom:236px;height:168px;border-radius:var(--radius);background:var(--paper);color:var(--ink);
+  display:flex;align-items:center;justify-content:space-between;padding:0 48px;box-shadow:0 40px 70px -30px rgba(10,20,51,.5);border:1.5px solid rgba(10,20,51,.06)}
+.cta .btn span{font-size:30px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(10,20,51,.55);display:block;margin-bottom:8px}
+.cta .btn b{font-size:64px;font-weight:800;letter-spacing:-.03em}
+.cta .btn .go{width:104px;height:104px;border-radius:34px;background:var(--blue-500);display:grid;place-items:center;color:#fff}
+.cta .btn .go svg{width:52px;height:52px}
+
+.hl{color:var(--blue-300)}
+.point .hl,.stat h2 .hl{color:var(--blue-500)}
+.stat .src{position:absolute;left:var(--m);top:640px;font-size:24px;font-weight:500;color:rgba(255,255,255,.62)}
+
+/* LIST */
+.list .copy{position:absolute;left:var(--m);right:var(--m);top:236px}
+.list h2{font-size:76px;margin:24px 0 0;max-width:900px}
+.list .cards{position:absolute;left:var(--m);right:var(--m);top:500px;display:flex;flex-direction:column;gap:20px}
+.list .card{display:flex;align-items:center;gap:32px;background:var(--paper);color:var(--ink);border-radius:var(--radius);padding:24px 36px;box-shadow:0 40px 70px -40px rgba(0,0,0,.6)}
+.list .card .ic{width:96px;height:96px;border-radius:32px;background:var(--mist);display:grid;place-items:center;color:var(--blue-500);flex:none}
+.list .card .ic svg{width:56px;height:56px}
+.list .card h3{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.list .card p{font-size:30px;line-height:1.3;color:rgba(10,20,51,.66);margin-top:8px}
+
+/* COMPARE */
+.compare .copy{position:absolute;left:var(--m);right:var(--m);top:236px}
+.compare h2{font-size:72px;margin:24px 0 0;max-width:900px}
+.compare .cols{position:absolute;left:var(--m);right:var(--m);top:470px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.compare .col{border-radius:var(--radius);padding:40px 36px;min-height:680px}
+.compare .col.l{background:var(--paper);color:var(--ink)}
+.compare .col.r{background:var(--blue-500);color:#fff}
+.compare .lab{font-size:26px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:36px;opacity:.7}
+.compare .row{display:flex;gap:18px;align-items:flex-start;font-size:32px;font-weight:600;line-height:1.25;margin-bottom:30px}
+.compare .row svg{width:40px;height:40px;flex:none;margin-top:1px}
+.compare .l .row svg{color:rgba(10,20,51,.45)}
+.compare .r .row svg{color:#fff}
+</style>
+</head>
+<body>
+<!--ICONS-->
+<section class="slide cover">
+  <div class="bg grain" style="inset:0"></div><div class="bg glow"></div><div class="bg light"></div>
+  <div class="wm-diag">cooca.id</div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Tips Keuangan</div>
+  <div class="copy"><div class="over">Evaluasi Keuangan UMKM</div><h1>Toko Ramai Tapi <span class="hl">Saldo Kosong</span>?</h1><p>Penyebab klasik uang usaha cepat habis dan cara menghentikan kebocoran kas tanpa ribet.</p></div>
+  <div class="swipe">Geser <svg class="icon"><use href="#i-arrow"/></svg></div>
+  <div class="hero"><div class="ring r2"></div><div class="ring"></div><div class="plate"><svg class="icon"><use href="#i-wallet"/></svg></div></div>
+  <div class="foot"><span class="pg" style="color:rgba(10,20,51,.6)">01 / 07</span><span class="wm" style="color:rgba(10,20,51,.26)">cooca.id</span></div>
+</section>
+
+<section class="slide point">
+  <div class="bg grain" style="inset:0"></div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Kesalahan 01</div>
+  <div class="panel">
+    <div class="num">01</div><div class="rule"></div>
+    <h2>Campur uang pribadi dan <span class="hl">kas usaha</span></h2><p>Uang penjualan dipakai belanja harian. Akibatnya modal belanja stok tergerus tanpa sadar.</p>
+    <div class="ic"><svg class="icon"><use href="#i-wallet"/></svg></div>
+  </div>
+  <div class="foot"><span class="pg">02 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+
+<section class="slide point">
+  <div class="bg grain" style="inset:0"></div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Kesalahan 02</div>
+  <div class="panel">
+    <div class="num">02</div><div class="rule"></div>
+    <h2>Bocor halus dari <span class="hl">biaya harian</span></h2><p>Pengeluaran kecil seperti parkir, konsumsi, dan transport sering lupa dicatat di kasir.</p>
+    <div class="ic"><svg class="icon"><use href="#i-doc"/></svg></div>
+  </div>
+  <div class="foot"><span class="pg">03 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+
+<section class="slide list">
+  <div class="bg grain" style="inset:0"></div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Checklist</div>
+  <div class="copy"><div class="over">Solusi Praktis</div><h2>4 data wajib <span class="hl">tercatat rapi</span></h2></div>
+  <div class="cards"><div class="card"><div class="ic"><svg class="icon"><use href="#i-pos"/></svg></div><div><h3>Arus kas masuk</h3><p>Total tunai dan QRIS kasir</p></div></div><div class="card"><div class="ic"><svg class="icon"><use href="#i-box"/></svg></div><div><h3>Belanja bahan</h3><p>Kulakan stok dan operasional</p></div></div><div class="card"><div class="ic"><svg class="icon"><use href="#i-wallet"/></svg></div><div><h3>Gaji pemilik</h3><p>Jatah pribadi yang terukur</p></div></div><div class="card"><div class="ic"><svg class="icon"><use href="#i-chart"/></svg></div><div><h3>Laba bersih</h3><p>Sisa kas setelah semua biaya</p></div></div></div>
+  <div class="foot"><span class="pg">04 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+
+<section class="slide compare">
+  <div class="bg grain" style="inset:0"></div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Bandingkan</div>
+  <div class="copy"><div class="over">Transformasi Usaha</div><h2>Dari tebakan ke <span class="hl">data riil</span></h2></div>
+  <div class="cols">
+    <div class="col l"><div class="lab">Cara Lama</div><div class="row"><svg class="icon"><use href="#i-x"/></svg><span>Ambil uang kas sesuka hati</span></div><div class="row"><svg class="icon"><use href="#i-x"/></svg><span>Catatan di nota mudah hilang</span></div><div class="row"><svg class="icon"><use href="#i-x"/></svg><span>Untung baru dicek akhir bulan</span></div></div>
+    <div class="col r"><div class="lab">Sistem Cooca</div><div class="row"><svg class="icon"><use href="#i-check"/></svg><span>Gaji owner terpisah rapi</span></div><div class="row"><svg class="icon"><use href="#i-check"/></svg><span>Semua transaksi tercatat di POS</span></div><div class="row"><svg class="icon"><use href="#i-check"/></svg><span>Laba rugi otomatis tiap hari</span></div></div>
+  </div>
+  <div class="foot"><span class="pg">05 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+
+<section class="slide stat">
+  <div class="bg top grain"></div><div class="bg glow"></div>
+  <img class="logo" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="tag">Formula</div>
+  <div class="big" style="font-size:400px;top:215px">3<i>.</i></div>
+  <div class="cap">Pilar keuangan sehat</div><div class="src">Sumber: Kemenkeu RI &amp; Riset UMKM 2026</div>
+  <h2>Pisahkan kas, catat mutasi, pantau laba.</h2>
+  <div class="grid"><div class="cell"><svg class="icon"><use href="#i-check"/></svg>Pisah rekening</div><div class="cell"><svg class="icon"><use href="#i-check"/></svg>Disiplin nota</div><div class="cell"><svg class="icon"><use href="#i-check"/></svg>Hitung HPP</div><div class="cell"><svg class="icon"><use href="#i-check"/></svg>Cek laporan</div></div>
+  <div class="foot on-light"><span class="pg">06 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+
+<section class="slide cta">
+  <div class="bg glow"></div>
+  <div class="wm-diag">cooca.id</div>
+  <img class="logo big" src="cooca-logo-dark.png" alt="Cooca">
+  <div class="copy"><div class="over">Mulai Sekarang</div><h2>Atur kas toko dengan <span class="hl">Cooca</span>.</h2><p>Kelola kasir POS, stok inventori, dan laporan laba rugi otomatis dalam satu aplikasi.</p></div>
+  <div class="btn"><div><span>Coba gratis di</span><b>cooca.id</b></div><div class="go"><svg class="icon"><use href="#i-arrow"/></svg></div></div>
+  <div class="foot on-light"><span class="pg">07 / 07</span><span class="wm">cooca.id</span></div>
+</section>
+</body>
+</html>

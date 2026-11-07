@@ -514,6 +514,9 @@
     {{-- Universal Typography Hierarchy (H1 - H6 & Typographic Roles) --}}
     @include('layouts.partials.typography')
 
+    {{-- Late-override styles: loaded after typography to guarantee specificity wins --}}
+    @stack('late-styles')
+
     @stack('seo')
 </head>
 

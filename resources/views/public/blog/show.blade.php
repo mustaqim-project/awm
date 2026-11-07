@@ -142,8 +142,30 @@
         font-size: 1.1875rem; /* 19px */
         line-height: 1.85;
     }
+
+    /* ═══ DARK MODE — article prose base ═══
+       Use html.dark for highest specificity to beat Tailwind CDN async inject.
+       !important guards against inline styles from WYSIWYG editor output.
+    ═══════════════════════════════════════ */
+    html.dark .article-prose,
     .dark .article-prose {
-        color: #D1D1D6;
+        color: #D1D1D6 !important;
+    }
+
+    /* Override ANY inline color injected by TinyMCE / rich-text editor in dark mode */
+    html.dark .article-prose p,
+    html.dark .article-prose li,
+    html.dark .article-prose span,
+    html.dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
+    html.dark .article-prose td,
+    html.dark .article-prose caption,
+    .dark .article-prose p,
+    .dark .article-prose li,
+    .dark .article-prose span,
+    .dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
+    .dark .article-prose td,
+    .dark .article-prose caption {
+        color: #D1D1D6 !important;
     }
 
     /* Heading hierarchy */
@@ -158,9 +180,10 @@
         padding-bottom: 0.75rem;
         border-bottom: 1px solid rgba(0,0,0,0.06);
     }
+    html.dark .article-prose h2,
     .dark .article-prose h2 {
-        color: #F5F5F7;
-        border-bottom-color: rgba(255,255,255,0.08);
+        color: #F5F5F7 !important;
+        border-bottom-color: rgba(255,255,255,0.08) !important;
     }
     .article-prose h3 {
         font-size: 1.25rem;
@@ -170,7 +193,8 @@
         line-height: 1.3;
         scroll-margin-top: 5rem;
     }
-    .dark .article-prose h3 { color: #F5F5F7; }
+    html.dark .article-prose h3,
+    .dark .article-prose h3 { color: #F5F5F7 !important; }
 
     .article-prose h4 {
         font-size: 1.0625rem;
@@ -178,7 +202,8 @@
         color: #1D1D1F;
         margin: 1.5rem 0 0.5rem;
     }
-    .dark .article-prose h4 { color: #F5F5F7; }
+    html.dark .article-prose h4,
+    .dark .article-prose h4 { color: #F5F5F7 !important; }
 
     /* Paragraphs */
     .article-prose p {
@@ -195,11 +220,13 @@
         transition: opacity 0.15s;
     }
     .article-prose a:hover { opacity: 0.75; }
-    .dark .article-prose a { color: #0A84FF; }
+    html.dark .article-prose a,
+    .dark .article-prose a { color: #0A84FF !important; }
 
     /* Bold & emphasis */
     .article-prose strong { font-weight: 700; color: #1D1D1F; }
-    .dark .article-prose strong { color: #F5F5F7; }
+    html.dark .article-prose strong,
+    .dark .article-prose strong { color: #FFFFFF !important; }
     .article-prose em { font-style: italic; }
 
     /* Lists */
@@ -217,7 +244,8 @@
     .article-prose li::marker {
         color: #007AFF;
     }
-    .dark .article-prose li::marker { color: #0A84FF; }
+    html.dark .article-prose li::marker,
+    .dark .article-prose li::marker { color: #0A84FF !important; }
 
     /* Blockquote */
     .article-prose blockquote {
@@ -229,10 +257,11 @@
         font-style: italic;
         color: #48484A;
     }
+    html.dark .article-prose blockquote,
     .dark .article-prose blockquote {
-        background: rgba(10,132,255,0.08);
-        color: #AEAEB2;
-        border-left-color: #0A84FF;
+        background: rgba(10,132,255,0.08) !important;
+        color: #AEAEB2 !important;
+        border-left-color: #0A84FF !important;
     }
 
     /* Code */
@@ -244,9 +273,10 @@
         border-radius: 6px;
         color: #1D1D1F;
     }
+    html.dark .article-prose code,
     .dark .article-prose code {
-        background: #2C2C2E;
-        color: #E5E5EA;
+        background: #2C2C2E !important;
+        color: #E5E5EA !important;
     }
     .article-prose pre {
         margin: 1.5rem 0;
@@ -281,8 +311,12 @@
         text-align: left;
         border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .dark .article-prose th, .dark .article-prose td {
-        border-bottom-color: rgba(255,255,255,0.08);
+    html.dark .article-prose th,
+    html.dark .article-prose td,
+    .dark .article-prose th,
+    .dark .article-prose td {
+        border-bottom-color: rgba(255,255,255,0.08) !important;
+        color: #E5E5EA !important;
     }
     .article-prose th {
         font-weight: 700;
@@ -292,9 +326,10 @@
         color: #8E8E93;
         background: #F9F9FB;
     }
+    html.dark .article-prose th,
     .dark .article-prose th {
-        background: #2C2C2E;
-        color: #AEAEB2;
+        background: #2C2C2E !important;
+        color: #AEAEB2 !important;
     }
 
     /* Images in prose */
@@ -312,7 +347,8 @@
         background: rgba(0,0,0,0.08);
         margin: 2.5rem 0;
     }
-    .dark .article-prose hr { background: rgba(255,255,255,0.08); }
+    html.dark .article-prose hr,
+    .dark .article-prose hr { background: rgba(255,255,255,0.08) !important; }
 
     /* ── Related articles horizontal slider (mobile) ── */
     .related-slider {
@@ -379,6 +415,116 @@
     @media (min-width: 1024px) {
         .article-prose h2 { font-size: 1.875rem; }
         .article-prose h3 { font-size: 1.5rem; }
+    }
+</style>
+@endpush
+
+{{-- Late-styles: injected AFTER typography system to guarantee dark mode wins --}}
+@push('late-styles')
+<style>
+    /* ═══════════════════════════════════════════════════════════════════
+       ARTICLE PROSE — DARK MODE OVERRIDE GUARANTEE
+       Loaded after cooca-typography-system to win CSS cascade.
+       Uses html.dark + !important to defeat both:
+         (a) global h2/p rules from typography.blade.php
+         (b) Tailwind CDN async-injected utility styles
+    ═══════════════════════════════════════════════════════════════════ */
+
+    /* Base prose text */
+    html.dark .article-prose,
+    .dark .article-prose {
+        color: #D1D1D6 !important;
+    }
+
+    /* All child text elements — override WYSIWYG inline styles */
+    html.dark .article-prose p,
+    html.dark .article-prose li,
+    html.dark .article-prose span,
+    html.dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
+    html.dark .article-prose td,
+    html.dark .article-prose caption,
+    .dark .article-prose p,
+    .dark .article-prose li,
+    .dark .article-prose span,
+    .dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
+    .dark .article-prose td,
+    .dark .article-prose caption {
+        color: #D1D1D6 !important;
+    }
+
+    /* Headings — high contrast white */
+    html.dark .article-prose h2,
+    html.dark .article-prose h3,
+    html.dark .article-prose h4,
+    html.dark .article-prose h5,
+    html.dark .article-prose h6,
+    .dark .article-prose h2,
+    .dark .article-prose h3,
+    .dark .article-prose h4,
+    .dark .article-prose h5,
+    .dark .article-prose h6 {
+        color: #F5F5F7 !important;
+    }
+
+    html.dark .article-prose h2,
+    .dark .article-prose h2 {
+        border-bottom-color: rgba(255,255,255,0.08) !important;
+    }
+
+    /* Bold — pure white for max contrast */
+    html.dark .article-prose strong,
+    html.dark .article-prose b,
+    .dark .article-prose strong,
+    .dark .article-prose b {
+        color: #FFFFFF !important;
+    }
+
+    /* Links */
+    html.dark .article-prose a,
+    .dark .article-prose a {
+        color: #0A84FF !important;
+    }
+
+    /* List markers */
+    html.dark .article-prose li::marker,
+    .dark .article-prose li::marker {
+        color: #0A84FF !important;
+    }
+
+    /* Blockquote */
+    html.dark .article-prose blockquote,
+    .dark .article-prose blockquote {
+        color: #AEAEB2 !important;
+        background: rgba(10,132,255,0.08) !important;
+        border-left-color: #0A84FF !important;
+    }
+
+    /* Code inline */
+    html.dark .article-prose code,
+    .dark .article-prose code {
+        background: #2C2C2E !important;
+        color: #E5E5EA !important;
+    }
+
+    /* Table cells */
+    html.dark .article-prose th,
+    html.dark .article-prose td,
+    .dark .article-prose th,
+    .dark .article-prose td {
+        border-bottom-color: rgba(255,255,255,0.08) !important;
+        color: #E5E5EA !important;
+    }
+
+    html.dark .article-prose th,
+    .dark .article-prose th {
+        background: #2C2C2E !important;
+        color: #AEAEB2 !important;
+    }
+
+    /* Horizontal rule */
+    html.dark .article-prose hr,
+    .dark .article-prose hr {
+        background: rgba(255,255,255,0.08) !important;
     }
 </style>
 @endpush
@@ -594,6 +740,13 @@ class="art-page w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text
                         @php
                             $sanitizedContent = preg_replace('/^\s*<h1\b[^>]*>.*?<\/h1>\s*/si', '', (string) $post->content);
                             $sanitizedContent = preg_replace('/<h1\b([^>]*)>(.*?)<\/h1>/si', '<h2$1>$2</h2>', $sanitizedContent);
+                            // Strip WYSIWYG inline dark colors that become invisible in dark mode
+                            // e.g. TinyMCE injects style="color: rgb(0,0,0)" or style="color: #333333"
+                            $sanitizedContent = preg_replace(
+                                '/(<[^>]+\bstyle\s*=\s*["\'][^"\']*)\bcolor\s*:\s*(?:#(?:[0-5][0-9a-fA-F]{5}|[0-3][0-9a-fA-F]{2})|rgb\(\s*(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-0][0-9])\s*,\s*(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-0][0-9])\s*,\s*(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-0][0-9])\s*\)|black|#000|#111|#222|#333)\s*;?([^"\']*["\'])/i',
+                                '$1$2',
+                                $sanitizedContent
+                            );
                         @endphp
                         <div class="article-prose" :class="fontSize === 'large' && 'text-large'">
                             {!! $sanitizedContent !!}

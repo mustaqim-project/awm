@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Showcase Desain Feed Cooca 1:1 Square (1080x1080) - Anti Tumpang Tindih</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap');
+
+:root {
+  --navy-950: #050B1F;
+  --navy-900: #0A1433;
+  --navy-800: #0E1F4D;
+  --navy-700: #162B68;
+  --blue-600: #1E3A8A;
+  --blue-500: #2563EB;
+  --cyan-400: #38BDF8;
+  --cyan-300: #7DD3FC;
+  --paper: #FFFFFF;
+  --mist: #EEF3FF;
+  --ink: #0A1433;
+  --radius-lg: 32px;
+  --radius-md: 22px;
+  --radius-sm: 16px;
+  --pad-x: 56px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #090b12;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  padding: 60px 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================================
+   1:1 SQUARE SLIDE (1080 x 1080 px)
+   ======================================================== */
+.slide {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  overflow: hidden;
+  color: #FFFFFF;
+  background: linear-gradient(150deg, #050B1F 0%, #0A1433 45%, #162B68 100%);
+  flex: none;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: inline-block;
+}
+
+/* Top Navigation Bar */
+.top-bar {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 36px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tag {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+/* Bottom Footer Bar */
+.foot {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.foot .identity {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.foot .pg {
+  color: #38BDF8;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.over {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #38BDF8;
+  margin-bottom: 4px;
+}
+
+.hl-cyan {
+  color: #38BDF8;
+  background: linear-gradient(135deg, #38BDF8 0%, #93C5FD 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-weight: 800;
+}
+
+/* Glow Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(85px);
+  z-index: 1;
+}
+.orb-cyan {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.32) 0%, rgba(30, 58, 138, 0) 70%);
+}
+.orb-blue {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.38) 0%, rgba(10, 20, 51, 0) 70%);
+}
+
+/* ========================================================
+   SLIDE 1: 1:1 SQUARE (1080 x 1080) - EDITORIAL & 3D GROWTH
+   ======================================================== */
+.slide-agency {
+  background: linear-gradient(145deg, #050B1F 0%, #0A1433 45%, #162B68 100%);
+}
+
+.agency-copy {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 96px;
+  height: 140px;
+  z-index: 5;
+}
+.agency-copy h1 {
+  font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin-bottom: 6px;
+}
+.agency-copy p {
+  font-size: 19px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 960px;
+}
+
+/* 3D Stage Card (Positioned safely at top: 260px) */
+.agency-stage-card {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 260px;
+  height: 485px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(10, 20, 51, 0.88) 100%);
+  border: 1.8px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 44px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.agency-left-info {
+  flex: 1;
+  max-width: 440px;
+}
+.agency-stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(37, 99, 235, 0.28);
+  border: 1.5px solid rgba(56, 189, 248, 0.55);
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #38BDF8;
+  margin-bottom: 14px;
+}
+.agency-stat-badge img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+.agency-stat-num {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 78px;
+  font-weight: 800;
+  line-height: 1;
+  color: #FFFFFF;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+.agency-stat-sub {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.34;
+}
+
+.agency-3d-asset-box {
+  width: 420px;
+  height: 420px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.agency-3d-asset-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.7));
+}
+
+/* 3D Features Row */
+.agency-3d-pills {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 775px;
+  display: flex;
+  gap: 16px;
+  z-index: 5;
+}
+.agency-3d-pill {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.4);
+}
+.agency-3d-pill-thumb {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.agency-3d-pill-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+.agency-3d-pill span {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.25;
+}
+
+/* ========================================================
+   SLIDE 2: 1:1 SQUARE (1080 x 1080) - 3D RETAIL MINIATURE
+   ======================================================== */
+.slide-b2b {
+  background: linear-gradient(155deg, #050B1F 0%, #0E1F4D 50%, #1E3A8A 100%);
+}
+.b2b-header {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 96px;
+  height: 140px;
+  z-index: 5;
+}
+.b2b-header h1 {
+  font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin-bottom: 6px;
+}
+.b2b-header p {
+  font-size: 19px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 960px;
+}
+
+/* Stage with 3D Retail Miniature + Stacked Cards */
+.b2b-stage {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 260px;
+  height: 490px;
+  z-index: 5;
+}
+
+/* Left 3D Retail Shop Asset */
+.b2b-3d-shop-wrap {
+  position: absolute;
+  left: -15px;
+  top: 20px;
+  width: 440px;
+  height: 440px;
+  z-index: 6;
+}
+.b2b-3d-shop-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.8));
+}
+
+/* Right Metric Card 1 */
+.b2b-float-metric {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 480px;
+  background: linear-gradient(145deg, #0A1433 0%, #162B68 100%);
+  border: 1.8px solid rgba(56, 189, 248, 0.55);
+  border-radius: var(--radius-md);
+  padding: 22px 28px;
+  box-shadow: 0 35px 75px -20px rgba(0, 0, 0, 0.7);
+  z-index: 7;
+}
+.b2b-float-metric .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.b2b-float-metric .title {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.06em;
+}
+.b2b-float-metric .badge {
+  background: rgba(16, 185, 129, 0.22);
+  border: 1.5px solid rgba(16, 185, 129, 0.6);
+  color: #34D399;
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 24px;
+  font-weight: 800;
+}
+.b2b-float-metric .amount {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 46px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+  letter-spacing: -0.03em;
+}
+.b2b-float-metric .sub {
+  font-size: 24px;
+  color: #7DD3FC;
+  font-weight: 600;
+}
+
+/* Right Alert Card 2 (Positioned cleanly below Card 1 without overlap) */
+.b2b-float-alert {
+  position: absolute;
+  right: 0;
+  top: 245px;
+  width: 480px;
+  background: linear-gradient(145deg, #FFFFFF 0%, #EEF3FF 100%);
+  color: var(--ink);
+  border-radius: var(--radius-md);
+  padding: 20px 26px;
+  box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.6);
+  z-index: 8;
+}
+.b2b-float-alert .alert-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.b2b-float-alert .alert-head img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.b2b-float-alert .alert-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.b2b-float-alert p {
+  font-size: 24px;
+  line-height: 1.32;
+  color: rgba(10, 20, 51, 0.78);
+  margin-bottom: 12px;
+}
+.b2b-float-alert .alert-badge {
+  display: inline-block;
+  background: #1E3A8A;
+  color: #FFFFFF;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* B2B Action Button Bar */
+.b2b-cta-bar {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 775px;
+  height: 78px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #EEF3FF 100%);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+.b2b-cta-bar .bar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.b2b-cta-bar .bar-left img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+.b2b-cta-bar .bar-text {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--ink);
+}
+.b2b-cta-bar .bar-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #2563EB;
+  color: #FFFFFF;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 21px;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1;
+}
+.b2b-cta-bar .bar-btn svg { width: 22px; height: 22px; }
+
+/* ========================================================
+   SLIDE 3: 1:1 SQUARE (1080 x 1080) - REAL HUMAN CUTOUT & 3D
+   ======================================================== */
+.slide-quickdata {
+  background: linear-gradient(160deg, #050B1F 0%, #0A1433 35%, #0E1F4D 65%, #1E3A8A 100%);
+}
+.quickdata-copy {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 96px;
+  height: 140px;
+  z-index: 5;
+}
+.quickdata-copy h1 {
+  font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin-bottom: 6px;
+}
+.quickdata-copy p {
+  font-size: 19px;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 960px;
+}
+
+/* Central Showcase: Real Human Cutout + 3D Feature Panel */
+.quickdata-stage {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 260px;
+  height: 490px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+/* Real Human Photo Cutout (Positioned strictly inside stage without overlapping header) */
+.quickdata-human-wrap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 440px;
+  height: 490px;
+  z-index: 7;
+}
+.quickdata-human-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom left;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.85));
+}
+
+/* Floating Persona Tag on Human */
+.quickdata-persona-tag {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  background: rgba(10, 20, 51, 0.88);
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  backdrop-filter: blur(20px);
+  border-radius: 999px;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #FFFFFF;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  z-index: 8;
+}
+.quickdata-persona-tag img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Right 3D Feature Panel */
+.quickdata-3d-panel {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 480px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(10, 20, 51, 0.88) 100%);
+  border: 1.8px solid rgba(56, 189, 248, 0.4);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(28px);
+  padding: 22px 26px;
+  box-shadow: 0 35px 75px -20px rgba(0, 0, 0, 0.7);
+  z-index: 6;
+}
+.quickdata-3d-panel .panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.quickdata-3d-panel .lbl {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+}
+.quickdata-3d-panel .val {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+.quickdata-3d-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.quickdata-3d-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+}
+.quickdata-3d-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  flex: none;
+}
+.quickdata-3d-item span {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Quickdata Bottom Row */
+.quickdata-bottom-row {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  top: 775px;
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+.quickdata-badge-feat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.quickdata-badge-feat img { width: 24px; height: 24px; object-fit: contain; }
+
+.quickdata-cta-btn {
+  background: linear-gradient(135deg, #FFFFFF 0%, #EEF3FF 100%);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 12px 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  box-shadow: 0 25px 50px -15px rgba(0,0,0,0.5);
+}
+.quickdata-cta-btn svg { width: 24px; height: 24px; color: #2563EB; }
+</style>
+</head>
+<body>
+<!--ICONS-->
+
+<!-- ========================================================
+     SLIDE 1: 1:1 SQUARE (1080 x 1080) - EDITORIAL & 3D GROWTH
+     ======================================================== -->
+<section class="slide slide-agency">
+  <div class="grain"></div>
+  <div class="orb orb-cyan" style="left: -100px; top: 120px; width: 550px; height: 550px;"></div>
+  <div class="orb orb-blue" style="right: -60px; bottom: 80px; width: 500px; height: 500px;"></div>
+  
+  <div class="top-bar">
+    <img class="logo" src="file:///C:/laragon/www/cooca_core/public/assets/image/1785229034_logo_light.png" alt="Cooca">
+    <div class="tag">EDUKASI BISNIS</div>
+  </div>
+
+  <div class="agency-copy">
+    <div class="over">SISTEM OPERASI BISNIS UMKM</div>
+    <h1>BAGAIMANA CARA <span class="hl-cyan">MENGEMBANGKAN</span> BISNIS TOKO KAMU?</h1>
+    <p>Tinggalkan pembukuan manual yang rawan selisih kas. Pantau kasir, stok, dan laba secara real-time.</p>
+  </div>
+
+  <div class="agency-stage-card">
+    <div class="agency-left-info">
+      <div class="agency-stat-badge">
+        <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_growth_arrow.png" alt="Growth" class="hero-photo">
+        <span>Efisiensi Operasional</span>
+      </div>
+      <div class="agency-stat-num">+148%</div>
+      <div class="agency-stat-sub">Rata-rata penghematan waktu rekap keuangan pemilik usaha setelah menggunakan sistem otomatis Cooca.</div>
+    </div>
+    <div class="agency-3d-asset-box">
+      <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/cutout_3d_growth.png" alt="3D Financial Growth" class="hero-photo">
+    </div>
+  </div>
+
+  <div class="agency-3d-pills">
+    <div class="agency-3d-pill">
+      <div class="agency-3d-pill-thumb"><img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_shop_store.png" alt="Shop" class="hero-photo"></div>
+      <span>Kasir POS Kilat &amp; QRIS</span>
+    </div>
+    <div class="agency-3d-pill">
+      <div class="agency-3d-pill-thumb"><img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_shopping_cart.png" alt="Cart" class="hero-photo"></div>
+      <span>Kontrol Stok Gudang</span>
+    </div>
+    <div class="agency-3d-pill">
+      <div class="agency-3d-pill-thumb"><img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_pie_chart.png" alt="Analytics" class="hero-photo"></div>
+      <span>Laporan Keuangan Rapi</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="identity">Toko Kamu &bull; Didukung oleh Cooca Indonesia</div>
+    <div class="pg">01 / 03</div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SLIDE 2: 1:1 SQUARE (1080 x 1080) - 3D RETAIL MINIATURE
+     ======================================================== -->
+<section class="slide slide-b2b">
+  <div class="grain"></div>
+  <div class="orb orb-blue" style="left: 60px; top: 120px; width: 550px; height: 550px;"></div>
+  <div class="orb orb-cyan" style="right: -60px; bottom: 120px; width: 480px; height: 480px;"></div>
+
+  <div class="top-bar">
+    <img class="logo" src="file:///C:/laragon/www/cooca_core/public/assets/image/1785229034_logo_light.png" alt="Cooca">
+    <div class="tag">KENDALI PENUH</div>
+  </div>
+
+  <div class="b2b-header">
+    <div class="over">VISIBILITAS KEUANGAN LENGKAP</div>
+    <h1>KASIR &amp; STOK TOKO KAMU, KINI <span class="hl-cyan">SEPENUHNYA TERKENDALI</span></h1>
+    <p>Pantau setiap rupiah keuntungan, margin produk terlaris, dan pengingat stok menipis dari satu layar praktis.</p>
+  </div>
+
+  <div class="b2b-stage">
+    <!-- Left 3D Retail Shop Asset -->
+    <div class="b2b-3d-shop-wrap">
+      <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/cutout_3d_shop.png" alt="3D Retail Boutique" class="hero-photo">
+    </div>
+
+    <!-- Right Floating Metric Card 1 -->
+    <div class="b2b-float-metric">
+      <div class="top-row">
+        <span class="title">OMZET BERSIH HARI INI</span>
+        <span class="badge">+34.2%</span>
+      </div>
+      <div class="amount">Rp 18.450.000</div>
+      <div class="sub">142 Transaksi Kasir Sukses &bull; Margin 28%</div>
+    </div>
+
+    <!-- Right Alert Card 2 (Positioned cleanly below Card 1) -->
+    <div class="b2b-float-alert">
+      <div class="alert-head">
+        <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_shopping_bag.png" alt="Bag" class="hero-photo">
+        <span class="alert-title">Pengingat Stok Otomatis</span>
+      </div>
+      <p>3 produk mencapai batas minimum opname di gudang utama Toko Kamu.</p>
+      <span class="alert-badge">Perlu Restock Hari Ini</span>
+    </div>
+  </div>
+
+  <!-- Action CTA Bar -->
+  <div class="b2b-cta-bar">
+    <div class="bar-left">
+      <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_trophy.png" alt="Trophy" class="hero-photo">
+      <div class="bar-text">Siap buat manajemen Toko Kamu jauh lebih rapi?</div>
+    </div>
+    <div class="bar-btn">
+      <span>Coba Gratis di cooca.id</span>
+      <svg class="icon"><use href="#i-arrow"/></svg>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="identity">Toko Kamu &bull; Didukung oleh Cooca Indonesia</div>
+    <div class="pg">02 / 03</div>
+  </div>
+</section>
+
+<!-- ========================================================
+     SLIDE 3: 1:1 SQUARE (1080 x 1080) - REAL HUMAN CUTOUT & 3D
+     ======================================================== -->
+<section class="slide slide-quickdata">
+  <div class="grain"></div>
+  <div class="orb orb-cyan" style="right: 30px; top: 120px; width: 520px; height: 520px;"></div>
+  <div class="orb orb-blue" style="left: -80px; bottom: 60px; width: 480px; height: 480px;"></div>
+
+  <div class="top-bar">
+    <img class="logo" src="file:///C:/laragon/www/cooca_core/public/assets/image/1785229034_logo_light.png" alt="Cooca">
+    <div class="tag">APLIKASI UMKM</div>
+  </div>
+
+  <div class="quickdata-copy">
+    <div class="over">EFISIENSI PRAKTIS SETIAP HARI</div>
+    <h1>KELOLA USAHA LEBIH MUDAH DALAM <span class="hl-cyan">SATU GENGGAMAN</span></h1>
+    <p>Semua transaksi kasir toko, stok produk, dan rekap laba harian Toko Kamu langsung beres dari smartphone Anda.</p>
+  </div>
+
+  <div class="quickdata-stage">
+    <!-- Real Human Cutout Photograph -->
+    <div class="quickdata-human-wrap">
+      <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/cutout_woman.png" alt="Indonesian Business Woman" class="hero-photo">
+      <div class="quickdata-persona-tag">
+        <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_gold_star.png" alt="Verified" class="hero-photo">
+        <span>Pemilik Toko Kamu</span>
+      </div>
+    </div>
+
+    <!-- 3D Feature Glass Panel -->
+    <div class="quickdata-3d-panel">
+      <div class="panel-top">
+        <span class="lbl">TOTAL PENJUALAN HARI INI</span>
+        <span style="color:#34D399; font-weight:800; font-size:24px;">+18.4%</span>
+      </div>
+      <div class="val">Rp 5.230.000</div>
+      
+      <div class="quickdata-3d-list">
+        <div class="quickdata-3d-item">
+          <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_shop_store.png" alt="POS" class="hero-photo">
+          <span>Kasir POS &amp; Pembayaran QRIS</span>
+        </div>
+        <div class="quickdata-3d-item">
+          <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_shopping_cart.png" alt="Stok" class="hero-photo">
+          <span>Sinkronisasi Stok Multi-Gudang</span>
+        </div>
+        <div class="quickdata-3d-item">
+          <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_pie_chart.png" alt="Laporan" class="hero-photo">
+          <span>Rekap Laporan Keuangan Otomatis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quickdata-bottom-row">
+    <div class="quickdata-badge-feat">
+      <img src="file:///C:/Users/Ulfah%20Ramadhani/.gemini/config/skills/cooca-feed-design/assets/3d-icons/3d_growth_arrow.png" alt="Feature" class="hero-photo">
+      <span>Aplikasi Kasir Siap Pakai di Ponsel</span>
+    </div>
+    <div class="quickdata-cta-btn">
+      <span>Buka cooca.id Sekarang</span>
+      <svg class="icon"><use href="#i-arrow"/></svg>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="identity">Toko Kamu &bull; Didukung oleh Cooca Indonesia</div>
+    <div class="pg">03 / 03</div>
+  </div>
+</section>
+
+</body>
+</html>

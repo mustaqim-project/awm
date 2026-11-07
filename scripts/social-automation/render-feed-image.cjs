@@ -10,11 +10,11 @@ function getBase64Image(filePath) {
 }
 
 async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona }) {
-  const logoPath = path.resolve('public/assets/image/cooca-logo-landscape_inv.png');
+  const logoPath = path.resolve('public/assets/image/1785229034_logo_light.png');
   const logoDataUri = getBase64Image(logoPath);
   const screenshotDataUri = getBase64Image(screenshotPath);
 
-  const businessName = (persona && persona.business_name) || feature.business_name || 'Toko Saya';
+  const businessName = (persona && persona.business_name) || feature.business_name || 'Toko Kamu';
   const ownerName = (persona && persona.owner_name) || feature.owner_name || 'Cooca Indonesia';
   const location = (persona && persona.location) || feature.location || 'Indonesia';
   const categoryTag = (persona && persona.category) || feature.category || 'BISNIS OPERATING SYSTEM';
@@ -34,7 +34,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
     
     body {
       width: 1080px;
-      height: 1350px;
+      height: 1080px;
       background-color: #0A0D14;
       background-image: 
         radial-gradient(circle at 15% 15%, rgba(0, 122, 255, 0.22) 0%, transparent 45%),
@@ -44,7 +44,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
       color: #FFFFFF;
       overflow: hidden;
       position: relative;
-      padding: 54px 56px 48px 56px;
+      padding: 40px 48px 34px 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -161,8 +161,8 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
 
     /* Headline Section */
     .headline-section {
-      margin-top: 32px;
-      margin-bottom: 24px;
+      margin-top: 18px;
+      margin-bottom: 14px;
     }
 
     .category-label {
@@ -171,7 +171,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #F59E0B;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -179,7 +179,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
 
     .main-title {
       font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
-      font-size: 46px;
+      font-size: 38px;
       line-height: 1.15;
       font-weight: 800;
       letter-spacing: -0.03em;
@@ -194,10 +194,10 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
     }
 
     .sub-title {
-      font-size: 18px;
-      line-height: 1.5;
+      font-size: 16px;
+      line-height: 1.4;
       color: rgba(255, 255, 255, 0.75);
-      margin-top: 14px;
+      margin-top: 8px;
       max-width: 860px;
       font-weight: 500;
     }
@@ -206,7 +206,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
     .mockup-container {
       position: relative;
       flex: 1;
-      min-height: 520px;
+      min-height: 440px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -215,7 +215,7 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
 
     .window-card {
       width: 100%;
-      height: 520px;
+      height: 440px;
       background: #161B26;
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -337,9 +337,9 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 30px;
+      padding-top: 18px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 24px;
+      margin-top: 16px;
     }
 
     .footer-left {
@@ -466,8 +466,8 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
   });
 
   const page = await browser.newPage({
-    viewport: { width: 1080, height: 1350 },
-    deviceScaleFactor: 1 // Exact 1080x1350 dimensions
+    viewport: { width: 1080, height: 1080 },
+    deviceScaleFactor: 1 // Exact 1080x1080 square
   });
 
   await page.setContent(html, { waitUntil: 'networkidle' });
