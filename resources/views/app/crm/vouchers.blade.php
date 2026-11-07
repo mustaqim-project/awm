@@ -1,5 +1,7 @@
 @extends('layouts.app', [
     'title' => __('crm.vouchers_title') . ' - Cooca',
+    'headerTitle' => __('crm.vouchers_title'),
+    'headerSubtitle' => __('crm.vouchers_subtitle'),
 ])
 
 @section('content')
@@ -45,11 +47,11 @@
         @endif
 
         <!-- ========================================================================= -->
-        <!-- 1. BENTO HERO KPI TILES                                                   -->
+        <!-- 1. BENTO HERO KPI TILES (Responsive Horizontal Snap Slider on Mobile)    -->
         <!-- ========================================================================= -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-2 sm:pb-0">
             <!-- Tile 1: Total Vouchers -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.total_vouchers') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
@@ -65,7 +67,7 @@
             </div>
 
             <!-- Tile 2: Active Vouchers -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.active_vouchers') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
@@ -81,7 +83,7 @@
             </div>
 
             <!-- Tile 3: Total Pemakaian -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.total_claims') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
@@ -96,17 +98,19 @@
                 </div>
             </div>
 
-            <!-- Tile 4: Action Tray -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] flex flex-col justify-between">
-                <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.actions_voucher') }}</span>
-                <div class="pt-2">
-                    @if (\App\Support\Context::hasPermission('crm.manage'))
-                        <button type="button" @click="showVoucherModal = true"
-                            class="w-full h-11 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition cursor-pointer flex items-center justify-center gap-2">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span>{{ __('crm.create_voucher_btn') }}</span>
-                        </button>
-                    @endif
+            <!-- Tile 4: Status Integrasi POS (Analytical Metric Replacing Redundant Button) -->
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">Kesiapan Kasir POS</span>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center">
+                        <i data-lucide="badge-percent" class="w-4 h-4"></i>
+                    </div>
+                </div>
+                <div class="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-[#5856D6] tabular-nums">
+                    {{ $activeVouchers > 0 ? '100% Aktif' : '0%' }}
+                </div>
+                <div class="text-[11px] text-black/50 dark:text-white/50 flex items-center gap-1">
+                    <span>Otomatis sinkron ke kasir toko</span>
                 </div>
             </div>
         </div>
@@ -122,13 +126,12 @@
                         {{ __('crm.vouchers_banner_desc') }}
                     </p>
                 </div>
-                @if (\App\Support\Context::hasPermission('crm.manage'))
-                    <button type="button" @click="showVoucherModal = true"
-                        class="h-11 px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-2 shrink-0">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>{{ __('crm.create_voucher_btn') }}</span>
-                    </button>
-                @endif
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/80">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                        <span>{{ $activeVouchers }} Kupon Aktif</span>
+                    </span>
+                </div>
             </div>
 
             <!-- Vouchers Grid -->

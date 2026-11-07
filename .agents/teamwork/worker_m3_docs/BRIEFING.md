@@ -1,65 +1,69 @@
-# BRIEFING — 2026-11-07T09:54:00Z
+# BRIEFING — 2026-11-07T14:25:00Z
 
 ## Mission
-Create and integrate comprehensive, Apple HIG Bento-styled business owner documentation for Analytics (`sec_analytics.blade.php`), Document Approvals (`sec_approvals.blade.php`), and Billing/Subscriptions (`sec_billing.blade.php`), and integrate them into `resources/views/app/docs/index.blade.php`.
+Author and integrate comprehensive Business Owner User Documentation (POV UMKM) for Customers, CRM, and Community modules in COOCA, featuring 20-industry matrices, 4-step practical workflows, security & anti-fraud guidelines, interactive route links, and TOC registration.
 
 ## 🔒 My Identity
-- Archetype: Documentation Worker (Worker 3)
+- Archetype: worker
 - Roles: implementer, qa, specialist
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\
-- Original parent: 58fe913b-8bbe-4705-a472-1a575b67e3a5
-- Milestone: M3 Documentation Expansion
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs
+- Original parent: 8d27681a-70c2-4f72-a481-2fbed64c6df8
+- Milestone: M3 (Business Owner Documentation)
 
 ## 🔒 Key Constraints
-- Exclusive file ownership:
-  - `resources/views/app/docs/index.blade.php`
-  - `resources/views/app/docs/partials/sec_analytics.blade.php`
-  - `resources/views/app/docs/partials/sec_approvals.blade.php`
-  - `resources/views/app/docs/partials/sec_billing.blade.php`
-- Do NOT touch or modify any other files.
-- Follow Bento Apple HIG standards (from `sec_ai.blade.php`), zero Unicode emojis (Lucide icons only), clean typography.
-- Business Owner POV: simple, jargon-free, practical, 20-industry matrix across 6 clusters.
-- All interactive links must be valid routes with proper permission guards (`@can` or `\App\Support\Context::hasPermission`).
-- Full verification: `php -l` and `php artisan view:clear` / `php artisan view:cache`.
+- EXCLUSIVE WRITE OWNERSHIP:
+  - resources/views/app/docs/partials/sec_customers.blade.php (new)
+  - resources/views/app/docs/partials/sec_crm.blade.php (new)
+  - resources/views/app/docs/partials/sec_community.blade.php (new)
+  - resources/views/app/docs/index.blade.php
+- DO NOT touch other files.
+- Business Owner (UMKM) POV in natural, warm, professional Indonesian without tech jargon.
+- Strict Apple HIG Bento UI design matching existing doc partials (e.g., sec_approvals, sec_billing).
+- Verified route links: route('customers.index'), route('crm.members'), route('crm.vouchers'), route('community.index'), route('community.events').
+- 20-industry matrix across 6 clusters for each module.
+- 4-step practical workflows, security/anti-fraud sections, practical FAQs.
+- Zero fake/cheating implementation; pass all tests and php -l syntax checks.
 
 ## Current Parent
-- Conversation ID: 58fe913b-8bbe-4705-a472-1a575b67e3a5
-- Updated: 2026-11-07T09:54:00Z
-
-## Loaded Skills
-- Source: C:\Users\Ulfah Ramadhani\.gemini\config\skills\business-owner-doc-generator\SKILL.md
-  - Local copy: c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\business_owner_doc_generator_skill.md
-  - Core methodology: Business Owner POV documentation for 20 industries in 6 clusters with actionable route links, 4-step workflow, anti-fraud, and FAQ.
-- Source: C:\Users\Ulfah Ramadhani\.gemini\config\skills\cooca-agent-directive\SKILL.md
-  - Local copy: c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\cooca_agent_directive_skill.md
-  - Core methodology: Bento Apple HIG UI/UX, zero emoji, anti-pill abuse, multi-tenant isolation, real verification.
+- Conversation ID: 8d27681a-70c2-4f72-a481-2fbed64c6df8
+- Updated: 2026-11-07T14:25:00Z
 
 ## Task Summary
-- **What to build**: 3 new documentation partials (`sec_analytics.blade.php`, `sec_approvals.blade.php`, `sec_billing.blade.php`) and update `index.blade.php` sidebar nav & include directives.
-- **Success criteria**: Valid Blade syntax, compiles cleanly in `php artisan view:cache`, matches design standard of `sec_ai.blade.php`, complete 20-industry application matrices across 6 clusters, active route buttons.
-- **Interface contracts**: `resources/views/app/docs/partials/sec_ai.blade.php`
-- **Code layout**: `resources/views/app/docs/`
+- **What to build**: 3 comprehensive doc partials (`sec_customers.blade.php`, `sec_crm.blade.php`, `sec_community.blade.php`) and update `index.blade.php` with sidebar TOC navigation & partial inclusion.
+- **Success criteria**:
+  1. `sec_customers.blade.php` created with header bento, route link, executive summary, 4-step workflow, 20-industry matrix across 6 clusters, security & access control, FAQ. (COMPLETED)
+  2. `sec_crm.blade.php` created with header bento, route links to members & vouchers, executive summary, 4-step workflow, 20-industry matrix, anti-fraud/security, FAQ. (COMPLETED)
+  3. `sec_community.blade.php` created with header bento, route links to index & events, executive summary, 4-step workflow, 20-industry matrix, content moderation/anti-spam, FAQ. (COMPLETED)
+  4. `index.blade.php` updated with Left Sidebar TOC links + badges for sec-customers, sec-crm, sec-community, and includes for the 3 partials replacing stubs. (COMPLETED)
+  5. `php -l` passes on all 4 files. (COMPLETED - 0 syntax errors)
+  6. `php artisan test --filter=Documentation` passes. (COMPLETED)
+- **Interface contracts**: PROJECT.md Business Owner Documentation Contract.
 
 ## Key Decisions Made
-- Matched the exact Bento Apple HIG styling, cards, and Lucide icons from `sec_ai.blade.php`.
-- Implemented complete 20-industry coverage across 6 standard clusters (Kuliner, Manufaktur, Ritel, Jasa Harian, Jasa Proyek, Distribusi/Agro) for each of the 3 modules.
-- Preserved backward compatibility for `#sec-security` anchor link by maintaining hidden anchor tag in `sec_approvals.blade.php`.
-- Verified all routes against routing registry (`analytics.index`, `reports.index`, `approvals.inbox`, `approvals.history`, `approval-rules.index`, `billing.limits`, `billing.checkout`, `billing.history`).
-
-## Artifact Index
-- `handoff.md` — Final handoff report
-- `progress.md` — Liveness & status tracking
+- Used fallback-aware route helpers: `Route::has('crm.members') ? route('crm.members') : route('crm.members.index')`, `Route::has('crm.vouchers') ? route('crm.vouchers') : route('crm.vouchers.index')`, `Route::has('community.events') ? route('community.events') : route('community.events.index')`, and `route('customers.index')` / `route('community.index')`.
+- Embedded permission checks using `\App\Support\Context::hasPermission` and `Context::isOwner` so buttons match user roles.
+- Implemented rich 20-industry application matrices covering all 6 clusters (F&B, Manufaktur, Ritel, Jasa Harian, Jasa Proyek, Distribusi/Agro) per module.
+- Designed 4-step practical implementation workflows, anti-fraud & security callouts, and 5 collapsible interactive FAQs per module.
 
 ## Change Tracker
 - **Files modified**:
-  - `resources/views/app/docs/index.blade.php` — Added Left Sidebar TOC links for analytics, approvals, billing; included all 3 partials.
-  - `resources/views/app/docs/partials/sec_analytics.blade.php` — Created Business Owner guide for Analytics module.
-  - `resources/views/app/docs/partials/sec_approvals.blade.php` — Created Business Owner guide for Approvals (MAR) module.
-  - `resources/views/app/docs/partials/sec_billing.blade.php` — Created Business Owner guide for Billing & Limits module.
-- **Build status**: PASS (php -l 100% clean, php artisan view:cache 100% clean, php artisan test DocumentationFeatureTest 100% pass)
+  - `resources/views/app/docs/partials/sec_customers.blade.php` (created, 248 lines)
+  - `resources/views/app/docs/partials/sec_crm.blade.php` (created, 252 lines)
+  - `resources/views/app/docs/partials/sec_community.blade.php` (created, 248 lines)
+  - `resources/views/app/docs/index.blade.php` (modified, TOC updated, partials included)
+- **Build status**: Pass (`php -l` on all 4 files passed; `DocumentationFeatureTest` passed)
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: PASS (All 4 Blade views compile without errors)
-- **Lint status**: PASS (0 syntax errors)
-- **Tests added/modified**: `DocumentationFeatureTest` passed (2 tests, 7 assertions)
+- **Build/test result**: Pass (3 tests, 10 assertions in Documentation suite; 2 tests, 7 assertions in DocumentationFeatureTest)
+- **Lint status**: Clean (valid Blade syntax confirmed via php -l)
+- **Tests added/modified**: Verified against project automated documentation test suite
+
+## Loaded Skills
+- **Source**: C:\Users\Ulfah Ramadhani\.gemini\config\skills\business-owner-doc-generator\SKILL.md
+- **Core methodology**: Business Owner (UMKM) POV documentation generator with 20-industry matrix, 4-step practical workflows, anti-fraud & security guidelines, and direct interactive route links.
+
+## Artifact Index
+- `handoff.md` — Final handoff report
+- `progress.md` — Activity heartbeat and step tracking
+- `DISPATCH.md` — Upstream assignment instructions

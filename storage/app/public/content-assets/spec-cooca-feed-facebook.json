@@ -7,7 +7,7 @@
   "slot_label": "Facebook Afternoon Single Community Discussion Feed",
   "topic_id": "receivables_bon_management",
   "topic_name": "Solusi Mengelola Bon Hutang Pelanggan & Catatan Piutang Digital",
-  "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Toko Kamu Mengatur Piutang Tanpa Ribut",
+  "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
   "solution_summary": "Catat bon hutang dengan limit kredit per pelanggan dan kirim pengingat digital ramah otomatis via WhatsApp.",
   "viral_score": 95.75,
   "gate_status": "PASSED (>= 85.0)",
@@ -15,9 +15,7 @@
   "problem_urgency": 97.0,
   "platform_fit": 98.0,
   "cta_clarity": 95.0,
-  "caption": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Toko Kamu Mengatur Piutang Tanpa Ribut\n\nDi kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali jadi dilema: Kalau tidak diberi hutang pelanggan batal beli, tapi kalau dibiarkan menumpuk arus kas toko yang macet.\n\nToko Kamu menerapkan solusi pembukuan piutang digital bersama Cooca Indonesia:\n- Batas maksimal plafon hutang ditentukan per pelanggan tetap.\n- Setiap bon tercatat otomatis saat transaksi kasir berlangsung.\n- Kirim struk dan pengingat tanggal jatuh tempo yang sopan via WhatsApp.\n\nArus kas toko tetap sehat, hubungan dengan tetangga dan pelanggan pun tetap harmonis.\nDiskusikan sistem pembukuan piutang toko kamu di https://cooca.id\n\n#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #TokoKamu #CoocaIndonesia",
-  "business_name": "Toko Kamu",
-  "owner_name": "Cooca Indonesia",
+  "caption": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut\n\nDi kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali menjadi dilema: Jika tidak diberi hutang pelanggan batal beli, namun jika dibiarkan menumpuk arus kas toko yang terganggu.\n\nBerikut solusi pembukuan piutang digital yang praktis dan efektif:\n- Tentukan batas maksimal plafon hutang per pelanggan tetap secara terukur.\n- Setiap bon tercatat langsung di sistem saat transaksi kasir berlangsung.\n- Kirim struk dan pengingat tanggal jatuh tempo yang sopan dan otomatis via WhatsApp.\n\nArus kas toko tetap sehat, hubungan baik dengan pelanggan pun tetap terjaga harmonis.\nDiskusikan sistem pembukuan piutang toko di https://cooca.id\n\n#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #ManajemenKas #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -25,5 +23,5 @@
       "tag": "Diskusi Komunitas"
     }
   ],
-  "evaluated_at": "2026-11-07 18:47:12"
+  "evaluated_at": "2026-11-07 22:23:33"
 }

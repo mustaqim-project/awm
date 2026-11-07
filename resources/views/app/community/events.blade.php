@@ -120,64 +120,49 @@
         }
     }
 }">
-    <!-- 0. Breadcrumb Bar -->
-    <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 print:hidden" aria-label="Breadcrumb">
-        <a href="{{ route('dashboard') }}" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
-            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-            <span>Dashboard</span>
-        </a>
-        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 dark:text-slate-600"></i>
-        <a href="{{ route('community.index') }}" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-            <i data-lucide="users" class="w-3.5 h-3.5"></i>
-            <span>Komunitas</span>
-        </a>
-        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 dark:text-slate-600"></i>
-        <span class="text-slate-900 dark:text-white font-bold flex items-center gap-1.5">
-            <span>Agenda Event</span>
-        </span>
-    </nav>
+    <!-- 0. Canonical Breadcrumbs -->
+    <x-breadcrumb :items="[
+        ['label' => 'Dashboard', 'url' => route('dashboard')],
+        ['label' => __('community.header_title'), 'url' => route('community.index')],
+        ['label' => 'Agenda Event']
+    ]" />
 
-    <!-- 1. Header Banner -->
-    <div class="bg-white dark:bg-slate-900/90 p-5 sm:p-6 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors">
-        <div class="space-y-1 max-w-2xl">
-            <div class="flex items-center gap-2">
-                <span class="rounded-full px-2.5 py-0.5 text-[10px] sm:text-xs font-bold border inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200/90 dark:border-emerald-800/90">
-                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-                    <span>Terbuka Untuk Semua Paket Langganan</span>
-                </span>
-            </div>
-            <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-                Agenda &amp; Pelatihan Komunitas
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Tingkatkan wawasan bisnis, strategi penjualan POS, dan perluas relasi dengan sesama pelaku usaha melalui seminar dan workshop resmi Cooca.
-            </p>
+    <!-- 1. Utility Status Bar & Quick Actions (Zero Redundant H1 Header) -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800/80 shadow-2xs">
+        <div class="flex items-center gap-2">
+            <span class="rounded-full px-3 py-1 text-xs font-bold border inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200/80 dark:border-emerald-800/80">
+                <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                <span>Terbuka Untuk Semua Paket Langganan</span>
+            </span>
+            <span class="hidden sm:inline-block text-xs text-slate-500 dark:text-slate-400">
+                Seminar bisnis, pelatihan kasir POS, dan meetup wirausaha Cooca
+            </span>
         </div>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
+        <div class="w-full sm:w-auto">
             <a href="{{ route('community.index') }}"
-                class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 transition flex items-center justify-center gap-1.5 flex-1 sm:flex-none">
+                class="w-full sm:w-auto min-h-[44px] px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/80 transition flex items-center justify-center gap-2">
                 <i data-lucide="messages-square" class="w-4 h-4"></i>
                 <span>Feed Komunitas</span>
             </a>
         </div>
     </div>
 
-    <!-- 2. Segmented Navigation Tabs -->
+    <!-- 2. Segmented Navigation Tabs (>= 44px Tap Targets) -->
     <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <button type="button" @click="activeTab = 'upcoming'"
             :class="activeTab === 'upcoming' ? 'bg-emerald-600 text-white shadow-2xs font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium'"
-            class="px-4 py-2 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="calendar-days" class="w-3.5 h-3.5"></i>
+            class="min-h-[44px] px-4 py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-2">
+            <i data-lucide="calendar-days" class="w-4 h-4"></i>
             <span>Event Mendatang</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 font-mono">{{ $upcomingEvents->total() }}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] bg-white/20 font-mono">{{ $upcomingEvents->total() }}</span>
         </button>
 
         <button type="button" @click="activeTab = 'my_tickets'"
             :class="activeTab === 'my_tickets' ? 'bg-emerald-600 text-white shadow-2xs font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium'"
-            class="px-4 py-2 rounded-xl text-xs transition cursor-pointer flex items-center gap-1.5">
-            <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
+            class="min-h-[44px] px-4 py-2.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-2">
+            <i data-lucide="ticket" class="w-4 h-4"></i>
             <span>Tiket &amp; Pendaftaran Saya</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 font-mono">{{ count($myRegistrations) }}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] bg-white/20 font-mono">{{ count($myRegistrations) }}</span>
         </button>
     </div>
 
@@ -279,31 +264,39 @@
                         <div class="p-5 pt-0">
                             @if($userRegistered)
                                 @if($userReg && $userReg->isPendingPayment())
+                                    @can('community.events.register')
                                     <a href="{{ route('community.events.payment.show', $userReg) }}"
-                                        class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-amber-600/20">
+                                        class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-amber-600/20">
                                         <i data-lucide="qr-code" class="w-4 h-4"></i>
                                         <span>{{ __('community.continue_pay_qris') }} ({{ $userReg->getFormattedAmountPaid() }})</span>
                                     </a>
+                                    @endcan
                                 @else
                                     <div class="flex items-center gap-2">
                                         <button type="button" @click="viewTicket('{{ $evt->id }}')"
-                                            class="flex-1 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+                                            class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                             <i data-lucide="ticket" class="w-4 h-4"></i>
                                             <span>{{ __('community.lihat_tiket_check_in') }}</span>
                                         </button>
                                     </div>
                                 @endif
                             @elseif($regOpen)
+                                @can('community.events.register')
                                 <form method="POST" action="{{ route('community.events.register', $evt) }}">
                                     @csrf
                                     <button type="submit"
-                                        class="w-full py-2.5 rounded-xl text-xs font-bold text-white {{ $evt->isPaid() ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/25' : 'bg-[#007AFF] hover:bg-[#0062CC] shadow-[#007AFF]/25' }} active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+                                        class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-white {{ $evt->isPaid() ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/25' : 'bg-[#007AFF] hover:bg-[#0062CC] shadow-[#007AFF]/25' }} active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
                                         <i data-lucide="{{ $evt->isPaid() ? 'credit-card' : 'user-plus' }}" class="w-4 h-4"></i>
                                         <span>{{ $evt->isPaid() ? 'Beli Tiket (' . $evt->formatted_price . ')' : 'Daftar Sekarang (Gratis)' }}</span>
                                     </button>
                                 </form>
+                                @else
+                                <div class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-medium text-slate-400 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-center">
+                                    {{ $evt->isPaid() ? $evt->formatted_price : 'Event Gratis' }}
+                                </div>
+                                @endcan
                             @else
-                                <button disabled class="w-full py-2.5 rounded-xl text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 cursor-not-allowed">
+                                <button disabled class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 cursor-not-allowed">
                                     Pendaftaran Ditutup
                                 </button>
                             @endif
@@ -383,26 +376,36 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
                             @if($reg->status !== 'cancelled')
                                 @if($reg->isPendingPayment())
+                                    @can('community.events.register')
                                     <a href="{{ route('community.events.payment.show', $reg) }}"
-                                        class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-xs">
+                                        class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-2 shadow-xs">
                                         <i data-lucide="qr-code" class="w-4 h-4"></i>
                                         <span>{{ __('community.bayar_via_qris') }}</span>
                                     </a>
+                                    @endcan
                                 @else
                                     <button type="button" @click="viewTicket('{{ $reg->event_id }}')"
-                                        class="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                        class="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-2 cursor-pointer shadow-xs">
                                         <i data-lucide="scan-barcode" class="w-4 h-4"></i>
                                         <span>{{ __('community.buka_tiket_digital') }}</span>
                                     </button>
                                 @endif
+
                                 @if(! $reg->isCheckedIn())
-                                    <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('{{ $reg->isPaid() ? 'Batalkan pendaftaran event ini? Tiket berbayar yang sudah dibatalkan tidak otomatis di-refund.' : 'Batalkan pendaftaran event ini?' }}')">
-                                        @csrf
-                                        <button type="submit" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer">{{ __('common.cancel') }}</button>
-                                    </form>
+                                    @can('community.events.register')
+                                    <div class="flex items-center justify-end pt-0.5">
+                                        <form method="POST" action="{{ route('community.events.cancel', $reg->event) }}" onsubmit="return confirm('{{ $reg->isPaid() ? 'Batalkan pendaftaran event ini? Tiket berbayar yang sudah dibatalkan tidak otomatis di-refund.' : 'Batalkan pendaftaran event ini?' }}')">
+                                            @csrf
+                                            <button type="submit" class="min-h-[44px] px-3 py-2 rounded-xl text-xs font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer flex items-center gap-1.5">
+                                                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('common.cancel') }} Pendaftaran</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    @endcan
                                 @endif
                             @endif
                         </div>
@@ -574,6 +577,7 @@
                         </div>
                     </template>
 
+                    @can('community.events.register')
                     <template x-if="!selectedTicket?.is_checked_in">
                         <div class="space-y-3">
                             <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
@@ -611,9 +615,9 @@
                                 </p>
                                 <div class="flex items-center gap-2">
                                     <input type="text" x-model="barcodeInput" placeholder="{{ __('community.ketik_kode_cooca_evt') }}"
-                                        class="flex-1 h-9 px-3 rounded-xl text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white uppercase">
+                                        class="flex-1 h-11 min-h-[44px] px-3.5 rounded-xl text-xs font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white uppercase">
                                     <button type="button" @click="checkinBarcodeSubmit()" :disabled="barcodeLoading || !barcodeInput"
-                                        class="px-4 h-9 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 transition cursor-pointer">
+                                        class="px-5 h-11 min-h-[44px] rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 transition cursor-pointer">
                                         Submit
                                     </button>
                                 </div>
@@ -623,6 +627,7 @@
                             </div>
                         </div>
                     </template>
+                    @endcan
                 </div>
             </div>
 

@@ -15,9 +15,7 @@
   "problem_urgency": 97.0,
   "platform_fit": 98.0,
   "cta_clarity": 96.0,
-  "caption": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet\n\nMengembangkan jaringan ritel modern dari 1 menjadi beberapa cabang menghadirkan tantangan tata kelola yang fundamental. Banyak pebisnis ritel mengalami kendala asimetri informasi: omzet terlihat bertumbuh, namun kebocoran stok dan ketidakteraturan kasir justru meningkat.\n\nBerikut kerangka operasional pengendalian multi-cabang yang diterapkan pada ekosistem Toko Kamu:\n1. Pembatasan Otorisasi: Wewenang kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan PIN Supervisor.\n2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang tercatat otomatis melalui pembacaan barcode terpusat.\n3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen.\n\nSeluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpadu melalui platform Cooca Indonesia di https://cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #TokoKamu #CoocaIndonesia",
-  "business_name": "Toko Kamu",
-  "owner_name": "Cooca Indonesia",
+  "caption": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet\n\nMengembangkan jaringan ritel modern dari 1 menjadi beberapa cabang menghadirkan tantangan tata kelola yang fundamental. Banyak pebisnis ritel mengalami kendala asimetri informasi: omzet terlihat bertumbuh, namun kebocoran stok dan ketidakteraturan kasir justru meningkat.\n\nBerikut kerangka operasional pengendalian multi-cabang yang terbukti efektif untuk bisnis ritel modern:\n1. Pembatasan Otorisasi: Wewenang staf kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan otorisasi PIN Supervisor.\n2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang dan antaroutlet tercatat otomatis melalui pembacaan barcode terpusat.\n3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen terpadu.\n\nSeluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpusat melalui platform COOCA di https://cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #EdukasiRitel #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -45,5 +43,5 @@
       "tag": "Solusi Eksekutif"
     }
   ],
-  "evaluated_at": "2026-11-07 18:47:01"
+  "evaluated_at": "2026-11-07 22:23:22"
 }

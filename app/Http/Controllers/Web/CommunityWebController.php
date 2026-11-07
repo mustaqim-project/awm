@@ -42,7 +42,46 @@ final class CommunityWebController extends Controller implements HasMiddleware
      */
     public static function middleware(): array
     {
-        return [];
+        return [
+            new Middleware('require.permission:community.view', only: [
+                'index',
+                'events',
+                'getEventTicket',
+                'showEventPayment',
+                'checkEventPaymentStatus',
+                'markNotificationsRead',
+                'feed',
+                'eventCatalog',
+                'eventShow',
+                'tickets',
+                'ticketDetail',
+            ]),
+            new Middleware('require.permission:community.post', only: [
+                'store',
+                'comment',
+                'toggleLike',
+                'toggleRepost',
+                'reply',
+                'repost',
+            ]),
+            new Middleware('require.permission:community.events.register', only: [
+                'registerEvent',
+                'cancelEventRegistration',
+                'simulateEventPayment',
+                'checkinLocation',
+                'checkinBarcode',
+                'eventRegister',
+                'eventPaySimulated',
+                'cancelRegistration',
+            ]),
+            new Middleware('require.permission:community.manage', only: [
+                'eventManage',
+                'scanTicketCheckIn',
+            ]),
+            new Middleware('require.permission:community.post,community.manage', only: [
+                'destroy',
+            ]),
+        ];
     }
 
     public function __construct(
@@ -870,14 +909,18 @@ final class CommunityWebController extends Controller implements HasMiddleware
     }
 
     /**
-     * Delete a community post (only the author/owner).
+     * Delete a community post (author or community manager).
      */
     public function destroy(Request $request, CommunityPost $post): RedirectResponse|JsonResponse
     {
         $user = $request->user();
         abort_unless($user !== null, 403);
 
-        if ((string) $post->owner_id !== (string) $user->getAuthIdentifier()) {
+        $isOwner = (string) $post->owner_id === (string) $user->getAuthIdentifier();
+        $isSameTenant = (string) $post->business_id === (string) Context::businessId();
+        $canManage = $isSameTenant && Context::hasPermission('community.manage');
+
+        if (! $isOwner && ! $canManage) {
             abort(403, 'Anda hanya dapat menghapus postingan milik sendiri.');
         }
 

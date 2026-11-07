@@ -205,10 +205,13 @@
                         <!-- Komunitas & Event UMKM -->
                         <a href="#sec-community" @click="if(activeTab !== 'all') activeTab = 'all'"
                             class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
-                            <span class="w-6 h-6 rounded-[7px] bg-amber-500/15 text-amber-600 dark:bg-amber-400/20 dark:text-amber-400 flex items-center justify-center shrink-0">
+                            <span class="w-6 h-6 rounded-[7px] bg-teal-500/15 text-teal-600 dark:bg-teal-400/20 dark:text-teal-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="messages-square" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.komunitas_event_umkm') }}</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.komunitas_event_umkm') }}</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">Tiket QRIS</span>
+                            </div>
                         </a>
                     </div>
 
@@ -280,13 +283,28 @@
                             <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.karyawan_penggajian') }}</span>
                         </a>
 
-                        <!-- Loyalitas & WhatsApp Gateway -->
+                        <!-- Master Data Pelanggan & Piutang -->
+                        <a href="#sec-customers" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-blue-500/15 text-blue-600 dark:bg-blue-400/20 dark:text-blue-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="users-round" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Master Data Pelanggan</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">Piutang &amp; B2B</span>
+                            </div>
+                        </a>
+
+                        <!-- Loyalitas & CRM Member -->
                         <a href="#sec-crm" @click="if(activeTab !== 'all') activeTab = 'all'"
                             class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
                             <span class="w-6 h-6 rounded-[7px] bg-pink-500/15 text-pink-500 dark:bg-pink-400/20 dark:text-pink-400 flex items-center justify-center shrink-0">
-                                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="award" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Loyalitas &amp; WhatsApp Gateway</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Loyalitas &amp; CRM Member</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20">Poin &amp; Kupon</span>
+                            </div>
                         </a>
 
                         <!-- Toko Online & 42 Tema Storefront -->
@@ -737,38 +755,16 @@
             </section>
 
             <!-- ===================================================== -->
-            <!-- SECTION 8: CRM, LOYALITAS & WHATSAPP BROADCAST        -->
+            <!-- SECTION: MODUL MASTER PELANGGAN & MANAJEMEN PIUTANG   -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & DELETION GUARD)     -->
             <!-- ===================================================== -->
-            <section id="sec-crm" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'all') && matchesSearch('crm loyalitas member poin whatsapp broadcast pelanggan diskon toko online storefront')">
+            @include('app.docs.partials.sec_customers')
 
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-pink-500/15 text-pink-500 flex items-center justify-center font-bold text-sm">
-                            8
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.crm_pelanggan_poin_notifikasi_whatsapp') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Retensi pelanggan loyal dan katalog toko online digital</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div class="p-4 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-2 shadow-2xs">
-                        <span class="font-bold text-black dark:text-white">Tiering Member &amp; Poin Belanja</span>
-                        <p class="text-black/60 dark:text-white/60 leading-relaxed">
-                            Pelanggan otomatis naik tingkat (*Silver &rarr; Gold &rarr; Platinum*) berdasarkan akumulasi belanja. Poin yang terkumpul dapat dipotongkan langsung sebagai diskon di kasir POS.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-2 shadow-2xs">
-                        <span class="font-bold text-black dark:text-white">Broadcast WhatsApp &amp; Bukti Struk</span>
-                        <p class="text-black/60 dark:text-white/60 leading-relaxed">
-                            Kirim struk digital ramah lingkungan langsung ke WhatsApp pelanggan tanpa memboroskan kertas thermal, serta kirim ucapan promo khusus member.
-                        </p>
-                    </div>
-                </div>
-            </section>
+            <!-- ===================================================== -->
+            <!-- SECTION: MODUL CRM, LOYALITAS MEMBER & VOUCHER PROMO  -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & ANTI-LAPPING WA)    -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_crm')
 
             <!-- ===================================================== -->
             <!-- SECTION: TOKO ONLINE & 42 TEMA STOREFRONT UNIVERSAL    -->
@@ -777,47 +773,10 @@
             @include('app.docs.partials.sec_storefront')
 
             <!-- ===================================================== -->
-            <!-- SECTION 9: KOMUNITAS BISNIS & EVENT UMKM COOCA        -->
+            <!-- SECTION: MODUL KOMUNITAS BISNIS, EVENT & TIKET QRIS   -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & PRESENSI GPS/QRIS)  -->
             <!-- ===================================================== -->
-            <section id="sec-community" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'community') && matchesSearch('komunitas community event seminar workshop bazaar tiket qris repost komen')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-teal-500/15 text-teal-500 flex items-center justify-center font-bold text-sm">
-                            9
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.komunitas_event_jejaring_bisnis_cooca') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Wadah berbagi ide, tips omzet, dan tiket barcode workshop offline</p>
-                        </div>
-                    </div>
-                    <a href="{{ route('community.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>{{ __('docs.buka_komunitas') }}</span>
-                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <p class="leading-relaxed">
-                        Fitur Komunitas Cooca dirancang untuk mempertemukan ribuan pemilik usaha di seluruh Indonesia:
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-teal-600 dark:text-teal-400">Diskusi &amp; Topik Tren</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Bahas strategi harga, perizinan BPOM/Halal, rekrutmen karyawan, dan inspirasi promosi menggunakan tagar seperti <code>#TipsBisnis</code>.</p>
-                        </div>
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-teal-600 dark:text-teal-400">Pendaftaran Event &amp; QRIS</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Ikuti seminar bisnis eksklusif. Untuk event berbayar, pembayaran instan via QRIS langsung mengonfirmasi tiket Anda.</p>
-                        </div>
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-teal-600 dark:text-teal-400">Tiket Barcode &amp; Presensi Lokasi</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Check-in di venue event menggunakan scan barcode tiket digital atau deteksi lokasi GPS venue.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_community')
 
             <!-- ===================================================== -->
             <!-- SECTION 10: OTORISASI (MAR) & AUDIT ANTI-FRAUD       -->

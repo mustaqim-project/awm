@@ -1,162 +1,116 @@
-# Laporan Handoff Worker 3: Dokumentasi Pemilik Usaha (Business Owner POV)
+# Handoff Report: Business Owner Documentation Specialist Worker (M3)
 
-**Worker**: Worker 3 (Documentation Worker)  
-**Milestone**: M3 — Business Owner Documentation Expansion  
-**Tanggal**: 2026-11-07  
-**Lokasi**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\handoff.md`  
-
----
-
-## 1. OBSERVATION
-
-Berdasarkan direktif tugas di `DISPATCH.md`, dokumen arsitektur `PROJECT.md`, hasil survei `explorer_audit_docs_survey/handoff.md`, dan standar baku `resources/views/app/docs/partials/sec_ai.blade.php`:
-
-1. **Kepemilikan File Eksklusif**:
-   - `resources/views/app/docs/index.blade.php` (TOC sidebar & container Blade)
-   - `resources/views/app/docs/partials/sec_analytics.blade.php` (Berkas baru)
-   - `resources/views/app/docs/partials/sec_approvals.blade.php` (Berkas baru)
-   - `resources/views/app/docs/partials/sec_billing.blade.php` (Berkas baru)
-
-2. **Kondisi Sebelum Perubahan**:
-   - Dokumentasi modul `analytics` sama sekali belum ada (0% coverage) di `resources/views/app/docs/`.
-   - Dokumentasi modul `approvals` hanya 2 paragraf statis di dalam `#sec-security` tanpa alur Maker-Checker, tanpa tautan interaktif, dan tanpa matriks industri.
-   - Dokumentasi modul `billing` hanya 1 paragraf statis di dalam `#sec-billing` tanpa penjelasan 4 tingkat langganan (Free Solo, Standard, Premium, Prestige), gateway pembayaran TriPay 24/7, manajemen kuota storage, dan buffer darurat kasir.
-
-3. **Tindakan & Berkas yang Dibuat / Dimodifikasi**:
-   - **`resources/views/app/docs/partials/sec_analytics.blade.php`** (Dibuat, 442 baris):
-     - Header Bento Apple HIG: Judul *"Modul Analitik & Tren Pertumbuhan"*, ikon semantik `bar-chart-3`, badge *"POV Business Owner"* & *"20 Sektor Industri"*, subtitle deskriptif, dan tombol aksi terverifikasi `route('analytics.index')` berpelindung `@can('reports.view')`.
-     - Ringkasan Eksekutif: Masalah nyata pemilik toko (mencegah kebocoran omzet, membedakan omzet kotor vs HPP riil, dan optimasi jadwal shift kerja kasir/pelayan).
-     - 4 Langkah Praktis: Filter periode & cabang &rarr; Membaca 4 KPI utama &rarr; Analisis heatmap jam sibuk & tren produk &rarr; Evaluasi produk cuan & ekspor laporan mingguan.
-     - Matriks 20 Sektor Industri lintas 6 Klaster lengkap:
-       * Klaster 1 (Kuliner): Restoran Dine-In, Coffee Shop & Cafe, Bakery & Toko Roti, Cloud Kitchen Online, Katering Prasmanan.
-       * Klaster 2 (Manufaktur): Konveksi & Garment, Percetakan & Offset, Mebel & Furniture Kayu, Bengkel Bubut & Logam, Kerajinan Tangan / Craft.
-       * Klaster 3 (Ritel & Apotek): Minimarket & Kelontong, Apotek & Toko Obat.
-       * Klaster 4 (Jasa Harian): Bengkel Kendaraan, Barbershop & Salon, Laundry Kiloan, Cuci Mobil & Detailing.
-       * Klaster 5 (Jasa Proyek): Kontraktor & Bangunan, Wedding Organizer, Digital Creative Agency.
-       * Klaster 6 (Distribusi & Agro): Distributor Grosir B2B & Agrobisnis.
-     - Keamanan, RBAC & Anti-Fraud: Isolasi metrik laba bersih khusus owner (`reports.view`), isolasi multi-tenant `business_id`, dan pencegahan manipulasi laporan transaksi.
-     - FAQ: 4 pertanyaan umum pemilik bisnis (omzet ramai vs margin tipis, proteksi akses staf kasir, update real-time transaksi, dan perbandingan antar-cabang).
-
-   - **`resources/views/app/docs/partials/sec_approvals.blade.php`** (Dibuat, 445 baris):
-     - Header Bento Apple HIG: Judul *"Modul Otorisasi & Persetujuan Dokumen (MAR)"*, ikon semantik `check-check`, badge *"Maker-Checker Anti-Fraud"*, subtitle deskriptif, dan tombol aksi langsung `route('approvals.inbox')`, `route('approvals.history')`, serta `route('approval-rules.index')` dengan permission guard.
-     - Preservasi backward compatibility link: Menyediakan anchor tag `<div id="sec-security" class="hidden"></div>` agar tautan lama tetap berfungsi mulus.
-     - Ringkasan Eksekutif: Tata kelola Maker-Checker pengeluaran kas kecil, kontrol diskon kasir, pembelian supplier besar, dan pencegahan pembukuan fiktif.
-     - 4 Langkah Praktis: Atur aturan plafon nominal per divisi &rarr; Staf mengajukan tiket transaksi &rarr; Notifikasi & review persetujuan berjenjang &rarr; Rekap riwayat audit & arsip dokumen.
-     - Matriks 20 Sektor Industri lintas 6 Klaster lengkap (contoh skenario riil belanja daging resto, rol kain konveksi, koreksi stok apotek, oli drum bengkel, belanja material semen kontraktor, hingga plafon kredit grosir B2B).
-     - Keamanan, RBAC & Anti-Fraud: Pencegahan self-approval (pembuat draf tidak bisa menyetujui transaksi sendiri), alasan penolakan wajib minimal 3 karakter, dan validasi kepemilikan tenant.
-     - FAQ: 4 pertanyaan umum pemilik bisnis (kecepatan transaksi kasir, akses persetujuan saat di luar kota, pencegahan staf menyetujui sendiri, dan alur penolakan dokumen).
-
-   - **`resources/views/app/docs/partials/sec_billing.blade.php`** (Dibuat, 453 baris):
-     - Header Bento Apple HIG: Judul *"Modul Paket Langganan, Kuota & Billing"*, ikon semantik `credit-card`, badge *"TriPay Instant 24/7"*, subtitle deskriptif, dan tombol aksi langsung `route('billing.limits')`, `route('billing.history')`, serta `route('billing.checkout')` berpelindung hak akses.
-     - Ringkasan Eksekutif: 4 Tiers langganan (Free Solo, Standard, Premium, Prestige), aktivasi instan 24 jam sehari via TriPay gateway (QRIS Dinamis dan Virtual Account bank utama), jaminan Buffer Darurat Transaksi saat toko ramai, dan komitmen tanpa penghapusan data masa lalu (*No-Data-Punishment*).
-     - 4 Langkah Praktis: Cek penggunaan kuota toko &rarr; Pilih paket langganan & klaim promo &rarr; Bayar instan via QRIS / VA Bank &rarr; Unduh faktur resmi (Invoice PDF) untuk pembukuan pajak.
-     - Matriks 20 Sektor Industri lintas 6 Klaster lengkap dengan rekomendasi paket langganan dan fitur kunci yang dioptimalkan per sektor usaha.
-     - Keamanan & Anti-Fraud: Verifikasi webhook signature HMAC SHA-256 TriPay, pemisahan hak akses tagihan khusus owner (`billing.manage`), dan faktur resmi anti-ubah bertanda tangan digital.
-     - FAQ: 4 pertanyaan umum pemilik usaha (penanganan kuota habis saat kasir ramai, keamanan data pelanggan, durasi aktivasi paket via QRIS, dan legalitas faktur pajak).
-
-   - **`resources/views/app/docs/index.blade.php`** (Dimodifikasi):
-     - Penambahan navigasi Left Sidebar TOC:
-       * Klaster Core Business: Tautan ke `#sec-analytics` dengan ikon `bar-chart-3` dan badge *"20 Sektor"*.
-       * Klaster Finance & Accounting: Pembaruan tautan ke `#sec-approvals` dengan ikon `check-check` dan badge *"Maker-Checker"*.
-       * Klaster System & Panduan: Pembaruan tautan ke `#sec-billing` dengan ikon `credit-card` dan badge *"TriPay QRIS"*.
-     - Integrasi berkas partial pada kontainer utama:
-       * `@include('app.docs.partials.sec_analytics')` setelah `#sec-sales-b2b`.
-       * `@include('app.docs.partials.sec_approvals')` menggantikan seksi statis `#sec-security`.
-       * `@include('app.docs.partials.sec_billing')` menggantikan seksi statis `#sec-billing`.
-     - Dukungan Live Instant Spotlight Search: Mendukung kata kunci pencarian baru (`analitik`, `omzet`, `laba kotor`, `peak hours`, `jam sibuk`, `approval`, `maker checker`, `otorisasi`, `plafon`, `billing`, `kuota`, `tripay`, `qris`, `token ai`, `paket langganan`).
-
-4. **Hasil Verifikasi Eksekusi**:
-   - `php -l resources/views/app/docs/index.blade.php`:
-     `No syntax errors detected in resources\views\app\docs\index.blade.php`
-   - `php -l resources/views/app/docs/partials/sec_analytics.blade.php`:
-     `No syntax errors detected in resources\views\app\docs\partials\sec_analytics.blade.php`
-   - `php -l resources/views/app/docs/partials/sec_approvals.blade.php`:
-     `No syntax errors detected in resources\views\app\docs\partials\sec_approvals.blade.php`
-   - `php -l resources/views/app/docs/partials/sec_billing.blade.php`:
-     `No syntax errors detected in resources\views\app\docs\partials\sec_billing.blade.php`
-   - `php artisan view:clear; php artisan view:cache; php artisan view:clear`:
-     `INFO Compiled views cleared successfully.`
-     `INFO Blade templates cached successfully.`
-     `INFO Compiled views cleared successfully.` (100% lulus tanpa kegagalan).
-   - `php artisan test tests/Feature/DocumentationFeatureTest.php`:
-     `{"tool":"phpunit","result":"passed","tests":2,"passed":2,"assertions":7,"duration_ms":18317}` [VERIFIED: PASS 100%].
+**Author**: `worker_m3_docs`  
+**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs`  
+**Recipient**: `8d27681a-70c2-4f72-a481-2fbed64c6df8` (Orchestrator)  
+**Timestamp**: 2026-11-07T14:26:30Z  
+**Type**: Hard Handoff (Task Complete)
 
 ---
 
-## 2. LOGIC CHAIN
+## 1. Observation
 
-```
-[Kebutuhan Sistem & User Request]
-- R4 Business Owner User Documentation untuk modul analytics, approvals, dan billing
-- Sesuai standar skill business-owner-doc-generator & cooca-agent-directive
-- Tampilan Bento Apple HIG, zero Unicode emoji, tipografi bersih, 20 industri lintas 6 klaster
-        ↓
-[Eksplorasi Format Acuan (Golden Standard)]
-- Menginspeksi resources/views/app/docs/partials/sec_ai.blade.php
-- Menemukan pola baku: Header Bento, Executive Summary POV Owner, 4 Langkah Praktis,
-  Matriks 20 Industri, Anti-Fraud & Keamanan RBAC, serta FAQ Pemilik Bisnis
-        ↓
-[Implementasi Surgical 3 Partials Baru]
-- sec_analytics.blade.php: menghubungkan analisis omzet, jam sibuk, AOV, dan margin kotor
-- sec_approvals.blade.php: menerapkan Maker-Checker, aturan plafon nominal, dan audit trail
-- sec_billing.blade.php: menguraikan 4 tier paket, TriPay instant QRIS/VA, buffer darurat
-        ↓
-[Integrasi ke index.blade.php]
-- Left Sidebar TOC didaftarkan untuk ketiga modul dengan badge modern & icon Lucide
-- Seksi lama yang skeletal digantikan oleh @include terstandarisasi
-- Anchor kompatibilitas mundur (#sec-security) dipertahankan
-        ↓
-[Pengujian Sintaks & Kompilasi View Laravel]
-- php -l memeriksa sintaks 4 file Blade -> 0 error
-- php artisan view:cache mengompilasi seluruh template Blade aplikasi -> LULUS 100%
-- Automated test suite tests/Feature/DocumentationFeatureTest.php -> LULUS 100%
-```
-
----
-
-## 3. CAVEATS
-
-1. **Hak Akses Pengguna saat Membaca Panduan**:
-   - Seluruh tombol aksi langsung di header parsial (`route(...)`) dibungkus oleh directive otorisasi `@can('reports.view')`, `@can('approvals.view')`, `@can('approvals.manage')`, `@can('billing.view')`, dan `@can('billing.manage')`. Pengguna tanpa wewenang akan melihat label santun bahwa fitur hanya dapat dibuka oleh peran yang berwenang.
-2. **Ketergantungan Eksternal TriPay**:
-   - Dokumentasi billing menjelaskan alur QRIS dinamis dan Virtual Account bank yang bekerja secara otomatis di produksi. Pada environment lokal testing, callback disimulasikan melalui mock controller tanpa perlu menghubungkan kredensial API TriPay aktif.
+1. **Pre-Existing Documentation Gaps**:
+   - `resources/views/app/docs/index.blade.php`: Section 8 (`#sec-crm`, lines 742–771) and Section 9 (`#sec-community`, lines 782–820) were basic ~30-line stubs without step-by-step workflows, without verified permission-gated action buttons, and without 20-industry application matrices.
+   - Customers Module: Had **no section whatsoever** in `index.blade.php` and no anchor or listing in the Left Sidebar Table of Contents (TOC).
+2. **Route Definitions in Laravel**:
+   - Route verification command: `php artisan route:list --name=customers`, `php artisan route:list --name=crm`, `php artisan route:list --name=community`.
+   - Results:
+     - `customers.index` -> `Web\CustomerWebController@index` (GET /customers)
+     - `customers.export` -> `Web\CustomerWebController@export` (GET /customers/export)
+     - `crm.members.index` -> `Web\Crm\CrmWebController@members` (GET /crm/members)
+     - `crm.vouchers.index` -> `Web\Crm\CrmWebController@vouchers` (GET /crm/vouchers)
+     - `community.index` -> `Web\CommunityWebController@index` (GET /community)
+     - `community.events.index` -> `Web\CommunityWebController@events` (GET /community/events)
+3. **Exclusive Write Ownership Enforcement**:
+   - Only 4 designated files were created/modified:
+     - `resources/views/app/docs/partials/sec_customers.blade.php` (created, 248 lines)
+     - `resources/views/app/docs/partials/sec_crm.blade.php` (created, 252 lines)
+     - `resources/views/app/docs/partials/sec_community.blade.php` (created, 248 lines)
+     - `resources/views/app/docs/index.blade.php` (modified, TOC updated and partials included)
+   - Zero modifications made outside this designated boundary.
+4. **Syntax and Automated Test Verifications**:
+   - `php -l` on all 4 files returned:
+     - `No syntax errors detected in resources/views/app/docs/partials/sec_customers.blade.php`
+     - `No syntax errors detected in resources/views/app/docs/partials/sec_crm.blade.php`
+     - `No syntax errors detected in resources/views/app/docs/partials/sec_community.blade.php`
+     - `No syntax errors detected in resources/views/app/docs/index.blade.php`
+   - `php artisan test --filter=DocumentationFeatureTest` returned:
+     `{"tool":"phpunit","result":"passed","tests":2,"passed":2,"assertions":7,"duration_ms":37849}`
+   - `php artisan test --filter=Documentation` returned:
+     `{"tool":"phpunit","result":"passed","tests":3,"passed":3,"assertions":10,"duration_ms":20252}`
+   - Full Blade view render via `view('app.docs.index')->render()` succeeded producing a 1.53 MB complete HTML document without runtime exceptions.
 
 ---
 
-## 4. CONCLUSION
+## 2. Logic Chain
 
-Tugas Milestone M3 (Business Owner Documentation Expansion) telah **SELESAI 100% DENGAN STATUS VERIFIED**:
-1. Ketiga berkas dokumentasi partial (`sec_analytics.blade.php`, `sec_approvals.blade.php`, `sec_billing.blade.php`) berhasil dibuat sesuai standar Bento Apple HIG COOCA.
-2. Setiap berkas mencakup matriks penerapan nyata untuk 20 sektor industri (6 klaster UMKM Indonesia), alur kerja 4 langkah, penegakan keamanan anti-fraud, dan FAQ pemilik usaha.
-3. Berkas `resources/views/app/docs/index.blade.php` telah diperbarui dengan tautan Left Sidebar TOC baru dan `@include` parsial yang rapi.
-4. Seluruh berkas Blade lolos kompilasi penuh `php artisan view:cache` dan automated feature test `DocumentationFeatureTest.php` dengan status **PASS (100% Lulus)**.
+1. **Business Owner Perspective Alignment (Skill `business-owner-doc-generator`)**:
+   - Business owners do not need abstract programming manuals; they need answers to practical business problems: preventing cashier theft, avoiding bad debts (*piutang macet*), retaining loyal customers, and establishing peer partnerships.
+   - Every partial was authored in natural, conversational, professional Indonesian, avoiding raw IT jargon while keeping standard business and accounting terms clear (e.g., *Terms of Payment*, Plafon Kredit, *Maker-Checker*, *Lapping Fraud*, *Customer Lifetime Value*).
+2. **Actionable Route Linking Architecture**:
+   - Rather than static text, every section features an interactive Header Bento with direct button links.
+   - To guard against route naming variations (`crm.members` vs `crm.members.index`, `crm.vouchers` vs `crm.vouchers.index`, `community.events` vs `community.events.index`), safe fallback ternary logic was used:
+     - `Route::has('crm.members') ? route('crm.members') : route('crm.members.index')`
+     - `Route::has('crm.vouchers') ? route('crm.vouchers') : route('crm.vouchers.index')`
+     - `Route::has('community.events') ? route('community.events') : route('community.events.index')`
+     - `route('customers.index')` and `route('community.index')`
+   - Buttons are wrapped in `\App\Support\Context::hasPermission(...)` and `Context::isOwner()` checks to ensure only authorized users see interactive modification controls.
+3. **Comprehensive 20-Industry Application Matrices across 6 Standard Clusters**:
+   - Each module contains tailored use-cases for all 20 business types in 6 clusters:
+     1. *Kuliner & F&B* (Restoran Dine-In, Coffee Shop & Cafe, Bakery & Toko Roti, Cloud Kitchen Online, Katering Prasmanan).
+     2. *Manufaktur & HPP* (Konveksi & Garment, Percetakan & Offset Digital, Mebel & Furniture Kayu, Bengkel Bubut & Logam, Kerajinan Tangan / Craft).
+     3. *Ritel & Apotek* (Minimarket & Kelontong, Apotek & Toko Obat).
+     4. *Jasa Harian* (Bengkel Mobil & Motor, Barbershop & Salon, Laundry Kiloan & Satuan, Cuci Mobil & Detailing).
+     5. *Jasa Proyek* (Kontraktor & Renovasi, Event / Wedding Organizer, Digital IT & Creative Agency).
+     6. *Distribusi & Agro* (Distributor Grosir B2B & Agrobisnis).
+4. **Security, Anti-Fraud & Regulatory Best Practices**:
+   - *Customers*: Details role permission separation (`customers.view` for cashiers vs `customers.export`/`delete` for owners), the automated *Deletion Guard* blocking deletion of customers with outstanding debt, and *Excel Formula Injection Shield* sanitizing `=`, `+`, `-`, `@`.
+   - *CRM*: Details prevention of cashier point inflation (*Point Inflation Fraud*), voucher usage limits and expiration checks, and the *Anti-Lapping Shield* on debt repayment with automated WhatsApp receipt links.
+   - *Community*: Details the *Word Filter Engine* for automated blocking of online gambling (judol) and fraud links, IDOR ownership protection on posts, and encrypted single-use QRIS TriPay event tickets with GPS venue verification.
+5. **Left Sidebar TOC Integration**:
+   - `index.blade.php` Left Sidebar TOC updated with:
+     - Klaster 1: `#sec-community` styled with teal icon, label, and `Tiket QRIS` badge.
+     - Klaster 4: `#sec-customers` added with blue icon, label, and `Piutang & B2B` badge.
+     - Klaster 4: `#sec-crm` updated with pink icon, label, and `Poin & Kupon` badge.
+   - Body sections updated to `@include('app.docs.partials.sec_customers')`, `@include('app.docs.partials.sec_crm')`, and `@include('app.docs.partials.sec_community')`.
 
 ---
 
-## 5. VERIFICATION METHOD & REPRODUCTION COMMANDS
+## 3. Caveats
 
-Untuk memverifikasi secara independen hasil pekerjaan Worker 3:
+- **External Module Features**: The documentation documents system capabilities (e.g., WhatsApp deep links, QRIS payments, TriPay webhook callbacks). It relies on existing system services and does not alter backend payment gateway credentials or WhatsApp API settings.
+- **Community Module RBAC Test**: The test failure in `CommunityModuleAuditTest::test_idor_protection_user_cannot_delete_another_users_post` (line 181) observed in the survey report relates to `CommunityWebController` RBAC middleware which is within the exclusive write ownership of Worker M1 (`worker_m1_rbac`). No documentation changes touched or caused this behavior.
 
-```powershell
-# 1. Pengecekan linter sintaks PHP pada keempat file Blade
-php -l resources/views/app/docs/index.blade.php
-php -l resources/views/app/docs/partials/sec_analytics.blade.php
-php -l resources/views/app/docs/partials/sec_approvals.blade.php
-php -l resources/views/app/docs/partials/sec_billing.blade.php
+---
 
-# 2. Pengujian kompilasi cache seluruh template Blade Laravel
-php artisan view:clear
-php artisan view:cache
-php artisan view:clear
+## 4. Conclusion
 
-# 3. Menjalankan automated test suite dokumentasi
-php artisan test tests/Feature/DocumentationFeatureTest.php
+Milestone 3 (Business Owner Documentation) objectives have been 100% fulfilled without shortcutting, dummy facades, or boundary violations:
+- `sec_customers.blade.php`, `sec_crm.blade.php`, and `sec_community.blade.php` have been created following the highest COOCA Bento Apple HIG standards.
+- `index.blade.php` integrates all three sections cleanly in both the Left Sidebar TOC and main content stream.
+- All 4 files pass syntax validation (`php -l`), view compilation (`view:clear`), and project automated documentation test suites (`Documentation` and `DocumentationFeatureTest`).
 
-# 4. Memverifikasi daftar rute yang ditautkan di dalam dokumentasi
-php artisan route:list --name=analytics.index
-php artisan route:list --name=approvals.inbox
-php artisan route:list --name=approval-rules.index
-php artisan route:list --name=billing.limits
-php artisan route:list --name=billing.checkout
-php artisan route:list --name=billing.history
-```
+---
+
+## 5. Verification Method
+
+To independently verify this implementation, execute the following commands in the workspace root:
+
+1. **Validate PHP Syntax on All Modified/Created Files**:
+   ```powershell
+   php -l resources/views/app/docs/partials/sec_customers.blade.php ; php -l resources/views/app/docs/partials/sec_crm.blade.php ; php -l resources/views/app/docs/partials/sec_community.blade.php ; php -l resources/views/app/docs/index.blade.php
+   ```
+   *Expected*: `No syntax errors detected` for all 4 files.
+
+2. **Run Documentation Automated Feature Test Suite**:
+   ```powershell
+   php artisan test --filter=Documentation
+   ```
+   *Expected*: 3 tests passed, 10 assertions passed (0 failures).
+
+3. **Verify Full Blade View Compilation**:
+   ```powershell
+   php artisan tinker --execute="echo view('app.docs.index')->render() ? 'Docs view rendered successfully' : 'Failed';"
+   ```
+   *Expected*: `Docs view rendered successfully`.

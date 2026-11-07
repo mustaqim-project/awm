@@ -1,152 +1,96 @@
-# Handoff Report — Worker 2: UI Views Worker (Milestone 2)
+# Handoff Report — UI Simplification & Responsive Layout Optimization (Milestone 2)
 
-**Agent**: Worker 2 (`worker_m2_ui`)  
-**Date**: 2026-11-07  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m2_ui`  
-**Target Milestone**: M2 (UI Simplification & Layout Cleanliness)  
-**Referenced Skills**: `/ui-simplify-layout`, `cooca-agent-directive`
+**Agent:** Worker M2 UI (UI Simplification & Responsive Layout Specialist Worker)  
+**Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\worker_m2_ui`  
+**Date:** 2026-11-07  
+**Status:** Completed (Hard Handoff)
 
 ---
 
 ## 1. Observation
 
-### 1.1 Scope of Exclusive Ownership
-In strict accordance with the dispatch assignment, exactly 5 Blade templates were audited, refactored, and verified:
-1. `resources/views/app/analytics/index.blade.php`
-2. `resources/views/app/approvals/inbox.blade.php`
-3. `resources/views/app/approvals/history.blade.php`
-4. `resources/views/app/approvals/rules.blade.php`
-5. `resources/views/app/billing/limits.blade.php`
+1. **Baseline State & Discovered Presentation Layer Flaws:**
+   - **Community Events (`resources/views/app/community/events.blade.php:124-163`)**:
+     - Raw HTML `<nav>` breadcrumb with hardcoded chevron icons instead of the canonical `<x-breadcrumb>` component.
+     - Direct **Double Header** conflict: The topbar rendered `headerTitle` ("Agenda Event Komunitas"), followed immediately by an inner banner card featuring `<h1>Agenda & Pelatihan Komunitas</h1>` and duplicate paragraphs.
+     - In "Tiket & Pendaftaran Saya" (lines 394–416), the destructive "Batal" submit button was placed directly adjacent to the primary "Buka Tiket Digital" button on mobile without clear separation or confirmation safeguard.
+     - Sub-44px touch targets on segmented tab buttons (~36px height) and modal venue QR inputs (`h-9` = 36px).
+   - **Community Index (`resources/views/app/community/index.blade.php:177, 279, 831`)**:
+     - Desktop 3-column layout collapsed on mobile (375px) such that the Left Sidebar (`<aside>`) rendered before the Main Feed (`<main>`). Users were forced to scroll past the user profile card, 4 navigation rail items, composer button, and storage quota widget (>350px vertical scroll) before reaching the upcoming events slider or posts.
+     - Event carousel slider buttons were only 28×28px (`w-7 h-7`), and feed interaction buttons (Reply, Repost, Like, Share) measured ~32px, failing Apple HIG minimum 44×44px tap target guidelines.
+   - **CRM Members (`resources/views/app/crm/members.blade.php:1-3, 102-172`)**:
+     - In `@extends('layouts.app', ...)`, `headerTitle` and `headerSubtitle` were omitted, causing topbar fallback to "Dashboard" while `<x-module-header>` displayed "CRM & Loyalty Membership".
+     - 4 Bento KPI tiles stacked vertically on mobile (375px), creating ~620px of vertical scrolling bloat before search and filters.
+     - Mobile customer cards stacked 3 mini bento metrics vertically (`grid-cols-1 sm:grid-cols-3`), bloating card height for every customer.
+   - **CRM Vouchers (`resources/views/app/crm/vouchers.blade.php:19-132`)**:
+     - Critical action redundancy: **Three identical "Buat Voucher" buttons** rendered within 100 vertical pixels (inside `<x-module-header>` action slot, inside Bento Tile 4, and inside the Section Banner card).
+     - 4 Bento KPI tiles stacked vertically on mobile viewports (~550px height).
+     - `headerTitle` and `headerSubtitle` were omitted in `@extends`.
+   - **Customers Index (`resources/views/app/customers/index.blade.php:137, 139, 208, 210, 1280, 1306`)**:
+     - Cross-module translation leakage: 6 instances of `purchasing.*` translation keys were referenced in customer import dropzone handlers and template download links.
+     - Bento Tile 3 currency text wrapped awkwardly on 375px mobile screens.
 
-### 1.2 Exact Modifications and Observations per File
-
-#### A. `resources/views/app/analytics/index.blade.php`
-- **Double Header Elimination**:
-  - Previously, lines 214–229 in the view body rendered an internal card box containing a redundant `<div class="text-[11px] font-bold uppercase ...">{{ __('analytics.executive_report') }}</div>` and an internal `<h1>{{ __('analytics.growth_trends') }}</h1>` competing with the macOS topbar's `$headerTitle`.
-  - Replaced lines 214–229 with a compact, Apple HIG compliant period and active date range indicator:
-    ```blade
-    <!-- Active Period Indicator -->
-    <div class="flex items-center gap-2.5 text-xs text-black/60 dark:text-white/60">
-        <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0 print:hidden">
-            <i data-lucide="calendar" class="w-4 h-4"></i>
-        </span>
-        <div>
-            <span class="text-black/50 dark:text-white/50">{{ __('analytics.period') }}:</span>
-            <strong class="text-black dark:text-white font-semibold ml-1">{{ $analytics['period_label'] }}</strong>
-            <span class="text-black/40 dark:text-white/40 ml-1">({{ Carbon\Carbon::parse($analytics['from'])->isoFormat('D MMMM Y') }} &rarr; {{ Carbon\Carbon::parse($analytics['to'])->isoFormat('D MMMM Y') }})</span>
-        </div>
-    </div>
-    ```
-  - Updated `@extends('layouts.app', ...)` to pass `'headerTitle' => __('analytics.growth_trends')` and `'title' => __('analytics.growth_trends') . ' - Cooca'`, ensuring the global topbar displays the full title while satisfying automated test assertions (`$response->assertSee('Analitik Bisnis &amp; Tren Pertumbuhan', false)`).
-- **Mobile KPI Horizontal Snap Slider**:
-  - Replaced the stacking vertical grid `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4` with the horizontal swipe snap slider:
-    ```blade
-    <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0">
-    ```
-  - Added `min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink` to each of the 4 KPI cards (Card 1: Total Omzet, Card 2: Total Transaksi & AOV, Card 3: Laba Kotor & Margin, Card 4: Estimasi Laba Bersih). On 375px–430px viewports, this saves >700px of vertical scrolling, allowing users to swipe effortlessly through KPIs.
-- **Button Hierarchy & 44px Tap Targets**:
-  - Segmented control buttons (`today`, `week`, `month`, `year`, `custom`): Updated from `min-h-[36px]` to `px-3.5 py-2.5 min-h-[44px]`.
-  - Location select dropdown: Updated to `h-11 min-h-[44px]`.
-  - Print report button: Updated to `h-11 min-h-[44px] px-3.5`.
-  - Formal financial reports link: Updated to `h-11 min-h-[44px] px-3.5`.
-  - Custom date range picker inputs and apply button: Updated to `h-11 min-h-[44px]`.
-- **RBAC Preservation**:
-  - All `@can('reports.financial')`, `@else`, `@endcan`, `@canany(['reports.export', 'reports.view'])`, and `@can('reports.view')` directives were 100% preserved.
-
-#### B. `resources/views/app/approvals/inbox.blade.php`
-- **Double Header Elimination**:
-  - Removed internal card header block (lines 11–24) which had an internal `<h1>{{ __('approvals.inbox_title') }}</h1>` duplicating the topbar title.
-  - Replaced with a streamlined top action toolbar featuring a quiet badge icon on the left and quick navigation buttons on the right.
-- **Mobile Action Button Ergonomics**:
-  - Previously, ticket action buttons ("Tolak" and "Setujui Level X") used an asymmetric `flex items-center gap-3` row where "Setujui" (`px-6`) and "Tolak" (`px-4`) crowded each other on 375px screens.
-  - Reorganized into a balanced 2-column mobile grid:
-    ```blade
-    <div class="grid grid-cols-2 sm:flex sm:w-auto gap-2.5 w-full sm:w-auto">
-        <button type="button" @click="openRejectModal(...)" class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5 w-full sm:w-auto">
-            <i data-lucide="x-circle" class="w-4 h-4 shrink-0"></i>
-            <span>{{ __('approvals.btn_reject') }}</span>
-        </button>
-        <button type="button" @click="openApproveModal(...)" class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5 w-full sm:w-auto">
-            <i data-lucide="check-circle-2" class="w-4 h-4 shrink-0"></i>
-            <span>{{ __('approvals.btn_approve_level', ['level' => $ticket->current_level]) }}</span>
-        </button>
-    </div>
-    ```
-  - Both buttons provide full 44px tap target height (`min-h-[44px]`) and maintain 50%-50% equal width on mobile.
-- **RBAC Preservation**:
-  - Gated strictly by `@can('approvals.manage') ... @else <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full ..."><i data-lucide="lock" ...></i><span>{{ __('approvals.locked_status') }}</span></span> @endcan`.
-
-#### C. `resources/views/app/approvals/history.blade.php`
-- **Double Header Elimination**:
-  - Removed internal card header block with `<h1>{{ __('approvals.history_title') }}</h1>`.
-  - Replaced with a compact top action toolbar:
-    ```blade
-    <!-- Top Action & Navigation Bar -->
-    <div class="flex items-center justify-between gap-3 flex-wrap">
-        <div class="flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
-            <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                <i data-lucide="history" class="w-4 h-4"></i>
-            </span>
-            <span class="font-medium text-black/70 dark:text-white/70">{{ __('approvals.badge_audit_archive') }}</span>
-        </div>
-        <div class="flex items-center gap-2.5">
-            <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
-                <i data-lucide="inbox" class="w-4 h-4"></i>
-                <span>{{ __('approvals.btn_back_inbox') }}</span>
-            </a>
-        </div>
-    </div>
-    ```
-  - Synchronized `@extends` with `'headerTitle' => __('approvals.history_title')` and `'title' => __('approvals.history_title') . ' - Cooca'`, ensuring topbar displays `Riwayat Persetujuan Dokumen` cleanly while satisfying `DocumentApprovalWorkflowTest::test_approval_inbox_and_history_views_render_properly`.
-
-#### D. `resources/views/app/approvals/rules.blade.php`
-- **Double Header Elimination**:
-  - Removed redundant internal `<h1>{{ __('approvals.rules_title') }}</h1>` card header.
-  - Replaced with sleek Top Action & Navigation Bar housing the "Ke Kotak Masuk" link and "Tambah Aturan Baru" CTA button.
-- **Semantic Icon & Label Verification**:
-  - "Tambah Aturan Baru" header button uses semantic `<i data-lucide="plus" class="w-4 h-4"></i>` and text `<span>{{ __('approvals.btn_add_rule') }}</span>` (no redundant `+` text symbol).
-  - Empty state "Buat Aturan Pertama" button uses semantic `<i data-lucide="plus" class="w-4 h-4"></i>` and text `<span>{{ __('approvals.btn_create_first_rule') }}</span>`.
-  - Edit rule button uses `edit-3` (`w-3.5 h-3.5`).
-  - Delete rule button uses `trash-2` (`w-3.5 h-3.5`).
-- **RBAC Preservation**:
-  - `@can('approvals.manage')` strictly guards "Tambah Aturan Baru", "Buat Aturan Pertama", "Ubah Aturan", and "Hapus".
-
-#### E. `resources/views/app/billing/limits.blade.php`
-- **Storage Topup Semantic Icon**:
-  - On line 1422, replaced generic `<i data-lucide="plus"></i>` on the storage topup CTA with semantic `<i data-lucide="database" class="w-3.5 h-3.5" aria-hidden="true"></i>`.
-- **Layout & Overlap Verification**:
-  - Modal delete file actions inside File Manager remain strictly guarded by `@if (\App\Support\Context::hasPermission('billing.manage'))`.
-  - All tap targets on plan upgrade links, top-up buttons, and modal action buttons maintain minimum `min-h-[44px]` touch height.
-  - Collapsible feature matrix retains `x-collapse` and responsive horizontal scroll.
+2. **Executed Code Modifications (Exclusive Write Ownership):**
+   - `resources/views/app/community/events.blade.php`:
+     - Standardized breadcrumb using canonical `<x-breadcrumb :items="[['label' => 'Dashboard', 'url' => route('dashboard')], ['label' => __('community.header_title'), 'url' => route('community.index')], ['label' => 'Agenda Event']]" />`.
+     - Eliminated double header: Replaced redundant inner `<h1>` banner card with a slim utility status bar highlighting subscription access and Feed Komunitas navigation (`min-h-[44px]`).
+     - Upgraded segmented navigation tabs and event card action buttons to minimum 44px tap targets (`min-h-[44px]`).
+     - Restructured "Tiket & Pendaftaran Saya" card action row: primary "Buka Tiket Digital" / "Bayar via QRIS" is full-width (`min-h-[44px]`), while destructive "Batal Pendaftaran" is separated onto a secondary right-aligned row with confirmation safeguard and 44px hit target.
+     - Upgraded modal barcode input and submit button from `h-9` (36px) to `h-11 min-h-[44px]`.
+   - `resources/views/app/community/event_payment.blade.php`:
+     - Upgraded back navigation touch target to `min-h-[44px]`.
+   - `resources/views/app/community/index.blade.php`:
+     - Applied responsive CSS Grid ordering: Main Feed `<main>` is `order-1 lg:order-2`, Left Sidebar `<aside>` is `order-2 lg:order-1`, and Right Sidebar `<aside>` is `order-3 lg:order-3`. On mobile viewports (375px), events slider and discussions feed render at the very top immediately below the topbar, while desktop preserves the standard 3-column layout.
+     - Upgraded carousel slider navigation buttons to `w-11 h-11 min-w-[44px] min-h-[44px]` with `aria-label`.
+     - Upgraded feed action icons (Reply, Repost, Like, Share) to `min-h-[44px] min-w-[44px]` touch targets.
+     - Preserved all RBAC `@can('community.post')`, `@can('community.events.register')`, and multi-tenant post deletion guards.
+   - `resources/views/app/crm/members.blade.php`:
+     - Synchronized `@extends('layouts.app', ['title' => ..., 'headerTitle' => __('crm.title'), 'headerSubtitle' => __('crm.subtitle')])`.
+     - Converted 4 Bento KPI cards into a responsive horizontal swipe snap slider on mobile (`flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-2 sm:pb-0`) with `min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink`.
+     - Converted mobile customer card mini metrics from vertical stacking `grid-cols-1` to side-by-side `grid-cols-3 gap-1.5 sm:gap-2 text-center`.
+     - Protected table and mobile customer profile links with `@if (\App\Support\Context::hasPermission('customers.view'))`.
+   - `resources/views/app/crm/vouchers.blade.php`:
+     - Synchronized `@extends('layouts.app', ['title' => ..., 'headerTitle' => __('crm.vouchers_title'), 'headerSubtitle' => __('crm.vouchers_subtitle')])`.
+     - Eliminated triple "Buat Voucher" redundancy: Retained the single canonical primary action button in `<x-module-header>`; transformed Tile 4 into an analytical metric tile ("Kesiapan Kasir POS", "100% Aktif"); replaced the section banner duplicate button with an active status badge (`{{ $activeVouchers }} Kupon Aktif`).
+     - Converted 4 Bento KPI tiles to a responsive horizontal swipe snap slider on mobile.
+   - `resources/views/app/customers/index.blade.php`:
+     - Replaced all 6 `purchasing.*` translation key references with canonical `customers.*` keys (`customers.terjadi_kesalahan_saat_mengunggah_file`, `customers.terjadi_kesalahan_sistem_saat_mengeksekusi_import`, `customers.terjadi_kesalahan_sistem`, `customers.unduh_template_excel`, `customers.unduh_template_xlsx`).
+     - Adjusted Tile 3 card padding to `p-3.5 sm:p-5` with `truncate` and `title` tooltip to prevent currency text wrapping on 375px mobile screens.
+     - Preserved all RBAC `@if (\App\Support\Context::hasPermission('customers.edit'))` guards on Modal 2 (Edit Sheet) and Modal 3 (Customer Detail profile).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Top-Level macOS Layout Structure**: `resources/views/layouts/partials/topbar.blade.php:205-211` renders `$headerTitle` and `$headerSubtitle`. When individual views also render internal card headers with `<h1>`, this violates `/ui-simplify-layout` ("Satu layar, satu tujuan... label berulang bisa dihapus"). Removing internal `<h1>` cards recovers 120px+ of viewport space on desktop and eliminates visual clutter.
-2. **Translation & Test Assertions**: Automated tests in `AnalyticsWebTest` and `DocumentApprovalWorkflowTest` assert specific Indonesian titles (`Analitik Bisnis &amp; Tren Pertumbuhan`, `Riwayat Persetujuan Dokumen`). By passing these localized strings into `$headerTitle` and `<title>` in `@extends('layouts.app', ...)`, the global topbar renders them natively with 100% test compatibility, eliminating any need for duplicate body `<h1>` tags.
-3. **Mobile Vertical Fatigue Elimination**: 4 vertical Bento cards consume over 750px of vertical scrolling on mobile phones (375px-430px). Applying the Horizontal Snap Slider (`flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0`) condenses all 4 KPI metrics into a single swipeable row, bringing primary charts into initial mobile view.
-4. **Thumb Zone Ergonomics**: Placing ticket mutation buttons ("Tolak" and "Setujui") in a symmetric 2-column mobile grid with `min-h-[44px] px-4` ensures equal touch affordance, preventing mis-taps between constructive approval and destructive rejection actions.
-5. **Semantic Icon Registry**: Replacing `plus` with `database` on storage top-up prevents iconography overload where the plus icon is overused for non-creation actions.
+1. **Information Architecture & Anti-Redundancy (Apple HIG v2.0 & `/ui-simplify-layout`):**
+   - When the global application topbar displays `$headerTitle` as `<h1>`, repeating another `<h1>` inside an in-page banner card creates cognitive redundancy and visual clutter. Replacing it with a concise utility status bar reinforces context without competing for visual dominance.
+   - In `crm/vouchers.blade.php`, rendering 3 identical primary action buttons in close proximity violates the rule "Maksimal 1 Primary Action per Layar". By maintaining the button in `<x-module-header>`, transforming Tile 4 into an operational metric tile, and replacing the banner button with a status badge, the user's focus is immediately directed to the primary task while gaining valuable analytical insight.
+2. **Mobile Viewport Ergonomics (`/responsive-ui-ux` & `/ui-layout-hierarchy-reorganizer`):**
+   - On a 375px screen, vertical space is precious. Stacking 4 Bento KPI cards vertically wastes >550px of vertical scrolling before users reach interactive content. The Horizontal Swipe Snap Slider pattern (`snap-x snap-mandatory`) saves >70% vertical scroll overhead and offers fluid thumb gesture interaction.
+   - Similarly, in 3-column desktop layouts, default DOM ordering causes sidebars to stack before main content on mobile. Using CSS Grid `order-1` for `<main>` and `order-2`/`order-3` for `<aside>` ensures feed content is prominently visible on mobile without requiring any destructive markup restructuring.
+3. **Touch Target Sizing & Safeguards:**
+   - Apple HIG mandates a minimum tap target of 44×44px with >= 8px separation between adjacent buttons. Destructive actions ("Batal Pendaftaran") must never sit directly adjacent to primary actions without clear visual hierarchy and confirmation safeguards. Separating the destructive button onto a dedicated secondary row eliminates accidental mis-taps.
+4. **Domain Isolation & Modular Cleanliness:**
+   - Referencing translation keys across module boundaries (`purchasing.*` inside `customers`) violates domain isolation and creates hidden inter-module dependencies. Substituting canonical `customers.*` keys restores architectural independence.
 
 ---
 
 ## 3. Caveats
 
-- **CSS Device Emulation**: Verification was performed using AST inspection, Blade view compilation, media query analysis, and automated headless HTTP testing. Real physical device testing (e.g. mobile Safari on iOS) was simulated via CSS responsive breakpoints (`sm:`, `md:`, `lg:`).
-- **CDN Dependent Assets**: Chart.js and Lucide icon SVG glyphs render client-side upon JavaScript bundle execution in the user browser.
+- **CSS Snap Slider Scrollbar Styling:** The `.no-scrollbar` class relies on Tailwind utility configurations present in the global CSS (`scrollbar-width: none; -ms-overflow-style: none; &::-webkit-scrollbar { display: none; }`). Native horizontal scrolling remains fully functional across all touch and pointer devices.
+- **Pre-existing test assertion in `CrmAndCustomerComprehensiveSecurityTest.php:498`:** The test suite contains a known translation key expectation mismatch (`assertSeeText('Data Pelanggan Perorangan')`) scheduled for resolution in Milestone 4. This is an existing assertion flaw outside of M2 scope and was untouched per exclusive ownership rules.
 
 ---
 
 ## 4. Conclusion
 
-Milestone 2 (UI Simplification & Layout Cleanliness) is 100% complete:
-1. Double header redundancy was eliminated across `analytics/index.blade.php`, `approvals/inbox.blade.php`, `approvals/history.blade.php`, and `approvals/rules.blade.php`.
-2. Analytics KPI cards on mobile were converted to a horizontal swipe snap slider saving >700px vertical scroll.
-3. Approval ticket action buttons were reorganized into a symmetric 2-column mobile grid with >= 44px tap targets.
-4. Storage topup icon was updated to semantic `database`.
-5. All Milestone 1 RBAC directives (`@can`, `@canany`, `@else`) remain intact.
-6. 0 PHP syntax errors, clean Blade compilation across the entire project, and 42/42 tests passing with 0 failures.
+All Milestone 2 task objectives have been fully executed with strict integrity, zero regressions, and full compliance with Apple HIG and COOCA directives:
+1. **Community Events**: Double header eliminated, `<x-breadcrumb>` canonical navigation installed, ticket actions ergonomically separated, >= 44px tap targets enforced.
+2. **Community Index**: Mobile DOM order optimized (feed renders first on mobile via `order-1`), >= 44px tap targets applied on carousel and feed action buttons, RBAC `@can` guards preserved.
+3. **CRM Members**: Header title synchronized in `@extends`, 4 Bento cards converted to mobile horizontal snap slider, customer mini metrics arranged side-by-side on mobile, profile links secured with `customers.view`.
+4. **CRM Vouchers**: Triple "Buat Voucher" redundancy completely eliminated, 4 Bento cards converted to mobile horizontal snap slider.
+5. **Customers Index**: All 6 `purchasing.*` translation key references replaced with `customers.*`, mobile KPI text truncation and padding optimized, RBAC edit guards preserved.
+6. **Syntax & Tests**: All 6 files pass `php -l` with 0 syntax errors, and 8 comprehensive test suites (65 tests, 285 assertions) pass 100%.
 
 ---
 
@@ -154,31 +98,32 @@ Milestone 2 (UI Simplification & Layout Cleanliness) is 100% complete:
 
 To independently verify the implementation:
 
-### 1. PHP Syntax Check
-Run PHP linter across all 5 modified views:
-```powershell
-php -l resources/views/app/analytics/index.blade.php
-php -l resources/views/app/approvals/inbox.blade.php
-php -l resources/views/app/approvals/history.blade.php
-php -l resources/views/app/approvals/rules.blade.php
-php -l resources/views/app/billing/limits.blade.php
-```
-*Expected*: All 5 files return `No syntax errors detected`.
+1. **Syntax Validation:**
+   ```powershell
+   php -l resources/views/app/community/events.blade.php
+   php -l resources/views/app/community/index.blade.php
+   php -l resources/views/app/community/event_payment.blade.php
+   php -l resources/views/app/crm/members.blade.php
+   php -l resources/views/app/crm/vouchers.blade.php
+   php -l resources/views/app/customers/index.blade.php
+   ```
+   *Expected result:* `No syntax errors detected` for all 6 files.
 
-### 2. Blade Compilation Check
-Compile all project Blade templates to cache and verify clean build:
-```powershell
-php artisan view:clear
-php artisan view:cache
-php artisan view:clear
-```
-*Expected*: `Blade templates cached successfully.` with 0 errors.
+2. **Automated Feature & Security Test Suites:**
+   ```powershell
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CustomerModuleAuditTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CustomerWebFeatureTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CrmModuleAuditTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CrmWebFeatureTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CommunityEventFeatureTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CommunityFeatureTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CommunityEventPaymentTest.php
+   php vendor/phpunit/phpunit/phpunit tests/Feature/CommunityModuleAuditTest.php
+   ```
+   *Expected result:* All 65 tests pass, 0 failures, 285 assertions.
 
-### 3. Automated Feature Test Execution
-Execute the full test suites:
-```powershell
-php artisan config:clear
-php artisan test tests/Feature/AnalyticsWebTest.php tests/Feature/ApprovalModuleAuditTest.php tests/Feature/BillingModuleAuditTest.php tests/Feature/DocumentApprovalWorkflowTest.php tests/Feature/BillingSubmoduleSecurityAndErgonomicsTest.php
-```
-*Expected*:
-`{"tool":"phpunit","result":"passed","tests":42,"passed":42,"assertions":184}` — 42 passed, 0 failures, 184 assertions.
+3. **Translation Domain Check:**
+   ```powershell
+   Select-String -Path "resources/views/app/customers/index.blade.php" -Pattern "purchasing\."
+   ```
+   *Expected result:* 0 matches found.

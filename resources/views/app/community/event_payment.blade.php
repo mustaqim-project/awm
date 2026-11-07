@@ -90,7 +90,7 @@
     <!-- Top Navigation Breadcrumbs -->
     <div class="mb-5 flex items-center justify-between gap-3">
         <a href="{{ route('community.events.index') }}"
-            class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-white transition">
+            class="min-h-[44px] inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-white transition py-2 px-1">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
             <span>{{ __('community.kembali_ke_agenda_event') }}</span>
         </a>
@@ -179,14 +179,17 @@
                     </template>
 
                     <div class="flex flex-col sm:flex-row items-center gap-2.5">
+                        @can('community.events.register')
                         <button type="button" @click="checkStatus(true)" :disabled="checkingStatus || isPaid"
                             class="w-full sm:flex-1 py-3 rounded-xl text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] transition flex items-center justify-center gap-2 shadow-xs cursor-pointer disabled:opacity-50">
                             <i data-lucide="refresh-cw" class="w-4 h-4" :class="checkingStatus ? 'animate-spin' : ''"></i>
                             <span x-text="checkingStatus ? 'Memeriksa...' : 'Cek Status Pembayaran'"></span>
                         </button>
+                        @endcan
 
                         <!-- Simulasi Bayar untuk Pengujian Instan / Sandbox -->
                         @if(app()->environment('local', 'testing'))
+                        @can('community.events.register')
                         <form method="POST" action="{{ route('community.events.payment.simulate', $registration) }}" class="w-full sm:w-auto">
                             @csrf
                             <button type="submit"
@@ -195,6 +198,7 @@
                                 <span>{{ __('community.simulasi_bayar_qris_sukses') }}</span>
                             </button>
                         </form>
+                        @endcan
                         @endif
                     </div>
                 </div>

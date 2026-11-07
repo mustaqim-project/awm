@@ -1,42 +1,45 @@
-# BRIEFING — 2026-11-07T11:43:00Z
+# BRIEFING — 2026-11-07T14:04:15Z
 
 ## Mission
-Investigate production readiness, automated test coverage, and documentation architecture for Community, CRM, and Customers modules to prepare structured survey findings and handoff report.
+Investigate production readiness, automated test coverage, and documentation architecture for Community, CRM, and Customers modules in COOCA.
 
 ## 🔒 My Identity
 - Archetype: explorer
-- Roles: Teamwork explorer (Read-only investigation)
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_audit_docs_survey\
-- Original parent: 58fe913b-8bbe-4705-a472-1a575b67e3a5
-- Milestone: M1_EXPLORATION
-- New Parent Mission: Community, CRM, Customers Audit & Docs Survey
+- Roles: Production Audit & Docs Survey Explorer
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_audit_docs_survey
+- Original parent: 8d27681a-70c2-4f72-a481-2fbed64c6df8
+- Milestone: Survey & Audit Discovery
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT implement
-- Multi-tenant query consistency check
-- Business Owner POV for documentation guidelines (20-industry matrix, 0 jargon, actionable route links)
-- Adhere to laravel-module-audit and cooca-agent-directive standards
-- Scope: Community, CRM, Customers modules (Controllers, Views, Tests, Documentation)
+- Multi-tenant scoping and 20-industry matrix analysis
+- Adhere to COOCA agent directive and business-owner-doc-generator skill standards
 
 ## Current Parent
 - Conversation ID: 8d27681a-70c2-4f72-a481-2fbed64c6df8
-- Updated: 2026-11-07T11:43:00Z
+- Updated: 2026-11-07T14:04:15Z
 
 ## Investigation State
-- **Explored paths**: [Initializing Community, CRM, Customers exploration]
-- **Key findings**: [Pending exploration]
-- **Unexplored areas**:
-  - `tests/Feature` & `tests/Unit` for Community, CRM, Customers
-  - Controllers: Community, CRM, Customers (validation, error handling, flash alerts, multi-tenant scoping, pagination)
-  - Blade views: `resources/views/app/community`, `resources/views/app/crm`, `resources/views/app/customers`
-  - Docs: `resources/views/app/docs/` and `index.blade.php`, TOC, partials, 20-industry matrix
+- **Explored paths**:
+  - `tests/Feature/Community*.php` (48 passed / 224 assertions)
+  - `tests/Feature/Crm*.php` & `tests/Feature/Crm/CustomerDebtAndRepayTest.php` (24 passed / 115 assertions)
+  - `tests/Feature/Customer*.php` (12 passed / 50 assertions)
+  - `app/Http/Controllers/Web/CommunityWebController.php`, `CustomerWebController.php`, `CrmWebController.php`
+  - `resources/views/app/community/`, `resources/views/app/crm/`, `resources/views/app/customers/`
+  - `resources/views/app/docs/index.blade.php` and `resources/views/app/docs/partials/`
+- **Key findings**:
+  - Test suites are remarkably comprehensive (>84 tests passing cleanly).
+  - 1 assertion failure in `test_customer_ui_auto_hides_b2b_fields_for_fnb_or_non_b2b_business` isolated to `window.COOCA_I18N` global dictionary leaking "NPWP Perusahaan" into `<head>`.
+  - Customers & CRM have complete Controller-Level RBAC and seeders; Community currently has `middleware(): []` and no permissions in `RbacSeeder.php`.
+  - Documentation for Community and CRM are currently short inline stub cards (<40 lines); Customers has no dedicated doc. Needs two dedicated partials: `sec_crm.blade.php` and `sec_community.blade.php` with 20-industry matrix and Bento Apple HIG layout.
+- **Unexplored areas**: None for survey phase. Investigation complete.
 
 ## Key Decisions Made
-- Proceed with methodical multi-phase audit: 1) Automated Test Coverage, 2) Production Readiness, 3) Documentation Architecture.
+- Authored comprehensive survey report in `survey_report.md`.
+- Produced 5-component self-contained handoff in `handoff.md`.
+- Formulated exact 20-industry matrix and route specifications for documentation implementer.
 
 ## Artifact Index
-- DISPATCH.md — Dispatch log
-- BRIEFING.md — Persistent context & state
-- progress.md — Liveness heartbeat & task progress
-- survey_report.md — Comprehensive findings
-- handoff.md — Final investigation report
+- survey_report.md — Comprehensive audit & docs survey report
+- handoff.md — 5-component handoff report
+- progress.md — Liveness heartbeat

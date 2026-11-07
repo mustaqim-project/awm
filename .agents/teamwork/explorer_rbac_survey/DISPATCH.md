@@ -58,3 +58,32 @@ And create your handoff in:
 c:\laragon\www\cooca_core\.agents\teamwork\explorer_rbac_survey\handoff.md
 
 Report back when complete.
+
+
+## 2026-11-07T13:40:13Z
+[Message] timestamp=2026-11-07T13:40:13Z sender=8d27681a-70c2-4f72-a481-2fbed64c6df8 priority=MESSAGE_PRIORITY_HIGH content=You are the RBAC & Security Survey Explorer for COOCA.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\explorer_rbac_survey
+Read ORIGINAL_REQUEST.md at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+
+Investigate RBAC authorization, controllers, routes, seeders, and view guards for Community, CRM, and Customers modules:
+1. Controllers & Middleware:
+   - Identify all controllers handling Community, CRM, and Customers in app/Http/Controllers/Web/
+   - Check how authorization is enforced (HasMiddleware, middleware in constructor, or authorize calls)
+   - Verify if any controller methods lack authorization guards
+2. Routes:
+   - Inspect routes/web.php (and any included route files) for all routes under community, crm, and customers
+   - Check route names, HTTP methods, and attached middleware
+3. Seeders & Permissions:
+   - Inspect database/seeders/RbacSeeder.php and any related seeders
+   - Map existing permissions for community.*, crm.*, customers.*
+   - Identify any missing permissions required for full RBAC protection
+4. Blade View Guards:
+   - Check views in resources/views/app/community, crm, customers for action buttons, links, and forms
+   - Identify which actions currently lack @can(...) checks (create, edit, delete, export, send, manage)
+
+Write your comprehensive findings to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_rbac_survey\survey_report.md
+And create your handoff in:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_rbac_survey\handoff.md
+
+Report back via send_message when complete.

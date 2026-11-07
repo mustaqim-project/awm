@@ -29,6 +29,12 @@ final class RbacSeeder extends Seeder
             'crm.view'                    => ['Lihat CRM & Loyalitas',                  'customers',   'Melihat tier membership pelanggan, riwayat poin, dan status voucher.'],
             'crm.manage'                  => ['Kelola CRM & Loyalitas',                 'customers',   'Mengatur tingkatan tier membership, formula reward poin, dan voucher promo.'],
 
+            // ─── Komunitas & Event UMKM ──────────────────────────────
+            'community.view'              => ['Lihat Komunitas & Event',                'community',   'Melihat forum diskusi komunitas UMKM, notifikasi, dan agenda event.'],
+            'community.post'              => ['Posting & Interaksi Komunitas',          'community',   'Membuat postingan baru, menyukai, merepost, dan berkomentar di forum diskusi.'],
+            'community.events.register'   => ['Pendaftaran Event Komunitas',            'community',   'Mendaftar event pelatihan/seminar, melakukan pembayaran tiket, dan check-in kehadiran.'],
+            'community.manage'            => ['Kelola & Moderasi Komunitas',            'community',   'Mengelola dan memoderasi postingan komunitas serta konfigurasi event.'],
+
             // ─── Products & BOM ──────────────────────────────────────
             'products.view'               => ['Lihat Katalog Produk',                   'products',    'Melihat daftar produk dan resep BOM.'],
             'products.create'             => ['Tambah Produk',                          'products',    'Menambahkan produk baru ke katalog.'],
@@ -295,6 +301,10 @@ final class RbacSeeder extends Seeder
             'ai_studio.view',
             'ai_studio.generate',
             'ai_studio.manage',
+            'community.view',
+            'community.post',
+            'community.events.register',
+            'community.manage',
         ];
 
         return [
@@ -332,6 +342,8 @@ final class RbacSeeder extends Seeder
                     'pos.orders',
                     'inventory.view',
                     'ai.access',
+                    'community.view',
+                    'community.events.register',
                 ],
             ],
             'warehouse' => [
@@ -350,6 +362,7 @@ final class RbacSeeder extends Seeder
                     'purchase.returns',
                     'receiving.manage',
                     'ai.access',
+                    'community.view',
                 ],
             ],
             'finance' => [
@@ -382,6 +395,7 @@ final class RbacSeeder extends Seeder
                     'reports.financial',
                     'reports.export',
                     'ai.access',
+                    'community.view',
                 ],
             ],
             'staff' => [
@@ -404,6 +418,9 @@ final class RbacSeeder extends Seeder
                     'inventory.view',
                     'receiving.manage',
                     'ai.access',
+                    'community.view',
+                    'community.post',
+                    'community.events.register',
                 ],
             ],
             'viewer' => [
@@ -422,6 +439,7 @@ final class RbacSeeder extends Seeder
                     'crm.view',
                     'pos.orders',
                     'whatsapp.view',
+                    'community.view',
                 ],
             ],
         ];

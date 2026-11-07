@@ -31,7 +31,7 @@ class DeployStandaloneSocialPostCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Deploy independent, stand-alone social media post or carousel from evaluated spec JSON without overwriting other automations';
+    protected $description = 'Deploy independent, stand-alone social media post or carousel from evaluated spec JSON without overwriting other automations (Universal & No user/business name)';
 
     /**
      * Execute the console command.
@@ -58,8 +58,8 @@ class DeployStandaloneSocialPostCommand extends Command
         $channel = $spec['channel'] ?? 'instagram';
         $format = $spec['format'] ?? 'feed';
         $mediaType = ($format === 'carousel') ? 'carousel' : 'image';
-        $caption = $spec['caption'] ?? 'Tips Operasional Toko Kamu bersama Cooca Indonesia di https://cooca.id';
-        $hookTitle = $spec['hook_title'] ?? $spec['topic_name'] ?? 'Konten Edukasi Toko Kamu';
+        $caption = $spec['caption'] ?? 'Tips Operasional Ritel Modern bersama COOCA di https://cooca.id';
+        $hookTitle = $spec['hook_title'] ?? $spec['topic_name'] ?? 'Konten Edukasi Bisnis Ritel';
         $topicName = $spec['topic_name'] ?? $hookTitle;
         $slotLabel = $spec['slot_label'] ?? (ucfirst($channel) . ' ' . ucfirst($format) . ' Post');
         $dimensions = $spec['dimensions'] ?? '1080x1080';
@@ -74,10 +74,10 @@ class DeployStandaloneSocialPostCommand extends Command
         $this->info("  COOCA STANDALONE DEPLOY: {$automationId}");
         $this->info("  Channel: " . strtoupper($channel) . " | Format: " . strtoupper($format) . " ({$dimensions})");
         $this->info("  Jadwal: " . $scheduledAtCarbon->format('d M Y H:i') . " WIB | Slot: {$slotLabel}");
+        $this->info("  Aturan: Bebas nama usaha & bebas nama user (Universal Educational)");
         $this->info('====================================================================');
 
-        // ISOLASI TOTAL: Hanya hapus postingan yang secara spesifik berasal dari automation_id atau slot_label ini!
-        // Tidak akan pernah menghapus postingan otomasi lain di channel yang sama!
+        // ISOLASI TOTAL: Hanya hapus postingan yang secara spesifik berasal dari automation_id atau slot_label ini
         SocialPostMedia::whereHas('post', function ($q) use ($automationId, $slotLabel) {
             $q->where('is_platform', true)
               ->where(function ($sub) use ($automationId, $slotLabel) {
@@ -103,7 +103,7 @@ class DeployStandaloneSocialPostCommand extends Command
         // Cari atau susun aset media sesuai channel & format
         $mediaItems = $this->resolveMediaItems($channel, $format, $dimensions, $slides);
 
-        // Buat Postingan Utama
+        // Buat Postingan Utama (tanpa nama usaha atau nama user)
         $post = SocialMediaPost::create([
             'admin_id'          => $admin->id,
             'is_platform'       => true,
@@ -123,8 +123,7 @@ class DeployStandaloneSocialPostCommand extends Command
                 'viral_score'               => $viralScore,
                 'dimensions'                => $dimensions,
                 'format'                    => $format,
-                'business_name'             => 'Toko Kamu',
-                'owner_name'                => 'Cooca Indonesia',
+                'identity_policy'           => 'strictly_neutral_no_business_or_user_name',
                 'deployed_at'               => now()->toDateTimeString(),
             ],
         ]);
@@ -192,7 +191,6 @@ class DeployStandaloneSocialPostCommand extends Command
         $baseAssets = storage_path('app/public/admin/social-media-assets');
 
         if ($format === 'carousel') {
-            // Cek folder slide per channel
             $potentialDirs = [
                 "{$baseAssets}/carousel/{$channel}",
                 "{$baseAssets}/{$channel}-carousel",
@@ -224,11 +222,9 @@ class DeployStandaloneSocialPostCommand extends Command
                     ];
                 }
             } else {
-                // Fallback default slide
                 $items[] = $this->getFallbackItem($channel, $dimensions);
             }
         } else {
-            // Format Single Feed
             $specificFeedMap = [
                 'facebook'  => 'platform/facebook-feed-inventory-1080x1080.png',
                 'linkedin'  => 'platform/2026-11-07-toko-kamu-linkedin-finance-1080x1350.png',
@@ -262,7 +258,7 @@ class DeployStandaloneSocialPostCommand extends Command
             'media_url'  => asset('assets/image/1785229034_logo_light.png'),
             'local_path' => 'public/assets/image/1785229034_logo_light.png',
             'file_size'  => 50000,
-            'title'      => 'Cooca Indonesia - Toko Kamu',
+            'title'      => 'COOCA - Solusi Sistem Ritel',
         ];
     }
 }

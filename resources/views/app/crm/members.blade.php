@@ -1,5 +1,7 @@
 @extends('layouts.app', [
     'title' => __('crm.members_title') . ' - Cooca',
+    'headerTitle' => __('crm.title'),
+    'headerSubtitle' => __('crm.subtitle'),
 ])
 
 @php
@@ -97,11 +99,11 @@
         <x-module-tabs module="crm" />
 
         <!-- ========================================================================= -->
-        <!-- 1. BENTO HERO KPI TILES                                                   -->
+        <!-- 1. BENTO HERO KPI TILES (Responsive Horizontal Snap Slider on Mobile)    -->
         <!-- ========================================================================= -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="flex sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory no-scrollbar pb-2 sm:pb-0">
             <!-- Tile 1: Total Members -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.total_members') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
@@ -118,7 +120,7 @@
             </div>
 
             <!-- Tile 2: Poin Beredar -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.total_points_issued') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
@@ -134,7 +136,7 @@
             </div>
 
             <!-- Tile 3: Piutang Kasbon -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2">
                 <div class="flex items-center justify-between">
                     <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.total_credit_receivable') }}</span>
                     <div class="w-8 h-8 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center">
@@ -150,7 +152,7 @@
             </div>
 
             <!-- Tile 4: Quick Action Tray -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+            <div class="min-w-[260px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] flex flex-col justify-between">
                 <span class="text-[12px] font-semibold text-black/50 dark:text-white/50">{{ __('crm.quick_actions') }}</span>
                 <div class="space-y-2 pt-2">
                     @if (\App\Support\Context::hasPermission('customers.create'))
@@ -367,12 +369,14 @@
                                                     <i data-lucide="hand-coins" class="w-4 h-4"></i>
                                                 </button>
                                             @endif
+                                            @if (\App\Support\Context::hasPermission('customers.view'))
                                             <a href="{{ route('customers.index', ['search' => $m->name]) }}"
                                                 class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/70 dark:text-white/70 transition cursor-pointer flex items-center justify-center shrink-0"
                                                 title="{{ __('crm.view_full_profile') }}"
                                                 aria-label="{{ __('crm.view_full_profile') }}">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
                                             </a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -448,33 +452,33 @@
                                 </div>
                             </div>
 
-                            <!-- Key Metrics 3-Col Mini Bento Grid -->
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
+                            <!-- Key Metrics 3-Col Mini Bento Grid (Horizontal 3-Cols on Mobile to Prevent Bloat) -->
+                            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 text-center">
                                 <!-- Poin Belanja -->
-                                <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
-                                    <span class="text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block">{{ __('crm.table_points_balance') }}</span>
-                                    <div class="text-[14px] font-bold text-[#FF9500] font-mono tabular-nums">
+                                <div class="p-2 sm:p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
+                                    <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block truncate">{{ __('crm.table_points_balance') }}</span>
+                                    <div class="text-[12px] sm:text-[14px] font-bold text-[#FF9500] font-mono tabular-nums truncate">
                                         {{ number_format($m->points_balance, 0, ',', '.') }}
                                     </div>
                                 </div>
 
                                 <!-- Total Belanja -->
-                                <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
-                                    <span class="text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block">{{ __('crm.table_total_spent') }}</span>
-                                    <div class="text-[12px] font-bold text-black dark:text-white font-mono tabular-nums truncate">
+                                <div class="p-2 sm:p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
+                                    <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block truncate">{{ __('crm.table_total_spent') }}</span>
+                                    <div class="text-[11px] sm:text-[12px] font-bold text-black dark:text-white font-mono tabular-nums truncate">
                                         Rp {{ number_format($m->total_spent, 0, ',', '.') }}
                                     </div>
                                 </div>
 
                                 <!-- Kasbon -->
-                                <div class="p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
-                                    <span class="text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block">{{ __('crm.table_credit_debt') }}</span>
+                                <div class="p-2 sm:p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-0.5">
+                                    <span class="text-[9px] sm:text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 block truncate">{{ __('crm.table_credit_debt') }}</span>
                                     @if ($m->current_credit_balance > 0)
-                                        <div class="text-[12px] font-bold text-[#FF3B30] font-mono tabular-nums truncate">
+                                        <div class="text-[11px] sm:text-[12px] font-bold text-[#FF3B30] font-mono tabular-nums truncate">
                                             Rp {{ number_format($m->current_credit_balance, 0, ',', '.') }}
                                         </div>
                                     @else
-                                        <div class="text-[12px] font-medium text-[#34C759]">
+                                        <div class="text-[11px] sm:text-[12px] font-medium text-[#34C759] truncate">
                                             {{ __('crm.status_paid_clean') }}
                                         </div>
                                     @endif
@@ -497,12 +501,14 @@
                                     <span>{{ __('crm.point_history') }}</span>
                                 </button>
 
+                                @if (\App\Support\Context::hasPermission('customers.view'))
                                 <a href="{{ route('customers.index', ['search' => $m->name]) }}"
                                     class="h-11 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white font-semibold text-[13px] flex items-center justify-center gap-1.5 active:scale-[0.98] transition cursor-pointer shrink-0"
                                     title="{{ __('crm.view_full_profile') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                     <span>{{ __('crm.btn_profile') }}</span>
                                 </a>
+                                @endif
 
                                 @if ($m->phone)
                                     @php

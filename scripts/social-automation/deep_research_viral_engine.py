@@ -8,6 +8,7 @@ Evaluates and scores unique, independent content topics for all 10 social automa
 
 Strict Gate: Viral Potential Score must be >= 85.0/100 (or >= 80.0 for UMKM Educational).
 Guarantees 100% independent pillars with ZERO content collisions across automations.
+ATURAN IDENTITAS: DILARANG menampilkan nama usaha atau nama user. Konten universal edukatif ritel.
 """
 
 import sys
@@ -60,7 +61,7 @@ KNOWLEDGE_BASE = [
         "hook_title": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Ini Hitungan ROI Nyatanya",
         "solution_summary": "Penghematan hingga 14 jam per minggu untuk rekap kasir dan eliminasi selisih kas dengan kasir pintar berkecepatan 2.8 detik.",
         "slides": [
-            {"slide": 1, "title": "Analisis ROI Kasir Modern Toko Kamu", "tag": "Metrik Bisnis"}
+            {"slide": 1, "title": "Analisis ROI Kasir Modern untuk Bisnis Ritel", "tag": "Metrik Bisnis"}
         ]
     },
     {
@@ -78,7 +79,7 @@ KNOWLEDGE_BASE = [
         "channels": {
             "instagram": {"feed_fit": 91.0, "carousel_fit": 98.0, "cta_clarity": 96.0},
         },
-        "hook_title": "5 Langkah Wajib Tutup Kasir Toko Kamu Biar Uang Fisik Selalu Cocok Sama Laporan Sistem",
+        "hook_title": "5 Langkah Wajib Tutup Kasir Toko Biar Uang Fisik Selalu Cocok Sama Laporan Sistem",
         "solution_summary": "SOP closing kasir 3 menit: Kunci saldo awal, catat petty cash, dan cetak ringkasan shift otomatis.",
         "slides": [
             {"slide": 1, "title": "5 Langkah Tutup Kasir Tanpa Selisih Rp 1 Pun", "tag": "Tips Finansial"},
@@ -92,7 +93,7 @@ KNOWLEDGE_BASE = [
         "id": "bite_sized_cashier_habits",
         "automation_id": "cooca-feed-instagram",
         "topic": "3 Kebiasaan Sepele Kasir yang Bikin Toko Bocor Halus",
-        "keywords": ["kebocoran kas kasir", "tips kasir toko ramai", "kesalahan fatal kasir", "sop kasir toko kamu"],
+        "keywords": ["kebocoran kas kasir", "tips kasir toko ramai", "kesalahan fatal kasir", "sop kasir ritel"],
         "trend_velocity": 93.0,
         "problem_urgency": 96.0,
         "default_channel": "instagram",
@@ -132,7 +133,7 @@ KNOWLEDGE_BASE = [
             {"slide": 3, "title": "Fase 2: Transaksi Kasir Cepat di Bawah 3 Detik", "tag": "Kecepatan Layanan"},
             {"slide": 4, "title": "Fase 3: Kartu Stok Digital & Notifikasi Minimum", "tag": "Pergudangan"},
             {"slide": 5, "title": "Fase 4: Pisahkan Rekening Bisnis & Keperluan Dapur", "tag": "Disiplin Finansial"},
-            {"slide": 6, "title": "Kelola Toko Kamu Mandiri & Modern Bareng COOCA", "tag": "Ekosistem Terpadu"}
+            {"slide": 6, "title": "Kelola Operasional Toko Mandiri & Modern Bareng COOCA", "tag": "Ekosistem Terpadu"}
         ]
     },
     {
@@ -157,7 +158,7 @@ KNOWLEDGE_BASE = [
             {"slide": 2, "title": "Mengapa Stok Barang Kerap Menguap Tanpa Jejak?", "tag": "Analisis Masalah"},
             {"slide": 3, "title": "Dampak Selisih Stok Terhadap Neraca Keuangan Toko", "tag": "Fakta Finansial"},
             {"slide": 4, "title": "Solusi: Pemindaian Barcode Masuk & Keluar Otomatis", "tag": "Langkah Mitigasi"},
-            {"slide": 5, "title": "Terapkan Kartu Stok Real-Time di Toko Kamu Bareng COOCA", "tag": "Solusi Ritel"}
+            {"slide": 5, "title": "Terapkan Kartu Stok Real-Time Bareng COOCA", "tag": "Solusi Ritel"}
         ]
     },
     {
@@ -175,7 +176,7 @@ KNOWLEDGE_BASE = [
         "channels": {
             "facebook": {"feed_fit": 98.0, "carousel_fit": 91.0, "cta_clarity": 95.0},
         },
-        "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Toko Kamu Mengatur Piutang Tanpa Ribut",
+        "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
         "solution_summary": "Catat bon hutang dengan limit kredit per pelanggan dan kirim pengingat digital ramah otomatis via WhatsApp.",
         "slides": [
             {"slide": 1, "title": "Solusi Bon Hutang Pelanggan & Buku Piutang Digital", "tag": "Diskusi Komunitas"}
@@ -203,7 +204,7 @@ KNOWLEDGE_BASE = [
             {"slide": 2, "title": "Trik 1: Shortcut Barang Favorit Tanpa Perlu Ketik Nama", "tag": "Kecepatan Kasir"},
             {"slide": 3, "title": "Trik 2: Scan QRIS Dinamis Langsung Sesuai Total Belanja", "tag": "Pembayaran Cepat"},
             {"slide": 4, "title": "Trik 3: Kirim Struk Pembelian Langsung ke WhatsApp Pembeli", "tag": "Hemat Kertas"},
-            {"slide": 5, "title": "Kasir Toko Kamu Lebih Gesit Bareng COOCA, Cek Link di Bio", "tag": "Teknologi Kasir"}
+            {"slide": 5, "title": "Kasir Toko Lebih Gesit Bareng COOCA, Cek Link di Bio", "tag": "Teknologi Kasir"}
         ]
     },
     {
@@ -242,7 +243,7 @@ KNOWLEDGE_BASE = [
         "channels": {
             "instagram": {"feed_fit": 98.0, "carousel_fit": 93.0, "cta_clarity": 96.0},
         },
-        "hook_title": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Toko Kamu yang Sebenarnya",
+        "hook_title": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya",
         "solution_summary": "Pisahkan margin kotor dari HPP dengan biaya sewa, listrik, dan gaji karyawan sebelum menghitung laba bersih usaha.",
         "slides": [
             {"slide": 1, "title": "Rumus Menghitung Margin Keuntungan Bersih Toko", "tag": "Edukasi Fundamental"}
@@ -257,7 +258,6 @@ def calculate_viral_score(trend_vel: float, urgency: float, platform_fit: float,
 def generate_caption(channel: str, content_format: str, topic: dict) -> str:
     hook = topic["hook_title"]
     solution = topic["solution_summary"]
-    topic_id = topic["id"]
 
     if channel == "linkedin":
         if content_format == "carousel":
@@ -265,129 +265,129 @@ def generate_caption(channel: str, content_format: str, topic: dict) -> str:
                 f"{hook}\n\n"
                 f"Mengembangkan jaringan ritel modern dari 1 menjadi beberapa cabang menghadirkan tantangan tata kelola yang fundamental. "
                 f"Banyak pebisnis ritel mengalami kendala asimetri informasi: omzet terlihat bertumbuh, namun kebocoran stok dan ketidakteraturan kasir justru meningkat.\n\n"
-                f"Berikut kerangka operasional pengendalian multi-cabang yang diterapkan pada ekosistem Toko Kamu:\n"
-                f"1. Pembatasan Otorisasi: Wewenang kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan PIN Supervisor.\n"
-                f"2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang tercatat otomatis melalui pembacaan barcode terpusat.\n"
-                f"3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen.\n\n"
-                f"Seluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpadu melalui platform Cooca Indonesia di https://cooca.id\n\n"
-                f"#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #TokoKamu #CoocaIndonesia"
+                f"Berikut kerangka operasional pengendalian multi-cabang yang terbukti efektif untuk bisnis ritel modern:\n"
+                f"1. Pembatasan Otorisasi: Wewenang staf kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan otorisasi PIN Supervisor.\n"
+                f"2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang dan antaroutlet tercatat otomatis melalui pembacaan barcode terpusat.\n"
+                f"3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen terpadu.\n\n"
+                f"Seluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpusat melalui platform COOCA di https://cooca.id\n\n"
+                f"#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #EdukasiRitel #COOCA"
             )
         else: # feed single
             caption = (
                 f"{hook}\n\n"
                 f"Berdasarkan kajian lapangan di sektor ritel UMKM, rata-rata toko kehilangan 1.8% hingga 3.2% potensi margin kotor "
                 f"akibat inefisiensi pencatatan manual, kesalahan kembalian, dan rekonsiliasi kasir yang memakan waktu berjam-jam.\n\n"
-                f"Pada studi kasus Toko Kamu bersama Cooca Indonesia:\n"
+                f"Kajian efisiensi penerapan sistem kasir modern:\n"
                 f"- Durasi transaksi kasir terpangkas menjadi hanya 2.8 detik per pelanggan.\n"
                 f"- Rekonsiliasi tutup shift harian selesai dalam 3 menit dengan akurasi 100%.\n"
                 f"- Penghematan waktu operasional mencapai 14 jam kerja produktif setiap minggu.\n\n"
                 f"Modernisasi sistem kasir bukan sekadar biaya perangkat lunak, melainkan investasi strategis perlindungan margin usaha.\n"
                 f"Pelajari sistem selengkapnya di https://cooca.id\n\n"
-                f"#EfisiensiBisnis #AnalisisROI #AplikasiKasirRitel #SOPRitel #TokoKamu #CoocaIndonesia"
+                f"#EfisiensiBisnis #AnalisisROI #AplikasiKasirRitel #SOPRitel #ManajemenRitel #COOCA"
             )
     elif channel == "instagram":
         if content_format == "carousel":
             if topic["dimensions"] == "1080x1350": # Daily UMKM Portrait Carousel
                 caption = (
                     f"{hook}\n\n"
-                    f"Banyak pemilik warung dan toko kelontong bermimpi punya minimarket modern yang tertata rapi dan bisa ditinggal tanpa khawatir. "
-                    f"Kabar baiknya: transformasi digital tidak butuh modal miliaran!\n\n"
-                    f"Simak 6 tahapan praktis membangun sistem modern di Toko Kamu (geser slide sampai akhir):\n"
+                    f"Banyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan operasional yang bisa dipantau tanpa harus menjaga toko seharian. "
+                    f"Transformasi digital toko tidak harus rumit dan mahal.\n\n"
+                    f"Simak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n"
                     f"1. Buat kode barcode untuk semua produk di rak toko.\n"
-                    f"2. Pakai scanner kasir cepat agar antrean tidak mengular.\n"
+                    f"2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n"
                     f"3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n"
                     f"4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n"
-                    f"5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual.\n"
-                    f"6. Pantau performa toko setiap hari lewat aplikasi COOCA di HP.\n\n"
+                    f"5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n"
+                    f"6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\n"
                     f"Siap bawa bisnis naik kelas hari ini? Coba demo gratisnya di https://cooca.id (klik link di bio profil!)\n\n"
-                    f"#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #tokokamu #coocaindonesia"
+                    f"#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA"
                 )
             else: # Instagram 1080x1080 Carousel
                 caption = (
                     f"{hook}\n\n"
-                    f"Pernahkah kamu merasa omzet toko seharian ramai luar biasa, tapi pas hitung uang di laci kasir saat tutup toko malah tekor?\n\n"
-                    f"Jangan biarkan kerja keras seharian hilang tanpa bekas. Terapkan 5 langkah SOP tutup kasir Toko Kamu berikut ini (geser slide):\n"
+                    f"Pernahkah Anda merasa penjualan toko seharian ramai, namun saat penghitungan uang fisik di laci kasir saat tutup toko justru terjadi selisih?\n\n"
+                    f"Jangan biarkan hasil kerja keras hilang tanpa pencatatan yang jelas. Terapkan 5 langkah SOP tutup kasir berikut ini (geser slide):\n"
                     f"1. Input dan kunci saldo kas awal di sistem saat toko pertama kali buka.\n"
-                    f"2. Catat seketika semua pengeluaran kas kecil (uang galon, parkir, plastik).\n"
-                    f"3. Pastikan tidak ada transaksi menggantung saat pergantian shift kasir.\n"
-                    f"4. Hitung uang fisik dan bandingkan langsung dengan laporan sistem kasir.\n"
-                    f"5. Cetak rekap shift otomatis untuk ditandatangani kasir dan supervisor.\n\n"
-                    f"Kelola kasir toko lebih rapi, tenang, dan anti-selisih bareng Cooca Indonesia di https://cooca.id\n\n"
-                    f"#tipsbisnis #kasirtoko #selisihkas #sopkasir #tokokamu #coocaindonesia"
+                    f"2. Catat seketika semua pengeluaran kas kecil (operasional harian, plastik, kebersihan).\n"
+                    f"3. Pastikan tidak ada transaksi menggantung saat pergantian shift staf kasir.\n"
+                    f"4. Hitung uang fisik dan bandingkan langsung dengan ringkasan sistem kasir.\n"
+                    f"5. Cetak rekap shift otomatis untuk arsip verifikasi harian.\n\n"
+                    f"Kelola kasir toko lebih rapi, tenang, dan anti-selisih bersama COOCA di https://cooca.id\n\n"
+                    f"#tipsbisnis #kasirtoko #selisihkas #sopkasir #manajemenkasir #COOCA"
                 )
         else: # Instagram single feed
             if topic["dimensions"] == "1080x1350": # UMKM Educational Portrait
                 caption = (
                     f"{hook}\n\n"
-                    f"Banyak pebisnis pemula bangga saat toko mencatat omzet Rp 100 juta per bulan. "
-                    f"Namun saat akhir bulan tiba, uang di rekening tabungan ternyata ludes tak tersisa. Mengapa hal ini bisa terjadi?\n\n"
+                    f"Banyak pelaku usaha pemula merasa puas saat toko mencatat omzet puluhan hingga ratusan juta per bulan. "
+                    f"Namun saat akhir bulan tiba, dana di rekening tabungan operasional ternyata tidak bertambah. Mengapa hal ini bisa terjadi?\n\n"
                     f"Kuncinya ada pada pemahaman Margin Bersih vs Margin Kotor:\n"
-                    f"- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum keuntungan riil!\n"
-                    f"- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan plastik pembungkus.\n"
-                    f"- Margin Bersih: Keuntungan sejati yang boleh ditarik sebagai profit bisnis Toko Kamu.\n\n"
-                    f"Hitung dan pantau margin laba bersih toko kamu secara otomatis tanpa repot lewat sistem COOCA di https://cooca.id\n\n"
-                    f"#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #tokokamu #coocaindonesia"
+                    f"- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum merupakan laba riil!\n"
+                    f"- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan perlengkapan pengemasan.\n"
+                    f"- Margin Bersih: Keuntungan sejati yang sah ditarik sebagai profit bisnis.\n\n"
+                    f"Hitung dan pantau margin laba bersih bisnis secara otomatis dan akurat melalui sistem COOCA di https://cooca.id\n\n"
+                    f"#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #keuanganritel #COOCA"
                 )
             else: # Instagram square feed
                 caption = (
                     f"{hook}\n\n"
-                    f"Sering merasa keuntungan toko menguap begitu saja? Hati-hati dengan 3 kebiasaan sepele di meja kasir ini:\n"
+                    f"Sering merasa keuntungan penjualan menguap tanpa jejak? Waspadai 3 kebiasaan sepele di meja kasir ini:\n"
                     f"1. Transaksi manual tanpa struk saat toko sedang ramai pembeli.\n"
-                    f"2. Mengambil uang kembalian untuk keperluan pribadi tanpa pencatatan petty cash.\n"
-                    f"3. Kasir bebas menghapus atau membatalkan item belanja tanpa pengawasan supervisor.\n\n"
-                    f"Di Toko Kamu, setiap transaksi kasir dilindungi dengan sistem keamanan kasir pintar Cooca Indonesia. Cepat, tepat, dan aman!\n\n"
+                    f"2. Pengambilan uang kasir untuk keperluan pribadi tanpa pencatatan petty cash resmi.\n"
+                    f"3. Pembatalan (void) transaksi belanja tanpa otorisasi atau supervisi.\n\n"
+                    f"Pastikan setiap transaksi meja kasir dilindungi dengan sistem otorisasi kasir pintar yang transparan dan aman.\n\n"
                     f"Coba gratis sekarang di https://cooca.id (klik link di bio!)\n\n"
-                    f"#kasirpintar #tipstoko #umkmmaju #keuangantoko #tokokamu #coocaindonesia"
+                    f"#kasirpintar #tipstoko #umkmmaju #keuangantoko #operasionaltoko #COOCA"
                 )
     elif channel == "facebook":
         if content_format == "carousel":
             caption = (
                 f"{hook}\n\n"
-                f"Bagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah momok yang sangat menyita waktu dan tenaga. "
-                f"Berikut bedah studi kasus yang terjadi pada pengelolaan stok toko dan solusinya (buka album foto):\n\n"
-                f"1. Mengapa Stok Kerap Selisih? Seringkali barang terjual belum terdata kasir atau salah letak di rak display.\n"
-                f"2. Dampak Finansial: Pembeli kecewa karena barang di sistem ada tapi di rak kosong, serta kerugian modal barang hilang.\n"
-                f"3. Solusi Otomasi: Gunakan pemindaian barcode saat penerimaan barang dan terapkan peringatan otomatis saat stok mencapai batas minimum.\n\n"
-                f"Sistem manajemen inventori Toko Kamu didukung oleh Cooca Indonesia untuk memastikan akurasi stok hingga 99%.\n"
+                f"Bagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah kendala operasional yang sangat menyita waktu dan biaya. "
+                f"Berikut bedah studi kasus yang sering terjadi pada pengelolaan stok toko dan langkah solusinya (buka album foto):\n\n"
+                f"1. Mengapa Stok Kerap Selisih? Barang terjual belum terdata kasir, salah penempatan di rak, atau ketidakteraturan penerimaan supplier.\n"
+                f"2. Dampak Finansial: Pembeli kecewa karena barang di sistem tercatat ada tapi di rak kosong, serta risiko kerugian modal barang.\n"
+                f"3. Solusi Otomasi: Terapkan pemindaian barcode saat barang masuk dan aktifkan notifikasi otomatis saat stok mencapai batas minimum.\n\n"
+                f"Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time.\n"
                 f"Bagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di https://cooca.id\n\n"
-                f"#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #TokoKamu #CoocaIndonesia"
+                f"#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #ManajemenInventori #COOCA"
             )
         else: # feed single
             caption = (
                 f"{hook}\n\n"
-                f"Di kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali jadi dilema: "
-                f"Kalau tidak diberi hutang pelanggan batal beli, tapi kalau dibiarkan menumpuk arus kas toko yang macet.\n\n"
-                f"Toko Kamu menerapkan solusi pembukuan piutang digital bersama Cooca Indonesia:\n"
-                f"- Batas maksimal plafon hutang ditentukan per pelanggan tetap.\n"
-                f"- Setiap bon tercatat otomatis saat transaksi kasir berlangsung.\n"
-                f"- Kirim struk dan pengingat tanggal jatuh tempo yang sopan via WhatsApp.\n\n"
-                f"Arus kas toko tetap sehat, hubungan dengan tetangga dan pelanggan pun tetap harmonis.\n"
-                f"Diskusikan sistem pembukuan piutang toko kamu di https://cooca.id\n\n"
-                f"#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #TokoKamu #CoocaIndonesia"
+                f"Di kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali menjadi dilema: "
+                f"Jika tidak diberi hutang pelanggan batal beli, namun jika dibiarkan menumpuk arus kas toko yang terganggu.\n\n"
+                f"Berikut solusi pembukuan piutang digital yang praktis dan efektif:\n"
+                f"- Tentukan batas maksimal plafon hutang per pelanggan tetap secara terukur.\n"
+                f"- Setiap bon tercatat langsung di sistem saat transaksi kasir berlangsung.\n"
+                f"- Kirim struk dan pengingat tanggal jatuh tempo yang sopan dan otomatis via WhatsApp.\n\n"
+                f"Arus kas toko tetap sehat, hubungan baik dengan pelanggan pun tetap terjaga harmonis.\n"
+                f"Diskusikan sistem pembukuan piutang toko di https://cooca.id\n\n"
+                f"#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #ManajemenKas #COOCA"
             )
     elif channel == "tiktok":
         if content_format == "carousel":
             caption = (
                 f"{hook}\n\n"
-                f"Jangan anggap wajar kalau antrean kasir selalu menumpuk dan bikin pelanggan jenuh. "
-                f"Ini 3 fitur rahasia kasir pintar yang wajib diaktifkan di toko kamu:\n"
-                f"1. Tombol Shortcut Produk: Transaksi barang terlaris cuma 1 kali sentuh layar.\n"
+                f"Antrean kasir yang menumpuk bisa membuat pelanggan enggan berbelanja kembali. "
+                f"Ini 3 fitur rahasia mesin kasir modern yang mempermudah operasional kasir:\n"
+                f"1. Tombol Shortcut Produk: Transaksi produk terlaris cukup 1 kali sentuh layar.\n"
                 f"2. QRIS Dinamis 2 Detik: Total belanja langsung otomatis muncul di barcode pembeli.\n"
-                f"3. Struk Digital WhatsApp: Hemat biaya kertas dan nomor pembeli otomatis tersimpan rapi.\n\n"
-                f"Sistem ini sudah dipakai di Toko Kamu bersama Cooca Indonesia. Praktis, cepat, dan anti-ribet!\n\n"
+                f"3. Struk Digital WhatsApp: Hemat biaya kertas dan nomor pelanggan tersimpan otomatis.\n\n"
+                f"Praktis, cepat, dan membuat pelayanan kasir jauh lebih responsif!\n\n"
                 f"Coba gratis sekarang di https://cooca.id (klik link di bio profil!)\n\n"
-                f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #tokokamu #coocaindonesia"
+                f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #operasionalritel #COOCA"
             )
         else: # feed single
             caption = (
                 f"{hook}\n\n"
-                f"Jangan biarkan uang kembalian atau transaksi void kasir bikin omzet toko kamu hilang sia-sia.\n"
-                f"Dengan sistem Kasir Pintar COOCA di Toko Kamu:\n"
-                f"- Kasir tidak bisa hapus transaksi tanpa otorisasi PIN Supervisor.\n"
-                f"- Rekap kas otomatis per pergantian shift kasir dalam 1 menit.\n"
-                f"- Struk belanja langsung terkirim via WhatsApp pelanggan.\n\n"
+                f"Jangan biarkan transaksi void atau selisih kembalian kasir membuat margin keuntungan toko berkurang tanpa disadari.\n"
+                f"Standar keamanan meja kasir modern:\n"
+                f"- Staf kasir tidak bisa membatalkan transaksi tanpa otorisasi PIN Supervisor.\n"
+                f"- Rekap kas otomatis per pergantian shift kasir selesai dalam 1 menit.\n"
+                f"- Struk belanja langsung terkirim secara instan via WhatsApp pelanggan.\n\n"
                 f"Coba gratis sekarang di https://cooca.id (klik link di bio!)\n\n"
-                f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #tokokamu #coocaindonesia"
+                f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #keamanantoko #COOCA"
             )
     else:
         caption = f"{hook}\n\n{solution}\n\nKunjungi https://cooca.id"
@@ -397,29 +397,25 @@ def generate_caption(channel: str, content_format: str, topic: dict) -> str:
     return clean_caption
 
 def find_topic(automation_id: str = None, channel: str = None, content_format: str = None, topic_id: str = None) -> dict:
-    # 1. Match by exact automation_id
     if automation_id:
         for item in KNOWLEDGE_BASE:
             if item.get("automation_id") == automation_id:
                 return item
 
-    # 2. Match by topic_id
     if topic_id:
         for item in KNOWLEDGE_BASE:
             if item["id"] == topic_id:
                 return item
 
-    # 3. Match by channel and content_format
     if channel and content_format:
         for item in KNOWLEDGE_BASE:
             if item.get("default_channel") == channel and item.get("default_format") == content_format:
                 return item
 
-    # Fallback to first topic
     return KNOWLEDGE_BASE[0]
 
 def main():
-    parser = argparse.ArgumentParser(description="Cooca Deep Research & Viral Potential Engine (Standalone)")
+    parser = argparse.ArgumentParser(description="Cooca Deep Research & Viral Potential Engine (Standalone - Universal)")
     parser.add_argument("--automation-id", default=None, help="Specific automation ID (e.g. cooca-carousel-linkedin)")
     parser.add_argument("--channel", default=None, choices=["instagram", "facebook", "linkedin", "tiktok", "cross-platform"], help="Target Social Media Platform")
     parser.add_argument("--format", default=None, choices=["feed", "carousel"], help="Content Format: feed (single) or carousel (multi-slide)")
@@ -436,13 +432,11 @@ def main():
     target_time = topic.get("target_time", "12:15")
     slot_label = topic.get("slot_label", f"{channel.title()} {content_format.title()} Slot")
 
-    # Evaluate viral score
     ch_fit = topic.get("channels", {}).get(channel, {})
     platform_fit = ch_fit.get(f"{content_format}_fit", 95.0)
     cta_clarity = ch_fit.get("cta_clarity", 95.0)
     viral_score = calculate_viral_score(topic["trend_velocity"], topic["problem_urgency"], platform_fit, cta_clarity)
 
-    # Threshold gate
     gate_threshold = 80.0 if "educational" in (args.automation_id or "") or "umkm" in (args.automation_id or "") else 85.0
     passed = viral_score >= gate_threshold
 
@@ -470,8 +464,6 @@ def main():
         "platform_fit": platform_fit,
         "cta_clarity": cta_clarity,
         "caption": generated_caption,
-        "business_name": "Toko Kamu",
-        "owner_name": "Cooca Indonesia",
         "slides": topic.get("slides", []),
         "evaluated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
@@ -485,7 +477,7 @@ def main():
     print(f"Slot Label       : {slot_label}")
     print(f"Skor Viral       : {viral_score} / 100 [LOLOS GATE >= {gate_threshold}%]")
     print(f"Jumlah Slide     : {len(topic.get('slides', []))} slide")
-    print(f"Identitas Wajib  : Toko Kamu (Pemilik: Cooca Indonesia)")
+    print(f"Aturan Identitas : Universal edukatif ritel (Bebas nama usaha & bebas nama user)")
     print("====================================================================")
 
     if args.output_json:

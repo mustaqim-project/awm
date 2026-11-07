@@ -134,9 +134,9 @@
             .catch(err => {
                 this.importLoading = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}');
+                    AppAlert.error(err.message || '{{ __('customers.terjadi_kesalahan_saat_mengunggah_file') }}');
                 } else {
-                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_saat_mengunggah_file') }}');
+                    alert(err.message || '{{ __('customers.terjadi_kesalahan_saat_mengunggah_file') }}');
                 }
             });
         },
@@ -205,9 +205,9 @@
             .catch(err => {
                 this.importExecuting = false;
                 if (typeof AppAlert !== 'undefined') {
-                    AppAlert.error(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem_saat_mengeksekusi_import') }}');
+                    AppAlert.error(err.message || '{{ __('customers.terjadi_kesalahan_sistem_saat_mengeksekusi_import') }}');
                 } else {
-                    alert(err.message || '{{ __('purchasing.terjadi_kesalahan_sistem') }}');
+                    alert(err.message || '{{ __('customers.terjadi_kesalahan_sistem') }}');
                 }
             });
         },
@@ -335,15 +335,15 @@
             @endif
 
             <!-- Bento Tile 3: Total Piutang Kasbon -->
-            <div class="p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2 transition hover:-translate-y-0.5">
+            <div class="p-3.5 sm:p-5 rounded-[20px] backdrop-blur-md bg-white/75 dark:bg-[#1C1C1E]/75 border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_12px_rgba(0,0,0,0.02)] space-y-2 transition hover:-translate-y-0.5">
                 <div class="flex items-center justify-between text-black/50 dark:text-white/50 text-[11px] font-semibold uppercase tracking-wider">
-                    <span>{{ __('customers.customer_credit_receivables') }}</span>
-                    <i data-lucide="receipt" class="w-4 h-4 text-[#FF3B30]"></i>
+                    <span class="truncate">{{ __('customers.customer_credit_receivables') }}</span>
+                    <i data-lucide="receipt" class="w-4 h-4 text-[#FF3B30] shrink-0"></i>
                 </div>
-                <div class="text-xl sm:text-2xl font-bold tracking-tight text-[#FF3B30] tabular-nums">
+                <div class="text-lg sm:text-2xl font-bold tracking-tight text-[#FF3B30] tabular-nums truncate" title="Rp {{ number_format($totalCreditReceivable, 0, ',', '.') }}">
                     Rp {{ number_format($totalCreditReceivable, 0, ',', '.') }}
                 </div>
-                <p class="text-[12px] text-black/50 dark:text-white/50">
+                <p class="text-[12px] text-black/50 dark:text-white/50 truncate">
                     {{ __('customers.outstanding_invoices_due') }}
                 </p>
             </div>
@@ -920,6 +920,7 @@
         @endif
 
         <!-- MODAL 2: EDIT PELANGGAN (CANVAS XXL & MOBILE BOTTOM SHEET)                -->
+        @if (\App\Support\Context::hasPermission('customers.edit'))
         <template x-teleport="body">
             <div x-show="showEditModal" 
                 x-cloak
@@ -1076,6 +1077,7 @@
                 </div>
             </div>
         </template>
+        @endif
 
         <!-- MODAL 3: DETAIL PROFIL PELANGGAN (CANVAS XXL & MOBILE BOTTOM SHEET)        -->
         <template x-teleport="body">
@@ -1202,11 +1204,13 @@
                                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                                 <span>Tagih via WhatsApp</span>
                             </a>
+                            @if (\App\Support\Context::hasPermission('customers.edit'))
                             <button type="button" @click="showDetailModal = false; openEditModal(selectedCustomer.id)"
                                 class="h-12 px-6 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white font-semibold text-[13px] transition cursor-pointer flex items-center gap-2">
                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                                 <span>{{ __('common.edit') }}</span>
                             </button>
+                            @endif
                             <button type="button" @click="showDetailModal = false"
                                 class="h-12 px-8 rounded-[14px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-semibold text-[13px] transition cursor-pointer">
                                 {{ __('common.close') }}
@@ -1271,9 +1275,9 @@
 
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('customers.template') }}"
-                                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-1.5 shadow-sm">
-                                        <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-600"></i>
-                                        <span>{{ __('purchasing.unduh_template_excel') }}</span>
+                                        class="min-h-[44px] h-11 px-4 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-black dark:text-white text-[12px] font-medium transition flex items-center gap-2 shadow-sm">
+                                        <i data-lucide="download" class="w-4 h-4 text-emerald-600"></i>
+                                        <span>{{ __('customers.unduh_template_excel') }}</span>
                                     </a>
                                     <button type="button" @click="if (!importExecuting) showImportModal = false"
                                         class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 transition cursor-pointer" aria-label="{{ __('common.close') }}">
@@ -1297,9 +1301,9 @@
                                     <p class="text-[12px] text-black/60 dark:text-white/60">Gunakan format template resmi Cooca yang dilengkapi validasi dropdown tier & limit piutang.</p>
                                 </div>
                                 <a href="{{ route('customers.template') }}"
-                                    class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
+                                    class="min-h-[44px] h-11 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0066D6] text-white text-[12px] font-semibold transition flex items-center justify-center gap-2 shadow-sm shrink-0 active:scale-[0.98]">
                                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                                    <span>{{ __('purchasing.unduh_template_xlsx') }}</span>
+                                    <span>{{ __('customers.unduh_template_xlsx') }}</span>
                                 </a>
                             </div>
 

@@ -521,10 +521,10 @@ class CrmAndCustomerComprehensiveSecurityTest extends TestCase
         $response = $this->actingAs($fnbUser)->get(route('customers.index'));
         $response->assertOk();
 
-        // B2B fields must be auto-hidden
-        $response->assertDontSee('NPWP Perusahaan');
-        $response->assertDontSee('Termin Tempo (Hari)');
-        $response->assertDontSee('Termin Tempo');
+        // B2B fields must be auto-hidden (DOM inputs not rendered)
+        $response->assertDontSee('name="tax_identification_number"', false);
+        $response->assertDontSee('name="company_name"', false);
+        $response->assertDontSee('name="payment_terms_days"', false);
 
         // Non-B2B metrics & customer shown
         $response->assertSee('Rina Melati');

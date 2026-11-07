@@ -52,3 +52,50 @@ TASK DETAILS:
      `php artisan test tests/Feature/AnalyticsWebTest.php tests/Feature/ApprovalModuleAuditTest.php tests/Feature/DocumentApprovalWorkflowTest.php tests/Feature/BillingModuleAuditTest.php tests/Feature/BillingSubmoduleSecurityAndErgonomicsTest.php`
    - Document all changes, verification commands, and test outputs in `c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac\handoff.md`.
    - Send completion message back to orchestrator.
+
+
+## 2026-11-07T14:06:08Z
+You are the RBAC & Authorization Specialist Worker for COOCA.
+Your working directory is: c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac
+Read ORIGINAL_REQUEST.md at: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+Read PROJECT.md at: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md
+Read the survey report at: c:\laragon\www\cooca_core\.agents\teamwork\explorer_rbac_survey\survey_report.md
+
+MANDATORY INTEGRITY WARNING:
+DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A teamwork_auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
+
+EXCLUSIVE WRITE OWNERSHIP (You own ONLY these files; do not touch other files):
+- database/seeders/RbacSeeder.php
+- app/Http/Controllers/Web/CommunityWebController.php
+- routes/owner.php
+- Action permission checks in:
+  - resources/views/app/customers/index.blade.php (lines 922 and 1205)
+  - resources/views/app/community/index.blade.php
+  - resources/views/app/community/events.blade.php
+  - resources/views/app/community/event_payment.blade.php
+
+TASK OBJECTIVES:
+1. Register `community.view`, `community.post`, `community.events.register`, `community.manage` in `database/seeders/RbacSeeder.php`. Assign them to Owner, Admin, and Kasir roles properly.
+2. Implement `HasMiddleware` in `app/Http/Controllers/Web/CommunityWebController.php`:
+   - Enforce controller middleware via `Middleware('require.permission:...')`:
+     - `community.view` on `index`, `feed`, `eventCatalog`, `eventShow`, `tickets`, `ticketDetail`.
+     - `community.post` on `store`, `reply`, `toggleLike`, `repost`.
+     - `community.events.register` on `eventRegister`, `eventPaySimulated`, `cancelRegistration`.
+     - `community.manage` on `eventManage`, `scanTicketCheckIn`.
+     - In `destroy`, permit deletion if the authenticated user is the post owner OR has `community.manage` permission.
+   - Note: Maintain multi-tenant scoping and backward compatibility.
+3. Verify that `routes/owner.php` community routes are properly secured.
+4. Protect view action buttons:
+   - In `customers/index.blade.php`: wrap the Edit Customer modal template (line 922) and the Customer Detail modal "Edit" button (line 1205) with `@can('customers.edit')` / `@if (\App\Support\Context::hasPermission('customers.edit'))`.
+   - In `community/index.blade.php`: wrap the Post Composer with `@can('community.post')`, reactions with `@can('community.post')`, and allow delete if author OR `@can('community.manage')`.
+   - In `community/events.blade.php`: wrap register buttons with `@can('community.events.register')`.
+   - In `community/event_payment.blade.php`: wrap check payment with `@can('community.events.register')`.
+5. Run syntax validation (`php -l`) and automated test suites:
+   `php artisan test --filter=Community`
+   `php artisan test --filter=Customer`
+   `php artisan test --filter=Crm`
+
+Write your handoff report to:
+c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac\handoff.md
+
+Report back via send_message when complete.

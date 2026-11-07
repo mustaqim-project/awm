@@ -174,7 +174,7 @@
         <!-- ========================================== -->
         <!-- 1. SIDEBAR KIRI (Navigasi Feed / Postingan Saya / Notifikasi) -->
         <!-- ========================================== -->
-        <aside class="lg:col-span-3 space-y-4 lg:sticky lg:top-20">
+        <aside class="order-2 lg:order-1 lg:col-span-3 space-y-4 lg:sticky lg:top-20">
             <!-- User Profile Card -->
             <div class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 shadow-2xs">
                 <div class="flex items-center gap-3">
@@ -246,11 +246,13 @@
             </nav>
 
             <!-- Quick Action: Tulis Postingan -->
+            @can('community.post')
             <button type="button" @click="focusComposer()"
                 class="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
                 <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
                 <span>{{ __('community.write_business_idea') }}</span>
             </button>
+            @endcan
 
             <!-- Storage Quota Widget -->
             <div class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-3.5 shadow-2xs space-y-2">
@@ -274,7 +276,7 @@
         <!-- ========================================== -->
         <!-- 2. KOLOM TENGAH (Main Thread Feed / Events Slider) -->
         <!-- ========================================== -->
-        <main class="lg:col-span-6 space-y-5 min-w-0">
+        <main class="order-1 lg:order-2 lg:col-span-6 space-y-5 min-w-0">
 
             <!-- 2A. SLIDER EVENT MENDATANG (Di Paling Atas Sesuai Mandat) -->
             <section class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-2xs space-y-3">
@@ -296,18 +298,18 @@
                     <div class="flex items-center gap-1.5">
                         @if($upcomingEvents->count() > 1)
                             <button type="button" @click="scrollSlider(-1)"
-                                class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95 cursor-pointer"
-                                title="Sebelumnya">
+                                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95 cursor-pointer"
+                                title="Sebelumnya" aria-label="Slide sebelumnya">
                                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
                             </button>
                             <button type="button" @click="scrollSlider(1)"
-                                class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95 cursor-pointer"
-                                title="Berikutnya">
+                                class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-600 dark:text-slate-300 flex items-center justify-center transition active:scale-95 cursor-pointer"
+                                title="Berikutnya" aria-label="Slide berikutnya">
                                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
                             </button>
                         @endif
                         <a href="{{ route('community.events.index') }}"
-                            class="text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline ml-1">
+                            class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-2 text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF] hover:underline">
                             {{ __('common.all') }}
                         </a>
                     </div>
@@ -388,11 +390,13 @@
                                 <div class="pt-1">
                                     @if($userRegistered)
                                         @if($userReg && $userReg->isPendingPayment())
+                                            @can('community.events.register')
                                             <a href="{{ route('community.events.payment.show', $userReg) }}"
                                                 class="w-full py-2 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 transition flex items-center justify-center gap-1.5 shadow-2xs">
                                                 <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
                                                 <span>{{ __('community.pay_qris') }} ({{ $userReg->getFormattedAmountPaid() }})</span>
                                             </a>
+                                            @endcan
                                         @else
                                             <button type="button" @click="viewTicket('{{ $evt->id }}')"
                                                 class="w-full py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer">
@@ -401,6 +405,7 @@
                                             </button>
                                         @endif
                                     @elseif($regOpen)
+                                        @can('community.events.register')
                                         <form method="POST" action="{{ route('community.events.register', $evt) }}">
                                             @csrf
                                             <button type="submit"
@@ -409,6 +414,11 @@
                                                 <span>{{ $evt->isFree() ? 'Daftar Event (Gratis)' : 'Beli Tiket (' . $evt->formatted_price . ')' }}</span>
                                             </button>
                                         </form>
+                                        @else
+                                        <div class="w-full py-2 rounded-xl text-xs font-medium text-slate-400 bg-slate-100 dark:bg-white/5 text-center">
+                                            {{ $evt->isFree() ? 'Event Gratis' : $evt->formatted_price }}
+                                        </div>
+                                        @endcan
                                     @else
                                         <button disabled class="w-full py-2 rounded-xl text-xs font-bold text-slate-400 bg-slate-200/80 dark:bg-white/5 cursor-not-allowed">
                                             Pendaftaran Ditutup
@@ -486,6 +496,7 @@
             <!-- 2D. KONTEN TAB FEED & POSTINGAN SAYA -->
             @else
                 <!-- Post Composer (Desain Ramping ala Threads / X.com - Tampil Normal untuk Semua Pengguna) -->
+                @can('community.post')
                 <div id="composer-section"
                     class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-2xs"
                     x-data="{
@@ -595,6 +606,7 @@
                         </div>
                     </form>
                 </div>
+                @endcan
 
                 <!-- Feed Thread List -->
                 <div class="space-y-4">
@@ -641,7 +653,7 @@
                                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500" x-show="copiedPostId === '{{ $post->id }}'" x-cloak></i>
                                             </button>
 
-                                            @if ((string) $post->owner_id === (string) auth()->id())
+                                            @if ((string) $post->owner_id === (string) auth()->id() || \App\Support\Context::hasPermission('community.manage'))
                                                 <form method="POST" action="{{ route('community.destroy', $post) }}"
                                                     onsubmit="return confirm('Hapus postingan ini?')">
                                                     @csrf
@@ -674,16 +686,17 @@
                                     <div class="flex items-center justify-between pt-2 text-slate-500 dark:text-slate-400 text-xs max-w-md">
                                         <!-- Reply / Comment Action -->
                                         <button type="button" @click="commentsOpen = !commentsOpen"
-                                            class="inline-flex items-center gap-1.5 hover:text-[#007AFF] transition cursor-pointer group">
+                                            class="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 hover:text-[#007AFF] transition cursor-pointer group py-1 px-1.5 -ml-1">
                                             <div class="p-1.5 rounded-full group-hover:bg-[#007AFF]/10 transition">
                                                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                                             </div>
                                             <span x-text="commentsCount"></span>
                                         </button>
 
+                                        @can('community.post')
                                         <!-- Repost Action (Twitter-Style) -->
                                         <button type="button" @click="toggleRepost()"
-                                            class="inline-flex items-center gap-1.5 hover:text-emerald-500 transition cursor-pointer group"
+                                            class="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 hover:text-emerald-500 transition cursor-pointer group py-1 px-1.5"
                                             :class="reposted ? 'text-emerald-500 font-bold' : ''">
                                             <div class="p-1.5 rounded-full group-hover:bg-emerald-500/10 transition">
                                                 <i data-lucide="repeat-2" class="w-4 h-4 transition active:rotate-180"
@@ -694,7 +707,7 @@
 
                                         <!-- Like Action -->
                                         <button type="button" @click="toggleLike()"
-                                            class="inline-flex items-center gap-1.5 hover:text-rose-500 transition cursor-pointer group"
+                                            class="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 hover:text-rose-500 transition cursor-pointer group py-1 px-1.5"
                                             :class="liked ? 'text-rose-500 font-bold' : ''">
                                             <div class="p-1.5 rounded-full group-hover:bg-rose-500/10 transition">
                                                 <i data-lucide="heart" class="w-4 h-4 transition active:scale-125"
@@ -702,10 +715,26 @@
                                             </div>
                                             <span x-text="likesCount"></span>
                                         </button>
+                                        @else
+                                        <!-- Read-only count for non-posters -->
+                                        <div class="min-h-[44px] inline-flex items-center gap-1.5 opacity-60 py-1 px-1.5">
+                                            <div class="p-1.5 rounded-full">
+                                                <i data-lucide="repeat-2" class="w-4 h-4"></i>
+                                            </div>
+                                            <span x-text="repostsCount"></span>
+                                        </div>
+
+                                        <div class="min-h-[44px] inline-flex items-center gap-1.5 opacity-60 py-1 px-1.5">
+                                            <div class="p-1.5 rounded-full">
+                                                <i data-lucide="heart" class="w-4 h-4"></i>
+                                            </div>
+                                            <span x-text="likesCount"></span>
+                                        </div>
+                                        @endcan
 
                                         <!-- Share Action -->
                                         <button type="button" @click="copyLink('{{ $post->id }}')"
-                                            class="inline-flex items-center gap-1.5 hover:text-slate-700 dark:hover:text-white transition cursor-pointer group"
+                                            class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 hover:text-slate-700 dark:hover:text-white transition cursor-pointer group py-1 px-1.5 -mr-1"
                                             title="Salin Tautan">
                                             <div class="p-1.5 rounded-full group-hover:bg-slate-100 dark:group-hover:bg-white/10 transition">
                                                 <i data-lucide="share" class="w-4 h-4"></i>
@@ -755,6 +784,7 @@
                                         </div>
 
                                         <!-- Reply Input (Tampil Normal untuk Semua Pengguna, Block & Tampilkan Swal Alert saat Diklik jika Belum Subscribe) -->
+                                        @can('community.post')
                                         <form class="flex items-center gap-2 pt-1" @submit.prevent="submitComment($el)">
                                             @csrf
                                             <input type="text" name="content" required maxlength="1000"
@@ -768,6 +798,7 @@
                                                 Balas
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -797,7 +828,7 @@
         <!-- ========================================== -->
         <!-- 3. SIDEBAR KANAN (Top 5 Tren 24 Jam & Ringkasan ala Twitter) -->
         <!-- ========================================== -->
-        <aside class="lg:col-span-3 space-y-5 lg:sticky lg:top-20">
+        <aside class="order-3 lg:order-3 lg:col-span-3 space-y-5 lg:sticky lg:top-20">
             <!-- Search Bar Komunitas -->
             <form method="GET" action="{{ route('community.index') }}" class="relative">
                 <input type="hidden" name="tab" value="{{ $activeTab }}">
@@ -1032,6 +1063,7 @@
                 </div>
 
                 <!-- Self Presensi Check-in Methods (Hanya jika belum hadir) -->
+                @can('community.events.register')
                 <template x-if="!selectedTicket?.is_checked_in">
                     <div class="space-y-2 pt-1">
                         <h5 class="text-xs font-bold text-slate-900 dark:text-white">{{ __('community.self_presence_at_location') }}:</h5>
@@ -1077,11 +1109,13 @@
                         </div>
                     </div>
                 </template>
+                @endcan
             </div>
 
             <!-- Modal Footer -->
             <div class="p-4 border-t border-slate-100 dark:border-white/10 flex items-center justify-between">
                 <template x-if="!selectedTicket?.is_checked_in">
+                    @can('community.events.register')
                     <form method="POST" :action="'/community/events/' + selectedTicket?.event_id + '/cancel'"
                         onsubmit="return confirm('Batalkan pendaftaran event ini?')">
                         @csrf
@@ -1089,6 +1123,9 @@
                             Batalkan Pendaftaran
                         </button>
                     </form>
+                    @else
+                    <div></div>
+                    @endcan
                 </template>
                 <div x-show="selectedTicket?.is_checked_in"></div>
                 <button type="button" @click="selectedTicket = null"
