@@ -1,6 +1,6 @@
 @extends('layouts.app', [
-    'title' => __('analytics.title') . ' - Cooca',
-    'headerTitle' => __('analytics.title'),
+    'title' => __('analytics.growth_trends') . ' - Cooca',
+    'headerTitle' => __('analytics.growth_trends'),
     'headerSubtitle' => __('analytics.subtitle')
 ])
 
@@ -213,19 +213,16 @@
     <!-- ======================================================= -->
     <div class="rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-2xl border border-black/[0.06] dark:border-white/[0.08] p-4 sm:p-5 shadow-sm space-y-4 print:border-none print:shadow-none print:p-0">
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div class="space-y-1">
-                <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    {{ __('analytics.executive_report') }}
+            <!-- Active Period Indicator -->
+            <div class="flex items-center gap-2.5 text-xs text-black/60 dark:text-white/60">
+                <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0 print:hidden">
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                </span>
+                <div>
+                    <span class="text-black/50 dark:text-white/50">{{ __('analytics.period') }}:</span>
+                    <strong class="text-black dark:text-white font-semibold ml-1">{{ $analytics['period_label'] }}</strong>
+                    <span class="text-black/40 dark:text-white/40 ml-1">({{ Carbon\Carbon::parse($analytics['from'])->isoFormat('D MMMM Y') }} &rarr; {{ Carbon\Carbon::parse($analytics['to'])->isoFormat('D MMMM Y') }})</span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-[11px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0 print:hidden">
-                        <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                    </span>
-                    <span>{{ __('analytics.growth_trends') }}</span>
-                </h1>
-                <p class="text-xs text-black/55 dark:text-white/55">
-                    {{ __('analytics.period') }}: <strong class="text-black dark:text-white">{{ $analytics['period_label'] }}</strong> ({{ Carbon\Carbon::parse($analytics['from'])->isoFormat('D MMMM Y') }} &rarr; {{ Carbon\Carbon::parse($analytics['to'])->isoFormat('D MMMM Y') }})
-                </p>
             </div>
 
             <!-- Filter Actions Form -->
@@ -236,7 +233,7 @@
                 @if($locations->count() > 1)
                     <div class="relative">
                         <select name="location_id" onchange="document.getElementById('form-analytics-filter').submit()"
-                            class="h-10 pl-8 pr-8 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[16px] sm:text-xs font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40 transition appearance-none cursor-pointer">
+                            class="h-11 min-h-[44px] pl-8 pr-8 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[16px] sm:text-xs font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40 transition appearance-none cursor-pointer">
                             <option value="">{{ __('analytics.all_locations') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}" {{ $selectedLocationId === $loc->id ? 'selected' : '' }}>
@@ -244,8 +241,8 @@
                                 </option>
                             @endforeach
                         </select>
-                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute left-2.5 top-3 pointer-events-none"></i>
-                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute right-2.5 top-3 pointer-events-none"></i>
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute left-2.5 top-3.5 pointer-events-none"></i>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute right-2.5 top-3.5 pointer-events-none"></i>
                     </div>
                 @endif
 
@@ -254,35 +251,39 @@
                     <div class="inline-flex p-1 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] text-xs font-semibold shrink-0 gap-0.5">
                         <button type="button" @click="selectPeriod('today')"
                             :class="period === 'today' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3.5 py-2 min-h-[36px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.today') }}</button>
+                            class="px-3.5 py-2.5 min-h-[44px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.today') }}</button>
                         <button type="button" @click="selectPeriod('week')"
                             :class="period === 'week' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3.5 py-2 min-h-[36px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.week') }}</button>
+                            class="px-3.5 py-2.5 min-h-[44px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.week') }}</button>
                         <button type="button" @click="selectPeriod('month')"
                             :class="period === 'month' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3.5 py-2 min-h-[36px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.month') }}</button>
+                            class="px-3.5 py-2.5 min-h-[44px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.month') }}</button>
                         <button type="button" @click="selectPeriod('year')"
                             :class="period === 'year' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3.5 py-2 min-h-[36px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.year') }}</button>
+                            class="px-3.5 py-2.5 min-h-[44px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.year') }}</button>
                         <button type="button" @click="selectPeriod('custom')"
                             :class="period === 'custom' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
-                            class="px-3.5 py-2 min-h-[36px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.custom') }}</button>
+                            class="px-3.5 py-2.5 min-h-[44px] rounded-[9px] transition-all active:scale-[0.98] inline-flex items-center justify-center">{{ __('analytics.periods.custom') }}</button>
                     </div>
                 </div>
 
                 <!-- Print Executive Report Button -->
+                @canany(['reports.export', 'reports.view'])
                 <button type="button" @click="window.print()"
-                    class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/75 text-xs font-semibold transition-all inline-flex items-center gap-1.5 active:scale-[0.98]">
+                    class="h-11 min-h-[44px] px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/75 text-xs font-semibold transition-all inline-flex items-center gap-1.5 active:scale-[0.98]">
                     <i data-lucide="printer" class="w-3.5 h-3.5 text-[#007AFF]"></i>
                     <span>{{ __('analytics.print_report') }}</span>
                 </button>
+                @endcanany
 
                 <!-- Link to Formal Financial Reports -->
+                @can('reports.view')
                 <a href="{{ route('reports.index') }}"
-                    class="h-10 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/75 text-xs font-semibold transition-all inline-flex items-center gap-1.5 active:scale-[0.98]">
+                    class="h-11 min-h-[44px] px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] text-black/75 dark:text-white/75 text-xs font-semibold transition-all inline-flex items-center gap-1.5 active:scale-[0.98]">
                     <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#007AFF]"></i>
                     <span>{{ __('analytics.formal_reports') }}</span>
                 </a>
+                @endcan
             </form>
         </div>
 
@@ -296,14 +297,14 @@
                 <div class="flex items-center gap-2">
                     <span class="text-xs font-medium text-black/60 dark:text-white/60">{{ __('analytics.from') }}:</span>
                     <input type="date" name="from" value="{{ $analytics['from'] }}" required
-                        class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                        class="h-11 min-h-[44px] px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-xs font-medium text-black/60 dark:text-white/60">{{ __('analytics.to') }}:</span>
                     <input type="date" name="to" value="{{ $analytics['to'] }}" required
-                        class="h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                        class="h-11 min-h-[44px] px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
                 </div>
-                <button type="submit" class="h-10 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-semibold transition-all shadow-sm active:scale-[0.98]">
+                <button type="submit" class="h-11 min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-semibold transition-all shadow-sm active:scale-[0.98]">
                     {{ __('analytics.apply_range') }}
                 </button>
             </form>
@@ -313,9 +314,9 @@
     <!-- ======================================================= -->
     <!-- 2. BENTO KPIS: REVENUE, ORDERS, MARGIN, NET PROFIT     -->
     <!-- ======================================================= -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0">
         <!-- Card 1: Total Omzet -->
-        <div class="rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.total_revenue') }}</span>
                 <span class="w-8 h-8 rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center">
@@ -339,7 +340,7 @@
         </div>
 
         <!-- Card 2: Total Transaksi & AOV -->
-        <div class="rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.total_orders') }}</span>
                 <span class="w-8 h-8 rounded-[9px] bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2] flex items-center justify-center">
@@ -358,7 +359,8 @@
         </div>
 
         <!-- Card 3: Laba Kotor & Margin -->
-        <div class="rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
+        @can('reports.financial')
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.gross_profit') }}</span>
                 <span class="w-8 h-8 rounded-[9px] bg-[#34C759]/10 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158] flex items-center justify-center">
@@ -375,9 +377,29 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3 opacity-70">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.gross_profit') }}</span>
+                <span class="w-8 h-8 rounded-[9px] bg-black/5 dark:bg-white/10 text-black/40 dark:text-white/40 flex items-center justify-center">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                </span>
+            </div>
+            <div>
+                <div class="text-2xl sm:text-[26px] font-bold tracking-tight text-black/40 dark:text-white/40 tabular-nums">
+                    ••••••••
+                </div>
+                <div class="mt-1.5 flex items-center gap-1.5 text-xs text-black/40 dark:text-white/40">
+                    <span>{{ __('analytics.gross_margin') }}:</span>
+                    <span class="font-semibold">••%</span>
+                </div>
+            </div>
+        </div>
+        @endcan
 
         <!-- Card 4: Estimasi Laba Bersih -->
-        <div class="rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
+        @can('reports.financial')
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.net_profit') }}</span>
                 <span class="w-8 h-8 rounded-[9px] bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A] flex items-center justify-center">
@@ -394,6 +416,25 @@
                 </div>
             </div>
         </div>
+        @else
+        <div class="min-w-[260px] sm:min-w-0 snap-start flex-1 shrink-0 sm:shrink rounded-[20px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-sm space-y-3 opacity-70">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-black/55 dark:text-white/55">{{ __('analytics.net_profit') }}</span>
+                <span class="w-8 h-8 rounded-[9px] bg-black/5 dark:bg-white/10 text-black/40 dark:text-white/40 flex items-center justify-center">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                </span>
+            </div>
+            <div>
+                <div class="text-2xl sm:text-[26px] font-bold tracking-tight text-black/40 dark:text-white/40 tabular-nums">
+                    ••••••••
+                </div>
+                <div class="mt-1.5 flex items-center gap-1.5 text-xs text-black/40 dark:text-white/40">
+                    <span>{{ __('analytics.operational_expenses') }}:</span>
+                    <span class="font-semibold">••••••••</span>
+                </div>
+            </div>
+        </div>
+        @endcan
     </div>
 
     <!-- ======================================================= -->
@@ -449,10 +490,12 @@
                     <h3 class="text-base font-bold text-black dark:text-white">{{ __('analytics.top_products_title') }}</h3>
                     <p class="text-xs text-black/50 dark:text-white/50">{{ __('analytics.top_products_subtitle') }}</p>
                 </div>
+                @can('reports.view')
                 <a href="{{ route('reports.index', ['tab' => 'stock']) }}" class="text-xs text-[#007AFF] hover:underline font-semibold flex items-center gap-1 print:hidden">
                     <span>{{ __('analytics.stock_valuation') }}</span>
                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </a>
+                @endcan
             </div>
 
             <!-- Desktop View: Table (Anti-Pill Pure Typography) -->
@@ -464,8 +507,10 @@
                             <th class="py-3 px-3">{{ __('analytics.product_name') }}</th>
                             <th class="py-3 px-3 text-right">{{ __('analytics.sold') }}</th>
                             <th class="py-3 px-3 text-right">{{ __('analytics.sales_total') }}</th>
+                            @can('reports.financial')
                             <th class="py-3 px-3 text-right">{{ __('analytics.profit_label') }}</th>
                             <th class="py-3 px-3 text-right">{{ __('analytics.margin') }}</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06] text-black dark:text-white">
@@ -475,16 +520,18 @@
                                 <td class="py-2.5 px-3 font-semibold">{{ $prod['name'] }}</td>
                                 <td class="py-2.5 px-3 text-right tabular-nums font-medium">{{ number_format($prod['quantity'], 0, ',', '.') }}</td>
                                 <td class="py-2.5 px-3 text-right tabular-nums">Rp {{ number_format($prod['total_sales'], 0, ',', '.') }}</td>
+                                @can('reports.financial')
                                 <td class="py-2.5 px-3 text-right tabular-nums text-[#34C759] font-medium">Rp {{ number_format($prod['gross_profit'], 0, ',', '.') }}</td>
                                 <td class="py-2.5 px-3 text-right">
                                     <span class="text-[12px] font-bold tabular-nums {{ $prod['margin_pct'] >= 40 ? 'text-[#34C759]' : 'text-[#FF9500]' }}">
                                         {{ $prod['margin_pct'] }}%
                                     </span>
                                 </td>
+                                @endcan
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="py-8 text-center text-black/40 dark:text-white/40">
+                                <td colspan="@can('reports.financial') 6 @else 4 @endcan" class="py-8 text-center text-black/40 dark:text-white/40">
                                     {{ __('analytics.no_sales_data') }}
                                 </td>
                             </tr>
@@ -504,11 +551,13 @@
                                 </span>
                                 <span class="font-bold text-xs text-black dark:text-white">{{ $prod['name'] }}</span>
                             </div>
+                            @can('reports.financial')
                             <span class="text-[11px] font-bold tabular-nums {{ $prod['margin_pct'] >= 40 ? 'text-[#34C759]' : 'text-[#FF9500]' }} shrink-0">
                                 {{ $prod['margin_pct'] }}%
                             </span>
+                            @endcan
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] pt-1 border-t border-black/5 dark:border-white/5">
+                        <div class="grid grid-cols-1 @can('reports.financial') sm:grid-cols-3 @else sm:grid-cols-2 @endcan gap-2 text-[11px] pt-1 border-t border-black/5 dark:border-white/5">
                             <div>
                                 <span class="text-black/50 dark:text-white/50 block">{{ __('analytics.sold') }}:</span>
                                 <strong class="text-black dark:text-white tabular-nums">{{ number_format($prod['quantity'], 0, ',', '.') }}</strong>
@@ -517,10 +566,12 @@
                                 <span class="text-black/50 dark:text-white/50 block">{{ __('analytics.sales_total') }}:</span>
                                 <strong class="text-black dark:text-white tabular-nums">Rp {{ number_format($prod['total_sales'], 0, ',', '.') }}</strong>
                             </div>
+                            @can('reports.financial')
                             <div>
                                 <span class="text-black/50 dark:text-white/50 block">{{ __('analytics.profit_label') }}:</span>
                                 <strong class="text-[#34C759] tabular-nums">Rp {{ number_format($prod['gross_profit'], 0, ',', '.') }}</strong>
                             </div>
+                            @endcan
                         </div>
                     </div>
                 @empty

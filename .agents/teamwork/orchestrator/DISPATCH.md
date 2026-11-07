@@ -130,41 +130,54 @@ Implementasikan test suite otomatis pada masing-masing repositori menggunakan to
 - [ ] Perintah `flutter analyze` pada `cooca_my_own` menghasilkan 0 issues/errors
 
 
-## 2026-11-07T05:22:41Z
-Refactor and improve the WhatsApp module views in resources/views/app/whatsapp for production, simplifying user interface layouts and enforcing role-based access control (RBAC).
+## 2026-11-07T09:18:34Z
+Perbaiki tampilan antarmuka, kontrol otorisasi (RBAC), dokumentasi pemilik bisnis, dan audit kesiapan produksi pada modul `analytics`, `approvals`, dan `billing` di `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` sesuai standar sistem Cooca SaaS ERP.
 
 Working directory: c:\laragon\www\cooca_core
 Integrity mode: development
 
 ## Requirements
 
-### R1. UI Simplification for WhatsApp Views
-Simplify and declutter the user interface across all views in `resources/views/app/whatsapp` (`index.blade.php`, `broadcast.blade.php`, `broadcast_detail.blade.php`, `logs.blade.php`). Reorganize information hierarchy, eliminate overlapping buttons or elements, and establish a clear, structured action button hierarchy for production.
+### R1. UI Simplification and Layout Cleanliness
+Terapkan penyederhanaan antarmuka pengguna pada seluruh view Blade di `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` sesuai prinsip `/ui-simplify-layout`:
+- Eliminasi tumpang tindih elemen (zero visual overlap), rapikan posisi tombol aksi (action buttons), dan pisahkan aksi utama (primary) dari aksi sekunder/tersier.
+- Pastikan tata letak informasi rapi, tidak padat/cluttered, mudah dibaca, serta responsif dan berfungsi optimal baik di viewport mobile (375px-430px) maupun desktop (>= 1024px).
 
-### R2. Role-Based Access Control (RBAC) Enforcement
-Enforce Laravel RBAC authorization for WhatsApp module functionality. Implement controller-level permission guards across WhatsApp controllers, restrict UI elements and action buttons in Blade views using `@can` directives, and ensure required permissions are registered in database seeders.
+### R2. Role-Based Access Control (RBAC) & Controller/View Guards
+Audit dan terapkan kontrol otorisasi berbasis peran (RBAC) untuk ketiga modul (`analytics`, `approvals`, `billing`) sesuai prinsip `/laravel-rbac`:
+- Pastikan rute dan method controller yang menangani ketiga modul dilindungi oleh permission guard / middleware otorisasi yang sesuai di level controller.
+- Amankan seluruh elemen aksi dan navigasi di dalam view Blade dengan pengecekan permission (misal `@can` atau directive otorisasi sistem), sehingga elemen aksi tidak tampak bagi pengguna tanpa izin akses.
+
+### R3. Module Audit & Production Readiness
+Lakukan audit komprehensif terhadap kesiapan produksi pada modul `analytics`, `approvals`, dan `billing` sesuai standar `/laravel-module-audit`:
+- Periksa konsistensi penanganan error, validasi input, status empty state, feedback pengguna (flash alerts), dan konsistensi query data.
+- Pastikan modul siap digunakan di lingkungan produksi tanpa regresi logika bisnis.
+
+### R4. Business Owner User Documentation
+Susun atau perbarui dokumentasi panduan penggunaan modul `analytics`, `approvals`, dan `billing` dari sudut pandang (POV) Business Owner / pemilik UMKM sesuai standar `/business-owner-doc-generator`:
+- Tempatkan file dokumentasi pada direktori dokumentasi sistem (`resources/views/app/docs/` atau lokasi docs modul terkait).
+- Tulis panduan dengan bahasa yang bersahaja dan mudah dipahami tanpa jargon teknis rumit, serta sertakan tautan langsung (link/route) ke fitur yang relevan.
 
 ## Verification Resources
-Standard Laravel testing framework and existing application test suite.
+- Test suite dan skrip pengujian repositori (`php artisan test`).
+- Linter dan pengecekan sintaks PHP (`php -l`).
 
 ## Acceptance Criteria
 
-### UI Simplification & Layout Hierarchy
-- [ ] All views in `resources/views/app/whatsapp` (`index.blade.php`, `broadcast.blade.php`, `broadcast_detail.blade.php`, `logs.blade.php`) are decluttered with clear visual and information hierarchy.
-- [ ] No buttons or UI elements overlap or collide across responsive desktop and mobile viewports.
-- [ ] Action buttons adhere to distinct primary, secondary, and destructive hierarchy without cluttered or duplicate actions.
+### UI Simplification & Layout
+- [ ] Seluruh file view Blade pada `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` bebas dari elemen yang saling bertumpuk atau overlap.
+- [ ] Tombol aksi pada ketiga modul tertata dengan hierarki visual yang jelas (primary vs secondary actions) dan tidak berdesakan.
+- [ ] Tampilan antarmuka pada ketiga modul tidak mengalami layout broken atau horizontal overflow yang tidak wajar pada resolusi mobile (375px) dan desktop (1280px).
 
-### Role-Based Access Control (RBAC)
-- [ ] WhatsApp controller actions enforce permission checks at the controller level.
-- [ ] Blade views in `resources/views/app/whatsapp` conditionally display actions, buttons, and navigation using `@can` directives.
-- [ ] All relevant WhatsApp permissions are defined and registered in database seeders.
-- [ ] Unauthorized users attempting direct access to WhatsApp controller endpoints receive an HTTP 403 Forbidden response.
+### RBAC & Security
+- [ ] Seluruh endpoint atau controller method terkait modul `analytics`, `approvals`, dan `billing` memiliki proteksi otorisasi / permission guard di level controller.
+- [ ] Tombol aksi, link modifikasi data, dan elemen sensitif pada view Blade dibungkus pengecekan hak akses (@can / permission check) dan tersembunyi bagi pengguna yang tidak memiliki wewenang.
 
-### Verification & Stability
-- [ ] All existing test suites pass without regression (`php artisan test`).
-- [ ] All modified Blade views compile and render without syntax errors or missing variable exceptions.
+### Module Audit & Stability
+- [ ] Seluruh file PHP dan Blade yang dimodifikasi lolos verifikasi sintaks tanpa error (`php -l`).
+- [ ] Seluruh automated test suite yang relevan (`php artisan test`) berhasil dijalankan tanpa kegagalan (pass).
+- [ ] Setiap view memiliki penanganan tampilan kosong (empty state) yang rapi saat data belum tersedia.
 
-Working directory: .agents/teamwork/orchestrator/
-Original request file: c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-Project root: c:\laragon\www\cooca_core
-Identity: Project Orchestrator
+### Business Owner Documentation
+- [ ] Dokumentasi panduan penggunaan untuk modul `analytics`, `approvals`, dan `billing` tersedia di direktori dokumentasi (`resources/views/app/docs/` atau lokasi docs terkait).
+- [ ] Panduan ditulis dari sudut pandang pemilik bisnis dengan alur langkah yang jelas dan tautan rute ke fitur terkait.

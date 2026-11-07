@@ -7,35 +7,28 @@
 @section('content')
 <div class="max-w-[1440px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="approvalInbox()">
 
-    <!-- Top Bento Navigation & Action Bar -->
-    <header class="rounded-[20px] backdrop-blur-2xl bg-white/85 dark:bg-[#1C1C1E]/85 border border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
-                <i data-lucide="inbox" class="w-5 h-5"></i>
-            </div>
-            <div>
-                <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    {{ __('approvals.badge_tiered_auth') }}
-                </div>
-                <h1 class="text-xl font-bold text-black dark:text-white tracking-tight">
-                    {{ __('approvals.inbox_title') }}
-                </h1>
-            </div>
+    <!-- Top Action & Navigation Bar -->
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
+            <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                <i data-lucide="inbox" class="w-4 h-4"></i>
+            </span>
+            <span class="font-medium text-black/70 dark:text-white/70">{{ __('approvals.badge_tiered_auth') }}</span>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-            <a href="{{ route('approvals.history') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-black/75 dark:text-white/75 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] active:scale-[0.98] transition-all flex items-center gap-1.5">
+            <a href="{{ route('approvals.history') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-black/75 dark:text-white/75 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.10] active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                 <i data-lucide="history" class="w-4 h-4"></i>
                 <span>{{ __('approvals.btn_history') }}</span>
             </a>
-            @if(\App\Support\Context::isOwner() || \App\Support\Context::isAdminOrOwner())
-            <a href="{{ route('approval-rules.index') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1.5">
+            @can('approvals.manage')
+            <a href="{{ route('approval-rules.index') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                 <i data-lucide="sliders" class="w-4 h-4"></i>
                 <span>{{ __('approvals.btn_rules') }}</span>
             </a>
-            @endif
+            @endcan
         </div>
-    </header>
+    </div>
 
     <!-- Filter Bar (Apple Segmented Style) -->
     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
@@ -128,21 +121,30 @@
                     </div>
 
                     <!-- Right: Tindakan Otorisasi Cepat -->
-                    <div class="flex items-center gap-3 shrink-0 pt-3 lg:pt-0 border-t lg:border-t-0 border-black/[0.06] dark:border-white/[0.08]">
-                        <button
-                            type="button"
-                            @click="openRejectModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}')"
-                            class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-[0.98] flex items-center gap-1.5">
-                            <i data-lucide="x-circle" class="w-4 h-4"></i>
-                            <span>{{ __('approvals.btn_reject') }}</span>
-                        </button>
-                        <button
-                            type="button"
-                            @click="openApproveModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}', {{ $ticket->current_level }})"
-                            class="min-h-[44px] px-6 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98] flex items-center gap-1.5">
-                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                            <span>{{ __('approvals.btn_approve_level', ['level' => $ticket->current_level]) }}</span>
-                        </button>
+                    <div class="shrink-0 pt-3 lg:pt-0 border-t lg:border-t-0 border-black/[0.06] dark:border-white/[0.08] w-full lg:w-auto">
+                        @can('approvals.manage')
+                        <div class="grid grid-cols-2 sm:flex sm:w-auto gap-2.5 w-full sm:w-auto">
+                            <button
+                                type="button"
+                                @click="openRejectModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}')"
+                                class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/20 text-[#FF3B30] dark:text-[#FF453A] font-semibold text-xs transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                                <i data-lucide="x-circle" class="w-4 h-4 shrink-0"></i>
+                                <span>{{ __('approvals.btn_reject') }}</span>
+                            </button>
+                            <button
+                                type="button"
+                                @click="openApproveModal('{{ $ticket->id }}', '{{ $ticket->getDocumentTypeLabel() }}', 'Rp {{ number_format($ticket->amount, 0, ',', '.') }}', {{ $ticket->current_level }})"
+                                class="min-h-[44px] px-4 py-2.5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white font-semibold text-xs shadow-sm shadow-[#34C759]/25 transition-all active:scale-[0.98] inline-flex items-center justify-center gap-1.5 w-full sm:w-auto">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 shrink-0"></i>
+                                <span>{{ __('approvals.btn_approve_level', ['level' => $ticket->current_level]) }}</span>
+                            </button>
+                        </div>
+                        @else
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium text-black/50 dark:text-white/50 bg-black/[0.04] dark:bg-white/[0.06]">
+                            <i data-lucide="lock" class="w-3 h-3 text-black/40 dark:text-white/40"></i>
+                            <span>{{ __('approvals.locked_status') }}</span>
+                        </span>
+                        @endcan
                     </div>
 
                 </div>

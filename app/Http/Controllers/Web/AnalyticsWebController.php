@@ -31,7 +31,7 @@ final class AnalyticsWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:reports.view', only: ['index']),
+            new Middleware('require.permission:analytics.view,reports.view', only: ['index']),
         ];
     }
 

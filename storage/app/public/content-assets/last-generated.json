@@ -1,45 +1,16 @@
 [
   {
-    "feature_id": "finance",
-    "feature_name": "Laporan Laba Rugi Real-Time",
-    "slot": "B2B Morning Insight",
-    "platform": "linkedin",
-    "scheduled_at": "2026-11-07 08:00:00",
-    "viral_score": 93.3,
-    "viral_verdict": "PASSED_VIRAL_GATE",
-    "image_filename": "2026-11-07-toko-kamu-linkedin-finance-1080x1350.png",
-    "image_relative_path": "admin/social-media-assets/platform/2026-11-07-toko-kamu-linkedin-finance-1080x1350.png",
-    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-07-toko-kamu-linkedin-finance-1080x1350.png",
-    "caption": "Membaca Kesehatan Finansial UMKM Melalui Real-Time Profit & Loss Reporting\n\nTingginya omzet penjualan seringkali mengaburkan realita margin keuntungan operasional yang tergerus biaya tersembunyi.\n\nStudi kasus Toko Kamu yang dikelola oleh Cooca Indonesia membuktikan bahwa otomatisasi laporan laba rugi dan rekonsiliasi arus kas memberikan kepastian pengambilan keputusan ekspansi bisnis.\n\nPelajari dashboard keuangan COOCA di: https://cooca.id\n\n#KeuanganUMKM #LabaRugiOtomatis #CoocaERP #TipsBisnis #AkuntansiPraktis",
-    "keywords": [
-      "cara hitung untung bersih bisnis",
-      "cara pisahkan uang pribadi dan usaha",
-      "laporan keuangan umkm otomatis",
-      "software akuntansi toko"
-    ],
-    "hashtags": [
-      "#KeuanganUMKM",
-      "#LabaRugiOtomatis",
-      "#CoocaERP",
-      "#TipsBisnis",
-      "#AkuntansiPraktis"
-    ],
-    "platforms": [
-      "linkedin"
-    ]
-  },
-  {
     "feature_id": "fraud_prevention",
     "feature_name": "Hak Akses Kasir & Anti-Kecurangan",
-    "slot": "Lunchtime Visual Carousel",
-    "platform": "instagram",
-    "scheduled_at": "2026-11-07 12:15:00",
+    "slot": "evening",
+    "platform": "tiktok",
+    "scheduled_at": "2026-11-09 19:45:00",
     "viral_score": 96.2,
     "viral_verdict": "PASSED_VIRAL_GATE",
-    "image_filename": "2026-11-07-toko-kamu-instagram-fraud_prevention-1080x1350.png",
-    "image_relative_path": "admin/social-media-assets/platform/2026-11-07-toko-kamu-instagram-fraud_prevention-1080x1350.png",
-    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-07-toko-kamu-instagram-fraud_prevention-1080x1350.png",
-    "caption": "Uang Kasir Sering Kurang Pas Tutup Toko? Waspadai Celah Ini!\n\nSalah satu titik paling rawan dalam bisnis ritel adalah meja kasir saat pergantian shift.\n\nToko Kamu yang dikelola oleh Cooca Indonesia mengamankan kasir dengan sistem anti-fraud COOCA:\n- Transaksi batal (Void) wajib PIN Supervisor\n- Kasir tidak bisa manipulasi harga sembarangan\n- Rekap kas otomatis mencocokkan uang fisik dengan catatan sistem\n- Audit log mencatat setiap aksi staf detik demi detik\n\nJaga jerih payah bisnismu sekarang: https://cooca.id (link di bio)\n\n#KeamananToko #AntiFraudKasir #CoocaERP #AuditBisnis #SistemUsaha",
+    "image_filename": "2026-11-09-toko-kamu-tiktok-fraud_prevention-1080x1350.png",
+    "image_relative_path": "admin/social-media-assets/platform/2026-11-09-toko-kamu-tiktok-fraud_prevention-1080x1350.png",
+    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-09-toko-kamu-tiktok-fraud_prevention-1080x1350.png",
+    "caption": "Rahasia Toko Ritel Bebas Kebocoran Uang Kasir Tiap Hari!\n\nKasir kamu masih bisa hapus transaksi sesuka hati? Bahaya banget! Kunci hak akses kasir pakai PIN Supervisor COOCA seperti di Toko Kamu. Aman dan transparan! Cek di https://cooca.id\n\n#KeamananToko #AntiFraudKasir #CoocaERP #AuditBisnis #SistemUsaha",
     "keywords": [
       "cegah kecurangan kasir",
       "cara audit kasir toko",
@@ -52,64 +23,6 @@
       "#CoocaERP",
       "#AuditBisnis",
       "#SistemUsaha"
-    ],
-    "platforms": [
-      "instagram"
-    ]
-  },
-  {
-    "feature_id": "multi_outlet",
-    "feature_name": "Multi-Cabang Dari 1 Layar HP",
-    "slot": "Afternoon Community Post",
-    "platform": "facebook",
-    "scheduled_at": "2026-11-07 16:30:00",
-    "viral_score": 91.3,
-    "viral_verdict": "PASSED_VIRAL_GATE",
-    "image_filename": "2026-11-07-toko-kamu-facebook-multi_outlet-1080x1350.png",
-    "image_relative_path": "admin/social-media-assets/platform/2026-11-07-toko-kamu-facebook-multi_outlet-1080x1350.png",
-    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-07-toko-kamu-facebook-multi_outlet-1080x1350.png",
-    "caption": "Pengalaman Mengelola Lebih Dari Satu Cabang Toko Tanpa Repot\n\nBagi teman-teman pemilik usaha yang sedang bersiap ekspansi buka cabang kedua atau ketiga, pastikan sistem pencatatannya sudah terhubung otomatis.\n\nSimak bagaimana Toko Kamu mengelola cabang dengan sistem terpusat Cooca Indonesia agar tidak perlu repot rekap manual tiap malam.\n\nBuka ulasannya di: https://cooca.id\n\n#MultiCabang #BisnisCabang #CoocaERP #OwnerBisnis #EkspansiUsaha",
-    "keywords": [
-      "pantau banyak cabang dari hp",
-      "aplikasi kasir multi cabang",
-      "software waralaba franchise",
-      "kelola banyak cabang toko"
-    ],
-    "hashtags": [
-      "#MultiCabang",
-      "#BisnisCabang",
-      "#CoocaERP",
-      "#OwnerBisnis",
-      "#EkspansiUsaha"
-    ],
-    "platforms": [
-      "facebook"
-    ]
-  },
-  {
-    "feature_id": "whatsapp",
-    "feature_name": "Struk Digital & Broadcast WhatsApp",
-    "slot": "Prime Time FYP Hook",
-    "platform": "tiktok",
-    "scheduled_at": "2026-11-07 19:45:00",
-    "viral_score": 90.6,
-    "viral_verdict": "PASSED_VIRAL_GATE",
-    "image_filename": "2026-11-07-toko-kamu-tiktok-whatsapp-1080x1350.png",
-    "image_relative_path": "admin/social-media-assets/platform/2026-11-07-toko-kamu-tiktok-whatsapp-1080x1350.png",
-    "image_full_path": "C:\\laragon\\www\\cooca_core\\storage\\app\\public\\admin\\social-media-assets\\platform\\2026-11-07-toko-kamu-tiktok-whatsapp-1080x1350.png",
-    "caption": "Hemat Ratusan Ribu Kertas Kasir dengan Struk Digital WhatsApp!\n\nJangan buang uang buat kertas struk thermal yang cuma dibuang pembeli! Pakai Struk Digital WhatsApp COOCA di Toko Kamu, pelanggan seneng, kontak langsung kesimpen otomatis! Cek di https://cooca.id\n\n#WhatsAppBisnis #StrukDigital #CoocaERP #MarketingUMKM #BisnisModern",
-    "keywords": [
-      "kirim struk via whatsapp",
-      "aplikasi broadcast wa pelanggan",
-      "cara promosi toko via wa",
-      "struk digital tanpa printer"
-    ],
-    "hashtags": [
-      "#WhatsAppBisnis",
-      "#StrukDigital",
-      "#CoocaERP",
-      "#MarketingUMKM",
-      "#BisnisModern"
     ],
     "platforms": [
       "tiktok"

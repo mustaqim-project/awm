@@ -7,29 +7,22 @@
 @section('content')
 <div class="max-w-[1440px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{ selectedTicket: null, detailModalOpen: false }">
 
-    <!-- Top Header Bar -->
-    <header class="rounded-[20px] backdrop-blur-2xl bg-white/85 dark:bg-[#1C1C1E]/85 border border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                <i data-lucide="history" class="w-5 h-5"></i>
-            </div>
-            <div>
-                <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    {{ __('approvals.badge_audit_archive') }}
-                </div>
-                <h1 class="text-xl font-bold text-black dark:text-white tracking-tight">
-                    {{ __('approvals.history_title') }}
-                </h1>
-            </div>
+    <!-- Top Action & Navigation Bar -->
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
+            <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                <i data-lucide="history" class="w-4 h-4"></i>
+            </span>
+            <span class="font-medium text-black/70 dark:text-white/70">{{ __('approvals.badge_audit_archive') }}</span>
         </div>
 
         <div class="flex items-center gap-2.5">
-            <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center gap-1.5">
+            <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                 <i data-lucide="inbox" class="w-4 h-4"></i>
                 <span>{{ __('approvals.btn_back_inbox') }}</span>
             </a>
         </div>
-    </header>
+    </div>
 
     <!-- Filter Bar -->
     <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">

@@ -128,6 +128,9 @@ final class RbacSeeder extends Seeder
             'storefront.reservations.manage' => ['Kelola Reservasi & Booking',          'storefront',  'Melihat, mengonfirmasi booking jadwal dan alokasi meja reservasi pelanggan.'],
             'storefront.po.manage'        => ['Kelola PO Klien Toko',                   'storefront',  'Menerima dan memproses pesanan purchase order (PO) bertahap dari pelanggan.'],
 
+            // ─── Analytics ───────────────────────────────────────────
+            'analytics.view'              => ['Lihat Analitik & Tren Bisnis',           'analytics',   'Akses dashboard performa analitik penjualan dan pertumbuhan.'],
+
             // ─── Reports ─────────────────────────────────────────────
             'reports.view'                => ['Lihat Laporan',                          'reports',     'Akses halaman laporan dan analitik.'],
             'reports.financial'           => ['Laporan Finansial (Laba/Rugi)',           'reports',     'Melihat laporan laba rugi, arus kas, dan analitik pendapatan.'],
@@ -270,6 +273,7 @@ final class RbacSeeder extends Seeder
             'storefront.shipping.manage',
             'storefront.reservations.manage',
             'storefront.po.manage',
+            'analytics.view',
             'reports.view',
             'reports.financial',
             'reports.export',

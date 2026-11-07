@@ -7,36 +7,31 @@
 @section('content')
 <div class="max-w-[1440px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="approvalRulesManager()">
 
-    <!-- Header Bar -->
-    <header class="rounded-[20px] backdrop-blur-2xl bg-white/85 dark:bg-[#1C1C1E]/85 border border-black/[0.06] dark:border-white/[0.08] px-5 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
-                <i data-lucide="sliders" class="w-5 h-5"></i>
-            </div>
-            <div>
-                <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
-                    {{ __('approvals.badge_policy_settings') }}
-                </div>
-                <h1 class="text-xl font-bold text-black dark:text-white tracking-tight">
-                    {{ __('approvals.rules_title') }}
-                </h1>
-            </div>
+    <!-- Top Action & Navigation Bar -->
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div class="flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
+            <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                <i data-lucide="sliders" class="w-4 h-4"></i>
+            </span>
+            <span class="font-medium text-black/70 dark:text-white/70">{{ __('approvals.badge_policy_settings') }}</span>
         </div>
 
         <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-            <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-black/75 dark:text-white/75 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] active:scale-[0.98] transition-all flex items-center gap-1.5">
+            <a href="{{ route('approvals.inbox') }}" class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-black/75 dark:text-white/75 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] active:scale-[0.98] transition-all inline-flex items-center gap-1.5">
                 <i data-lucide="inbox" class="w-4 h-4"></i>
                 <span>{{ __('approvals.btn_to_inbox') }}</span>
             </a>
+            @can('approvals.manage')
             <button
                 type="button"
                 @click="openCreateModal()"
-                class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-sm flex items-center gap-1.5">
+                class="min-h-[44px] px-4 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-sm inline-flex items-center gap-1.5">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 <span>{{ __('approvals.btn_add_rule') }}</span>
             </button>
+            @endcan
         </div>
-    </header>
+    </div>
 
     <!-- Rules List Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -98,7 +93,7 @@
                 </div>
 
                 <!-- Footer Actions: Edit & Delete -->
-                @if(\App\Support\Context::hasPermission('approvals.manage'))
+                @can('approvals.manage')
                 <div class="pt-3 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between gap-2">
                     <button
                         type="button"
@@ -117,7 +112,7 @@
                         </button>
                     </form>
                 </div>
-                @endif
+                @endcan
             </div>
         @empty
             <div class="col-span-full p-12 text-center rounded-[24px] bg-white/85 dark:bg-[#1C1C1E]/85 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] space-y-3">
@@ -128,6 +123,7 @@
                 <p class="text-xs text-black/50 dark:text-white/50 max-w-md mx-auto">
                     {{ __('approvals.empty_rules_desc') }}
                 </p>
+                @can('approvals.manage')
                 <div class="pt-2">
                     <button
                         type="button"
@@ -137,6 +133,7 @@
                         <span>{{ __('approvals.btn_create_first_rule') }}</span>
                     </button>
                 </div>
+                @endcan
             </div>
         @endforelse
     </div>

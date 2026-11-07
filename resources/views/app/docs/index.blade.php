@@ -140,6 +140,18 @@
                             <span class="truncate tracking-tight font-medium text-[12px]">Penjualan B2B &amp; Invoice</span>
                         </a>
 
+                        <!-- Modul Analitik & Tren Pertumbuhan -->
+                        <a href="#sec-analytics" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-bold text-black dark:text-white hover:bg-blue-500/10 dark:hover:bg-blue-500/15 hover:text-blue-600 transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-blue-500/15 text-blue-600 dark:bg-blue-400/20 dark:text-blue-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight text-[12px]">Analitik &amp; Tren Bisnis</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">20 Sektor</span>
+                            </div>
+                        </a>
+
                         <!-- 3D Virtual Office & Asisten AI -->
                         <div class="space-y-0.5">
                             <a href="#sec-ai" @click="if(activeTab !== 'all') activeTab = 'all'"
@@ -240,13 +252,16 @@
                             <span class="truncate tracking-tight font-medium text-[12px]">Kas, Bank &amp; Akuntansi</span>
                         </a>
 
-                        <!-- Otorisasi MAR & Anti-Fraud -->
-                        <a href="#sec-security" @click="if(activeTab !== 'all') activeTab = 'all'"
-                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                        <!-- Otorisasi Dokumen MAR & Anti-Fraud -->
+                        <a href="#sec-approvals" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-bold text-black dark:text-white hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 hover:text-emerald-600 transition-all group">
                             <span class="w-6 h-6 rounded-[7px] bg-emerald-600/15 text-emerald-600 dark:bg-emerald-400/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.otorisasi_mar_anti_fraud') }}</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight text-[12px]">Otorisasi Dokumen MAR</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Maker-Checker</span>
+                            </div>
                         </a>
                     </div>
 
@@ -293,13 +308,16 @@
                             System &amp; Panduan
                         </div>
 
-                        <!-- Langganan & Token AI -->
+                        <!-- Paket Langganan, Kuota & Billing -->
                         <a href="#sec-billing" @click="if(activeTab !== 'all') activeTab = 'all'"
-                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
-                            <span class="w-6 h-6 rounded-[7px] bg-amber-500/15 text-amber-500 dark:bg-amber-400/20 dark:text-amber-400 flex items-center justify-center shrink-0">
-                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-bold text-black dark:text-white hover:bg-purple-500/10 dark:hover:bg-purple-500/15 hover:text-purple-600 transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-purple-500/15 text-purple-600 dark:bg-purple-400/20 dark:text-purple-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.langganan_kuota_token') }}</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight text-[12px]">Langganan &amp; Billing</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">TriPay QRIS</span>
+                            </div>
                         </a>
 
                         <!-- Pintasan Keyboard -->
@@ -637,6 +655,12 @@
             </section>
 
             <!-- ===================================================== -->
+            <!-- SECTION: MODUL ANALITIK & TREN PERTUMBUHAN BISNIS    -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & ROUTE VERIFIKASI)  -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_analytics')
+
+            <!-- ===================================================== -->
             <!-- SECTION 6: KEUANGAN, KAS & LAPORAN AKUNTANSI         -->
             <!-- ===================================================== -->
             <section id="sec-finance" class="space-y-4"
@@ -797,68 +821,15 @@
 
             <!-- ===================================================== -->
             <!-- SECTION 10: OTORISASI (MAR) & AUDIT ANTI-FRAUD       -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & ROUTE VERIFIKASI)  -->
             <!-- ===================================================== -->
-            <section id="sec-security" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'all') && matchesSearch('keamanan otorisasi mar approval audit log anti-fraud fraud manipulasi hak akses')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-emerald-600/15 text-emerald-600 flex items-center justify-center font-bold text-sm">
-                            10
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.otorisasi_mar_sistem_anti_fraud') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Perlindungan bisnis dari kecurangan kasir dan manipulasi laporan</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-1.5">
-                            <span class="font-bold text-black dark:text-white text-sm">Multi-Approval Rules (MAR)</span>
-                            <p class="text-black/60 dark:text-white/60 text-xs leading-relaxed">
-                                Anda dapat mengatur agar transaksi pembelian atau pengeluaran kas di atas nominal tertentu (misal &gt; Rp 5.000.000) wajib disetujui (Approved) oleh Owner sebelum dana dapat dicairkan.
-                            </p>
-                        </div>
-                        <div class="space-y-1.5">
-                            <span class="font-bold text-black dark:text-white text-sm">Pusat Deteksi Fraud Real-Time</span>
-                            <p class="text-black/60 dark:text-white/60 text-xs leading-relaxed">
-                                Cooca memiliki algoritma pendeteksi pola anomali: kasir yang sering membatalkan transaksi setelah cetak nota, perbedaan jam presensi fisik, atau penghapusan mutasi stok secara tidak wajar.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_approvals')
 
             <!-- ===================================================== -->
-            <!-- SECTION 11: LANGGANAN & TOKEN AI                     -->
+            <!-- SECTION 11: PAKET LANGGANAN, KUOTA & BILLING         -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & TRIPAY INSTAN 24/7)-->
             <!-- ===================================================== -->
-            <section id="sec-billing" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'all') && matchesSearch('langganan billing kuota batas token ai patungan paket free solo upgrade')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-500 flex items-center justify-center font-bold text-sm">
-                            11
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.langganan_kuota_fitur_token_ai') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Pengelolaan kapasitas bisnis dan aktivasi asisten kecerdasan buatan</p>
-                        </div>
-                    </div>
-                    <a href="{{ route('billing.limits') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                        <span>{{ __('docs.cek_kuota_fitur') }}</span>
-                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                    </a>
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <p class="leading-relaxed">
-                        Cooca menawarkan paket fleksibel dari <strong>Free Solo</strong> hingga <strong>Cooca Unlimited</strong>. Jika kuota produk atau invoice bulanan Anda mencapai batas, tingkatkan paket Anda dengan mudah melalui transfer bank atau QRIS langsung dari menu <strong>Langganan &amp; Kuota</strong>.
-                    </p>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_billing')
 
             <!-- ===================================================== -->
             <!-- SECTION 12: ASISTEN PINTAR AI & INTELIJEN BISNIS      -->

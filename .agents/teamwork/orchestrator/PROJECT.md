@@ -1,81 +1,83 @@
-# Project: WhatsApp Module UI Simplification & RBAC Enforcement
+# Project: Analytics, Approvals, and Billing Modules Refactor, RBAC & Documentation
 
 ## Architecture
-- **Framework**: Laravel 11, PHP 8.2+, Blade Templating, Alpine.js, Tailwind CSS
-- **Module Path**: `resources/views/app/whatsapp/`
-  - `index.blade.php` (Gateway Cockpit, connection cards, service toggles, auto-receipt, test console, Meta message catalog)
-  - `broadcast.blade.php` (Broadcast campaigns hub, delivery metrics, campaign listing, composer modal sheet)
-  - `broadcast_detail.blade.php` (Delivery report, KPI cards, message preview, recipient status table, live polling)
-  - `logs.blade.php` (Message transmission logs, status filters, log inspector sheet, storage pruning modal)
-- **RBAC Architecture**:
-  - Tenant RBAC: `App\Models\Permission`, `App\Models\Role`, `App\Support\Context::hasPermission($ability)`
-  - Permissions: `whatsapp.view` (read-only view access), `whatsapp.manage` (full gateway connection, settings, test send, broadcasts, storage pruning), `reports.export` (Excel export)
-  - Gate Bridge: `Gate::before` in `AppServiceProvider.php` bridging `App\Models\User` to `Context::hasPermission($ability)` for native Blade `@can` support
-  - Controller Guards: Laravel 11 `HasMiddleware` in `WhatsAppWebController`, `WhatsAppBroadcastWebController`, and `MetaWhatsAppOnboardingController`
-  - HTTP 403 Forbidden: `RequirePermission` middleware returns 403 on JSON/API requests (`expectsJson()`); unauthorized web GET requests redirect to `portal`
-- **UI Design System**:
-  - Apple HIG / Bento architecture: clean layout, distinct primary/secondary/destructive action hierarchy, 44×44px minimum touch targets, zero overlapping elements across desktop & mobile.
+- **Framework**: Laravel 11.x multi-tenant SaaS ERP (Cooca Core).
+- **Presentation Layer**: Blade templates with Tailwind CSS, Alpine.js, and Lucide icons.
+- **Authorization Engine**: Spatie-based multi-tenant RBAC with `AppServiceProvider` `Gate::before` delegation to `\App\Support\Context::hasPermission(...)`, supporting native Blade `@can(...)` directives.
+- **Documentation Engine**: `DocumentationWebController` and `resources/views/app/docs/` with Bento Apple HIG partials, interactive verified `route(...)` links, and 20-industry practical implementation matrices.
 
 ## Feature Inventory
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| 1 | Gate::before User RBAC Bridge | Enable native Blade `@can` for tenant `User` via `Context::hasPermission($ability)` in `AppServiceProvider.php` | M1 (RBAC Core) | survey (all explorers) |
-| 2 | Navigation Registry Permission Fix | Set `whatsapp-gateway` sidebar item permission to `whatsapp.view` so view-only users can access the gateway | M1 (RBAC Core) | survey (explorer_wa_rbac) |
-| 3 | Controller Middleware Guards | Standardize controller-level `HasMiddleware` guards across WhatsApp controllers for strict permission enforcement | M1 (RBAC Core) | survey (explorer_wa_rbac, ORIGINAL_REQUEST R2) |
-| 4 | `index.blade.php` UI Simplification & RBAC | Demote header button, remove duplicate inbox button, guard disconnect/toggle/receipt/test/catalog actions with `@can`, disable read-only form controls | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
-| 5 | `broadcast.blade.php` UI & Touch Targets | Fix table eye action button touch target to 44px (`min-w-[44px] min-h-[44px]`), apply `@can('whatsapp.manage')` on header, empty state & blast submit | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
-| 6 | `broadcast_detail.blade.php` RBAC Guards | Guard header "Buat Siaran Baru" and "Buat Siaran Serupa" CTA with `@can('whatsapp.manage')` | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R2) |
-| 7 | `logs.blade.php` UI & RBAC Enforcement | Fix table eye button to 44px hit area, guard Excel export with `@can('reports.export')`, guard storage pruning button & modal with `@can('whatsapp.manage')` | M2 (UI Views) | survey (explorer_wa_ui, ORIGINAL_REQUEST R1, R2) |
-| 8 | WhatsApp RBAC Security Test Suite | Create `WhatsAppRbacSecurityTest.php` asserting 403 Forbidden on JSON endpoints, redirection on web, and Blade UI element hiding | M3 (Verification) | survey (explorer_wa_test, ORIGINAL_REQUEST R2) |
-| 9 | Blade Compilation & Regression Verification | Verify `php artisan view:cache` and run all 28 existing tests in `MerchantWhatsAppWebFeatureTest.php` without regression | M3 (Verification) | survey (explorer_wa_test, ORIGINAL_REQUEST R1, R2) |
-| 10 | Forensic Integrity Audit Gate | Execute `teamwork_auditor` check verifying genuine implementations, zero dummy facades, and clean RBAC/UI architecture | M3 (Verification) | orchestrator audit gate |
+| F1 | RBAC Seeder Alignment | Ensure granular permissions for `analytics.view`, `approvals.view`, `approvals.manage`, `billing.view`, `billing.manage` in `RbacSeeder.php` | M1 | Survey (Explorer 2) |
+| F2 | Controller Authorization Guards | Verify & enforce `HasMiddleware` with `require.permission:...` across `AnalyticsWebController`, `ApprovalWebController`, `BillingAndLimitWebController`, and `SubscriptionCheckoutWebController` | M1 | Survey (Explorer 2) |
+| F3 | Blade Action Guarding (Approvals) | Guard "Tolak" and "Setujui" buttons in `inbox.blade.php` and "Tambah Aturan" buttons in `rules.blade.php` with `@can('approvals.manage')` | M1 | Survey (Explorers 1, 2, 3) |
+| F4 | Blade Action Guarding (Analytics & Billing) | Guard export/print and report links in `analytics/index.blade.php` with `@can('reports.view')` / `@can('reports.export')`; guard upgrade CTAs and File Manager delete in `billing/limits.blade.php` with `@can('billing.manage')` | M1 | Survey (Explorers 1, 2) |
+| F5 | UI Simplification & Double Header Elimination | Eliminate duplicate topbar header titles and redundant internal `<h1>` blocks in `analytics/index.blade.php`, `approvals/inbox.blade.php`, `approvals/history.blade.php`, `approvals/rules.blade.php` | M2 | Survey (Explorer 1) |
+| F6 | Mobile Layout & Horizontal Snap Sliders | Convert stacking KPI cards in `analytics/index.blade.php` to responsive horizontal snap sliders on 375px-430px mobile viewports per `/ui-simplify-layout` | M2 | Survey (Explorer 1) |
+| F7 | Action Button Ergonomics & Anti-Clutter | Format approval action buttons in `inbox.blade.php` into symmetric 2-column mobile grid with >= 44px tap targets; eliminate cluttered wraps | M2 | Survey (Explorer 1) |
+| F8 | Billing UI Polish & Semantic Icons | Standardize storage topup button icon to semantic `database` or `hard-drive` in `billing/limits.blade.php`; verify responsive layout and zero visual overlap | M2 | Survey (Explorer 1) |
+| F9 | Analytics Business Owner Guide | Create `resources/views/app/docs/partials/sec_analytics.blade.php` with POV Business Owner, 4-step workflow, 20-industry matrix, and interactive route links | M3 | Survey (Explorer 3) |
+| F10 | Approvals Business Owner Guide | Create `resources/views/app/docs/partials/sec_approvals.blade.php` covering Maker-Checker workflows, fraud prevention, 20-industry matrix, and interactive route links | M3 | Survey (Explorer 3) |
+| F11 | Billing Business Owner Guide | Create `resources/views/app/docs/partials/sec_billing.blade.php` covering 4 tiers, TriPay automatic activation, cloud storage, emergency buffers, 20-industry matrix, and route links | M3 | Survey (Explorer 3) |
+| F12 | Docs Navigation TOC Integration | Register `sec-analytics`, `sec-approvals`, `sec-billing` in `resources/views/app/docs/index.blade.php` Left Sidebar TOC with smooth scrolling links | M3 | Survey (Explorer 3) |
+| F13 | Production Readiness & Automated Test Suites | Verify all modified Blade and PHP files with `php -l`; run and expand automated test suites for Analytics, Approvals, Billing, and Documentation | M4 | Survey (Explorers 1, 3) |
+| F14 | Comprehensive Quality Gate & Forensic Audit | Multi-reviewer (2), challenger (2), and forensic integrity audit (1) verification | M4 | Project Pattern |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 0 | Phase 0: Survey & Technical Discovery | Map views, controllers, seeders, and test baseline via 3 parallel Explorers | none | DONE |
-| 1 | Milestone 1: RBAC Core & Controller Guards | `AppServiceProvider.php` Gate bridge, `NavigationRegistry.php`, and WhatsApp controller middleware guards | M0 | DONE |
-| 2 | Milestone 2: WhatsApp Views UI Simplification & RBAC | Refactor `index`, `broadcast`, `broadcast_detail`, and `logs` Blade templates per Bento/Apple HIG & `@can` directives | M1 | DONE |
-| 3 | Milestone 3: Test Verification & Forensic Audit Gate | `WhatsAppRbacSecurityTest`, `view:cache`, full regression test, and Forensic Audit gate | M1, M2 | DONE |
+| 1 | RBAC Enforcement & Controller/View Guards | F1, F2, F3, F4 | none | PLANNED |
+| 2 | UI Simplification & Layout Cleanliness | F5, F6, F7, F8 | M1 | PLANNED |
+| 3 | Business Owner Documentation | F9, F10, F11, F12 | none | PLANNED |
+| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F13, F14 | M1, M2, M3 | PLANNED |
 
 ## Interface Contracts
-### Gate & Permissions Contract
-- Ability `whatsapp.view`: Read-only access to WhatsApp gateway dashboard, status, and message logs.
-- Ability `whatsapp.manage`: Full operational permissions (connect/disconnect WhatsApp session, update receipt settings, send test message, create and send broadcast campaigns, prune log storage).
-- Ability `reports.export`: Permission to trigger Excel spreadsheet export of message logs.
-- Gate Hook: In `AppServiceProvider.php`:
-  ```php
-  Gate::before(function ($user, string $ability) {
-      if ($user instanceof \App\Models\Admin) {
-          return $user->isSuperAdmin() ? true : ($user->hasPermission($ability) ? true : null);
-      }
-      if ($user instanceof \App\Models\User) {
-          return \App\Support\Context::hasPermission($ability) ? true : null;
-      }
-      return null;
-  });
-  ```
 
-### HTTP Authorization Contract
-- Unauthorized JSON/AJAX requests (`Accept: application/json` or `isJson()`): HTTP 403 Forbidden with payload:
-  `{ "success": false, "error_code": "FORBIDDEN_PERMISSION", "message": "..." }`
-- Unauthorized Web GET requests: Redirect to `route('portal')` with session error flash.
+### Multi-Tenant Authorization Contract
+- Native Laravel Blade directives `@can('permission.name')` and `@cannot('permission.name')` delegate via `Gate::before` in `AppServiceProvider.php` to `\App\Support\Context::hasPermission('permission.name')`.
+- All controller actions enforce authorization via `HasMiddleware` and `Middleware('require.permission:...')`.
+- Read-only users (`*.view`) can view listings and records, but action buttons (approve, reject, create, edit, delete, upgrade, export) MUST be hidden in Blade templates using `@can(...)`.
 
-### UI Layout & Button Hierarchy Contract
-- Primary Actions: Solid `#007AFF` blue, white text, 44px min touch target, reserved for primary CTA per section.
-- Secondary Actions: Tonal gray/white background (`bg-black/[0.05] dark:bg-white/[0.08]`), 44px min touch target.
-- Destructive Actions: Tonal red (`bg-[#FF3B30]/10 text-[#FF3B30]`), 44px min touch target, guarded by confirmation and `@can('whatsapp.manage')`.
-- Table Row Actions: `min-w-[44px] min-h-[44px]` touch target, centered SVG icon.
-- Read-Only State: When user lacks `whatsapp.manage`, mutating form inputs and toggles are disabled (`disabled` attribute, `cursor-not-allowed`, reduced opacity), and action buttons are omitted via `@can`.
+### Business Owner Documentation Contract
+- Documentation partials located in `resources/views/app/docs/partials/sec_{module}.blade.php`.
+- Each partial MUST contain:
+  1. Header Bento with semantic icon and verified direct route link (`route('...')`).
+  2. Executive Summary written in conversational Indonesian from Business Owner POV.
+  3. 4-step practical workflow.
+  4. 20-Industry Application Matrix across 6 standard clusters (F&B, Manufaktur, Ritel, Jasa Harian, Jasa Proyek, Distribusi/Agro).
+  5. Security, authorization, and fraud prevention section.
+  6. Practical FAQ.
+- All links must use valid route names: `route('analytics.index')`, `route('approvals.inbox')`, `route('approvals.history')`, `route('approval-rules.index')`, `route('billing.limits')`, `route('billing.checkout')`, `route('billing.history')`.
 
 ## Code Layout
-- `app/Providers/AppServiceProvider.php` (Gate::before bridge)
-- `app/Support/Navigation/NavigationRegistry.php` (sidebar permissions)
-- `app/Http/Controllers/Web/WhatsApp/WhatsAppWebController.php` (controller middleware)
-- `app/Http/Controllers/Web/WhatsApp/WhatsAppBroadcastWebController.php` (controller middleware)
-- `app/Http/Controllers/Web/WhatsApp/MetaWhatsAppOnboardingController.php` (controller middleware)
-- `resources/views/app/whatsapp/index.blade.php` (view refactor)
-- `resources/views/app/whatsapp/broadcast.blade.php` (view refactor)
-- `resources/views/app/whatsapp/broadcast_detail.blade.php` (view refactor)
-- `resources/views/app/whatsapp/logs.blade.php` (view refactor)
-- `tests/Feature/WhatsApp/WhatsAppRbacSecurityTest.php` (new test suite)
+- Controllers:
+  - `app/Http/Controllers/Web/AnalyticsWebController.php`
+  - `app/Http/Controllers/Web/Approval/ApprovalWebController.php`
+  - `app/Http/Controllers/Web/Billing/BillingAndLimitWebController.php`
+  - `app/Http/Controllers/Web/Billing/SubscriptionCheckoutWebController.php`
+  - `app/Http/Controllers/Web/DocumentationWebController.php`
+- Seeders:
+  - `database/seeders/RbacSeeder.php`
+- Blade Views:
+  - `resources/views/app/analytics/index.blade.php`
+  - `resources/views/app/approvals/inbox.blade.php`
+  - `resources/views/app/approvals/history.blade.php`
+  - `resources/views/app/approvals/rules.blade.php`
+  - `resources/views/app/billing/limits.blade.php`
+  - `resources/views/app/billing/checkout.blade.php`
+  - `resources/views/app/billing/payment.blade.php`
+  - `resources/views/app/billing/history.blade.php`
+  - `resources/views/app/billing/invoice.blade.php`
+- Documentation Views:
+  - `resources/views/app/docs/index.blade.php`
+  - `resources/views/app/docs/partials/sec_analytics.blade.php` (new)
+  - `resources/views/app/docs/partials/sec_approvals.blade.php` (new)
+  - `resources/views/app/docs/partials/sec_billing.blade.php` (new)
+- Tests:
+  - `tests/Feature/AnalyticsWebTest.php`
+  - `tests/Feature/ApprovalModuleAuditTest.php`
+  - `tests/Feature/DocumentApprovalWorkflowTest.php`
+  - `tests/Feature/BillingModuleAuditTest.php`
+  - `tests/Feature/BillingSubmoduleSecurityAndErgonomicsTest.php`
+  - `tests/Feature/ModuleAuditAndDocsTest.php` (new/extended)
