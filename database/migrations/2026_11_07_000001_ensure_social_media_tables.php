@@ -95,6 +95,40 @@ return new class extends Migration
                 $table->timestamps();
             });
         }
+
+        if (! Schema::hasTable('social_media_comments')) {
+            Schema::create('social_media_comments', function (Blueprint $table): void {
+                $table->uuid('id')->primary();
+                $table->foreignUuid('business_id')->nullable()->constrained('businesses')->nullOnDelete();
+                $table->foreignUuid('social_media_account_id')->nullable()->constrained('social_media_accounts')->nullOnDelete();
+                $table->foreignUuid('social_media_post_id')->nullable()->constrained('social_media_posts')->nullOnDelete();
+                $table->foreignUuid('admin_id')->nullable()->constrained('admins')->nullOnDelete();
+                $table->boolean('is_platform')->default(false)->index();
+                $table->boolean('is_internal_note')->default(false);
+                $table->string('platform', 30)->default('instagram');
+                $table->string('platform_comment_id', 500)->nullable()->index();
+                $table->string('platform_post_id', 500)->nullable()->index();
+                $table->string('parent_comment_id', 500)->nullable()->index();
+                $table->string('from_id', 500)->nullable();
+                $table->string('from_name')->nullable();
+                $table->string('from_email')->nullable();
+                $table->string('from_phone')->nullable();
+                $table->string('session_token')->nullable();
+                $table->text('message')->nullable();
+                $table->text('media_url')->nullable();
+                $table->string('media_type', 30)->nullable();
+                $table->boolean('is_from_page')->default(false);
+                $table->boolean('is_human_takeover')->default(false);
+                $table->foreignUuid('takeover_by_id')->nullable()->constrained('users')->nullOnDelete();
+                $table->timestamp('takeover_at')->nullable();
+                $table->json('tags')->nullable();
+                $table->string('status', 30)->default('unread')->index();
+                $table->timestamp('created_time')->nullable();
+                $table->timestamps();
+
+                $table->index(['platform_post_id', 'status']);
+            });
+        }
     }
 
     /**
@@ -102,6 +136,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('social_media_comments');
         Schema::dropIfExists('social_post_media');
         Schema::dropIfExists('social_post_targets');
         Schema::dropIfExists('social_media_posts');
