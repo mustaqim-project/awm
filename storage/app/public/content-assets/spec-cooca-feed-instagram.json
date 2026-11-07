@@ -1,0 +1,29 @@
+{
+  "automation_id": "cooca-feed-instagram",
+  "channel": "instagram",
+  "format": "feed",
+  "dimensions": "1080x1080",
+  "target_time": "12:15",
+  "slot_label": "Instagram Lunchtime Single Visual Feed",
+  "topic_id": "bite_sized_cashier_habits",
+  "topic_name": "3 Kebiasaan Sepele Kasir yang Bikin Toko Bocor Halus",
+  "hook_title": "Omzet Ramai Tapi Profit Tipis? Waspadai 3 Titik Kebocoran Kasir yang Sering Dianggap Remeh",
+  "solution_summary": "Hilangkan celah nota manual, pembulatan sepihak, dan void transaksi tanpa supervisi dengan kasir POS terintegrasi.",
+  "viral_score": 94.8,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 93.0,
+  "problem_urgency": 96.0,
+  "platform_fit": 96.0,
+  "cta_clarity": 94.0,
+  "caption": "Omzet Ramai Tapi Profit Tipis? Waspadai 3 Titik Kebocoran Kasir yang Sering Dianggap Remeh\n\nSering merasa keuntungan toko menguap begitu saja? Hati-hati dengan 3 kebiasaan sepele di meja kasir ini:\n1. Transaksi manual tanpa struk saat toko sedang ramai pembeli.\n2. Mengambil uang kembalian untuk keperluan pribadi tanpa pencatatan petty cash.\n3. Kasir bebas menghapus atau membatalkan item belanja tanpa pengawasan supervisor.\n\nDi Toko Kamu, setiap transaksi kasir dilindungi dengan sistem keamanan kasir pintar Cooca Indonesia. Cepat, tepat, dan aman!\n\nCoba gratis sekarang di https://cooca.id (klik link di bio!)\n\n#kasirpintar #tipstoko #umkmmaju #keuangantoko #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "3 Kebiasaan Sepele Kasir yang Bikin Toko Bocor Halus",
+      "tag": "Edukasi Kasir"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:07"
+}

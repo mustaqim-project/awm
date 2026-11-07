@@ -1,0 +1,49 @@
+{
+  "automation_id": "cooca-carousel-instagram",
+  "channel": "instagram",
+  "format": "carousel",
+  "dimensions": "1080x1080",
+  "target_time": "12:15",
+  "slot_label": "Instagram Lunchtime 5-Slide HD Carousel",
+  "topic_id": "cashier_shift_reconciliation",
+  "topic_name": "Step-by-Step Rekap Kas Harian Tanpa Selisih Rp 1 Pun",
+  "hook_title": "5 Langkah Wajib Tutup Kasir Toko Kamu Biar Uang Fisik Selalu Cocok Sama Laporan Sistem",
+  "solution_summary": "SOP closing kasir 3 menit: Kunci saldo awal, catat petty cash, dan cetak ringkasan shift otomatis.",
+  "viral_score": 97.1,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 96.0,
+  "problem_urgency": 98.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "5 Langkah Wajib Tutup Kasir Toko Kamu Biar Uang Fisik Selalu Cocok Sama Laporan Sistem\n\nPernahkah kamu merasa omzet toko seharian ramai luar biasa, tapi pas hitung uang di laci kasir saat tutup toko malah tekor?\n\nJangan biarkan kerja keras seharian hilang tanpa bekas. Terapkan 5 langkah SOP tutup kasir Toko Kamu berikut ini (geser slide):\n1. Input dan kunci saldo kas awal di sistem saat toko pertama kali buka.\n2. Catat seketika semua pengeluaran kas kecil (uang galon, parkir, plastik).\n3. Pastikan tidak ada transaksi menggantung saat pergantian shift kasir.\n4. Hitung uang fisik dan bandingkan langsung dengan laporan sistem kasir.\n5. Cetak rekap shift otomatis untuk ditandatangani kasir dan supervisor.\n\nKelola kasir toko lebih rapi, tenang, dan anti-selisih bareng Cooca Indonesia di https://cooca.id\n\n#tipsbisnis #kasirtoko #selisihkas #sopkasir #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "5 Langkah Tutup Kasir Tanpa Selisih Rp 1 Pun",
+      "tag": "Tips Finansial"
+    },
+    {
+      "slide": 2,
+      "title": "Langkah 1: Kunci Saldo Kas Awal Sebelum Buka Toko",
+      "tag": "SOP Awal"
+    },
+    {
+      "slide": 3,
+      "title": "Langkah 2: Rekam Pengeluaran Operasional Kecil Seketika",
+      "tag": "Petty Cash"
+    },
+    {
+      "slide": 4,
+      "title": "Langkah 3: Hindari Nota Bon Gantung Saat Pergantian Shift",
+      "tag": "Disiplin Kasir"
+    },
+    {
+      "slide": 5,
+      "title": "Langkah 4-5: Cetak Rekap Shift Otomatis di Sistem COOCA",
+      "tag": "Hasil Otomatis"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:05"
+}

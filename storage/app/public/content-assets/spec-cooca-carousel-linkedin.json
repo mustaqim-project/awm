@@ -1,0 +1,49 @@
+{
+  "automation_id": "cooca-carousel-linkedin",
+  "channel": "linkedin",
+  "format": "carousel",
+  "dimensions": "1080x1080",
+  "target_time": "08:00",
+  "slot_label": "LinkedIn Morning Executive Carousel Deck",
+  "topic_id": "b2b_multi_outlet_governance",
+  "topic_name": "Arsitektur Kontrol Multi-Cabang & Tata Kelola Ritel B2B",
+  "hook_title": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet",
+  "solution_summary": "Terapkan pemisahan hak akses kasir vs supervisor dan pantau konsolidasi omzet seluruh cabang dari 1 dashboard cloud.",
+  "viral_score": 96.2,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 94.0,
+  "problem_urgency": 97.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet\n\nMengembangkan jaringan ritel modern dari 1 menjadi beberapa cabang menghadirkan tantangan tata kelola yang fundamental. Banyak pebisnis ritel mengalami kendala asimetri informasi: omzet terlihat bertumbuh, namun kebocoran stok dan ketidakteraturan kasir justru meningkat.\n\nBerikut kerangka operasional pengendalian multi-cabang yang diterapkan pada ekosistem Toko Kamu:\n1. Pembatasan Otorisasi: Wewenang kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan PIN Supervisor.\n2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang tercatat otomatis melalui pembacaan barcode terpusat.\n3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen.\n\nSeluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpadu melalui platform Cooca Indonesia di https://cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #TokoKamu #CoocaIndonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau?",
+      "tag": "Tata Kelola B2B"
+    },
+    {
+      "slide": 2,
+      "title": "Tantangan Terbesar Multi-Cabang: Kebocoran Wewenang",
+      "tag": "Masalah Ritel"
+    },
+    {
+      "slide": 3,
+      "title": "Pemisahan Hak Akses: Kasir vs Kepala Toko",
+      "tag": "SOP Sistem"
+    },
+    {
+      "slide": 4,
+      "title": "Konsolidasi Stok & Mutasi Antar Cabang Real-Time",
+      "tag": "Otomasi Cloud"
+    },
+    {
+      "slide": 5,
+      "title": "Pantau Seluruh Cabang dari 1 Smartphone Bersama COOCA",
+      "tag": "Solusi Eksekutif"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:01"
+}

@@ -1,0 +1,29 @@
+{
+  "automation_id": "cooca-umkm-educational-social-media",
+  "channel": "instagram",
+  "format": "feed",
+  "dimensions": "1080x1350",
+  "target_time": "19:45",
+  "slot_label": "UMKM Educational Evening Portrait 1080x1350 Feed",
+  "topic_id": "retail_margin_pricing_fundamentals",
+  "topic_name": "Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel",
+  "hook_title": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Toko Kamu yang Sebenarnya",
+  "solution_summary": "Pisahkan margin kotor dari HPP dengan biaya sewa, listrik, dan gaji karyawan sebelum menghitung laba bersih usaha.",
+  "viral_score": 96.8,
+  "gate_status": "PASSED (>= 80.0)",
+  "trend_velocity": 95.0,
+  "problem_urgency": 98.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Toko Kamu yang Sebenarnya\n\nBanyak pebisnis pemula bangga saat toko mencatat omzet Rp 100 juta per bulan. Namun saat akhir bulan tiba, uang di rekening tabungan ternyata ludes tak tersisa. Mengapa hal ini bisa terjadi?\n\nKuncinya ada pada pemahaman Margin Bersih vs Margin Kotor:\n- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum keuntungan riil!\n- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan plastik pembungkus.\n- Margin Bersih: Keuntungan sejati yang boleh ditarik sebagai profit bisnis Toko Kamu.\n\nHitung dan pantau margin laba bersih toko kamu secara otomatis tanpa repot lewat sistem COOCA di https://cooca.id\n\n#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Rumus Menghitung Margin Keuntungan Bersih Toko",
+      "tag": "Edukasi Fundamental"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:17"
+}

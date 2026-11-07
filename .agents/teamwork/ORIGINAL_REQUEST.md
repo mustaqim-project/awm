@@ -1,54 +1,47 @@
 # Original User Request
 
-## Initial Request — 2026-11-07T09:17:19Z
+## Initial Request — 2026-11-07T11:29:54Z
 
-Perbaiki tampilan antarmuka, kontrol otorisasi (RBAC), dokumentasi pemilik bisnis, dan audit kesiapan produksi pada modul `analytics`, `approvals`, dan `billing` di `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` sesuai standar sistem Cooca SaaS ERP.
+Audit, simplify UI layouts, enforce RBAC authorization, and generate business owner documentation for the Community, CRM, and Customers modules in COOCA for production readiness.
 
 Working directory: c:\laragon\www\cooca_core
 Integrity mode: development
 
 ## Requirements
 
-### R1. UI Simplification and Layout Cleanliness
-Terapkan penyederhanaan antarmuka pengguna pada seluruh view Blade di `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` sesuai prinsip `/ui-simplify-layout`:
-- Eliminasi tumpang tindih elemen (zero visual overlap), rapikan posisi tombol aksi (action buttons), dan pisahkan aksi utama (primary) dari aksi sekunder/tersier.
-- Pastikan tata letak informasi rapi, tidak padat/cluttered, mudah dibaca, serta responsif dan berfungsi optimal baik di viewport mobile (375px-430px) maupun desktop (>= 1024px).
+### R1. UI Simplification and Layout Optimization
+Simplify views in `resources/views/app/community`, `resources/views/app/crm`, and `resources/views/app/customers` using UI simplification principles: eliminate overlapping elements, structure button hierarchy (primary vs secondary/tertiary actions), and ensure responsive, uncluttered layouts across mobile and desktop viewports.
 
-### R2. Role-Based Access Control (RBAC) & Controller/View Guards
-Audit dan terapkan kontrol otorisasi berbasis peran (RBAC) untuk ketiga modul (`analytics`, `approvals`, `billing`) sesuai prinsip `/laravel-rbac`:
-- Pastikan rute dan method controller yang menangani ketiga modul dilindungi oleh permission guard / middleware otorisasi yang sesuai di level controller.
-- Amankan seluruh elemen aksi dan navigasi di dalam view Blade dengan pengecekan permission (misal `@can` atau directive otorisasi sistem), sehingga elemen aksi tidak tampak bagi pengguna tanpa izin akses.
+### R2. Role-Based Access Control (RBAC) Enforcement
+Audit and enforce RBAC authorization for the Community, CRM, and Customers modules at both controller and view levels: protect controller methods and routes with appropriate permission middleware/guards, register any missing permissions/seeders, and wrap view action buttons and links with authorization checks so unauthorized actions remain hidden.
 
 ### R3. Module Audit & Production Readiness
-Lakukan audit komprehensif terhadap kesiapan produksi pada modul `analytics`, `approvals`, dan `billing` sesuai standar `/laravel-module-audit`:
-- Periksa konsistensi penanganan error, validasi input, status empty state, feedback pengguna (flash alerts), dan konsistensi query data.
-- Pastikan modul siap digunakan di lingkungan produksi tanpa regresi logika bisnis.
+Audit the Community, CRM, and Customers modules for production readiness: verify error handling, input validation, empty states, flash feedback alerts, and data query consistency to ensure the modules operate reliably in production without regressions.
 
 ### R4. Business Owner User Documentation
-Susun atau perbarui dokumentasi panduan penggunaan modul `analytics`, `approvals`, dan `billing` dari sudut pandang (POV) Business Owner / pemilik UMKM sesuai standar `/business-owner-doc-generator`:
-- Tempatkan file dokumentasi pada direktori dokumentasi sistem (`resources/views/app/docs/` atau lokasi docs modul terkait).
-- Tulis panduan dengan bahasa yang bersahaja dan mudah dipahami tanpa jargon teknis rumit, serta sertakan tautan langsung (link/route) ke fitur yang relevan.
+Generate or update business owner user guidelines and documentation for Community, CRM, and Customers in `resources/views/app/docs/`: author the guides from the perspective of business owners (UMKM) using accessible language without technical jargon, and provide direct route links to the relevant module features.
 
 ## Verification Resources
-- Test suite dan skrip pengujian repositori (`php artisan test`).
-- Linter dan pengecekan sintaks PHP (`php -l`).
+- Project automated test suite (`php artisan test`)
+- PHP syntax checks (`php -l`)
 
 ## Acceptance Criteria
 
-### UI Simplification & Layout
-- [ ] Seluruh file view Blade pada `resources/views/app/analytics`, `resources/views/app/approvals`, dan `resources/views/app/billing` bebas dari elemen yang saling bertumpuk atau overlap.
-- [ ] Tombol aksi pada ketiga modul tertata dengan hierarki visual yang jelas (primary vs secondary actions) dan tidak berdesakan.
-- [ ] Tampilan antarmuka pada ketiga modul tidak mengalami layout broken atau horizontal overflow yang tidak wajar pada resolusi mobile (375px) dan desktop (1280px).
+### UI Layout & Responsiveness
+- [ ] Views across `resources/views/app/community`, `resources/views/app/crm`, and `resources/views/app/customers` display with no overlapping elements or broken layouts on mobile (375px) and desktop (1280px) viewports.
+- [ ] Action buttons have a clear hierarchy (primary action distinguished from secondary/tertiary actions) with no cramped or overlapping action rows.
+- [ ] Meaningful empty states are displayed when no records exist.
 
 ### RBAC & Security
-- [ ] Seluruh endpoint atau controller method terkait modul `analytics`, `approvals`, dan `billing` memiliki proteksi otorisasi / permission guard di level controller.
-- [ ] Tombol aksi, link modifikasi data, dan elemen sensitif pada view Blade dibungkus pengecekan hak akses (@can / permission check) dan tersembunyi bagi pengguna yang tidak memiliki wewenang.
+- [ ] All routes and controller actions for Community, CRM, and Customers are secured with controller-level permission guards or middleware.
+- [ ] Action buttons, modification links, and sensitive controls in Blade views are protected with permission checks (`@can` or equivalent) and hidden from unauthorized users.
+- [ ] Required permissions for Community, CRM, and Customers are registered in the system seeders / database schema.
 
-### Module Audit & Stability
-- [ ] Seluruh file PHP dan Blade yang dimodifikasi lolos verifikasi sintaks tanpa error (`php -l`).
-- [ ] Seluruh automated test suite yang relevan (`php artisan test`) berhasil dijalankan tanpa kegagalan (pass).
-- [ ] Setiap view memiliki penanganan tampilan kosong (empty state) yang rapi saat data belum tersedia.
+### Production Readiness & Verification
+- [ ] All modified and newly created PHP and Blade files pass syntax validation (`php -l`) without errors.
+- [ ] Relevant automated tests (`php artisan test`) pass without failures.
+- [ ] Flash notifications and validation error summaries are displayed consistently across module actions.
 
 ### Business Owner Documentation
-- [ ] Dokumentasi panduan penggunaan untuk modul `analytics`, `approvals`, dan `billing` tersedia di direktori dokumentasi (`resources/views/app/docs/` atau lokasi docs terkait).
-- [ ] Panduan ditulis dari sudut pandang pemilik bisnis dengan alur langkah yang jelas dan tautan rute ke fitur terkait.
+- [ ] User guidelines for Community, CRM, and Customers are available in `resources/views/app/docs/`.
+- [ ] Documentation includes practical feature walkthroughs and direct route links tailored for business owners.

@@ -1,0 +1,54 @@
+{
+  "automation_id": "cooca-daily-umkm-carousel",
+  "channel": "instagram",
+  "format": "carousel",
+  "dimensions": "1080x1350",
+  "target_time": "12:15",
+  "slot_label": "Daily UMKM Portrait 1080x1350 High-End Carousel",
+  "topic_id": "grand_blueprint_digital_umkm",
+  "topic_name": "Roadmap Transformasi Toko Kelontong Jadi Ritel Modern Mandiri",
+  "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Menjadi Ritel Modern",
+  "solution_summary": "Panduan transformasi menyeluruh: Pengelompokan barang, barcodeisasi rak, kasir scanner cepat, dan pemisahan uang usaha.",
+  "viral_score": 96.9,
+  "gate_status": "PASSED (>= 80.0)",
+  "trend_velocity": 95.0,
+  "problem_urgency": 97.0,
+  "platform_fit": 99.0,
+  "cta_clarity": 97.0,
+  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Menjadi Ritel Modern\n\nBanyak pemilik warung dan toko kelontong bermimpi punya minimarket modern yang tertata rapi dan bisa ditinggal tanpa khawatir. Kabar baiknya: transformasi digital tidak butuh modal miliaran!\n\nSimak 6 tahapan praktis membangun sistem modern di Toko Kamu (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak toko.\n2. Pakai scanner kasir cepat agar antrean tidak mengular.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual.\n6. Pantau performa toko setiap hari lewat aplikasi COOCA di HP.\n\nSiap bawa bisnis naik kelas hari ini? Coba demo gratisnya di https://cooca.id (klik link di bio profil!)\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Blueprint Toko Kelontong Menjadi Ritel Modern",
+      "tag": "Transformasi UMKM"
+    },
+    {
+      "slide": 2,
+      "title": "Fase 1: Standarisasi Kode Barcode Seluruh Produk",
+      "tag": "Identifikasi"
+    },
+    {
+      "slide": 3,
+      "title": "Fase 2: Transaksi Kasir Cepat di Bawah 3 Detik",
+      "tag": "Kecepatan Layanan"
+    },
+    {
+      "slide": 4,
+      "title": "Fase 3: Kartu Stok Digital & Notifikasi Minimum",
+      "tag": "Pergudangan"
+    },
+    {
+      "slide": 5,
+      "title": "Fase 4: Pisahkan Rekening Bisnis & Keperluan Dapur",
+      "tag": "Disiplin Finansial"
+    },
+    {
+      "slide": 6,
+      "title": "Kelola Toko Kamu Mandiri & Modern Bareng COOCA",
+      "tag": "Ekosistem Terpadu"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:08"
+}

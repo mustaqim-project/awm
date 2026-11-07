@@ -1,0 +1,49 @@
+{
+  "automation_id": "cooca-carousel-tiktok",
+  "channel": "tiktok",
+  "format": "carousel",
+  "dimensions": "1080x1080",
+  "target_time": "19:45",
+  "slot_label": "TikTok Prime Time Swipe Photo Carousel",
+  "topic_id": "swipe_secret_cashier_tricks",
+  "topic_name": "3 Fitur Rahasia Mesin Kasir yang Bikin Antrean Toko Bebas Macet",
+  "hook_title": "3 Trik Rahasia Kasir Toko Ramai yang Jarang Diketahui Karyawan! Geser Sampai Akhir",
+  "solution_summary": "Gunakan tombol shortcut barang favorit, integrasi QRIS dinamis 2 detik, dan cetak struk via WhatsApp tanpa kertas.",
+  "viral_score": 96.5,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 97.0,
+  "problem_urgency": 95.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "3 Trik Rahasia Kasir Toko Ramai yang Jarang Diketahui Karyawan! Geser Sampai Akhir\n\nJangan anggap wajar kalau antrean kasir selalu menumpuk dan bikin pelanggan jenuh. Ini 3 fitur rahasia kasir pintar yang wajib diaktifkan di toko kamu:\n1. Tombol Shortcut Produk: Transaksi barang terlaris cuma 1 kali sentuh layar.\n2. QRIS Dinamis 2 Detik: Total belanja langsung otomatis muncul di barcode pembeli.\n3. Struk Digital WhatsApp: Hemat biaya kertas dan nomor pembeli otomatis tersimpan rapi.\n\nSistem ini sudah dipakai di Toko Kamu bersama Cooca Indonesia. Praktis, cepat, dan anti-ribet!\n\nCoba gratis sekarang di https://cooca.id (klik link di bio profil!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "3 Trik Rahasia Kasir Toko Ramai Anti-Antre",
+      "tag": "Trik Bisnis"
+    },
+    {
+      "slide": 2,
+      "title": "Trik 1: Shortcut Barang Favorit Tanpa Perlu Ketik Nama",
+      "tag": "Kecepatan Kasir"
+    },
+    {
+      "slide": 3,
+      "title": "Trik 2: Scan QRIS Dinamis Langsung Sesuai Total Belanja",
+      "tag": "Pembayaran Cepat"
+    },
+    {
+      "slide": 4,
+      "title": "Trik 3: Kirim Struk Pembelian Langsung ke WhatsApp Pembeli",
+      "tag": "Hemat Kertas"
+    },
+    {
+      "slide": 5,
+      "title": "Kasir Toko Kamu Lebih Gesit Bareng COOCA, Cek Link di Bio",
+      "tag": "Teknologi Kasir"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:14"
+}

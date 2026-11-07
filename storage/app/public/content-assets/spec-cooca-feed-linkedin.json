@@ -1,0 +1,29 @@
+{
+  "automation_id": "cooca-feed-linkedin",
+  "channel": "linkedin",
+  "format": "feed",
+  "dimensions": "1080x1080",
+  "target_time": "08:00",
+  "slot_label": "LinkedIn Morning Business Single Infographic",
+  "topic_id": "retail_roi_executive_metrics",
+  "topic_name": "Analisis ROI & Metrik Efisiensi Sistem Kasir Modern",
+  "hook_title": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Ini Hitungan ROI Nyatanya",
+  "solution_summary": "Penghematan hingga 14 jam per minggu untuk rekap kasir dan eliminasi selisih kas dengan kasir pintar berkecepatan 2.8 detik.",
+  "viral_score": 94.6,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 92.0,
+  "problem_urgency": 95.0,
+  "platform_fit": 97.0,
+  "cta_clarity": 95.0,
+  "caption": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Ini Hitungan ROI Nyatanya\n\nBerdasarkan kajian lapangan di sektor ritel UMKM, rata-rata toko kehilangan 1.8% hingga 3.2% potensi margin kotor akibat inefisiensi pencatatan manual, kesalahan kembalian, dan rekonsiliasi kasir yang memakan waktu berjam-jam.\n\nPada studi kasus Toko Kamu bersama Cooca Indonesia:\n- Durasi transaksi kasir terpangkas menjadi hanya 2.8 detik per pelanggan.\n- Rekonsiliasi tutup shift harian selesai dalam 3 menit dengan akurasi 100%.\n- Penghematan waktu operasional mencapai 14 jam kerja produktif setiap minggu.\n\nModernisasi sistem kasir bukan sekadar biaya perangkat lunak, melainkan investasi strategis perlindungan margin usaha.\nPelajari sistem selengkapnya di https://cooca.id\n\n#EfisiensiBisnis #AnalisisROI #AplikasiKasirRitel #SOPRitel #TokoKamu #CoocaIndonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Analisis ROI Kasir Modern Toko Kamu",
+      "tag": "Metrik Bisnis"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:03"
+}

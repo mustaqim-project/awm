@@ -1,0 +1,29 @@
+{
+  "automation_id": "cooca-feed-facebook",
+  "channel": "facebook",
+  "format": "feed",
+  "dimensions": "1080x1080",
+  "target_time": "16:30",
+  "slot_label": "Facebook Afternoon Single Community Discussion Feed",
+  "topic_id": "receivables_bon_management",
+  "topic_name": "Solusi Mengelola Bon Hutang Pelanggan & Catatan Piutang Digital",
+  "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Toko Kamu Mengatur Piutang Tanpa Ribut",
+  "solution_summary": "Catat bon hutang dengan limit kredit per pelanggan dan kirim pengingat digital ramah otomatis via WhatsApp.",
+  "viral_score": 95.75,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 93.0,
+  "problem_urgency": 97.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 95.0,
+  "caption": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Toko Kamu Mengatur Piutang Tanpa Ribut\n\nDi kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali jadi dilema: Kalau tidak diberi hutang pelanggan batal beli, tapi kalau dibiarkan menumpuk arus kas toko yang macet.\n\nToko Kamu menerapkan solusi pembukuan piutang digital bersama Cooca Indonesia:\n- Batas maksimal plafon hutang ditentukan per pelanggan tetap.\n- Setiap bon tercatat otomatis saat transaksi kasir berlangsung.\n- Kirim struk dan pengingat tanggal jatuh tempo yang sopan via WhatsApp.\n\nArus kas toko tetap sehat, hubungan dengan tetangga dan pelanggan pun tetap harmonis.\nDiskusikan sistem pembukuan piutang toko kamu di https://cooca.id\n\n#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #TokoKamu #CoocaIndonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Solusi Bon Hutang Pelanggan & Buku Piutang Digital",
+      "tag": "Diskusi Komunitas"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:12"
+}

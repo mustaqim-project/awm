@@ -1,0 +1,49 @@
+{
+  "automation_id": "cooca-carousel-facebook",
+  "channel": "facebook",
+  "format": "carousel",
+  "dimensions": "1080x1080",
+  "target_time": "16:30",
+  "slot_label": "Facebook Afternoon Community Album Carousel",
+  "topic_id": "warehouse_stock_discrepancy",
+  "topic_name": "Studi Kasus: Selisih Stok Gudang vs Buku dan Cara Audit Otomatis",
+  "hook_title": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?",
+  "solution_summary": "Audit kartu stok otomatis dan terapkan alert stok minimum saat kasir memindai barcode transaksi.",
+  "viral_score": 96.1,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 94.0,
+  "problem_urgency": 98.0,
+  "platform_fit": 97.0,
+  "cta_clarity": 95.0,
+  "caption": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?\n\nBagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah momok yang sangat menyita waktu dan tenaga. Berikut bedah studi kasus yang terjadi pada pengelolaan stok toko dan solusinya (buka album foto):\n\n1. Mengapa Stok Kerap Selisih? Seringkali barang terjual belum terdata kasir atau salah letak di rak display.\n2. Dampak Finansial: Pembeli kecewa karena barang di sistem ada tapi di rak kosong, serta kerugian modal barang hilang.\n3. Solusi Otomasi: Gunakan pemindaian barcode saat penerimaan barang dan terapkan peringatan otomatis saat stok mencapai batas minimum.\n\nSistem manajemen inventori Toko Kamu didukung oleh Cooca Indonesia untuk memastikan akurasi stok hingga 99%.\nBagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di https://cooca.id\n\n#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #TokoKamu #CoocaIndonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Studi Kasus Selisih Stok Gudang vs Buku",
+      "tag": "Studi Kasus Ritel"
+    },
+    {
+      "slide": 2,
+      "title": "Mengapa Stok Barang Kerap Menguap Tanpa Jejak?",
+      "tag": "Analisis Masalah"
+    },
+    {
+      "slide": 3,
+      "title": "Dampak Selisih Stok Terhadap Neraca Keuangan Toko",
+      "tag": "Fakta Finansial"
+    },
+    {
+      "slide": 4,
+      "title": "Solusi: Pemindaian Barcode Masuk & Keluar Otomatis",
+      "tag": "Langkah Mitigasi"
+    },
+    {
+      "slide": 5,
+      "title": "Terapkan Kartu Stok Real-Time di Toko Kamu Bareng COOCA",
+      "tag": "Solusi Ritel"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:10"
+}

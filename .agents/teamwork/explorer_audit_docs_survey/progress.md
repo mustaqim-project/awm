@@ -1,15 +1,11 @@
-# Progress — explorer_audit_docs_survey
+# Progress — Production Audit & Docs Survey
 
-Last visited: 2026-11-07T09:34:00Z
-Status: Completed
-
-## Tasks
-- [x] Initialize DISPATCH.md, BRIEFING.md, and progress.md
-- [x] Read ORIGINAL_REQUEST.md
-- [x] Read domain skill instructions (laravel-module-audit, business-owner-doc-generator, cooca-agent-directive)
-- [x] Investigate production readiness for Analytics module (error handling, validation, flash alerts, multi-tenant scoping, test coverage: 9/9 PASS)
-- [x] Investigate production readiness for Approvals module (error handling, validation, flash alerts, multi-tenant scoping, test coverage: 17/17 PASS, View-Level RBAC button gaps identified)
-- [x] Investigate production readiness for Billing module (error handling, validation, flash alerts, multi-tenant scoping, test coverage: 32/32 PASS, IDOR protected)
-- [x] Investigate Documentation architecture in `resources/views/app/docs/` and `DocumentationWebController.php` (Structure, partials layout, TOC navigator, missing analytics docs, skeletal approval/billing docs identified)
-- [x] Synthesize findings, formulate remediation plan, and write `handoff.md`
-- [x] Send handoff message to orchestrator
+- **Last visited**: 2026-11-07T11:43:30Z
+- **Current status**: Starting investigation into Community, CRM, and Customers modules
+- **Tasks**:
+  - [ ] 1. Discover controllers, models, and routes for Community, CRM, and Customers
+  - [ ] 2. Investigate Automated Test Coverage (tests/Feature and tests/Unit)
+  - [ ] 3. Audit Production Readiness (Error handling, FormRequest/validate, flash alerts, multi-tenant scoping, pagination)
+  - [ ] 4. Inspect Documentation Architecture (resources/views/app/docs/, index.blade.php, partials, TOC, 20-industry matrices)
+  - [ ] 5. Write `survey_report.md`
+  - [ ] 6. Write `handoff.md` and send report to parent

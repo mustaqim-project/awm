@@ -1,0 +1,29 @@
+{
+  "automation_id": "cooca-feed-tiktok",
+  "channel": "tiktok",
+  "format": "feed",
+  "dimensions": "1080x1080",
+  "target_time": "19:45",
+  "slot_label": "TikTok Prime Time Single FYP Video/Image Feed",
+  "topic_id": "cashier_fraud_void_prevention",
+  "topic_name": "POV Anti-Fraud: Cegah Transaksi Void Palsu di Meja Kasir",
+  "hook_title": "POV Kasir: Mau Hapus Transaksi Belanja Tapi Layar Langsung Minta PIN Supervisor",
+  "solution_summary": "Kunci mutlak keamanan meja kasir: Tombol void dan diskon manual hanya bisa dibuka dengan persetujuan manajer toko.",
+  "viral_score": 98.25,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 98.0,
+  "problem_urgency": 99.0,
+  "platform_fit": 99.0,
+  "cta_clarity": 96.0,
+  "caption": "POV Kasir: Mau Hapus Transaksi Belanja Tapi Layar Langsung Minta PIN Supervisor\n\nJangan biarkan uang kembalian atau transaksi void kasir bikin omzet toko kamu hilang sia-sia.\nDengan sistem Kasir Pintar COOCA di Toko Kamu:\n- Kasir tidak bisa hapus transaksi tanpa otorisasi PIN Supervisor.\n- Rekap kas otomatis per pergantian shift kasir dalam 1 menit.\n- Struk belanja langsung terkirim via WhatsApp pelanggan.\n\nCoba gratis sekarang di https://cooca.id (klik link di bio!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #tokokamu #coocaindonesia",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "slides": [
+    {
+      "slide": 1,
+      "title": "POV Anti-Fraud: Proteksi Tombol Void Kasir Pintar",
+      "tag": "Keamanan Toko"
+    }
+  ],
+  "evaluated_at": "2026-11-07 18:47:15"
+}
