@@ -56,6 +56,7 @@ $PHP_BIN artisan db:seed --class=DefaultUnitSeeder --force
 $PHP_BIN artisan db:seed --class=DefaultCostCategorySeeder --force
 $PHP_BIN artisan db:seed --class=BusinessTemplateSeeder --force
 $PHP_BIN artisan db:seed --class=PostSeeder --force
+$PHP_BIN artisan cooca:deploy-umkm-carousel || true
 
 # 6. Storage Link & Folder Permissions
 echo "✓ Mengatur symlink storage dan izin direktori..."
