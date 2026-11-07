@@ -65,7 +65,9 @@ function evaluateViralPotential(feature) {
 async function loginAsDemoUser(page, context, authPath) {
   console.log('[Playwright] Authenticating as demo user (demo@cooca.id)...');
   try {
-    await page.goto('http://cooca_core.test/login', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    if (!page.url().includes('/login')) {
+      await page.goto('http://cooca_core.test/login', { waitUntil: 'domcontentloaded', timeout: 35000 });
+    }
     
     // Check if already authenticated and redirected away from /login
     if (!page.url().includes('/login')) {
@@ -86,7 +88,7 @@ async function loginAsDemoUser(page, context, authPath) {
 
     console.log('[Playwright] Submitting login form...');
     await Promise.all([
-      page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 25000 }),
+      page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 35000 }),
       page.click('form[action*="login"] button[type="submit"]', { noWaitAfter: true })
     ]);
 
@@ -123,11 +125,11 @@ async function captureScreen(feature, outDir, slug) {
   
   console.log(`[Playwright] Navigating to ${targetUrl}...`);
   try {
-    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 25000 });
+    await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 35000 });
     await page.waitForTimeout(2000); // allow charts/animations to settle
   } catch (err) {
     console.warn(`[Playwright] Warning on navigation: ${err.message}. Retrying load...`);
-    await page.goto(targetUrl, { waitUntil: 'load', timeout: 20000 }).catch(() => {});
+    await page.goto(targetUrl, { waitUntil: 'load', timeout: 25000 }).catch(() => {});
   }
 
   // DETEKSI SESSION EXPIRED / REDIRECT KE LOGIN
@@ -137,10 +139,10 @@ async function captureScreen(feature, outDir, slug) {
     if (loginSuccess) {
       console.log(`[Playwright] Re-navigating to ${targetUrl} after successful login...`);
       try {
-        await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 25000 });
+        await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 35000 });
         await page.waitForTimeout(2000);
       } catch (e) {
-        await page.goto(targetUrl, { waitUntil: 'load', timeout: 20000 }).catch(() => {});
+        await page.goto(targetUrl, { waitUntil: 'load', timeout: 25000 }).catch(() => {});
       }
     }
   }

@@ -1,52 +1,62 @@
 {
   "cookies": [
     {
-      "name": "_ga_HZSN9QHGN1",
-      "value": "GS2.1.s1793937127$o1$g0$t1793937127$j60$l0$h0",
+      "name": "_ga",
+      "value": "GA1.1.97386948.1793937127",
       "domain": ".cooca_core.test",
       "path": "/",
-      "expires": 1828497127.354667,
+      "expires": 1828575315.621395,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "_ga",
-      "value": "GA1.1.97386948.1793937127",
-      "domain": ".cooca_core.test",
+      "name": "remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d",
+      "value": "eyJpdiI6ImhrNlQ5Q1RnR09oTXVsK1k2d203Snc9PSIsInZhbHVlIjoiVXQ0RGU0U0JtM3RyTVV5T1VBTnZwOHovdldaQ3BCVmxRTWNxaDg1d0MwR2IwS3UxYnpGTE8yRzdCNXJxajRlc3lXdWM1VTBDVmQvZkFhVkp3dldrbUZDMmhOSllIL3IxMm91dWZ6UnBXRS9TKzNrMXAxUU5ONm04dDZUcFlCby9IamV6TEVYOHlMK0ZSc1NDVnM3c1dQRkJGZ2JKMWpiaElPdVBBdkJZUGFnRk84SWVtdVRBU09zeUp1RzlvRXJPTVFQYkowM2xmY1pFajZLcUxWeThkazkxTEpobjFmVXh4RlhTUVk0bUl6Mlg3Q3VZcHZwZHNGZXBkSXA1aXpJSWpGWUhUZ3Ewb3N5NnIzK1haQ3JyL0E9PSIsIm1hYyI6IjEyYTBlOTI4NGVhM2E1ZTRhYzM0YTcxNDE5OTk3YWEzMjM5ZGMzNDU3MGU5ZTNmZGRmNGJhY2I4ODZhMTVmNzYiLCJ0YWciOiIifQ%3D%3D",
+      "domain": "cooca_core.test",
       "path": "/",
-      "expires": 1828497127.355892,
-      "httpOnly": false,
+      "expires": 1828575318.024928,
+      "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "cooca_wa_trusted_device",
-      "value": "eyJpdiI6Imp6bHlOZ0RuaFRNNzJXdmFLVC9VdEE9PSIsInZhbHVlIjoiVy9vYWZKNndHbTFndWhGSWNOS2Y2d0dPVzRyOTB6eFhYK1FwQmJFc2ErOXBybDQ5allBQW82STIxd2VhR0ozWTFWcTZHZXhNeE0wVGpRTVl6NC9PTmw1c1BuVDBjcDFWWXFLNWtsV3l3WVdPTitZcTM0M3gzamxJS1U1L1R3WHc1MW9BWjNONllvampFbFJOUEU4bGpXR0xjaVJPWjJUOWdmem5RK3dWY0tEYXk4Tzl3RG4yN3ZLK1BXaWc3VC9kZTJOd3VlcXZ5dnQ4U2hEUUxFUlRuVGhMSDVXSHZjM1ZNUjI3RUVKN2NjRVA0b0xEa3FtNHRHMmQvMDFsYm1xRCIsIm1hYyI6ImNkMGFjODVjMWNiYTMyYmY0ZTc5YzUzY2NkMTA5YzE1ZmFlOWI5YjA5ZDVlZmY3YzlhYTI5MTQwZGY2N2FlZjQiLCJ0YWciOiIifQ%3D%3D",
+      "value": "eyJpdiI6IkJMWEpFSm12VjFtR3BtcDZ3bVpac0E9PSIsInZhbHVlIjoiVHdJUUV5YjlZVjF3Z0JYRmRMZDJVakVHR1NtWU85RCtHUDNMR2U3ZElRNDcvcTcrSTRwemhOaFZOR1NBTVloN0ZVamZFWHM4YjVCbllNWnRaT2JEalFFOEJJc1Y5NGIwLy8yNThTaTFDUU1CS3dpQWY2bkJ5SUp0djgvWVhraG1XbjJrb1BNVndpcjZDY09wVncyemhyS0NGdmw2ZU44VXhtUHU2NTgzRENHK0pMVGZpUXVjNWh5QlFBSS92c3VVTGFXRGQ4ZGx6RzBrTU96Yncraml6U2FaT3JaSEM3ZGx2cW5lbzREOUs4Yk9qUFRDTU5RVUtMdDh2TUpodkNaeSIsIm1hYyI6Ijk4ZDc4NDFjYmMxYjdhODRiODQzNTNmYWJlNmZiMGJhOWM2YTIwNTNiYmY3YTA5NGRkOTk5MWRlMzczZTlhNjgiLCJ0YWciOiIifQ%3D%3D",
       "domain": "cooca_core.test",
       "path": "/",
-      "expires": 1799121127.43573,
+      "expires": 1799199318.02498,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "XSRF-TOKEN",
-      "value": "eyJpdiI6IlllaFYxa2p5K2JITmZZbVgwNDdJR0E9PSIsInZhbHVlIjoialEvcEhVWHFEOE5wN2lsTTJGSmFiMDFEUmhUNmg5UFVjSzBOOVp0cmZocDF4Z0xXVnl2NU9NUUcyQVRmWGVPSkFYd3JLcWxGeFgvVmJLSjBvb1EzR3cyRWlsSGhpalpvTk4rL092eThRbTRqa0R5T1dVRElDbUI3REd0VXE1dVYiLCJtYWMiOiJjMmQzZTE3NjEyNjc1YjdiMGQ4ZmUwYWIxYTQwMTc1OTBiZTFjOWQxMTRjYTEwODRhODYxZDVkNTc1ZWMyMThlIiwidGFnIjoiIn0%3D",
+      "value": "eyJpdiI6IlVFbEt0RTlLdmlNUlM5NFJrYVY4UUE9PSIsInZhbHVlIjoibzJ0TzVMcGpJVUh0UWNyMWZLV0g4NWNOQ01vMFNmbnR3MUs2Z1dHamhNaHdkM21ObkFPaUJDc0ZyU2hXWDdibFZQdmlWQmdmdy80SHM0TVQxOXNWNWlOYkF2RHhGS3dYV21VeHR6TjZXRS8zaCt1SmU4TDdVWkZkOG9iZG0wcDYiLCJtYWMiOiIxZWYyMGQ2ZWYzZDU1NjQ4MDM2Y2M1ZjQ2ZTJmZWRkODY4NDA3ZmJjODJiMjc5YWNiNDg0Y2Q1NDNjMDU2ODBkIiwidGFnIjoiIn0%3D",
       "domain": "cooca_core.test",
       "path": "/",
-      "expires": 1793944327.880819,
+      "expires": 1794022535.831897,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "cooca-session",
-      "value": "eyJpdiI6IjQxSVJNa25Mb2tnb0lNSkdBazVJNmc9PSIsInZhbHVlIjoiL2tJQVBXbmFTRjBzazRKb21jdEEyYWE0bXE5OW9ROGJ6WGdBU2tMQU1CbDJGZVRQMTQ5Q21SUlBKWjdHWm1pMXhZbVEyZmRRSG9xanpGSEg3VHAwUStzalh1YU1zMDdMV3dHYVlLS3FKblJabWxpQW9KOC9UVVpDVWx3ZUh5Y1giLCJtYWMiOiIwNmNhMTEzYWJkY2U3MTFjOGZhMGUwODMzODVkNzU1ZTUzODJiN2IwOTdiZGNiYzUwMzJmNjQwYzBjZDY4OTQ2IiwidGFnIjoiIn0%3D",
+      "value": "eyJpdiI6IndDZXg1dDBxNFZtbWdCS24xenp6S2c9PSIsInZhbHVlIjoiMHdpZU05NkFEZzNlWmhpYmZmQ3AyNm8xYytrY1VzWmZKbm4zbkRtbWxsWjluMDNaNm0vLy9DUWI1STNsd2pmMEVSR05YUTNWNnRIbFQ2SlhVZmE5ZVdvVC9aR1VaOFU0OWNjK1JyZFhWcXUrK2VCcFZnVnRWcFBXeldRYnlCV0oiLCJtYWMiOiJiYjhkMTgzYzQwZDM2MTM2M2Y4YzgxMmNmYWZiMDljNTJhMjc4MmEyODM3YjQwODFhMGI0NzFmYzcxZWUxMTJmIiwidGFnIjoiIn0%3D",
       "domain": "cooca_core.test",
       "path": "/",
-      "expires": 1793944327.881012,
+      "expires": 1794022535.832122,
       "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_HZSN9QHGN1",
+      "value": "GS2.1.s1794015315$o2$g1$t1794015335$j40$l0$h0",
+      "domain": ".cooca_core.test",
+      "path": "/",
+      "expires": 1828575335.855291,
+      "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     }
