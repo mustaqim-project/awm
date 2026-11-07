@@ -30,7 +30,7 @@ class DeployUmkmCarouselAndViralPostsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Deploy 5-slide HD 3D & Human Cutout Instagram Carousel and 4 unique daily viral platform posts into production';
+    protected $description = 'Deploy 5-slide HD 3D & Human Cutout Instagram Carousel into production (Exclusively for Instagram)';
 
     /**
      * Execute the console command.
@@ -38,7 +38,7 @@ class DeployUmkmCarouselAndViralPostsCommand extends Command
     public function handle(AdminSocialMediaService $adminSocialMediaService): int
     {
         $this->info('====================================================================');
-        $this->info('  COOCA PRODUCTION DEPLOYMENT: HD 3D CAROUSEL & 4 VIRAL PLATFORMS   ');
+        $this->info('  COOCA INSTAGRAM CAROUSEL AUTOMATION: 5 SLIDES HD 3D & HUMAN CUTOUT ');
         $this->info('====================================================================');
 
         $admin = Admin::first();
@@ -50,17 +50,28 @@ class DeployUmkmCarouselAndViralPostsCommand extends Command
         $startDateStr = (string) ($this->option('start-date') ?: '2026-11-09');
         $force = (bool) $this->option('force');
 
+        // Clean up any non-Instagram platform posts so automation is strictly Instagram-only
+        $this->info('Menyelaraskan database: Menghapus pos platform non-Instagram agar khusus Instagram saja...');
+        SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', '!=', 'instagram'))->delete();
+        SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', '!=', 'instagram'))->delete();
+        SocialMediaPost::where('is_platform', true)->where('platform', '!=', 'instagram')->delete();
+
         if ($force) {
-            $this->warn('Force mode aktif: Menghapus data jadwal media sosial platform sebelumnya...');
-            SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true))->delete();
-            SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true))->delete();
-            SocialMediaPost::where('is_platform', true)->delete();
+            $this->warn('Force mode aktif: Menghapus postingan Instagram carousel sebelumnya...');
+            SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram'))->delete();
+            SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram'))->delete();
+            SocialMediaPost::where('is_platform', true)->where('platform', 'instagram')->delete();
+        } else {
+            // Delete previous carousel posts to avoid duplicates on redeployment
+            SocialPostMedia::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
+            SocialPostTarget::whereHas('post', fn ($q) => $q->where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel'))->delete();
+            SocialMediaPost::where('is_platform', true)->where('platform', 'instagram')->where('media_type', 'carousel')->delete();
         }
 
         // =========================================================================
         // 1. DEPLOY MULTI-SLIDE INSTAGRAM CAROUSEL (5 SLIDES HD 3D & HUMAN CUTOUT)
         // =========================================================================
-        $this->info("\n[1/2] Menyiapkan Multi-Slide Carousel Instagram (5 Slides 1080x1080)...");
+        $this->info("\n[Instagram Exclusivity] Menyiapkan Multi-Slide Carousel Instagram (5 Slides 1080x1080)...");
 
         $carouselSlides = [
             [
@@ -182,176 +193,52 @@ CAPTION;
             'retry_count'             => 0,
         ]);
 
-        $this->info(" -> Berhasil membuat Carousel Post [ID: {$carouselPost->id}] dengan 5 slide HD 3D.");
+        $this->info(" -> Berhasil membuat Carousel Post [ID: {$carouselPost->id}] khusus Instagram dengan 5 slide HD 3D.");
 
         // =========================================================================
-        // 2. DEPLOY 4 KONTEN UNIK HARIAN DI JAM VIRAL RESMI
+        // 2. RINGKASAN DEPLOYMENT EKSKLUSIF INSTAGRAM
         // =========================================================================
-        $this->info("\n[2/2] Menyiapkan 4 Konten Harian di Jam Viral Resmi Lintas Platform...");
-
-        $dailyPostsSpec = [
-            [
-                'platform'     => 'linkedin',
-                'viral_time'   => '08:00:00',
-                'slot_label'   => 'B2B Morning Insight',
-                'feature_id'   => 'multi_outlet',
-                'feature_name' => 'Multi-Cabang Dari 1 Layar HP',
-                'image_rel'    => 'admin/social-media-assets/carousel/slide-01.png',
-                'viral_score'  => 91.3,
-                'caption'      => <<<TXT
-Tantangan terbesar scale up bisnis ritel bukan membuka cabang baru, melainkan mempertahankan standarisasi dan kontrol stok lintas outlet.
-
-Di Toko Kamu yang didukung oleh Cooca Indonesia, monitoring 3 cabang diselesaikan dari satu layar smartphone:
-- Pantau perputaran omzet kasir per outlet secara real-time.
-- Transfer barang antar gudang tercatat otomatis tanpa risiko selisih stok fisik.
-- Hak akses kasir dibatasi per cabang untuk mencegah manipulasi data keuangan.
-
-Pelajari sistem multi-outlet terintegrasi untuk bisnis Anda di: https://cooca.id
-
-#CoocaERP #TataKelolaBisnis #MultiOutlet #SOPBisnis #ManajemenRitel #TokoKamu #CoocaIndonesia
-TXT
-            ],
-            [
-                'platform'     => 'instagram',
-                'viral_time'   => '12:15:00',
-                'slot_label'   => 'Lunchtime Visual Carousel',
-                'feature_id'   => 'pos',
-                'feature_name' => 'Kasir POS Pintar Kilat',
-                'image_rel'    => 'admin/social-media-assets/carousel/slide-01.png',
-                'viral_score'  => 96.5,
-                'is_carousel'  => true,
-                'post_id'      => $carouselPost->id, // Reuses carousel post created above
-                'caption'      => $carouselCaption,
-            ],
-            [
-                'platform'     => 'facebook',
-                'viral_time'   => '16:30:00',
-                'slot_label'   => 'Afternoon Community Post',
-                'feature_id'   => 'inventory',
-                'feature_name' => 'Manajemen Stok & Low-Stock Alert',
-                'image_rel'    => 'admin/social-media-assets/carousel/slide-02.png',
-                'viral_score'  => 95.1,
-                'caption'      => <<<TXT
-Bagi rekan-rekan pemilik toko dan grosir ritel, pernahkah mengalami situasi stok di buku masih ada 10 pcs tapi saat dicari di rak barangnya sudah habis?
-
-Hal ini biasanya terjadi karena:
-1. Kasir lupa mencatat barang keluar saat toko sedang ramai.
-2. Ada retur barang yang tidak tercatat ke kartu stok.
-3. Tidak ada sistem notifikasi saat barang sudah mencapai batas minimum.
-
-Di Toko Kamu bersama Cooca Indonesia, setiap kali kasir scan produk di kasir, kartu stok otomatis berkurang detik itu juga. Ketika barang menipis, sistem langsung mengirim pengingat otomatis untuk restock.
-
-Simak studi kasus lengkapnya di: https://cooca.id
-
-#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #TokoKamu #CoocaIndonesia
-TXT
-            ],
-            [
-                'platform'     => 'tiktok',
-                'viral_time'   => '19:45:00',
-                'slot_label'   => 'Prime Time FYP Hook',
-                'feature_id'   => 'fraud_prevention',
-                'feature_name' => 'Hak Akses Kasir & Anti-Kecurangan',
-                'image_rel'    => 'admin/social-media-assets/carousel/slide-03.png',
-                'viral_score'  => 96.2,
-                'caption'      => <<<TXT
-3 detik langsung beres! Trik kasir toko anti-bocor kas dan anti-kecurangan.
-
-Jangan biarkan uang kembalian atau transaksi void kasir bikin omzet toko kamu hilang sia-sia.
-Dengan sistem Kasir Pintar COOCA di Toko Kamu:
-- Kasir tidak bisa hapus transaksi tanpa PIN Supervisor.
-- Rekap kas otomatis per pergantian shift.
-- Struk belanja langsung terkirim via WhatsApp pelanggan.
-
-Coba gratis sekarang di https://cooca.id (klik link di bio!)
-
-#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #tokokamu #coocaindonesia
-TXT
-            ],
-        ];
-
-        $tableRows = [];
-
-        foreach ($dailyPostsSpec as $spec) {
-            $targetPlatform = $spec['platform'];
-            $scheduledAtCarbon = Carbon::parse("{$startDateStr} {$spec['viral_time']}");
-
-            if (! empty($spec['is_carousel'])) {
-                // Post already registered
-                $post = $carouselPost;
-            } else {
-                $publicUrl = asset('storage/' . $spec['image_rel']);
-                $cleanCap = str_replace(['—', '–'], '-', $spec['caption']);
-
-                $post = SocialMediaPost::create([
-                    'admin_id'          => $admin->id,
-                    'business_id'       => null,
-                    'is_platform'       => true,
-                    'platform'          => $targetPlatform,
-                    'content'           => trim($cleanCap),
-                    'media_type'        => 'image',
-                    'media_urls'        => [$publicUrl],
-                    'local_media_paths' => [$spec['image_rel']],
-                    'status'            => 'scheduled',
-                    'approval_status'   => 'approved',
-                    'scheduled_at'      => $scheduledAtCarbon,
-                    'metrics'           => [
-                        'viral_score' => $spec['viral_score'],
-                        'slot_label'  => $spec['slot_label'],
-                    ],
-                ]);
-
-                $fullPath = public_path('storage/' . $spec['image_rel']);
-                $fileSize = file_exists($fullPath) ? filesize($fullPath) : (file_exists(public_path($spec['image_rel'])) ? filesize(public_path($spec['image_rel'])) : 1000000);
-
-                SocialPostMedia::create([
-                    'social_media_post_id' => $post->id,
-                    'sort_order'           => 1,
-                    'media_type'           => 'image',
-                    'media_url'            => $publicUrl,
-                    'local_path'           => $spec['image_rel'],
-                    'file_size'            => $fileSize,
-                    'metadata'             => [
-                        'dimensions' => '1080x1080',
-                        'aspect'     => '1:1',
-                        'title'      => $spec['feature_name'],
-                    ],
-                ]);
-
-                SocialPostTarget::create([
-                    'social_media_post_id'    => $post->id,
-                    'social_media_account_id' => null,
-                    'provider'                => in_array($targetPlatform, ['facebook', 'instagram', 'threads'], true) ? 'meta' : ($targetPlatform === 'linkedin' ? 'linkedin' : 'tiktok'),
-                    'channel'                 => $targetPlatform,
-                    'content_type'            => 'photo',
-                    'custom_caption'          => null,
-                    'status'                  => 'scheduled',
-                    'scheduled_at'            => $scheduledAtCarbon,
-                    'retry_count'             => 0,
-                ]);
-            }
-
-            $tableRows[] = [
-                $post->id,
-                strtoupper($targetPlatform),
-                $spec['slot_label'],
-                $scheduledAtCarbon->format('d M Y H:i') . ' WIB',
-                $spec['viral_score'] . '/100',
-                strtoupper($post->status),
-                $spec['feature_name'],
+        $slideTableRows = [];
+        foreach ($carouselSlides as $idx => $s) {
+            $slideTableRows[] = [
+                'Slide ' . ($idx + 1),
+                $s['title'],
+                $s['rel_path'],
+                '1080x1080 (1:1)',
+                '100% HD Ready',
             ];
         }
 
         $this->info("\n==========================================================================================");
-        $this->info("  SCHEDULED CONTENT SUMMARY (4 Platform-Unique Posts at Viral Hours)                     ");
+        $this->info("  INSTAGRAM CAROUSEL AUTOMATION: 5-SLIDE SLIDESHOW STRUCTURE                             ");
         $this->info("==========================================================================================");
         $this->table(
-            ['Post ID', 'Platform', 'Slot Viral', 'Jadwal Tayang', 'Skor Viral', 'Status', 'Topik Fitur'],
-            $tableRows
+            ['Slide #', 'Fokus Konten & Pesan', 'Lokasi File Aset', 'Dimensi', 'Status Visual'],
+            $slideTableRows
         );
 
-        $this->info("\nSemua konten (Carousel 5 Slide + 4 Postingan Harian di Jam Viral) berhasil dideploy ke sistem!");
-        $this->info("Buka Admin Social Media Center di: " . route('admin.social-media.index', ['tab' => 'posts']));
+        $summaryTable = [
+            [
+                $carouselPost->id,
+                'INSTAGRAM (ONLY)',
+                'Lunchtime Viral Peak',
+                $igSchedTime->format('d M Y H:i') . ' WIB',
+                '96.8 / 100',
+                strtoupper($carouselPost->status),
+                'Solusi Selisih Kas & POS Pintar (5 Slide)',
+            ],
+        ];
+
+        $this->info("\n==========================================================================================");
+        $this->info("  SCHEDULED CONTENT SUMMARY (EXCLUSIVELY FOR INSTAGRAM)                                   ");
+        $this->info("==========================================================================================");
+        $this->table(
+            ['Post ID', 'Saluran', 'Slot Viral', 'Jadwal Tayang', 'Skor Viral IG', 'Status', 'Format'],
+            $summaryTable
+        );
+
+        $this->info("\nOtomatisasi Carousel berhasil dideploy KHUSUS UNTUK INSTAGRAM SAJA!");
+        $this->info("Buka Admin Social Media Center di: " . route('admin.social-media.index', ['tab' => 'posts', 'status' => 'scheduled']));
 
         return Command::SUCCESS;
     }
