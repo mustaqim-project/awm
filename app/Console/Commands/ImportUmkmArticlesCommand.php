@@ -202,47 +202,56 @@ final class ImportUmkmArticlesCommand extends Command
 
         $this->info("Found {$totalFiles} article files in {$dir}. Starting import...");
 
-        // 1. Ensure Standard Clusters Exist
-        $clusterTutorial = PostCluster::firstOrCreate(
-            ['code' => 'tutorial'],
-            [
-                'name' => 'Cluster K - Tutorial Cara',
-                'slug' => 'tutorial',
-                'description' => 'Panduan teknis langkah demi langkah operasional bisnis, POS kasir, dan resep usaha',
-                'icon' => 'wrench',
-                'is_active' => true,
-                'sort_order' => 1,
-            ]
-        );
+        $hasClustersTable = \Illuminate\Support\Facades\Schema::hasTable('post_clusters');
+        $hasCategoriesTable = \Illuminate\Support\Facades\Schema::hasTable('post_categories');
+        $hasClusterIdCol = \Illuminate\Support\Facades\Schema::hasColumn('posts', 'cluster_id');
+        $hasCategoryIdCol = \Illuminate\Support\Facades\Schema::hasColumn('posts', 'category_id');
 
-        $clusterEdukasi = PostCluster::firstOrCreate(
-            ['code' => 'edukasi'],
-            [
-                'name' => 'Cluster O - Edukasi Topikal',
-                'slug' => 'edukasi',
-                'description' => 'Wawasan bisnis, manajemen keuangan, permodalan, legalitas, dan scale-up UMKM',
-                'icon' => 'graduation-cap',
-                'is_active' => true,
-                'sort_order' => 2,
-            ]
-        );
-
-        // 2. Ensure Categories Exist with High-Quality Metadata
-        $categoryMap = [];
-        $order = 1;
-        foreach (self::CATEGORY_CONFIG as $catName => $meta) {
-            $cat = PostCategory::firstOrCreate(
-                ['slug' => Str::slug($catName)],
+        $clusterTutorial = null;
+        $clusterEdukasi = null;
+        if ($hasClustersTable) {
+            $clusterTutorial = PostCluster::firstOrCreate(
+                ['code' => 'tutorial'],
                 [
-                    'name' => $catName,
-                    'description' => $meta['description'],
-                    'color' => $meta['color'],
-                    'icon' => $meta['icon'],
+                    'name' => 'Cluster K - Tutorial Cara',
+                    'slug' => 'tutorial',
+                    'description' => 'Panduan teknis langkah demi langkah operasional bisnis, POS kasir, dan resep usaha',
+                    'icon' => 'wrench',
                     'is_active' => true,
-                    'sort_order' => $order++,
+                    'sort_order' => 1,
                 ]
             );
-            $categoryMap[$catName] = $cat;
+
+            $clusterEdukasi = PostCluster::firstOrCreate(
+                ['code' => 'edukasi'],
+                [
+                    'name' => 'Cluster O - Edukasi Topikal',
+                    'slug' => 'edukasi',
+                    'description' => 'Wawasan bisnis, manajemen keuangan, permodalan, legalitas, dan scale-up UMKM',
+                    'icon' => 'graduation-cap',
+                    'is_active' => true,
+                    'sort_order' => 2,
+                ]
+            );
+        }
+
+        $categoryMap = [];
+        if ($hasCategoriesTable) {
+            $order = 1;
+            foreach (self::CATEGORY_CONFIG as $catName => $meta) {
+                $cat = PostCategory::firstOrCreate(
+                    ['slug' => Str::slug($catName)],
+                    [
+                        'name' => $catName,
+                        'description' => $meta['description'],
+                        'color' => $meta['color'],
+                        'icon' => $meta['icon'],
+                        'is_active' => true,
+                        'sort_order' => $order++,
+                    ]
+                );
+                $categoryMap[$catName] = $cat;
+            }
         }
 
         // 3. Process Each File
@@ -265,12 +274,12 @@ final class ImportUmkmArticlesCommand extends Command
             // Determine cluster
             $isTutorial = str_contains($parsed['cluster_raw'] ?? '', 'Cluster K') || str_contains($parsed['cluster_raw'] ?? '', 'Tutorial');
             $clusterCode = $isTutorial ? 'tutorial' : 'edukasi';
-            $clusterId = $isTutorial ? $clusterTutorial->id : $clusterEdukasi->id;
+            $clusterId = ($hasClustersTable && ($clusterTutorial || $clusterEdukasi)) ? ($isTutorial ? $clusterTutorial?->id : $clusterEdukasi?->id) : null;
 
             // Determine category
             $catName = $parsed['category'] ?? 'Umum';
             $categoryObj = $categoryMap[$catName] ?? null;
-            if (!$categoryObj) {
+            if (!$categoryObj && $hasCategoriesTable) {
                 $categoryObj = PostCategory::firstOrCreate(
                     ['slug' => Str::slug($catName)],
                     [
@@ -306,9 +315,7 @@ final class ImportUmkmArticlesCommand extends Command
                 'title' => $parsed['title'],
                 'slug' => $parsed['slug'],
                 'cluster' => $clusterCode,
-                'cluster_id' => $clusterId,
                 'category' => $catName,
-                'category_id' => $categoryObj->id,
                 'excerpt' => $parsed['excerpt'] ?? '',
                 'content' => $parsed['content'] ?? '',
                 'cover_image' => $coverImage,
@@ -319,6 +326,13 @@ final class ImportUmkmArticlesCommand extends Command
                 'is_published' => true,
                 'published_at' => $publishedAt,
             ];
+
+            if ($hasClusterIdCol && $clusterId) {
+                $postAttributes['cluster_id'] = $clusterId;
+            }
+            if ($hasCategoryIdCol && $categoryObj) {
+                $postAttributes['category_id'] = $categoryObj->id;
+            }
 
             if (!empty($parsed['created_at'])) {
                 $postAttributes['created_at'] = Carbon::parse($parsed['created_at'], 'Asia/Jakarta');

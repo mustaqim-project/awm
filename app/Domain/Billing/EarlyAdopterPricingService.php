@@ -85,6 +85,10 @@ final class EarlyAdopterPricingService
      */
     public function getActiveBatchForTier(string $tier, string $cycle = 'monthly'): ?SubscriptionPricingBatch
     {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('subscription_pricing_batches')) {
+            return null;
+        }
+
         $tier = strtolower($tier);
 
         // Find candidate active batches

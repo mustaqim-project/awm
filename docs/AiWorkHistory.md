@@ -33,6 +33,71 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-07-383] UMKM Business Education SEO Content Strategy, Article Generation (Batch 2: ID 271-280) & Production Deployment for COOCA
+
+- **Date:** 2026-11-07
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends & Regulatory Research November 2026, 10 Curated SEO Articles (ID 271-280), Zero Em Dash Compliance, Pure /blog/(slug) Internal Linking, Resilient DB Importer, Schema.org Article & FAQPage JSON-LD, Automated DB Import & Public Sitemap Regeneration
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika regulasi bisnis dan operasional terbaru UMKM Indonesia per November 2026 (PP No. 20 Tahun 2026 tentang PPh Final UMKM, UU Pelindungan Ketenagakerjaan perihal upah mikro 50% UMK, kewajiban BPJS Ketenagakerjaan KUR Permenko No. 1/2026, klarifikasi NIB, logistik hyperlocal, pencegahan fraud kasir, otomasi WhatsApp piutang, pemisahan rekening, audit inventory shrinkage, dan penguncian HPP bahan baku kuliner) untuk mendongkrak trafik organik, otoritas domain, dan akuisisi merchant Cooca.
+- **Target:**
+  1. Melakukan riset komprehensif Google Trends & Regulatory Analysis Kategori 3 (Bisnis & Keuangan) dan menghasilkan 	rending-research-2026-11-07-batch2.json serta keyword-research-2026-11-07-batch2.json.
+  2. Memproduksi 10 artikel edukasi bisnis berkualitas tinggi (ID 271 hingga 280) dengan kepatuhan mutlak:
+     - Tanpa karakter em dash () maupun en dash ().
+     - Tautan internal eksklusif dari /blog/(slug) valid di log_links.json (3-5 internal link unik per artikel).
+     - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
+     - Lolos linter konten (lint_content.py) dengan status 0 FAIL.
+  3. Mengimpor seluruh artikel ke database sistem melalui php artisan blog:import-articles (total 295 artikel terverifikasi, 285 post aktif), memperbarui public/sitemap_blog.xml, dan dataset log_links.json.
+  4. Memperkuat ketahanan ImportUmkmArticlesCommand dan EarlyAdopterPricingService terhadap kondisi database partial/offline.
+
+#### 2. What Was Done
+1. **Riset Tren & Regulasi Bisnis Nasional (November 2026):**
+   - ID 271: Aturan Baru PPh Final UMKM 0,5% Menurut PP No. 20 Tahun 2026: Batas Wajib Pajak Orang Pribadi, PT Perorangan, dan Pengecualian PT/CV Baru.
+   - ID 272: Aturan Khusus Upah Minimum UMKM 50 Persen UMK Berdasarkan UU Pelindungan Ketenagakerjaan & Simulasi Biaya Gaji.
+   - ID 273: Syarat Wajib BPJS Ketenagakerjaan Pengajuan KUR 2026 Sesuai Permenko Perekonomian No. 1 Tahun 2026 Skema BPU.
+   - ID 274: Klarifikasi NIB Usaha Tidak Otomatis Kena Pajak, Perlindungan Hukum OSS RBA, dan Portal SAPA UMKM.
+   - ID 275: Strategi Logistik Hyperlocal UMKM: Pemanfaatan Gudang Penyangga (Micro-Fulfillment) dan Kurir Instan Sameday.
+   - ID 276: SOP Mencegah Fraud dan Void Kasir: Otorisasi PIN Supervisor POS dan Audit Rekonsiliasi Kas Harian.
+   - ID 277: Cara Otomasi Penagihan Piutang UMKM via WhatsApp Gateway Berjenjang agar Invoice Cepat Lunas.
+   - ID 278: Panduan Pemisahan Rekening Bisnis dan Pribadi: Cegah Salah Hitung Pajak DJP dan Kebocoran Modal Toko.
+   - ID 279: SOP Pengendalian Inventory Shrinkage: Menekan Selisih, Kerusakan, dan Kehilangan Barang di Toko Ritel.
+   - ID 280: Cara Mengunci HPP dan Kontrak Pasokan Bahan Baku Kuliner Sebelum Lonjakan Harga Musiman Libur Panjang.
+2. **Produksi Artikel Markdown & Metadata JSON:**
+   - Menghasilkan 10 pasang berkas .md dan .json di database/data/articles/ (271 sampai 280).
+   - Menjalankan script validasi lint_content.py dengan hasil 100% lulus (0 FAIL).
+3. **Database Import & Regenerasi Public Sitemap:**
+   - Menyempurnakan ImportUmkmArticlesCommand.php dengan fallback schema check yang adaptif.
+   - Memperbaiki EarlyAdopterPricingService.php dengan pengecekan aman keberadaan tabel subscription_pricing_batches.
+   - Menjalankan php artisan blog:import-articles (total 295 artikel terimpor sukses, sitemap tergenerasi ulang).
+   - Memperbarui log_links.json menjadi 285 slug artikel blog aktif.
+   - Memverifikasi HTTP GET route /blog/{slug} berstatus 200 OK dengan Schema.org JSON-LD Article dan FAQPage lengkap.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - docs/AiWorkHistory.md
+  - pp/Console/Commands/ImportUmkmArticlesCommand.php
+  - pp/Domain/Billing/EarlyAdopterPricingService.php
+  - log_links.json
+- **Files Created:**
+  - database/data/articles/trending-research-2026-11-07-batch2.json
+  - database/data/articles/keyword-research-2026-11-07-batch2.json
+  - scripts/generate_batch2_articles.py
+  - database/data/articles/271-aturan-pph-final-umkm-pp-20-tahun-2026.md & .json
+  - database/data/articles/272-aturan-upah-minimum-umkm-50-persen-umk.md & .json
+  - database/data/articles/273-syarat-bpjs-ketenagakerjaan-pengajuan-kur-2026.md & .json
+  - database/data/articles/274-nib-usaha-tidak-otomatis-kena-pajak.md & .json
+  - database/data/articles/275-strategi-logistik-hyperlocal-umkm.md & .json
+  - database/data/articles/276-sop-mencegah-fraud-dan-void-kasir.md & .json
+  - database/data/articles/277-otomasi-penagihan-piutang-via-whatsapp.md & .json
+  - database/data/articles/278-panduan-pemisahan-rekening-bisnis-dan-pribadi.md & .json
+  - database/data/articles/279-cara-mengatasi-inventory-shrinkage-toko-ritel.md & .json
+  - database/data/articles/280-cara-mengunci-hpp-bahan-baku-kuliner.md & .json
+
+---
+
 ### [WORK-2026-11-07-382] Google Trends Business Research, Blog Article Production (10 Artikel SEO Edukasi UMKM ID 261-270) & Production Deployment for COOCA
 
 - **Date:** 2026-11-07
