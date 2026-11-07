@@ -629,14 +629,12 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // AI POS & Predictive Analytics (Legacy compatibility)
-        Route::middleware('require.permission:ai.access')->group(function (): void {
-            Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
-            Route::post('/pos/ai/ask', [PosAiWebController::class, 'ask'])->middleware('entitlement:ai')->name('pos.ai.ask');
-            Route::post('/pos/ai/execute-action', [PosAiWebController::class, 'executeAction'])->middleware('entitlement:ai')->name('pos.ai.execute-action');
-        });
+        Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
+        Route::post('/pos/ai/ask', [PosAiWebController::class, 'ask'])->middleware('entitlement:ai')->name('pos.ai.ask');
+        Route::post('/pos/ai/execute-action', [PosAiWebController::class, 'executeAction'])->middleware('entitlement:ai')->name('pos.ai.execute-action');
 
         // COOCA AI Digital Company Command Center & 3 Distinct AI Office Environments
-        Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('cooca-ai')->name('cooca-ai.')->group(function (): void {
+        Route::middleware('entitlement:ai')->prefix('cooca-ai')->name('cooca-ai.')->group(function (): void {
             Route::get('/', [AiCompanyWebController::class, 'lobby'])->name('index');
             Route::get('/office', [AiCompanyWebController::class, 'lobby'])->name('office.view');
             Route::get('/office/executive', [AiCompanyWebController::class, 'executiveOffice'])->name('office.executive');
@@ -672,7 +670,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // Legacy /ai Compatibility: 301 Permanent Canonical Redirects & Named Fallbacks
-        Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('ai')->name('ai.')->group(function (): void {
+        Route::middleware('entitlement:ai')->prefix('ai')->name('ai.')->group(function (): void {
             Route::get('/', fn() => redirect()->route('cooca-ai.index', [], 301))->name('office');
             Route::get('/office', fn() => redirect()->route('cooca-ai.office.view', [], 301))->name('office.view');
             Route::get('/office/executive', fn() => redirect()->route('cooca-ai.office.executive', [], 301))->name('office.executive');

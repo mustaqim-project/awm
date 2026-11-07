@@ -1,154 +1,425 @@
-# Handoff Report: Mobile Codebase Readiness (`cooca_my_own`) for Phase 1
+# Handoff Report: AI & AI Studio Routes, Controllers & RBAC Audit
 
-**Agent ID**: `explorer_survey_2`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\`  
-**Date**: 2026-11-02  
-**Handoff Type**: Hard (Task Complete)  
+**Date**: 2026-11-07  
+**Agent**: Explorer 2 (Controllers, Routes & RBAC)  
+**Target Repository**: `c:\laragon\www\cooca_core`  
+**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2`  
+**Parent Agent**: `e2aae656-229b-42bb-a7be-8273bdd8a984`
 
 ---
 
 ## 1. Observation
 
-1. **POS & Shift Management**:
-   - `lib/screens/pos/pos_shift_modal.dart` (lines 63-102, 109-117, 122-158):
-     - Active shift check & sync: calls `_posService.getActiveShift(locationId: ...)` (`GET /api/v1/pos/shifts/active`) and `_posService.getShiftSummary(...)` (`GET /api/v1/pos/shifts/$shiftId/summary`).
-     - Expected cash computation:
-       `double get _expectedCash => (_liveShiftSummary?['expected_cash'] as num?)?.toDouble() ?? widget.state.activeShift?.expectedCash ?? 0.0;`
-       `double get _cashVariance => _enteredCash - _expectedCash;`
-     - Action button calls `widget.state.openShift(...)` (`POST /api/v1/pos/shifts/open`) and `widget.state.closeShift(...)` (`POST /api/v1/pos/shifts/$shiftId/close`).
-   - `lib/screens/pos_screen.dart`:
-     - Top header cashier shift pill (lines 1265-1289):
-       `onTap: () => PosShiftModal.show(context, state)`
-     - Main Operations Menu Sheet `_showMainMenu(MerchantState state)` (lines 358-840):
-       Section `"OPERASIONAL KASIR"` (lines 498-587) contains `"Kelola Shift"` / `"Buka Shift"` (lines 503-531), `"Pesanan Tertahan"` (lines 533-559), `"Riwayat Transaksi"` (lines 561-572), `"Pilih Cabang / Outlet"` (lines 574-585).
-   - `lib/state/merchant_state.dart`:
-     - `PosShift? activeShift;` (line 66)
-     - `bool get hasActiveShift => activeShift != null && activeShift!.status == 'open';` (line 67)
-     - `void updateActiveShift(PosShift? shift)` (lines 69-72)
-     - `openShift(...)` (lines 1480-1497) and `closeShift(...)` (lines 1500-1518).
-   - `lib/models/order.dart`:
-     - `class PosShift` (lines 129-170) parses `opening_cash`, `total_cash_sales`, `total_non_cash_sales`, `expected_cash`.
+### 1.1 Route Mapping & Route-Level Middleware
+Direct inspection of `routes/owner.php` and `routes/admin.php` revealed all route groups governing AI and AI Studio:
 
-2. **State Management & Network Layer**:
-   - `lib/state/merchant_state.dart`: Central `ChangeNotifier` singleton (`factory MerchantState() => _instance;`).
-   - `lib/core/services/api_client.dart`:
-     - Base URL: `defaultProductionUrl = 'https://cooca.id'`, `defaultLocalLaragonUrl = 'http://cooca_core.test'` (lines 13-36).
-     - Sanctum Token: read from SharedPreferences and injected into headers:
-       `if (_customerToken != null && _customerToken!.isNotEmpty) headers['Authorization'] = 'Bearer $_customerToken';` (line 96)
-     - Multi-tenant ID: `headers['X-Business-Id'] = bizId;` (line 100).
-   - `lib/core/services/pos_offline_sync_manager.dart` (lines 14-56, 59-150):
-     - Uses RFC4122 v4 UUID (`client_uuid`) for idempotency.
-     - Offline queue managed in `LocalStorageService`.
-     - Dispatches batch payload via `_posService.batchSync(...)` (`POST /api/v1/pos/sync/batch`).
+#### A. AI Digital Company / AI Office (`routes/owner.php:638-702`)
+Route group is currently guarded at the route level with:
+`Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('cooca-ai')->name('cooca-ai.')->group(...)`
+- `GET /cooca-ai` (`cooca-ai.index`) -> `AiCompanyWebController@lobby`
+- `GET /cooca-ai/office` (`cooca-ai.office.view`) -> `AiCompanyWebController@lobby`
+- `GET /cooca-ai/office/executive` (`cooca-ai.office.executive`) -> `AiCompanyWebController@executiveOffice`
+- `GET /cooca-ai/office/operations` (`cooca-ai.office.operations`) -> `AiCompanyWebController@operationsOffice`
+- `GET /cooca-ai/office/growth` (`cooca-ai.office.growth`) -> `AiCompanyWebController@growthOffice`
+- `POST /cooca-ai/ask` (`cooca-ai.ask`) -> `AiCompanyWebController@ask`
+- `POST /cooca-ai/daily-check` (`cooca-ai.daily-check`) -> `AiCompanyWebController@triggerDailyCheck`
+- `POST /cooca-ai/teamwork` (`cooca-ai.teamwork`) -> `AiCompanyWebController@teamwork`
+- `POST /cooca-ai/goal` (`cooca-ai.goal`) -> `AiCompanyWebController@goal`
+- `POST /cooca-ai/grill-me` (`cooca-ai.grill-me`) -> `AiCompanyWebController@grillMe`
+- `POST /cooca-ai/boost` (`cooca-ai.boost`) -> `AiCompanyWebController@boost`
+- `POST /cooca-ai/schedule` (`cooca-ai.schedule`) -> `AiCompanyWebController@schedule`
+- `GET /cooca-ai/actions` (`cooca-ai.actions`) -> `AiCompanyWebController@actions`
+- `POST /cooca-ai/actions/{proposal}/approve` (`cooca-ai.actions.approve`) -> `AiCompanyWebController@approveAction`
+- `POST /cooca-ai/actions/{proposal}/revise` (`cooca-ai.actions.revise`) -> `AiCompanyWebController@reviseAction`
+- `POST /cooca-ai/actions/{proposal}/reject` (`cooca-ai.actions.reject`) -> `AiCompanyWebController@rejectAction`
+- `GET /cooca-ai/history` (`cooca-ai.history`) -> `AiCompanyWebController@history`
+- `GET /cooca-ai/providers` (`cooca-ai.providers`) -> `AiCompanyWebController@providers`
+- `POST /cooca-ai/providers` (`cooca-ai.providers.store`) -> `AiCompanyWebController@storeProvider`
+- `POST /cooca-ai/providers/test` (`cooca-ai.providers.test`) -> `AiCompanyWebController@testProvider`
+- `POST /cooca-ai/providers/detect-models` (`cooca-ai.providers.detect-models`) -> `AiCompanyWebController@detectModels`
+- `GET /cooca-ai/agents/avatars` (`cooca-ai.agents.avatars`) -> `AiCompanyWebController@getAgentAvatars`
+- `POST /cooca-ai/agents/{role}/avatar` (`cooca-ai.agents.avatar.update`) -> `AiCompanyWebController@updateAgentAvatar`
+- `GET /cooca-ai/live-metrics` (`cooca-ai.live-metrics`) -> `AiCompanyWebController@liveMetrics`
+- `GET /cooca-ai/rules` (`cooca-ai.rules.index`) -> `AiCompanyWebController@getRules`
+- `POST /cooca-ai/rules` (`cooca-ai.rules.store`) -> `AiCompanyWebController@storeRule`
+- `PATCH /cooca-ai/rules/{rule}/toggle` (`cooca-ai.rules.toggle`) -> `AiCompanyWebController@toggleRule`
+- `DELETE /cooca-ai/rules/{rule}` (`cooca-ai.rules.destroy`) -> `AiCompanyWebController@deleteRule`
+- Legacy 301 redirects and POST aliases are declared at `routes/owner.php:675-702` under `/ai/*`.
+- Guardrail routes for Social Media Inbox (`routes/owner.php:1002-1005`) also route to `AiCompanyWebController@getRules`, `@storeRule`, `@toggleRule`, `@deleteRule`.
 
-3. **Approvals & Dashboard Integration**:
-   - `lib/screens/dashboard_screen.dart`:
-     - Executive Header (lines 330-390): Contains notification icon button with unread red badge dot (lines 374-386).
-     - Financial Hero Card (lines 455, 507, 571-630).
-     - Active Shift Bar (lines 459, 525, 870-980).
-     - Operational Pulse Bento (lines 463, 512, 1100-1250): 4 metric cards with badges.
-     - Module Launcher Grid (lines 471, 529, 1514-1640): 6 core enterprise modules (`Kasir POS`, `Antrean/KDS`, `Presensi Tim`, `HR & Staf`, `Laporan`, `Inventori`).
-   - Apple HIG Design Tokens:
-     - `lib/core/theme/ios_tokens.dart`: `IOSSpacing`, `IOSRadius`, `IOSColors`, `IOSText`, and `IOSThemeContext` extensions.
-     - `lib/core/theme/ios_adaptive.dart`: `IOSBreakpoints`, `isCompact`, `isTablet`, `screenMargin`.
-     - Haptics: `HapticFeedback.lightImpact()`, `mediumImpact()`, `heavyImpact()`, `selectionClick()`, `vibrate()` from `flutter/services.dart`.
+#### B. POS AI & Analytics (`routes/owner.php:631-636`)
+Route group is currently guarded at route level with:
+`Route::middleware('require.permission:ai.access')->group(...)`
+- `GET /pos/ai` (`pos.ai.index`) and `GET /cooca-ai/pos` (`cooca-ai.pos`) -> `PosAiWebController@index`
+- `POST /pos/ai/ask` (`pos.ai.ask`) -> `PosAiWebController@ask` (with route middleware `entitlement:ai`)
+- `POST /pos/ai/execute-action` (`pos.ai.execute-action`) -> `PosAiWebController@executeAction` (with route middleware `entitlement:ai`)
 
-4. **Camera & Media Support**:
-   - `pubspec.yaml`:
-     - Line 43: `image_picker: ^1.2.4`
-     - Line 44: `permission_handler: ^11.3.1`
-     - Line 46: `camera: ^0.12.1`
-   - `android/app/src/main/AndroidManifest.xml`:
-     - Line 5: `<uses-permission android:name="android.permission.CAMERA"/>`
-     - Line 8: `<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />`
-     - Line 9: `<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />`
-     - Line 17: `<uses-feature android:name="android.hardware.camera" android:required="false" />`
-   - `ios/Runner/Info.plist`:
-     - Line 50: `<key>NSCameraUsageDescription</key>` present.
-     - Line 56: `<key>NSPhotoLibraryUsageDescription</key>` present.
-   - Existing ImagePicker usage: `lib/screens/auth/account_recovery_sheet.dart` (line 103) and `lib/core/services/location_biometric_service.dart` (line 152).
+#### C. AI Studio Projects & Generation (`routes/owner.php:704-729`)
+Route group has clean routing without route-level permission middleware:
+`Route::prefix('ai-studio')->name('ai-studio.')->group(...)`
+- `GET /ai-studio` (`ai-studio.index`) -> `OwnerAiStudioWebController@index`
+- `GET /ai-studio/create` (`ai-studio.create`) -> `OwnerAiStudioWebController@create`
+- `POST /ai-studio/projects` (`ai-studio.projects.store`) -> `OwnerAiStudioWebController@store`
+- `GET /ai-studio/projects/{project}` (`ai-studio.show`) -> `OwnerAiStudioWebController@show`
+- `DELETE /ai-studio/projects/{project}` (`ai-studio.projects.destroy`) -> `OwnerAiStudioWebController@destroy`
+- `POST /ai-studio/prompt/compile` (`ai-studio.prompt.compile`) -> `OwnerAiStudioWebController@compilePrompt`
+- `POST /ai-studio/generate` (`ai-studio.generate`) -> `OwnerAiStudioWebController@dispatchGeneration`
+- `GET /ai-studio/projects/{project}/generations/{generation}/status` (`ai-studio.generation.status`) -> `OwnerAiStudioWebController@generationStatus`
+- `POST /ai-studio/assets/{asset}/export-to-catalog` (`ai-studio.assets.export-to-catalog`) -> `OwnerAiStudioWebController@exportToCatalog`
+- `POST /ai-studio/assets/{asset}/export-to-social-media` (`ai-studio.assets.export-to-social-media`) -> `OwnerAiStudioWebController@exportToSocialMedia`
+- `POST /ai-studio/assets/{asset}/toggle-favorite` (`ai-studio.assets.toggle-favorite`) -> `OwnerAiStudioWebController@toggleFavoriteAsset`
+- `DELETE /ai-studio/assets/{asset}` (`ai-studio.assets.destroy`) -> `OwnerAiStudioWebController@destroyAsset`
+- `GET /ai-studio/credit-history` (`ai-studio.credit-history`) -> `OwnerAiStudioWebController@creditHistory`
+- `GET /ai-studio/topup-packages` (`ai-studio.topup.packages`) -> `OwnerAiStudioWebController@topupPackages`
+- `POST /ai-studio/topup` (`ai-studio.topup.order`) -> `OwnerAiStudioWebController@orderTopup`
+- `GET /ai-studio/topup/{payment}/status` (`ai-studio.topup.status`) -> `OwnerAiStudioWebController@checkTopupStatus`
 
-5. **Testing Infrastructure & Health**:
-   - `test/industry_gating_test.dart` and `test/widget_test.dart` exist.
-   - Command `flutter analyze` executed in `c:\laragon\www\cooca_my_own`:
-     - Verbatim result: `No issues found! (ran in 16.1s)` — Exit Code 0.
-   - Command `flutter test` executed in `c:\laragon\www\cooca_my_own`:
-     - Verbatim result: `00:03 +10: All tests passed!` — Exit Code 0.
+#### D. AI Studio Inspiration Library (`routes/owner.php:730-745`)
+- `GET /ai-studio/inspiration` (`ai-studio.inspiration.index`) -> `OwnerInspirationWebController@index`
+- `GET /ai-studio/inspiration/search` (`ai-studio.inspiration.search`) -> `OwnerInspirationWebController@search`
+- `GET /ai-studio/inspiration/categories` (`ai-studio.inspiration.categories`) -> `OwnerInspirationWebController@categories`
+- `GET /ai-studio/inspiration/collections` (`ai-studio.inspiration.collections`) -> `OwnerInspirationWebController@collections`
+- `POST /ai-studio/inspiration/collections` (`ai-studio.inspiration.collections.store`) -> `OwnerInspirationWebController@storeCollection`
+- `GET /ai-studio/inspiration/collections/{collection}` (`ai-studio.inspiration.collections.show`) -> `OwnerInspirationWebController@showCollection`
+- `POST /ai-studio/inspiration/collections/{collection}/items` (`ai-studio.inspiration.collections.items.store`) -> `OwnerInspirationWebController@addItemToCollection`
+- `DELETE /ai-studio/inspiration/collections/{collection}/items/{item}` (`ai-studio.inspiration.collections.items.destroy`) -> `OwnerInspirationWebController@removeItemFromCollection`
+- `GET /ai-studio/inspiration/favorites` (`ai-studio.inspiration.favorites`) -> `OwnerInspirationWebController@favorites`
+- `POST /ai-studio/inspiration/favorites/toggle` (`ai-studio.inspiration.favorites.toggle`) -> `OwnerInspirationWebController@toggleFavorite`
+- `GET /ai-studio/inspiration/my-library` (`ai-studio.inspiration.my-library`) -> `OwnerInspirationWebController@myLibrary`
+- `POST /ai-studio/inspiration/my-library/upload` (`ai-studio.inspiration.my-library.upload`) -> `OwnerInspirationWebController@uploadAsset`
+- `POST /ai-studio/inspiration/use-as-reference` (`ai-studio.inspiration.use-as-reference`) -> `OwnerInspirationWebController@useAsReference`
+- `GET /ai-studio/inspiration/{inspiration}` (`ai-studio.inspiration.show`) -> `OwnerInspirationWebController@show`
+
+---
+
+### 1.2 Controller-Level Authorization Status
+
+| Controller | Implements `HasMiddleware` | Constructor Middleware | Method-Level Checks | Encapsulation Status |
+|---|---|---|---|---|
+| `OwnerAiStudioWebController` | **YES** (`line 48`) | None | `abort_unless($payment->business_id === $business->id, 403)` | **Compliant** (`ai_studio.view`, `generate`, `manage`) |
+| `OwnerInspirationWebController` | **YES** (`line 38`) | None | Tenant abort check (`line 307, 332, 383`) | **Compliant** (`ai_studio.view`, `manage`) |
+| `AdminAiTokenController` | **YES** (`line 28`) | None | None | **Compliant** (`require.admin.permission`) |
+| `AdminAiStudioVisualController` | **YES** (`line 22`) | None | None | **Compliant** (`require.admin.permission`) |
+| `AdminAiStudioSourceController` | **YES** (`line 18`) | None | None | **Compliant** (`require.admin.permission`) |
+| `AdminAiStudioPricingController` | **YES** (`line 20`) | None | None | **Compliant** (`require.admin.permission`) |
+| `AdminInspirationManagementController`| **YES** (`line 31`) | None | None | **Compliant** (`require.admin.permission`) |
+| `AiCompanyWebController` | **NO** (`line 41`) | **NO** | `approveAction` calls `canApprove` (`line 496`) | **NON-COMPLIANT** (0 Controller RBAC) |
+| `PosAiWebController` | **NO** (`line 15`) | **NO** | `executeAction` uses FormRequest | **NON-COMPLIANT** (0 Controller RBAC) |
+
+**Verbatim Code Quote - Non-compliant `AiCompanyWebController.php:41`**:
+```php
+final class AiCompanyWebController extends Controller
+{
+    public function __construct(
+        private readonly AiOrchestrator $orchestrator = new AiOrchestrator(),
+        private readonly AiActionExecutor $actionExecutor = new AiActionExecutor(),
+        private readonly AiActionPolicy $actionPolicy = new AiActionPolicy(),
+        private readonly AiProviderManager $providerManager = new AiProviderManager(),
+        private readonly AiBusinessTeamworkService $teamworkService = new AiBusinessTeamworkService(),
+    ) {}
+    // 29 public methods without static middleware() method
+}
+```
+
+---
+
+### 1.3 Database Seeders & Permission Matrix (`database/seeders/RbacSeeder.php`)
+
+Direct inspection of `database/seeders/RbacSeeder.php:178-187` revealed:
+```php
+// ─── AI Assistant ─────────────────────────────────────────
+'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, dan chatbot AI.'],
+
+// ─── AI Studio & Viral Inspiration ───────────────────────
+'ai_studio.view'              => ['Lihat AI Studio',                        'ai_studio',   'Melihat dashboard AI Studio dan perpustakaan inspirasi viral.'],
+'ai_studio.generate'          => ['Generate Gambar AI Studio',              'ai_studio',   'Membuat gambar produk dan media sosial dengan AI Studio.'],
+'ai_studio.manage'            => ['Kelola AI Studio',                       'ai_studio',   'Mengelola proyek, aset inspirasi, dan riwayat generasi AI Studio.'],
+'admin.ai_studio.sources'     => ['Kelola Sumber Provider AI Studio',       'ai_studio',   'Mengatur konektor sumber dan kredensial API provider inspirasi.'],
+'admin.ai_studio.pricing'     => ['Kelola Tarif Kredit AI Studio',          'ai_studio',   'Mengatur margin dan konversi kredit generasi AI.'],
+```
+
+#### Discovery of Phantom Permission `ai.approve`:
+In `app/Domain/Ai/Policy/AiActionPolicy.php:68`:
+```php
+return Context::hasPermission('ai.approve');
+```
+In `app/Http/Requests/Ai/ExecuteAiPosActionRequest.php:21, 25`:
+```php
+if ($actionType === 'create_invoice') {
+    return Context::hasPermission('invoices.create') || Context::hasPermission('pos.orders') || Context::hasPermission('ai.approve');
+}
+if ($actionType === 'create_quotation') {
+    return Context::hasPermission('quotations.create') || Context::hasPermission('pos.orders') || Context::hasPermission('ai.approve');
+}
+```
+`ai.approve` is checked in business logic, but **does NOT exist in `RbacSeeder.php`**!
+
+#### Discovery of Missing `ai.manage`:
+Endpoints `storeProvider`, `testProvider`, `detectModels` (which manage external API Keys and endpoints for OpenAI/Anthropic/Gemini) and guardrails endpoints `storeRule`, `toggleRule`, `deleteRule` in `AiCompanyWebController` currently have no dedicated permission. Any user with generic `ai.access` who sends a POST to `/cooca-ai/providers` can reconfigure company API keys!
+
+---
+
+### 1.4 View-Level Authorization Scan (31 Blade Files)
+
+Scanning `resources/views/app/ai/` (13 files) and `resources/views/app/ai-studio/` (11 files) revealed that **29 out of 31 views** have ZERO authorization guards around interactive action buttons and forms:
+
+1. `resources/views/app/ai/actions.blade.php`:
+   - Approve action form (`cooca-ai.actions.approve`): **Unprotected**
+   - Revise action form (`cooca-ai.actions.revise`): **Unprotected**
+   - Reject action form (`cooca-ai.actions.reject`): **Unprotected**
+2. `resources/views/app/ai/offices/executive.blade.php`:
+   - Quick Reject & Approve forms (`cooca-ai.actions.reject`, `cooca-ai.actions.approve`): **Unprotected**
+3. `resources/views/app/ai/offices/operations.blade.php`:
+   - Quick Reject & Approve forms: **Unprotected**
+4. `resources/views/app/ai/offices/growth.blade.php`:
+   - Quick Reject & Approve forms: **Unprotected**
+5. `resources/views/app/ai/providers.blade.php`:
+   - Form Save Provider (`cooca-ai.providers.store`): **Unprotected**
+   - Test Provider button (`cooca-ai.providers.test`): **Unprotected**
+   - Detect Models button (`cooca-ai.providers.detect-models`): **Unprotected**
+6. `resources/views/app/ai-studio/create.blade.php`:
+   - Form Create Project (`ai-studio.projects.store`): **Unprotected**
+   - Compile Prompt button (`ai-studio.prompt.compile`): **Unprotected**
+7. `resources/views/app/ai-studio/show.blade.php`:
+   - Dispatch Generation button (`ai-studio.generate`): **Unprotected**
+   - Export to Catalog modal & submit (`ai-studio.assets.export-to-catalog`): **Unprotected**
+   - Export to Social Media modal & submit (`ai-studio.assets.export-to-social-media`): **Unprotected**
+   - Delete Asset button (`ai-studio.assets.destroy`): **Unprotected**
+   - Delete Project button (`ai-studio.projects.destroy`): **Unprotected**
+8. `resources/views/app/ai-studio/inspiration/collections.blade.php` & `collection-detail.blade.php`:
+   - Create Collection modal & submit (`ai-studio.inspiration.collections.store`): **Unprotected**
+   - Delete Item from Collection form (`ai-studio.inspiration.collections.items.destroy`): **Unprotected**
+   - Use As Reference form (`ai-studio.inspiration.use-as-reference`): **Unprotected**
+9. `resources/views/app/ai-studio/inspiration/my-library.blade.php`:
+   - Upload Asset modal & submit (`ai-studio.inspiration.my-library.upload`): **Unprotected**
+10. `resources/views/app/ai-studio/inspiration/index.blade.php` & `favorites.blade.php`:
+    - Favorite toggle button: **Unprotected**
+    - Use As Reference submit: **Unprotected**
+11. `resources/views/app/ai-studio/partials/topup-modal.blade.php`:
+    - Order Top-up submit (`ai-studio.topup.order`): **Unprotected**
 
 ---
 
 ## 2. Logic Chain
 
-1. **POS & Shift Integration Logic**:
-   - Observations show that `PosShiftModal` computes `_expectedCash` from `_liveShiftSummary['expected_cash']` or `widget.state.activeShift?.expectedCash`.
-   - When petty cash is recorded via the backend endpoint `POST /api/v1/pos/expenses`, the server will record a cash outflow in the cash ledger linked to the shift.
-   - Therefore, on mobile:
-     - Adding `PosExpenseModal` (`lib/screens/pos/pos_expense_modal.dart`) with `PosService.recordExpense(...)` will send the expense record and base64 receipt to the backend.
-     - Placing a launcher button in `PosScreen._showMainMenu` (under `OPERASIONAL KASIR`) and inside `PosShiftModal` (under `Mutasi Kas`) guarantees immediate cashier discoverability.
-     - Updating `_expectedCash` and refreshing `_initShiftData()` ensures the cashier sees expected cash automatically reduced by the expense amount upon closing the shift.
-
-2. **Network & State Logic**:
-   - Observations show `ApiClient` attaches `Bearer $_customerToken` and `X-Business-Id: $bizId` to all outgoing requests.
-   - `ApiClient.post` serializes JSON bodies directly.
-   - Because existing photo capture modules (`attendance_screen.dart`, `location_biometric_service.dart`) encode images as `data:image/jpeg;base64,...`, adopting `receipt_image_base64` in the `POST /api/v1/pos/expenses` payload allows zero-friction integration without altering `ApiClient` transport mechanisms.
-
-3. **Owner Approval Center Logic**:
-   - Observations confirm that `DashboardScreen` has an Executive Header, an Active Shift Bar, an Operational Pulse Bento, and an Enterprise Module Launchers grid.
-   - Creating `ApprovalsService` (`lib/core/services/approvals_service.dart`) to communicate with `GET /api/v1/owner/approvals/pending` and `POST /api/v1/owner/approvals/{id}/action`, and binding `pendingApprovalsCount` to `MerchantState.refreshPulse()` allows real-time counter updates on pull-to-refresh.
-   - Adding a high-visibility Apple HIG Alert Banner below `_buildActiveShiftBar` (displayed when `state.pendingApprovalsCount > 0`) provides an immediate call-to-action for owners, navigating directly to `OwnerApprovalScreen`.
-   - In `OwnerApprovalScreen`, utilizing Apple HIG swipeable cards with `HapticFeedback.mediumImpact()` provides tactile feedback consistent with the app's established UI conventions.
-
-4. **Media Support Logic**:
-   - Both `image_picker: ^1.2.4` and `camera: ^0.12.1` are verified in `pubspec.yaml`, and runtime permissions are fully configured in Android and iOS manifests.
-   - Using `ImagePicker().pickImage(source: ImageSource.camera, maxWidth: 1200, maxHeight: 1200, imageQuality: 80)` with gallery fallback provides an optimal receipt photo capture flow with minimal memory footprint.
-
-5. **Testing & Health Logic**:
-   - Observations show that all 10 existing tests pass and `flutter analyze` reports 0 issues.
-   - Thus, new unit and widget tests for `pos_expense_modal.dart` and `owner_approval_screen.dart` can follow the established mock and test harness patterns (`SharedPreferences.setMockInitialValues({})`, `tester.view.physicalSize = Size(1080, 2400)`).
+1. **Premise 1 (Requirement R2 & Skill Directive)**:
+   The user requested `/laravel-rbac` and Controller-Level RBAC. According to `C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md`:
+   - Permission middleware MUST be encapsulated directly inside controllers using Laravel 11+ `HasMiddleware` interface.
+   - Route-level middleware `->middleware('require.permission:...')` in `routes/owner.php` should be removed to achieve *Clean Routing*.
+   - Action buttons, forms, and tabs in Blade views MUST be guarded with `@if (\App\Support\Context::hasPermission(...))`.
+2. **Premise 2 (Observation of Controllers)**:
+   `OwnerAiStudioWebController` and `OwnerInspirationWebController` already adhere to `HasMiddleware`, mapping permissions `ai_studio.view`, `ai_studio.generate`, and `ai_studio.manage`.
+   However, `AiCompanyWebController` and `PosAiWebController` lack `HasMiddleware`. Their protection currently relies solely on the route group in `routes/owner.php`.
+3. **Premise 3 (Granularity & Principle of Least Privilege)**:
+   The route group currently applies `require.permission:ai.access` broadly to all 29 methods in `AiCompanyWebController`. This allows any employee role (such as cashier or warehouse staff with `ai.access`) to hit `/cooca-ai/providers` and alter third-party API keys or guardrails. By introducing `ai.manage` and `ai.approve`, sensitive actions are separated from standard view/chat interactions.
+4. **Premise 4 (Elimination of Phantom Permissions)**:
+   `AiActionPolicy.php:68` checks `Context::hasPermission('ai.approve')`, but `ai.approve` is missing from `RbacSeeder.php`. Because `Context::hasPermission('ai.approve')` checks registered permission slugs, it fails for any role other than hardcoded owner/admin bypasses. Registering `ai.approve` in `RbacSeeder.php` turns a phantom permission into a recognized system capability.
+5. **Premise 5 (Defense-in-Depth UI Guarding)**:
+   Server-side authorization rejects unauthorized requests with `403 Forbidden`, but good UX dictates that users without permission should not see action buttons that trigger 403 errors. Wrapping action buttons in Blade views with `@if (\App\Support\Context::hasPermission(...) || \App\Support\Context::isAdminOrOwner())` completes the defense-in-depth model.
 
 ---
 
 ## 3. Caveats
 
-- **Network connectivity in emulator**: `ApiClient.baseUrl` automatically falls back to `https://cooca.id` when running on physical/emulator devices where `http://cooca_core.test` does not resolve. For local test suite execution, tests should mock or inject responses rather than making live HTTP calls.
-- **Offline queueing for petty cash**: While `PosOfflineSyncManager` exists for sales transactions, offline petty cash syncing can use a similar local queue pattern if network is unavailable, or alert the cashier if offline.
-- **Alternative considered**: Using direct multipart file upload vs base64. Base64 is preferred because `ApiClient` is natively built for JSON bodies and existing photo flows in the codebase uniformly use base64 data URIs.
+1. **Entitlement vs. Permission**:
+   `routes/owner.php` applies `entitlement:ai` on `cooca-ai` and `pos/ai/ask`. `entitlement:ai` checks business subscription tiers (SaaS plan capability), while `require.permission:*` checks user role authorization. When migrating permission checks into controllers, `entitlement:ai` should remain either on the route group or also be encapsulated if desired. Keeping `entitlement:ai` on the route group is standard in Cooca for SaaS feature-tier gating.
+2. **Owner & Admin Super-Access**:
+   In Cooca, `Context::isOwner()` and `Context::isAdminOrOwner()` bypass permission checks. In `RbacSeeder.php`, `owner` automatically receives all permission slugs (`$ownerSlugs = $allSlugs;`). Therefore, adding `ai.approve` and `ai.manage` will automatically be granted to owners, while explicitly empowering managers and admins.
+3. **Backwards Compatibility**:
+   Legacy route fallbacks `/ai/*` point to `AiCompanyWebController`. Because `HasMiddleware` applies to the controller itself regardless of route URI, legacy routes will be automatically secured without requiring redundant route middleware.
 
 ---
 
-## 4. Conclusion
+## 4. Conclusion & Actionable Roadmap
 
-The mobile application at `c:\laragon\www\cooca_my_own` is **100% architecturally and operationally ready** for implementing Phase 1 (Petty Cash & Owner Approval Center).
-- No new packages need to be installed.
-- No new OS permissions need to be declared.
-- Clean integration points have been precisely mapped in `pos_screen.dart`, `pos_shift_modal.dart`, `merchant_state.dart`, and `dashboard_screen.dart`.
-- The codebase is clean with 0 analysis errors and 100% passing tests.
+### 4.1 Permission Definitions to Add to `database/seeders/RbacSeeder.php`
+
+Add the following to `permissionMatrix()`:
+```php
+// ─── AI Assistant & Digital Company ───────────────────────
+'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, chatbot AI, dan kantor virtual.'],
+'ai.approve'                  => ['Otorisasi & Eksekusi Aksi AI',           'ai',          'Menyetujui, merevisi, atau menolak usulan aksi otomatis agen AI serta mengeksekusi rekomendasi POS.'],
+'ai.manage'                   => ['Kelola AI & Konfigurasi Provider',       'ai',          'Mengatur kredensial API key provider AI, model LLM, aturan guardrails DO/DONT, dan konfigurasi avatar agen.'],
+
+// ─── AI Studio & Viral Inspiration ───────────────────────
+'ai_studio.view'              => ['Lihat AI Studio',                        'ai_studio',   'Melihat dashboard AI Studio dan perpustakaan inspirasi viral.'],
+'ai_studio.generate'          => ['Generate Gambar AI Studio',              'ai_studio',   'Membuat gambar produk dan media sosial dengan AI Studio.'],
+'ai_studio.manage'            => ['Kelola AI Studio',                       'ai_studio',   'Mengelola proyek, aset inspirasi, dan riwayat generasi AI Studio.'],
+```
+
+Map in `roleDefinitions()`:
+- `owner`: Automatically gets all slugs.
+- `manager`: Add `'ai.approve'`.
+- `admin`: Add `'ai.approve'`, `'ai.manage'`.
+- `cashier`, `warehouse`, `finance`, `staff`: Retain `'ai.access'`.
+
+---
+
+### 4.2 File-by-File Controller-Level RBAC Enforcement
+
+#### 1. `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
+- Add `use Illuminate\Routing\Controllers\HasMiddleware;`
+- Add `use Illuminate\Routing\Controllers\Middleware;`
+- Class declaration: `final class AiCompanyWebController extends Controller implements HasMiddleware`
+- Implement `middleware()` method:
+```php
+public static function middleware(): array
+{
+    return [
+        new Middleware('require.permission:ai.access', only: [
+            'index',
+            'lobby',
+            'executiveOffice',
+            'operationsOffice',
+            'growthOffice',
+            'history',
+            'actions',
+            'liveMetrics',
+            'getAgentAvatars',
+            'getRules',
+            'ask',
+            'triggerDailyCheck',
+            'teamwork',
+            'goal',
+            'grillMe',
+            'boost',
+            'schedule',
+        ]),
+        new Middleware('require.permission:ai.approve', only: [
+            'approveAction',
+            'reviseAction',
+            'rejectAction',
+        ]),
+        new Middleware('require.permission:ai.manage', only: [
+            'providers',
+            'storeProvider',
+            'testProvider',
+            'detectModels',
+            'updateAgentAvatar',
+            'storeRule',
+            'toggleRule',
+            'deleteRule',
+        ]),
+    ];
+}
+```
+
+#### 2. `app/Http/Controllers/Web/Ai/PosAiWebController.php`
+- Add `use Illuminate\Routing\Controllers\HasMiddleware;`
+- Add `use Illuminate\Routing\Controllers\Middleware;`
+- Class declaration: `final class PosAiWebController extends Controller implements HasMiddleware`
+- Implement `middleware()` method:
+```php
+public static function middleware(): array
+{
+    return [
+        new Middleware('require.permission:ai.access', only: [
+            'index',
+            'ask',
+        ]),
+        new Middleware('require.permission:ai.approve', only: [
+            'executeAction',
+        ]),
+    ];
+}
+```
+
+#### 3. `routes/owner.php` Clean Routing Migration
+- Lines 632-636: Remove `require.permission:ai.access` from POS AI group:
+  ```php
+  // SEBELUM:
+  Route::middleware('require.permission:ai.access')->group(function (): void {
+      Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
+      ...
+  });
+
+  // SESUDAH:
+  Route::group(function (): void {
+      Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
+      Route::post('/pos/ai/ask', [PosAiWebController::class, 'ask'])->middleware('entitlement:ai')->name('pos.ai.ask');
+      Route::post('/pos/ai/execute-action', [PosAiWebController::class, 'executeAction'])->middleware('entitlement:ai')->name('pos.ai.execute-action');
+  });
+  ```
+- Lines 638-672: Remove `require.permission:ai.access` from `cooca-ai` prefix:
+  ```php
+  // SEBELUM:
+  Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('cooca-ai')->name('cooca-ai.')->group(...);
+
+  // SESUDAH:
+  Route::middleware('entitlement:ai')->prefix('cooca-ai')->name('cooca-ai.')->group(...);
+  ```
+- Lines 674-702: Remove `require.permission:ai.access` from legacy `ai` prefix:
+  ```php
+  // SEBELUM:
+  Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('ai')->name('ai.')->group(...);
+
+  // SESUDAH:
+  Route::middleware('entitlement:ai')->prefix('ai')->name('ai.')->group(...);
+  ```
+
+---
+
+### 4.3 View-Level Authorization Protection Roadmap
+
+| View File | UI Component / Action | Required Guard Condition |
+|---|---|---|
+| `resources/views/app/ai/actions.blade.php` | Approve, Revise, Reject forms & buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai/offices/executive.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai/offices/growth.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai/offices/operations.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai/providers.blade.php` | Provider save form, Test button, Detect Models button | `@if (\App\Support\Context::hasPermission('ai.manage') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai/providers.blade.php` | If no `ai.manage`, show read-only notice banner | `@else <div class="alert ...">{{ __('ai.providers.readonly_notice') }}</div> @endif` |
+| `resources/views/app/ai/index.blade.php` | "Terapkan Rekomendasi" (Execute Action Draft) modal button | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/app/ai-studio/index.blade.php` | "Buat Proyek Baru" header link/button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/index.blade.php` | Top-up Kredit button & modal trigger | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('billing.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/create.blade.php` | Form submit & Prompt Compiler button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/show.blade.php` | "Generate Variasi" button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/show.blade.php` | "Export ke Katalog" modal button | `@if (\App\Support\Context::hasPermission('products.create') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/show.blade.php` | "Export ke Media Sosial" modal button | `@if (\App\Support\Context::hasPermission('social_media.manage') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/show.blade.php` | "Hapus Aset" & "Hapus Proyek" buttons | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/inspiration/index.blade.php` | "Gunakan Sebagai Referensi" form submit | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/inspiration/collections.blade.php` | "Buat Koleksi" button & modal form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/inspiration/collection-detail.blade.php` | "Hapus Item dari Koleksi" form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/app/ai-studio/inspiration/my-library.blade.php` | "Upload Aset Referensi" button & modal form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
+| `resources/views/layouts/partials/sidebar.blade.php` | Submenu `cooca-ai.providers` | `@if (\App\Support\Context::hasPermission('ai.manage') \|\| \App\Support\Context::isAdminOrOwner())` |
+| `resources/views/layouts/partials/sidebar.blade.php` | Submenu `ai-studio.create` | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
 
 ---
 
 ## 5. Verification Method
 
-To independently verify the facts and health documented in this report:
+To independently verify all findings and test subsequent implementations:
 
-1. **Verify Static Analysis**:
-   ```powershell
-   cd c:\laragon\www\cooca_my_own
-   flutter analyze
+1. **Verify Syntax of Controllers and Views**:
+   ```bash
+   php -l app/Http/Controllers/Web/Ai/AiCompanyWebController.php
+   php -l app/Http/Controllers/Web/Ai/PosAiWebController.php
+   php -l app/Http/Controllers/Web/AiStudio/OwnerAiStudioWebController.php
+   php -l app/Http/Controllers/Web/AiStudio/OwnerInspirationWebController.php
+   php -l database/seeders/RbacSeeder.php
    ```
-   *Expected result*: `No issues found! (ran in ~16s)`
 
-2. **Verify Existing Automated Test Suite**:
-   ```powershell
-   cd c:\laragon\www\cooca_my_own
-   flutter test
+2. **Verify RBAC Seeder Execution (Idempotent)**:
+   ```bash
+   php artisan db:seed --class=RbacSeeder --force
    ```
-   *Expected result*: `All tests passed! (10 tests in ~3s)`
+   *Expected result*: Confirms all permissions including `ai.approve` and `ai.manage` are registered and assigned to target roles without errors.
 
-3. **Verify Dependencies & Permissions**:
-   - Inspect `pubspec.yaml` lines 43-46 to confirm `image_picker` and `camera`.
-   - Inspect `android/app/src/main/AndroidManifest.xml` line 5 to confirm `android.permission.CAMERA`.
-   - Inspect `ios/Runner/Info.plist` lines 50-57 to confirm `NSCameraUsageDescription` and `NSPhotoLibraryUsageDescription`.
+3. **Verify Route Registration & Middleware Binding**:
+   ```bash
+   php artisan route:list --name=cooca-ai
+   php artisan route:list --name=ai-studio
+   php artisan route:list --name=pos.ai
+   ```
+   *Expected result*: All endpoints correctly mapped to controller actions with clean routes.
 
-4. **Verify POS Shift & Expected Cash Code**:
-   - Inspect `lib/screens/pos/pos_shift_modal.dart` lines 109-117 to confirm `_expectedCash` and `_cashVariance`.
-   - Inspect `lib/screens/pos_screen.dart` lines 498-587 to inspect `_showMainMenu` and the `"OPERASIONAL KASIR"` menu group.
+4. **Execute Feature Test Suite**:
+   ```bash
+   php artisan test tests/Feature/AiStudio/AiStudioWebControllerTest.php
+   php artisan test tests/Feature/AiDigitalCompanyTest.php
+   ```
+   *Expected result*: 100% tests pass without regression.
+
+5. **Invalidation Conditions**:
+   - If any endpoint in `AiCompanyWebController` returns `403` to an authenticated `owner` or `admin`, verify that `Context::isOwner()` is properly checked or `owner` has all permission slugs in `RbacSeeder.php`.
+   - If a cashier receives `403` on `cooca-ai.index`, verify that `ai.access` remains mapped to `cashier` in `RbacSeeder.php`.

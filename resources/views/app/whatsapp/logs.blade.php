@@ -24,16 +24,22 @@
             subtitle="{{ __('whatsapp.logs_subtitle') }}">
             <x-slot:actions>
                 <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-                    <a href="{{ route('whatsapp.logs.export', request()->query()) }}"
-                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
-                        <i data-lucide="download" class="w-4 h-4"></i>
-                        <span>{{ __('whatsapp.export_excel') }}</span>
-                    </a>
-                    <button type="button" @click="openPruneModal = true"
-                        class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
-                        <i data-lucide="database-zap" class="w-4 h-4 text-[#FF9500]"></i>
-                        <span>{{ __('whatsapp.storage_pruning_btn') }}</span>
-                    </button>
+                    @can('whatsapp.view')
+                        @can('reports.export')
+                            <a href="{{ route('whatsapp.logs.export', request()->query()) }}"
+                                class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <span>{{ __('whatsapp.export_excel') }}</span>
+                            </a>
+                        @endcan
+                    @endcan
+                    @can('whatsapp.manage')
+                        <button type="button" @click="openPruneModal = true"
+                            class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                            <i data-lucide="database-zap" class="w-4 h-4 text-[#FF9500]"></i>
+                            <span>{{ __('whatsapp.storage_pruning_btn') }}</span>
+                        </button>
+                    @endcan
                 </div>
             </x-slot:actions>
         </x-module-header>
@@ -199,7 +205,7 @@
                                     <td class="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <div class="flex items-center justify-end">
                                             <button type="button" @click.stop='inspectLog(@json($logJson))'
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                                class="min-w-[44px] min-h-[44px] w-9 h-9 rounded-[10px] flex items-center justify-center text-[#007AFF] bg-[#007AFF]/8 hover:bg-[#007AFF]/15 dark:hover:bg-[#007AFF]/25 transition-all cursor-pointer shrink-0"
                                                 title="{{ __('whatsapp.view_detail_log') }}"
                                                 aria-label="{{ __('whatsapp.view_detail_log') }}">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
@@ -415,6 +421,7 @@
         <!-- ===================================================== -->
         <!-- 4. STORAGE PRUNING PREVIEW MODAL                      -->
         <!-- ===================================================== -->
+        @can('whatsapp.manage')
         <template x-teleport="body">
             <div x-show="openPruneModal" x-cloak class="fixed inset-0 z-[200] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="pruneModalTitle" @keydown.escape.window="openPruneModal = false" style="display: none;">
                 <!-- Standalone Backdrop -->
@@ -469,6 +476,7 @@
                 </div>
             </div>
         </template>
+        @endcan
 
     </div>
 @endsection

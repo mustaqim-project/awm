@@ -1,100 +1,118 @@
-# Orchestrator Final Handoff Report: Master UI/UX & Information Architecture Audit
+# Orchestrator Final Handoff Report: WhatsApp Module Production Refactoring
 
-**Date**: 2026-10-31  
-**Orchestrator**: `teamwork_orchestrator`  
-**Parent Agent**: Sentinel (`20b9d7fe-ffc0-4268-8495-4bd01370e1c6`)  
-**Workspace**: `c:\laragon\www\cooca_core`  
-**Target Scope**: All 185 Blade views across 44 submodules in `resources/views/app` (134,824 lines of code)  
-**Deliverable**: `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md` (1,315 lines, publication-grade markdown)  
-**Type**: Hard Handoff (Task Complete)  
-**Gate Result**: **PASS** (Reviewers APPROVE, Challengers APPROVE, Forensic Auditor CLEAN)
+**Project**: Refactor and improve WhatsApp module views in `resources/views/app/whatsapp` for production, simplifying UI layouts and enforcing RBAC.  
+**Orchestrator**: Project Orchestrator (`teamwork_orchestrator`)  
+**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator`  
+**Date**: 2026-11-07  
+**Status**: COMPLETED (Gate: PASS)  
 
 ---
 
-## 1. Observation
+## 1. Milestone State
 
-### 1.1 Scope & Codebase Mapping
-- **Total Views Audited**: Exactly 185 Blade templates across 44 submodules (134,824 lines of code) in `resources/views/app`.
-- **Layout Architecture**: 134 views extend `layouts.app` (main backoffice shell); 51 views are standalone or partials (10 print/receipt templates, 1 standalone fullscreen POS cashier terminal, 24 tabs, 15 modal/HUD partials, 1 OAuth consent).
-- **Navigation System**: Evaluated macOS-inspired 56px sticky topbar with breadcrumbs and Spotlight command palette, desktop dual sidebar (collapsible 9-domain cluster primary rail + secondary module navigation), and mobile bottom tab bar.
-- **Shared Components**: Surveyed `<x-module-header>`, `<x-module-tabs>`, `<x-breadcrumb>`, `<x-table-sort-th>`, `<x-quota-modal>`, `<x-document-stepper>`, and design tokens.
+| # | Milestone Name | Scope | Status | Verification Result |
+|---|---|---|---|---|
+| 0 | Phase 0: Survey & Technical Discovery | Map views, controllers, seeders, and test suite baseline via 3 parallel Explorers | **DONE** | 3 comprehensive reports delivered; root cause of `@can` identified |
+| 1 | Milestone 1: RBAC Core & Controller Guards | `AppServiceProvider.php` Gate bridge, `NavigationRegistry.php` permission fix, and `HasMiddleware` declarations across WhatsApp controllers | **DONE** | 28/28 tests passed in `MerchantWhatsAppWebFeatureTest.php`, 5/5 in `WhatsAppLogsExportTest.php` |
+| 2 | Milestone 2: WhatsApp Views UI Simplification & RBAC | Refactor all 4 Blade templates (`index`, `broadcast`, `broadcast_detail`, `logs`) to Apple HIG/Bento standards, 44px touch targets, and native `@can` directives | **DONE** | Clean compilation in `view:cache`, zero layout collisions, all touch targets >= 44×44px |
+| 3 | Milestone 3: Security Test Suite & Quality Gate | `tests/Feature/WhatsApp/WhatsAppRbacSecurityTest.php` covering all personas, full test regression, and Quality Gate | **DONE** | 13/13 new security tests passed (124 assertions); 46 total tests passed (359 assertions); Gate: **PASS** |
 
-### 1.2 Quantitative Audit & Defect Breakdown
-- **Clean vs. Issue Distribution**:
-  - 107 clean views (57.8%)
-  - 78 views with issues (42.2%)
-  - 762 hardcoded user-facing text instances across 78 views (308 raw button labels, 119 title attributes, 81 placeholders, 53 empty states, 46 h3 headings, 38 aria-labels, 28 h2 headings, 24 validation error lists).
-  - Bilingual Translation Parity: Exactly 100.00% across 17,068 keys in `lang/id` (66 files) and 17,068 keys in `lang/en` (66 files).
-- **Systematic UI/UX Defect Classes**:
-  1. **Double Header Redundancy**: Exactly 44 views on disk render redundant titles in both topbar `headerTitle` and `<x-module-header>` inside content.
-  2. **Flawed Modal Backdrop Wrappers**: Exactly 76 instances across 21 views (47 instances in core transactional submodules, 29 instances in back-office/settings views) that bind overlay backgrounds directly to flex wrappers, causing topbar clipping and safe-area leaks.
-  3. **Cramped Modal Dialog Sizing**: 127 locations in core transactional modules (301 globally across 106 views) constrained to `max-w-xs..lg` instead of Apple Bento HIG XXL canvas.
-  4. **Missing Mobile Safe-Area Bottom Padding**: Exactly 32 views lack `pb-28`/`pb-36` padding, causing fixed mobile bottom tab bar occlusion.
-  5. **Hardcoded Unresponsive Grids**: Exactly 23 views declare raw `grid-cols-3` or `grid-cols-4` without mobile breakpoint prefixes.
-  6. **Table Horizontal Clipping**: 8 views lack responsive overflow wrappers.
-  7. **Raw Unicode Emojis**: 13 views use raw emojis in data cells and badges instead of SVG icons.
-  8. **Touch Target Accessibility**: Multiple views exhibit sub-44px touch targets (`w-8 h-8` = 32px, `h-7` = 28px) and table action button clutter (>2 inline actions without overflow `⋯`).
-- **Architectural Monoliths Disclosed**:
-  - `pos/terminal.blade.php`: 7,158 lines, 20 embedded modals, 2,500 lines inline JS.
-  - `hrm/index.blade.php`: 5,705 lines, 10 data tables, 15 complete modal dialogues.
-  - `ai/partials/virtual_office_canvas.blade.php`: 3,875 lines (3D canvas).
-  - `products/index.blade.php`: 3,443 lines (~1,350 lines duplicated between Create and Edit modals).
-  - `landing_page/edit.blade.php`: 3,334 lines (drag-and-drop page builder).
+---
 
-### 1.3 Read-Only Guarantee Attestation
-`git status resources/views/app` confirms:
+## 2. Active Subagents
+- **Active Subagents**: 0 (all 11 spawned subagents completed and retired per zero-reuse protocol).
+- **Spawn Count**: 11 / 16 (within limits).
+- **Active Background Timers**: 0 (heartbeat cron and safety timers cleanly terminated).
+
+---
+
+## 3. Pending Decisions
+- **None**: All architectural decisions were validated and verified unanimously by workers, reviewers, challengers, and the forensic auditor.
+
+---
+
+## 4. Remaining Work
+- **None**: All acceptance criteria specified in `ORIGINAL_REQUEST.md` have been fully implemented, tested, and verified.
+
+---
+
+## 5. Key Artifacts
+- `c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md` — Authoritative user request
+- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md` — Architectural scope and feature inventory
+- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md` — Quality gate verdicts (Unanimous PASS)
+- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\progress.md` — Execution logs and retrospectives
+- `c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\BRIEFING.md` — Agent working memory
+- `tests/Feature/WhatsApp/WhatsAppRbacSecurityTest.php` — Comprehensive RBAC security test suite (13 tests, 124 assertions)
+- Modified files in codebase:
+  - `app/Providers/AppServiceProvider.php`
+  - `app/Support/Navigation/NavigationRegistry.php`
+  - `app/Http/Controllers/Web/WhatsApp/WhatsAppWebController.php`
+  - `app/Http/Controllers/Web/WhatsApp/WhatsAppBroadcastWebController.php`
+  - `app/Http/Controllers/Web/WhatsApp/MetaWhatsAppOnboardingController.php`
+  - `resources/views/app/whatsapp/index.blade.php`
+  - `resources/views/app/whatsapp/broadcast.blade.php`
+  - `resources/views/app/whatsapp/broadcast_detail.blade.php`
+  - `resources/views/app/whatsapp/logs.blade.php`
+
+---
+
+## 6. Observation, Logic Chain & Audit Verification
+
+### Observation
+1. **RBAC Bridge**: `Gate::before` in `AppServiceProvider.php` now bridges `\App\Models\User` to `\App\Support\Context::hasPermission($ability)`. Native `@can` directives evaluate accurately for all tenant roles.
+2. **Navigation**: `NavigationRegistry.php` assigns `whatsapp.view` to the gateway menu item so read-only users can navigate to the cockpit.
+3. **Controller Defense-in-Depth**: `WhatsAppWebController`, `WhatsAppBroadcastWebController`, and `MetaWhatsAppOnboardingController` enforce `require.permission` and rate throttling via `HasMiddleware`.
+4. **UI Refactoring**:
+   - `index.blade.php`: Header "Kotak Masuk" demoted to secondary tonal; duplicate button in connected card removed; mutating actions (Disconnect, Embedded Signup, Settings save, Test send, Template blast) protected with `@can('whatsapp.manage')`; inputs disabled for read-only users.
+   - `broadcast.blade.php`: Table action eye button upgraded from 32px to 44px hit target; blast creation actions protected with `@can('whatsapp.manage')`; accessibility attributes preserved.
+   - `broadcast_detail.blade.php`: Header button and preview card CTA protected with `@can('whatsapp.manage')`; 44px min touch targets preserved.
+   - `logs.blade.php`: Excel export protected with `@can('reports.export')`; storage pruning button and modal protected with `@can('whatsapp.manage')`; table eye button upgraded to 44px.
+5. **Testing Verification**:
+   - `php artisan view:cache` & `php artisan view:clear`: 0 errors.
+   - `WhatsAppRbacSecurityTest.php`: 13/13 passed (124 assertions).
+   - `MerchantWhatsAppWebFeatureTest.php`: 28/28 passed (191 assertions).
+   - `WhatsAppLogsExportTest.php`: 5/5 passed (27 assertions).
+   - WCAG & Touch Targets accessibility test: 1/1 passed (17 assertions).
+
+### Logic Chain
+All acceptance criteria are satisfied:
+- Unauthorized users attempting direct access receive HTTP 403 Forbidden on JSON and redirect to `portal` on web.
+- Blade views conditionally display actions using `@can` directives.
+- Permissions are defined and mapped in seeders (`whatsapp.view`, `whatsapp.manage`).
+- Views are decluttered, no buttons collide or overlap across desktop and mobile, and action buttons follow distinct primary, secondary, and destructive styling.
+- All test suites pass without regression.
+
+### Quality Gate Summary
+| Agent | Role | Verdict |
+|---|---|---|
+| `reviewer_wa_1` | teamwork_reviewer | **APPROVE** |
+| `reviewer_wa_2` | teamwork_reviewer | **APPROVE** |
+| `challenger_wa_1` | teamwork_challenger | **APPROVE** |
+| `challenger_wa_2` | teamwork_challenger | **APPROVE** |
+| `auditor_wa_1` | teamwork_auditor | **CLEAN** |
+
+**Final Quality Gate Verdict**: **PASS** (Unanimous).
+
+---
+
+## 7. Independent Verification Commands
+```powershell
+# 1. Clear config cache to ensure SQLite in-memory environment
+php artisan config:clear
+
+# 2. Verify Blade template compilation
+php artisan view:cache
+php artisan view:clear
+
+# 3. Run the new WhatsApp RBAC Security Test suite
+php artisan test tests/Feature/WhatsApp/WhatsAppRbacSecurityTest.php
+
+# 4. Run the full WhatsApp Web Feature test suite
+php artisan test tests/Feature/WhatsApp/MerchantWhatsAppWebFeatureTest.php
+
+# 5. Run the WhatsApp Logs Export test suite
+php artisan test tests/Feature/WhatsApp/WhatsAppLogsExportTest.php
+
+# 6. Verify touch targets and accessibility
+php artisan test --filter=test_whatsapp_views_satisfy_mobile_touch_targets_and_wcag_a11y
 ```
-On branch main
-Your branch is up to date with 'origin/main'.
-
-nothing to commit, working tree clean
-```
-Zero files in `resources/views/app` were modified or deleted.
-
----
-
-## 2. Logic Chain
-
-1. **Phase 0 (Survey)**: Deployed 3 Explorers in parallel to map layouts/components, core transactional modules, and management/analytics. Aggregated comprehensive AST and line counts into `PROJECT.md`.
-2. **Phase 1 & 2 (Authoring & Gate 1 Review)**: Dispatched `worker_audit_1` to author `docs/UI_UX_AUDIT_REPORT.md`. Panel review (2 Reviewers, 2 Challengers, 1 Auditor) uncovered 3 critical empirical discrepancies: 11 non-existent file paths in Section 3.2 manifest, global backdrop count mismatch (47 vs 76), and undisclosed 5,705-line HRM monolith. Gate 1 failed strictly per protocol.
-3. **Iteration 2 (Remediation & Re-Verification)**: Dispatched `worker_remediation_2` to resolve all 3 issues. Dispatched fresh re-check panel (`reviewer_recheck_1`, `challenger_recheck_1`, `auditor_recheck_1`). All 44 Double Header paths on disk were verified with 0 missing files, Command 3 global 76 instances verified, HRM monolith disclosed, and codebase read-only integrity confirmed.
-4. **Gate 2 Evaluation**: All Reviewers APPROVED, all Challengers APPROVED, and Forensic Auditor certified CLEAN.
-
----
-
-## 3. Caveats
-
-1. **Static Analysis Scope**: All findings are based on static analysis of Blade templates, AST token parsing, and regex pattern audits.
-2. **Print Templates**: Dedicated print templates (`invoices/print.blade.php`, `pos/receipt.blade.php`, `purchase-orders/print.blade.php`, etc.) intentionally use fixed A4/thermal CSS and are not mobile UI bugs.
-3. **Admin Directory**: Per the original request, `resources/views/admin` (87 views) was out of scope; the audit focused strictly on `resources/views/app` (185 views).
-
----
-
-## 4. Conclusion & Key Deliverables
-
-The UI/UX Audit project has completed with 100% compliance:
-- **Master Deliverable**: `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md` (1,315 lines, publication-grade markdown).
-- **Scope**: Complete mapping of all 185 Blade views and 44 submodules in `resources/views/app`.
-- **Roadmap**: 4-phase actionable engineering remediation roadmap with concrete before/after code snippets.
-- **Integrity**: 0 modifications to application source code (`resources/views/app` clean).
-
----
-
-## 5. Verification Method
-
-To independently verify the deliverable:
-1. Check git clean status:
-   ```powershell
-   git status resources/views/app
-   ```
-2. Verify Section 3.2 manifest paths on disk:
-   ```powershell
-   python .agents/teamwork/challenger_1/verify_section_3_2.py
-   ```
-   *(Expected: Total Section 3.2 items: 44 | Fabricated items: 0)*
-3. Verify Command 3 flawed backdrops:
-   ```powershell
-   python .agents/teamwork/challenger_1/run_cmd3.py
-   ```
-   *(Expected: Affected Views: 21 | Total Flawed Backdrop Instances: 76)*
-4. Read master report at `docs/UI_UX_AUDIT_REPORT.md`.

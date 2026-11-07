@@ -16,13 +16,13 @@
                     <i data-lucide="history" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
                     <span>{{ __('whatsapp.tab_logs') }}</span>
                 </a>
-                @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                @can('whatsapp.manage')
                     <button type="button" @click="openCreateModal()"
                         class="flex-1 sm:flex-initial min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-[13.5px] shadow-md shadow-[#007AFF]/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98] w-full sm:w-auto shrink-0 whitespace-nowrap">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>{{ __('whatsapp.new_broadcast_btn') }}</span>
                     </button>
-                @endif
+                @endcan
             </x-slot:actions>
         </x-module-header>
 
@@ -123,13 +123,13 @@
                             {{ __('whatsapp.empty_campaigns_desc') }}
                         </p>
                     </div>
-                    @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                    @can('whatsapp.manage')
                         <button type="button" @click="openCreateModal()"
                             class="inline-flex items-center gap-2 mt-3 min-h-[44px] px-5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-[13px] shadow-md shadow-[#007AFF]/25 transition-all active:scale-[0.98]">
                             <i data-lucide="plus" class="w-4 h-4"></i>
                             <span>{{ __('whatsapp.create_first_broadcast_btn') }}</span>
                         </button>
-                    @endif
+                    @endcan
                 </div>
             @else
                 {{-- Desktop Campaigns Table --}}
@@ -216,7 +216,7 @@
                                     <td class="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <div class="flex items-center justify-end">
                                             <a href="{{ route('whatsapp.broadcast.show', $campaign) }}"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                                class="min-w-[44px] min-h-[44px] w-9 h-9 rounded-[10px] flex items-center justify-center text-[#007AFF] bg-[#007AFF]/8 hover:bg-[#007AFF]/15 dark:hover:bg-[#007AFF]/25 transition-all cursor-pointer shrink-0"
                                                 title="{{ __('whatsapp.view_detail_action') }}"
                                                 aria-label="{{ __('whatsapp.view_detail_action') }}">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
@@ -808,7 +808,7 @@
                             {{ __('whatsapp.cancel_btn') }}
                         </button>
 
-                        @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                        @can('whatsapp.manage')
                             <button type="button" @click="submitBlast()"
                                 :disabled="submitting || !message.trim() || !title.trim()"
                                 :class="submitting ? 'opacity-70 cursor-not-allowed' : ''"
@@ -820,7 +820,7 @@
                                 <i data-lucide="send" x-show="!submitting" class="w-4 h-4"></i>
                                 <span x-text="submitting ? {{ Js::from(__('whatsapp.scheduling_btn')) }} : ({{ Js::from(__('whatsapp.send_blast_to_btn_prefix')) }} + ' ' + estimatedCount.toLocaleString(localeCode) + ' ' + {{ Js::from(__('whatsapp.send_blast_to_btn_suffix')) }})"></span>
                             </button>
-                        @endif
+                        @endcan
                     </div>
                 </footer>
 

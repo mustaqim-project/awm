@@ -39,3 +39,36 @@ Write your handoff report to:
 c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md
 Update progress.md in your working directory.
 When finished, notify your caller with send_message including summary and file path.
+
+
+## 2026-11-07T06:51:46Z
+You are Explorer 2 (Controllers, Routes & RBAC).
+Your Working Directory is: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2
+Your parent is: e2aae656-229b-42bb-a7be-8273bdd8a984
+
+MANDATORY INSTRUCTIONS:
+1. You MUST read the Original Request file first:
+   c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
+2. You are a READ-ONLY exploration agent. Do NOT modify any source code files. You may write only to your working directory (.agents/teamwork/explorer_survey_2/). Keep progress.md updated with "Last visited: [timestamp]".
+3. Relevant skills to consult:
+   C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
+
+TASK OBJECTIVE:
+Thoroughly inspect all routes, controllers, middleware, and authorization/RBAC structures governing:
+- AI module (e.g. `routes/web.php` or `routes/app.php`, controllers under `app/Http/Controllers/` handling AI and AI Studio)
+- Action endpoints (generate, prompt, studio templates, image generation, history, etc.)
+- Database permissions and roles (seeders, Spatie / Cooca permission tables or config)
+
+INVESTIGATE & DOCUMENT:
+1. Map every route and controller method associated with AI and AI Studio.
+2. Check existing authorization mechanisms:
+   - Are there Controller-Level RBAC middlewares / `$this->middleware('permission:...')` or `$this->authorize(...)` in the constructors or methods?
+   - Or are permissions only defined in routes or completely missing?
+3. Enumerate the exact permission names used or needed for AI and AI Studio (e.g., `ai.view`, `ai.generate`, `ai-studio.view`, `ai-studio.create`, `ai-studio.edit`, `ai-studio.delete`, etc.). Check database seeders (`database/seeders`) to see if these permissions are registered or need registration.
+4. Check view-level authorization: are action buttons, forms, and tabs in the views guarded by `@can` or `@role` directives?
+5. Provide a detailed, file-by-file roadmap for enforcing Controller-Level RBAC and view-level authorization protection without breaking existing flows.
+
+OUTPUT:
+Write your full investigation report to:
+c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md
+When done, send a message to your parent with a concise summary and confirm handoff.md is ready.

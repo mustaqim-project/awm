@@ -35,11 +35,56 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Throwable;
 
-final class AiCompanyWebController extends Controller
+final class AiCompanyWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan middleware Controller-Level RBAC.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:ai.access', only: [
+                'index',
+                'lobby',
+                'executiveOffice',
+                'operationsOffice',
+                'growthOffice',
+                'history',
+                'actions',
+                'liveMetrics',
+                'getAgentAvatars',
+                'getRules',
+                'ask',
+                'triggerDailyCheck',
+                'teamwork',
+                'goal',
+                'grillMe',
+                'boost',
+                'schedule',
+            ]),
+            new Middleware('require.permission:ai.approve', only: [
+                'approveAction',
+                'reviseAction',
+                'rejectAction',
+            ]),
+            new Middleware('require.permission:ai.manage', only: [
+                'providers',
+                'storeProvider',
+                'testProvider',
+                'detectModels',
+                'updateAgentAvatar',
+                'storeRule',
+                'toggleRule',
+                'deleteRule',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly AiOrchestrator $orchestrator = new AiOrchestrator(),
         private readonly AiActionExecutor $actionExecutor = new AiActionExecutor(),

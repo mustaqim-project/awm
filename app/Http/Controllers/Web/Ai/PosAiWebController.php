@@ -9,11 +9,29 @@ use App\Http\Controllers\Controller;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Throwable;
 
-final class PosAiWebController extends Controller
+final class PosAiWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan middleware Controller-Level RBAC.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:ai.access', only: [
+                'index',
+                'ask',
+            ]),
+            new Middleware('require.permission:ai.approve', only: [
+                'executeAction',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly AiSalesAnalysisService $aiService = new AiSalesAnalysisService
     ) {}

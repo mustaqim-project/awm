@@ -12,8 +12,8 @@
             :subtitle="__('whatsapp.subtitle', ['business' => $business->name])">
             <x-slot:actions>
                 <a href="{{ route('whatsapp.inbox.index') }}"
-                    class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062cc] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto shadow-sm shadow-[#007AFF]/25">
-                    <i data-lucide="message-square" class="w-4 h-4 text-white"></i>
+                    class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                    <i data-lucide="message-square" class="w-4 h-4 text-[#007AFF]"></i>
                     <span>{{ __('social_media.tab_inbox') }}</span>
                 </a>
                 <a href="{{ route('whatsapp.logs.index') }}"
@@ -21,13 +21,13 @@
                     <i data-lucide="history" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
                     <span>{{ __('whatsapp.tab_logs') }}</span>
                 </a>
-                @if (\App\Support\Context::hasPermission('pos.terminal'))
+                @can('pos.terminal')
                     <a href="{{ route('pos.terminal') }}"
                         class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
                         <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
                         <span>{{ __('whatsapp.open_pos') }}</span>
                     </a>
-                @endif
+                @endcan
             </x-slot:actions>
         </x-module-header>
 
@@ -138,15 +138,12 @@
                                         {{ __('whatsapp.waba_id_label') }}: <span x-text="metaAccount.waba_id"></span>
                                     </span>
                                     <div class="flex items-center gap-2">
-                                        <a href="{{ route('whatsapp.inbox.index') }}"
-                                            class="min-h-[44px] px-4 rounded-[12px] text-[12.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0062cc] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm">
-                                            <i data-lucide="message-square" class="w-4 h-4"></i>
-                                            <span>{{ __('social_media.tab_inbox') }}</span>
-                                        </a>
-                                        <button type="button" @click="disconnectMeta()"
-                                            class="min-h-[44px] px-4 rounded-[12px] text-[12.5px] font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all flex items-center justify-center">
-                                            {{ __('whatsapp.disconnect_btn') }}
-                                        </button>
+                                        @can('whatsapp.manage')
+                                            <button type="button" @click="disconnectMeta()"
+                                                class="min-h-[44px] px-4 rounded-[12px] text-[12.5px] font-bold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all flex items-center justify-center">
+                                                {{ __('whatsapp.disconnect_btn') }}
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +156,7 @@
                                     {{ __('whatsapp.embedded_signup_instruction') }}
                                 </p>
 
-                                @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                                @can('whatsapp.manage')
                                     <!-- Action Row: Button CTA directly follows instruction, with proportional width & centered icon -->
                                     <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-0.5">
                                         <button type="button" @click="launchEmbeddedSignup()" :disabled="embeddedLoading"
@@ -169,7 +166,7 @@
                                             <span class="whitespace-nowrap" x-text="embeddedLoading ? '{{ __('whatsapp.connecting_meta') }}' : '{{ __('whatsapp.connect_meta_btn') }}'"></span>
                                         </button>
                                     </div>
-                                @endif
+                                @endcan
 
                                 <!-- Quiet Informational Stepper (Apple HIG - NOT Button-like Cards) -->
                                 <div class="pt-3 border-t border-black/5 dark:border-white/10">
@@ -220,8 +217,10 @@
                                 <p class="text-[13.5px] font-bold text-black dark:text-white">{{ __('whatsapp.service_status_title') }}</p>
                                 <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('whatsapp.service_status_desc') }}</p>
                             </div>
-                            <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                                <input type="checkbox" name="is_active" value="1" @change="toggleServiceStatus($event)" class="sr-only peer"
+                            <label class="relative inline-flex items-center shrink-0 @cannot('whatsapp.manage') opacity-60 cursor-not-allowed @else cursor-pointer @endcannot">
+                                <input type="checkbox" name="is_active" value="1"
+                                    @can('whatsapp.manage') @change="toggleServiceStatus($event)" @else disabled @endcan
+                                    class="sr-only peer"
                                     {{ ($waSession?->is_active ?? true) ? 'checked' : '' }}>
                                 <div class="w-11 h-6 bg-black/[0.12] dark:bg-white/[0.15] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#34C759]"></div>
                             </label>
@@ -260,8 +259,10 @@
                                 <p class="text-[13px] font-semibold text-black dark:text-white">{{ __('whatsapp.auto_send_receipt_label') }}</p>
                                 <p class="text-[11.5px] text-black/50 dark:text-white/50 mt-0.5">{{ __('whatsapp.auto_send_receipt_desc') }}</p>
                             </div>
-                            <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                                <input type="checkbox" name="auto_send_receipt" value="1" class="sr-only peer"
+                            <label class="relative inline-flex items-center shrink-0 @cannot('whatsapp.manage') opacity-60 cursor-not-allowed @else cursor-pointer @endcannot">
+                                <input type="checkbox" name="auto_send_receipt" value="1"
+                                    @cannot('whatsapp.manage') disabled @endcannot
+                                    class="sr-only peer"
                                     {{ $waSession && $waSession->auto_send_receipt ? 'checked' : '' }}>
                                 <div
                                     class="w-11 h-6 bg-black/[0.12] dark:bg-white/[0.15] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#34C759]">
@@ -275,16 +276,18 @@
                                 {{ __('whatsapp.receipt_footer_label') }}
                             </label>
                             <textarea name="receipt_template" rows="2"
+                                @cannot('whatsapp.manage') disabled @endcannot
                                 placeholder="{{ __('whatsapp.receipt_footer_placeholder') }}"
-                                class="w-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 resize-none placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors">{{ $waSession?->receipt_template ?? '' }}</textarea>
+                                class="w-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 py-2.5 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 resize-none placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors @cannot('whatsapp.manage') opacity-60 cursor-not-allowed @endcannot">{{ $waSession?->receipt_template ?? '' }}</textarea>
                         </div>
 
-                        @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                        @can('whatsapp.manage')
                             <button type="submit"
-                                class="w-full min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center">
-                                {{ __('whatsapp.save_receipt_settings_btn') }}
+                                class="w-full min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span>{{ __('whatsapp.save_receipt_settings_btn') }}</span>
                             </button>
-                        @endif
+                        @endcan
                     </form>
                 </div>
 
@@ -305,17 +308,21 @@
                     <div class="space-y-3">
                         <div class="space-y-1.5">
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('whatsapp.test_phone_label') }}</label>
-                            <input x-model="testPhone" type="tel" placeholder="{{ __('whatsapp.test_phone_placeholder') }}"
-                                class="w-full min-h-[44px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13.5px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors">
+                            <input x-model="testPhone" type="tel"
+                                @cannot('whatsapp.manage') disabled @endcannot
+                                placeholder="{{ __('whatsapp.test_phone_placeholder') }}"
+                                class="w-full min-h-[44px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13.5px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors @cannot('whatsapp.manage') opacity-60 cursor-not-allowed @endcannot">
                         </div>
 
                         <div class="space-y-1.5">
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('whatsapp.test_message_label') }}</label>
-                            <input x-model="testMessage" type="text" placeholder="{{ __('whatsapp.test_message_placeholder') }}"
-                                class="w-full min-h-[44px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors">
+                            <input x-model="testMessage" type="text"
+                                @cannot('whatsapp.manage') disabled @endcannot
+                                placeholder="{{ __('whatsapp.test_message_placeholder') }}"
+                                class="w-full min-h-[44px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 placeholder:text-black/35 dark:placeholder:text-white/35 transition-colors @cannot('whatsapp.manage') opacity-60 cursor-not-allowed @endcannot">
                         </div>
 
-                        @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+                        @can('whatsapp.manage')
                             <button type="button" @click="sendTest()"
                                 class="w-full min-h-[44px] px-4 rounded-[12px] text-[13.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-md shadow-[#007AFF]/25 transition-all flex items-center justify-center gap-2"
                                 :disabled="testLoading">
@@ -323,7 +330,7 @@
                                 <i data-lucide="send" x-show="!testLoading" class="w-4 h-4"></i>
                                 <span x-text="testLoading ? '{{ __('whatsapp.test_sending') }}' : '{{ __('whatsapp.test_send_btn') }}'"></span>
                             </button>
-                        @endif
+                        @endcan
 
                         <div x-show="testResult" x-text="testResult"
                             class="p-3 rounded-[12px] text-[12.5px] text-center font-semibold transition-all"
@@ -362,13 +369,15 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2 shrink-0">
-                    <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
-                        class="min-h-[40px] px-3.5 rounded-[11px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-bold inline-flex items-center gap-2 shadow-sm transition active:scale-[0.98]">
-                        <i data-lucide="megaphone" class="w-4 h-4"></i>
-                        <span>{{ __('whatsapp.send_blast_with_template') }}</span>
-                    </a>
-                </div>
+                @can('whatsapp.manage')
+                    <div class="flex items-center gap-2 shrink-0">
+                        <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
+                            class="min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-bold inline-flex items-center gap-2 shadow-sm transition active:scale-[0.98]">
+                            <i data-lucide="megaphone" class="w-4 h-4"></i>
+                            <span>{{ __('whatsapp.send_blast_with_template') }}</span>
+                        </a>
+                    </div>
+                @endcan
             </div>
 
             {{-- Category Filter Pills (Apple HIG Segmented Control) --}}
@@ -512,10 +521,14 @@
                         <div class="pt-2.5 border-t border-black/5 dark:border-white/10 flex items-center justify-between text-[11px]">
                             <span class="text-black/45 dark:text-white/45 font-medium truncate max-w-[150px]">{{ $tpl['badge'] }}</span>
                             @if($tpl['category'] === 'MARKETING')
-                                <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
-                                    class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                                    <span>Blast</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </a>
+                                @can('whatsapp.manage')
+                                    <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
+                                        class="text-[11px] font-bold text-[#007AFF] hover:underline flex items-center gap-0.5">
+                                        <span>Blast</span> <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                    </a>
+                                @else
+                                    <span class="text-black/40 dark:text-white/40 text-[11px] font-medium">Marketing</span>
+                                @endcan
                             @else
                                 <span class="text-[#34C759] font-semibold inline-flex items-center gap-1">
                                     <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
@@ -529,6 +542,7 @@
         </div>
 
         <!-- Teleported Supervisor PIN Disconnect Modal -->
+        @can('whatsapp.manage')
         <template x-teleport="body">
             <div x-show="showDisconnectModal" x-cloak
                 class="fixed inset-0 z-[200] overflow-y-auto"
@@ -601,6 +615,7 @@
                 </div>
             </div>
         </template>
+        @endcan
 
     </div>
 @endsection

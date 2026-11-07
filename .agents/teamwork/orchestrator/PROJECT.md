@@ -34,9 +34,9 @@
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
 | 0 | Phase 0: Survey & Technical Discovery | Map views, controllers, seeders, and test baseline via 3 parallel Explorers | none | DONE |
-| 1 | Milestone 1: RBAC Core & Controller Guards | `AppServiceProvider.php` Gate bridge, `NavigationRegistry.php`, and WhatsApp controller middleware guards | M0 | PLANNED |
-| 2 | Milestone 2: WhatsApp Views UI Simplification & RBAC | Refactor `index`, `broadcast`, `broadcast_detail`, and `logs` Blade templates per Bento/Apple HIG & `@can` directives | M1 | PLANNED |
-| 3 | Milestone 3: Test Verification & Forensic Audit Gate | `WhatsAppRbacSecurityTest`, `view:cache`, full regression test, and Forensic Audit gate | M1, M2 | PLANNED |
+| 1 | Milestone 1: RBAC Core & Controller Guards | `AppServiceProvider.php` Gate bridge, `NavigationRegistry.php`, and WhatsApp controller middleware guards | M0 | DONE |
+| 2 | Milestone 2: WhatsApp Views UI Simplification & RBAC | Refactor `index`, `broadcast`, `broadcast_detail`, and `logs` Blade templates per Bento/Apple HIG & `@can` directives | M1 | DONE |
+| 3 | Milestone 3: Test Verification & Forensic Audit Gate | `WhatsAppRbacSecurityTest`, `view:cache`, full regression test, and Forensic Audit gate | M1, M2 | DONE |
 
 ## Interface Contracts
 ### Gate & Permissions Contract

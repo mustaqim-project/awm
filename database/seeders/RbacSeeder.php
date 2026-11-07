@@ -175,8 +175,10 @@ final class RbacSeeder extends Seeder
             'billing.view'                => ['Lihat Paket & Tagihan',                  'billing',     'Melihat paket langganan dan riwayat tagihan.'],
             'billing.manage'              => ['Kelola Langganan & Upgrade',             'billing',     'Mengelola paket langganan Cooca, upgrade, dan riwayat tagihan.'],
 
-            // ─── AI Assistant ─────────────────────────────────────────
-            'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, dan chatbot AI.'],
+            // ─── AI Assistant & Digital Company ───────────────────────
+            'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, chatbot AI, dan kantor virtual.'],
+            'ai.approve'                  => ['Otorisasi & Eksekusi Aksi AI',           'ai',          'Menyetujui, merevisi, atau menolak usulan aksi otomatis agen AI serta mengeksekusi rekomendasi POS.'],
+            'ai.manage'                   => ['Kelola AI & Konfigurasi Provider',       'ai',          'Mengatur kredensial API key provider AI, model LLM, aturan guardrails DO/DONT, dan konfigurasi avatar agen.'],
 
             // ─── AI Studio & Viral Inspiration ───────────────────────
             'ai_studio.view'              => ['Lihat AI Studio',                        'ai_studio',   'Melihat dashboard AI Studio dan perpustakaan inspirasi viral.'],
@@ -285,6 +287,7 @@ final class RbacSeeder extends Seeder
             'labor_machines.view',
             'labor_machines.manage',
             'ai.access',
+            'ai.approve',
             'ai_studio.view',
             'ai_studio.generate',
             'ai_studio.manage',
@@ -304,7 +307,7 @@ final class RbacSeeder extends Seeder
             'admin' => [
                 'name'        => 'Admin Operasional',
                 'description' => 'Administrator operasional dengan akses hampir penuh kecuali billing dan platform settings.',
-                'permissions' => array_merge($managerSlugs, ['users.manage', 'roles.view', 'admin.ai_studio.sources', 'admin.ai_studio.pricing']),
+                'permissions' => array_merge($managerSlugs, ['users.manage', 'roles.view', 'ai.manage', 'admin.ai_studio.sources', 'admin.ai_studio.pricing']),
             ],
             'cashier' => [
                 'name'        => 'Kasir / Sales',

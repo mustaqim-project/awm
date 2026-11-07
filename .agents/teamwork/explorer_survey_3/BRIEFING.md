@@ -1,46 +1,50 @@
-# BRIEFING — 2026-11-02T05:28:45Z
+# BRIEFING — 2026-11-07T07:13:10Z
 
 ## Mission
-Mine, formalize, and document complete specification contracts for Phase 1 (Petty Cash / Quick Expense and Owner Approval Center) across backend (cooca_core) and mobile (cooca_my_own).
+Investigate documentation system, test suites, and production readiness gaps for AI and AI Studio modules in COOCA.
 
 ## 🔒 My Identity
-- Archetype: explorer_survey
-- Roles: Specification & Contract Miner
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\
-- Original parent: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Milestone: Phase 1 Specification Mining & Contract Definition
+- Archetype: Teamwork explorer
+- Roles: Documentation & Module Audit / Tests Specialist
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3
+- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
+- Milestone: Investigation & Survey
 
 ## 🔒 Key Constraints
-- Do NOT implement code directly (Specification Miner is read-only).
-- Thoroughly investigate authoritative source code and database schemas in both cooca_core and cooca_my_own.
-- Produce comprehensive API specifications, data models, error codes, validation rules, mobile component contracts, and test matrices.
-- Write output to report.md, handoff.md, and progress.md.
-- Send completion message to parent 1516ea67-27cb-4c71-a78a-e0325a01044c via send_message.
+- Read-only investigation — do NOT implement or modify source code
+- Write only to working directory: .agents/teamwork/explorer_survey_3/
+- Update progress.md with "Last visited: [timestamp]"
+- 5-Component handoff report required
 
 ## Current Parent
-- Conversation ID: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Updated: 2026-11-02T05:28:45Z
+- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
+- Updated: 2026-11-07T07:13:10Z
 
-## Task Summary
-- **What to build**: Complete specification contract covering Petty Cash API, Owner Approval API, Flutter UI/Logic Contracts, and Full Test Matrix.
-- **Success criteria**: Exhaustive, production-ready specification contracts enabling seamless implementation for backend and mobile developers.
-- **Interface contracts**: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\report.md
-- **Code layout**: Backend in `cooca_core`, Mobile in `cooca_my_own`
+## Investigation State
+- **Explored paths**:
+  - `resources/views/app/docs/` (`index.blade.php`, `partials/sec_ai.blade.php`, `partials/sec_storefront.blade.php`)
+  - `resources/views/app/ai/` (`index.blade.php`, `lobby.blade.php`, `actions.blade.php`, `office.blade.php`, `providers.blade.php`, `offices/*`)
+  - `resources/views/app/ai-studio/` (`index.blade.php`, `show.blade.php`, `create.blade.php`, `credit-history.blade.php`, `inspiration/*`, `partials/*`)
+  - `app/Http/Controllers/Web/Ai/` (`AiCompanyWebController.php`, `PosAiWebController.php`)
+  - `app/Http/Controllers/Web/AiStudio/` (`OwnerAiStudioWebController.php`, `OwnerInspirationWebController.php`)
+  - `app/Domain/Ai/` (`AiOrchestrator.php`, `GenerationOrchestrator.php`, `ProcessImageGenerationJob.php`, `OpenAiImageAdapter.php`, `AiProviderManager.php`)
+  - `routes/` (`owner.php`, `admin.php`, `api.php`, `web.php`)
+  - `database/seeders/RbacSeeder.php`
+  - `tests/Feature/` (`AiStudioWebControllerTest.php`, `AiDigitalCompanyTest.php`, `AiCompanyWorkflowTest.php`, `PosAiEngineTest.php`, etc.)
+- **Key findings**:
+  - AI Studio documentation is 100% missing in `resources/views/app/docs/` (needs `partials/sec_ai_studio.blade.php` and sidebar integration).
+  - Controller-level RBAC (`HasMiddleware`) missing in `AiCompanyWebController` and `PosAiWebController`.
+  - View-level permission checks missing in `ai/actions.blade.php` (Approve/Reject/Revise) and `ai-studio/show.blade.php` (Generate, Export to Catalog, Social, Delete).
+  - Failing test in `AiDigitalCompanyTest.php:148` caused by unmocked live HTTP call with dummy key `sk-cooca...`.
+  - `ai-studio/show.blade.php` polling uses full project endpoint every 3s instead of lightweight status endpoint, with no max retry timeout.
+  - UI clutter: Multi-colored button arrays in `ai-studio/show.blade.php` and `ai/lobby.blade.php` violating `/ui-simplify-layout`.
+- **Unexplored areas**: None, full scope investigated.
 
 ## Key Decisions Made
-- Specification mining successfully completed across both `cooca_core` and `cooca_my_own`.
-- Formalized `POST /api/v1/pos/expenses` linking `PosExpense` -> `PosCashMovement` (`TYPE_CASH_OUT`) -> `CashLedgerService::recordOutflow()`.
-- Formalized unified `GET /api/v1/owner/approvals/pending` aggregating `PosApprovalRequest`, `AttendanceCorrection`, and `ApprovalRequest`.
-- Formalized `POST /api/v1/owner/approvals/{id}/action` with transaction locking, idempotency guard (422 if resolved), and side-effects.
-- Designed mobile contracts for `PosExpenseModal` (Apple HIG, camera capture, offline sync queue) and `OwnerApprovalScreen` (Cupertino, swipe-to-approve/reject with haptics, dashboard badge).
-- Established 14 Backend test scenarios and 11 Mobile Flutter test scenarios.
+- Structure comprehensive handoff report with 5 mandatory components: Observation, Logic Chain, Caveats, Conclusion, Verification Method.
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\DISPATCH.md` — Dispatch instructions
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\BRIEFING.md` — Working memory
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\progress.md` — Liveness & progress tracking
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\report.md` — Complete specification report
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md` — 5-component handoff report
-
-## Loaded Skills
-- cooca-agent-directive: System orchestration for COOCA SaaS ERP multi-tenant Indonesian MSME
+- `DISPATCH.md` — Incoming dispatch logs
+- `progress.md` — Heartbeat and task tracker
+- `BRIEFING.md` — Persistent working memory
+- `handoff.md` — Final 5-component investigation report

@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            @if (\App\Support\Context::hasPermission('whatsapp.manage'))
+            @can('whatsapp.manage')
                 <div class="flex items-center gap-2">
                     <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
                         class="min-h-[44px] px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-[13px] shadow-md shadow-[#007AFF]/25 flex items-center gap-2 transition-all active:scale-[0.98]">
@@ -96,7 +96,7 @@
                         <span>{{ __('whatsapp.create_new_broadcast_btn') }}</span>
                     </a>
                 </div>
-            @endif
+            @endcan
         </header>
 
         <!-- Live Processing Alert (When Background Queue Is Running) -->
@@ -197,11 +197,21 @@
         <!-- ===================================================== -->
         <div
             class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 shadow-[0_1px_2px_rgba(0,0,0,0.02)] p-5 sm:p-6 space-y-3 transition-colors">
-            <div class="flex items-center gap-2.5 pb-3 border-b border-black/5 dark:border-white/10">
-                <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                    <i data-lucide="message-square" class="w-4 h-4"></i>
+            <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10 flex-wrap gap-2">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                    </div>
+                    <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('whatsapp.sent_message_preview_title') }}</h2>
                 </div>
-                <h2 class="text-[15px] font-bold text-black dark:text-white">{{ __('whatsapp.sent_message_preview_title') }}</h2>
+                @can('whatsapp.manage')
+                    <a href="{{ route('whatsapp.broadcast.index', ['open_composer' => 1]) }}"
+                        class="min-h-[44px] px-3.5 rounded-[12px] text-[12.5px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 shrink-0"
+                        title="Buat Siaran Serupa">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <span>Buat Siaran Serupa</span>
+                    </a>
+                @endcan
             </div>
 
             @if ($campaign->media_url)

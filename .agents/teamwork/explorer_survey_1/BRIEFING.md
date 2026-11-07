@@ -1,52 +1,46 @@
-# BRIEFING — 2026-11-02T05:15:00Z
+# BRIEFING — 2026-11-07T07:05:40Z
 
 ## Mission
-Investigate the backend architecture in c:\laragon\www\cooca_core to prepare for implementing Phase 1 (Petty Cash & Owner Approval Center).
+Thoroughly inspect all Blade view files in `resources/views/app/ai` and `resources/views/app/ai-studio` (and related partials/components), identify UI clutter, button collisions/overlaps, visual hierarchy problems, responsive defects, and produce a comprehensive handoff report with actionable recommendations.
 
 ## 🔒 My Identity
-- Archetype: teamwork_explorer
-- Roles: Backend Codebase Explorer for cooca_core
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
-- Original parent: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Milestone: Phase 1 Pre-Implementation Architecture Survey
+- Archetype: Teamwork explorer
+- Roles: UI & Blade Views Explorer
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1
+- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
+- Milestone: Survey & Investigation (Phase 1)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source code
-- Document all findings with file paths, line numbers, and code evidence
-- Follow 5-component handoff report protocol
+- Read-only investigation — do NOT implement or modify any source code files.
+- Write only to working directory (`.agents/teamwork/explorer_survey_1/`).
+- Follow ui-simplify-layout and responsive-ui-ux skills.
+- Deliver self-contained 5-component handoff report (`handoff.md`).
 
 ## Current Parent
-- Conversation ID: 1516ea67-27cb-4c71-a78a-e0325a01044c
-- Updated: not yet
+- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
+- Updated: 2026-11-07T07:05:40Z
 
 ## Investigation State
 - **Explored paths**:
-  - `app/Domain/Finance/CashLedgerService.php`, `app/Models/CashTransaction.php`, `app/Models/CashAccount.php`
-  - `app/Http/Controllers/Web/Finance/CashLedgerWebController.php`, `app/Http/Controllers/Api/V1/Finance/CashLedgerController.php`
-  - `app/Domain/Pos/PosShiftService.php`, `app/Models/PosShift.php`, `app/Models/PosCashMovement.php`
-  - `app/Http/Controllers/Api/V1/Pos/PosShiftController.php`, `app/Http/Controllers/Api/V1/Pos/PosTerminalController.php`
-  - `routes/api.php`, `bootstrap/app.php`
-  - `app/Http/Middleware/SetActiveBusinessContext.php`, `app/Http/Middleware/EnsureActiveBusiness.php`, `app/Models/Traits/BelongsToBusiness.php`, `app/Support/Context.php`
-  - `app/Domain/Storage/TenantStorage.php`, `app/Models/Expense.php`, `app/Domain/Mcp/Tools/FinanceRecordExpenseTool.php`
-  - `app/Models/ApprovalRequest.php`, `app/Models/ApprovalRule.php`, `app/Models/PosApprovalRequest.php`, `app/Models/AttendanceCorrection.php`
-  - `app/Domain/Approval/ApprovalWorkflowService.php`, `app/Domain/HRM/AttendanceService.php`
-  - `tests/TestCase.php`, `phpunit.xml`, `composer.json`, `tests/Feature/ActiveBusinessContextTest.php`, `tests/Feature/CashLedgerIntegrationTest.php`
+  - `resources/views/app/ai/*` (index, office, lobby, actions, history, providers, offices/*, partials/*)
+  - `resources/views/app/ai-studio/*` (index, create, show, credit-history, prompt-preview, partials/*, inspiration/*)
+  - `resources/views/layouts/app.blade.php`
 - **Key findings**:
-  - `CashTransaction` is the model for ledger movements (no `CashLedgerEntry`).
-  - `PosShift` and `PosCashMovement` calculate live expected cash in shifts.
-  - `TenantStorage` manages private `'local'` disk under `bisnis/{slug}/expenses` for receipts.
-  - Three approval models exist: `PosApprovalRequest`, `AttendanceCorrection`, and `ApprovalRequest`.
-  - PHPUnit 12 is the test framework (Pest is not used); tests run with SQLite in-memory and pass 100%.
-- **Unexplored areas**: None for Phase 1 pre-implementation survey.
+  1. Multiple competing primary buttons in module headers (`lobby.blade.php`, `ai-studio/index.blade.php`, `ai-studio/show.blade.php`).
+  2. Mobile collision between fixed toast (`providers.blade.php`) and iOS 18 bottom tab bar in `layouts.app`.
+  3. Overlapping top & bottom HUD overlays in 3D canvas (`virtual_office_canvas.blade.php`).
+  4. Off-screen bounding overflow on mobile in `agent_inspector_hud.blade.php` and camera preset popover.
+  5. Inconsistent z-index scale (`z-50` instead of `z-[200]` in topup modal and inspiration modals) and missing `x-teleport="body"`.
+  6. Sub-44px touch targets on mobile (28px favorite/collection buttons in inspiration index, small prompt chips).
+  7. Hardcoded dark mode styling and malformed HTML comment in `consultation_modal.blade.php`.
+  8. Duplication of `+` character with icons in button labels.
+- **Unexplored areas**: None within the assigned scope. All 31 Blade files surveyed.
 
 ## Key Decisions Made
-- Detailed technical findings written to `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\report.md`.
-- Handoff report written to `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md`.
-- Ready to send message back to orchestrator.
+- Categorize findings systematically across: (1) View enumeration, (2) UI clutter & button collisions, (3) Visual hierarchy & button tiers, (4) Responsive & modal/drawer issues, (5) Actionable remediation plan.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat
-- report.md — comprehensive technical survey findings
-- handoff.md — 5-component handoff report
+- `DISPATCH.md` — Inbound instructions log
+- `BRIEFING.md` — Persistent working memory and state
+- `progress.md` — Liveness heartbeat and milestone tracking
+- `handoff.md` — Final 5-component handoff report

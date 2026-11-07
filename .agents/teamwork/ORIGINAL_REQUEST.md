@@ -1,36 +1,41 @@
 # Original User Request
 
-## Initial Request — 2026-11-07T05:22:00Z
+## Initial Request — 2026-11-07T06:50:22Z
 
-Refactor and improve the WhatsApp module views in resources/views/app/whatsapp for production, simplifying user interface layouts and enforcing role-based access control (RBAC).
+Perbaiki dan sempurnakan modul AI dan AI Studio pada `c:\laragon\www\cooca_core\resources\views\app\ai` dan `c:\laragon\www\cooca_core\resources\views\app\ai-studio` untuk kebutuhan production sistem Cooca SaaS ERP menggunakan panduan `/ui-simplify-layout`, `/laravel-rbac`, `/business-owner-doc-generator`, dan `/laravel-module-audit`.
 
 Working directory: c:\laragon\www\cooca_core
 Integrity mode: development
 
 ## Requirements
 
-### R1. UI Simplification for WhatsApp Views
-Simplify and declutter the user interface across all views in `resources/views/app/whatsapp` (`index.blade.php`, `broadcast.blade.php`, `broadcast_detail.blade.php`, `logs.blade.php`). Reorganize information hierarchy, eliminate overlapping buttons or elements, and establish a clear, structured action button hierarchy for production.
+### R1. UI Simplification and Layout Cleanliness
+Sederhanakan antarmuka pengguna pada seluruh view di `resources/views/app/ai` dan `resources/views/app/ai-studio` dengan menata hierarki visual, merapikan letak tombol aksi, dan mengeliminasi elemen layout yang saling tumpang tindih (overlap) sesuai prinsip `/ui-simplify-layout`. Tampilan harus rapi, terstruktur, dan responsif pada perangkat mobile maupun desktop.
 
-### R2. Role-Based Access Control (RBAC) Enforcement
-Enforce Laravel RBAC authorization for WhatsApp module functionality. Implement controller-level permission guards across WhatsApp controllers, restrict UI elements and action buttons in Blade views using `@can` directives, and ensure required permissions are registered in database seeders.
+### R2. Controller-Level RBAC and Authorization Enforcement
+Terapkan kontrol akses berbasis peran (RBAC) pada controller terkait modul AI dan AI Studio serta sembunyikan atau amankan tombol aksi dan elemen view dari pengguna tanpa hak akses sesuai prinsip `/laravel-rbac`.
 
-## Verification Resources
-Standard Laravel testing framework and existing application test suite.
+### R3. Business Owner User Documentation
+Buat dokumentasi panduan penggunaan modul AI dan AI Studio dari sudut pandang (POV) pemilik bisnis / UMKM tanpa jargon rumit dan sertakan tautan ke rute/fitur terkait di direktori dokumentasi sesuai pedoman `/business-owner-doc-generator`.
+
+### R4. Module Audit and Production Readiness
+Lakukan audit komprehensif terhadap kesiapan produksi modul AI dan AI Studio sesuai standar `/laravel-module-audit`, termasuk pengecekan konsistensi alur, validasi, penanganan error, dan checklist kesiapan release.
 
 ## Acceptance Criteria
 
-### UI Simplification & Layout Hierarchy
-- [ ] All views in `resources/views/app/whatsapp` (`index.blade.php`, `broadcast.blade.php`, `broadcast_detail.blade.php`, `logs.blade.php`) are decluttered with clear visual and information hierarchy.
-- [ ] No buttons or UI elements overlap or collide across responsive desktop and mobile viewports.
-- [ ] Action buttons adhere to distinct primary, secondary, and destructive hierarchy without cluttered or duplicate actions.
+### UI and Layout
+- [ ] Seluruh file view Blade pada `resources/views/app/ai` dan `resources/views/app/ai-studio` tidak memiliki tombol atau komponen antarmuka yang saling tumpang tindih (zero overlap).
+- [ ] Tombol aksi utama (primary action) terpisah jelas dari aksi sekunder dan tersusun rapi pada setiap halaman view AI dan AI Studio.
+- [ ] Tampilan antarmuka dapat diakses dan tertata rapi tanpa layout broken atau horizontal scrolling tidak wajar pada viewport mobile (375px-430px) dan desktop (>= 1024px).
 
-### Role-Based Access Control (RBAC)
-- [ ] WhatsApp controller actions enforce permission checks at the controller level.
-- [ ] Blade views in `resources/views/app/whatsapp` conditionally display actions, buttons, and navigation using `@can` directives.
-- [ ] All relevant WhatsApp permissions are defined and registered in database seeders.
-- [ ] Unauthorized users attempting direct access to WhatsApp controller endpoints receive an HTTP 403 Forbidden response.
+### RBAC and Access Control
+- [ ] Seluruh endpoint atau controller method terkait fitur AI dan AI Studio dilindungi oleh middleware/guard permission yang sesuai di level controller.
+- [ ] Elemen aksi dan navigasi di dalam view AI dan AI Studio dibungkus dengan pengecekan permission (misal `@can` / directive otorisasi), sehingga tidak tampak oleh user yang tidak memiliki izin.
 
-### Verification & Stability
-- [ ] All existing test suites pass without regression (`php artisan test`).
-- [ ] All modified Blade views compile and render without syntax errors or missing variable exceptions.
+### Documentation
+- [ ] File panduan pengguna untuk Business Owner untuk fitur AI dan AI Studio telah dibuat di `resources/views/app/docs/` (atau direktori dokumentasi sistem terkait).
+- [ ] Panduan mendeskripsikan alur kerja penggunaan fitur dalam bahasa yang mudah dipahami serta memuat tautan rute ke fitur terkait.
+
+### Verification and Quality
+- [ ] Seluruh sintaks file PHP dan Blade yang dimodifikasi lolos verifikasi sintaks tanpa syntax error (`php -l`).
+- [ ] Test suite Laravel yang relevan (`php artisan test`) berjalan dan lulus tanpa regresi.
