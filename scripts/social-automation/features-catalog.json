@@ -5,13 +5,37 @@
     "category": "KASIR & PENJUALAN",
     "route": "/pos",
     "viewport": { "width": 1440, "height": 900 },
-    "slot": "morning",
-    "headline": "Antrean Kasir Macet Pas Toko Rame?",
+    "viral_metrics": {
+      "trend_velocity": 92,
+      "hook_urgency": 95,
+      "visual_depth": 96,
+      "cta_clarity": 94,
+      "viral_score": 94.2
+    },
+    "headline": "Antrean Kasir Macet Pas Toko Lagi Ramai?",
     "subheadline": "Selesaikan transaksi kilat kurang dari 3 detik dengan Kasir Pintar COOCA. Dukung scan barcode, split bill, dan cetak struk instan.",
-    "badges": ["⚡ Transaksi < 3 Detik", "💳 QRIS & Multi-Payment", "📱 Bisa di Tablet & HP"],
+    "badges": ["Transaksi Kilat Kurang Dari 3 Detik", "QRIS & Multi-Payment", "Bisa di Tablet & HP"],
     "keywords": ["aplikasi kasir anti lemot", "software kasir toko ramai", "cara mempercepat antrean kasir", "mesin kasir android umkm"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Efisiensi Transaksi Meja Kasir untuk Menekan Turnaround Time Pelanggan",
+        "caption": "Di jam sibuk ritel, kecepatan transaksi kasir menentukan kepuasan dan perputaran kas harian Toko Kamu yang dikelola oleh Cooca Indonesia.\n\nDengan sistem Kasir POS COOCA, proses checkout diselesaikan kurang dari 3 detik dengan pencatatan otomatis ke jurnal keuangan dan kartu stok secara real-time.\n\nPelajari implementasi sistem kasir pintar di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Kasir Lemot Bikin Pelanggan Kabur? Ini Solusi Kilatnya!",
+        "caption": "Pernah kehilangan pembeli karena antrean kasir mengular panjang?\n\nDi Toko Kamu yang didukung Cooca Indonesia, transaksi kasir tuntas kurang dari 3 detik:\n- Scan barcode super cepat\n- Terima QRIS, kartu debit, transfer, dan tunai\n- Struk digital langsung kirim ke WhatsApp pembeli\n\nCek demo sistem kasir modern di: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Tips Mengatur Meja Kasir Toko Ritel Biar Tidak Antre Panjang",
+        "caption": "Bagi rekan-rekan pemilik toko dan warung ritel, antrean panjang di kasir seringkali membuat kasir panik dan rentan salah hitung kembalian.\n\nSimak pengalaman operasional Toko Kamu bersama Cooca Indonesia dalam menerapkan sistem kasir modern yang anti-lemot dan mudah dipelajari staf baru.\n\nInformasi lengkapnya: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "3 Detik Langsung Beres! Trik Atasi Kasir Toko Macet",
+        "caption": "Jangan biarkan antrean kasir bikin omzet toko kamu hilang sia-sia! Pakai Kasir Pintar COOCA di Toko Kamu, transaksi kilat langsung terhubung ke stok dan laporan laba rugi. Coba gratis di https://cooca.id"
+      }
+    },
     "caption_hook": "Kasir macet saat pelanggan lagi antre panjang itu mimpi buruk setiap pemilik toko.",
-    "caption_body": "Pelanggan jadi buru-buru, kasir panik, dan risiko salah hitung kembalian makin besar.\n\nDengan Kasir Pintar COOCA:\n✅ Transaksi kilat kurang dari 3 detik (klik langsung beres)\n✅ Dukung barcode scanner & pencarian produk super responsif\n✅ Terima QRIS, debit, transfer, & tunai otomatis tercatat\n✅ Struk bisa langsung dikirim via WhatsApp (hemat kertas thermal)\n\nBikin kasir Anda kerja lebih santai dan pelanggan puas tanpa antre berlama-lama.",
+    "caption_body": "Pelanggan jadi buru-buru, kasir panik, dan risiko salah hitung kembalian makin besar.\n\nDengan Kasir Pintar COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n1. Transaksi kilat kurang dari 3 detik (klik langsung beres)\n2. Dukung barcode scanner dan pencarian produk super responsif\n3. Terima QRIS, debit, transfer, dan tunai otomatis tercatat\n4. Struk bisa langsung dikirim via WhatsApp (hemat kertas thermal)\n\nBikin kasir Anda kerja lebih santai dan pelanggan puas tanpa antre berlama-lama.",
     "hashtags": ["#CoocaERP", "#AplikasiKasir", "#KasirPintar", "#UMKMIndonesia", "#BisnisSukses"]
   },
   {
@@ -20,14 +44,37 @@
     "category": "INVENTORI & GUDANG",
     "route": "/inventory/stocks",
     "viewport": { "width": 1440, "height": 900 },
-    "slot": "evening",
+    "viral_metrics": {
+      "trend_velocity": 94,
+      "hook_urgency": 98,
+      "visual_depth": 95,
+      "cta_clarity": 92,
+      "viral_score": 95.1
+    },
     "headline": "Stok Fisik Sering Tidak Sesuai Catatan?",
-    "subheadline": "Kenali penyebabnya dan mulai kontrol inventori bisnis dengan sistem yang terintegrasi.",
-    "badges": ["📦 Monitoring Stok Real-Time", "🔄 Riwayat Mutasi Lengkap", "📊 Laporan Stok Otomatis"],
+    "subheadline": "Kenali penyebabnya dan mulai kontrol inventori bisnis dengan sistem mutasi otomatis real-time.",
+    "badges": ["Monitoring Stok Real-Time", "Riwayat Mutasi Lengkap", "Laporan Stok Otomatis"],
     "keywords": ["cara mengatasi stok barang selisih", "kenapa stok fisik berbeda dengan catatan", "manajemen stok toko umkm", "cara stock opname toko"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Audit Kontrol Inventori: Menghentikan Kebocoran Modal Akibat Selisih Stok",
+        "caption": "Selisih inventori bukan sekadar perbedaan angka di atas kertas, melainkan erosi margin laba bersih yang nyata bagi Toko Kamu di bawah pengelolaan Cooca Indonesia.\n\nPenerapan sistem mutasi otomatis dan sinkronisasi kasir COOCA memastikan setiap perpindahan barang memiliki audit trail yang dapat dipertanggungjawabkan.\n\nPelajari sistem inventori terintegrasi di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Kenapa Stok Fisik di Rak Sering Selisih Pas Akhir Bulan?",
+        "caption": "Masalah klasik pemilik toko ritel: barang di rak habis, tapi di catatan sistem masih ada banyak, atau sebaliknya!\n\nDi Toko Kamu yang dikelola oleh Cooca Indonesia, kami mengontrol inventori secara akurat:\n- Penjualan kasir otomatis memotong stok gudang detik itu juga\n- Notifikasi peringatan saat stok barang menipis\n- Riwayat mutasi barang masuk, keluar, retur, dan sampel tercatat rapi\n\nMulai tertibkan stok usaha Anda di: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Penyebab Utama Barang Toko Sering Hilang atau Selisih Catatan",
+        "caption": "Pernah pusing saat stock opname akhir bulan menemukan banyak barang yang selisih? Jangan langsung curiga dulu, periksa alur pencatatan mutasinya.\n\nPelajari bagaimana Toko Kamu bersama Cooca Indonesia menata ulang SOP gudang dan pencatatan kasir agar tidak ada lagi barang yang luput dari rekapan.\n\nSimak panduannya di: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "Stop Rugi Jutaan Rupiah Gara-Gara Stok Barang Selisih!",
+        "caption": "Stok gudang beda dengan catatan kasir? Ini cara Toko Kamu mengunci mutasi barang otomatis bareng COOCA. Nggak ada lagi barang hilang tanpa jejak! Cek sistemnya di https://cooca.id"
+      }
+    },
     "caption_hook": "Stok fisik di rak toko sering tidak sesuai dengan catatan pembukuan saat akhir bulan?",
-    "caption_body": "Bagi pemilik usaha ritel dan toko seperti Toko Saya yang dikelola oleh Cooca Indonesia, selisih stok bukan cuma bikin pusing saat stock opname, tapi juga merupakan kebocoran modal yang menggerus keuntungan bersih secara diam-diam.\n\nBiasanya, selisih stok terjadi karena beberapa faktor umum:\n1. Transaksi penjualan kasir tidak langsung memotong stok gudang secara otomatis.\n2. Barang retur, barang rusak, atau sampel display tidak dicatat mutasinya.\n3. Kesalahan input kode atau salah ambil barang saat toko sedang ramai.\n4. Jadwal stock opname ditunda terlalu lama sampai selisih menumpuk.\n\nSolusinya adalah membangun kebiasaan pencatatan mutasi otomatis dan disiplin audit berkala. Dengan modul Manajemen Stok & Inventori COOCA, setiap pergerakan barang langsung tercatat akurat dan terhubung dengan kasir POS.\n\nManfaat utama menggunakan sistem inventori terintegrasi COOCA:\n- Mengontrol stok barang secara real-time dari satu sistem terpadu.\n- Memantau riwayat mutasi barang masuk dan keluar tanpa rekap manual.\n- Mendapatkan notifikasi otomatis saat stok barang mulai menipis.\n- Mengurangi risiko selisih fisik saat melakukan stock opname berkala.",
-    "full_caption": "Stok fisik di rak toko sering tidak sesuai dengan catatan pembukuan saat akhir bulan?\n\nBagi pemilik usaha ritel dan toko seperti Toko Saya yang dikelola oleh Cooca Indonesia, selisih stok bukan cuma bikin pusing saat stock opname, tapi juga merupakan kebocoran modal yang menggerus keuntungan bersih secara diam-diam.\n\nBiasanya, selisih stok terjadi karena beberapa faktor umum:\n1. Transaksi penjualan kasir tidak langsung memotong stok gudang secara otomatis.\n2. Barang retur, barang rusak, atau sampel display tidak dicatat mutasinya.\n3. Kesalahan input kode atau salah ambil barang saat toko sedang ramai.\n4. Jadwal stock opname ditunda terlalu lama sampai selisih menumpuk.\n\nSolusinya adalah membangun kebiasaan pencatatan mutasi otomatis dan disiplin audit berkala. Dengan modul Manajemen Stok & Inventori COOCA, setiap pergerakan barang langsung tercatat akurat dan terhubung dengan kasir POS.\n\nManfaat utama menggunakan sistem inventori terintegrasi COOCA:\n- Mengontrol stok barang secara real-time dari satu sistem terpadu.\n- Memantau riwayat mutasi barang masuk dan keluar tanpa rekap manual.\n- Mendapatkan notifikasi otomatis saat stok barang mulai menipis.\n- Mengurangi risiko selisih fisik saat melakukan stock opname berkala.\n\nMulai rapikan operasional dan kendalikan stok bisnis Anda bersama COOCA. Kunjungi website resmi kami di: https://cooca.id\n\n#CoocaERP #EdukasiBisnis #UMKMIndonesia #TipsUsaha #ManajemenStok",
+    "caption_body": "Bagi pemilik usaha ritel seperti Toko Kamu yang dikelola oleh Cooca Indonesia, selisih stok bukan cuma bikin pusing saat stock opname, tapi juga merupakan kebocoran modal yang menggerus keuntungan bersih secara diam-diam.\n\nEmpat faktor penyebab selisih stok:\n1. Transaksi kasir tidak memotong stok gudang secara otomatis.\n2. Barang retur, barang rusak, atau sampel display tidak dicatat mutasinya.\n3. Kesalahan input kode atau salah ambil barang saat toko ramai.\n4. Jadwal stock opname ditunda terlalu lama.\n\nModul Manajemen Stok COOCA mencatat setiap mutasi secara real-time dan terhubung langsung dengan kasir POS.",
     "hashtags": ["#CoocaERP", "#EdukasiBisnis", "#UMKMIndonesia", "#TipsUsaha", "#ManajemenStok"]
   },
   {
@@ -36,44 +83,38 @@
     "category": "KEUANGAN & AKUNTANSI",
     "route": "/reports",
     "viewport": { "width": 1440, "height": 900 },
-    "slot": "evening",
-    "headline": "Omzet Rame Tapi Uangnya Nggak Tahu Kemana?",
+    "viral_metrics": {
+      "trend_velocity": 90,
+      "hook_urgency": 96,
+      "visual_depth": 94,
+      "cta_clarity": 93,
+      "viral_score": 93.3
+    },
+    "headline": "Omzet Ramai Tapi Uangnya Nggak Tahu Kemana?",
     "subheadline": "Hitung laba bersih otomatis tanpa excel manual. Pisahkan uang usaha dan uang pribadi dalam 1 dashboard keuangan terpadu.",
-    "badges": ["📊 Laba Rugi Otomatis", "💰 Arus Kas Terpantau", "📑 Ekspor Laporan Excel/PDF"],
+    "badges": ["Laba Rugi Otomatis", "Arus Kas Terpantau", "Ekspor Laporan Excel/PDF"],
     "keywords": ["cara hitung untung bersih bisnis", "cara pisahkan uang pribadi dan usaha", "laporan keuangan umkm otomatis", "software akuntansi toko"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Membaca Kesehatan Finansial UMKM Melalui Real-Time Profit & Loss Reporting",
+        "caption": "Tingginya omzet penjualan seringkali mengaburkan realita margin keuntungan operasional yang tergerus biaya tersembunyi.\n\nStudi kasus Toko Kamu yang dikelola oleh Cooca Indonesia membuktikan bahwa otomatisasi laporan laba rugi dan rekonsiliasi arus kas memberikan kepastian pengambilan keputusan ekspansi bisnis.\n\nPelajari dashboard keuangan COOCA di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Omzet Ratusan Juta Tapi Saldo Kas Toko Pas-Pasan?",
+        "caption": "Pernah merasa toko ramai setiap hari, tapi giliran bayar tagihan dan supplier malah kebingungan?\n\nDi Toko Kamu yang didampingi Cooca Indonesia:\n- Laba bersih terhitung otomatis dari selisih omzet dan HPP\n- Uang usaha terpisah tegas dari uang pribadi\n- Laporan laba rugi siap unduh ke Excel atau PDF kapan saja\n\nKetahui persis keuntungan bisnismu di: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Cara Sederhana Memisahkan Uang Usaha dan Uang Pribadi Bagi Pedagang",
+        "caption": "Salah satu jebakan terbesar pebisnis UMKM adalah mencampur dompet belanja dapur dengan uang kasir toko.\n\nYuk pelajari bagaimana Toko Kamu mengelola pencatatan kas harian menggunakan sistem COOCA agar keuangan toko tetap sehat dan terukur.\n\nBaca ulasan selengkapnya di: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "Jangan Bangga Dulu Sama Omzet Gede Kalau Laba Bersih Nggak Jelas!",
+        "caption": "Omzet ramai tapi pas akhir bulan uang kasir habis entah kemana? Pakai Laporan Laba Rugi Otomatis COOCA di Toko Kamu, langsung tahu untung bersih setiap hari! Coba di https://cooca.id"
+      }
+    },
     "caption_hook": "Pernah merasa penjualan ramai setiap hari, tapi pas akhir bulan saldo kas toko kok malah pas-pasan?",
-    "caption_body": "Masalah klasik pebisnis: omzet tercatat, tapi biaya operasional dan pengeluaran kecil-kecil luput dari pembukuan.\n\nDi COOCA, Anda tidak perlu jadi akuntan handal untuk tahu kesehatan finansial:\n✅ Laporan Laba Rugi dihitung otomatis dari setiap penjualan dan belanja bahan\n✅ Arus kas harian, mingguan, hingga bulanan terpantau jelas\n✅ Pisahkan pencatatan kas kasir dan kas utama perusahaan\n✅ Siap cetak dan ekspor ke Excel/PDF dalam satu klik\n\nSaatnya bisnis naik kelas dengan pembukuan yang rapi dan transparan.",
+    "caption_body": "Masalah klasik pebisnis: omzet tercatat, tapi biaya operasional dan pengeluaran kecil-kecil luput dari pembukuan.\n\nDi COOCA, Anda tidak perlu jadi akuntan handal untuk tahu kesehatan finansial Toko Kamu yang dikelola oleh Cooca Indonesia:\n1. Laporan Laba Rugi dihitung otomatis dari setiap transaksi penjualan dan belanja barang.\n2. Arus kas harian, mingguan, hingga bulanan terpantau jelas.\n3. Pisahkan pencatatan kas kasir dan kas utama perusahaan.\n4. Siap cetak dan ekspor ke Excel atau PDF dalam satu klik.",
     "hashtags": ["#KeuanganUMKM", "#LabaRugiOtomatis", "#CoocaERP", "#TipsBisnis", "#AkuntansiPraktis"]
-  },
-  {
-    "id": "whatsapp",
-    "name": "Struk Digital & Broadcast WhatsApp",
-    "category": "PEMASARAN & CRM",
-    "route": "/dashboard",
-    "viewport": { "width": 1440, "height": 900 },
-    "slot": "morning",
-    "headline": "Hemat Kertas Struk, Kumpulkan Database Pelanggan!",
-    "subheadline": "Kirim struk kasir resmi langsung ke WhatsApp pembeli. Otomatis simpan kontak pelanggan untuk kirim promo repeat order.",
-    "badges": ["📲 Struk Digital WhatsApp", "🎯 Database Kontak Otomatis", "🌿 Hemat Biaya Kertas"],
-    "keywords": ["kirim struk via whatsapp", "aplikasi broadcast wa pelanggan", "cara promosi toko via wa", "struk digital tanpa printer"],
-    "caption_hook": "Kertas thermal struk kasir makin mahal dan ujung-ujungnya cuma dibuang pembeli ke tong sampah?",
-    "caption_body": "Ganti cara lama dengan Struk Digital WhatsApp dari COOCA:\n✅ Hemat ratusan ribu rupiah anggaran kertas printer thermal setiap bulan\n✅ Struk elegan terkirim langsung ke nomor WhatsApp pembeli secara instan\n✅ Nomor pelanggan otomatis tersimpan rapi di database CRM toko Anda\n✅ Bisa dipakai untuk kirim info promo dan ucapan agar pelanggan rajin repeat order\n\nLebih hemat, lebih ramah lingkungan, dan bikin pelanggan makin loyal.",
-    "hashtags": ["#WhatsAppBisnis", "#StrukDigital", "#CoocaERP", "#MarketingUMKM", "#BisnisModern"]
-  },
-  {
-    "id": "multi_outlet",
-    "name": "Multi-Cabang Dari 1 Layar HP",
-    "category": "MULTI-OUTLET",
-    "route": "/dashboard",
-    "viewport": { "width": 1440, "height": 900 },
-    "slot": "morning",
-    "headline": "Pantau 5 Cabang Toko Cukup Dari Rumah!",
-    "subheadline": "Semua data penjualan, stok, dan kasir di berbagai outlet tersinkronisasi secara real-time. Tidak perlu lagi keliling setiap hari.",
-    "badges": ["🌐 Pantau Semua Cabang", "🔄 Transfer Stok Antar Toko", "📈 Perbandingan Omzet Outlet"],
-    "keywords": ["pantau banyak cabang dari hp", "aplikasi kasir multi cabang", "software waralaba franchise", "kelola banyak cabang toko"],
-    "caption_hook": "Buka banyak cabang itu impian, tapi kalau harus keliling setiap hari ngecek laporan satu per satu, kapan istirahatnya?",
-    "caption_body": "Kendalikan seluruh cabang bisnis Anda hanya dari genggaman tangan bersama COOCA:\n✅ Pantau omzet dan transaksi semua outlet secara real-time dari 1 layar\n✅ Bandingkan performa cabang mana yang paling profit dan mana yang butuh support\n✅ Kirim dan mutasi stok antar cabang tanpa ribet catatan manual\n✅ Pengaturan harga dan promo terpusat untuk semua toko\n\nBisnis jalan terus, ekspansi cabang makin lancar tanpa pusing operasional.",
-    "hashtags": ["#MultiCabang", "#BisnisCabang", "#CoocaERP", "#OwnerBisnis", "#EkspansiUsaha"]
   },
   {
     "id": "fraud_prevention",
@@ -81,13 +122,115 @@
     "category": "KEAMANAN OPERASIONAL",
     "route": "/roles",
     "viewport": { "width": 1440, "height": 900 },
-    "slot": "evening",
+    "viral_metrics": {
+      "trend_velocity": 95,
+      "hook_urgency": 99,
+      "visual_depth": 95,
+      "cta_clarity": 95,
+      "viral_score": 96.2
+    },
     "headline": "Uang Kasir Sering Selisih Saat Tutup Shift?",
     "subheadline": "Kunci hak akses sensitif dengan PIN Supervisor. Kasir tidak bisa seenaknya hapus pesanan (void), ubah harga, atau buka laci kas.",
-    "badges": ["🔒 Kunci Hak Akses (RBAC)", "🔑 PIN Supervisor Otorisasi", "🛡️ Audit Log Transaksi"],
+    "badges": ["Kunci Hak Akses (RBAC)", "PIN Supervisor Otorisasi", "Audit Log Transaksi"],
     "keywords": ["cegah kecurangan kasir", "cara audit kasir toko", "pin supervisor kasir pos", "keamanan sistem toko"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Mencegah Internal Fraud pada Titik Penjualan Ritel dengan Role-Based Access Control",
+        "caption": "Kebocoran kasir merupakan ancaman operasional nyata yang seringkali tidak disadari pemilik usaha hingga berdampak signifikan pada bottom line.\n\nMelalui sistem Role-Based Access Control dan audit trail di COOCA, Toko Kamu di bawah naungan Cooca Indonesia berhasil mengamankan setiap transaksi sensitif (Void, Diskon, Pengembalian Kas).\n\nPelajari modul keamanan operasional di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Uang Kasir Sering Kurang Pas Tutup Toko? Waspadai Celah Ini!",
+        "caption": "Salah satu titik paling rawan dalam bisnis ritel adalah meja kasir saat pergantian shift.\n\nToko Kamu yang dikelola oleh Cooca Indonesia mengamankan kasir dengan sistem anti-fraud COOCA:\n- Transaksi batal (Void) wajib PIN Supervisor\n- Kasir tidak bisa manipulasi harga sembarangan\n- Rekap kas otomatis mencocokkan uang fisik dengan catatan sistem\n- Audit log mencatat setiap aksi staf detik demi detik\n\nJaga jerih payah bisnismu sekarang: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Cara Mengamankan Uang Kasir Toko Dari Selisih dan Kecurangan",
+        "caption": "Banyak pemilik toko yang mengeluh uang di laci kasir sering kurang saat dihitung malam hari. Ternyata seringkali masalahnya ada pada celah sistem kasir yang belum terkunci.\n\nSimak tips pengamanan kasir yang diterapkan Toko Kamu bersama Cooca Indonesia agar operasional toko aman dan tenang.\n\nPelajari caranya di: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "Rahasia Toko Ritel Bebas Kebocoran Uang Kasir Tiap Hari!",
+        "caption": "Kasir kamu masih bisa hapus transaksi sesuka hati? Bahaya banget! Kunci hak akses kasir pakai PIN Supervisor COOCA seperti di Toko Kamu. Aman dan transparan! Cek di https://cooca.id"
+      }
+    },
     "caption_hook": "Salah satu kebocoran terbesar di toko fisik adalah celah manipulasi transaksi di meja kasir.",
-    "caption_body": "Transaksi dihapus setelah pembeli bayar tunai, diskon dimanipulasi, atau selisih uang kas saat pergantian shift.\n\nLindungi jerih payah bisnis Anda dengan sistem keamanan COOCA:\n✅ Hak akses bertingkat: Kasir, Supervisor, dan Owner memiliki wewenang berbeda\n✅ Transaksi batal (Void) atau diskon khusus wajib verifikasi PIN Supervisor\n✅ Setiap pergantian shift kasir wajib hitung uang kas awal dan kas akhir\n✅ Audit log lengkap mencatat detik per detik aktivitas staf di sistem\n\nBisnis tenang, operasional aman, dan keuangan terlindungi maksimal.",
+    "caption_body": "Transaksi dihapus setelah pembeli bayar tunai, diskon dimanipulasi, atau selisih uang kas saat pergantian shift.\n\nLindungi jerih payah bisnis Anda dengan sistem keamanan COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n1. Hak akses bertingkat: Kasir, Supervisor, dan Owner memiliki wewenang berbeda.\n2. Transaksi batal (Void) atau diskon khusus wajib verifikasi PIN Supervisor.\n3. Setiap pergantian shift kasir wajib hitung uang kas awal dan kas akhir.\n4. Audit log lengkap mencatat detik per detik aktivitas staf di sistem.",
     "hashtags": ["#KeamananToko", "#AntiFraudKasir", "#CoocaERP", "#AuditBisnis", "#SistemUsaha"]
+  },
+  {
+    "id": "multi_outlet",
+    "name": "Multi-Cabang Dari 1 Layar HP",
+    "category": "MULTI-OUTLET",
+    "route": "/dashboard",
+    "viewport": { "width": 1440, "height": 900 },
+    "viral_metrics": {
+      "trend_velocity": 89,
+      "hook_urgency": 91,
+      "visual_depth": 94,
+      "cta_clarity": 92,
+      "viral_score": 91.3
+    },
+    "headline": "Pantau Semua Cabang Toko Cukup Dari Rumah!",
+    "subheadline": "Semua data penjualan, stok, dan kasir di berbagai outlet tersinkronisasi secara real-time. Tidak perlu lagi keliling setiap hari.",
+    "badges": ["Pantau Semua Cabang", "Transfer Stok Antar Toko", "Perbandingan Omzet Outlet"],
+    "keywords": ["pantau banyak cabang dari hp", "aplikasi kasir multi cabang", "software waralaba franchise", "kelola banyak cabang toko"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Skalabilitas Bisnis Ritel: Mengontrol Operasional Multi-Outlet Secara Terpusat",
+        "caption": "Membuka cabang baru adalah target pertumbuhan, namun tanpa integrasi data terpusat, operasional multi-outlet justru meningkatkan kompleksitas dan biaya pengawasan.\n\nCOOCA memungkinkan monitoring performa komparatif antar outlet secara real-time untuk Toko Kamu dan jaringan gerai di bawah Cooca Indonesia.\n\nPelajari modul multi-cabang terpadu di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Punya Banyak Cabang Toko Tapi Harus Keliling Terus Setiap Hari?",
+        "caption": "Buka banyak cabang itu impian, tapi kalau setiap hari harus keliling ngecek laporan satu per satu, kapan istirahatnya?\n\nKendalikan seluruh cabang toko dari genggaman bersama COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n- Pantau omzet dan transaksi semua outlet dari 1 layar\n- Bandingkan performa cabang yang paling profit\n- Transfer stok antar cabang tanpa ribet catatan manual\n\nEkspansi bisnis tanpa pusing operasional: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Pengalaman Mengelola Lebih Dari Satu Cabang Toko Tanpa Repot",
+        "caption": "Bagi teman-teman pemilik usaha yang sedang bersiap ekspansi buka cabang kedua atau ketiga, pastikan sistem pencatatannya sudah terhubung otomatis.\n\nSimak bagaimana Toko Kamu mengelola cabang dengan sistem terpusat Cooca Indonesia agar tidak perlu repot rekap manual tiap malam.\n\nBuka ulasannya di: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "Cara Pantau 5 Cabang Toko Sambil Rebahan di Rumah!",
+        "caption": "Capek keliling cabang toko tiap hari cuma buat ngecek rekap kasir? Di Toko Kamu bareng COOCA, semua laporan cabang langsung update real-time di HP kamu! Coba sekarang di https://cooca.id"
+      }
+    },
+    "caption_hook": "Buka banyak cabang itu impian, tapi kalau harus keliling setiap hari ngecek laporan satu per satu, kapan istirahatnya?",
+    "caption_body": "Kendalikan seluruh cabang bisnis Anda hanya dari genggaman tangan bersama COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n1. Pantau omzet dan transaksi semua outlet secara real-time dari 1 layar.\n2. Bandingkan performa cabang mana yang paling profit dan mana yang butuh support.\n3. Kirim dan mutasi stok antar cabang tanpa ribet catatan manual.\n4. Pengaturan harga dan promo terpusat untuk semua toko.",
+    "hashtags": ["#MultiCabang", "#BisnisCabang", "#CoocaERP", "#OwnerBisnis", "#EkspansiUsaha"]
+  },
+  {
+    "id": "whatsapp",
+    "name": "Struk Digital & Broadcast WhatsApp",
+    "category": "PEMASARAN & CRM",
+    "route": "/dashboard",
+    "viewport": { "width": 1440, "height": 900 },
+    "viral_metrics": {
+      "trend_velocity": 88,
+      "hook_urgency": 90,
+      "visual_depth": 93,
+      "cta_clarity": 93,
+      "viral_score": 90.6
+    },
+    "headline": "Hemat Kertas Struk, Kumpulkan Database Pelanggan!",
+    "subheadline": "Kirim struk kasir resmi langsung ke WhatsApp pembeli. Otomatis simpan kontak pelanggan untuk kirim promo repeat order.",
+    "badges": ["Struk Digital WhatsApp", "Database Kontak Otomatis", "Hemat Biaya Kertas"],
+    "keywords": ["kirim struk via whatsapp", "aplikasi broadcast wa pelanggan", "cara promosi toko via wa", "struk digital tanpa printer"],
+    "platform_angles": {
+      "linkedin": {
+        "title": "Efisiensi Operasional & Retensi Pelanggan Melalui Digitalisasi Struk WhatsApp",
+        "caption": "Biaya kertas thermal kasir seringkali dianggap pengeluaran sepele padahal bernilai jutaan rupiah per tahun dan tidak menghasilkan data pelanggan yang dapat ditindaklanjuti.\n\nToko Kamu yang dikelola oleh Cooca Indonesia mendigitalisasi struk kasir via WhatsApp, sekaligus membangun database pelanggan yang tertata rapi untuk strategi CRM berkelanjutan.\n\nPelajari sistemnya di: https://cooca.id"
+      },
+      "instagram": {
+        "title": "Kertas Struk Kasir Dibuang Pembeli? Ubah Jadi Database Omzet!",
+        "caption": "Kertas thermal makin mahal, dan ujung-ujungnya cuma jadi sampah di tong toko?\n\nGanti cara lama dengan Struk Digital WhatsApp dari COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n- Hemat ratusan ribu rupiah biaya kertas struk tiap bulan\n- Struk resmi langsung terkirim ke WhatsApp pembeli\n- Nomor kontak pelanggan otomatis tersimpan rapi untuk promo\n\nBikin pelanggan makin loyal dan bisnismu makin modern: https://cooca.id (link di bio)"
+      },
+      "facebook": {
+        "title": "Tips Menghemat Biaya Kertas Struk Sekaligus Mengumpulkan Kontak Pelanggan",
+        "caption": "Sebagai pemilik toko ritel, biaya operasional kecil seperti kertas struk bisa membengkak jika transaksi ramai.\n\nYuk pelajari bagaimana Toko Kamu memanfaatkan fitur struk digital WhatsApp dari Cooca Indonesia untuk menekan biaya dan menjalin hubungan akrab dengan pelanggan.\n\nPelajari caranya di: https://cooca.id"
+      },
+      "tiktok": {
+        "title": "Hemat Ratusan Ribu Kertas Kasir dengan Struk Digital WhatsApp!",
+        "caption": "Jangan buang uang buat kertas struk thermal yang cuma dibuang pembeli! Pakai Struk Digital WhatsApp COOCA di Toko Kamu, pelanggan seneng, kontak langsung kesimpen otomatis! Cek di https://cooca.id"
+      }
+    },
+    "caption_hook": "Kertas thermal struk kasir makin mahal dan ujung-ujungnya cuma dibuang pembeli ke tong sampah?",
+    "caption_body": "Ganti cara lama dengan Struk Digital WhatsApp dari COOCA di Toko Kamu yang dikelola oleh Cooca Indonesia:\n1. Hemat ratusan ribu rupiah anggaran kertas printer thermal setiap bulan.\n2. Struk elegan terkirim langsung ke nomor WhatsApp pembeli secara instan.\n3. Nomor pelanggan otomatis tersimpan rapi di database CRM toko Anda.\n4. Bisa dipakai untuk kirim info promo dan ucapan agar pelanggan rajin repeat order.",
+    "hashtags": ["#WhatsAppBisnis", "#StrukDigital", "#CoocaERP", "#MarketingUMKM", "#BisnisModern"]
   }
 ]

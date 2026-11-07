@@ -1,0 +1,49 @@
+{
+  "slug": "toko-kamu",
+  "business_name": "Toko Kamu",
+  "owner_name": "Cooca Indonesia",
+  "owner_email": "demo@cooca.id",
+  "business_category": "UMKM & Ritel Indonesia",
+  "business_type": "Toko Retail & Bisnis Operasional UMKM",
+  "location": "Indonesia",
+  "address": "Toko Kamu - Bisnis Demo Cooca Indonesia",
+  "description": "Simulasi bisnis operasional UMKM Indonesia yang menggunakan Business Operating System COOCA untuk pengelolaan transaksi kasir, inventori stok, kalkulasi HPP, dan laporan keuangan terpadu.",
+  "outlet_count": 1,
+  "operational_problems": "Tantangan operasional umum pemilik usaha: perbedaan stok fisik dengan catatan pembukuan, antrean kasir saat jam sibuk, serta kebutuhan memantau laporan keuntungan dan arus kas bisnis secara real-time.",
+  "cooca_goal": "Mengotomasi operasional usaha harian dengan sistem POS kasir, manajemen stok mutasi otomatis, kontrol anti-fraud, dan laporan laba rugi instan tanpa pencatatan manual yang rentan salah.",
+  "modules_used": [
+    "Inventory & Stock Management (/inventory/stocks)",
+    "Katalog Produk & Harga (/products)",
+    "Kasir Pintar POS (/pos)",
+    "Laporan Keuangan & Laba Rugi (/reports)"
+  ],
+  "simulated_sku_list": [
+    {
+      "code": "TKS-001",
+      "name": "Produk Retail Pilihan A",
+      "stock": 15,
+      "min_stock": 10,
+      "cost": 45000,
+      "price": 85000,
+      "status": "Tersedia"
+    },
+    {
+      "code": "TKS-002",
+      "name": "Produk Retail Pilihan B",
+      "stock": 4,
+      "min_stock": 12,
+      "cost": 65000,
+      "price": 125000,
+      "status": "Menipis"
+    },
+    {
+      "code": "TKS-003",
+      "name": "Produk Retail Pilihan C",
+      "stock": 25,
+      "min_stock": 10,
+      "cost": 30000,
+      "price": 60000,
+      "status": "Tersedia"
+    }
+  ]
+}
