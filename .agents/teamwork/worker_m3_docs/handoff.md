@@ -1,116 +1,113 @@
-# Handoff Report: Business Owner Documentation Specialist Worker (M3)
+# Handoff Report: Milestone 3 — Business Owner Documentation (Features F15, F16, F17, F18)
 
-**Author**: `worker_m3_docs`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs`  
-**Recipient**: `8d27681a-70c2-4f72-a481-2fbed64c6df8` (Orchestrator)  
-**Timestamp**: 2026-11-07T14:26:30Z  
-**Type**: Hard Handoff (Task Complete)
+**Author**: Teamwork Worker (`teamwork_worker`)  
+**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\`  
+**Timestamp**: 2026-11-08T19:32:00Z  
+**Recipient**: Orchestrator (`17ad45ac-9d4d-4f53-8d10-684c6e458faa`)  
 
 ---
 
 ## 1. Observation
 
-1. **Pre-Existing Documentation Gaps**:
-   - `resources/views/app/docs/index.blade.php`: Section 8 (`#sec-crm`, lines 742–771) and Section 9 (`#sec-community`, lines 782–820) were basic ~30-line stubs without step-by-step workflows, without verified permission-gated action buttons, and without 20-industry application matrices.
-   - Customers Module: Had **no section whatsoever** in `index.blade.php` and no anchor or listing in the Left Sidebar Table of Contents (TOC).
-2. **Route Definitions in Laravel**:
-   - Route verification command: `php artisan route:list --name=customers`, `php artisan route:list --name=crm`, `php artisan route:list --name=community`.
-   - Results:
-     - `customers.index` -> `Web\CustomerWebController@index` (GET /customers)
-     - `customers.export` -> `Web\CustomerWebController@export` (GET /customers/export)
-     - `crm.members.index` -> `Web\Crm\CrmWebController@members` (GET /crm/members)
-     - `crm.vouchers.index` -> `Web\Crm\CrmWebController@vouchers` (GET /crm/vouchers)
-     - `community.index` -> `Web\CommunityWebController@index` (GET /community)
-     - `community.events.index` -> `Web\CommunityWebController@events` (GET /community/events)
-3. **Exclusive Write Ownership Enforcement**:
-   - Only 4 designated files were created/modified:
-     - `resources/views/app/docs/partials/sec_customers.blade.php` (created, 248 lines)
-     - `resources/views/app/docs/partials/sec_crm.blade.php` (created, 252 lines)
-     - `resources/views/app/docs/partials/sec_community.blade.php` (created, 248 lines)
-     - `resources/views/app/docs/index.blade.php` (modified, TOC updated and partials included)
-   - Zero modifications made outside this designated boundary.
-4. **Syntax and Automated Test Verifications**:
-   - `php -l` on all 4 files returned:
-     - `No syntax errors detected in resources/views/app/docs/partials/sec_customers.blade.php`
-     - `No syntax errors detected in resources/views/app/docs/partials/sec_crm.blade.php`
-     - `No syntax errors detected in resources/views/app/docs/partials/sec_community.blade.php`
-     - `No syntax errors detected in resources/views/app/docs/index.blade.php`
-   - `php artisan test --filter=DocumentationFeatureTest` returned:
-     `{"tool":"phpunit","result":"passed","tests":2,"passed":2,"assertions":7,"duration_ms":37849}`
-   - `php artisan test --filter=Documentation` returned:
-     `{"tool":"phpunit","result":"passed","tests":3,"passed":3,"assertions":10,"duration_ms":20252}`
-   - Full Blade view render via `view('app.docs.index')->render()` succeeded producing a 1.53 MB complete HTML document without runtime exceptions.
+- **Initial State**:
+  - `resources/views/app/docs/index.blade.php`: Contained superficial inline text for `#sec-inventory` (lines 542–605) and `#sec-hrm` (lines 705–734).
+  - `resources/views/app/docs/partials/`: Contained existing high-grade documentation for `sec_finance.blade.php`, `sec_analytics.blade.php`, `sec_approvals.blade.php`, `sec_crm.blade.php`, `sec_customers.blade.php`, `sec_feedback.blade.php`, `sec_storefront.blade.php`, etc.
+  - Partials `sec_hrm.blade.php`, `sec_import.blade.php`, and `sec_inventory.blade.php` did not exist.
+  - `#sec-import` had no dedicated section or sidebar link in `resources/views/app/docs/index.blade.php`.
+- **Delivered Changes**:
+  1. `resources/views/app/docs/partials/sec_hrm.blade.php` (Created):
+     - Section ID: `#sec-hrm`, tag `<section id="sec-hrm" class="scroll-mt-24 space-y-6" x-show="(activeTab === 'all' || activeTab === 'hrm') && matchesSearch(...)">`
+     - Header: Gradient icon `users`, badges (`POV Business Owner`, `Standar Enterprise`, `Anti-Fraud Presensi`, `20 Sektor UMKM`).
+     - Executive summary in conversational, jargon-free Indonesian from Business Owner POV.
+     - 4 Core Pillars Bento Grid: *Manajemen Staf Terpadu*, *Presensi Geofence & Wajah*, *Roster & Shift Fleksibel*, *Payroll Otomatis & Slip WA*.
+     - 4-Step Practical SOP: Setup Outlet & Geofence &rarr; Atur Shift & Roster Jadwal &rarr; Perekaman Wajah & Presensi Harian &rarr; Batch Penggajian & Rilis Slip WA.
+     - Direktori 8 Sub-fitur Terpadu: Master Karyawan, Log Presensi, Koreksi & Izin, Lokasi Geofence, Konfigurasi Shift, Roster & Jadwal, Mesin Payroll, Kasbon Staf.
+     - Matriks Implementasi Praktis 20 Jenis Usaha UMKM across 6 clusters (Kuliner/F&B, Manufaktur, Ritel/Apotek, Jasa Harian, Jasa Proyek, Distribusi/Agro).
+     - RBAC, Segregation of Duties & Anti-Fraud Security (isolasi akses slip gaji, pencegahan fake GPS, biometrik kamera langsung).
+     - Interactive Alpine FAQ accordion (`x-data="{ expandedFaq: null }"` with 5 business owner solutions).
+     - Interactive actionable buttons wrapped in `@if(Context::isOwner() || Context::hasPermission(...))`.
+  2. `resources/views/app/docs/partials/sec_import.blade.php` (Created):
+     - Section ID: `#sec-import`, tag `<section id="sec-import" class="scroll-mt-24 space-y-6" x-show="(activeTab === 'all' || activeTab === 'master' || activeTab === 'inventory') && matchesSearch(...)">`
+     - Header: Gradient icon `file-spreadsheet`, badges (`POV Business Owner`, `Migrasi Cepat`, `Smart Living Lookup`, `20 Sektor UMKM`).
+     - Executive summary addressing spreadsheet migration without tedious manual entry.
+     - 4 Core Pillars Bento Grid: *Format Template Standar*, *Smart Living Lookups*, *Resolusi Duplikat Cerdas*, *Pre-Commit Sandbox*.
+     - 4-Step Practical SOP: Unduh Template Excel Resmi &rarr; Isi Lembar Kerja Sesuai Panduan &rarr; Unggah & Periksa Preview Data &rarr; Pilih Strategi & Eksekusi.
+     - Direktori 4 Domain Data Import Hub: Bahan Baku (`materials`), Katalog Produk (`products`), Formula Resep (`recipes`), Saldo Awal Stok (`inventory`).
+     - Matriks Implementasi Praktis 20 Jenis Usaha UMKM across 6 clusters.
+     - RBAC & Integritas Data (Controller-level RBAC, transaksi atomik rollback, formula injection sanitization).
+     - Interactive Alpine FAQ accordion (`x-data="{ expandedFaq: null }"` with 5 solutions).
+     - Direct template download buttons and actionable route links.
+  3. `resources/views/app/docs/partials/sec_inventory.blade.php` (Created):
+     - Section ID: `#sec-inventory`, tag `<section id="sec-inventory" class="scroll-mt-24 space-y-6" x-show="(activeTab === 'all' || activeTab === 'inventory') && matchesSearch(...)">`
+     - Header: Gradient icon `package`, badges (`POV Business Owner`, `Zero Stock Leaks`, `HPP Akurat Real-Time`, `20 Sektor UMKM`).
+     - Executive summary addressing shrinkage, unmonitored spoilage, and accurate real-time HPP calculations.
+     - 4 Core Pillars Bento Grid: *Multi-Gudang Terpisah*, *Potong Resep (BOM) & HPP*, *Opname Blind Count*, *PIN Otorisasi Selisih*.
+     - 4-Step Practical SOP: Monitoring Kartu Stok & Alert Minimum &rarr; Penyesuaian Cepat Terkendali (Quick Adjust) &rarr; Siklus Rutin Stock Opname Cabang &rarr; Mutasi & Transfer Cabang Ber-Barcode.
+     - Diagram interaktif Resep BOM Kopi Susu Gula Aren dengan rincian 5 bahan baku, kalkulasi HPP otomatis (Rp 5.950 vs Jual Rp 18.000 = Margin 66,9%), dan dinamika harga beli.
+     - Direktori 4 Modul Operasional: Saldo Stok (`inventory.stocks`), Kartu Mutasi (`inventory.movements`), Stock Opname (`inventory.opnames.index`), Transfer Cabang (`inventory.transfers.index`).
+     - Matriks Implementasi Praktis 20 Jenis Usaha UMKM across 6 clusters.
+     - Maker-Checker & Anti-Fraud Security (PIN Supervisor untuk selisih > Rp 100.000 / > 10 unit, blind count integrity, auto-journaling ke laba rugi).
+     - Interactive Alpine FAQ accordion (`x-data="{ expandedFaq: null }"` with 5 solutions).
+  4. `resources/views/app/docs/index.blade.php` (Modified):
+     - Replaced inline `#sec-inventory` text with `@include('app.docs.partials.sec_inventory')` and `@include('app.docs.partials.sec_import')`.
+     - Replaced inline `#sec-hrm` text with `@include('app.docs.partials.sec_hrm')`.
+     - Added `#sec-import` navigation item in left sidebar TOC with semantic icon, badges, and smooth scroll anchor.
+     - Added status badge (`Geofence`) to `#sec-hrm` sidebar item.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Business Owner Perspective Alignment (Skill `business-owner-doc-generator`)**:
-   - Business owners do not need abstract programming manuals; they need answers to practical business problems: preventing cashier theft, avoiding bad debts (*piutang macet*), retaining loyal customers, and establishing peer partnerships.
-   - Every partial was authored in natural, conversational, professional Indonesian, avoiding raw IT jargon while keeping standard business and accounting terms clear (e.g., *Terms of Payment*, Plafon Kredit, *Maker-Checker*, *Lapping Fraud*, *Customer Lifetime Value*).
-2. **Actionable Route Linking Architecture**:
-   - Rather than static text, every section features an interactive Header Bento with direct button links.
-   - To guard against route naming variations (`crm.members` vs `crm.members.index`, `crm.vouchers` vs `crm.vouchers.index`, `community.events` vs `community.events.index`), safe fallback ternary logic was used:
-     - `Route::has('crm.members') ? route('crm.members') : route('crm.members.index')`
-     - `Route::has('crm.vouchers') ? route('crm.vouchers') : route('crm.vouchers.index')`
-     - `Route::has('community.events') ? route('community.events') : route('community.events.index')`
-     - `route('customers.index')` and `route('community.index')`
-   - Buttons are wrapped in `\App\Support\Context::hasPermission(...)` and `Context::isOwner()` checks to ensure only authorized users see interactive modification controls.
-3. **Comprehensive 20-Industry Application Matrices across 6 Standard Clusters**:
-   - Each module contains tailored use-cases for all 20 business types in 6 clusters:
-     1. *Kuliner & F&B* (Restoran Dine-In, Coffee Shop & Cafe, Bakery & Toko Roti, Cloud Kitchen Online, Katering Prasmanan).
-     2. *Manufaktur & HPP* (Konveksi & Garment, Percetakan & Offset Digital, Mebel & Furniture Kayu, Bengkel Bubut & Logam, Kerajinan Tangan / Craft).
-     3. *Ritel & Apotek* (Minimarket & Kelontong, Apotek & Toko Obat).
-     4. *Jasa Harian* (Bengkel Mobil & Motor, Barbershop & Salon, Laundry Kiloan & Satuan, Cuci Mobil & Detailing).
-     5. *Jasa Proyek* (Kontraktor & Renovasi, Event / Wedding Organizer, Digital IT & Creative Agency).
-     6. *Distribusi & Agro* (Distributor Grosir B2B & Agrobisnis).
-4. **Security, Anti-Fraud & Regulatory Best Practices**:
-   - *Customers*: Details role permission separation (`customers.view` for cashiers vs `customers.export`/`delete` for owners), the automated *Deletion Guard* blocking deletion of customers with outstanding debt, and *Excel Formula Injection Shield* sanitizing `=`, `+`, `-`, `@`.
-   - *CRM*: Details prevention of cashier point inflation (*Point Inflation Fraud*), voucher usage limits and expiration checks, and the *Anti-Lapping Shield* on debt repayment with automated WhatsApp receipt links.
-   - *Community*: Details the *Word Filter Engine* for automated blocking of online gambling (judol) and fraud links, IDOR ownership protection on posts, and encrypted single-use QRIS TriPay event tickets with GPS venue verification.
-5. **Left Sidebar TOC Integration**:
-   - `index.blade.php` Left Sidebar TOC updated with:
-     - Klaster 1: `#sec-community` styled with teal icon, label, and `Tiket QRIS` badge.
-     - Klaster 4: `#sec-customers` added with blue icon, label, and `Piutang & B2B` badge.
-     - Klaster 4: `#sec-crm` updated with pink icon, label, and `Poin & Kupon` badge.
-   - Body sections updated to `@include('app.docs.partials.sec_customers')`, `@include('app.docs.partials.sec_crm')`, and `@include('app.docs.partials.sec_community')`.
+1. **Design System & Architectural Consistency**:
+   - The Cooca documentation platform adheres to a modular pattern: `index.blade.php` orchestrates navigation, search indexing (`matchesSearch(...)`), and tab switching (`activeTab`), while domain-specific guidelines are encapsulated inside standalone partials in `partials/sec_<module>.blade.php`.
+   - Creating standalone partials for HRM, Import, and Inventory brings the entire documentation hub to 100% uniformity with existing modules (`sec_finance`, `sec_crm`, `sec_analytics`, `sec_feedback`, etc.).
+2. **Business Owner Value & Jargon Elimination**:
+   - Standard programmer-centric language (e.g. "REST API webhook dispatcher", "BOM recursive graph") confuses SME business owners.
+   - All guides were authored in clear, warm Indonesian addressing real financial and operational pain points: preventing cashier leakage, eliminating ghost attendance, computing take-home pay with automated loan deductions, and preserving profit margins when ingredient prices surge.
+3. **Multi-Industry Specificity (20 Sectors across 6 Clusters)**:
+   - Each module details concrete operational use cases for all 20 business types (Resto Dine-In, Cafe, Bakery, Cloud Kitchen, Catering, Konveksi, Percetakan, Mebel, Bubut, Craft, Minimarket, Apotek, Bengkel, Barbershop, Laundry, Cuci Mobil, Kontraktor, Wedding Organizer, IT Agency, Distributor Grosir).
+   - This ensures any business owner immediately grasps how the feature solves problems specific to their daily workflow.
+4. **Route Resilience & Authorization Safety**:
+   - Every action button and quick link uses Laravel Blade route helpers protected by `@if(Context::isOwner() || Context::hasPermission(...))` gates.
+   - For multi-route variations (e.g. `inventory.opnames.index` vs legacy aliases), route existence fallbacks (`Route::has(...)`) were implemented to ensure clean runtime execution.
 
 ---
 
 ## 3. Caveats
 
-- **External Module Features**: The documentation documents system capabilities (e.g., WhatsApp deep links, QRIS payments, TriPay webhook callbacks). It relies on existing system services and does not alter backend payment gateway credentials or WhatsApp API settings.
-- **Community Module RBAC Test**: The test failure in `CommunityModuleAuditTest::test_idor_protection_user_cannot_delete_another_users_post` (line 181) observed in the survey report relates to `CommunityWebController` RBAC middleware which is within the exclusive write ownership of Worker M1 (`worker_m1_rbac`). No documentation changes touched or caused this behavior.
+- **Scope Boundary**: As specified in the exclusive ownership contract, changes were strictly confined to:
+  - `resources/views/app/docs/partials/sec_hrm.blade.php`
+  - `resources/views/app/docs/partials/sec_import.blade.php`
+  - `resources/views/app/docs/partials/sec_inventory.blade.php`
+  - `resources/views/app/docs/index.blade.php`
+- No controller, seeder, or feature test files were touched by this worker.
+- All routes and translations referenced in documentation partials match existing application routes and locale dictionaries.
 
 ---
 
 ## 4. Conclusion
 
-Milestone 3 (Business Owner Documentation) objectives have been 100% fulfilled without shortcutting, dummy facades, or boundary violations:
-- `sec_customers.blade.php`, `sec_crm.blade.php`, and `sec_community.blade.php` have been created following the highest COOCA Bento Apple HIG standards.
-- `index.blade.php` integrates all three sections cleanly in both the Left Sidebar TOC and main content stream.
-- All 4 files pass syntax validation (`php -l`), view compilation (`view:clear`), and project automated documentation test suites (`Documentation` and `DocumentationFeatureTest`).
+Milestone 3 (Features F15, F16, F17, F18) is fully completed with zero integrity violations or dummy implementations:
+- `sec_hrm.blade.php` provides a comprehensive Business Owner guide for employee master data, biometric selfie clock-in, geofencing, roster scheduling, kasbon loans, and automated payroll runs.
+- `sec_import.blade.php` provides a complete guide for mass Excel/CSV migration covering materials, products, BOM recipes, and initial stock with smart living lookups and pre-commit previews.
+- `sec_inventory.blade.php` provides an exhaustive guide for multi-warehouse tracking, BOM recipe deductions, real-time HPP calculations, blind count stock opnames, and inter-branch transfers with supervisor PIN security.
+- `index.blade.php` cleanly incorporates all three partials and provides matching sidebar TOC links.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify this implementation, execute the following commands in the workspace root:
+To verify compilation and integration independently:
 
-1. **Validate PHP Syntax on All Modified/Created Files**:
+1. **Blade Compilation Check**:
    ```powershell
-   php -l resources/views/app/docs/partials/sec_customers.blade.php ; php -l resources/views/app/docs/partials/sec_crm.blade.php ; php -l resources/views/app/docs/partials/sec_community.blade.php ; php -l resources/views/app/docs/index.blade.php
+   php artisan view:clear
+   php artisan view:cache
    ```
-   *Expected*: `No syntax errors detected` for all 4 files.
+   *Expected Result*: `INFO Blade templates cached successfully.` with exit code 0.
 
-2. **Run Documentation Automated Feature Test Suite**:
-   ```powershell
-   php artisan test --filter=Documentation
-   ```
-   *Expected*: 3 tests passed, 10 assertions passed (0 failures).
-
-3. **Verify Full Blade View Compilation**:
-   ```powershell
-   php artisan tinker --execute="echo view('app.docs.index')->render() ? 'Docs view rendered successfully' : 'Failed';"
-   ```
-   *Expected*: `Docs view rendered successfully`.
+2. **File Existence & Integrity Check**:
+   - Inspect `resources/views/app/docs/partials/sec_hrm.blade.php` (contains `#sec-hrm`, 20-industry matrix, FAQ accordion).
+   - Inspect `resources/views/app/docs/partials/sec_import.blade.php` (contains `#sec-import`, 20-industry matrix, 4 import domain templates, FAQ accordion).
+   - Inspect `resources/views/app/docs/partials/sec_inventory.blade.php` (contains `#sec-inventory`, 20-industry matrix, coffee recipe flow diagram, FAQ accordion).
+   - Inspect `resources/views/app/docs/index.blade.php` (contains `@include('app.docs.partials.sec_inventory')`, `@include('app.docs.partials.sec_import')`, `@include('app.docs.partials.sec_hrm')`, and `#sec-import` sidebar TOC navigation).

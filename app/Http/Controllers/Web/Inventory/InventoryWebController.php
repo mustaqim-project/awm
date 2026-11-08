@@ -247,53 +247,65 @@ final class InventoryWebController extends Controller implements HasMiddleware
                 return redirect()->back()->with('warning', $msg);
             }
 
-            // Standard or Pre-Approved Adjustment:
-            $adjustment = StockAdjustment::create([
-                'business_id' => $business->id,
-                'location_id' => $validated['location_id'],
-                'adjustment_number' => $adjustmentNumber,
-                'adjustment_date' => now()->toDateString(),
-                'reason' => $validated['reason_code'] ?? 'opname_variance',
-                'status' => 'completed',
-                'total_loss_cost' => $diff < 0 ? $diffValue : 0,
-                'notes' => $notes,
-                'created_by' => $user->id,
-                'approved_by' => $user->id,
-                'approved_at' => now(),
-            ]);
+            // Standard or Pre-Approved Adjustment (Atomic Multi-Step Mutation):
+            DB::transaction(function () use (
+                $business,
+                $validated,
+                $adjustmentNumber,
+                $notes,
+                $user,
+                $stock,
+                $diff,
+                $unitCost,
+                $diffValue
+            ): void {
+                $adjustment = StockAdjustment::create([
+                    'business_id' => $business->id,
+                    'location_id' => $validated['location_id'],
+                    'adjustment_number' => $adjustmentNumber,
+                    'adjustment_date' => now()->toDateString(),
+                    'reason' => $validated['reason_code'] ?? 'opname_variance',
+                    'status' => 'completed',
+                    'total_loss_cost' => $diff < 0 ? $diffValue : 0,
+                    'notes' => $notes,
+                    'created_by' => $user->id,
+                    'approved_by' => $user->id,
+                    'approved_at' => now(),
+                ]);
 
-            StockAdjustmentItem::create([
-                'stock_adjustment_id' => $adjustment->id,
-                'product_id' => $validated['product_id'],
-                'system_quantity' => (float) $stock->quantity,
-                'adjusted_quantity' => (float) $validated['new_quantity'],
-                'difference_quantity' => $diff,
-                'unit_cost' => $unitCost,
-                'total_cost' => $diffValue,
-                'notes' => $notes,
-            ]);
+                StockAdjustmentItem::create([
+                    'stock_adjustment_id' => $adjustment->id,
+                    'product_id' => $validated['product_id'],
+                    'system_quantity' => (float) $stock->quantity,
+                    'adjusted_quantity' => (float) $validated['new_quantity'],
+                    'difference_quantity' => $diff,
+                    'unit_cost' => $unitCost,
+                    'total_cost' => $diffValue,
+                    'notes' => $notes,
+                ]);
 
-            $movement = $this->stockService->recordMovement(
-                businessId: $business->id,
-                locationId: $validated['location_id'],
-                productId: $validated['product_id'],
-                movementType: StockMovement::TYPE_ADJUSTMENT,
-                quantityChange: $diff,
-                unitCost: $unitCost,
-                notes: $notes,
-                userId: $user->id
-            );
-
-            // Fase 2: Auto-Journal Integration for Stock Adjustment (§FR-04)
-            if ($unitCost > 0) {
-                $this->journalService->recordStockAdjustmentJournal(
-                    business: $business,
-                    movement: $movement,
+                $movement = $this->stockService->recordMovement(
+                    businessId: $business->id,
+                    locationId: $validated['location_id'],
+                    productId: $validated['product_id'],
+                    movementType: StockMovement::TYPE_ADJUSTMENT,
                     quantityChange: $diff,
                     unitCost: $unitCost,
+                    notes: $notes,
                     userId: $user->id
                 );
-            }
+
+                // Fase 2: Auto-Journal Integration for Stock Adjustment (§FR-04)
+                if ($unitCost > 0) {
+                    $this->journalService->recordStockAdjustmentJournal(
+                        business: $business,
+                        movement: $movement,
+                        quantityChange: $diff,
+                        unitCost: $unitCost,
+                        userId: $user->id
+                    );
+                }
+            });
         }
 
         if ($request->wantsJson()) {
@@ -699,31 +711,35 @@ final class InventoryWebController extends Controller implements HasMiddleware
 
         $transferNumber = 'TRF-' . date('Ymd') . '-' . rand(100, 999);
 
-        $transfer = StockTransfer::create([
-            'business_id' => $business->id,
-            'source_location_id' => $validated['source_location_id'],
-            'destination_location_id' => $validated['destination_location_id'],
-            'transfer_number' => $transferNumber,
-            'transfer_date' => $validated['transfer_date'],
-            'status' => StockTransfer::STATUS_PENDING,
-            'notes' => $validated['notes'] ?? null,
-            'created_by' => $user->id,
-            'sent_at' => now(),
-        ]);
-
-        foreach ($validated['items'] as $itemData) {
-            $product = Product::find($itemData['product_id']);
-            $cost = $product ? (float) $product->base_cost : 0.0;
-            $qty = (float) $itemData['quantity'];
-
-            StockTransferItem::create([
-                'stock_transfer_id' => $transfer->id,
-                'product_id' => $itemData['product_id'],
-                'quantity' => $qty,
-                'unit_cost' => $cost,
-                'total_cost' => $qty * $cost,
+        $transfer = DB::transaction(function () use ($business, $validated, $transferNumber, $user): StockTransfer {
+            $transfer = StockTransfer::create([
+                'business_id' => $business->id,
+                'source_location_id' => $validated['source_location_id'],
+                'destination_location_id' => $validated['destination_location_id'],
+                'transfer_number' => $transferNumber,
+                'transfer_date' => $validated['transfer_date'],
+                'status' => StockTransfer::STATUS_PENDING,
+                'notes' => $validated['notes'] ?? null,
+                'created_by' => $user->id,
+                'sent_at' => now(),
             ]);
-        }
+
+            foreach ($validated['items'] as $itemData) {
+                $product = Product::find($itemData['product_id']);
+                $cost = $product ? (float) $product->base_cost : 0.0;
+                $qty = (float) $itemData['quantity'];
+
+                StockTransferItem::create([
+                    'stock_transfer_id' => $transfer->id,
+                    'product_id' => $itemData['product_id'],
+                    'quantity' => $qty,
+                    'unit_cost' => $cost,
+                    'total_cost' => $qty * $cost,
+                ]);
+            }
+
+            return $transfer;
+        });
 
         AuditLogService::log(
             (string) $business->id,

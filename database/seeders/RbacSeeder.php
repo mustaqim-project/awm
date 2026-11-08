@@ -203,6 +203,17 @@ final class RbacSeeder extends Seeder
             // ─── Feedback & Dukungan Platform ─────────────────────────
             'feedback.view'               => ['Lihat Tiket Masalah & Feedback',         'feedback',    'Melihat daftar tiket kendala sistem, bug, dan usulan fitur.', 'name' => 'feedback.view', 'label' => 'Lihat Tiket Masalah & Feedback', 'group' => 'Feedback', 'module' => 'feedback', 'action' => 'view'],
             'feedback.create'             => ['Kirim Laporan Bug & Request Fitur',      'feedback',    'Mengirimkan laporan kendala sistem, bug, dan usulan fitur baru.', 'name' => 'feedback.create', 'label' => 'Kirim Laporan Bug & Request Fitur', 'group' => 'Feedback', 'module' => 'feedback', 'action' => 'create'],
+
+            // ─── Human Resource Management (HRM) & Payroll ───────────
+            'hrm.view'                    => ['Lihat Modul SDM / HRM',                  'hrm',         'Melihat daftar karyawan, kehadiran, lokasi, shift, dan jadwal kerja.'],
+            'hrm.manage'                  => ['Kelola Karyawan & SDM',                  'hrm',         'Menambah, mengubah data karyawan, biometrik, lokasi geofence, shift, dan jadwal roster.'],
+            'hrm.attendance.manage'       => ['Kelola & Koreksi Absensi',               'hrm',         'Menyetujui/menolak tiket koreksi presensi dan import log fingerprint.'],
+            'hrm.payroll.view'            => ['Lihat Data Gaji & Slip',                 'hrm',         'Melihat riwayat penggajian bulanan, rincian take-home pay, dan slip gaji karyawan.'],
+            'hrm.payroll.manage'          => ['Kelola & Eksekusi Payroll',              'hrm',         'Membuat draft penggajian, persetujuan gaji, bayar gaji, hapus payroll, dan kelola kasbon.'],
+
+            // ─── Unified Data Exchange / Import ───────────────────────
+            'import.view'                 => ['Lihat Data Exchange Hub',                'import',      'Melihat hub import dan mengunduh spreadsheet template resmi.'],
+            'import.manage'               => ['Eksekusi Import Data Massal',            'import',      'Mengunggah dan mengeksekusi import massal produk, bahan baku, resep, dan stok.'],
         ];
     }
 
@@ -311,6 +322,13 @@ final class RbacSeeder extends Seeder
             'community.manage',
             'feedback.view',
             'feedback.create',
+            'hrm.view',
+            'hrm.manage',
+            'hrm.attendance.manage',
+            'hrm.payroll.view',
+            'hrm.payroll.manage',
+            'import.view',
+            'import.manage',
         ];
 
         return [
@@ -367,6 +385,7 @@ final class RbacSeeder extends Seeder
                     'master_data.suppliers.view',
                     'purchase.returns',
                     'receiving.manage',
+                    'import.view',
                     'ai.access',
                     'community.view',
                 ],
@@ -397,6 +416,9 @@ final class RbacSeeder extends Seeder
 
                     'finance.receivables',
                     'finance.payables',
+                    'hrm.payroll.view',
+                    'hrm.payroll.manage',
+                    'import.view',
                     'feedback.view',
                     'feedback.create',
                     'reports.view',

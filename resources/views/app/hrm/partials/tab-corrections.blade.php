@@ -13,11 +13,6 @@
                         <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.tickets_approval_sub') }}</p>
                     </div>
                 </div>
-                <button type="button" @click="showAddCorrectionModal = true"
-                    class="h-10 px-4 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer shrink-0">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_apply_correction') }}</span>
-                </button>
             </div>
 
             <!-- Desktop View (>= 768px) -->
@@ -78,12 +73,14 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end">
+                                        @if($cor->status !== 'pending' || \App\Support\Context::hasPermission('hrm.attendance.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                                         <button type="button" @click="openReviewCorrection({{ json_encode($cor) }})"
-                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            class="w-9 h-9 min-h-[36px] min-w-[36px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
                                             title="{{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}"
                                             aria-label="{{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}">
                                             <i data-lucide="{{ $cor->status === 'pending' ? 'clipboard-check' : 'eye' }}" class="w-4 h-4"></i>
                                         </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -159,6 +156,7 @@
                             </div>
                         @endif
 
+                        @if($cor->status !== 'pending' || \App\Support\Context::hasPermission('hrm.attendance.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                         <div class="pt-1">
                             <button type="button" @click="openReviewCorrection({{ json_encode($cor) }})"
                                 class="w-full h-11 px-4 rounded-[12px] text-[13px] font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#0071E3] hover:text-white active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
@@ -166,6 +164,7 @@
                                 <span>{{ $cor->status === 'pending' ? __('hrm.review_and_approve') : __('hrm.view_details') }}</span>
                             </button>
                         </div>
+                        @endif
                     </div>
                 @empty
                     <div class="py-10 text-center text-black/50 dark:text-white/50 font-medium">

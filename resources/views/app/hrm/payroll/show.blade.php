@@ -65,7 +65,7 @@
             </div>
 
             @if($payroll->status === 'draft')
-                @if(\App\Support\Context::hasPermission('users.manage'))
+                @if(\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
                     <div class="flex items-center gap-2">
                         <form method="POST" action="{{ route('hrm.payrolls.approve', $payroll->id) }}"
                             @submit="if(isApproving) { $event.preventDefault(); return false; } isApproving = true;">
@@ -118,7 +118,7 @@
                     </div>
                 @endif
             @elseif($payroll->status === 'approved')
-                @if(\App\Support\Context::hasPermission('users.manage'))
+                @if(\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
                     <button type="button" @click="showPayModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-5 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold shadow-[0_4px_16px_rgba(52,199,89,0.3)] transition active:scale-[0.98] flex items-center gap-2 cursor-pointer">
                         <i data-lucide="check-circle-2" class="w-4.5 h-4.5"></i>

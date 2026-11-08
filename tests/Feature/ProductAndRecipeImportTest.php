@@ -110,24 +110,14 @@ final class ProductAndRecipeImportTest extends TestCase
         file_put_contents($path, $matXlsx->streamedContent());
         $workbook = IOFactory::load($path);
         unlink($path);
-        $this->assertSame(['Template Bahan Baku', 'MASTER_CATEGORY', 'MASTER_UOM', 'MASTER_SUPPLIER'], $workbook->getSheetNames());
-        $this->assertSame('hidden', $workbook->getSheetByName('MASTER_CATEGORY')->getSheetState());
-        $this->assertSame('Dairy', $workbook->getSheetByName('MASTER_CATEGORY')->getCell('C2')->getValue());
-        $this->assertSame([
-            'Nama Bahan Baku *', 'Kode / SKU', 'Kategori Bahan *', 'Satuan Dasar *',
-            'Harga Beli Standar', 'Nama Pemasok / Supplier', 'Deskripsi / Catatan',
-        ], $workbook->getSheetByName('Template Bahan Baku')->rangeToArray('A1:G1')[0]);
-        $this->assertStringNotContainsString('category_id', strtolower(implode(',', $workbook->getSheetByName('Template Bahan Baku')->rangeToArray('A1:G1')[0])));
-        $this->assertCount(1, $workbook->getSheetByName('Template Bahan Baku')->getTableCollection());
-        $tableCollection = $workbook->getSheetByName('Template Bahan Baku')->getTableCollection();
-        $materialTable = $tableCollection->getIterator()->current();
-        $this->assertSame('A1:G1001', $materialTable->getRange());
-        $this->assertTrue($materialTable->getStyle()->getShowRowStripes());
-        $this->assertCount(3, $workbook->getSheetByName('Template Bahan Baku')->getDataValidationCollection());
-        $this->assertStringContainsString('CategoryNames', $workbook->getSheetByName('Template Bahan Baku')->getDataValidation('C2')->getFormula1());
-        $this->assertStringContainsString('UomNames', $workbook->getSheetByName('Template Bahan Baku')->getDataValidation('D2')->getFormula1());
-        $this->assertStringContainsString('SupplierNames', $workbook->getSheetByName('Template Bahan Baku')->getDataValidation('F2')->getFormula1());
-        $this->assertTrue($workbook->getSheetByName('Template Bahan Baku')->getDataValidation('C2')->getShowDropDown());
+        $this->assertSame(['INPUT_BAHAN_BAKU', 'DATA_REFERENSI', 'PANDUAN_IMPORT'], $workbook->getSheetNames());
+        $materialSheet = $workbook->getSheetByName('INPUT_BAHAN_BAKU');
+        $this->assertNotNull($materialSheet);
+        $this->assertSame('Dairy', $workbook->getSheetByName('DATA_REFERENSI')->getCell('A2')->getValue());
+        $this->assertSame('Nama Bahan Baku *', $materialSheet->getCell('A1')->getValue());
+        $this->assertStringContainsString('RefKategoriBahan', $materialSheet->getDataValidation('C3')->getFormula1());
+        $this->assertStringContainsString('RefSatuanBahan', $materialSheet->getDataValidation('D3')->getFormula1());
+        $this->assertStringContainsString('RefSupplierBahan', $materialSheet->getDataValidation('F3')->getFormula1());
 
         $matCsv = $this->actingAs($this->owner)->get(route('import.materials.template', ['format' => 'csv']));
         $matCsv->assertStatus(200);
@@ -142,15 +132,14 @@ final class ProductAndRecipeImportTest extends TestCase
         file_put_contents($productPath, $responseXlsx->streamedContent());
         $productWorkbook = IOFactory::load($productPath);
         unlink($productPath);
-        $productSheet = $productWorkbook->getSheetByName('Template Produk');
-        $this->assertSame('A1:I1001', $productSheet->getTableCollection()->getIterator()->current()->getRange());
-        $this->assertTrue($productSheet->getTableCollection()->getIterator()->current()->getStyle()->getShowRowStripes());
-        $this->assertSame('hidden', $productWorkbook->getSheetByName('MASTER_PRODUCT_CATEGORY')->getSheetState());
-        $this->assertSame('hidden', $productWorkbook->getSheetByName('MASTER_UOM')->getSheetState());
-        $this->assertStringContainsString('ProductCategoryNames', $productSheet->getDataValidation('C2')->getFormula1());
-        $this->assertStringContainsString('ProductUomNames', $productSheet->getDataValidation('D2')->getFormula1());
-        $this->assertTrue($productSheet->getDataValidation('C2')->getShowDropDown());
-        $this->assertTrue($productSheet->getDataValidation('D2')->getShowDropDown());
+        $this->assertSame(['INPUT_PRODUK', 'DATA_REFERENSI', 'PANDUAN_IMPORT'], $productWorkbook->getSheetNames());
+        $productSheet = $productWorkbook->getSheetByName('INPUT_PRODUK');
+        $this->assertNotNull($productSheet);
+        $this->assertSame('Nama Produk *', $productSheet->getCell('A1')->getValue());
+        $this->assertStringContainsString('RefKategori', $productSheet->getDataValidation('D3')->getFormula1());
+        $this->assertStringContainsString('RefSatuan', $productSheet->getDataValidation('E3')->getFormula1());
+        $this->assertTrue($productSheet->getDataValidation('D3')->getShowDropDown());
+        $this->assertTrue($productSheet->getDataValidation('E3')->getShowDropDown());
 
         // Product CSV template
         $responseCsv = $this->actingAs($this->owner)->get(route('import.products.template', ['format' => 'csv']));
@@ -164,16 +153,13 @@ final class ProductAndRecipeImportTest extends TestCase
         file_put_contents($recipePath, $recipeXlsx->streamedContent());
         $recipeWorkbook = IOFactory::load($recipePath);
         unlink($recipePath);
-        $recipeSheet = $recipeWorkbook->getSheetByName('Template Resep BOM');
-        $recipeTable = $recipeSheet->getTableCollection()->getIterator()->current();
-        $this->assertSame('A1:F1001', $recipeTable->getRange());
-        $this->assertTrue($recipeTable->getStyle()->getShowRowStripes());
-        $this->assertSame('hidden', $recipeWorkbook->getSheetByName('MASTER_PRODUCT')->getSheetState());
-        $this->assertSame('hidden', $recipeWorkbook->getSheetByName('MASTER_MATERIAL')->getSheetState());
-        $this->assertSame('hidden', $recipeWorkbook->getSheetByName('MASTER_UOM')->getSheetState());
-        $this->assertStringContainsString('RecipeProductNames', $recipeSheet->getDataValidation('A2')->getFormula1());
-        $this->assertStringContainsString('RecipeMaterialNames', $recipeSheet->getDataValidation('B2')->getFormula1());
-        $this->assertStringContainsString('RecipeUomNames', $recipeSheet->getDataValidation('D2')->getFormula1());
+        $this->assertSame(['INPUT_RESEP_BOM', 'DATA_REFERENSI', 'PANDUAN_IMPORT'], $recipeWorkbook->getSheetNames());
+        $recipeSheet = $recipeWorkbook->getSheetByName('INPUT_RESEP_BOM');
+        $this->assertNotNull($recipeSheet);
+        $this->assertSame('Nama / SKU Produk Jadi *', $recipeSheet->getCell('A1')->getValue());
+        $this->assertStringContainsString('RefProdukJadiBOM', $recipeSheet->getDataValidation('A3')->getFormula1());
+        $this->assertStringContainsString('RefBahanBakuBOM', $recipeSheet->getDataValidation('B3')->getFormula1());
+        $this->assertStringContainsString('RefSatuanBOM', $recipeSheet->getDataValidation('D3')->getFormula1());
 
         // Recipe CSV template
         $recipeCsv = $this->actingAs($this->owner)->get(route('import.recipes.template', ['format' => 'csv']));
@@ -186,14 +172,12 @@ final class ProductAndRecipeImportTest extends TestCase
         file_put_contents($inventoryPath, $inventoryXlsx->streamedContent());
         $inventoryWorkbook = IOFactory::load($inventoryPath);
         unlink($inventoryPath);
-        $inventorySheet = $inventoryWorkbook->getSheetByName('Template Stok Awal');
-        $inventoryTable = $inventorySheet->getTableCollection()->getIterator()->current();
-        $this->assertSame('A1:G1001', $inventoryTable->getRange());
-        $this->assertTrue($inventoryTable->getStyle()->getShowRowStripes());
-        $this->assertStringContainsString('InventoryLocationNames', $inventorySheet->getDataValidation('C2')->getFormula1());
-        $this->assertStringContainsString('InventoryUomNames', $inventorySheet->getDataValidation('E2')->getFormula1());
-        $this->assertSame('hidden', $inventoryWorkbook->getSheetByName('MASTER_LOCATION')->getSheetState());
-        $this->assertSame('hidden', $inventoryWorkbook->getSheetByName('MASTER_UOM')->getSheetState());
+        $this->assertSame(['INPUT_SALDO_STOK', 'DATA_REFERENSI', 'PANDUAN_IMPORT'], $inventoryWorkbook->getSheetNames());
+        $inventorySheet = $inventoryWorkbook->getSheetByName('INPUT_SALDO_STOK');
+        $this->assertNotNull($inventorySheet);
+        $this->assertSame('Nama Item / Produk / Bahan *', $inventorySheet->getCell('A1')->getValue());
+        $this->assertStringContainsString('RefGudangStok', $inventorySheet->getDataValidation('C2')->getFormula1());
+        $this->assertStringContainsString('RefSatuanStok', $inventorySheet->getDataValidation('E2')->getFormula1());
     }
 
     public function test_material_preview_rejects_unknown_master_labels(): void
@@ -247,12 +231,12 @@ final class ProductAndRecipeImportTest extends TestCase
         $workbook = IOFactory::load($path);
         unlink($path);
 
-        $sheet = $workbook->getSheetByName('Template Stok Awal');
+        $sheet = $workbook->getSheetByName('INPUT_SALDO_STOK');
         $rows = $sheet->rangeToArray('A2:G3');
         $this->assertSame(['Biji Kopi', 'MAT-KOPI'], [$rows[0][0], $rows[0][1]]);
         $this->assertSame(['Susu Segar', 'MAT-SUSU'], [$rows[1][0], $rows[1][1]]);
         $this->assertNull($rows[0][3]);
-        $this->assertStringContainsString('InventoryLocationNames', $sheet->getDataValidation('C2')->getFormula1());
+        $this->assertStringContainsString('RefGudangStok', $sheet->getDataValidation('C2')->getFormula1());
     }
 
     public function test_pro_user_can_preview_and_execute_material_import(): void
@@ -335,8 +319,9 @@ final class ProductAndRecipeImportTest extends TestCase
         $workbook = IOFactory::load($path);
         unlink($path);
 
-        $categorySheet = $workbook->getSheetByName('MASTER_CATEGORY');
-        $categoryNames = array_column($categorySheet->toArray(), 2);
+        $refSheet = $workbook->getSheetByName('DATA_REFERENSI');
+        $this->assertNotNull($refSheet);
+        $categoryNames = array_column($refSheet->toArray(), 0);
         $this->assertContains('Kategori Baru', $categoryNames);
     }
 

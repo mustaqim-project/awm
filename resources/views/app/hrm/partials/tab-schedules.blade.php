@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="submit" class="flex-1 h-10 px-4 rounded-[10px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-xs font-bold transition cursor-pointer">
+                    <button type="submit" class="flex-1 h-10 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-xs font-semibold transition cursor-pointer">
                         {{ __('hrm.apply_filter') }}
                     </button>
                     @if($schUserId || $schShiftId || $schType)
@@ -129,9 +129,10 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-1">
+                                        @if(\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                                         <button type="button"
                                             @click="openEditSchedule({{ Js::from($sch) }}, '{{ route('hrm.schedules.update', $sch->id) }}')"
-                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#5856D6] hover:bg-[#5856D6]/10 dark:hover:bg-[#5856D6]/20 transition-all cursor-pointer shrink-0"
+                                            class="w-9 h-9 min-h-[36px] min-w-[36px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#5856D6] hover:bg-[#5856D6]/10 dark:hover:bg-[#5856D6]/20 transition-all cursor-pointer shrink-0"
                                             title="{{ __('hrm.btn_edit') }}"
                                             aria-label="{{ __('hrm.btn_edit') }}">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
@@ -141,12 +142,13 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                class="w-9 h-9 min-h-[36px] min-w-[36px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
                                                 title="{{ __('hrm.tooltip_delete_schedule') ?? 'Hapus Jadwal' }}"
                                                 aria-label="{{ __('hrm.tooltip_delete_schedule') ?? 'Hapus Jadwal' }}">
                                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -197,10 +199,11 @@
                                 </div>
                             @endif
                         </div>
+                        @if(\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                         <div class="pt-1 flex items-center gap-2">
                             <button type="button"
                                 @click="openEditSchedule({{ Js::from($sch) }}, '{{ route('hrm.schedules.update', $sch->id) }}')"
-                                class="flex-1 h-10 px-3 rounded-[11px] text-[12.5px] font-bold text-[#5856D6] bg-[#5856D6]/10 hover:bg-[#5856D6] hover:text-white transition active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer">
+                                class="flex-1 h-11 px-3 rounded-[11px] text-[12.5px] font-bold text-[#5856D6] bg-[#5856D6]/10 hover:bg-[#5856D6] hover:text-white transition active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer">
                                 <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('hrm.btn_edit_schedule') }}</span>
                             </button>
@@ -209,11 +212,12 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    class="h-10 w-10 rounded-[11px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition flex items-center justify-center cursor-pointer shrink-0">
+                                    class="h-11 w-11 rounded-[11px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition flex items-center justify-center cursor-pointer shrink-0">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </form>
                         </div>
+                        @endif
                     </div>
                 @empty
                     <div class="py-8 text-center text-black/50 dark:text-white/50 text-xs">

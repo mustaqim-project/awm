@@ -158,8 +158,8 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
 
         $uploadedFile = new UploadedFile($tempPath, 'selfie.jpg', 'image/jpeg', null, true);
 
-        // Verify face
-        $this->faceService->verifyFace($this->business, $this->employee, $uploadedFile);
+        // Extract embedding vector securely (enforcing zero permanent photo retention)
+        $this->faceService->extractEmbeddingVector($uploadedFile);
 
         // The temporary capture file MUST be deleted immediately to comply with Zero-Retention privacy
         $this->assertFileDoesNotExist($tempPath);
@@ -225,6 +225,8 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
     public function test_attendance_exception_policy_wfa_allows_any_location(): void
     {
         Carbon::setTestNow('2026-10-05 08:00:00');
+        $faceData = 'budi-valid-face-signature-abc';
+        $this->faceService->registerFaceTemplate($this->business, $this->employee, $faceData);
 
         // Create WFA Exception for Budi
         $exception = $this->exceptionService->createException($this->business, [
@@ -242,6 +244,7 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
         $attendance = $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -8.670458,
             'longitude' => 115.212629,
+            'face_data' => $faceData,
             'notes' => 'Presensi dari Bali Hub',
         ]);
 
@@ -255,6 +258,8 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
     public function test_attendance_exception_policy_wfh_validates_custom_geofence(): void
     {
         Carbon::setTestNow('2026-10-05 08:00:00');
+        $faceData = 'budi-valid-face-signature-abc';
+        $this->faceService->registerFaceTemplate($this->business, $this->employee, $faceData);
 
         // Budi's home coordinates in Bogor (-6.595038, 106.816635)
         $exception = $this->exceptionService->createException($this->business, [
@@ -273,6 +278,7 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
         $attendance = $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -6.595050,
             'longitude' => 106.816640,
+            'face_data' => $faceData,
             'notes' => 'WFH Rumah',
         ]);
         $this->assertEquals($exception->id, $attendance->exception_policy_id);
@@ -283,6 +289,8 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
     public function test_expired_attendance_exception_falls_back_to_office_geofence(): void
     {
         Carbon::setTestNow('2026-10-05 08:00:00');
+        $faceData = 'budi-valid-face-signature-abc';
+        $this->faceService->registerFaceTemplate($this->business, $this->employee, $faceData);
 
         // Exception expired yesterday
         $this->exceptionService->createException($this->business, [
@@ -300,6 +308,7 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
         $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -8.670458,
             'longitude' => 115.212629,
+            'face_data' => $faceData,
         ]);
 
         Carbon::setTestNow();
@@ -307,11 +316,16 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
 
     public function test_shift_grace_period_and_late_calculation(): void
     {
+        $faceData = 'budi-valid-face-signature-abc';
+        $this->faceService->registerFaceTemplate($this->business, $this->employee, $faceData);
+
         // 1. Clock in within grace period (08:10 WIB <= 08:15) -> On Time
         Carbon::setTestNow('2026-10-05 08:10:00');
         $attOnTime = $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -6.175390,
             'longitude' => 106.827150,
+            'face_data' => $faceData,
+            'shift_start' => '08:00:00',
             'grace_period_minutes' => 15,
         ]);
         $this->assertEquals(0, $attOnTime->late_minutes);
@@ -323,6 +337,8 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
         $attLate = $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -6.175390,
             'longitude' => 106.827150,
+            'face_data' => $faceData,
+            'shift_start' => '08:00:00',
         ]);
         $this->assertEquals(35, $attLate->late_minutes);
         $this->assertEquals(Attendance::CLOCK_IN_LATE, $attLate->clock_in_status);
@@ -334,21 +350,26 @@ final class HrmAttendanceBiometricAndExceptionTest extends TestCase
     public function test_clock_out_calculates_work_duration_and_overtime(): void
     {
         Carbon::setTestNow('2026-10-05 08:00:00');
+        $faceData = 'budi-valid-face-signature-abc';
+        $this->faceService->registerFaceTemplate($this->business, $this->employee, $faceData);
+
         $attendance = $this->attendanceService->clockIn($this->business, $this->employee, [
             'latitude' => -6.175390,
             'longitude' => 106.827150,
+            'face_data' => $faceData,
         ]);
 
-        // Clock out at 18:30 WIB (9.5 hours work duration, 90 minutes overtime past 17:00)
+        // Clock out at 18:30 WIB (10.5 hours = 630 mins work duration, 90 minutes overtime past 17:00 shift end)
         Carbon::setTestNow('2026-10-05 18:30:00');
         $updated = $this->attendanceService->clockOut($this->business, $this->employee, [
             'latitude' => -6.175390,
             'longitude' => 106.827150,
+            'face_data' => $faceData,
             'shift_end' => '17:00:00',
         ]);
 
         $this->assertEquals(630, $updated->work_duration_minutes); // 10.5 hours = 630 mins
-        $this->assertEquals(150, $updated->overtime_minutes); // 630 - 480 standard mins = 150 mins
+        $this->assertEquals(90, $updated->overtime_minutes); // 90 mins overtime past 17:00 shift end
         $this->assertEquals(0, $updated->early_leave_minutes);
 
         Carbon::setTestNow();

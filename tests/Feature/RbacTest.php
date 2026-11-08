@@ -58,6 +58,14 @@ final class RbacTest extends TestCase
         $business->users()->attach($owner->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
         $owner->update(['active_business_id' => $business->id]);
 
+        // Attach 1 existing staff member so Free plan limit (1 non-owner member) is reached
+        $existingMember = User::create([
+            'name' => 'Anggota Awal',
+            'email' => 'anggota_awal@example.com',
+            'password' => 'password123',
+        ]);
+        $business->users()->attach($existingMember->id, ['id' => (string) Str::uuid(), 'role' => 'staff']);
+
         // 1. Free plan: Attempting to add 2nd user should be blocked by Entitlement
         $freeResponse = $this->actingAs($owner, 'sanctum')
             ->withHeader('X-Business-Id', $business->id)

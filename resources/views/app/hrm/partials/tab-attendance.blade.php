@@ -177,7 +177,7 @@
             <form method="GET" action="{{ route('hrm.index') }}" class="p-4 sm:p-5 border-b border-black/5 dark:border-white/10 flex flex-wrap items-center justify-between gap-3">
                 <input type="hidden" name="tab" value="attendance">
 
-                <div class="flex flex-wrap items-center gap-3">
+                <div class="flex flex-wrap items-end gap-3">
                     <div>
                         <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.col_target_date') }}</label>
                         <input type="date" name="att_date" value="{{ $attDate }}"
@@ -209,7 +209,7 @@
                         </select>
                     </div>
 
-                    <div class="flex items-end pt-5">
+                    <div class="flex items-end">
                         <button type="submit"
                             class="h-11 sm:h-9 px-4.5 rounded-[10px] sm:rounded-[9px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[13.5px] sm:text-[12.5px] font-bold transition cursor-pointer">
                             {{ __('common.filter') }}

@@ -54,6 +54,28 @@
         inventoryDuplicateStrategy: 'skip',
         inventoryExecuting: false,
 
+        // Filtered Row Getters for Reactive Previews & Empty States
+        get filteredMaterialRows() {
+            if (!this.materialPreview || !this.materialPreview.rows) return [];
+            if (this.materialFilter === 'all') return this.materialPreview.rows;
+            return this.materialPreview.rows.filter(r => r.status === this.materialFilter);
+        },
+        get filteredProductRows() {
+            if (!this.productPreview || !this.productPreview.rows) return [];
+            if (this.productFilter === 'all') return this.productPreview.rows;
+            return this.productPreview.rows.filter(r => r.status === this.productFilter);
+        },
+        get filteredRecipeRows() {
+            if (!this.recipePreview || !this.recipePreview.rows) return [];
+            if (this.recipeFilter === 'all') return this.recipePreview.rows;
+            return this.recipePreview.rows.filter(r => r.status === this.recipeFilter);
+        },
+        get filteredInventoryRows() {
+            if (!this.inventoryPreview || !this.inventoryPreview.rows) return [];
+            if (this.inventoryFilter === 'all') return this.inventoryPreview.rows;
+            return this.inventoryPreview.rows.filter(r => r.status === this.inventoryFilter);
+        },
+
         // Material Methods
         handleMaterialFileSelect(event) {
             const file = event.target.files[0];
@@ -654,12 +676,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.products.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <button type="button" @click="activeTab = 'products'; scrollToWorkspace()"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </button>
@@ -677,12 +699,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.materials.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <button type="button" @click="activeTab = 'materials'; scrollToWorkspace()"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </button>
@@ -700,12 +722,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.recipes.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <button type="button" @click="activeTab = 'recipes'; scrollToWorkspace()"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </button>
@@ -723,12 +745,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ url('/customers/template') }}" title="{{ __('import.unduh_template_excel_pelanggan') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('customers.index') }}" title="{{ __('import.buka_modul_pelanggan_untuk_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -746,12 +768,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ url('/suppliers/template') }}" title="{{ __('import.unduh_template_excel_pemasok') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('suppliers.index') }}" title="{{ __('import.buka_modul_pemasok_untuk_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -785,12 +807,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('import.inventory.template', ['format' => 'xlsx']) }}" title="Download Template Excel Hidup"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 text-[#8E32BC] dark:text-[#BF5AF2] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#AF52DE]/10 hover:bg-[#AF52DE]/20 text-[#8E32BC] dark:text-[#BF5AF2] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <button type="button" @click="activeTab = 'inventory'; scrollToWorkspace()"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </button>
@@ -808,12 +830,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('inventory.opnames.export-blank') }}" title="{{ __('import.unduh_lembar_hitung_blanko') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('inventory.opnames.index') }}" title="{{ __('import.buka_modul_opname_untuk_upload_hasil') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -849,12 +871,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('finance.coa.template') }}" title="{{ __('import.unduh_template_excel_coa') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('finance.coa.index') }}" title="{{ __('import.buka_coa_untuk_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -869,12 +891,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('finance.balance-sheet.opening-template') }}" title="{{ __('import.unduh_template_saldo_awal') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('finance.balance-sheet') }}" title="{{ __('import.buka_neraca_untuk_upload_saldo_awal') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -889,12 +911,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('finance.receivables.template') }}" title="{{ __('import.unduh_template_piutang') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('finance.receivables') }}" title="{{ __('import.buka_piutang_untuk_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -909,12 +931,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('finance.payables.template') }}" title="{{ __('import.unduh_template_hutang') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('finance.payables') }}" title="{{ __('import.buka_hutang_untuk_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -948,12 +970,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('hrm.employees.template') }}" title="{{ __('import.unduh_template_excel_karyawan') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#30B0C7]/10 hover:bg-[#30B0C7]/20 text-[#1C8A9E] dark:text-[#40C8E0] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('hrm.index') }}" title="{{ __('import.kelola_karyawan_upload_data') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -971,12 +993,12 @@
                             </div>
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <a href="{{ route('hrm.attendance.template') }}" title="{{ __('import.unduh_template_log_mesin') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#34C759]/10 hover:bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Template</span>
                                 </a>
                                 <a href="{{ route('hrm.index') }}" title="{{ __('import.buka_presensi_untuk_upload_log') }}"
-                                    class="h-7 px-2.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white font-semibold text-[11px] flex items-center gap-1 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
                                     <span>Upload</span>
                                 </a>
@@ -1017,7 +1039,7 @@
                             </div>
                             <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
                                 <a href="{{ route('storefront.orders.export-dispatch') }}"
-                                    class="h-8 px-3 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#5856D6]/10 hover:bg-[#5856D6]/20 text-[#5856D6] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>{{ __('import.unduh_manifest_hari_ini') }}</span>
                                 </a>
@@ -1038,7 +1060,7 @@
                             </div>
                             <div class="flex items-center justify-between pt-2 border-t border-black/5 dark:border-white/5">
                                 <a href="{{ route('marketplace-hub.orders.export') }}"
-                                    class="h-8 px-3 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
+                                    class="min-h-[40px] sm:min-h-[32px] px-3.5 rounded-[8px] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 text-[#B26A00] dark:text-[#FF9F0A] font-semibold text-[11px] flex items-center gap-1.5 transition-all">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
                                     <span>Ekspor Rekap Omnichannel</span>
                                 </a>
@@ -1077,7 +1099,7 @@
         {{-- ========================================================== --}}
         <div class="p-1 rounded-[12px] bg-black/[0.06] dark:bg-white/[0.08] border border-black/5 dark:border-white/5 inline-flex flex-wrap gap-1 max-w-full overflow-x-auto">
             <button type="button" @click="activeTab = 'materials'"
-                class="h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap"
+                class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer"
                 :class="activeTab === 'materials' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/></svg>
@@ -1086,7 +1108,7 @@
             </button>
 
             <button type="button" @click="activeTab = 'products'"
-                class="h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap"
+                class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer"
                 :class="activeTab === 'products' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#007AFF]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></svg>
@@ -1095,7 +1117,7 @@
             </button>
 
             <button type="button" @click="activeTab = 'recipes'"
-                class="h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap"
+                class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer"
                 :class="activeTab === 'recipes' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#5856D6]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5m4.75-11.396a24.646 24.646 0 014.5 0m-4.5 0L5 14.5m9.75-11.396v5.714c0 .597.237 1.17.659 1.591L19 14.5m-4.25-11.396L19 14.5m-14 0l1.75 5.25A2.25 2.25 0 008.884 21h6.232a2.25 2.25 0 002.134-1.25L19 14.5m-14 0h14"/></svg>
@@ -1104,7 +1126,7 @@
             </button>
 
             <button type="button" @click="activeTab = 'inventory'"
-                class="h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap"
+                class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[9px] text-[13px] transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer"
                 :class="activeTab === 'inventory' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white font-semibold shadow-sm' :
                     'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'">
                 <svg class="w-4 h-4 text-[#AF52DE]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
@@ -1314,9 +1336,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
-                            <template x-for="row in (materialPreview ? materialPreview.rows : [])" :key="row.row_number">
-                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors"
-                                    x-show="materialFilter === 'all' || materialFilter === row.status">
+                            <template x-for="row in filteredMaterialRows" :key="row.row_number">
+                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="py-2.5 px-3 font-mono tabular-nums text-black/50 dark:text-white/50" x-text="row.row_number"></td>
                                     <td class="py-2.5 px-3 whitespace-nowrap">
                                         <template x-if="row.status === 'valid'">
@@ -1350,6 +1371,14 @@
                                         x-text="row.status_reason"></td>
                                 </tr>
                             </template>
+                            <tr x-show="filteredMaterialRows.length === 0" class="border-t border-black/5 dark:border-white/5">
+                                <td colspan="9" class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">
+                                    <div class="flex flex-col items-center justify-center gap-1.5">
+                                        <svg class="w-6 h-6 text-black/30 dark:text-white/30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                                        <span>Tidak ada data dengan status <strong class="capitalize" x-text="materialFilter"></strong></span>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1362,11 +1391,11 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="materialPreview = null; materialFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
-                        @if(\App\Support\Context::hasPermission('materials.create'))
+                        @if(\App\Support\Context::hasPermission('materials.manage') || \App\Support\Context::hasPermission('materials.create') || \App\Support\Context::hasPermission('import.manage'))
                         <button type="button" @click="executeMaterialImport()" :disabled="materialExecuting || (materialPreview && materialPreview.error_count > 0)"
-                            class="h-9 px-5 rounded-[10px] bg-[#34C759] hover:bg-[#2DB34F] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(52,199,89,0.25)] disabled:opacity-50 disabled:pointer-events-none">
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-5 rounded-[10px] bg-[#34C759] hover:bg-[#2DB34F] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(52,199,89,0.25)] disabled:opacity-50 disabled:pointer-events-none">
                             <template x-if="materialExecuting">
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
@@ -1580,9 +1609,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
-                            <template x-for="row in (productPreview ? productPreview.rows : [])" :key="row.row_number">
-                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors"
-                                    x-show="productFilter === 'all' || productFilter === row.status">
+                            <template x-for="row in filteredProductRows" :key="row.row_number">
+                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="py-2.5 px-3 font-mono tabular-nums text-black/50 dark:text-white/50" x-text="row.row_number"></td>
                                     <td class="py-2.5 px-3 whitespace-nowrap">
                                         <template x-if="row.status === 'valid'">
@@ -1617,6 +1645,14 @@
                                         x-text="row.status_reason"></td>
                                 </tr>
                             </template>
+                            <tr x-show="filteredProductRows.length === 0" class="border-t border-black/5 dark:border-white/5">
+                                <td colspan="9" class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">
+                                    <div class="flex flex-col items-center justify-center gap-1.5">
+                                        <svg class="w-6 h-6 text-black/30 dark:text-white/30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                                        <span>Tidak ada data dengan status <strong class="capitalize" x-text="productFilter"></strong></span>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1629,11 +1665,11 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="productPreview = null; productFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
-                        @if(\App\Support\Context::hasPermission('products.create'))
+                        @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('products.create') || \App\Support\Context::hasPermission('import.manage'))
                         <button type="button" @click="executeProductImport()" :disabled="productExecuting"
-                            class="h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] disabled:opacity-50 disabled:pointer-events-none">
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-5 rounded-[10px] bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(0,122,255,0.25)] disabled:opacity-50 disabled:pointer-events-none">
                             <template x-if="productExecuting">
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
@@ -1847,9 +1883,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
-                            <template x-for="row in (recipePreview ? recipePreview.rows : [])" :key="row.row_number">
-                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors"
-                                    x-show="recipeFilter === 'all' || recipeFilter === row.status">
+                            <template x-for="row in filteredRecipeRows" :key="row.row_number">
+                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="py-2.5 px-3 font-mono tabular-nums text-black/50 dark:text-white/50" x-text="row.row_number"></td>
                                     <td class="py-2.5 px-3 whitespace-nowrap">
                                         <template x-if="row.status === 'valid'">
@@ -1884,6 +1919,14 @@
                                         x-text="row.status_reason"></td>
                                 </tr>
                             </template>
+                            <tr x-show="filteredRecipeRows.length === 0" class="border-t border-black/5 dark:border-white/5">
+                                <td colspan="9" class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">
+                                    <div class="flex flex-col items-center justify-center gap-1.5">
+                                        <svg class="w-6 h-6 text-black/30 dark:text-white/30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                                        <span>Tidak ada data dengan status <strong class="capitalize" x-text="recipeFilter"></strong></span>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1896,11 +1939,11 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="recipePreview = null; recipeFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
-                        @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('costing.manage'))
+                        @if(\App\Support\Context::hasPermission('products.manage') || \App\Support\Context::hasPermission('costing.manage') || \App\Support\Context::hasPermission('import.manage'))
                         <button type="button" @click="executeRecipeImport()" :disabled="recipeExecuting"
-                            class="h-9 px-5 rounded-[10px] bg-[#5856D6] hover:bg-[#4745C2] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(88,86,214,0.25)] disabled:opacity-50 disabled:pointer-events-none">
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-5 rounded-[10px] bg-[#5856D6] hover:bg-[#4745C2] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(88,86,214,0.25)] disabled:opacity-50 disabled:pointer-events-none">
                             <template x-if="recipeExecuting">
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>
@@ -2113,9 +2156,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
-                            <template x-for="row in (inventoryPreview ? inventoryPreview.rows : [])" :key="row.row_number">
-                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors"
-                                    x-show="inventoryFilter === 'all' || inventoryFilter === row.status">
+                            <template x-for="row in filteredInventoryRows" :key="row.row_number">
+                                <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.02] transition-colors">
                                     <td class="py-2.5 px-3 font-mono tabular-nums text-black/50 dark:text-white/50" x-text="row.row_number"></td>
                                     <td class="py-2.5 px-3 whitespace-nowrap">
                                         <template x-if="row.status === 'valid'">
@@ -2152,6 +2194,14 @@
                                         x-text="row.status_reason"></td>
                                 </tr>
                             </template>
+                            <tr x-show="filteredInventoryRows.length === 0" class="border-t border-black/5 dark:border-white/5">
+                                <td colspan="9" class="py-10 text-center text-black/40 dark:text-white/40 text-[13px]">
+                                    <div class="flex flex-col items-center justify-center gap-1.5">
+                                        <svg class="w-6 h-6 text-black/30 dark:text-white/30" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+                                        <span>Tidak ada data dengan status <strong class="capitalize" x-text="inventoryFilter"></strong></span>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -2165,11 +2215,11 @@
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="inventoryPreview = null; inventoryFile = null"
-                            class="h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] text-black/80 dark:text-white/80 text-[13px] font-medium transition-all active:scale-[0.97]">{{ __('common.cancel') }}</button>
 
-                        @if(\App\Support\Context::hasPermission('inventory.manage'))
+                        @if(\App\Support\Context::hasPermission('inventory.manage') || \App\Support\Context::hasPermission('import.manage'))
                         <button type="button" @click="executeInventoryImport()" :disabled="inventoryExecuting"
-                            class="h-9 px-5 rounded-[10px] bg-[#AF52DE] hover:bg-[#9B38CA] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(175,82,222,0.25)] disabled:opacity-50 disabled:pointer-events-none">
+                            class="min-h-[44px] sm:min-h-[36px] h-11 sm:h-9 px-5 rounded-[10px] bg-[#AF52DE] hover:bg-[#9B38CA] active:scale-[0.97] text-white font-semibold text-[13px] transition-all flex items-center gap-2 shadow-[0_1px_2px_rgba(175,82,222,0.25)] disabled:opacity-50 disabled:pointer-events-none">
                             <template x-if="inventoryExecuting">
                                 <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             </template>

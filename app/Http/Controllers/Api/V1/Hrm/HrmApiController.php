@@ -20,13 +20,38 @@ use App\Support\Context;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-final class HrmApiController extends Controller
+final class HrmApiController extends Controller implements HasMiddleware
 {
+    /**
+     * Controller-level authorization guards for HRM API endpoints.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:hrm.view,users.view', only: [
+                'hub',
+            ]),
+            new Middleware('require.permission:hrm.manage,users.manage', only: [
+                'storeEmployee',
+                'updateEmployee',
+                'storeShift',
+            ]),
+            new Middleware('require.permission:hrm.payroll.manage,hrm.manage,users.manage', only: [
+                'storeLoan',
+            ]),
+            new Middleware('require.permission:hrm.attendance.manage,hrm.manage,users.manage', only: [
+                'approveCorrection',
+                'rejectCorrection',
+            ]),
+        ];
+    }
     /**
      * Unified HRM Hub Dashboard: Metrics, Employees, Attendances, Corrections, Shifts, Payrolls, Loans.
      * GET /api/v1/hrm/hub

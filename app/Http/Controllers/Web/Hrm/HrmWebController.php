@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -44,27 +45,37 @@ final class HrmWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:users.view', only: [
+            new Middleware('require.permission:hrm.view,users.view', only: [
                 'index',
-                'showPayroll',
                 'showPayslip',
+            ]),
+            new Middleware('require.permission:hrm.payroll.view,hrm.payroll.manage,users.view,users.manage', only: [
+                'showPayroll',
                 'exportPayrollExcel',
                 'exportPayrollCsv',
                 'exportPayrollBankCsv',
             ]),
-            new Middleware('require.permission:users.manage', only: [
-                'storeEmployee',
-                'updateEmployee',
-                'destroyEmployee',
-                'storeLoan',
-                'cancelLoan',
+            new Middleware('require.permission:hrm.payroll.manage,hrm.manage,users.manage', only: [
                 'createPayroll',
                 'storePayroll',
                 'approvePayroll',
                 'payPayroll',
                 'destroyPayroll',
+                'storeLoan',
+                'cancelLoan',
+            ]),
+            new Middleware('require.permission:hrm.attendance.manage,hrm.manage,users.manage', only: [
                 'approveCorrection',
                 'rejectCorrection',
+                'exportAttendance',
+                'attendanceTemplate',
+                'previewAttendanceImport',
+                'executeAttendanceImport',
+            ]),
+            new Middleware('require.permission:hrm.manage,users.manage', only: [
+                'storeEmployee',
+                'updateEmployee',
+                'destroyEmployee',
                 'registerEmployeeFace',
                 'resetEmployeeFace',
                 'storeLocation',
@@ -80,10 +91,6 @@ final class HrmWebController extends Controller implements HasMiddleware
                 'employeeTemplate',
                 'previewEmployeeImport',
                 'executeEmployeeImport',
-                'exportAttendance',
-                'attendanceTemplate',
-                'previewAttendanceImport',
-                'executeAttendanceImport',
             ]),
         ];
     }
@@ -299,7 +306,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storeEmployee(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
         if (! $this->entitlementService->canAddMember($business)) {
             return back()->with('error', 'Kapasitas anggota staf pada paket Anda telah mencapai batas maksimal. Silakan tingkatkan ke paket Cooca untuk menambah staf tanpa batas.');
@@ -340,50 +347,56 @@ final class HrmWebController extends Controller implements HasMiddleware
                 $q->whereNull('business_id')->orWhere('business_id', $business->id);
             })->firstOrFail();
 
-        $user = User::where('email', $validated['email'])->first();
-        if (! $user) {
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['whatsapp_number'] ?? null,
-                'password' => Hash::make($validated['password'] ?? 'password123'),
-                'email_verified_at' => now(),
-            ]);
-        }
-
-        if ($business->users()->where('users.id', $user->id)->exists()) {
+        $existingUser = User::where('email', $validated['email'])->first();
+        if ($existingUser && $business->users()->where('users.id', $existingUser->id)->exists()) {
             return back()->with('error', 'Pengguna dengan email tersebut sudah menjadi anggota tim bisnis ini.');
         }
 
-        $membership = BusinessMembership::create([
-            'id' => (string) Str::uuid(),
-            'business_id' => $business->id,
-            'user_id' => $user->id,
-            'role' => $selectedRole->slug,
-            'role_id' => $selectedRole->id,
-            'job_title' => $validated['job_title'] ?? $selectedRole->name,
-            'employment_type' => $validated['employment_type'],
-            'join_date' => $validated['join_date'] ?? now()->toDateString(),
-            'base_salary' => (float) ($validated['base_salary'] ?? 0.0),
-            'daily_rate' => (float) ($validated['daily_rate'] ?? 0.0),
-            'fixed_allowances' => (float) ($validated['fixed_allowances'] ?? 0.0),
-            'variable_allowances' => (float) ($validated['variable_allowances'] ?? 0.0),
-            'tax_ptkp_status' => $validated['tax_ptkp_status'],
-            'nik_ktp' => $validated['nik_ktp'] ?? null,
-            'npwp' => $validated['npwp'] ?? null,
-            'bpjs_tk_enabled' => ! empty($validated['bpjs_tk_enabled']),
-            'bpjs_tk_number' => $validated['bpjs_tk_number'] ?? null,
-            'bpjs_kes_enabled' => ! empty($validated['bpjs_kes_enabled']),
-            'bpjs_kes_number' => $validated['bpjs_kes_number'] ?? null,
-            'bpjs_dependents_count' => (int) ($validated['bpjs_dependents_count'] ?? 0),
-            'bank_name' => $validated['bank_name'] ?? null,
-            'bank_account_number' => $validated['bank_account_number'] ?? null,
-            'bank_account_holder' => $validated['bank_account_holder'] ?? $validated['name'],
-            'whatsapp_number' => $validated['whatsapp_number'] ?? null,
-            'attendance_mode' => $validated['attendance_mode'] ?? 'geofenced',
-            'primary_location_id' => $validated['primary_location_id'] ?? null,
-            'default_shift_id' => $validated['default_shift_id'] ?? null,
-        ]);
+        // Wrap User creation and BusinessMembership creation inside DB::transaction (§F12)
+        [$user, $membership] = DB::transaction(function () use ($validated, $business, $selectedRole, $existingUser): array {
+            $user = $existingUser;
+            if (! $user) {
+                $user = User::create([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'],
+                    'phone' => $validated['whatsapp_number'] ?? null,
+                    'password' => Hash::make($validated['password'] ?? 'password123'),
+                    'email_verified_at' => now(),
+                ]);
+            }
+
+            $membership = BusinessMembership::create([
+                'id' => (string) Str::uuid(),
+                'business_id' => $business->id,
+                'user_id' => $user->id,
+                'role' => $selectedRole->slug,
+                'role_id' => $selectedRole->id,
+                'job_title' => $validated['job_title'] ?? $selectedRole->name,
+                'employment_type' => $validated['employment_type'],
+                'join_date' => $validated['join_date'] ?? now()->toDateString(),
+                'base_salary' => (float) ($validated['base_salary'] ?? 0.0),
+                'daily_rate' => (float) ($validated['daily_rate'] ?? 0.0),
+                'fixed_allowances' => (float) ($validated['fixed_allowances'] ?? 0.0),
+                'variable_allowances' => (float) ($validated['variable_allowances'] ?? 0.0),
+                'tax_ptkp_status' => $validated['tax_ptkp_status'],
+                'nik_ktp' => $validated['nik_ktp'] ?? null,
+                'npwp' => $validated['npwp'] ?? null,
+                'bpjs_tk_enabled' => ! empty($validated['bpjs_tk_enabled']),
+                'bpjs_tk_number' => $validated['bpjs_tk_number'] ?? null,
+                'bpjs_kes_enabled' => ! empty($validated['bpjs_kes_enabled']),
+                'bpjs_kes_number' => $validated['bpjs_kes_number'] ?? null,
+                'bpjs_dependents_count' => (int) ($validated['bpjs_dependents_count'] ?? 0),
+                'bank_name' => $validated['bank_name'] ?? null,
+                'bank_account_number' => $validated['bank_account_number'] ?? null,
+                'bank_account_holder' => $validated['bank_account_holder'] ?? $validated['name'],
+                'whatsapp_number' => $validated['whatsapp_number'] ?? null,
+                'attendance_mode' => $validated['attendance_mode'] ?? 'geofenced',
+                'primary_location_id' => $validated['primary_location_id'] ?? null,
+                'default_shift_id' => $validated['default_shift_id'] ?? null,
+            ]);
+
+            return [$user, $membership];
+        });
 
         // Register initial face photo if provided
         $photoData = $request->file('photo') ?? $request->input('photo');
@@ -417,7 +430,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function updateEmployee(Request $request, string $membershipId): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit profil staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit profil staf.');
 
         $membership = BusinessMembership::where('business_id', $business->id)
             ->where('id', $membershipId)
@@ -523,7 +536,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function destroyEmployee(string $membershipId): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus staf.');
 
         $membership = BusinessMembership::where('business_id', $business->id)
             ->where('id', $membershipId)
@@ -558,7 +571,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storeLoan(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mencatat kasbon.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mencatat kasbon.');
 
         $validated = $request->validate([
             'user_id' => ['required', 'uuid', 'exists:users,id'],
@@ -611,7 +624,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function cancelLoan(EmployeeLoan $loan): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membatalkan kasbon.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membatalkan kasbon.');
 
         if ($loan->business_id !== $business->id) {
             abort(404);
@@ -641,7 +654,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function createPayroll(Request $request): View
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membuat penggajian.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membuat penggajian.');
 
         $month = (int) $request->query('month', (int) now()->month);
         $year = (int) $request->query('year', (int) now()->year);
@@ -681,7 +694,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storePayroll(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membuat penggajian.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin membuat penggajian.');
 
         $validated = $request->validate([
             'period_month' => ['required', 'integer', 'between:1,12'],
@@ -742,7 +755,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function approvePayroll(Payroll $payroll): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menyetujui penggajian.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menyetujui penggajian.');
 
         if ($payroll->business_id !== $business->id) {
             abort(404);
@@ -771,7 +784,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function payPayroll(Request $request, Payroll $payroll): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin memproses pembayaran gaji.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin memproses pembayaran gaji.');
 
         if ($payroll->business_id !== $business->id) {
             abort(404);
@@ -810,7 +823,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function destroyPayroll(Payroll $payroll): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus penggajian.');
+        abort_unless(Context::hasPermission('hrm.payroll.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus penggajian.');
 
         if ($payroll->business_id !== $business->id) {
             abort(404);
@@ -1059,7 +1072,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
-        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('hrm.view') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'latitude' => ['nullable', 'numeric'],
@@ -1120,7 +1133,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
-        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('hrm.view') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'latitude' => ['nullable', 'numeric'],
@@ -1180,7 +1193,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $user = auth()->user();
-        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
+        abort_unless($user && ($user->isBusinessOwner() || Context::hasPermission('hrm.view') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.view') || Context::hasPermission('users.manage') || $business->users()->where('users.id', $user->id)->exists()), 403, 'Akses ditolak.');
 
         $validated = $request->validate([
             'target_date' => ['required', 'date', 'before_or_equal:today'],
@@ -1205,7 +1218,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $isOwner = auth()->user()->isBusinessOwner();
-        abort_unless(Context::hasPermission('users.manage') || $isOwner, 403, 'Anda tidak memiliki hak otorisasi untuk menyetujui tiket koreksi absensi.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage') || $isOwner, 403, 'Anda tidak memiliki hak otorisasi untuk menyetujui tiket koreksi absensi.');
 
         if ($correction->business_id !== $business->id) {
             abort(404);
@@ -1230,7 +1243,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $isOwner = auth()->user()->isBusinessOwner();
-        abort_unless(Context::hasPermission('users.manage') || $isOwner, 403, 'Anda tidak memiliki hak otorisasi untuk menolak tiket koreksi absensi.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage') || $isOwner, 403, 'Anda tidak memiliki hak otorisasi untuk menolak tiket koreksi absensi.');
 
         if ($correction->business_id !== $business->id) {
             abort(404);
@@ -1261,7 +1274,7 @@ final class HrmWebController extends Controller implements HasMiddleware
 
         $user = auth()->user();
         abort_unless(
-            $correction->user_id === $user->id || Context::hasPermission('users.view') || Context::hasPermission('users.manage'),
+            $correction->user_id === $user->id || Context::hasPermission('hrm.view') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.view') || Context::hasPermission('users.manage'),
             403,
             'Akses berkas lampiran absensi ditolak.'
         );
@@ -1289,7 +1302,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function registerEmployeeFace(Request $request, string $membershipId): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola biometrik staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola biometrik staf.');
 
         $membership = BusinessMembership::where('business_id', $business->id)
             ->where('id', $membershipId)
@@ -1344,7 +1357,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function resetEmployeeFace(Request $request, string $membershipId): RedirectResponse|JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola biometrik staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola biometrik staf.');
 
         $membership = BusinessMembership::where('business_id', $business->id)
             ->where('id', $membershipId)
@@ -1373,7 +1386,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storeLocation(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola lokasi presensi.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola lokasi presensi.');
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -1414,7 +1427,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function updateLocation(Request $request, Location $location): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola lokasi presensi.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola lokasi presensi.');
 
         if ($location->business_id !== $business->id) {
             abort(404);
@@ -1457,7 +1470,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function destroyLocation(Location $location): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus lokasi presensi.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus lokasi presensi.');
 
         if ($location->business_id !== $business->id) {
             abort(404);
@@ -1481,7 +1494,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storeShift(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola shift kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola shift kerja.');
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
@@ -1525,7 +1538,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function updateShift(Request $request, WorkShift $shift): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit shift kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit shift kerja.');
 
         if ($shift->business_id !== $business->id) {
             abort(404);
@@ -1571,7 +1584,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function destroyShift(WorkShift $shift): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus shift kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus shift kerja.');
 
         if ($shift->business_id !== $business->id) {
             abort(404);
@@ -1598,7 +1611,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function storeSchedule(Request $request): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola jadwal kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola jadwal kerja.');
 
         $validated = $request->validate([
             'user_id' => ['required', 'uuid', 'exists:users,id'],
@@ -1643,7 +1656,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function updateSchedule(Request $request, EmployeeSchedule $schedule): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit jadwal kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengedit jadwal kerja.');
 
         if ($schedule->business_id !== $business->id) {
             abort(404);
@@ -1690,7 +1703,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function destroySchedule(EmployeeSchedule $schedule): RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus jadwal kerja.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin menghapus jadwal kerja.');
 
         if ($schedule->business_id !== $business->id) {
             abort(404);
@@ -1708,7 +1721,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function exportEmployees(): StreamedResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
         return (new DataExchangeService())->exportEmployees($business);
     }
@@ -1719,7 +1732,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function employeeTemplate(): StreamedResponse|RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
         try {
             return (new DataExchangeService())->generateEmployeeTemplate($business);
@@ -1739,7 +1752,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function previewEmployeeImport(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
         $request->validate([
             'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
@@ -1761,7 +1774,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function executeEmployeeImport(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
 
         $request->validate([
             'rows' => ['required', 'array', 'min:1'],
@@ -1788,7 +1801,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function exportAttendance(Request $request): StreamedResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola presensi.');
 
         return (new DataExchangeService())->exportAttendance(
             $business,
@@ -1803,7 +1816,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function attendanceTemplate(): StreamedResponse|RedirectResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola presensi.');
 
         try {
             return (new DataExchangeService())->generateFingerprintTemplate($business);
@@ -1823,7 +1836,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function previewAttendanceImport(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola presensi.');
 
         $request->validate([
             'file' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
@@ -1845,7 +1858,7 @@ final class HrmWebController extends Controller implements HasMiddleware
     public function executeAttendanceImport(Request $request): JsonResponse
     {
         $business = Context::requireBusiness();
-        abort_unless(Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola staf.');
+        abort_unless(Context::hasPermission('hrm.attendance.manage') || Context::hasPermission('hrm.manage') || Context::hasPermission('users.manage'), 403, 'Anda tidak memiliki izin mengelola presensi.');
 
         $request->validate([
             'rows' => ['required', 'array', 'min:1'],

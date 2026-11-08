@@ -206,8 +206,8 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::put('/services/{product}', [ServiceWebController::class, 'update'])->middleware('require.permission:products.edit')->name('services.update');
         Route::delete('/services/{product}', [ServiceWebController::class, 'destroy'])->middleware('require.permission:products.delete')->name('services.destroy');
 
-        // Mass Excel / CSV Import (Materials, Products, Recipes & Inventory)
-        Route::middleware('require.permission:materials.view,products.view')->group(function (): void {
+        // Mass Excel / CSV Import (Materials, Products, Recipes & Inventory - Granular permissions enforced via ImportWebController::middleware())
+        Route::group([], function (): void {
             Route::get('/import', [ImportWebController::class, 'index'])->name('import.index');
             Route::get('/import/materials/template', [ImportWebController::class, 'downloadMaterialTemplate'])->name('import.materials.template');
             Route::post('/import/materials/preview', [ImportWebController::class, 'previewMaterials'])->middleware('entitlement:import')->name('import.materials.preview');
@@ -455,46 +455,46 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Root aliases for HRM Employee & Attendance (direct access & legacy compatibility)
         Route::get('/employees/template', [HrmWebController::class, 'employeeTemplate'])->middleware('require.permission:users.manage')->name('employees.template');
-        Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->middleware('require.permission:users.manage')->name('employees.export');
-        Route::get('/employees', [HrmWebController::class, 'index'])->middleware('require.permission:users.view')->name('employees.index');
-        Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->middleware('require.permission:users.manage')->name('attendance.template');
-        Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->middleware('require.permission:users.manage')->name('attendance.export');
-        Route::get('/attendance', [HrmWebController::class, 'index'])->middleware('require.permission:users.view')->name('attendance.index');
+        Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->name('employees.export');
+        Route::get('/employees', [HrmWebController::class, 'index'])->name('employees.index');
+        Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->name('attendance.template');
+        Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->name('attendance.export');
+        Route::get('/attendance', [HrmWebController::class, 'index'])->name('attendance.index');
 
-        // Human Resource Management (HRM) & Monthly Payroll Engine
+        // Human Resource Management (HRM) & Monthly Payroll Engine (Granular permissions enforced via HrmWebController::middleware())
         Route::prefix('hrm')->name('hrm.')->group(function (): void {
             Route::get('/', [HrmWebController::class, 'index'])->name('index');
-            Route::post('/employees', [HrmWebController::class, 'storeEmployee'])->middleware('require.permission:users.manage')->name('employees.store');
-            Route::put('/employees/{membership}', [HrmWebController::class, 'updateEmployee'])->middleware('require.permission:users.manage')->name('employees.update');
-            Route::delete('/employees/{membership}', [HrmWebController::class, 'destroyEmployee'])->middleware('require.permission:users.manage')->name('employees.destroy');
+            Route::post('/employees', [HrmWebController::class, 'storeEmployee'])->name('employees.store');
+            Route::put('/employees/{membership}', [HrmWebController::class, 'updateEmployee'])->name('employees.update');
+            Route::delete('/employees/{membership}', [HrmWebController::class, 'destroyEmployee'])->name('employees.destroy');
 
             // Master Karyawan Import & Export (Sprint 3)
-            Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->middleware('require.permission:users.manage')->name('employees.export');
-            Route::get('/employees/template', [HrmWebController::class, 'employeeTemplate'])->middleware('require.permission:users.manage')->name('employees.template');
-            Route::post('/employees/import/preview', [HrmWebController::class, 'previewEmployeeImport'])->middleware('require.permission:users.manage')->name('employees.import-preview');
-            Route::post('/employees/import/execute', [HrmWebController::class, 'executeEmployeeImport'])->middleware('require.permission:users.manage')->name('employees.import-execute');
+            Route::get('/employees/export', [HrmWebController::class, 'exportEmployees'])->name('employees.export');
+            Route::get('/employees/template', [HrmWebController::class, 'employeeTemplate'])->name('employees.template');
+            Route::post('/employees/import/preview', [HrmWebController::class, 'previewEmployeeImport'])->name('employees.import-preview');
+            Route::post('/employees/import/execute', [HrmWebController::class, 'executeEmployeeImport'])->name('employees.import-execute');
 
             // Log Presensi Mesin Fingerprint Import & Export (Sprint 3)
-            Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->middleware('require.permission:users.manage')->name('attendance.export');
-            Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->middleware('require.permission:users.manage')->name('attendance.template');
-            Route::post('/attendance/import/preview', [HrmWebController::class, 'previewAttendanceImport'])->middleware('require.permission:users.manage')->name('attendance.import-preview');
-            Route::post('/attendance/import/execute', [HrmWebController::class, 'executeAttendanceImport'])->middleware('require.permission:users.manage')->name('attendance.import-execute');
+            Route::get('/attendance/export', [HrmWebController::class, 'exportAttendance'])->name('attendance.export');
+            Route::get('/attendance/template', [HrmWebController::class, 'attendanceTemplate'])->name('attendance.template');
+            Route::post('/attendance/import/preview', [HrmWebController::class, 'previewAttendanceImport'])->name('attendance.import-preview');
+            Route::post('/attendance/import/execute', [HrmWebController::class, 'executeAttendanceImport'])->name('attendance.import-execute');
 
             // Kasbon & Pinjaman Karyawan
-            Route::post('/loans', [HrmWebController::class, 'storeLoan'])->middleware('require.permission:users.manage')->name('loans.store');
-            Route::post('/loans/{loan}/cancel', [HrmWebController::class, 'cancelLoan'])->middleware('require.permission:users.manage')->name('loans.cancel');
+            Route::post('/loans', [HrmWebController::class, 'storeLoan'])->name('loans.store');
+            Route::post('/loans/{loan}/cancel', [HrmWebController::class, 'cancelLoan'])->name('loans.cancel');
 
             // Penggajian Bulanan / Monthly Payroll Runs
-            Route::get('/payrolls', [HrmWebController::class, 'index'])->middleware('require.permission:users.view')->name('payrolls.index');
-            Route::get('/payrolls/create', [HrmWebController::class, 'createPayroll'])->middleware('require.permission:users.manage')->name('payrolls.create');
-            Route::post('/payrolls', [HrmWebController::class, 'storePayroll'])->middleware('require.permission:users.manage')->name('payrolls.store');
+            Route::get('/payrolls', [HrmWebController::class, 'index'])->name('payrolls.index');
+            Route::get('/payrolls/create', [HrmWebController::class, 'createPayroll'])->name('payrolls.create');
+            Route::post('/payrolls', [HrmWebController::class, 'storePayroll'])->name('payrolls.store');
             Route::get('/payrolls/{payroll}', [HrmWebController::class, 'showPayroll'])->name('payrolls.show');
             Route::get('/payrolls/{payroll}/export-excel', [HrmWebController::class, 'exportPayrollExcel'])->name('payrolls.export-excel');
             Route::get('/payrolls/{payroll}/export', [HrmWebController::class, 'exportPayrollCsv'])->name('payrolls.export');
             Route::get('/payrolls/{payroll}/export-bank', [HrmWebController::class, 'exportPayrollBankCsv'])->name('payrolls.export-bank');
-            Route::post('/payrolls/{payroll}/approve', [HrmWebController::class, 'approvePayroll'])->middleware('require.permission:users.manage')->name('payrolls.approve');
-            Route::post('/payrolls/{payroll}/pay', [HrmWebController::class, 'payPayroll'])->middleware('require.permission:users.manage')->name('payrolls.pay');
-            Route::delete('/payrolls/{payroll}', [HrmWebController::class, 'destroyPayroll'])->middleware('require.permission:users.manage')->name('payrolls.destroy');
+            Route::post('/payrolls/{payroll}/approve', [HrmWebController::class, 'approvePayroll'])->name('payrolls.approve');
+            Route::post('/payrolls/{payroll}/pay', [HrmWebController::class, 'payPayroll'])->name('payrolls.pay');
+            Route::delete('/payrolls/{payroll}', [HrmWebController::class, 'destroyPayroll'])->name('payrolls.destroy');
 
             // Digital Payslip View
             Route::get('/payslips/{item}', [HrmWebController::class, 'showPayslip'])->name('payslips.show');
@@ -503,28 +503,28 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/attendance/clock-in', [HrmWebController::class, 'clockIn'])->name('attendance.clock-in');
             Route::post('/attendance/clock-out', [HrmWebController::class, 'clockOut'])->name('attendance.clock-out');
             Route::post('/attendance/corrections', [HrmWebController::class, 'storeCorrection'])->name('attendance.corrections.store');
-            Route::post('/attendance/corrections/{correction}/approve', [HrmWebController::class, 'approveCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.approve');
-            Route::post('/attendance/corrections/{correction}/reject', [HrmWebController::class, 'rejectCorrection'])->middleware('require.permission:users.manage')->name('attendance.corrections.reject');
+            Route::post('/attendance/corrections/{correction}/approve', [HrmWebController::class, 'approveCorrection'])->name('attendance.corrections.approve');
+            Route::post('/attendance/corrections/{correction}/reject', [HrmWebController::class, 'rejectCorrection'])->name('attendance.corrections.reject');
             Route::get('/attendance/corrections/{correction}/attachment', [HrmWebController::class, 'streamCorrectionAttachment'])->name('attendance.corrections.attachment');
 
             // Pendaftaran & Reset Biometrik Wajah Karyawan
-            Route::post('/employees/{membership}/face-register', [HrmWebController::class, 'registerEmployeeFace'])->middleware('require.permission:users.manage')->name('employees.face-register');
-            Route::post('/employees/{membership}/face-reset', [HrmWebController::class, 'resetEmployeeFace'])->middleware('require.permission:users.manage')->name('employees.face-reset');
+            Route::post('/employees/{membership}/face-register', [HrmWebController::class, 'registerEmployeeFace'])->name('employees.face-register');
+            Route::post('/employees/{membership}/face-reset', [HrmWebController::class, 'resetEmployeeFace'])->name('employees.face-reset');
 
             // Pengaturan Lokasi & Geofencing Presensi
-            Route::post('/locations', [HrmWebController::class, 'storeLocation'])->middleware('require.permission:users.manage')->name('locations.store');
-            Route::put('/locations/{location}', [HrmWebController::class, 'updateLocation'])->middleware('require.permission:users.manage')->name('locations.update');
-            Route::delete('/locations/{location}', [HrmWebController::class, 'destroyLocation'])->middleware('require.permission:users.manage')->name('locations.destroy');
+            Route::post('/locations', [HrmWebController::class, 'storeLocation'])->name('locations.store');
+            Route::put('/locations/{location}', [HrmWebController::class, 'updateLocation'])->name('locations.update');
+            Route::delete('/locations/{location}', [HrmWebController::class, 'destroyLocation'])->name('locations.destroy');
 
             // Pengaturan Shift Kerja Karyawan
-            Route::post('/shifts', [HrmWebController::class, 'storeShift'])->middleware('require.permission:users.manage')->name('shifts.store');
-            Route::put('/shifts/{shift}', [HrmWebController::class, 'updateShift'])->middleware('require.permission:users.manage')->name('shifts.update');
-            Route::delete('/shifts/{shift}', [HrmWebController::class, 'destroyShift'])->middleware('require.permission:users.manage')->name('shifts.destroy');
+            Route::post('/shifts', [HrmWebController::class, 'storeShift'])->name('shifts.store');
+            Route::put('/shifts/{shift}', [HrmWebController::class, 'updateShift'])->name('shifts.update');
+            Route::delete('/shifts/{shift}', [HrmWebController::class, 'destroyShift'])->name('shifts.destroy');
 
             // Pengaturan Jadwal Kerja & Roster Karyawan
-            Route::post('/schedules', [HrmWebController::class, 'storeSchedule'])->middleware('require.permission:users.manage')->name('schedules.store');
-            Route::put('/schedules/{schedule}', [HrmWebController::class, 'updateSchedule'])->middleware('require.permission:users.manage')->name('schedules.update');
-            Route::delete('/schedules/{schedule}', [HrmWebController::class, 'destroySchedule'])->middleware('require.permission:users.manage')->name('schedules.destroy');
+            Route::post('/schedules', [HrmWebController::class, 'storeSchedule'])->name('schedules.store');
+            Route::put('/schedules/{schedule}', [HrmWebController::class, 'updateSchedule'])->name('schedules.update');
+            Route::delete('/schedules/{schedule}', [HrmWebController::class, 'destroySchedule'])->name('schedules.destroy');
         });
 
         // Platform Feedback & Bug Reports (Granular permissions enforced via FeedbackWebController::middleware())

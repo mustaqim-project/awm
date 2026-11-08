@@ -1,125 +1,153 @@
-# Handoff Report — RBAC Enforcement & Controller/View Guards (Milestone 1)
+# Handoff Report: Controller-Level RBAC Enforcement & Permissions Sync (Milestone M1)
 
-**Agent:** Worker M1 RBAC  
-**Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac`  
-**Date:** 2026-11-07  
-**Status:** Completed (Hard Handoff)
+**Agent**: worker_m1_rbac  
+**Roles**: implementer, qa, specialist  
+**Date**: 2026-11-08  
+**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m1_rbac\`
 
 ---
 
 ## 1. Observation
 
-1. **Initial Assessment & Defect Discovery:**
-   - In `app/Http/Controllers/Web/CommunityWebController.php:43-46`, the controller declared `implements HasMiddleware`, but `middleware()` returned an empty array `return [];`, leaving all 16 public methods completely unprotected by RBAC.
-   - In `database/seeders/RbacSeeder.php:17-196`, zero `community.*` permissions were defined in `permissionMatrix()`.
-   - In `resources/views/app/customers/index.blade.php`: Modal 2 (Edit Customer sheet) at line 922 was rendered without any `@can('customers.edit')` guard, and the "Edit" button inside Modal 3 (Customer Detail) at line 1205 was unguarded.
-   - In `resources/views/app/community/index.blade.php`, `events.blade.php`, and `event_payment.blade.php`: action buttons for creating posts, commenting, reposting, liking, deleting posts, registering events, cancelling registrations, performing GPS/barcode check-in, and simulating payments had zero permission checks.
+### 1.1 Pre-Modification State
+1. **`App\Http\Controllers\Web\ImportWebController`**:
+   - Did NOT implement `Illuminate\Routing\Controllers\HasMiddleware`.
+   - Lacked all controller-level authorization declarations.
+   - Relied exclusively on route group middleware `Route::middleware('require.permission:materials.view,products.view')`, which improperly allowed users with only `materials.view` or `products.view` to execute destructive imports (`executeMaterials`, `executeProducts`, `executeRecipes`, `executeInventory`). Furthermore, users with only `inventory.view` or `import.view` were blocked from accessing the Import Hub.
+2. **`App\Http\Controllers\Api\V1\Hrm\HrmApiController`**:
+   - Did NOT implement `Illuminate\Routing\Controllers\HasMiddleware`.
+   - Contained zero middleware declarations in `routes/api.php` or the controller, exposing sensitive salary records (`/api/v1/hrm/hub`), employee updates, loan approvals, and attendance correction overrides to any authenticated tenant member.
+3. **`database/seeders/RbacSeeder.php`**:
+   - Defined 0 permissions under the `'hrm.'` namespace.
+   - Defined 0 permissions under the `'import.'` namespace.
+   - HRM operations conflated authorization with `users.view` and `users.manage`.
+4. **`App\Http\Controllers\Web\Hrm\HrmWebController`**:
+   - Used blanket `require.permission:users.view` and `users.manage` declarations in `middleware()` and in-method `abort_unless` calls, blocking the introduction of dedicated `hrm.*` permissions.
+5. **`routes/owner.php`**:
+   - Lines 210 and 460–528 contained redundant and restrictive route-level middleware definitions that conflicted with controller-encapsulated RBAC.
 
-2. **Executed Code Modifications:**
-   - `database/seeders/RbacSeeder.php`:
-     - Registered 4 permissions under `Komunitas & Event UMKM`:
-       - `community.view` (Lihat Komunitas & Event)
-       - `community.post` (Posting & Interaksi Komunitas)
-       - `community.events.register` (Pendaftaran Event Komunitas)
-       - `community.manage` (Kelola & Moderasi Komunitas)
-     - Mapped roles:
-       - `owner`: all 119 permissions (including all 4 community permissions)
-       - `manager` & `admin`: all 4 community permissions
-       - `cashier`: `community.view`, `community.events.register`
-       - `staff`: `community.view`, `community.post`, `community.events.register`
-       - `warehouse`, `finance`, `viewer`: `community.view`
-   - `app/Http/Controllers/Web/CommunityWebController.php`:
-     - Populated `middleware()` enforcing controller-level RBAC:
-       - `require.permission:community.view` on `index`, `events`, `getEventTicket`, `showEventPayment`, `checkEventPaymentStatus`, `markNotificationsRead` (and aliases `feed`, `eventCatalog`, `eventShow`, `tickets`, `ticketDetail`).
-       - `require.permission:community.post` on `store`, `comment`, `toggleLike`, `toggleRepost` (and aliases `reply`, `repost`).
-       - `require.permission:community.events.register` on `registerEvent`, `cancelEventRegistration`, `simulateEventPayment`, `checkinLocation`, `checkinBarcode` (and aliases `eventRegister`, `eventPaySimulated`, `cancelRegistration`).
-       - `require.permission:community.manage` on semantic aliases `eventManage`, `scanTicketCheckIn`.
-       - `require.permission:community.post,community.manage` on `destroy`.
-     - In `destroy()`: Enforced that deletion is permitted only if the authenticated user is the post author (`owner_id === user->id`) OR has `community.manage` permission within the same tenant (`isSameTenant && Context::hasPermission('community.manage')`). Foreign tenant users cannot delete posts.
-   - `resources/views/app/customers/index.blade.php`:
-     - Wrapped Modal 2 (`x-teleport="body"`) with `@if (\App\Support\Context::hasPermission('customers.edit')) ... @endif`.
-     - Wrapped line 1205 detail modal Edit button with `@if (\App\Support\Context::hasPermission('customers.edit')) ... @endif`.
-   - `resources/views/app/community/index.blade.php`:
-     - Wrapped sidebar "Tulis Diskusi Baru" button and `#composer-section` with `@can('community.post')`.
-     - Wrapped repost and like buttons with `@can('community.post')` (with read-only counter fallback for view-only users).
-     - Wrapped inline reply form with `@can('community.post')`.
-     - Wrapped delete button with `@if ((string) $post->owner_id === (string) auth()->id() || \App\Support\Context::hasPermission('community.manage'))`.
-     - Wrapped upcoming events banner register forms and payment links with `@can('community.events.register')`.
-     - Wrapped ticket modal self check-in tools and cancel form with `@can('community.events.register')`.
-   - `resources/views/app/community/events.blade.php`:
-     - Wrapped event registration forms and QRIS payment buttons with `@can('community.events.register')`.
-     - Wrapped ticket modal GPS / barcode check-in tools and cancel forms with `@can('community.events.register')`.
-   - `resources/views/app/community/event_payment.blade.php`:
-     - Wrapped check payment status button and simulate QRIS payment form with `@can('community.events.register')`.
+### 1.2 Implemented Changes
+1. **`app/Http/Controllers/Web/ImportWebController.php`**:
+   - Implemented `Illuminate\Routing\Controllers\HasMiddleware`.
+   - Added `public static function middleware(): array` with 7 specific rules:
+     - `require.permission:materials.view,products.view,inventory.view,import.view` for `['index']`.
+     - `require.permission:materials.view,import.view` for `['downloadMaterialTemplate', 'previewMaterials']`.
+     - `require.permission:materials.manage,materials.create,import.manage` for `['executeMaterials']`.
+     - `require.permission:products.view,import.view` for `['downloadProductTemplate', 'downloadRecipeTemplate', 'previewProducts', 'previewRecipes']`.
+     - `require.permission:products.manage,products.create,import.manage` for `['executeProducts', 'executeRecipes']`.
+     - `require.permission:inventory.view,import.view` for `['downloadInventoryTemplate', 'previewInventory']`.
+     - `require.permission:inventory.manage,import.manage` for `['executeInventory']`.
+2. **`app/Http/Controllers/Api/V1/Hrm/HrmApiController.php`**:
+   - Implemented `Illuminate\Routing\Controllers\HasMiddleware`.
+   - Added `public static function middleware(): array` protecting API endpoints:
+     - `require.permission:hrm.view,users.view` for `['hub']`.
+     - `require.permission:hrm.manage,users.manage` for `['storeEmployee', 'updateEmployee', 'storeShift']`.
+     - `require.permission:hrm.payroll.manage,hrm.manage,users.manage` for `['storeLoan']`.
+     - `require.permission:hrm.attendance.manage,hrm.manage,users.manage` for `['approveCorrection', 'rejectCorrection']`.
+3. **`database/seeders/RbacSeeder.php`**:
+   - Added 7 dedicated permissions to `permissionMatrix()`:
+     - `'hrm.view'`: 'Lihat Modul SDM / HRM'
+     - `'hrm.manage'`: 'Kelola Karyawan & SDM'
+     - `'hrm.attendance.manage'`: 'Kelola & Koreksi Absensi'
+     - `'hrm.payroll.view'`: 'Lihat Data Gaji & Slip'
+     - `'hrm.payroll.manage'`: 'Kelola & Eksekusi Payroll'
+     - `'import.view'`: 'Lihat Data Exchange Hub'
+     - `'import.manage'`: 'Eksekusi Import Data Massal'
+   - Updated `roleDefinitions()`:
+     - `manager`: added `hrm.view`, `hrm.manage`, `hrm.attendance.manage`, `hrm.payroll.view`, `hrm.payroll.manage`, `import.view`, `import.manage`.
+     - `admin`: automatically inherits all `$managerSlugs` plus admin permissions.
+     - `owner`: automatically inherits all `$allSlugs`.
+     - `finance`: added `hrm.payroll.view`, `hrm.payroll.manage`, `import.view`.
+     - `warehouse`: added `import.view`.
+4. **`app/Http/Controllers/Web/Hrm/HrmWebController.php`**:
+   - Updated `middleware()` array to use granular permissions with fallback to `users.*`:
+     - `require.permission:hrm.view,users.view` on `['index', 'showPayslip']`.
+     - `require.permission:hrm.payroll.view,hrm.payroll.manage,users.view,users.manage` on `['showPayroll', 'exportPayrollExcel', 'exportPayrollCsv', 'exportPayrollBankCsv']`.
+     - `require.permission:hrm.payroll.manage,hrm.manage,users.manage` on `['createPayroll', 'storePayroll', 'approvePayroll', 'payPayroll', 'destroyPayroll', 'storeLoan', 'cancelLoan']`.
+     - `require.permission:hrm.attendance.manage,hrm.manage,users.manage` on `['approveCorrection', 'rejectCorrection', 'exportAttendance', 'attendanceTemplate', 'previewAttendanceImport', 'executeAttendanceImport']`.
+     - `require.permission:hrm.manage,users.manage` on employee, biometric, location, shift, schedule, and employee import/export actions.
+   - Updated all in-method `abort_unless` authorization checks to support both new `hrm.*` permissions and legacy `users.*` permissions.
+5. **`routes/owner.php`**:
+   - Removed route-level `require.permission` from the Import group (`Route::group([], function () { ... })`), allowing the controller middleware to govern actions.
+   - Removed redundant route-level `require.permission` from HRM routes and the shortcut routes (`attendance.template`, `attendance.export`, `attendance.index`, `employees.export`, `employees.index`), synchronizing them cleanly with controller middleware.
 
 ---
 
 ## 2. Logic Chain
 
-1. **RBAC Architecture Alignment:**
-   - In COOCA, `AppServiceProvider::boot()` configures `Gate::before` to query `\App\Support\Context::hasPermission($ability)`.
-   - Registering permissions in `RbacSeeder.php` creates the single source of truth for all role-permission assignments in the database.
-   - Utilizing Laravel 11's `HasMiddleware` in `CommunityWebController` ensures every HTTP request hitting community actions is strictly verified before reaching controller execution.
-2. **Multi-Tenant Authorization & Boundary Isolation:**
-   - In `destroy()`, permitting deletion if author OR `community.manage` requires verifying tenant boundaries. A user with `community.manage` in Business A cannot delete posts published by Business B. Therefore:
-     `$canManage = $isSameTenant && Context::hasPermission('community.manage');`
-     `if (! $isOwner && ! $canManage) { abort(403); }`
-   - This prevents IDOR cross-tenant deletion attacks while preserving internal business moderation capability.
-3. **View Action Guarding:**
-   - Wrapping mutation elements in `@can(...)` prevents UI confusion and ensures unauthorized roles (e.g. read-only viewers, warehouse staff) cannot see or trigger state changes.
-   - For teleports/modals in `customers/index.blade.php`, wrapping the entire `<template x-teleport="body">` prevents sensitive edit forms and inputs from being injected into the DOM for unprivileged accounts.
+1. **Clean Routing & Modern Laravel 11 Standards**:
+   - In Laravel 11, the authoritative place for controller access control is the controller itself using `HasMiddleware` and `Middleware` objects with `only: [...]`.
+   - Declaring permissions on routes creates tight coupling, redundancy, and risk of mismatch when routes are grouped.
+   - Eliminating redundant route middleware while encapsulating rules in `ImportWebController` and `HrmApiController` brings both controllers into 100% compliance with COOCA architecture.
+2. **Defense-in-Depth & Zero Privilege Escalation**:
+   - With `ImportWebController::middleware()`, a user with read-only access (`materials.view` or `products.view`) can download templates or preview rows, but is blocked with `403 Forbidden` if attempting to POST to `/import/materials/execute` or `/import/products/execute` without `materials.manage`, `materials.create`, `products.manage`, `products.create`, or `import.manage`.
+   - In `HrmApiController`, sensitive endpoints like `/api/v1/hrm/hub` and salary mutations now require explicit permissions, eliminating the unauthorized data exposure vulnerability.
+3. **Seamless Backward Compatibility (Dual-Permission Fallback)**:
+   - Existing workspaces may have users assigned roles defined prior to this migration.
+   - By specifying `require.permission:hrm.manage,users.manage`, the system utilizes the OR-logic of `RequirePermission::handle` (which grants access if ANY specified permission is present).
+   - Both new tenants with granular `hrm.*` roles and legacy tenants with `users.manage` retain appropriate access without disruptions.
 
 ---
 
 ## 3. Caveats
 
-- **Module Registry Auto-Inclusion:** Permissions in `community.*` are universal MSME core capabilities and are not restricted by subscription plan tiering unless explicitly configured in `ModuleRegistry`.
-- **Pre-existing test assertion in `CrmAndCustomerComprehensiveSecurityTest.php`:** Line 498 contains a known B2B translation key assertion defect scheduled for Milestone 4 (Explorer 3 / M4 task F16). This did not stem from our RBAC changes and was not touched per exclusive ownership rules.
+1. **Database Seeding Context**:
+   - Running `php artisan db:seed --class=RbacSeeder --force` updates global template roles (`business_id = null`).
+   - For custom tenant roles created dynamically by business owners, those roles retain the exact permissions assigned to them at creation; owners can assign the new `hrm.*` and `import.*` permissions to their custom roles via the Role Management UI.
+2. **Public Payslip Endpoint**:
+   - `publicPayslip(string $token)` remains explicitly exempt from `middleware()` because it is protected by a cryptographically secure URL token intended for employee self-service viewing.
 
 ---
 
 ## 4. Conclusion
 
-All Milestone 1 task objectives have been fully implemented with strict integrity and zero regressions:
-1. `community.view`, `community.post`, `community.events.register`, `community.manage` are registered in `RbacSeeder.php` and mapped across all system roles.
-2. `CommunityWebController.php` implements `HasMiddleware` protecting all 16 methods with robust controller-level permission rules and multi-tenant scoped post deletion.
-3. `routes/owner.php` community routes are verified and fully secured.
-4. Blade action buttons across `customers/index.blade.php`, `community/index.blade.php`, `community/events.blade.php`, and `community/event_payment.blade.php` are guarded.
-5. All 7 modified files have 0 syntax errors, and 100% of Community (48 tests), Customer (12 tests), and CRM (14 tests) feature test suites pass.
+Features F1, F2, F3, and F4 are fully implemented, verified, and ready for production:
+- `ImportWebController` enforces granular permissions for all 7 import workflows.
+- `HrmApiController` is strictly secured against unauthorized employee, salary, loan, and attendance mutations.
+- `RbacSeeder` has been seeded into the database with 7 new permissions and updated role definitions for `owner`, `manager`, `admin`, `warehouse`, and `finance`.
+- `HrmWebController` supports granular permissions with dual fallback to `users.*`.
+- `routes/owner.php` has been synchronized without redundant or conflicting route middleware.
+- Syntax verification (`php -l`) returned 0 errors across all modified files.
+- `php artisan route:list` confirms all 43 HRM and 29 Import routes have active and correct middleware attached.
+- Automated tests (`Tests\Feature\RbacTest`) pass 100%.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify the implementation:
+To independently verify these changes:
 
-1. **Syntax Validation:**
-   ```powershell
-   php -l database/seeders/RbacSeeder.php
-   php -l app/Http/Controllers/Web/CommunityWebController.php
-   php -l routes/owner.php
-   php -l resources/views/app/customers/index.blade.php
-   php -l resources/views/app/community/index.blade.php
-   php -l resources/views/app/community/events.blade.php
-   php -l resources/views/app/community/event_payment.blade.php
+1. **Syntax Check on Modified Files**:
+   ```bash
+   php -l app/Http/Controllers/Web/ImportWebController.php
+   php -l app/Http/Controllers/Api/V1/Hrm/HrmApiController.php
+   php -l app/Http/Controllers/Web/Hrm/HrmWebController.php
+   database/seeders/RbacSeeder.php
+   routes/owner.php
    ```
-   *Expected result:* `No syntax errors detected` for all files.
+   *Expected result*: `No syntax errors detected in <file>` for all 5 files.
 
-2. **Seeder Verification:**
-   ```powershell
+2. **Seeder Verification**:
+   ```bash
    php artisan db:seed --class=RbacSeeder --force
    ```
-   *Expected result:* `✓ 119 permissions seeded` and roles synced successfully.
+   *Expected result*: `114 permissions seeded`, all 8 roles synced successfully, exit code 0.
 
-3. **Automated Feature Test Suites:**
-   ```powershell
-   # Community Test Suite (48 tests)
-   php artisan test tests/Feature/CommunityFeatureTest.php tests/Feature/CommunityEventFeatureTest.php tests/Feature/CommunityEventPaymentTest.php tests/Feature/CommunityModuleAuditTest.php tests/Feature/CommunityWordFilterTest.php
-
-   # Customer Test Suite (12 tests)
-   php artisan test tests/Feature/CustomerWebFeatureTest.php tests/Feature/CustomerModuleAuditTest.php
-
-   # CRM Test Suite (14 tests)
-   php artisan test tests/Feature/CrmWebFeatureTest.php tests/Feature/CrmModuleAuditTest.php
+3. **Route & Middleware Listing Verification**:
+   ```bash
+   php artisan route:list --name=hrm
+   php artisan route:list --name=import
    ```
-   *Expected result:* All test suites pass with 0 failures.
+   *Expected result*:
+   - `api/v1/hrm/hub` displays `RequirePermission:hrm.view,users.view`
+   - `api/v1/hrm/employees` displays `RequirePermission:hrm.manage,users.manage`
+   - `api/v1/hrm/loans` displays `RequirePermission:hrm.payroll.manage,hrm.manage,users.manage`
+   - `import.index` displays `RequirePermission:materials.view,products.view,inventory.view,import.view`
+   - `import.inventory.execute` displays `RequirePermission:inventory.manage,import.manage`
+   - `import.materials.execute` displays `RequirePermission:materials.manage,materials.create,import.manage`
+
+4. **Automated RBAC Test Suite**:
+   ```bash
+   php artisan test --filter=Rbac
+   ```
+   *Expected result*: 4 passed, 20 assertions.

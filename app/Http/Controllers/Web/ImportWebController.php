@@ -11,11 +11,49 @@ use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-final class ImportWebController extends Controller
+final class ImportWebController extends Controller implements HasMiddleware
 {
+    /**
+     * Daftarkan middleware permission langsung di dalam controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:materials.view,products.view,inventory.view,import.view', only: [
+                'index',
+            ]),
+            new Middleware('require.permission:materials.view,import.view', only: [
+                'downloadMaterialTemplate',
+                'previewMaterials',
+            ]),
+            new Middleware('require.permission:materials.manage,materials.create,import.manage', only: [
+                'executeMaterials',
+            ]),
+            new Middleware('require.permission:products.view,import.view', only: [
+                'downloadProductTemplate',
+                'downloadRecipeTemplate',
+                'previewProducts',
+                'previewRecipes',
+            ]),
+            new Middleware('require.permission:products.manage,products.create,import.manage', only: [
+                'executeProducts',
+                'executeRecipes',
+            ]),
+            new Middleware('require.permission:inventory.view,import.view', only: [
+                'downloadInventoryTemplate',
+                'previewInventory',
+            ]),
+            new Middleware('require.permission:inventory.manage,import.manage', only: [
+                'executeInventory',
+            ]),
+        ];
+    }
+
     public function __construct(
         private readonly DataImportService $importService,
         private readonly EntitlementService $entitlementService

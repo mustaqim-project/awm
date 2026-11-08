@@ -1,119 +1,79 @@
-# Project: Feedback & Finance Modules Production Readiness
+# Project: HRM, Import, and Inventory Modules Remediation & Production Readiness
 
 ## Architecture
-- **Framework**: Laravel 11.x multi-tenant SaaS ERP (COOCA Core).
-- **Presentation Layer**: Blade templates with Tailwind CSS, Alpine.js, Lucide SVG icons, and Apple HIG responsive design principles (zero overlapping elements, single primary action per view, touch targets ≥ 44px).
-- **Authorization Engine**: Spatie-based multi-tenant RBAC with `AppServiceProvider` `Gate::before` delegation to `\App\Support\Context::hasPermission(...)`, supporting native Blade `@can(...)` directives and controller `HasMiddleware` with `Middleware('require.permission:...')`.
-- **Documentation Engine**: `DocumentationWebController` and `resources/views/app/docs/` with Bento Apple HIG partials, interactive verified `route(...)` links, and 20-industry practical implementation matrices across 6 standard clusters (F&B, Ritel, Jasa Harian, Manufaktur, Jasa Proyek, Distribusi/Agro).
+- **Framework**: Laravel 11 (PHP 8.2+) with Blade templates, Alpine.js, Tailwind CSS, and Spatie/custom RBAC.
+- **Multi-Tenant Scoping**: All operations scoped by `Context::requireBusiness()` and `$business->id`.
+- **Controller-Level RBAC**: All controllers must implement `Illuminate\Routing\Controllers\HasMiddleware` with explicit permission definitions per action.
+- **View Architecture**: Modular Blade partials with single primary CTA per context, Apple HIG touch targets (≥ 44px), mobile safe area padding (`pb-28 lg:pb-12`), and view-level authorization wrappers (`@if(Context::hasPermission(...))`).
+- **Documentation Architecture**: Standalone partials in `resources/views/app/docs/partials/sec_<module>.blade.php` integrated into `resources/views/app/docs/index.blade.php` with 20-industry implementation matrices and interactive route helpers.
+
+---
 
 ## Feature Inventory
+
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| F1 | RBAC Seeder Registration (Feedback) | Register `feedback.view` and `feedback.create` permissions in `database/seeders/RbacSeeder.php` with role mappings (`owner`, `manager`, `admin`, `finance`, etc.) | M1 | Survey (Explorer 2) |
-| F2 | Controller Authorization Guards (Feedback) | Refactor `app/Http/Controllers/Web/FeedbackWebController.php` to implement `HasMiddleware` with granular permissions (`feedback.view`, `feedback.create`) instead of `require.role:owner` | M1 | Survey (Explorer 2) |
-| F3 | Route & Navigation Alignment (Feedback) | Remove outer `require.role:owner` wrapper from `routes/owner.php` for feedback routes; update `sidebar.blade.php` and `topbar.blade.php` visibility checks to `@if (\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('feedback.view'))` | M1 | Survey (Explorer 2) |
-| F4 | Settlement Proof Permission Guard | Add `Context::hasPermission('finance.cash_bank')` authorization check in `app/Http/Controllers/Common/SettlementProofController.php` | M1 | Survey (Explorer 2) |
-| F5 | Blade Action Permission Guards | Wrap unguarded action buttons in `@can(...)`: Payables & Receivables import (`finance.payables` / `finance.receivables`), EDC & Payout Account creation (`finance.cash_bank`), Settlement form (`finance.cash_bank`), Accounting export links (`accounting.view`) | M1 | Survey (Explorer 1, 2) |
-| F6 | Action Button Hierarchy & Anti-Clutter | In `cash-bank/index.blade.php`, eliminate competing solid primary buttons (Kas Masuk, Kas Keluar, Transfer Kas) into 1 primary action with secondary variants; remove redundant "Tambah Akun" button | M2 | Survey (Explorer 1) |
-| F7 | Double Title Elimination | In `feedback/create.blade.php` and `feedback/show.blade.php`, remove redundant `<h2>` and `<h1>` card titles that duplicate the `<x-module-header :title="...">` | M2 | Survey (Explorer 1) |
-| F8 | Header Component Standardization | In `finance/settlements/show.blade.php`, replace raw `<header>` and manual breadcrumb markup with standard `<x-module-header :breadcrumbs="...">` | M2 | Survey (Explorer 1) |
-| F9 | Apple HIG Touch Targets (≥ 44px) | Enforce minimum 44px touch targets across 9 views: `accounting/coa.blade.php` (convert 32px buttons to 44px), `payables.blade.php`, `receivables.blade.php`, `accounting/reconciliation.blade.php`, `edc-terminals/index.blade.php`, `payout-accounts/index.blade.php`, `feedback/show.blade.php` | M2 | Survey (Explorer 1) |
-| F10 | Mobile Safe Area & Empty State Polish | In `settlements/show.blade.php`, upgrade bottom padding to `pb-28 sm:pb-32 lg:pb-10` and add `@empty` fallback for allocations loop | M2 | Survey (Explorer 1, 3) |
-| F11 | i18n & Zero Hardcoded Text | Translate hardcoded Indonesian expense category labels in `expenses.blade.php`; localize raw enum strings and breadcrumb home labels in feedback views | M2 | Survey (Explorer 1) |
-| F12 | Feedback Business Owner Guide | Create `resources/views/app/docs/partials/sec_feedback.blade.php` with POV Business Owner, 4-step workflow, 20-industry matrix, privacy/sanitization guidelines, FAQ, and verified interactive route links | M3 | Survey (Explorer 3) |
-| F13 | Finance Business Owner Guide | Create `resources/views/app/docs/partials/sec_finance.blade.php` replacing the obsolete 35-line stub with full Bento Apple HIG, 4-step workflow, 20-industry matrix across 6 clusters, fraud prevention, and verified interactive route links to 15 sub-modules | M3 | Survey (Explorer 3) |
-| F14 | Docs TOC & Navigation Integration | Wire `#sec-feedback` and `#sec-finance` into the Left Sidebar TOC and include directives in `resources/views/app/docs/index.blade.php` | M3 | Survey (Explorer 3) |
-| F15 | RBAC & 403 Forbidden Comprehensive Tests | Create `tests/Feature/FeedbackAndFinanceComprehensiveSecurityTest.php` testing 403 Forbidden for unauthorized roles and 200 OK for authorized roles across Feedback and Finance endpoints | M4 | Survey (Explorer 2, 3) |
-| F16 | UI Zero Overlap & View Compilation Test | Add automated tests verifying all modified Blade views compile cleanly with zero errors and conform to responsive structural guidelines | M4 | Survey (Explorer 1, 3) |
-| F17 | Syntax & Route Verification | Validate all modified and newly created Blade and PHP files with `php -l` and ensure `php artisan route:list` runs without error | M4 | Survey (Explorer 1, 2, 3) |
-| F18 | Multi-Perspective Quality Gate | Run the complete verification gate: 2 Reviewers (RBAC/Security, UI/UX/Docs), 2 Challengers (Adversarial Security & Compilation), and 1 Forensic Auditor | M4 | Project Pattern |
+| F1 | Controller-Level RBAC in Import | Implement `HasMiddleware` in `ImportWebController` protecting execute and preview actions | M1 | Survey (RBAC) |
+| F2 | Controller-Level RBAC in HRM API | Implement `HasMiddleware` in `HrmApiController` to prevent unauthorized salary and staff mutations | M1 | Survey (RBAC) |
+| F3 | Dedicated HRM & Import Permissions Seeding | Register `hrm.*` and `import.*` permissions and role assignments in `RbacSeeder.php` | M1 | Survey (RBAC) |
+| F4 | Granular HRM Web Controller Permissions | Update `HrmWebController` to check `hrm.*` permissions with fallback to `users.*` | M1 | Survey (RBAC) |
+| F5 | View-Level Authorization Guards | Wrap sensitive action buttons with `@if(Context::hasPermission(...))` in HRM, Import, and Inventory views | M1 | Survey (RBAC) |
+| F6 | Payroll Create Floating Bar Mobile Fix | Adjust floating action bar offset to `bottom-[calc(68px+env(safe-area-inset-bottom))] lg:bottom-4` in `hrm/payroll/create.blade.php` | M2 | Survey (UI) |
+| F7 | Inventory Mobile Safe-Area Padding | Standardize bottom padding to `pb-28 lg:pb-12` in `stocks.blade.php`, `opname.blade.php`, and `transfers.blade.php` | M2 | Survey (UI) |
+| F8 | Eliminate Duplicate Primary CTAs in HRM | Remove redundant CTA buttons inside card headers in `tab-corrections.blade.php` and `tab-locations.blade.php` | M2 | Survey (UI) |
+| F9 | HRM Schedule Filter Visual Hierarchy | Restyle filter button to neutral/tonal in `tab-schedules.blade.php` preserving single primary CTA | M2 | Survey (UI) |
+| F10 | Apple HIG Touch Targets in Import & Payslip | Upgrade sub-44px buttons to `min-h-[44px]` in `import/index.blade.php` and `hrm/payroll/payslip.blade.php` | M2 | Survey (UI) |
+| F11 | Import Preview Mobile Cards & Attendance Filter Fix | Add responsive card layout for preview rows in Import Hub; fix vertical padding on mobile in `tab-attendance.blade.php` | M2 | Survey (UI) |
+| F12 | Transaction Safety in Multi-Step Mutations | Wrap `quickAdjust`, `storeTransfer`, and `storeEmployee` in `DB::transaction(...)` | M4 | Survey (Audit) |
+| F13 | Import Test Suite Synchronization | Synchronize sheet names in `ProductAndRecipeImportTest.php` with `DataExchangeService` | M4 | Survey (Audit) |
+| F14 | Biometric Attendance Test Fixture Fix | Ensure test fixtures register face templates before clocking in in `HrmAttendanceBiometricAndExceptionTest.php` | M4 | Survey (Audit) |
+| F15 | Author `sec_hrm.blade.php` Documentation | Comprehensive Business Owner guide with 20-industry matrix, payroll workflow, geofencing, and FAQ | M3 | Survey (Docs) |
+| F16 | Author `sec_import.blade.php` Documentation | Comprehensive Business Owner guide with 20-industry matrix, template guide, living lookups, and FAQ | M3 | Survey (Docs) |
+| F17 | Author `sec_inventory.blade.php` Documentation | Comprehensive Business Owner guide with 20-industry matrix, opname, transfers, maker-checker, and FAQ | M3 | Survey (Docs) |
+| F18 | Docs Index Integration | Replace inline summaries with `@include` partials in `resources/views/app/docs/index.blade.php` and add sidebar link | M3 | Survey (Docs) |
+| F19 | Comprehensive Security & Quality Gate | Validate test suite (`php artisan test`), Blade compilation (`php artisan view:cache`), and forensic audit | M4 | Survey (Gate) |
+
+---
 
 ## Milestones
+
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | RBAC Enforcement & Controller-Level Guards | F1, F2, F3, F4, F5 | none | DONE |
-| 2 | UI Simplification & Layout Optimization | F6, F7, F8, F9, F10, F11 | M1 | DONE |
-| 3 | Business Owner Documentation | F12, F13, F14 | none | DONE |
-| 4 | Test Suites, Production Readiness & Forensic Audit Gate | F15, F16, F17, F18 | M1, M2, M3 | DONE |
+| M0 | Survey & Technical Discovery | Comprehensive survey by 3 Explorers (UI, RBAC, Audit/Docs) | none | DONE |
+| M1 | Controller-Level RBAC Enforcement & Permissions | F1, F2, F3, F4, F5: `ImportWebController`, `HrmApiController`, `RbacSeeder.php`, `HrmWebController`, View Guards | M0 | DONE |
+| M2 | UI Layout Simplification & Decluttering | F6, F7, F8, F9, F10, F11: HRM views, Inventory views, Import Hub layout | M0 | DONE |
+| M3 | Business Owner Documentation & User Guides | F15, F16, F17, F18: `sec_hrm.blade.php`, `sec_import.blade.php`, `sec_inventory.blade.php`, `index.blade.php` | M0 | DONE |
+| M4 | Module Audit, Verification & Quality Gate | F12, F13, F14, F19: Transaction safety, test fixes, review, challenge, and forensic audit | M1, M2, M3 | DONE |
 
-## Interface Contracts
+---
 
-### Multi-Tenant Authorization Contract
-- Permissions in `database/seeders/RbacSeeder.php`:
-  - `feedback.view`: View feedback bugs and features listings, view individual tickets, stream attachments.
-  - `feedback.create`: Submit new bug reports and feature requests.
-  - `expenses.view`, `expenses.manage`: Manage operational expenses.
-  - `accounting.view`, `accounting.manage`: Chart of Accounts, Journals, Balance Sheet, Trial Balance, General Ledger, Reconciliation.
-  - `finance.cash_bank`: Cash & bank accounts, cash ledger, settlements, EDC terminals, payout accounts, external reconciliation.
-  - `finance.receivables`: Accounts receivable and customer debt tracking.
-  - `finance.payables`: Accounts payable and supplier bills.
-- Controllers implement `Illuminate\Routing\Controllers\HasMiddleware` with `new Middleware('require.permission:...')`.
-- Blade templates hide unauthorized buttons using `@can('permission.name')` / `@cannot('permission.name')`.
-- Unauthorized requests must receive `403 Forbidden`.
+## Interface Contracts & Code Layout
 
-### Business Owner Documentation Contract
-- Documentation partials located in `resources/views/app/docs/partials/sec_{module}.blade.php`.
-- Each partial MUST contain:
-  1. Header Bento with semantic icon, badge, and verified direct route link (`route('...')`).
-  2. Executive Summary written in conversational Indonesian from Business Owner (UMKM) POV.
-  3. 4-step practical workflow.
-  4. 20-Industry Application Matrix across 6 standard clusters (F&B, Manufaktur, Ritel, Jasa Harian, Jasa Proyek, Distribusi/Agro).
-  5. Security, authorization, and fraud prevention section.
-  6. Practical FAQ.
-- All links must use valid route names:
-  - Feedback: `route('feedback.bugs.index')`, `route('feedback.bugs.create')`, `route('feedback.features.index')`, `route('feedback.features.create')`
-  - Finance: `route('finance.cash-bank.index')`, `route('finance.expenses.index')`, `route('finance.payables.index')`, `route('finance.receivables.index')`, `route('finance.accounting.coa')`, `route('finance.accounting.balance-sheet')`, `route('finance.accounting.trial-balance')`, `route('finance.accounting.general-ledger')`, `route('finance.accounting.reconciliation')`, `route('finance.journals.index')`, `route('finance.settlements.index')`, `route('finance.external-reconciliation.index')`, `route('finance.edc-terminals.index')`, `route('finance.payout-accounts.index')`
-
-## Code Layout
-- Controllers:
-  - `app/Http/Controllers/Web/FeedbackWebController.php`
-  - `app/Http/Controllers/Web/Finance/AccountingWebController.php`
-  - `app/Http/Controllers/Web/Finance/CashLedgerWebController.php`
-  - `app/Http/Controllers/Web/Finance/ExternalReconciliationWebController.php`
-  - `app/Http/Controllers/Web/Finance/MerchantPayoutAccountWebController.php`
-  - `app/Http/Controllers/Web/Finance/PaymentSettlementWebController.php`
-  - `app/Http/Controllers/Web/Finance/PosFinanceWebController.php`
-  - `app/Http/Controllers/Web/Finance/StoreEdcTerminalWebController.php`
-  - `app/Http/Controllers/Common/SettlementProofController.php`
-  - `app/Http/Controllers/Web/DocumentationWebController.php`
-- Seeders:
+### Exclusive File Ownership:
+- **Milestone 1 (RBAC)**:
+  - `app/Http/Controllers/Web/ImportWebController.php`
+  - `app/Http/Controllers/Api/V1/Hrm/HrmApiController.php`
+  - `app/Http/Controllers/Web/Hrm/HrmWebController.php`
   - `database/seeders/RbacSeeder.php`
-- Routes:
-  - `routes/owner.php`
-  - `routes/web.php`
-- Navigation Views:
-  - `resources/views/layouts/partials/sidebar.blade.php`
-  - `resources/views/layouts/partials/topbar.blade.php`
-- Feedback Views:
-  - `resources/views/app/feedback/index.blade.php`
-  - `resources/views/app/feedback/create.blade.php`
-  - `resources/views/app/feedback/show.blade.php`
-- Finance Views:
-  - `resources/views/app/finance/expenses.blade.php`
-  - `resources/views/app/finance/journals.blade.php`
-  - `resources/views/app/finance/payables.blade.php`
-  - `resources/views/app/finance/receivables.blade.php`
-  - `resources/views/app/finance/cash-bank/index.blade.php`
-  - `resources/views/app/finance/cash-bank/ledger.blade.php`
-  - `resources/views/app/finance/edc-terminals/index.blade.php`
-  - `resources/views/app/finance/external-reconciliation/index.blade.php`
-  - `resources/views/app/finance/payout-accounts/index.blade.php`
-  - `resources/views/app/finance/settlements/index.blade.php`
-  - `resources/views/app/finance/settlements/show.blade.php`
-  - `resources/views/app/finance/accounting/coa.blade.php`
-  - `resources/views/app/finance/accounting/balance-sheet.blade.php`
-  - `resources/views/app/finance/accounting/trial-balance.blade.php`
-  - `resources/views/app/finance/accounting/general-ledger.blade.php`
-  - `resources/views/app/finance/accounting/reconciliation.blade.php`
-- Documentation Views:
+  - `routes/owner.php` (lines 209–235, 465–528)
+- **Milestone 2 (UI)**:
+  - `resources/views/app/hrm/payroll/create.blade.php`
+  - `resources/views/app/hrm/payroll/payslip.blade.php`
+  - `resources/views/app/hrm/partials/tab-corrections.blade.php`
+  - `resources/views/app/hrm/partials/tab-locations.blade.php`
+  - `resources/views/app/hrm/partials/tab-schedules.blade.php`
+  - `resources/views/app/hrm/partials/tab-attendance.blade.php`
+  - `resources/views/app/hrm/index.blade.php`
+  - `resources/views/app/inventory/stocks.blade.php`
+  - `resources/views/app/inventory/opname.blade.php`
+  - `resources/views/app/inventory/transfers.blade.php`
+  - `resources/views/app/import/index.blade.php`
+- **Milestone 3 (Docs)**:
+  - `resources/views/app/docs/partials/sec_hrm.blade.php`
+  - `resources/views/app/docs/partials/sec_import.blade.php`
+  - `resources/views/app/docs/partials/sec_inventory.blade.php`
   - `resources/views/app/docs/index.blade.php`
-  - `resources/views/app/docs/partials/sec_feedback.blade.php` (new)
-  - `resources/views/app/docs/partials/sec_finance.blade.php` (new)
-- Tests:
-  - `tests/Feature/FeedbackModuleAuditTest.php`
-  - `tests/Feature/FeedbackWorkflowTest.php`
-  - `tests/Feature/FinanceModuleAuditTest.php`
-  - `tests/Feature/FinanceAndAccountingNavigationTest.php`
-  - `tests/Feature/FinanceApiIntegrationTest.php`
-  - `tests/Feature/FeedbackAndFinanceComprehensiveSecurityTest.php` (new)
-  - `tests/Feature/DocumentationFeatureTest.php`
+- **Milestone 4 (Audit & Gate)**:
+  - `app/Http/Controllers/Web/Inventory/InventoryWebController.php`
+  - `tests/Feature/ProductAndRecipeImportTest.php`
+  - `tests/Feature/HrmAttendanceBiometricAndExceptionTest.php`

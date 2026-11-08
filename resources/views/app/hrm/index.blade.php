@@ -943,13 +943,13 @@
             <!-- Action CTA Dinamis sesuai Tab -->
             <template x-if="activeTab === 'employees'">
                 <div class="flex items-center gap-2">
+                    @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                     <a href="{{ route('hrm.employees.export') }}"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_export_employees_excel') }}">
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                         <span class="hidden sm:inline">{{ __('hrm.btn_export_excel') }}</span>
                     </a>
-                    @if (\App\Support\Context::hasPermission('users.manage'))
                     <button type="button" @click="showImportEmployeeModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_import_employees_excel') }}">
@@ -967,13 +967,13 @@
 
             <template x-if="activeTab === 'attendance'">
                 <div class="flex items-center gap-2">
+                    @if (\App\Support\Context::hasPermission('hrm.attendance.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                     <a href="{{ route('hrm.attendance.export') }}"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_export_attendance_excel') }}">
                         <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                         <span class="hidden sm:inline">{{ __('hrm.btn_export_attendance') }}</span>
                     </a>
-                    @if (\App\Support\Context::hasPermission('users.manage'))
                     <button type="button" @click="showImportAttendanceModal = true"
                         class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
                         title="{{ __('hrm.title_import_fingerprint') }}">
@@ -998,43 +998,53 @@
             </template>
 
             <template x-if="activeTab === 'locations'">
+                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                 <button type="button" @click="showAddLocationModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#FF2D55] hover:bg-[#E02648] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,45,85,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('hrm.btn_add_location') }}</span>
                 </button>
+                @endif
             </template>
 
             <template x-if="activeTab === 'shifts'">
+                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                 <button type="button" @click="showAddShiftModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#30B0C7] hover:bg-[#2591a3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(48,176,199,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('hrm.btn_add_shift') }}</span>
                 </button>
+                @endif
             </template>
 
             <template x-if="activeTab === 'schedules'">
+                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                 <button type="button" @click="showAddScheduleModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(88,86,214,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('hrm.btn_set_roster_schedule') }}</span>
                 </button>
+                @endif
             </template>
 
             <template x-if="activeTab === 'payrolls'">
+                @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
                 <a href="{{ route('hrm.payrolls.create') }}"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('hrm.btn_create_payroll') }}</span>
                 </a>
+                @endif
             </template>
 
             <template x-if="activeTab === 'loans'">
+                @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                 <button type="button" @click="showAddLoanModal = true"
                     class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('hrm.btn_record_loan') }}</span>
                 </button>
+                @endif
             </template>
         </div>
     </div>

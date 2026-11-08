@@ -13,11 +13,6 @@
                         <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('hrm.locations_geofence_sub') }}</p>
                     </div>
                 </div>
-                <button type="button" @click="showAddLocationModal = true"
-                    class="h-10 px-4 rounded-[12px] bg-[#FF2D55] hover:bg-[#E02648] text-white text-[13px] font-bold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(255,45,85,0.3)] transition active:scale-[0.98] cursor-pointer shrink-0">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_add_location') }}</span>
-                </button>
             </div>
 
             <!-- Desktop View (>= 768px) -->
@@ -72,9 +67,10 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-1">
+                                        @if(\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                                         <button type="button"
                                             @click="openEditLocation({{ Js::from($loc) }}, '{{ route('hrm.locations.update', $loc->id) }}')"
-                                            class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
+                                            class="w-9 h-9 min-h-[36px] min-w-[36px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0"
                                             title="{{ __('hrm.btn_edit') }}"
                                             aria-label="{{ __('hrm.btn_edit') }}">
                                             <i data-lucide="pencil" class="w-4 h-4"></i>
@@ -86,12 +82,13 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                    class="w-9 h-9 min-h-[36px] min-w-[36px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
                                                     title="{{ __('hrm.tooltip_delete_location') }}"
                                                     aria-label="{{ __('hrm.tooltip_delete_location') }}">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </form>
+                                        @endif
                                         @endif
                                     </div>
                                 </td>
@@ -154,6 +151,7 @@
                             </div>
                         </div>
 
+                        @if(\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
                         <!-- Actions -->
                         <div class="pt-1 flex items-center gap-2">
                             <button type="button"
@@ -177,6 +175,7 @@
                                 </form>
                             @endif
                         </div>
+                        @endif
                     </div>
                 @empty
                     <div class="py-10 text-center text-black/50 dark:text-white/50 font-medium">

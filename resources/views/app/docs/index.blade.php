@@ -227,7 +227,22 @@
                             <span class="w-6 h-6 rounded-[7px] bg-[#FF9500]/15 text-[#FF9500] dark:bg-[#FF9F0A]/20 dark:text-[#FF9F0A] flex items-center justify-center shrink-0">
                                 <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.stok_resep_multi_gudang') }}</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.stok_resep_multi_gudang') }}</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">Blind Count</span>
+                            </div>
+                        </a>
+
+                        <!-- Impor Massal Excel & Migrasi -->
+                        <a href="#sec-import" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-emerald-500/15 text-emerald-600 dark:bg-emerald-400/20 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Import Excel &amp; Migrasi</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">4 Domain</span>
+                            </div>
                         </a>
 
                         <!-- Pembelian & Supplier (PO) -->
@@ -283,7 +298,10 @@
                             <span class="w-6 h-6 rounded-[7px] bg-sky-500/15 text-sky-500 dark:bg-sky-400/20 dark:text-sky-400 flex items-center justify-center shrink-0">
                                 <i data-lucide="users" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.karyawan_penggajian') }}</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">{{ __('docs.karyawan_penggajian') }}</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">Geofence</span>
+                            </div>
                         </a>
 
                         <!-- Master Data Pelanggan & Piutang -->
@@ -537,72 +555,16 @@
             </section>
 
             <!-- ===================================================== -->
-            <!-- SECTION 3: INVENTORI, RESEP BOM & HPP OTOMATIS        -->
+            <!-- SECTION 3: INVENTORI, MULTI-GUDANG & HPP RESEP (BOM)  -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & BLIND COUNT OPNAME) -->
             <!-- ===================================================== -->
-            <section id="sec-inventory" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'inventory') && matchesSearch('inventori resep bom hpp bahan baku stock opname mutasi stok barang minimum')">
+            @include('app.docs.partials.sec_inventory')
 
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center font-bold text-sm">
-                            3
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Inventori, Resep &amp; Kalkulasi HPP</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Pelacakan stok bahan baku dan perhitungan Harga Pokok Penjualan otomatis</p>
-                        </div>
-                    </div>
-                    @if(\App\Support\Context::hasPermission('products.view'))
-                        <a href="{{ route('products.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>{{ __('docs.buka_katalog_produk_resep') }}</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </a>
-                    @endif
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-4 shadow-2xs">
-                    <div class="space-y-2">
-                        <h3 class="text-sm font-bold text-black dark:text-white">Bagaimana Resep (Bill of Materials) Bekerja?</h3>
-                        <p class="text-xs text-black/60 dark:text-white/60 leading-relaxed">
-                            Khusus bisnis kuliner (F&amp;B) atau manufaktur perakitan, Cooca mengaitkan produk jadi dengan bahan baku penyusunnya. Saat kasir menjual 1 porsi *"Kopi Susu Gula Aren"*, Cooca secara otomatis memotong stok:
-                        </p>
-                    </div>
-
-                    <!-- Flow Diagram Card -->
-                    <div class="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-xs font-mono space-y-2">
-                        <div class="flex items-center justify-between flex-wrap gap-2 text-black dark:text-white font-bold">
-                            <span>1 Cup Kopi Susu Gula Aren Terjual</span>
-                            <span class="text-emerald-500">&rarr; Potong Stok Bahan Otomatis:</span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-black/70 dark:text-white/70">
-                            <div class="p-2 rounded bg-white dark:bg-black/20 border border-black/5 dark:border-white/5">
-                                • Biji Kopi Espresso: 18 Gram
-                            </div>
-                            <div class="p-2 rounded bg-white dark:bg-black/20 border border-black/5 dark:border-white/5">
-                                • Susu Fresh Milk: 120 mL
-                            </div>
-                            <div class="p-2 rounded bg-white dark:bg-black/20 border border-black/5 dark:border-white/5">
-                                • Gula Aren Cair: 25 mL
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-xs">
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-black dark:text-white">Kalkulasi HPP Real-Time</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">
-                                Jika harga beli susu naik dari supplier, HPP kopi susu otomatis ter-update sehingga margin keuntungan bersih di dashboard selalu presisi.
-                            </p>
-                        </div>
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-black dark:text-white">Stock Opname &amp; Kartu Stok</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">
-                                Catat stok fisik berkala melalui menu <strong>Stock Opname</strong>. Selisih stok dicatat ke akun penyesuaian inventori secara otomatis.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <!-- ===================================================== -->
+            <!-- SECTION: PUSAT IMPORT MASSAL EXCEL & MIGRASI DATA     -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & SMART LIVING LOOKUP)-->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_import')
 
             <!-- ===================================================== -->
             <!-- SECTION 4: PENGADAAN & PEMBELIAN (PROCUREMENT)        -->
@@ -700,38 +662,10 @@
             @include('app.docs.partials.sec_finance')
 
             <!-- ===================================================== -->
-            <!-- SECTION 7: HRM, PRESENSI ONLINE & GAJI KARYAWAN       -->
+            <!-- SECTION 7: HRM, PRESENSI GEOFENCE & PENGGAJIAN OTOMATIS-->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & BIOMETRIK GEOFENCE) -->
             <!-- ===================================================== -->
-            <section id="sec-hrm" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'hrm') && matchesSearch('hrm karyawan gaji shift presensi selfie gps komisi kasir slip gaji payroll')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-500 flex items-center justify-center font-bold text-sm">
-                            7
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.karyawan_presensi_gps_penggajian_hrm') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Manajemen kehadiran shift kerja dan slip gaji otomatis</p>
-                        </div>
-                    </div>
-                    @if(\App\Support\Context::hasPermission('users.view'))
-                        <a href="{{ route('hrm.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>{{ __('docs.buka_data_karyawan') }}</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </a>
-                    @endif
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <ul class="space-y-2 list-disc list-inside">
-                        <li><strong>Presensi GPS &amp; Radius Kantor:</strong> Karyawan dapat absen masuk dan pulang melalui smartphone masing-masing dengan validasi titik GPS radius toko.</li>
-                        <li><strong>Pengaturan Shift Kerja:</strong> Tetapkan shift pagi, siang, dan malam dengan toleransi keterlambatan menit otomatis.</li>
-                        <li><strong>Perhitungan Komisi Penjualan:</strong> Khusus kasir atau sales, Cooca dapat mengkalkulasi bonus omzet yang otomatis masuk ke komponen slip gaji bulanan.</li>
-                        <li><strong>Cetak Slip Gaji PDF:</strong> Sekali klik untuk menerbitkan slip gaji resmi berlogo perusahaan ke karyawan.</li>
-                    </ul>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_hrm')
 
             <!-- ===================================================== -->
             <!-- SECTION: MODUL MASTER PELANGGAN & MANAJEMEN PIUTANG   -->

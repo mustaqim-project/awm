@@ -1,49 +1,36 @@
 # Original User Request
 
-## Initial Request — 2026-11-08T06:39:01Z
+## Initial Request — 2026-11-08T18:53:48Z
 
-Audit, perbaiki, dan standardisasi modul Feedback (c:\laragon\www\cooca_core\resources\views\app\feedback) dan Finance (c:\laragon\www\cooca_core\resources\views\app\finance) pada aplikasi COOCA Core untuk kesiapan production, mencakup penyederhanaan tata letak antarmuka (UI simplification), penegakan otorisasi role & permission (RBAC) pada level controller, dan penyusunan panduan penggunaan untuk Business Owner.
+Perbaiki modul HRM, Import, dan Inventory pada views c:\laragon\www\cooca_core\resources\views\app\hrm, c:\laragon\www\cooca_core\resources\views\app\import, dan c:\laragon\www\cooca_core\resources\views\app\inventory dengan penyederhanaan tata letak UI, penegakan kontrol akses RBAC di tingkat controller, penyusunan dokumentasi Business Owner, serta audit modul menyeluruh.
 
 Working directory: c:\laragon\www\cooca_core
 Integrity mode: development
 
 ## Requirements
 
-### R1. Module Audit & Production Readiness
-Lakukan audit komprehensif pada modul Feedback dan Finance untuk mengidentifikasi celah fungsional, kepatuhan arsitektur, dan potensi error sebelum dan sesudah perbaikan, serta dokumentasikan temuan audit tersebut.
+### R1. UI Layout Simplification and Decluttering
+Sederhanakan tata letak UI dan rapikan penataan komponen pada views modul HRM (resources/views/app/hrm), Import (resources/views/app/import), dan Inventory (resources/views/app/inventory). Hilangkan elemen atau tombol yang bertabrakan/tumpang tindih, optimalkan hierarki tombol aksi, dan pastikan layout bersih serta responsif pada tampilan mobile dan desktop.
 
-### R2. UI Layout Simplification & Clutter Elimination
-Sederhanakan tata letak UI pada seluruh tampilan views modul Feedback dan Finance: hilangkan elemen yang bertumpuk atau tumpang tindih (zero overlapping elements), rapikan hierarki tombol aksi (maksimal 1 aksi primer per konteks), rapikan spasi dan padding antar komponen, serta pastikan antarmuka bersih dan mudah digunakan.
+### R2. Controller-Level RBAC Enforcement
+Audit dan tegakkan kontrol akses berbasis peran (RBAC) pada controller terkait modul HRM, Import, dan Inventory sehingga setiap method dan endpoint terlindungi hak akses yang sesuai. Daftarkan atau sinkronkan permission baru ke seeder/database bila terdapat permission yang belum terdaftar.
 
-### R3. Controller-Level RBAC & Authorization
-Terapkan dan pastikan seluruh controller dan rute yang menangani modul Feedback dan Finance memiliki proteksi Role-Based Access Control (RBAC) yang ketat pada level controller sesuai permission yang berlaku, serta pastikan hak akses tersebut tersinkronisasi pada seeder atau konfigurasi hak akses aplikasi.
+### R3. Module Audit & Production Readiness
+Lakukan audit komprehensif terhadap fungsionalitas, alur data, routing, dan penanganan error pada modul HRM, Import, dan Inventory untuk memastikan kestabilan dan kesiapan produksi tanpa celah kebocoran fitur.
 
-### R4. Business Owner User Guide Documentation
-Susun dokumentasi panduan penggunaan (user guideline) dari sudut pandang (POV) Business Owner untuk modul Feedback dan Finance dengan bahasa yang lugas dan mudah dipahami UMKM tanpa jargon rumit, disimpan di direktori dokumentasi standar proyek (`resources/views/app/docs/` atau `docs/`).
-
-## Verification Resources
-Gunakan test suite yang ada di proyek (`php artisan test` atau PHPUnit/Pest jika tersedia), serta jalankan pengecekan sintaks PHP (`php -l`) dan verifikasi rute (`php artisan route:list`) untuk memastikan tidak ada syntax error atau rute rusak akibat perubahan.
+### R4. Business Owner Documentation
+Susun atau perbarui dokumentasi panduan penggunaan (user guideline) dari sudut pandang (POV) Business Owner untuk modul HRM, Import, dan Inventory dengan bahasa yang lugas tanpa jargon teknis, mencakup panduan fitur utama dan disimpan di direktori dokumentasi terkait (resources/views/app/docs/).
 
 ## Acceptance Criteria
 
-### UI Layout Simplification
-- [ ] Seluruh file views di `resources/views/app/feedback` dan `resources/views/app/finance` tidak memiliki elemen tombol atau card yang tumpang tindih (zero overlapping elements)
-- [ ] Tombol tindakan pada setiap halaman modul memiliki hierarki visual yang terstruktur (aksi primer, sekunder, dan destruktif terbedakan dengan rapi)
+### UI Layout & Usability
+- [ ] Halaman views pada modul HRM, Import, dan Inventory tidak lagi memiliki layout berantakan, tombol tumpang tindih, atau elemen yang saling menutupi.
+- [ ] Tata letak form, tabel, dan tombol aksi tertata secara konsisten dan responsif di seluruh resolusi layar.
 
-### Authorization & RBAC
-- [ ] Seluruh method controller untuk modul Feedback dan Finance memverifikasi permission pada level controller (menggunakan middleware permission atau authorization gates/policies)
-- [ ] Pengguna tanpa hak akses yang sesuai (unauthorized) menerima respons 403 Forbidden ketika mencoba mengakses aksi pada modul Feedback dan Finance
-- [ ] Seluruh nama permission yang digunakan terdaftar pada seeder atau konfigurasi hak akses aplikasi
+### Access Control & Security
+- [ ] Controller yang menangani modul HRM, Import, dan Inventory memiliki deklarasi guard permission RBAC yang lengkap pada setiap aksi.
+- [ ] Seluruh permission terkait terdaftar pada seeder/tabel permission, dan pengujian akses tidak menghasilkan otorisasi yang bocor atau 403/500 tidak semestinya bagi pengguna berhak.
 
-### Business Owner Documentation
-- [ ] Dokumen panduan pengguna untuk modul Feedback dan Finance tersedia di direktori dokumentasi proyek (`resources/views/app/docs/` atau `docs/`)
-- [ ] Dokumen memuat alur kerja praktis dan instruksi penggunaan modul Feedback dan Finance yang ditulis dari sudut pandang Business Owner
-
-### Code Quality & Verification
-- [ ] Semua file PHP dan Blade yang dimodifikasi atau dibuat lolos pemeriksaan sintaks (`php -l`) tanpa error
-- [ ] Perintah `php artisan route:list` berjalan sukses tanpa error rute rusak
-
-
-## Follow-up — 2026-11-08T14:18:28Z
-
-Server telah di-restart. Silakan lanjutkan pengerjaan tugas Feedback dan Finance modules production readiness sesuai rencana (Phase 0 Discovery -> Phase 1 -> Milestones). Lakukan pengecekan status dan resume/re-dispatch subagents sesuai kebutuhan.
+### Documentation & Verification
+- [ ] Dokumen panduan Business Owner untuk modul HRM, Import, dan Inventory tersedia di resources/views/app/docs/ dengan penjelasan alur kerja yang jelas.
+- [ ] Pemeriksaan sintaks Blade dan eksekusi test suite Laravel (`php artisan test`) berhasil tanpa error fatal atau regresi.

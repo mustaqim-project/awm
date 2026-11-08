@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-12" x-data="{
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
     showCreateModal: false,
     receiveModalOpen: false,
     receiveTarget: { id: null, number: '' },
@@ -146,7 +146,7 @@
                             <div class="flex items-center justify-end gap-1">
                                 @if($tr->status !== 'received')
                                     @if(\App\Support\Context::hasPermission('inventory.manage'))
-                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.konfirmasi_terima') }}" aria-label="{{ __('inventory.konfirmasi_terima_2') }}">
+                                    <button type="button" @click="openReceive('{{ $tr->id }}', '{{ $tr->transfer_number }}')" class="w-10 h-10 min-w-[40px] min-h-[40px] sm:w-9 sm:h-9 rounded-[9px] bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('inventory.konfirmasi_terima') }}" aria-label="{{ __('inventory.konfirmasi_terima_2') }}">
                                         <i data-lucide="check" class="w-4 h-4"></i>
                                     </button>
                                     <form id="form-receive-{{ $tr->id }}" action="{{ route('inventory.transfers.receive', $tr->id) }}" method="POST" class="hidden">
@@ -154,7 +154,7 @@
                                     </form>
                                     @endif
                                 @else
-                                    <span class="inline-flex items-center justify-center w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="{{ __('common.completed') }}">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px] sm:w-9 sm:h-9 rounded-[9px] text-[#34C759] bg-[#34C759]/10" title="{{ __('common.completed') }}">
                                         <i data-lucide="check-check" class="w-4 h-4"></i>
                                     </span>
                                 @endif

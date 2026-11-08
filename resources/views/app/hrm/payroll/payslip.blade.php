@@ -88,28 +88,28 @@
 
             <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto">
                 @if(!$isPublicMode)
-                    <a href="{{ route('hrm.payrolls.show', $item->payroll_id) }}" class="h-10 sm:h-9 min-h-[40px] px-3.5 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[12.5px] sm:text-[12px] font-bold active:scale-[0.97] transition-all text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 inline-flex items-center justify-center gap-1.5 cursor-pointer" aria-label="{{ __('hrm.batch_monthly') }}">
+                    <a href="{{ route('hrm.payrolls.show', $item->payroll_id) }}" class="min-h-[44px] h-11 px-4 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[13px] sm:text-[12.5px] font-bold active:scale-[0.97] transition-all text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 inline-flex items-center justify-center gap-1.5 cursor-pointer" aria-label="{{ __('hrm.batch_monthly') }}">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
                         <span>{{ __('hrm.batch_monthly') }}</span>
                     </a>
                 @endif
 
-                <button type="button" onclick="window.print()" class="h-10 sm:h-9 min-h-[40px] px-3.5 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[12.5px] sm:text-[12px] font-bold flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all border border-slate-200 dark:border-slate-700 cursor-pointer" aria-label="{{ __('hrm.payslip_print_a4') }}">
+                <button type="button" onclick="window.print()" class="min-h-[44px] h-11 px-4 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[13px] sm:text-[12.5px] font-bold flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all border border-slate-200 dark:border-slate-700 cursor-pointer" aria-label="{{ __('hrm.payslip_print_a4') }}">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
                     <span>{{ __('hrm.payslip_print_a4') }}</span>
                 </button>
 
-                <button id="btnPdf" type="button" onclick="downloadPayslipPDF()" class="h-10 sm:h-9 min-h-[40px] px-3.5 rounded-[11px] bg-black dark:bg-white text-white dark:text-black hover:bg-black/90 dark:hover:bg-white/90 text-[12.5px] sm:text-[12px] font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer" aria-label="{{ __('hrm.payslip_download_pdf') }}">
+                <button id="btnPdf" type="button" onclick="downloadPayslipPDF()" class="min-h-[44px] h-11 px-4 rounded-[11px] bg-black dark:bg-white text-white dark:text-black hover:bg-black/90 dark:hover:bg-white/90 text-[13px] sm:text-[12.5px] font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer" aria-label="{{ __('hrm.payslip_download_pdf') }}">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                     <span>{{ __('hrm.payslip_download_pdf') }}</span>
                 </button>
 
-                <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="h-10 sm:h-9 min-h-[40px] px-3.5 rounded-[11px] bg-[#25D366] hover:bg-[#20bd5a] text-white text-[12.5px] sm:text-[12px] font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer" aria-label="{{ __('hrm.action_send_whatsapp') }}">
+                <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="min-h-[44px] h-11 px-4 rounded-[11px] bg-[#25D366] hover:bg-[#20bd5a] text-white text-[13px] sm:text-[12.5px] font-bold shadow-xs flex items-center justify-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer" aria-label="{{ __('hrm.action_send_whatsapp') }}">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                     <span>WhatsApp</span>
                 </a>
 
-                <button type="button" onclick="copySlipSummary()" class="col-span-2 sm:col-span-1 h-10 sm:h-9 min-h-[40px] px-3 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[12.5px] sm:text-[12px] font-semibold flex items-center justify-center gap-1 active:scale-[0.97] transition-all border border-slate-200 dark:border-slate-700 cursor-pointer" title="{{ __('hrm.payslip_copy_summary') }}" aria-label="{{ __('hrm.payslip_copy_summary') }}">
+                <button type="button" onclick="copySlipSummary()" class="col-span-2 sm:col-span-1 min-h-[44px] h-11 px-4 rounded-[11px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[13px] sm:text-[12.5px] font-semibold flex items-center justify-center gap-1 active:scale-[0.97] transition-all border border-slate-200 dark:border-slate-700 cursor-pointer" title="{{ __('hrm.payslip_copy_summary') }}" aria-label="{{ __('hrm.payslip_copy_summary') }}">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     <span id="copyBtnText">{{ __('hrm.payslip_copy_summary') }}</span>
                 </button>

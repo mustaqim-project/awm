@@ -72,17 +72,19 @@
                                         </a>
 
                                         @if($p->status === 'draft')
-                                            <form method="POST" action="{{ route('hrm.payrolls.destroy', $p->id) }}"
-                                                onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_payroll')) }}')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
-                                                    title="{{ __('hrm.tooltip_delete_draft') }}"
-                                                    aria-label="{{ __('hrm.tooltip_delete_draft') }}">
-                                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                                </button>
-                                            </form>
+                                            @if(\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
+                                                <form method="POST" action="{{ route('hrm.payrolls.destroy', $p->id) }}"
+                                                    onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_payroll')) }}')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0"
+                                                        title="{{ __('hrm.tooltip_delete_draft') }}"
+                                                        aria-label="{{ __('hrm.tooltip_delete_draft') }}">
+                                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         @endif
                                     </div>
                                 </td>
@@ -168,17 +170,19 @@
                             </a>
 
                             @if($p->status === 'draft')
-                                <form method="POST" action="{{ route('hrm.payrolls.destroy', $p->id) }}"
-                                    onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_payroll')) }}')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="h-11 w-11 rounded-[12px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all flex items-center justify-center cursor-pointer shrink-0"
-                                        title="{{ __('hrm.tooltip_delete_draft') }}"
-                                        aria-label="{{ __('hrm.tooltip_delete_draft') }}">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
-                                </form>
+                                @if(\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
+                                    <form method="POST" action="{{ route('hrm.payrolls.destroy', $p->id) }}"
+                                        onsubmit="return confirm('{{ addslashes(__('hrm.confirm_delete_payroll')) }}')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="h-11 w-11 rounded-[12px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition-all flex items-center justify-center cursor-pointer shrink-0"
+                                            title="{{ __('hrm.tooltip_delete_draft') }}"
+                                            aria-label="{{ __('hrm.tooltip_delete_draft') }}">
+                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             @endif
                         </div>
                     </div>

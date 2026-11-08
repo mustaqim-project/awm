@@ -375,7 +375,7 @@
         </div>
 
         <!-- Sticky Floating Action Bar at Bottom -->
-        <div class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-8 z-40 max-w-xl mx-auto sm:mx-0">
+        <div class="fixed bottom-[calc(68px+env(safe-area-inset-bottom))] lg:bottom-4 left-4 right-4 sm:left-auto sm:right-8 z-40 max-w-xl mx-auto sm:mx-0">
             <div class="p-3 sm:p-3.5 rounded-[18px] bg-white/90 dark:bg-[#1C1C1E]/90 border border-black/10 dark:border-white/15 shadow-[0_12px_32px_rgba(0,0,0,0.18)] backdrop-blur-xl flex items-center justify-between gap-3">
                 <div class="pl-2 hidden sm:block">
                     <span class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50 block">{{ __('hrm.ready_for_calculation') }}</span>
