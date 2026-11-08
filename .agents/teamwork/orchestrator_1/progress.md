@@ -1,6 +1,6 @@
 # Progress — Orchestrator 1
 
-Last visited: 2026-11-08T23:36:30Z
+Last visited: 2026-11-08T23:38:55Z
 
 ## Iteration Status
 Current iteration: 1 / 32
@@ -13,7 +13,7 @@ Mission 2: Invoices & Labor-Machines Production Readiness Audit and Enhancement
   - [x] explorer_survey_3: Module Audit, Workflow & Documentation Survey [COMPLETED - handoff delivered]
 - [x] Phase 1: Compile PROJECT.md Feature Inventory & Milestones
 - [ ] Phase 2: Milestone Execution Loop
-  - [ ] M1: Controller-Level RBAC, Tenant Security & Clean Routing [GATE CHECK IN PROGRESS: 2 Reviewers, 2 Challengers, 1 Auditor]
+  - [ ] M1: Controller-Level RBAC, Tenant Security & Clean Routing [GATE CHECK IN PROGRESS: Reviewers running route/syntax checks, Challengers executing empirical tests, Auditor inspecting git diffs]
   - [ ] M2: UI Simplification, Layout Ergonomics, Syntax Fix & View Auth Gating [PLANNED]
   - [ ] M3: Business Owner User Documentation [PLANNED]
   - [ ] M4: Module Production Readiness Audit & Verification [PLANNED]
