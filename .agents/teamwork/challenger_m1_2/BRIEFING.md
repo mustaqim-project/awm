@@ -1,51 +1,53 @@
-# BRIEFING — 2026-11-07T07:47:00Z
+# BRIEFING — 2026-11-09T06:37:00Z
 
 ## Mission
-Adversarially verify route resolution, legacy fallback routing (/ai/*), seeder idempotency (RbacSeeder), and unauthenticated guest edge cases for Milestone M1 (RBAC & Controller Security).
+Empirically stress-test view compilation and costing/invoice engine integrity:
+1. Verify view compilation (`php artisan view:cache`, `php artisan view:clear`) for `resources/views/app/labor-machines/index.blade.php`.
+2. Verify route caching and route resolution for labor-machines and invoices routes.
+3. Verify costing engine execution (`LaborAndMachineEngineTest.php`, `InvoiceModuleAuditTest.php`).
+4. Adversarially verify permission rejection for unauthorized users without `labor_machines.manage` and unauthenticated guest requests.
 
 ## 🔒 My Identity
 - Archetype: empirical-challenger
 - Roles: critic, specialist
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2
-- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Milestone: M1 (RBAC & Controller Security)
+- Working directory: C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\
+- Original parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Milestone: M1 (Labor-Machines & Invoices Controller RBAC / View Compilation / Integrity)
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation/source code
 - Must execute tests and verification empirically (tests, tinker, route lists, scripts)
-- Output handoff report to c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\handoff.md
+- Output handoff report to C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\handoff.md
 - Explicit verdict required: APPROVE or REQUEST_CHANGES
 - Send message back to parent via send_message
 
 ## Current Parent
-- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Updated: 2026-11-07T07:47:00Z
+- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Updated: 2026-11-09T06:37:00Z
 
 ## Review Scope
 - **Files to review**:
+  - `resources/views/app/labor-machines/index.blade.php`
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`
   - `routes/owner.php`
-  - `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
-  - `app/Http/Controllers/Web/Ai/PosAiWebController.php`
-  - `database/seeders/RbacSeeder.php`
-  - Worker M1 handoff report and test results
-- **Interface contracts**: PROJECT.md, ORIGINAL_REQUEST.md
-- **Review criteria**: Controller RBAC enforcement on legacy alias routes, seeder idempotency without relation drop or duplication, unauthenticated guest redirection (no 500 error).
+  - `tests/Feature/LaborAndMachineEngineTest.php`
+  - `tests/Feature/InvoiceModuleAuditTest.php`
+- **Interface contracts**: PROJECT.md, ORIGINAL_REQUEST.md, worker_m1/handoff.md
+- **Review criteria**: Blade view compilation without error, route resolution after cache/clear, costing engine test pass, adversarial unauthorized and unauthenticated request interception.
 
 ## Attack Surface
 - **Hypotheses tested**:
-  1. Legacy `/ai/*` routes might bypass Controller-level RBAC middleware because route-level `require.permission` was removed from `routes/owner.php`. -> DISPROVEN. Laravel 11's `HasMiddleware` applies controller middleware to all routes routing to that controller, including legacy alias routes.
-  2. Running `RbacSeeder` multiple times might duplicate permissions in `permissions` or detach/corrupt role-permission relations. -> DISPROVEN. Tested across 3 consecutive runs; permission count (208), role count (15), and pivot count (611) remained identical with 0 duplicates.
-  3. Unauthenticated guest hitting `/cooca-ai/*` might bypass auth or trigger a 500 error due to uninitialized `Context` or null user. -> DISPROVEN. Tested across 56 endpoints (112 test cases: HTML + JSON); 100% intercepted (HTML redirected to login, JSON returned 401), 0 500 errors.
-- **Vulnerabilities found**: None. System is resilient and robust.
-- **Untested angles**: None within M1 scope.
+  1. Blade view `labor-machines/index.blade.php` might have unmatched `@can` / `@endcan` or `@else` syntax breaking view compilation under `php artisan view:cache`.
+  2. Route clearance or route caching might fail or fail to resolve `labor-rates.*`, `machines.*`, or `invoices.*` routes.
+  3. Costing engine tests (`LaborAndMachineEngineTest.php`) or invoice tests (`InvoiceModuleAuditTest.php`) might fail due to controller RBAC or view changes.
+  4. Users without `labor_machines.manage` might bypass RBAC and modify labor rates or machines.
+  5. Unauthenticated guest requests might bypass auth or cause 500 server crashes instead of 401/302 redirects.
+- **Vulnerabilities found**: [TBD]
+- **Untested angles**: [TBD]
 
 ## Key Decisions Made
-- Executed empirical test suites covering:
-  - 17 legacy route authorization tests (32 assertions)
-  - 112 unauthenticated guest requests (280 assertions)
-  - 3 consecutive `RbacSeeder` database executions measuring pivot and duplicate metrics
-- All tests passed with zero failures. Declaring verdict: APPROVE.
+- [TBD]
 
 ## Artifact Index
 - `DISPATCH.md` — Inbound instructions

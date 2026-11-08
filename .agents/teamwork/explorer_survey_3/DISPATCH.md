@@ -27,3 +27,35 @@ OUTPUT:
 Write your full investigation report to:
 c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md
 When done, send a message to your parent with a concise summary and confirm handoff.md is ready.
+
+
+## 2026-11-08T22:59:05Z
+You are explorer_survey_3.
+Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\
+The workspace root is: C:\laragon\www\cooca_core
+
+MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
+
+Also read skill guidelines:
+- Module Audit: C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-module-audit\SKILL.md
+- Business Owner Docs: C:\Users\Ulfah Ramadhani\.gemini\config\skills\business-owner-doc-generator\SKILL.md
+
+TASK:
+Perform a comprehensive read-only survey of Module Audit readiness and Documentation structure for `invoices` and `labor-machines`:
+1. Documentation Architecture Survey:
+   - Investigate existing documentation location in `resources/views/app/docs/` or docs routes/controllers.
+   - Examine existing doc formats, conventions, navigation links, and how Business Owner user guidelines are integrated in the app.
+   - Determine exact target paths and routing for invoices and labor-machines business owner docs.
+2. Models, Relationships & Database Schema Survey:
+   - Identify models associated with invoices (e.g. `Invoice`, `InvoiceItem`, `Customer`, `Order`, etc.) and labor-machines (e.g. `LaborMachine`, `Machine`, `Operator`, `Production`, etc.).
+   - Check database migrations, foreign keys, soft deletes, and relationships.
+   - Trace typical workflows (e.g. invoice generation, status transitions unpaid -> paid -> cancelled, labor machine assignment/status/tracking).
+3. Production Readiness & Static Health:
+   - Check if existing tests exist in `tests/Feature` or `tests/Unit` for invoices and labor-machines.
+   - Identify potential edge cases, missing validation, unhandled statuses, or zero-feature-leakage considerations.
+
+Deliverable:
+Write a thorough, structured handoff report to:
+`C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\handoff.md`
+Update your progress in `C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\progress.md`.
+When finished, send a message to the orchestrator with a summary and confirmation of the report path.

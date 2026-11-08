@@ -1,70 +1,69 @@
-# BRIEFING — 2026-11-07T07:29:30Z
+# BRIEFING — 2026-11-09T06:33:30Z
 
 ## Mission
-Implement Controller-Level RBAC for AI Modules (AiCompanyWebController & PosAiWebController), expand RbacSeeder with `ai.approve` and `ai.manage`, and clean up route-level permissions in routes/owner.php while preserving module entitlements.
+Execute Milestone 1: Implement Controller-Level RBAC and IDOR Tenant Isolation in `LaborMachineWebController.php`, clean routing in `routes/owner.php`, and synchronize permission checks in `resources/views/app/labor-machines/index.blade.php`.
 
 ## 🔒 My Identity
-- Archetype: worker
+- Archetype: worker_m1
 - Roles: implementer, qa, specialist
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\worker_m1
-- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Milestone: M1 (RBAC Implementation Worker)
+- Working directory: C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\
+- Original parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Milestone: Milestone 1 (M1: Controller-Level RBAC & Tenant Security)
 
 ## 🔒 Key Constraints
-- Exclusive file ownership:
-  - `database/seeders/RbacSeeder.php`
-  - `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
-  - `app/Http/Controllers/Web/Ai/PosAiWebController.php`
-  - `routes/owner.php`
-- DO NOT edit any other files.
-- Real genuine implementation, no dummy/facade or hardcoded outputs.
-- Maintain existing `entitlement:ai` at route-level.
-- Implement Laravel 11 `Illuminate\Routing\Controllers\HasMiddleware` and `public static function middleware(): array` with `Middleware` objects.
+- Exclusive write ownership:
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`
+  - `routes/owner.php` (only lines pertaining to labor-machines and invoices routing)
+  - `resources/views/app/labor-machines/index.blade.php` (permission directives: replace costing.manage with labor_machines.manage)
+- Do not modify files outside exclusive write ownership.
+- Genuine implementation only: no dummy code, no hardcoded test results.
 
 ## Current Parent
-- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Updated: 2026-11-07T07:29:30Z
+- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Updated: 2026-11-09T06:33:30Z
 
 ## Task Summary
-- **What to build**:
-  - Add `ai.approve` and `ai.manage` permissions in RbacSeeder.php.
-  - Assign `ai.approve` to `manager` and `admin`; `ai.manage` to `admin` (`owner` automatically receives all slugs). Ensure `cashier`, `warehouse`, etc. retain `ai.access`.
-  - Implement `HasMiddleware` on `AiCompanyWebController` and `PosAiWebController` with granular method protection.
-  - Remove route-level `require.permission:ai.access` from `routes/owner.php` (POS AI, `cooca-ai` prefix, legacy `ai` prefix) while preserving `entitlement:ai`.
+- **What to build**: Controller-level RBAC (`HasMiddleware`), IDOR defense (`abort_unless`), Audit logging, clean routing in `routes/owner.php`, permission synchronization in Blade index.
 - **Success criteria**:
-  - `php -l` on all 4 files passes with 0 syntax errors.
-  - `php artisan db:seed --class=RbacSeeder --force` executes cleanly and syncs all permissions.
-  - `php artisan route:list` confirms controller middleware binding and absence of duplicate route-level permissions.
-  - `php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php` passes with 100% success.
-- **Interface contracts**: PROJECT.md, Explorer 2 handoff.md, laravel-permission skill.
+  - `LaborMachineWebController` implements `HasMiddleware` with exact middleware mappings.
+  - IDOR protection verifies `$business->id` match for labor rates & machines.
+  - AuditLog recorded on mutations.
+  - Routes in `routes/owner.php` streamlined by dropping redundant route-level `require.permission` while preserving modules, prefixes, and route names.
+  - View permission checks in `labor-machines/index.blade.php` use `labor_machines.manage`.
+  - All PHP files pass `php -l`.
+  - Tests pass with zero regressions.
+- **Interface contracts**: `PROJECT.md § Interface Contracts`
+- **Code layout**: `PROJECT.md § Code Layout`
 
 ## Key Decisions Made
-- `AiCompanyWebController`: Grouped all 28 action methods into `ai.access` (17 methods), `ai.approve` (3 methods), and `ai.manage` (8 methods) via Laravel 11 `HasMiddleware`.
-- `PosAiWebController`: Grouped 3 methods into `ai.access` (`index`, `ask`) and `ai.approve` (`executeAction`).
-- `routes/owner.php`: Removed redundant route-level `require.permission:ai.access` from POS AI, `cooca-ai` group, and `ai` group, keeping `entitlement:ai` on routes.
-- `RbacSeeder.php`: Seeded `ai.approve` and `ai.manage`, assigned to `manager`, `admin`, and `owner`.
+- Implemented `HasMiddleware` on `LaborMachineWebController` mapping `labor_machines.view` to `index` and `labor_machines.manage` to all mutations.
+- Enforced tenant isolation via `abort_unless($record->business_id === $business->id, 403)`.
+- Scoped `index()` queries strictly to tenant: `LaborRate::where('business_id', $business->id)->latest()->get()`, `Machine::where('business_id', $business->id)->latest()->get()`.
+- Emitted explicit `AuditLog` records for `created`, `updated`, and `deleted` actions on both `LaborRate` and `Machine`.
+- Streamlined `routes/owner.php` by encapsulating permissions into controllers while retaining `module:labor_machines` route group.
+- Upgraded view permission guards in `labor-machines/index.blade.php` to `@can('labor_machines.manage')` / `Context::hasPermission('labor_machines.manage')`.
 
-## Artifact Index
-- DISPATCH.md — Dispatch instructions from parent
-- BRIEFING.md — Worker briefing and state tracking
-- progress.md — Real-time progress and heartbeat
-- handoff.md — Final handoff report
+## Loaded Skills
+- **Source**: `C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md`
+- **Local copy**: `C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\SKILL_laravel_permission.md`
+- **Core methodology**: Controller-level RBAC with `HasMiddleware`, Clean Routing, IDOR prevention with tenant scoping, UI permission synchronization.
 
 ## Change Tracker
 - **Files modified**:
-  - `database/seeders/RbacSeeder.php`: Added `ai.approve` & `ai.manage` to `permissionMatrix()`, mapped to roles in `roleDefinitions()`.
-  - `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`: Implemented `HasMiddleware`, added `middleware()` returning Middleware objects for all 28 methods.
-  - `app/Http/Controllers/Web/Ai/PosAiWebController.php`: Implemented `HasMiddleware`, added `middleware()` returning Middleware objects for `index`, `ask`, and `executeAction`.
-  - `routes/owner.php`: Cleaned up route definitions by removing route-level `require.permission:ai.access` while preserving `entitlement:ai`.
-- **Build status**: All checks and tests passed (14 tests, 70 assertions).
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`: Implemented `HasMiddleware`, tenant scoping in `index`, IDOR abort checks, and full AuditLog logging on mutations.
+  - `routes/owner.php`: Removed redundant route-level permission middleware on invoices and labor-machines routes; unified labor-machines under `module:labor_machines` group.
+  - `resources/views/app/labor-machines/index.blade.php`: Replaced `costing.manage` with `@can('labor_machines.manage')` and `Context::hasPermission('labor_machines.manage')`.
+- **Build status**: Pass (`php -l` clean on all 3 files; `LaborAndMachineEngineTest` 4/4 passed; `InvoiceModuleAuditTest` 9/9 passed; `InvoiceDraftEditAndPartiesTest` 4/4 passed).
 - **Pending issues**: None.
 
 ## Quality Status
-- **Build/test result**: Pass (14/14 tests in AiCompanyWorkflowTest + PosAiEngineTest, 22/22 tests in AiStudioWebControllerTest).
-- **Lint status**: Clean (`php -l` 0 errors on all 4 files).
-- **Tests added/modified**: Verified against existing feature test suites.
+- **Build/test result**: All passing (17 tests, 71 assertions, 0 failures).
+- **Lint status**: 0 syntax errors (`php -l` reports no syntax errors).
+- **Tests added/modified**: Existing feature tests verified against controller and route changes.
 
-## Loaded Skills
-- **Source**: C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
-- **Local copy**: C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
-- **Core methodology**: Controller-Level RBAC using HasMiddleware interface and Middleware objects, registering permissions in RbacSeeder with matrix & role definitions.
+## Artifact Index
+- `DISPATCH.md` — Worker assignment and scope
+- `SKILL_laravel_permission.md` — Copy of RBAC skill reference
+- `BRIEFING.md` — Persistent situational awareness
+- `progress.md` — Liveness and execution heartbeat
+- `handoff.md` — Final deliverable report

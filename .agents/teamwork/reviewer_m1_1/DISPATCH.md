@@ -1,32 +1,31 @@
-## 2026-11-07T07:31:16Z
-You are Reviewer 1 for Milestone M1 (RBAC & Controller Security).
-Your Working Directory is: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1
-Your parent is: e2aae656-229b-42bb-a7be-8273bdd8a984
+## 2026-11-08T23:35:16Z
+You are reviewer_m1_1.
+Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1\
+The workspace root is: C:\laragon\www\cooca_core
 
-MANDATORY INSTRUCTIONS:
-1. You MUST read the Original Request file first:
-   c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-2. Read the Project Plan:
-   c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
-3. Read Worker M1's handoff report:
-   c:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
-4. Relevant skill:
-   C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
+MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
+Also read:
+- C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
+- C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
+- Skill reference: C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
 
-TASK OBJECTIVE:
-Objectively and rigorously review the changes made by Worker M1 to:
-- database/seeders/RbacSeeder.php
-- app/Http/Controllers/Web/Ai/AiCompanyWebController.php
-- app/Http/Controllers/Web/Ai/PosAiWebController.php
-- routes/owner.php
+TASK:
+Objectively and rigorously review the changes implemented by worker_m1 for Milestone 1:
+1. Examine `app\Http\Controllers\Web\LaborMachineWebController.php`:
+   - Does it correctly implement `Illuminate\Routing\Controllers\HasMiddleware`?
+   - Is `middleware()` defined with `require.permission:labor_machines.view` on `index` and `require.permission:labor_machines.manage` on all mutation methods (`storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, `destroyMachine`)?
+   - Are `index()` queries scoped to `$business->id`?
+   - Are IDOR protections (`abort_unless($record->business_id === $business->id, 403)`) present and strictly applied before updating or deleting?
+   - Is `AuditLog` dispatched properly?
+2. Examine `routes\owner.php`:
+   - Is Clean Routing achieved without breaking route names, URLs, or middleware groups (`module:labor_machines`, `module:sales`)?
+3. Examine `resources\views\app\labor-machines\index.blade.php`:
+   - Are action buttons correctly protected with `@can('labor_machines.manage')`?
+4. Verification:
+   - Run `php -l` on modified files.
+   - Run tests: `php artisan test tests/Feature/LaborAndMachineEngineTest.php` and `php artisan test tests/Feature/InvoiceModuleAuditTest.php`.
 
-REVIEW CRITERIA:
-1. Correctness: Are `ai.approve` and `ai.manage` properly declared in `permissionMatrix()` and synced to appropriate roles in `roleDefinitions()`?
-2. Controller-Level RBAC: Does `AiCompanyWebController` and `PosAiWebController` correctly implement `HasMiddleware` with granular method mapping?
-3. Clean Routing: Is `require.permission:ai.access` removed from `routes/owner.php` while `entitlement:ai` is preserved?
-4. Verification: Run syntax checks (`php -l`), seeder (`php artisan db:seed --class=RbacSeeder --force`), and feature tests (`php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php`).
-
-OUTPUT:
-Write your review report to `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1\handoff.md`.
-Explicitly declare your verdict: `APPROVE` or `REQUEST_CHANGES`.
-Send a message to parent with your verdict and summary.
+VERDICT:
+Your handoff MUST explicitly issue a verdict: **APPROVE** or **REQUEST_CHANGES**.
+Write your report to: `C:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1\handoff.md`.
+Update `progress.md` and message the orchestrator when finished.

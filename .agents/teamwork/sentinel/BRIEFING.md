@@ -1,37 +1,35 @@
-# BRIEFING — 2026-11-08T20:51:10Z
+# BRIEFING — 2026-11-08T22:57:00Z
 
 ## Mission
-Project Sentinel supervising execution of HRM, Import, and Inventory module refactoring, RBAC enforcement, audit, and documentation.
+Orchestrate repairs, RBAC enforcement, production readiness audit, and documentation for invoices and labor-machines modules in COOCA.
 
 ## 🔒 My Identity
 - Archetype: sentinel
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\sentinel\
-- Orchestrator: 17ad45ac-9d4d-4f53-8d10-684c6e458faa
-- Victory Auditor: 82d88dba-3536-483a-98db-280cb6c8e903
+- Working directory: C:\laragon\www\cooca_core\.agents\teamwork\sentinel
+- Orchestrator: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints
 - No technical decisions — relay only
 - Victory Audit is MANDATORY before reporting completion
-- R1: UI layout simplification and decluttering across hrm, import, inventory views
-- R2: Controller-level RBAC enforcement and seeder registration
-- R3: Module audit & production readiness
-- R4: Business Owner documentation in resources/views/app/docs/
+- R1: UI Simplification and no-overlap layout
+- R2: Controller-Level RBAC and permission enforcement
+- R3: Module production readiness audit
+- R4: Business Owner user documentation
 
 ## User Context
-- **Last user request**: Approved task prompt for HRM, Import, Inventory refactoring & audit
+- **Last user request**: Approved task prompt received
 - **Pending clarifications**: none
-- **Delivered results**: Orchestrator claims 100% completion; Independent Victory Auditor dispatched
+- **Delivered results**: none
 
 ## Project Status
-- **Phase**: auditing
-- **Routing Decision**: General path -> teamwork_orchestrator (ID: 17ad45ac-9d4d-4f53-8d10-684c6e458faa)
+- **Phase**: in progress
+- **Route**: General -> teamwork_orchestrator (multi-part full-stack Laravel engineering and audit task)
 
 ## Victory Audit Status
-- **Triggered**: yes
+- **Triggered**: no
 - **Verdict**: pending
 - **Retry count**: 0
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user request record
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\handoff.md — Orchestrator completion report
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md — Quality gate evaluation matrix
+- C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative task record

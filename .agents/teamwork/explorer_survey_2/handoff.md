@@ -1,425 +1,436 @@
-# Handoff Report: AI & AI Studio Routes, Controllers & RBAC Audit
+# Handoff Report: Backend Controllers, Routes, and RBAC Authorization Survey
 
-**Date**: 2026-11-07  
-**Agent**: Explorer 2 (Controllers, Routes & RBAC)  
-**Target Repository**: `c:\laragon\www\cooca_core`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2`  
-**Parent Agent**: `e2aae656-229b-42bb-a7be-8273bdd8a984`
+- **Survey Target**: `invoices` and `labor-machines` modules
+- **Surveyor**: `explorer_survey_2`
+- **Working Directory**: `C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\`
+- **Date**: 2026-11-08T23:12:00Z
+- **Reference Standard**: [`laravel-permission/SKILL.md`](file:///c:/Users/Ulfah%20Ramadhani/.gemini/config/skills/laravel-permission/SKILL.md) & [ORIGINAL_REQUEST.md](file:///c:/laragon/www/cooca_core/.agents/teamwork/ORIGINAL_REQUEST.md)
 
 ---
 
 ## 1. Observation
 
-### 1.1 Route Mapping & Route-Level Middleware
-Direct inspection of `routes/owner.php` and `routes/admin.php` revealed all route groups governing AI and AI Studio:
+### 1.1 Relevant Controllers Identified
 
-#### A. AI Digital Company / AI Office (`routes/owner.php:638-702`)
-Route group is currently guarded at the route level with:
-`Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('cooca-ai')->name('cooca-ai.')->group(...)`
-- `GET /cooca-ai` (`cooca-ai.index`) -> `AiCompanyWebController@lobby`
-- `GET /cooca-ai/office` (`cooca-ai.office.view`) -> `AiCompanyWebController@lobby`
-- `GET /cooca-ai/office/executive` (`cooca-ai.office.executive`) -> `AiCompanyWebController@executiveOffice`
-- `GET /cooca-ai/office/operations` (`cooca-ai.office.operations`) -> `AiCompanyWebController@operationsOffice`
-- `GET /cooca-ai/office/growth` (`cooca-ai.office.growth`) -> `AiCompanyWebController@growthOffice`
-- `POST /cooca-ai/ask` (`cooca-ai.ask`) -> `AiCompanyWebController@ask`
-- `POST /cooca-ai/daily-check` (`cooca-ai.daily-check`) -> `AiCompanyWebController@triggerDailyCheck`
-- `POST /cooca-ai/teamwork` (`cooca-ai.teamwork`) -> `AiCompanyWebController@teamwork`
-- `POST /cooca-ai/goal` (`cooca-ai.goal`) -> `AiCompanyWebController@goal`
-- `POST /cooca-ai/grill-me` (`cooca-ai.grill-me`) -> `AiCompanyWebController@grillMe`
-- `POST /cooca-ai/boost` (`cooca-ai.boost`) -> `AiCompanyWebController@boost`
-- `POST /cooca-ai/schedule` (`cooca-ai.schedule`) -> `AiCompanyWebController@schedule`
-- `GET /cooca-ai/actions` (`cooca-ai.actions`) -> `AiCompanyWebController@actions`
-- `POST /cooca-ai/actions/{proposal}/approve` (`cooca-ai.actions.approve`) -> `AiCompanyWebController@approveAction`
-- `POST /cooca-ai/actions/{proposal}/revise` (`cooca-ai.actions.revise`) -> `AiCompanyWebController@reviseAction`
-- `POST /cooca-ai/actions/{proposal}/reject` (`cooca-ai.actions.reject`) -> `AiCompanyWebController@rejectAction`
-- `GET /cooca-ai/history` (`cooca-ai.history`) -> `AiCompanyWebController@history`
-- `GET /cooca-ai/providers` (`cooca-ai.providers`) -> `AiCompanyWebController@providers`
-- `POST /cooca-ai/providers` (`cooca-ai.providers.store`) -> `AiCompanyWebController@storeProvider`
-- `POST /cooca-ai/providers/test` (`cooca-ai.providers.test`) -> `AiCompanyWebController@testProvider`
-- `POST /cooca-ai/providers/detect-models` (`cooca-ai.providers.detect-models`) -> `AiCompanyWebController@detectModels`
-- `GET /cooca-ai/agents/avatars` (`cooca-ai.agents.avatars`) -> `AiCompanyWebController@getAgentAvatars`
-- `POST /cooca-ai/agents/{role}/avatar` (`cooca-ai.agents.avatar.update`) -> `AiCompanyWebController@updateAgentAvatar`
-- `GET /cooca-ai/live-metrics` (`cooca-ai.live-metrics`) -> `AiCompanyWebController@liveMetrics`
-- `GET /cooca-ai/rules` (`cooca-ai.rules.index`) -> `AiCompanyWebController@getRules`
-- `POST /cooca-ai/rules` (`cooca-ai.rules.store`) -> `AiCompanyWebController@storeRule`
-- `PATCH /cooca-ai/rules/{rule}/toggle` (`cooca-ai.rules.toggle`) -> `AiCompanyWebController@toggleRule`
-- `DELETE /cooca-ai/rules/{rule}` (`cooca-ai.rules.destroy`) -> `AiCompanyWebController@deleteRule`
-- Legacy 301 redirects and POST aliases are declared at `routes/owner.php:675-702` under `/ai/*`.
-- Guardrail routes for Social Media Inbox (`routes/owner.php:1002-1005`) also route to `AiCompanyWebController@getRules`, `@storeRule`, `@toggleRule`, `@deleteRule`.
+1. **Invoices Module**:
+   - **Primary Web Controller**: `App\Http\Controllers\Web\InvoiceWebController` (`app/Http/Controllers/Web/InvoiceWebController.php`, 678 lines).
+     - Handles customer commerce billing, invoices list, generation, PDF printing, Excel export, payment recording, confirmation (stock deduction & auto-journaling), term reminders, voiding, and draft deletion.
+   - **API Controller**: `App\Http\Controllers\Api\V1\Sales\InvoiceController` (`app/Http/Controllers/Api/V1/Sales/InvoiceController.php`, 238 lines).
+     - Handles REST API endpoints for sales invoices (`index`, `store`, `show`, `update`, `recordPayment`, `destroy`).
+   - **Purchasing Bills (Related Module)**: `App\Http\Controllers\Web\Purchasing\SupplierInvoiceWebController` (`app/Http/Controllers/Web/Purchasing/SupplierInvoiceWebController.php`) and API `App\Http\Controllers\Api\V1\Purchasing\SupplierInvoiceController`.
+     - Handles supplier/vendor invoices (bills) under the `purchasing.bills` permission.
+   - **Platform Admin (Backoffice)**: `App\Http\Controllers\Admin\AdminB2bController` (`app/Http/Controllers/Admin/AdminB2bController.php`).
+     - Handles platform-wide B2B invoices.
+   - **SaaS Subscription Invoices**: `App\Http\Controllers\Web\SubscriptionCheckoutWebController` (`invoice` action for platform subscription receipts).
 
-#### B. POS AI & Analytics (`routes/owner.php:631-636`)
-Route group is currently guarded at route level with:
-`Route::middleware('require.permission:ai.access')->group(...)`
-- `GET /pos/ai` (`pos.ai.index`) and `GET /cooca-ai/pos` (`cooca-ai.pos`) -> `PosAiWebController@index`
-- `POST /pos/ai/ask` (`pos.ai.ask`) -> `PosAiWebController@ask` (with route middleware `entitlement:ai`)
-- `POST /pos/ai/execute-action` (`pos.ai.execute-action`) -> `PosAiWebController@executeAction` (with route middleware `entitlement:ai`)
-
-#### C. AI Studio Projects & Generation (`routes/owner.php:704-729`)
-Route group has clean routing without route-level permission middleware:
-`Route::prefix('ai-studio')->name('ai-studio.')->group(...)`
-- `GET /ai-studio` (`ai-studio.index`) -> `OwnerAiStudioWebController@index`
-- `GET /ai-studio/create` (`ai-studio.create`) -> `OwnerAiStudioWebController@create`
-- `POST /ai-studio/projects` (`ai-studio.projects.store`) -> `OwnerAiStudioWebController@store`
-- `GET /ai-studio/projects/{project}` (`ai-studio.show`) -> `OwnerAiStudioWebController@show`
-- `DELETE /ai-studio/projects/{project}` (`ai-studio.projects.destroy`) -> `OwnerAiStudioWebController@destroy`
-- `POST /ai-studio/prompt/compile` (`ai-studio.prompt.compile`) -> `OwnerAiStudioWebController@compilePrompt`
-- `POST /ai-studio/generate` (`ai-studio.generate`) -> `OwnerAiStudioWebController@dispatchGeneration`
-- `GET /ai-studio/projects/{project}/generations/{generation}/status` (`ai-studio.generation.status`) -> `OwnerAiStudioWebController@generationStatus`
-- `POST /ai-studio/assets/{asset}/export-to-catalog` (`ai-studio.assets.export-to-catalog`) -> `OwnerAiStudioWebController@exportToCatalog`
-- `POST /ai-studio/assets/{asset}/export-to-social-media` (`ai-studio.assets.export-to-social-media`) -> `OwnerAiStudioWebController@exportToSocialMedia`
-- `POST /ai-studio/assets/{asset}/toggle-favorite` (`ai-studio.assets.toggle-favorite`) -> `OwnerAiStudioWebController@toggleFavoriteAsset`
-- `DELETE /ai-studio/assets/{asset}` (`ai-studio.assets.destroy`) -> `OwnerAiStudioWebController@destroyAsset`
-- `GET /ai-studio/credit-history` (`ai-studio.credit-history`) -> `OwnerAiStudioWebController@creditHistory`
-- `GET /ai-studio/topup-packages` (`ai-studio.topup.packages`) -> `OwnerAiStudioWebController@topupPackages`
-- `POST /ai-studio/topup` (`ai-studio.topup.order`) -> `OwnerAiStudioWebController@orderTopup`
-- `GET /ai-studio/topup/{payment}/status` (`ai-studio.topup.status`) -> `OwnerAiStudioWebController@checkTopupStatus`
-
-#### D. AI Studio Inspiration Library (`routes/owner.php:730-745`)
-- `GET /ai-studio/inspiration` (`ai-studio.inspiration.index`) -> `OwnerInspirationWebController@index`
-- `GET /ai-studio/inspiration/search` (`ai-studio.inspiration.search`) -> `OwnerInspirationWebController@search`
-- `GET /ai-studio/inspiration/categories` (`ai-studio.inspiration.categories`) -> `OwnerInspirationWebController@categories`
-- `GET /ai-studio/inspiration/collections` (`ai-studio.inspiration.collections`) -> `OwnerInspirationWebController@collections`
-- `POST /ai-studio/inspiration/collections` (`ai-studio.inspiration.collections.store`) -> `OwnerInspirationWebController@storeCollection`
-- `GET /ai-studio/inspiration/collections/{collection}` (`ai-studio.inspiration.collections.show`) -> `OwnerInspirationWebController@showCollection`
-- `POST /ai-studio/inspiration/collections/{collection}/items` (`ai-studio.inspiration.collections.items.store`) -> `OwnerInspirationWebController@addItemToCollection`
-- `DELETE /ai-studio/inspiration/collections/{collection}/items/{item}` (`ai-studio.inspiration.collections.items.destroy`) -> `OwnerInspirationWebController@removeItemFromCollection`
-- `GET /ai-studio/inspiration/favorites` (`ai-studio.inspiration.favorites`) -> `OwnerInspirationWebController@favorites`
-- `POST /ai-studio/inspiration/favorites/toggle` (`ai-studio.inspiration.favorites.toggle`) -> `OwnerInspirationWebController@toggleFavorite`
-- `GET /ai-studio/inspiration/my-library` (`ai-studio.inspiration.my-library`) -> `OwnerInspirationWebController@myLibrary`
-- `POST /ai-studio/inspiration/my-library/upload` (`ai-studio.inspiration.my-library.upload`) -> `OwnerInspirationWebController@uploadAsset`
-- `POST /ai-studio/inspiration/use-as-reference` (`ai-studio.inspiration.use-as-reference`) -> `OwnerInspirationWebController@useAsReference`
-- `GET /ai-studio/inspiration/{inspiration}` (`ai-studio.inspiration.show`) -> `OwnerInspirationWebController@show`
+2. **Labor & Machines Module**:
+   - **Primary Web Controller**: `App\Http\Controllers\Web\LaborMachineWebController` (`app/Http/Controllers/Web/LaborMachineWebController.php`, 178 lines).
+     - Handles web operations: listing labor rates and machines (`index`), creating labor rates (`storeLabor`), updating labor rates (`updateLabor`), deleting labor rates (`destroyLabor`), creating machines (`storeMachine`), updating machines (`updateMachine`), and deleting machines (`destroyMachine`).
+   - **API Controllers**:
+     - `App\Http\Controllers\Api\V1\LaborRateController` (`app/Http/Controllers/Api/V1/LaborRateController.php`, 126 lines) — `index`, `store`, `show`, `update`, `destroy`, `hourlyEquivalent`.
+     - `App\Http\Controllers\Api\V1\MachineController` (`app/Http/Controllers/Api/V1/MachineController.php`, 119 lines) — `index`, `store`, `show`, `update`, `destroy`, `costPerHour`.
+     - `App\Http\Controllers\Api\V1\CostModelLaborController` & `CostModelMachineController` — handles assigning labor and machine resources to specific product Cost Models (HPP recipes).
 
 ---
 
-### 1.2 Controller-Level Authorization Status
+### 1.2 Routing Declarations
 
-| Controller | Implements `HasMiddleware` | Constructor Middleware | Method-Level Checks | Encapsulation Status |
-|---|---|---|---|---|
-| `OwnerAiStudioWebController` | **YES** (`line 48`) | None | `abort_unless($payment->business_id === $business->id, 403)` | **Compliant** (`ai_studio.view`, `generate`, `manage`) |
-| `OwnerInspirationWebController` | **YES** (`line 38`) | None | Tenant abort check (`line 307, 332, 383`) | **Compliant** (`ai_studio.view`, `manage`) |
-| `AdminAiTokenController` | **YES** (`line 28`) | None | None | **Compliant** (`require.admin.permission`) |
-| `AdminAiStudioVisualController` | **YES** (`line 22`) | None | None | **Compliant** (`require.admin.permission`) |
-| `AdminAiStudioSourceController` | **YES** (`line 18`) | None | None | **Compliant** (`require.admin.permission`) |
-| `AdminAiStudioPricingController` | **YES** (`line 20`) | None | None | **Compliant** (`require.admin.permission`) |
-| `AdminInspirationManagementController`| **YES** (`line 31`) | None | None | **Compliant** (`require.admin.permission`) |
-| `AiCompanyWebController` | **NO** (`line 41`) | **NO** | `approveAction` calls `canApprove` (`line 496`) | **NON-COMPLIANT** (0 Controller RBAC) |
-| `PosAiWebController` | **NO** (`line 15`) | **NO** | `executeAction` uses FormRequest | **NON-COMPLIANT** (0 Controller RBAC) |
+In `routes/owner.php`:
 
-**Verbatim Code Quote - Non-compliant `AiCompanyWebController.php:41`**:
+#### Invoices Routes (`routes/owner.php:329-345`):
 ```php
-final class AiCompanyWebController extends Controller
+// Invoices Management & Generator (Commerce Billing)
+Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->middleware('require.permission:invoices.create')->name('invoices.create');
+Route::post('/invoices', [InvoiceWebController::class, 'store'])->middleware(['require.permission:invoices.create', 'entitlement:invoice'])->name('invoices.store');
+Route::middleware('require.permission:invoices.view')->group(function (): void {
+    Route::get('/invoices/export-excel', [InvoiceWebController::class, 'exportExcel'])->middleware('require.permission:invoices.export')->name('invoices.export-excel');
+    Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
+    Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
+    Route::get('/invoices/{invoice}/pdf', [InvoiceWebController::class, 'pdf'])->name('invoices.pdf');
+});
+Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->middleware('require.permission:invoices.edit')->name('invoices.edit');
+Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->middleware('require.permission:invoices.edit')->name('invoices.update');
+Route::post('/invoices/{invoice}/payments', [InvoiceWebController::class, 'recordPayment'])->middleware('require.permission:invoices.record_payment')->name('invoices.payments.store');
+Route::post('/invoices/{invoice}/confirm', [InvoiceWebController::class, 'confirm'])->middleware('require.permission:invoices.create')->name('invoices.confirm');
+Route::post('/invoices/{invoice}/remind', [InvoiceWebController::class, 'sendTermReminder'])->middleware('require.permission:invoices.view')->name('invoices.remind');
+Route::post('/invoices/{invoice}/void', [InvoiceWebController::class, 'void'])->middleware('require.permission:invoices.edit')->name('invoices.void');
+Route::delete('/invoices/{invoice}', [InvoiceWebController::class, 'destroy'])->middleware('require.permission:invoices.delete')->name('invoices.destroy');
+```
+
+#### Labor & Machines Routes (`routes/owner.php:372-383`):
+```php
+// Labor Rates & Machine Costs
+Route::middleware(['module:labor_machines', 'require.permission:labor_machines.view'])->group(function (): void {
+    Route::get('/labor-machines', [LaborMachineWebController::class, 'index'])->name('labor-machines.index');
+});
+Route::middleware(['module:labor_machines', 'require.permission:labor_machines.manage'])->group(function (): void {
+    Route::post('/labor-rates', [LaborMachineWebController::class, 'storeLabor'])->name('labor-rates.store');
+    Route::put('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'updateLabor'])->name('labor-rates.update');
+    Route::delete('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'destroyLabor'])->name('labor-rates.destroy');
+    Route::post('/machines', [LaborMachineWebController::class, 'storeMachine'])->name('machines.store');
+    Route::put('/machines/{machine}', [LaborMachineWebController::class, 'updateMachine'])->name('machines.update');
+    Route::delete('/machines/{machine}', [LaborMachineWebController::class, 'destroyMachine'])->name('machines.destroy');
+});
+```
+
+---
+
+### 1.3 Controller-Level RBAC State
+
+#### `InvoiceWebController` (`app/Http/Controllers/Web/InvoiceWebController.php:28-60`):
+- Implements `Illuminate\Routing\Controllers\HasMiddleware`:
+```php
+final class InvoiceWebController extends Controller implements HasMiddleware
+{
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('require.permission:invoices.view', only: [
+                'index',
+                'show',
+                'print',
+                'pdf',
+                'sendTermReminder',
+            ]),
+            new Middleware(['require.permission:invoices.create', 'entitlement:invoice'], only: [
+                'create',
+                'store',
+                'confirm',
+            ]),
+            new Middleware('require.permission:invoices.edit', only: [
+                'edit',
+                'update',
+                'void',
+            ]),
+            new Middleware('require.permission:invoices.record_payment', only: [
+                'recordPayment',
+            ]),
+            new Middleware('require.permission:invoices.export', only: [
+                'exportExcel',
+            ]),
+            new Middleware('require.permission:invoices.delete', only: [
+                'destroy',
+            ]),
+        ];
+    }
+```
+- Direct Object Reference (IDOR) Protection:
+  - Every method executing on a single invoice model (`show`, `edit`, `update`, `recordPayment`, `pdf`, `destroy`, `confirm`, `void`, `sendTermReminder`) explicitly verifies tenant ownership:
+    ```php
+    $business = Context::requireBusiness();
+    abort_unless($invoice->business_id === $business->id, 403);
+    ```
+  - Input relations (`customer_id`, `product_id`, `purchase_order_id`, `location_id`) are validated against `$business->id`.
+  - Mutation methods emit structured `AuditLog` records.
+
+#### `LaborMachineWebController` (`app/Http/Controllers/Web/LaborMachineWebController.php:17`):
+- **Does NOT implement `HasMiddleware`**:
+```php
+final class LaborMachineWebController extends Controller
 {
     public function __construct(
-        private readonly AiOrchestrator $orchestrator = new AiOrchestrator(),
-        private readonly AiActionExecutor $actionExecutor = new AiActionExecutor(),
-        private readonly AiActionPolicy $actionPolicy = new AiActionPolicy(),
-        private readonly AiProviderManager $providerManager = new AiProviderManager(),
-        private readonly AiBusinessTeamworkService $teamworkService = new AiBusinessTeamworkService(),
+        private readonly LaborCostService $laborService = new LaborCostService,
+        private readonly MachineCostService $machineService = new MachineCostService
     ) {}
-    // 29 public methods without static middleware() method
-}
 ```
+- Has **ZERO** Controller-Level middleware declarations (`middleware()` method is absent).
+- Direct Object Reference (IDOR) Deficiencies:
+  - `updateLabor`: Neither calls `Context::requireBusiness()` nor checks `$laborRate->business_id === $business->id`.
+  - `destroyLabor`: Neither calls `Context::requireBusiness()` nor checks `$laborRate->business_id === $business->id`.
+  - `updateMachine`: Neither calls `Context::requireBusiness()` nor checks `$machine->business_id === $business->id`.
+  - `destroyMachine`: Neither calls `Context::requireBusiness()` nor checks `$machine->business_id === $business->id`.
+- Audit Logging Deficiencies:
+  - Mutation actions (`storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, `destroyMachine`) record **zero** `AuditLog` entries.
 
 ---
 
-### 1.3 Database Seeders & Permission Matrix (`database/seeders/RbacSeeder.php`)
+### 1.4 Database Seeders & Permission Matrix
 
-Direct inspection of `database/seeders/RbacSeeder.php:178-187` revealed:
-```php
-// ─── AI Assistant ─────────────────────────────────────────
-'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, dan chatbot AI.'],
+In `database/seeders/RbacSeeder.php`:
 
-// ─── AI Studio & Viral Inspiration ───────────────────────
-'ai_studio.view'              => ['Lihat AI Studio',                        'ai_studio',   'Melihat dashboard AI Studio dan perpustakaan inspirasi viral.'],
-'ai_studio.generate'          => ['Generate Gambar AI Studio',              'ai_studio',   'Membuat gambar produk dan media sosial dengan AI Studio.'],
-'ai_studio.manage'            => ['Kelola AI Studio',                       'ai_studio',   'Mengelola proyek, aset inspirasi, dan riwayat generasi AI Studio.'],
-'admin.ai_studio.sources'     => ['Kelola Sumber Provider AI Studio',       'ai_studio',   'Mengatur konektor sumber dan kredensial API provider inspirasi.'],
-'admin.ai_studio.pricing'     => ['Kelola Tarif Kredit AI Studio',          'ai_studio',   'Mengatur margin dan konversi kredit generasi AI.'],
-```
+#### Permission Definitions (`database/seeders/RbacSeeder.php:59-65, 200-201`):
+| Permission Slug | Name | Category | Description |
+|---|---|---|---|
+| `invoices.view` | Lihat Faktur | `invoices` | Melihat daftar dan detail faktur penjualan. |
+| `invoices.create` | Buat Faktur | `invoices` | Menerbitkan faktur penjualan baru. |
+| `invoices.edit` | Edit Faktur | `invoices` | Mengubah faktur yang belum dikirim. |
+| `invoices.delete` | Hapus Faktur | `invoices` | Menghapus faktur penjualan. |
+| `invoices.record_payment` | Catat Pembayaran Faktur | `invoices` | Mencatat pelunasan piutang faktur. |
+| `invoices.export` | Export Faktur | `invoices` | Export data faktur ke Excel/CSV. |
+| `labor_machines.view` | Lihat Upah Kerja & Mesin | `labor` | Melihat daftar tarif upah kerja dan biaya mesin. |
+| `labor_machines.manage` | Kelola Upah Kerja & Mesin | `labor` | Menambah dan mengubah tarif upah kerja dan biaya mesin produksi. |
 
-#### Discovery of Phantom Permission `ai.approve`:
-In `app/Domain/Ai/Policy/AiActionPolicy.php:68`:
-```php
-return Context::hasPermission('ai.approve');
-```
-In `app/Http/Requests/Ai/ExecuteAiPosActionRequest.php:21, 25`:
-```php
-if ($actionType === 'create_invoice') {
-    return Context::hasPermission('invoices.create') || Context::hasPermission('pos.orders') || Context::hasPermission('ai.approve');
-}
-if ($actionType === 'create_quotation') {
-    return Context::hasPermission('quotations.create') || Context::hasPermission('pos.orders') || Context::hasPermission('ai.approve');
-}
-```
-`ai.approve` is checked in business logic, but **does NOT exist in `RbacSeeder.php`**!
-
-#### Discovery of Missing `ai.manage`:
-Endpoints `storeProvider`, `testProvider`, `detectModels` (which manage external API Keys and endpoints for OpenAI/Anthropic/Gemini) and guardrails endpoints `storeRule`, `toggleRule`, `deleteRule` in `AiCompanyWebController` currently have no dedicated permission. Any user with generic `ai.access` who sends a POST to `/cooca-ai/providers` can reconfigure company API keys!
+#### Role Mapping (`database/seeders/RbacSeeder.php:220-475`):
+| Role | Invoices Permissions | Labor & Machine Permissions | Notes |
+|---|---|---|---|
+| `owner` | All (`view`, `create`, `edit`, `delete`, `record_payment`, `export`) | All (`view`, `manage`) | Full access |
+| `admin` | `view`, `create`, `edit`, `record_payment`, `export` | `view`, `manage` | Inherits manager slugs + admin ops |
+| `manager` | `view`, `create`, `edit`, `record_payment`, `export` | `view`, `manage` | All except `invoices.delete` |
+| `finance` | `view`, `create`, `edit`, `record_payment`, `export` | None | Dedicated to billing/AR/AP |
+| `cashier` | `view`, `create`, `record_payment` | None | Restricted (no edit, delete, export) |
+| `staff` | `view`, `create`, `record_payment` | None | General operational sales/POS |
+| `viewer` | `view` | None | Read-only |
+| `warehouse` | None | None | Isolated to logistics & inventory |
 
 ---
 
-### 1.4 View-Level Authorization Scan (31 Blade Files)
+### 1.5 View-Layer Permission Guards & Discrepancies
 
-Scanning `resources/views/app/ai/` (13 files) and `resources/views/app/ai-studio/` (11 files) revealed that **29 out of 31 views** have ZERO authorization guards around interactive action buttons and forms:
+#### In `resources/views/app/labor-machines/index.blade.php`:
+- Lines 138, 337, 410, 483, 538, 619, 694 guard UI action buttons with:
+  `@if (\App\Support\Context::hasPermission('costing.manage'))`
+- **Discrepancy**: The backend routes and seeders use `labor_machines.manage`. Users granted `labor_machines.manage` (who do not have `costing.manage`) cannot see or access the Create/Edit/Delete buttons on the interface.
 
-1. `resources/views/app/ai/actions.blade.php`:
-   - Approve action form (`cooca-ai.actions.approve`): **Unprotected**
-   - Revise action form (`cooca-ai.actions.revise`): **Unprotected**
-   - Reject action form (`cooca-ai.actions.reject`): **Unprotected**
-2. `resources/views/app/ai/offices/executive.blade.php`:
-   - Quick Reject & Approve forms (`cooca-ai.actions.reject`, `cooca-ai.actions.approve`): **Unprotected**
-3. `resources/views/app/ai/offices/operations.blade.php`:
-   - Quick Reject & Approve forms: **Unprotected**
-4. `resources/views/app/ai/offices/growth.blade.php`:
-   - Quick Reject & Approve forms: **Unprotected**
-5. `resources/views/app/ai/providers.blade.php`:
-   - Form Save Provider (`cooca-ai.providers.store`): **Unprotected**
-   - Test Provider button (`cooca-ai.providers.test`): **Unprotected**
-   - Detect Models button (`cooca-ai.providers.detect-models`): **Unprotected**
-6. `resources/views/app/ai-studio/create.blade.php`:
-   - Form Create Project (`ai-studio.projects.store`): **Unprotected**
-   - Compile Prompt button (`ai-studio.prompt.compile`): **Unprotected**
-7. `resources/views/app/ai-studio/show.blade.php`:
-   - Dispatch Generation button (`ai-studio.generate`): **Unprotected**
-   - Export to Catalog modal & submit (`ai-studio.assets.export-to-catalog`): **Unprotected**
-   - Export to Social Media modal & submit (`ai-studio.assets.export-to-social-media`): **Unprotected**
-   - Delete Asset button (`ai-studio.assets.destroy`): **Unprotected**
-   - Delete Project button (`ai-studio.projects.destroy`): **Unprotected**
-8. `resources/views/app/ai-studio/inspiration/collections.blade.php` & `collection-detail.blade.php`:
-   - Create Collection modal & submit (`ai-studio.inspiration.collections.store`): **Unprotected**
-   - Delete Item from Collection form (`ai-studio.inspiration.collections.items.destroy`): **Unprotected**
-   - Use As Reference form (`ai-studio.inspiration.use-as-reference`): **Unprotected**
-9. `resources/views/app/ai-studio/inspiration/my-library.blade.php`:
-   - Upload Asset modal & submit (`ai-studio.inspiration.my-library.upload`): **Unprotected**
-10. `resources/views/app/ai-studio/inspiration/index.blade.php` & `favorites.blade.php`:
-    - Favorite toggle button: **Unprotected**
-    - Use As Reference submit: **Unprotected**
-11. `resources/views/app/ai-studio/partials/topup-modal.blade.php`:
-    - Order Top-up submit (`ai-studio.topup.order`): **Unprotected**
+#### In `resources/views/app/invoices/show.blade.php`:
+- Line 58: `$canRelease = $invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit'));`
+- Line 62: `$canVoid = !in_array($invoice->status, ['draft', 'void']) && $invoice->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit'));`
+- **Discrepancy**:
+  - `InvoiceWebController::confirm()` requires `invoices.create`. In the view, a user with only `invoices.edit` sees the "Rilis Faktur" button, but submitting results in a `403 Forbidden`.
+  - `InvoiceWebController::void()` requires `invoices.edit`. In the view, the guard checks `invoices.delete || invoices.edit`.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Premise 1 (Requirement R2 & Skill Directive)**:
-   The user requested `/laravel-rbac` and Controller-Level RBAC. According to `C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md`:
-   - Permission middleware MUST be encapsulated directly inside controllers using Laravel 11+ `HasMiddleware` interface.
-   - Route-level middleware `->middleware('require.permission:...')` in `routes/owner.php` should be removed to achieve *Clean Routing*.
-   - Action buttons, forms, and tabs in Blade views MUST be guarded with `@if (\App\Support\Context::hasPermission(...))`.
-2. **Premise 2 (Observation of Controllers)**:
-   `OwnerAiStudioWebController` and `OwnerInspirationWebController` already adhere to `HasMiddleware`, mapping permissions `ai_studio.view`, `ai_studio.generate`, and `ai_studio.manage`.
-   However, `AiCompanyWebController` and `PosAiWebController` lack `HasMiddleware`. Their protection currently relies solely on the route group in `routes/owner.php`.
-3. **Premise 3 (Granularity & Principle of Least Privilege)**:
-   The route group currently applies `require.permission:ai.access` broadly to all 29 methods in `AiCompanyWebController`. This allows any employee role (such as cashier or warehouse staff with `ai.access`) to hit `/cooca-ai/providers` and alter third-party API keys or guardrails. By introducing `ai.manage` and `ai.approve`, sensitive actions are separated from standard view/chat interactions.
-4. **Premise 4 (Elimination of Phantom Permissions)**:
-   `AiActionPolicy.php:68` checks `Context::hasPermission('ai.approve')`, but `ai.approve` is missing from `RbacSeeder.php`. Because `Context::hasPermission('ai.approve')` checks registered permission slugs, it fails for any role other than hardcoded owner/admin bypasses. Registering `ai.approve` in `RbacSeeder.php` turns a phantom permission into a recognized system capability.
-5. **Premise 5 (Defense-in-Depth UI Guarding)**:
-   Server-side authorization rejects unauthorized requests with `403 Forbidden`, but good UX dictates that users without permission should not see action buttons that trigger 403 errors. Wrapping action buttons in Blade views with `@if (\App\Support\Context::hasPermission(...) || \App\Support\Context::isAdminOrOwner())` completes the defense-in-depth model.
+1. **Premise 1 (Laravel 11+ Architecture & Clean Routing Standard)**:
+   - According to `laravel-permission/SKILL.md` (Pillar 2) and `references/controller-middleware-migration-guide.md`, controllers in modern Laravel (Framework `^13.17`) should implement `Illuminate\Routing\Controllers\HasMiddleware` to encapsulate authorization.
+   - Route files (`routes/owner.php`) should be clean, declarative, and free of duplicated permission middleware chains.
+2. **Premise 2 (Invoice Controller State vs Route Redundancy)**:
+   - `InvoiceWebController` already implemented `HasMiddleware` with exact action mappings (`invoices.view`, `invoices.create`, `invoices.edit`, `invoices.record_payment`, `invoices.export`, `invoices.delete`).
+   - However, `routes/owner.php` lines 330-345 still retain duplicate route-level middlewares (`->middleware('require.permission:invoices.xxx')`).
+   - Therefore, the routes for `invoices` in `routes/owner.php` are redundant and should be cleaned to follow the encapsulated pattern exhibited by `SupplierInvoiceWebController`.
+3. **Premise 3 (LaborMachine Controller Gap & IDOR Risk)**:
+   - `LaborMachineWebController` currently implements NO middleware.
+   - Authorization relies entirely on two route group wrappers in `routes/owner.php`.
+   - Furthermore, mutation actions (`updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine`) lack explicit business scoping (`abort_unless($record->business_id === $business->id, 403)`), creating a potential IDOR vulnerability if invoked outside route group context.
+   - Therefore, `LaborMachineWebController` must implement `HasMiddleware`, encapsulate `module:labor_machines`, `labor_machines.view`, and `labor_machines.manage`, and enforce explicit tenant checks.
+4. **Premise 4 (Permission Registry Completeness)**:
+   - `RbacSeeder.php` already contains all 6 invoice permissions (`invoices.view`, `create`, `edit`, `delete`, `record_payment`, `export`) and both labor-machine permissions (`labor_machines.view`, `manage`).
+   - All standard business roles (`owner`, `admin`, `manager`, `cashier`, `finance`, `staff`, `viewer`, `warehouse`) have appropriate assignments.
+   - No missing or phantom permission exists in the database seeder matrix.
+5. **Premise 5 (UI View Alignment)**:
+   - `labor-machines/index.blade.php` mistakenly checks `costing.manage` for all button actions instead of `labor_machines.manage`.
+   - `invoices/show.blade.php` has a mismatch where `$canRelease` allows `invoices.edit` even though the controller strictly mandates `invoices.create`.
+   - Aligning view guards with controller permissions ensures zero 403 errors and consistent UI state.
 
 ---
 
 ## 3. Caveats
 
-1. **Entitlement vs. Permission**:
-   `routes/owner.php` applies `entitlement:ai` on `cooca-ai` and `pos/ai/ask`. `entitlement:ai` checks business subscription tiers (SaaS plan capability), while `require.permission:*` checks user role authorization. When migrating permission checks into controllers, `entitlement:ai` should remain either on the route group or also be encapsulated if desired. Keeping `entitlement:ai` on the route group is standard in Cooca for SaaS feature-tier gating.
-2. **Owner & Admin Super-Access**:
-   In Cooca, `Context::isOwner()` and `Context::isAdminOrOwner()` bypass permission checks. In `RbacSeeder.php`, `owner` automatically receives all permission slugs (`$ownerSlugs = $allSlugs;`). Therefore, adding `ai.approve` and `ai.manage` will automatically be granted to owners, while explicitly empowering managers and admins.
-3. **Backwards Compatibility**:
-   Legacy route fallbacks `/ai/*` point to `AiCompanyWebController`. Because `HasMiddleware` applies to the controller itself regardless of route URI, legacy routes will be automatically secured without requiring redundant route middleware.
+1. **Entitlement Middleware on Invoices**:
+   - `InvoiceWebController` binds `entitlement:invoice` to `create`, `store`, and `confirm` in its `HasMiddleware` definition. This checks plan quota limits (e.g. Free plan invoice quotas). Any route cleanup must ensure `entitlement:invoice` remains active on the controller level.
+2. **Custom Business Roles**:
+   - COOCA allows business owners to define custom roles (`$membership->customRole`). If a business owner creates a custom role with `labor_machines.manage` only, fixing the view condition (`costing.manage` $\rightarrow$ `labor_machines.manage`) is necessary for them to use the feature.
+3. **API Controllers (`Api/V1`)**:
+   - API controllers (`Sales\InvoiceController`, `LaborRateController`, `MachineController`) currently rely on `routes/api.php` route middleware. While this survey focuses on the primary web modules requested (`resources/views/app/invoices` and `resources/views/app/labor-machines`), migrating API controllers to `HasMiddleware` in a future refactor would provide full defense-in-depth across the API surface.
 
 ---
 
-## 4. Conclusion & Actionable Roadmap
+## 4. Conclusion & Actionable Design
 
-### 4.1 Permission Definitions to Add to `database/seeders/RbacSeeder.php`
+### 4.1 Proposed Clean Routing (`routes/owner.php`)
 
-Add the following to `permissionMatrix()`:
 ```php
-// ─── AI Assistant & Digital Company ───────────────────────
-'ai.access'                   => ['AI Assistant & Rekomendasi',             'ai',          'Mengakses fitur prediksi stok, analitik pintar, chatbot AI, dan kantor virtual.'],
-'ai.approve'                  => ['Otorisasi & Eksekusi Aksi AI',           'ai',          'Menyetujui, merevisi, atau menolak usulan aksi otomatis agen AI serta mengeksekusi rekomendasi POS.'],
-'ai.manage'                   => ['Kelola AI & Konfigurasi Provider',       'ai',          'Mengatur kredensial API key provider AI, model LLM, aturan guardrails DO/DONT, dan konfigurasi avatar agen.'],
+// =========================================================================
+// Invoices Management & Generator (Commerce Billing)
+// Clean Routing: Permission & Entitlement encapsulated in InvoiceWebController
+// =========================================================================
+Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->name('invoices.create');
+Route::post('/invoices', [InvoiceWebController::class, 'store'])->name('invoices.store');
+Route::get('/invoices/export-excel', [InvoiceWebController::class, 'exportExcel'])->name('invoices.export-excel');
+Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
+Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
+Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
+Route::get('/invoices/{invoice}/pdf', [InvoiceWebController::class, 'pdf'])->name('invoices.pdf');
+Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->name('invoices.edit');
+Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->name('invoices.update');
+Route::post('/invoices/{invoice}/payments', [InvoiceWebController::class, 'recordPayment'])->name('invoices.payments.store');
+Route::post('/invoices/{invoice}/confirm', [InvoiceWebController::class, 'confirm'])->name('invoices.confirm');
+Route::post('/invoices/{invoice}/remind', [InvoiceWebController::class, 'sendTermReminder'])->name('invoices.remind');
+Route::post('/invoices/{invoice}/void', [InvoiceWebController::class, 'void'])->name('invoices.void');
+Route::delete('/invoices/{invoice}', [InvoiceWebController::class, 'destroy'])->name('invoices.destroy');
 
-// ─── AI Studio & Viral Inspiration ───────────────────────
-'ai_studio.view'              => ['Lihat AI Studio',                        'ai_studio',   'Melihat dashboard AI Studio dan perpustakaan inspirasi viral.'],
-'ai_studio.generate'          => ['Generate Gambar AI Studio',              'ai_studio',   'Membuat gambar produk dan media sosial dengan AI Studio.'],
-'ai_studio.manage'            => ['Kelola AI Studio',                       'ai_studio',   'Mengelola proyek, aset inspirasi, dan riwayat generasi AI Studio.'],
+// =========================================================================
+// Labor Rates & Machine Costs
+// Clean Routing: Module & Permissions encapsulated in LaborMachineWebController
+// =========================================================================
+Route::get('/labor-machines', [LaborMachineWebController::class, 'index'])->name('labor-machines.index');
+Route::post('/labor-rates', [LaborMachineWebController::class, 'storeLabor'])->name('labor-rates.store');
+Route::put('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'updateLabor'])->name('labor-rates.update');
+Route::delete('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'destroyLabor'])->name('labor-rates.destroy');
+Route::post('/machines', [LaborMachineWebController::class, 'storeMachine'])->name('machines.store');
+Route::put('/machines/{machine}', [LaborMachineWebController::class, 'updateMachine'])->name('machines.update');
+Route::delete('/machines/{machine}', [LaborMachineWebController::class, 'destroyMachine'])->name('machines.destroy');
 ```
 
-Map in `roleDefinitions()`:
-- `owner`: Automatically gets all slugs.
-- `manager`: Add `'ai.approve'`.
-- `admin`: Add `'ai.approve'`, `'ai.manage'`.
-- `cashier`, `warehouse`, `finance`, `staff`: Retain `'ai.access'`.
-
 ---
 
-### 4.2 File-by-File Controller-Level RBAC Enforcement
+### 4.2 Proposed Controller-Level RBAC for `LaborMachineWebController`
 
-#### 1. `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
-- Add `use Illuminate\Routing\Controllers\HasMiddleware;`
-- Add `use Illuminate\Routing\Controllers\Middleware;`
-- Class declaration: `final class AiCompanyWebController extends Controller implements HasMiddleware`
-- Implement `middleware()` method:
 ```php
-public static function middleware(): array
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers\Web;
+
+use App\Domain\Labor\LaborCostService;
+use App\Domain\Machine\MachineCostService;
+use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
+use App\Models\LaborRate;
+use App\Models\Machine;
+use App\Support\Context;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\View\View;
+
+final class LaborMachineWebController extends Controller implements HasMiddleware
 {
-    return [
-        new Middleware('require.permission:ai.access', only: [
-            'index',
-            'lobby',
-            'executiveOffice',
-            'operationsOffice',
-            'growthOffice',
-            'history',
-            'actions',
-            'liveMetrics',
-            'getAgentAvatars',
-            'getRules',
-            'ask',
-            'triggerDailyCheck',
-            'teamwork',
-            'goal',
-            'grillMe',
-            'boost',
-            'schedule',
-        ]),
-        new Middleware('require.permission:ai.approve', only: [
-            'approveAction',
-            'reviseAction',
-            'rejectAction',
-        ]),
-        new Middleware('require.permission:ai.manage', only: [
-            'providers',
-            'storeProvider',
-            'testProvider',
-            'detectModels',
-            'updateAgentAvatar',
-            'storeRule',
-            'toggleRule',
-            'deleteRule',
-        ]),
-    ];
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('module:labor_machines'),
+            new Middleware('require.permission:labor_machines.view', only: [
+                'index',
+            ]),
+            new Middleware('require.permission:labor_machines.manage', only: [
+                'storeLabor',
+                'updateLabor',
+                'destroyLabor',
+                'storeMachine',
+                'updateMachine',
+                'destroyMachine',
+            ]),
+        ];
+    }
+
+    public function __construct(
+        private readonly LaborCostService $laborService = new LaborCostService,
+        private readonly MachineCostService $machineService = new MachineCostService
+    ) {}
+
+    public function index(): View
+    {
+        $business = Context::requireBusiness();
+
+        $laborRates = LaborRate::where('business_id', $business->id)->latest()->get();
+        $machines = Machine::where('business_id', $business->id)->latest()->get();
+
+        return view('app.labor-machines.index', compact('business', 'laborRates', 'machines'));
+    }
+
+    public function storeLabor(Request $request): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        // validation & creation with AuditLog
+        ...
+    }
+
+    public function updateLabor(Request $request, LaborRate $laborRate): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($laborRate->business_id === $business->id, 403);
+        // validation & update with AuditLog
+        ...
+    }
+
+    public function destroyLabor(LaborRate $laborRate): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($laborRate->business_id === $business->id, 403);
+        // deletion with AuditLog
+        ...
+    }
+
+    public function storeMachine(Request $request): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        // validation & creation with AuditLog
+        ...
+    }
+
+    public function updateMachine(Request $request, Machine $machine): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($machine->business_id === $business->id, 403);
+        // validation & update with AuditLog
+        ...
+    }
+
+    public function destroyMachine(Machine $machine): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($machine->business_id === $business->id, 403);
+        // deletion with AuditLog
+        ...
+    }
 }
 ```
 
-#### 2. `app/Http/Controllers/Web/Ai/PosAiWebController.php`
-- Add `use Illuminate\Routing\Controllers\HasMiddleware;`
-- Add `use Illuminate\Routing\Controllers\Middleware;`
-- Class declaration: `final class PosAiWebController extends Controller implements HasMiddleware`
-- Implement `middleware()` method:
-```php
-public static function middleware(): array
-{
-    return [
-        new Middleware('require.permission:ai.access', only: [
-            'index',
-            'ask',
-        ]),
-        new Middleware('require.permission:ai.approve', only: [
-            'executeAction',
-        ]),
-    ];
-}
-```
-
-#### 3. `routes/owner.php` Clean Routing Migration
-- Lines 632-636: Remove `require.permission:ai.access` from POS AI group:
-  ```php
-  // SEBELUM:
-  Route::middleware('require.permission:ai.access')->group(function (): void {
-      Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
-      ...
-  });
-
-  // SESUDAH:
-  Route::group(function (): void {
-      Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
-      Route::post('/pos/ai/ask', [PosAiWebController::class, 'ask'])->middleware('entitlement:ai')->name('pos.ai.ask');
-      Route::post('/pos/ai/execute-action', [PosAiWebController::class, 'executeAction'])->middleware('entitlement:ai')->name('pos.ai.execute-action');
-  });
-  ```
-- Lines 638-672: Remove `require.permission:ai.access` from `cooca-ai` prefix:
-  ```php
-  // SEBELUM:
-  Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('cooca-ai')->name('cooca-ai.')->group(...);
-
-  // SESUDAH:
-  Route::middleware('entitlement:ai')->prefix('cooca-ai')->name('cooca-ai.')->group(...);
-  ```
-- Lines 674-702: Remove `require.permission:ai.access` from legacy `ai` prefix:
-  ```php
-  // SEBELUM:
-  Route::middleware(['require.permission:ai.access', 'entitlement:ai'])->prefix('ai')->name('ai.')->group(...);
-
-  // SESUDAH:
-  Route::middleware('entitlement:ai')->prefix('ai')->name('ai.')->group(...);
-  ```
-
 ---
 
-### 4.3 View-Level Authorization Protection Roadmap
+### 4.3 Proposed View Guard Fixes
 
-| View File | UI Component / Action | Required Guard Condition |
-|---|---|---|
-| `resources/views/app/ai/actions.blade.php` | Approve, Revise, Reject forms & buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai/offices/executive.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai/offices/growth.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai/offices/operations.blade.php` | Proposal Approve/Reject buttons | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai/providers.blade.php` | Provider save form, Test button, Detect Models button | `@if (\App\Support\Context::hasPermission('ai.manage') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai/providers.blade.php` | If no `ai.manage`, show read-only notice banner | `@else <div class="alert ...">{{ __('ai.providers.readonly_notice') }}</div> @endif` |
-| `resources/views/app/ai/index.blade.php` | "Terapkan Rekomendasi" (Execute Action Draft) modal button | `@if (\App\Support\Context::hasPermission('ai.approve') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/app/ai-studio/index.blade.php` | "Buat Proyek Baru" header link/button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/index.blade.php` | Top-up Kredit button & modal trigger | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('billing.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/create.blade.php` | Form submit & Prompt Compiler button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/show.blade.php` | "Generate Variasi" button | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/show.blade.php` | "Export ke Katalog" modal button | `@if (\App\Support\Context::hasPermission('products.create') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/show.blade.php` | "Export ke Media Sosial" modal button | `@if (\App\Support\Context::hasPermission('social_media.manage') \|\| \App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/show.blade.php` | "Hapus Aset" & "Hapus Proyek" buttons | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/inspiration/index.blade.php` | "Gunakan Sebagai Referensi" form submit | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/inspiration/collections.blade.php` | "Buat Koleksi" button & modal form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/inspiration/collection-detail.blade.php` | "Hapus Item dari Koleksi" form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/app/ai-studio/inspiration/my-library.blade.php` | "Upload Aset Referensi" button & modal form | `@if (\App\Support\Context::hasPermission('ai_studio.manage') \|\| \App\Support\Context::isOwner())` |
-| `resources/views/layouts/partials/sidebar.blade.php` | Submenu `cooca-ai.providers` | `@if (\App\Support\Context::hasPermission('ai.manage') \|\| \App\Support\Context::isAdminOrOwner())` |
-| `resources/views/layouts/partials/sidebar.blade.php` | Submenu `ai-studio.create` | `@if (\App\Support\Context::hasPermission('ai_studio.generate') \|\| \App\Support\Context::isOwner())` |
+1. **In `resources/views/app/labor-machines/index.blade.php`**:
+   - Replace `@if (\App\Support\Context::hasPermission('costing.manage'))` with:
+     ```blade
+     @if (\App\Support\Context::hasPermission('labor_machines.manage') || \App\Support\Context::hasPermission('costing.manage'))
+     ```
+   - Locations:
+     - Line 138 (Header action buttons: "Tambah Tarif Upah", "Tambah Mesin Baru")
+     - Line 337 (Labor section desktop table header action)
+     - Line 410 (Labor table row: edit and delete buttons)
+     - Line 483 (Labor mobile card: edit and delete buttons)
+     - Line 538 (Machine section desktop table header action)
+     - Line 619 (Machine table row: edit and delete buttons)
+     - Line 694 (Machine mobile card: edit and delete buttons)
+
+2. **In `resources/views/app/invoices/show.blade.php`**:
+   - Line 58: Fix `$canRelease` to require `invoices.create`:
+     ```php
+     $canRelease = $invoice->status === 'draft' && \App\Support\Context::hasPermission('invoices.create');
+     ```
+   - Line 62: Align `$canVoid` strictly with controller requirement:
+     ```php
+     $canVoid = !in_array($invoice->status, ['draft', 'void']) && (float) $invoice->paid_amount === 0.0 && \App\Support\Context::hasPermission('invoices.edit');
+     ```
 
 ---
 
 ## 5. Verification Method
 
-To independently verify all findings and test subsequent implementations:
+To independently verify all findings and validate future implementations:
 
-1. **Verify Syntax of Controllers and Views**:
-   ```bash
-   php -l app/Http/Controllers/Web/Ai/AiCompanyWebController.php
-   php -l app/Http/Controllers/Web/Ai/PosAiWebController.php
-   php -l app/Http/Controllers/Web/AiStudio/OwnerAiStudioWebController.php
-   php -l app/Http/Controllers/Web/AiStudio/OwnerInspirationWebController.php
-   php -l database/seeders/RbacSeeder.php
+1. **Syntax Linting**:
+   ```powershell
+   php -l app\Http\Controllers\Web\InvoiceWebController.php
+   php -l app\Http\Controllers\Web\LaborMachineWebController.php
+   Get-ChildItem -Path "resources\views\app\invoices", "resources\views\app\labor-machines" -Filter "*.blade.php" -Recurse | ForEach-Object { php -l $_.FullName }
    ```
+   *Expected outcome*: Every file reports `No syntax errors detected`.
 
-2. **Verify RBAC Seeder Execution (Idempotent)**:
-   ```bash
+2. **Run Feature Tests for Invoices**:
+   ```powershell
+   php artisan test tests/Feature/InvoiceModuleAuditTest.php
+   ```
+   *Verified result*: 9 passed, 32 assertions (`0 failures`).
+
+3. **Verify Route List Authorization Mapping**:
+   ```powershell
+   php artisan route:list --name=invoices
+   php artisan route:list --name=labor-machines
+   ```
+   *Expected outcome*: Routes resolve to their respective controllers without unhandled exceptions.
+
+4. **Verify RBAC Seeder Idempotency**:
+   ```powershell
    php artisan db:seed --class=RbacSeeder --force
    ```
-   *Expected result*: Confirms all permissions including `ai.approve` and `ai.manage` are registered and assigned to target roles without errors.
-
-3. **Verify Route Registration & Middleware Binding**:
-   ```bash
-   php artisan route:list --name=cooca-ai
-   php artisan route:list --name=ai-studio
-   php artisan route:list --name=pos.ai
-   ```
-   *Expected result*: All endpoints correctly mapped to controller actions with clean routes.
-
-4. **Execute Feature Test Suite**:
-   ```bash
-   php artisan test tests/Feature/AiStudio/AiStudioWebControllerTest.php
-   php artisan test tests/Feature/AiDigitalCompanyTest.php
-   ```
-   *Expected result*: 100% tests pass without regression.
-
-5. **Invalidation Conditions**:
-   - If any endpoint in `AiCompanyWebController` returns `403` to an authenticated `owner` or `admin`, verify that `Context::isOwner()` is properly checked or `owner` has all permission slugs in `RbacSeeder.php`.
-   - If a cashier receives `403` on `cooca-ai.index`, verify that `ai.access` remains mapped to `cashier` in `RbacSeeder.php`.
+   *Expected outcome*: All permissions and roles are synced without duplicate key exceptions.

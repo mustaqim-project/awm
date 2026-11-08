@@ -327,22 +327,20 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::delete('/sales/orders/{salesOrder}', [SalesOrderWebController::class, 'destroy'])->middleware('require.permission:sales.pipeline')->name('sales.orders.destroy');
 
         // Invoices Management & Generator (Commerce Billing)
-        Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->middleware('require.permission:invoices.create')->name('invoices.create');
-        Route::post('/invoices', [InvoiceWebController::class, 'store'])->middleware(['require.permission:invoices.create', 'entitlement:invoice'])->name('invoices.store');
-        Route::middleware('require.permission:invoices.view')->group(function (): void {
-            Route::get('/invoices/export-excel', [InvoiceWebController::class, 'exportExcel'])->middleware('require.permission:invoices.export')->name('invoices.export-excel');
-            Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
-            Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
-            Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
-            Route::get('/invoices/{invoice}/pdf', [InvoiceWebController::class, 'pdf'])->name('invoices.pdf');
-        });
-        Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->middleware('require.permission:invoices.edit')->name('invoices.edit');
-        Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->middleware('require.permission:invoices.edit')->name('invoices.update');
-        Route::post('/invoices/{invoice}/payments', [InvoiceWebController::class, 'recordPayment'])->middleware('require.permission:invoices.record_payment')->name('invoices.payments.store');
-        Route::post('/invoices/{invoice}/confirm', [InvoiceWebController::class, 'confirm'])->middleware('require.permission:invoices.create')->name('invoices.confirm');
-        Route::post('/invoices/{invoice}/remind', [InvoiceWebController::class, 'sendTermReminder'])->middleware('require.permission:invoices.view')->name('invoices.remind');
-        Route::post('/invoices/{invoice}/void', [InvoiceWebController::class, 'void'])->middleware('require.permission:invoices.edit')->name('invoices.void');
-        Route::delete('/invoices/{invoice}', [InvoiceWebController::class, 'destroy'])->middleware('require.permission:invoices.delete')->name('invoices.destroy');
+        Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->name('invoices.create');
+        Route::post('/invoices', [InvoiceWebController::class, 'store'])->name('invoices.store');
+        Route::get('/invoices/export-excel', [InvoiceWebController::class, 'exportExcel'])->name('invoices.export-excel');
+        Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
+        Route::get('/invoices/{invoice}', [InvoiceWebController::class, 'show'])->name('invoices.show');
+        Route::get('/invoices/{invoice}/print', [InvoiceWebController::class, 'print'])->name('invoices.print');
+        Route::get('/invoices/{invoice}/pdf', [InvoiceWebController::class, 'pdf'])->name('invoices.pdf');
+        Route::get('/invoices/{invoice}/edit', [InvoiceWebController::class, 'edit'])->name('invoices.edit');
+        Route::put('/invoices/{invoice}', [InvoiceWebController::class, 'update'])->name('invoices.update');
+        Route::post('/invoices/{invoice}/payments', [InvoiceWebController::class, 'recordPayment'])->name('invoices.payments.store');
+        Route::post('/invoices/{invoice}/confirm', [InvoiceWebController::class, 'confirm'])->name('invoices.confirm');
+        Route::post('/invoices/{invoice}/remind', [InvoiceWebController::class, 'sendTermReminder'])->name('invoices.remind');
+        Route::post('/invoices/{invoice}/void', [InvoiceWebController::class, 'void'])->name('invoices.void');
+        Route::delete('/invoices/{invoice}', [InvoiceWebController::class, 'destroy'])->name('invoices.destroy');
 
         // Sales Returns
         Route::middleware('require.permission:sales.returns')->group(function (): void {
@@ -370,10 +368,8 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         });
 
         // Labor Rates & Machine Costs
-        Route::middleware(['module:labor_machines', 'require.permission:labor_machines.view'])->group(function (): void {
+        Route::middleware('module:labor_machines')->group(function (): void {
             Route::get('/labor-machines', [LaborMachineWebController::class, 'index'])->name('labor-machines.index');
-        });
-        Route::middleware(['module:labor_machines', 'require.permission:labor_machines.manage'])->group(function (): void {
             Route::post('/labor-rates', [LaborMachineWebController::class, 'storeLabor'])->name('labor-rates.store');
             Route::put('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'updateLabor'])->name('labor-rates.update');
             Route::delete('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'destroyLabor'])->name('labor-rates.destroy');

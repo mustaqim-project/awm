@@ -1,9 +1,15 @@
-# Progress — Auditor M1
-Last visited: 2026-11-07T07:42:00Z
+# Auditor M1 Progress
+Last visited: 2026-11-09T06:37:00Z
 
-- [x] Initialized
-- [x] Reading baseline context (ORIGINAL_REQUEST.md, PROJECT.md, worker_m1/handoff.md)
-- [x] Phase 1: Source code & scope analysis (git status, git diff, facade/anti-cheating scan)
-- [x] Phase 2: Behavioral & independent verification (php lint, seeder execution, route binding, feature tests)
-- [x] Phase 3: Adversarial stress test & edge cases (100% action method coverage verified, least privilege verified)
-- [x] Phase 4: Forensic audit report & handoff
+- [x] Read ORIGINAL_REQUEST.md, PROJECT.md, and worker_m1 handoff.md
+- [/] Phase 1: Mode-Agnostic Investigation & Code Inspection
+  - [ ] Git diff line-by-line inspection on modified files
+  - [ ] `LaborMachineWebController.php` HasMiddleware, permission mapping, IDOR check, and AuditLog check
+  - [ ] `routes/owner.php` clean routing check (no accidental deletion or exposure)
+  - [ ] `labor-machines/index.blade.php` permission directives check (no hardcoded true bypasses)
+- [ ] Phase 2: Static & Execution Validation
+  - [ ] PHP syntax check (`php -l`) on all modified files
+  - [ ] Feature test `tests/Feature/LaborAndMachineEngineTest.php`
+  - [ ] Feature test `tests/Feature/InvoiceModuleAuditTest.php`
+- [ ] Phase 3: Adversarial Stress Test & Integrity Forensics Verdict
+- [ ] Phase 4: Final Handoff Report & Orchestrator Message

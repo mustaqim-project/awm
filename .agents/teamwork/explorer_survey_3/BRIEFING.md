@@ -1,7 +1,7 @@
-# BRIEFING — 2026-11-07T07:13:10Z
+# BRIEFING — 2026-11-08T23:13:00Z
 
 ## Mission
-Investigate documentation system, test suites, and production readiness gaps for AI and AI Studio modules in COOCA.
+Perform comprehensive read-only survey of Module Audit readiness and Documentation structure for `invoices` and `labor-machines`.
 
 ## 🔒 My Identity
 - Archetype: Teamwork explorer
@@ -9,39 +9,50 @@ Investigate documentation system, test suites, and production readiness gaps for
 - Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3
 - Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
 - Milestone: Investigation & Survey
+- Current parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Sub-milestone: Survey invoices & labor-machines (docs, models/DB, test/production readiness)
 
 ## 🔒 Key Constraints
 - Read-only investigation — do NOT implement or modify source code
 - Write only to working directory: .agents/teamwork/explorer_survey_3/
 - Update progress.md with "Last visited: [timestamp]"
 - 5-Component handoff report required
+- Focus strictly on invoices and labor-machines modules
 
 ## Current Parent
-- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Updated: 2026-11-07T07:13:10Z
+- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Updated: 2026-11-08T23:13:00Z
 
 ## Investigation State
 - **Explored paths**:
-  - `resources/views/app/docs/` (`index.blade.php`, `partials/sec_ai.blade.php`, `partials/sec_storefront.blade.php`)
-  - `resources/views/app/ai/` (`index.blade.php`, `lobby.blade.php`, `actions.blade.php`, `office.blade.php`, `providers.blade.php`, `offices/*`)
-  - `resources/views/app/ai-studio/` (`index.blade.php`, `show.blade.php`, `create.blade.php`, `credit-history.blade.php`, `inspiration/*`, `partials/*`)
-  - `app/Http/Controllers/Web/Ai/` (`AiCompanyWebController.php`, `PosAiWebController.php`)
-  - `app/Http/Controllers/Web/AiStudio/` (`OwnerAiStudioWebController.php`, `OwnerInspirationWebController.php`)
-  - `app/Domain/Ai/` (`AiOrchestrator.php`, `GenerationOrchestrator.php`, `ProcessImageGenerationJob.php`, `OpenAiImageAdapter.php`, `AiProviderManager.php`)
-  - `routes/` (`owner.php`, `admin.php`, `api.php`, `web.php`)
+  - `resources/views/app/docs/` (`index.blade.php`, `partials/*`)
+  - `resources/views/app/invoices/` (`index`, `show`, `create`, `edit`, `print`)
+  - `resources/views/app/labor-machines/` (`index`)
+  - `app/Http/Controllers/Web/InvoiceWebController.php`
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`
+  - `app/Models/Invoice.php`, `InvoiceItem.php`, `InvoicePayment.php`
+  - `app/Models/LaborRate.php`, `Machine.php`, `CostModelLabor.php`, `CostModelMachine.php`
+  - `app/Domain/Commerce/InvoiceService.php`, `InvoiceNumberGenerator.php`
+  - `app/Domain/Labor/LaborCostService.php`, `app/Domain/Machine/MachineCostService.php`
+  - `database/migrations/` (migrations for invoices, labor rates, machines)
   - `database/seeders/RbacSeeder.php`
-  - `tests/Feature/` (`AiStudioWebControllerTest.php`, `AiDigitalCompanyTest.php`, `AiCompanyWorkflowTest.php`, `PosAiEngineTest.php`, etc.)
+  - `tests/Feature/InvoiceModuleAuditTest.php`, `InvoiceDraftEditAndPartiesTest.php`, `InvoiceStockAndJournalIntegrationTest.php`, `LaborAndMachineEngineTest.php`, `Commerce/InvoiceTest.php`
 - **Key findings**:
-  - AI Studio documentation is 100% missing in `resources/views/app/docs/` (needs `partials/sec_ai_studio.blade.php` and sidebar integration).
-  - Controller-level RBAC (`HasMiddleware`) missing in `AiCompanyWebController` and `PosAiWebController`.
-  - View-level permission checks missing in `ai/actions.blade.php` (Approve/Reject/Revise) and `ai-studio/show.blade.php` (Generate, Export to Catalog, Social, Delete).
-  - Failing test in `AiDigitalCompanyTest.php:148` caused by unmocked live HTTP call with dummy key `sk-cooca...`.
-  - `ai-studio/show.blade.php` polling uses full project endpoint every 3s instead of lightweight status endpoint, with no max retry timeout.
-  - UI clutter: Multi-colored button arrays in `ai-studio/show.blade.php` and `ai/lobby.blade.php` violating `/ui-simplify-layout`.
-- **Unexplored areas**: None, full scope investigated.
+  1. Documentation:
+     - `labor-machines` documentation is 100% missing from `resources/views/app/docs/` (needs `partials/sec_labor_machines.blade.php`, TOC link, and search indexing).
+     - `invoices` is currently represented only by an obsolete 36-line inline stub (`#sec-sales-b2b`) in `index.blade.php`. Needs dedicated partial `partials/sec_invoices.blade.php` following the Business Owner 20-industry format.
+  2. RBAC & Security:
+     - `InvoiceWebController` implements `HasMiddleware` and enforces tenant check (`abort_unless($invoice->business_id === $business->id, 403)`) across all methods.
+     - `LaborMachineWebController` DOES NOT implement `HasMiddleware` (relies purely on route middleware) and lacks explicit tenant isolation defense checks in `updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine`.
+     - In `labor-machines/index.blade.php`, action buttons check `costing.manage` instead of `labor_machines.manage`.
+  3. Tests & Production Readiness:
+     - All 9 tests in `InvoiceModuleAuditTest.php` and 14 tests in other invoice test suites pass.
+     - `LaborAndMachineEngineTest.php` passes (4 tests, 15 assertions), but tests only API and domain service; web controller `LaborMachineWebController` has 0 dedicated feature tests.
+     - `php artisan view:cache` passes with 0 syntax errors across all Blade templates.
+- **Unexplored areas**: None. Comprehensive survey completed.
 
 ## Key Decisions Made
-- Structure comprehensive handoff report with 5 mandatory components: Observation, Logic Chain, Caveats, Conclusion, Verification Method.
+- Synthesize all findings into the mandatory 5-component handoff report (`handoff.md`).
 
 ## Artifact Index
 - `DISPATCH.md` — Incoming dispatch logs

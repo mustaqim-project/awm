@@ -28,3 +28,35 @@ OUTPUT:
 Write your full investigation report to:
 c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md
 When done, send a message to your parent with a concise summary and confirm handoff.md is ready.
+
+
+## 2026-11-08T22:58:46Z
+You are explorer_survey_1.
+Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
+The workspace root is: C:\laragon\www\cooca_core
+
+MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
+
+Also read skill guidelines:
+- UI Simplification: C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-simplify-layout\SKILL.md
+
+TASK:
+Perform a comprehensive read-only survey of all Blade view templates in:
+1. `resources\views\app\invoices` (and subdirectories/components)
+2. `resources\views\app\labor-machines` (and subdirectories/components)
+
+Investigate and document in detail:
+- List every blade view file and its purpose (index, show, create, edit, forms, modals, tables, components).
+- UI structure and visual hierarchy: analyze headers, filters, table columns, action buttons, modals, dropdowns.
+- Identify all UI issues:
+  * Element overlapping or cramped controls.
+  * Inconsistent button styling or too many competing primary buttons.
+  * Mobile/responsive issues (horizontal overflow, unstacked buttons, small touch targets).
+  * Presence or absence of authorization gates/directives (`@can`, `@cannot`) around sensitive action buttons (Create, Edit, Delete, Export, Print, Approve, etc.).
+- Concrete improvement recommendations aligned with `ui-simplify-layout` (no-overlap, clean button grouping, clear primary vs secondary hierarchy, mobile responsiveness).
+
+Deliverable:
+Write a thorough, structured handoff report to:
+`C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md`
+Update your progress in `C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\progress.md`.
+When finished, send a message to the orchestrator with a summary and confirmation of the report path.

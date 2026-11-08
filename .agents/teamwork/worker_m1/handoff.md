@@ -1,187 +1,166 @@
-# Handoff Report: Milestone M1 — RBAC Implementation & Clean Routing
+# Milestone 1 Handoff Report: Controller-Level RBAC, Tenant Security & Clean Routing
 
-**Worker**: Worker M1 (RBAC Implementation Worker)  
-**Parent**: `e2aae656-229b-42bb-a7be-8273bdd8a984`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m1`  
-**Date**: 2026-11-07  
+- **Worker**: `worker_m1`
+- **Milestone**: Milestone 1 (M1: Controller-Level RBAC & Tenant Security)
+- **Date**: 2026-11-09T06:34:00Z
+- **Reference Standard**: [`laravel-permission/SKILL.md`](file:///c:/Users/Ulfah%20Ramadhani/.gemini/config/skills/laravel-permission/SKILL.md) & [`PROJECT.md`](file:///c:/laragon/www/cooca_core/.agents/teamwork/orchestrator_1/PROJECT.md)
+- **Exclusive Write Ownership Scope**:
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`
+  - `routes/owner.php` (lines for invoices and labor-machines routing)
+  - `resources/views/app/labor-machines/index.blade.php` (permission directives)
 
 ---
 
 ## 1. Observation
 
-### 1.1 Modified Files & Exact Line Ranges
-In accordance with EXCLUSIVE FILE OWNERSHIP, only the four assigned files were modified:
+### 1.1 Pre-Modification State
 
-1. `database/seeders/RbacSeeder.php`
-   - Lines 178-181: Replaced single `ai.access` entry with three granular permissions (`ai.access`, `ai.approve`, `ai.manage`) in `permissionMatrix()`.
-   - Line 290: Added `'ai.approve'` to `$managerSlugs`.
-   - Line 310: Added `'ai.manage'` to `'admin'` permissions array.
-   - Verified that `owner` inherits all slugs (`$ownerSlugs = $allSlugs;`), and `cashier`, `warehouse`, `finance`, and `staff` retain `'ai.access'`.
-
-2. `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
-   - Lines 38-39: Imported `Illuminate\Routing\Controllers\HasMiddleware` and `Illuminate\Routing\Controllers\Middleware`.
-   - Line 42: Added `implements HasMiddleware` to `final class AiCompanyWebController extends Controller`.
-   - Lines 44-86: Implemented `public static function middleware(): array` with granular protection:
-     - `require.permission:ai.access`: 17 viewing/chat/office methods (`index`, `lobby`, `executiveOffice`, `operationsOffice`, `growthOffice`, `history`, `actions`, `liveMetrics`, `getAgentAvatars`, `getRules`, `ask`, `triggerDailyCheck`, `teamwork`, `goal`, `grillMe`, `boost`, `schedule`).
-     - `require.permission:ai.approve`: 3 proposal action methods (`approveAction`, `reviseAction`, `rejectAction`).
-     - `require.permission:ai.manage`: 8 provider and guardrail management methods (`providers`, `storeProvider`, `testProvider`, `detectModels`, `updateAgentAvatar`, `storeRule`, `toggleRule`, `deleteRule`).
-
-3. `app/Http/Controllers/Web/Ai/PosAiWebController.php`
-   - Lines 12-13: Imported `Illuminate\Routing\Controllers\HasMiddleware` and `Illuminate\Routing\Controllers\Middleware`.
-   - Line 17: Added `implements HasMiddleware` to `final class PosAiWebController extends Controller`.
-   - Lines 19-35: Implemented `public static function middleware(): array` with:
-     - `require.permission:ai.access`: `index`, `ask`.
-     - `require.permission:ai.approve`: `executeAction`.
-
-4. `routes/owner.php`
-   - Lines 632-635: Cleaned up POS AI routes by removing outer `Route::middleware('require.permission:ai.access')->group(...)`. Routes are declared directly:
+1. **`app/Http/Controllers/Web/LaborMachineWebController.php`**:
+   - Class declared as `final class LaborMachineWebController extends Controller`.
+   - Did **not** implement `Illuminate\Routing\Controllers\HasMiddleware`.
+   - Method `public static function middleware(): array` was completely absent.
+   - `index()` queried all records globally without tenant isolation:
      ```php
-     Route::get('/pos/ai', [PosAiWebController::class, 'index'])->name('pos.ai.index');
-     Route::post('/pos/ai/ask', [PosAiWebController::class, 'ask'])->middleware('entitlement:ai')->name('pos.ai.ask');
-     Route::post('/pos/ai/execute-action', [PosAiWebController::class, 'executeAction'])->middleware('entitlement:ai')->name('pos.ai.execute-action');
+     $laborRates = LaborRate::latest()->get();
+     $machines = Machine::latest()->get();
      ```
-   - Line 638: Removed `require.permission:ai.access` from `cooca-ai` prefix group while retaining `entitlement:ai`:
+   - In mutation methods (`updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine`), no tenant verification existed:
      ```php
-     Route::middleware('entitlement:ai')->prefix('cooca-ai')->name('cooca-ai.')->group(function (): void {
+     // updateLabor:
+     $laborRate->update([...]);
+     // destroyLabor:
+     $laborRate->delete();
+     // updateMachine:
+     $machine->update([...]);
+     // destroyMachine:
+     $machine->delete();
      ```
-   - Line 673: Removed `require.permission:ai.access` from legacy `ai` prefix group while retaining `entitlement:ai`:
+     An authenticated user from Business A could directly modify or delete records belonging to Business B if providing the ID (IDOR vulnerability).
+   - Zero `AuditLog` entries were dispatched on create, update, or delete operations.
+
+2. **`routes/owner.php`**:
+   - Invoices routes (lines 330–345) explicitly specified redundant route-level middleware:
      ```php
-     Route::middleware('entitlement:ai')->prefix('ai')->name('ai.')->group(function (): void {
+     Route::get('/invoices/create', [InvoiceWebController::class, 'create'])->middleware('require.permission:invoices.create')->name('invoices.create');
+     Route::post('/invoices', [InvoiceWebController::class, 'store'])->middleware(['require.permission:invoices.create', 'entitlement:invoice'])->name('invoices.store');
+     Route::middleware('require.permission:invoices.view')->group(function (): void {
+         Route::get('/invoices/export-excel', [InvoiceWebController::class, 'exportExcel'])->middleware('require.permission:invoices.export')->name('invoices.export-excel');
+         Route::get('/invoices', [InvoiceWebController::class, 'index'])->name('invoices.index');
+         ...
+     });
+     Route::get('/invoices/{invoice}/edit', ...)->middleware('require.permission:invoices.edit');
+     Route::put('/invoices/{invoice}', ...)->middleware('require.permission:invoices.edit');
+     Route::post('/invoices/{invoice}/payments', ...)->middleware('require.permission:invoices.record_payment');
+     Route::post('/invoices/{invoice}/confirm', ...)->middleware('require.permission:invoices.create');
+     Route::post('/invoices/{invoice}/remind', ...)->middleware('require.permission:invoices.view');
+     Route::post('/invoices/{invoice}/void', ...)->middleware('require.permission:invoices.edit');
+     Route::delete('/invoices/{invoice}', ...)->middleware('require.permission:invoices.delete');
+     ```
+     This duplicated the definitions already declared inside `InvoiceWebController::middleware()`.
+   - Labor-machines routes (lines 372–383) were split into two separate route groups with route-level permissions:
+     ```php
+     Route::middleware(['module:labor_machines', 'require.permission:labor_machines.view'])->group(...);
+     Route::middleware(['module:labor_machines', 'require.permission:labor_machines.manage'])->group(...);
      ```
 
-### 1.2 Verbatim Command Outputs
-All verification steps completed with 0 errors:
+3. **`resources/views/app/labor-machines/index.blade.php`**:
+   - Checked `costing.manage` at lines 138, 169, 337, 410, 483, 538, 619, 694 instead of `labor_machines.manage`.
+   - Users with role `admin` or `manager` who possessed `labor_machines.manage` (but not `costing.manage`) could not see or click add/edit/delete buttons.
 
-1. **Syntax Checks (`php -l`)**:
-   ```
-   No syntax errors detected in database/seeders/RbacSeeder.php
-   No syntax errors detected in app/Http/Controllers/Web/Ai/AiCompanyWebController.php
-   No syntax errors detected in app/Http/Controllers/Web/Ai/PosAiWebController.php
-   No syntax errors detected in routes/owner.php
-   ```
+---
 
-2. **Seeder Execution (`php artisan db:seed --class=RbacSeeder --force`)**:
-   ```
-   INFO Seeding database. 
+### 1.2 Implemented Changes
 
-   ✓ 114 permissions seeded.
-   ✓ Role [owner] 114 permissions synced.
-   ✓ Role [manager] 88 permissions synced.
-   ✓ Role [admin] 93 permissions synced.
-   ✓ Role [cashier] 15 permissions synced.
-   ✓ Role [warehouse] 12 permissions synced.
-   ✓ Role [finance] 25 permissions synced.
-   ✓ Role [staff] 16 permissions synced.
-   ✓ Role [viewer] 12 permissions synced.
-   Database\Seeders\AdminRbacSeeder .. RUNNING 
-   ✓ 94 admin permissions seeded.
-   ✓ Admin Role [super_admin] 94 permissions synced.
-   ✓ Admin Role [operations_admin] 21 permissions synced.
-   ✓ Admin Role [finance_admin] 33 permissions synced.
-   ✓ Admin Role [support_admin] 14 permissions synced.
-   ✓ Admin Role [content_admin] 26 permissions synced.
-   ✓ Admin Role [system_admin] 20 permissions synced.
-   ✓ Admin Role [auditor] 28 permissions synced.
-   ✓ Admin RBAC seeder complete.
-   Database\Seeders\AdminRbacSeeder .. 2,951 ms DONE 
+#### A. `app/Http/Controllers/Web/LaborMachineWebController.php`
+- Implemented `Illuminate\Routing\Controllers\HasMiddleware` on the class.
+- Added `middleware()` static method:
+  ```php
+  public static function middleware(): array
+  {
+      return [
+          new Middleware('require.permission:labor_machines.view', only: ['index']),
+          new Middleware('require.permission:labor_machines.manage', only: [
+              'storeLabor',
+              'updateLabor',
+              'destroyLabor',
+              'storeMachine',
+              'updateMachine',
+              'destroyMachine',
+          ]),
+      ];
+  }
+  ```
+- Scoped `index()` queries strictly to the active business:
+  ```php
+  $laborRates = LaborRate::where('business_id', $business->id)->latest()->get();
+  $machines = Machine::where('business_id', $business->id)->latest()->get();
+  ```
+- Enforced IDOR protection in `updateLabor`, `destroyLabor`, `updateMachine`, and `destroyMachine`:
+  ```php
+  $business = Context::business();
+  abort_unless($business !== null, 403);
+  abort_unless($laborRate->business_id === $business->id, 403);
+  // and for machines:
+  abort_unless($machine->business_id === $business->id, 403);
+  ```
+- Added full `AuditLog` records for `created`, `updated`, and `deleted` actions for both `LaborRate` and `Machine`, capturing IP address, user agent, old values, and new values.
 
-   ✓ RBAC seeder complete.
-   ```
+#### B. `routes/owner.php`
+- Cleaned up redundant route-level permission middleware from all 14 `invoices` routes. `InvoiceWebController` continues to enforce view, create, edit, delete, payment recording, and Excel export permissions plus the `entitlement:invoice` check via `HasMiddleware`.
+- Consolidated the `labor-machines` routes under a clean `Route::middleware('module:labor_machines')->group(...)` block, eliminating route-level `require.permission` checks now enforced by `LaborMachineWebController::middleware()`. Preserved all route names (`labor-machines.index`, `labor-rates.store`, `labor-rates.update`, `labor-rates.destroy`, `machines.store`, `machines.update`, `machines.destroy`).
 
-3. **Database Permission Verification (`Permission::whereIn('slug', ['ai.access', 'ai.approve', 'ai.manage'])`)**:
-   ```json
-   [
-     {
-       "slug": "ai.access",
-       "name": "AI Assistant & Rekomendasi",
-       "category": "ai",
-       "description": "Mengakses fitur prediksi stok, analitik pintar, chatbot AI, dan kantor virtual."
-     },
-     {
-       "slug": "ai.approve",
-       "name": "Otorisasi & Eksekusi Aksi AI",
-       "category": "ai",
-       "description": "Menyetujui, merevisi, atau menolak usulan aksi otomatis agen AI serta mengeksekusi rekomendasi POS."
-     },
-     {
-       "slug": "ai.manage",
-       "name": "Kelola AI & Konfigurasi Provider",
-       "category": "ai",
-       "description": "Mengatur kredensial API key provider AI, model LLM, aturan guardrails DO/DONT, dan konfigurasi avatar agen."
-     }
-   ]
-   ```
-
-4. **Route Middleware Binding Verification (`php artisan route:list -v`)**:
-   - `cooca-ai.index` (`lobby`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.access`
-   - `cooca-ai.actions.approve` (`approveAction`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.approve`
-   - `cooca-ai.providers.store` (`storeProvider`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.manage`
-   - `pos.ai.index` (`index`):
-     - `RequirePermission:ai.access`
-   - `pos.ai.ask` (`ask`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.access`
-   - `pos.ai.execute-action` (`executeAction`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.approve`
-   - Legacy routes (e.g. `ai.actions.approve`):
-     - `CheckResourceEntitlement:ai`
-     - `RequirePermission:ai.approve`
-
-5. **Test Suite Execution**:
-   - `php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php`:
-     ```json
-     {"tool":"phpunit","result":"passed","tests":14,"passed":14,"assertions":70,"duration_ms":18035}
-     ```
-   - `php artisan test tests/Feature/AiStudio/AiStudioWebControllerTest.php`:
-     ```json
-     {"tool":"phpunit","result":"passed","tests":22,"passed":22,"assertions":111,"duration_ms":44205,"risky":1}
-     ```
+#### C. `resources/views/app/labor-machines/index.blade.php`
+- Synchronized all action button gates from `costing.manage` to `@can('labor_machines.manage')` / `@endcan` and `Context::hasPermission('labor_machines.manage')`:
+  - Line 138: Top action buttons (Tambah Tarif Upah, Tambah Mesin Baru) wrapped in `@can('labor_machines.manage')` ... `@endcan`.
+  - Line 169: Sub-navigation tab check updated to include `Context::hasPermission('labor_machines.manage')`.
+  - Line 337: Direct labor section header button (Tambah Posisi) wrapped in `@can('labor_machines.manage')` ... `@endcan`.
+  - Line 410: Direct labor desktop table row actions (edit, delete) wrapped in `@can('labor_machines.manage')` ... `@else` ... `@endcan`.
+  - Line 483: Direct labor mobile card actions wrapped in `@can('labor_machines.manage')` ... `@endcan`.
+  - Line 538: Machine section header button (Tambah Mesin) wrapped in `@can('labor_machines.manage')` ... `@endcan`.
+  - Line 619: Machine desktop table row actions (edit, delete) wrapped in `@can('labor_machines.manage')` ... `@else` ... `@endcan`.
+  - Line 694: Machine mobile card actions wrapped in `@can('labor_machines.manage')` ... `@endcan`.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Step 1 — Permission Registry & Single Source of Truth**:
-   The permission matrix in `RbacSeeder.php` is the single source of truth for all system permissions. Previously, `ai.approve` was checked in `AiActionPolicy.php:68` and `ExecuteAiPosActionRequest.php:21`, but was unregistered in the database ("phantom permission"). Furthermore, sensitive provider configuration endpoints had no dedicated permission. Registering `ai.approve` and `ai.manage` in `permissionMatrix()` and syncing them to `owner`, `admin`, and `manager` resolved the authorization gap.
+1. **Modern Clean Routing Architecture**:
+   - Modern Laravel 11/12 best practices (as codified in `laravel-permission/SKILL.md`) specify that authorization middleware belongs inside controllers via `HasMiddleware` rather than cluttering route definitions.
+   - Enkapsulasi ini memusatkan seluruh otorisasi modul pada satu tempat (single source of truth), mencegah route bocor saat endpoint dipanggil atau dialiaskan dari tempat lain.
 
-2. **Step 2 — Clean Routing & Controller Encapsulation**:
-   Per the `/laravel-permission` skill and Laravel 11 architecture, authorization logic belongs within the controller via `HasMiddleware` rather than cluttering route definitions. By removing `require.permission:ai.access` from `routes/owner.php` and declaring granular `Middleware` arrays within `AiCompanyWebController` and `PosAiWebController`, routes remain clean and self-documenting.
+2. **Defense-in-Depth & IDOR Elimination**:
+   - Relying on route middleware alone is insufficient if controller methods accept implicit model bindings without verifying tenant ownership.
+   - Explicitly adding `abort_unless($record->business_id === $business->id, 403);` guarantees that cross-tenant access attempts immediately fail with HTTP 403 Forbidden.
+   - Restricting `index()` to `where('business_id', $business->id)` eliminates tenant data leaks on listing views.
 
-3. **Step 3 — Principle of Least Privilege**:
-   Previously, any user with `ai.access` (e.g., cashier or warehouse staff) could access and submit POST requests to `/cooca-ai/providers` or approve/reject action proposals. With the granular controller middleware:
-   - Cashiers/warehouse staff with `ai.access` can view the lobby, offices, live metrics, and ask questions.
-   - Only users with `ai.approve` (manager, admin, owner) can approve, revise, or reject action proposals or execute POS action drafts.
-   - Only users with `ai.manage` (admin, owner) can configure third-party AI providers, API keys, and guardrails.
+3. **Audit Trail Completeness**:
+   - Cooca ERP mandates auditable business actions (`AuditLog`).
+   - Recording structured log entries on `storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, and `destroyMachine` provides compliance traceability for all rate and equipment changes.
 
-4. **Step 4 — Entitlement Preservation**:
-   Tenant feature gating (`entitlement:ai`) is distinct from user RBAC (`require.permission:*`). Gating remains strictly active at the route level in `routes/owner.php` to prevent non-subscribed tenants from consuming AI features.
+4. **UI-Backend Permission Parity**:
+   - The database permissions defined in `RbacSeeder.php` are `labor_machines.view` and `labor_machines.manage`.
+   - The views originally checked `costing.manage`, which meant managers and operators without global costing permissions were locked out of labor/machine management buttons.
+   - Transitioning view directives to `@can('labor_machines.manage')` aligns the UI directly with backend enforcement, avoiding false-denial UI anomalies.
 
 ---
 
 ## 3. Caveats
 
-- **View Directives (Milestone M2 Scope)**:
-  This milestone (M1) secures all backend controller endpoints and routing. Hiding action buttons, forms, and tabs in Blade views (e.g. `@if(Context::hasPermission('ai.approve') || Context::isAdminOrOwner())`) is the explicit responsibility of Milestone M2. Since backend controller middleware is now active, any unauthorized attempt to trigger these actions from the UI will correctly return `403 Forbidden`.
-- **Admin & Owner Bypasses**:
-  In Cooca's `Context::isAdminOrOwner()` and `Context::isOwner()`, owners and admins bypass permission restrictions where applicable. Furthermore, `owner` is seeded with all permissions ($ownerSlugs = $allSlugs), guaranteeing zero regressions for tenant owners.
+- **Profitability Sub-navigation Tab**: Line 186 in `resources/views/app/labor-machines/index.blade.php` retains checking `costing.view_margin`, `reports.costing`, and `costing.manage` because it links to the `/profitability` route, which is protected by `require.permission:costing.view_margin`.
+- **API Controllers**: Rest API endpoints (`App\Http\Controllers\Api\V1\LaborRateController` and `MachineController`) operate under `routes/api.php` and use API token/sanctum authentication with route middleware; they remain untouched as they are outside the web module scope.
+- No other caveats.
 
 ---
 
 ## 4. Conclusion
 
-Milestone M1 has been successfully and genuinely implemented:
-- `database/seeders/RbacSeeder.php` defines and seeds `ai.access`, `ai.approve`, and `ai.manage`, correctly assigning them across system roles.
-- `app/Http/Controllers/Web/Ai/AiCompanyWebController.php` implements `HasMiddleware` with granular method protection for all 28 action methods.
-- `app/Http/Controllers/Web/Ai/PosAiWebController.php` implements `HasMiddleware` with granular method protection for all 3 action methods.
-- `routes/owner.php` has been cleaned of route-level permission middleware while preserving `entitlement:ai`.
-- All syntax checks pass, seeder runs cleanly and idempotently, routes bind the expected middleware, and all 36 feature tests pass without regression.
+Milestone 1 is complete:
+- `LaborMachineWebController` implements `HasMiddleware` with exact action-to-permission mappings.
+- Tenant isolation and IDOR defense are enforced across all single-record and listing operations.
+- Full `AuditLog` logging is dispatched on all mutations.
+- `routes/owner.php` is streamlined with clean routing for both `invoices` and `labor-machines`.
+- `labor-machines/index.blade.php` is synchronized to `@can('labor_machines.manage')`.
+- Zero syntax errors detected, all relevant unit and feature tests pass with 0 failures.
 
 ---
 
@@ -189,35 +168,31 @@ Milestone M1 has been successfully and genuinely implemented:
 
 To independently verify the implementation:
 
-1. **Verify PHP Syntax across all 4 files**:
-   ```bash
-   php -l database/seeders/RbacSeeder.php
-   php -l app/Http/Controllers/Web/Ai/AiCompanyWebController.php
-   php -l app/Http/Controllers/Web/Ai/PosAiWebController.php
-   php -l routes/owner.php
+1. **PHP Syntax Check (`php -l`)**:
+   ```powershell
+   php -l app\Http\Controllers\Web\LaborMachineWebController.php
+   php -l routes\owner.php
+   php -l resources\views\app\labor-machines\index.blade.php
    ```
-   *Expected*: `No syntax errors detected` in all 4 files.
+   *Verified Result*: All files reported `No syntax errors detected`.
 
-2. **Verify RBAC Seeder Execution**:
-   ```bash
-   php artisan db:seed --class=RbacSeeder --force
+2. **Route Resolution Check**:
+   ```powershell
+   php artisan route:list --name=labor-machines
+   php artisan route:list --name=labor-rates
+   php artisan route:list --name=machines
+   php artisan route:list --name=invoices
    ```
-   *Expected*: Seeds 114 permissions, syncs `owner` (114), `manager` (88), `admin` (93), and exits with code 0.
+   *Verified Result*: All 28 target routes resolved to their respective controllers without errors.
 
-3. **Verify Route Middleware Assignment**:
-   ```bash
-   php artisan route:list --name=cooca-ai.actions.approve -v
-   php artisan route:list --name=cooca-ai.providers.store -v
-   php artisan route:list --name=pos.ai -v
+3. **Feature Test Execution**:
+   ```powershell
+   php artisan test tests/Feature/LaborAndMachineEngineTest.php
+   php artisan test tests/Feature/InvoiceModuleAuditTest.php
+   php artisan test tests/Feature/InvoiceDraftEditAndPartiesTest.php
    ```
-   *Expected*: Shows `RequirePermission:ai.approve` on action approvals, `RequirePermission:ai.manage` on provider storage, and `RequirePermission:ai.access` on POS viewing.
-
-4. **Run Feature Tests**:
-   ```bash
-   php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php
-   ```
-   *Expected*: 14 passed (70 assertions), code 0.
-
-5. **Invalidation Conditions**:
-   - If `cooca-ai.actions.approve` allows an unauthorized role without `ai.approve` or admin/owner status, verify `AiCompanyWebController::middleware()`.
-   - If an owner gets 403 on `/cooca-ai/providers`, verify that `RbacSeeder` synced all slugs to the `owner` role.
+   *Verified Results*:
+   - `LaborAndMachineEngineTest`: 4 tests passed, 15 assertions (20.6s)
+   - `InvoiceModuleAuditTest`: 9 tests passed, 32 assertions (27.7s)
+   - `InvoiceDraftEditAndPartiesTest`: 4 tests passed, 24 assertions (21.8s)
+   - **Total**: 17 tests passed, 71 assertions, 0 failures.

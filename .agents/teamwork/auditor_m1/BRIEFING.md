@@ -1,7 +1,7 @@
-# BRIEFING — 2026-11-07T07:42:30Z
+# BRIEFING — 2026-11-09T06:37:00Z
 
 ## Mission
-Perform an independent forensic integrity audit on Milestone M1 work product (RBAC & Controller Security implementation by Worker M1).
+Perform an independent forensic integrity audit on Milestone M1 work product (Controller-Level RBAC, Tenant Security, and Clean Routing for Invoices and Labor-Machines by Worker M1).
 
 ## 🔒 My Identity
 - Archetype: forensic_auditor
@@ -9,6 +9,8 @@ Perform an independent forensic integrity audit on Milestone M1 work product (RB
 - Working directory: c:\laragon\www\cooca_core\.agents\teamwork\auditor_m1
 - Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
 - Target: Milestone M1 (RBAC & Controller Security)
+- Re-assigned Parent (2026-11-08): c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Target Milestone: M1 (Invoices & Labor-Machines Controller-Level RBAC & Tenant Security)
 
 ## 🔒 Key Constraints
 - Audit-only — do NOT modify implementation code
@@ -16,31 +18,34 @@ Perform an independent forensic integrity audit on Milestone M1 work product (RB
 - ORIGINAL_REQUEST.md always takes precedence over dispatch
 
 ## Current Parent
-- Conversation ID: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Updated: 2026-11-07T07:32:11Z
+- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Updated: 2026-11-08T23:35:59Z
 
 ## Audit Scope
 - **Work product**: Worker M1 changes in:
-  - `database/seeders/RbacSeeder.php`
-  - `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`
-  - `app/Http/Controllers/Web/Ai/PosAiWebController.php`
+  - `app/Http/Controllers/Web/LaborMachineWebController.php`
   - `routes/owner.php`
+  - `resources/views/app/labor-machines/index.blade.php`
 - **Profile loaded**: General Project
 - **Audit type**: forensic integrity check
+- **Integrity Mode**: Development (from ORIGINAL_REQUEST.md)
 
 ## Audit Progress
-- **Phase**: reporting
+- **Phase**: investigating
 - **Checks completed**:
-  - Phase 1: Source code analysis & scope verification (zero out-of-scope files touched, zero backdoors/facades)
-  - Phase 2: Behavioral verification (php -l 0 errors, db:seed succeeded with 114 permissions, route:list verified middleware attachments)
-  - Phase 3: Adversarial stress test (28 of 28 methods in AiCompanyWebController covered, 3 of 3 in PosAiWebController covered, 0 uncovered)
-  - Phase 4: Test suite execution (14/14 tests in AiCompanyWorkflowTest + PosAiEngineTest passed, 22/22 in AiStudioWebControllerTest passed)
-- **Checks remaining**: []
-- **Findings so far**: CLEAN
+  - Context & specification review (ORIGINAL_REQUEST.md, PROJECT.md, worker_m1 handoff.md)
+- **Checks remaining**:
+  - Git diff analysis
+  - HasMiddleware and IDOR verification in LaborMachineWebController
+  - Clean routing audit in routes/owner.php
+  - Blade permission gating check in labor-machines/index.blade.php
+  - Static linting (`php -l`)
+  - Test suite execution
+  - Adversarial review & anti-pattern scanning
+- **Findings so far**: Under investigation
 
 ## Key Decisions Made
-- Audit confirms genuine, robust Laravel 11 HasMiddleware controller-level RBAC implementation.
-- Verdict is CLEAN.
+- Prioritize independent verification of IDOR checks, HasMiddleware contracts, and route integrity.
 
 ## Artifact Index
 - `DISPATCH.md` — Parent dispatch instructions
@@ -50,12 +55,13 @@ Perform an independent forensic integrity audit on Milestone M1 work product (RB
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - H1: Uncovered public methods in controllers -> REJECTED (100% covered across all 31 action methods)
-  - H2: Phantom permissions -> REJECTED (ai.access, ai.approve, ai.manage registered in RbacSeeder and verified in DB)
-  - H3: Entitlement leakage -> REJECTED (entitlement:ai strictly preserved on route level)
-  - H4: Legacy route bypasses -> REJECTED (HasMiddleware attaches to controller methods globally)
-- **Vulnerabilities found**: None.
-- **Untested angles**: View-level directive hiding (`@if(Context::hasPermission(...))`) is designated for Milestone M2 scope.
+  - H1: HasMiddleware in LaborMachineWebController is a facade or missing required methods
+  - H2: IDOR check ($record->business_id === $business->id) is bypassed, non-strict, or missing on some actions
+  - H3: Clean routing in routes/owner.php deleted routes or exposed unauthenticated/unprotected actions
+  - H4: View-level @can('labor_machines.manage') has hardcoded 'true' or bypass logic
+  - H5: AuditLog logging is simulated or omitted
+- **Vulnerabilities found**: TBD
+- **Untested angles**: TBD
 
 ## Loaded Skills
 - None

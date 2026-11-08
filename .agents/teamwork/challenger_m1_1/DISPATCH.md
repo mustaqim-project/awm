@@ -24,3 +24,27 @@ OUTPUT:
 Write your empirical challenge report to `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\handoff.md`.
 Explicitly declare your verdict: `APPROVE` or `REQUEST_CHANGES`.
 Send a message to parent with your verdict and empirical proof.
+
+
+## 2026-11-08T23:35:35Z
+You are challenger_m1_1.
+Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\
+The workspace root is: C:\laragon\www\cooca_core
+
+MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
+Also read:
+- C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
+- C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
+
+TASK:
+Empirically challenge the Controller-Level RBAC and Clean Routing implementation:
+1. Write and execute an empirical test script or test runner (using `php artisan test` or a temporary artisan/eval harness) to stress-test:
+   - Check that calling `LaborMachineWebController::middleware()` returns the expected middleware array with `require.permission:labor_machines.view` for `index` and `require.permission:labor_machines.manage` for all mutation actions.
+   - Verify that all route names for labor-machines (`labor-machines.index`, `labor-rates.store`, `labor-rates.update`, `labor-rates.destroy`, `machines.store`, `machines.update`, `machines.destroy`) and invoices (`invoices.index`, `invoices.create`, `invoices.store`, `invoices.show`, `invoices.edit`, `invoices.update`, `invoices.destroy`, `invoices.export-excel`, etc.) are intact and resolve correctly.
+   - Test IDOR defense: verify that calling update/destroy on a model with mismatched `business_id` throws a 403 Forbidden exception.
+2. Run relevant feature and unit tests.
+
+VERDICT:
+Your handoff MUST issue a verdict: **APPROVE** or **REQUEST_CHANGES**.
+Write your report to: `C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\handoff.md`.
+Update `progress.md` and message the orchestrator when finished.

@@ -1,224 +1,359 @@
-# Handoff Report — Explorer 1 (UI & Blade Views Survey)
+# Comprehensive Survey Report: Invoices & Labor-Machines Blade Views
 
-**Module Under Survey**: `resources/views/app/ai` & `resources/views/app/ai-studio`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1`  
-**Investigation Timestamp**: 2026-11-07T07:06:00Z  
-**Surveyed By**: Explorer 1 (UI & Blade Views)  
-**Parent Agent ID**: `e2aae656-229b-42bb-a7be-8273bdd8a984`  
+**Agent**: `explorer_survey_1`  
+**Date**: 2026-11-09  
+**Scope**:  
+1. `resources\views\app\invoices` (and subdirectories/components)  
+2. `resources\views\app\labor-machines` (and subdirectories/components)  
+**Guidelines**: `ui-simplify-layout` & `ORIGINAL_REQUEST.md`
 
 ---
 
 ## 1. Observation
 
-A full code audit was conducted across all 31 Blade template files in `resources/views/app/ai` and `resources/views/app/ai-studio`, together with the core application layout `resources/views/layouts/app.blade.php`.
+A full read-only survey of all Blade templates in the target directories identified **6 Blade view files** totaling **4,062 lines of code**:
 
-### 1.1 Enumeration of Surveyed Blade Views & File Structure
+| File Path | Lines | Byte Size | Primary Purpose |
+|---|---|---|---|
+| `resources\views\app\invoices\index.blade.php` | 450 | 34,448 B | Main listing of invoices, KPI summary, filters, dense table & mobile card list, delete modal |
+| `resources\views\app\invoices\create.blade.php` | 498 | 39,000 B | Invoice creation form, PO pulling, dynamic item rows, Alpine margin/tax calculation, save action |
+| `resources\views\app\invoices\edit.blade.php` | 440 | 35,057 B | Invoice edit form for draft/unpaid invoices, live financial recalculation, save action |
+| `resources\views\app\invoices\show.blade.php` | 915 | 66,700 B | Detail invoice document view, party cards, items table, profit analysis, payment receipts history, 5 action modals (Payment, Release, Void, Delete Draft, Remind) |
+| `resources\views\app\invoices\print.blade.php` | 491 | 27,105 B | Dedicated A4 print/PDF template, floating action toolbar, official bank transfer box, signature blocks |
+| `resources\views\app\labor-machines\index.blade.php` | 1,268 | 95,200 B | Monolithic management of labor rates and machine costs, 4 KPI cards, sub-navigation, search & segmented tabs, 2 dense tables, 2 mobile lists, 4 form modals, 1 delete dialog |
 
-```
-resources/views/app/ai/
-├── actions.blade.php (843 lines) — Action Center & Proposal Approvals
-├── history.blade.php (101 lines) — Work Session History Log
-├── index.blade.php (830 lines) — AI POS Intelligence Dashboard & Stock Modal
-├── lobby.blade.php (748 lines) — Digital HQ Executive Lobby & Cockpit
-├── office.blade.php (709 lines) — Digital Company Department Offices
-├── providers.blade.php (438 lines) — AI Provider Settings & API Keys
-├── offices/
-│   ├── executive.blade.php (377 lines) — CEO & CFO Penthouse Floor
-│   ├── growth.blade.php (440 lines) — CMO & Sales Director Floor
-│   └── operations.blade.php (407 lines) — COO & Warehouse Logistik Floor
-└── partials/
-    ├── agent_inspector_hud.blade.php (169 lines) — Floating Canvas Inspector HUD
-    ├── consultation_modal.blade.php (193 lines) — Shared AI Chat Modal
-    ├── office_navigation.blade.php (111 lines) — Floor Navigation Hub
-    ├── office_script.blade.php (800+ lines) — Three.js & Alpine Canvas Engine
-    ├── virtual_office_canvas.blade.php (3,869 lines) — 3D WebGL / 2D Canvas Viewport
-    └── desks/
-        ├── executive_desks.blade.php (98 lines)
-        ├── growth_desks.blade.php (118 lines)
-        ├── lobby_desks.blade.php (82 lines)
-        └── operations_desks.blade.php (80 lines)
+---
 
-resources/views/app/ai-studio/
-├── create.blade.php (704 lines) — Visual Project Initiation Form
-├── credit-history.blade.php (158 lines) — Credit Ledger & Transaction History
-├── index.blade.php (579 lines) — AI Studio Projects & Asset Catalog
-├── prompt-preview.blade.php (135 lines) — Prompt Transparency & Quote Sheet Modal
-├── show.blade.php (1,033 lines) — Canvas Studio & Multi-Generation Output Editor
-├── partials/
-│   └── topup-modal.blade.php (517 lines) — Credit Top-Up Multi-Step Modal
-└── inspiration/
-    ├── categories.blade.php (131 lines) — Industry Taxonomy & Categories
-    ├── collection-detail.blade.php (137 lines) — Thematic Collection Detail View
-    ├── collections.blade.php (212 lines) — Thematic Collection Boards & Create Modal
-    ├── favorites.blade.php (155 lines) — Saved Favorite Inspiration Grid
-    ├── index.blade.php (500 lines) — Inspiration Gallery & Commercial Asset Hub
-    ├── my-library.blade.php (219 lines) — Private Asset Library & Upload Modal
-    └── show.blade.php (251 lines) — Single Inspiration Spec & Prompt Replicator
-```
+### File-by-File Detailed Observations
 
-### 1.2 Verbatim Observations & Code Evidence
+#### A. `resources\views\app\invoices\index.blade.php`
+1. **Component Hierarchy**:
+   - `x-module-header` (lines 26–45): Contains module title, subtitle, Export CSV link, and Create New button.
+   - `x-module-tabs` (line 47): Navigation tabs for the Sales module.
+   - Flash Messages (lines 52–67): Success and error message banners.
+   - KPI Summary (lines 72–116): 4 cards in `grid grid-cols-2 lg:grid-cols-4` (Total Invoiced, Total Paid, Unpaid Receivables, Real Gross Profit).
+   - Filter Toolbar (lines 121–154): Search input + Status select dropdown (`onchange="this.form.submit()"`).
+   - Desktop/Tablet Table (lines 161–305): 8 columns with sortable headers (`coocaTableSort()`) and sticky action column (`sticky right-0`).
+   - Mobile Grouped Inset List (lines 310–386): Inset list items for viewports `< 640px`.
+   - Apple Alert Dialog (lines 391–441): Centered native-style delete confirmation modal via `x-teleport="body"`.
+2. **Direct Observations of Defects & Anomalies**:
+   - **Severe Mobile Button Crowding & Sub-Standard Touch Targets**:
+     Lines 345–373 in the mobile list layout:
+     ```blade
+     <div class="flex items-center gap-1.5 shrink-0">
+         <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
+            class="h-8 px-2 rounded-[8px] text-[12px] font-medium ...">
+             <i data-lucide="printer" class="w-3.5 h-3.5 ..."></i>
+             <span>PDF</span>
+         </a>
+         @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
+             <a href="{{ route('invoices.edit', $inv->id) }}"
+                class="h-8 px-2 rounded-[8px] text-[12px] font-medium ...">
+                 <i data-lucide="edit-3" class="w-3.5 h-3.5 ..."></i>
+                 <span>{{ __('common.edit') }}</span>
+             </a>
+         @endif
+         <a href="{{ route('invoices.show', $inv->id) }}"
+            class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium ...">
+             <span>{{ __('sales.invoices.btn_detail') }}</span>
+             <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+         </a>
+         @if($inv->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
+             <button type="button" @click="openDelete(...)"
+                     class="h-8 w-8 rounded-[8px] ...">
+                 <i data-lucide="trash-2" class="w-4 h-4"></i>
+             </button>
+         @endif
+     </div>
+     ```
+     Each mobile card forces up to 4 inline action buttons side-by-side (`[PDF] [Edit] [Detail >] [Trash]`).
+     All 4 buttons have a fixed height of `h-8` (32px), with the delete button being `32x32px`. This violates the Apple HIG minimum touch target of 44×44px. On a 375px mobile screen, these buttons consume ~200px width, compressing invoice numbers, customer names, and amounts into ~140px, causing aggressive truncation.
+   - **Table Overflow Dropdown Clipping**:
+     Lines 161–162 wrap the desktop table with `overflow-hidden` and `overflow-x-auto`. The action column dropdown (lines 249–279) uses `absolute right-0 mt-1.5 w-48 ... z-30` without portal teleportation (`x-teleport`). When the table has only 1 or 2 rows, opening the dropdown extends beyond the bottom of the table and is clipped by the table scroll container.
+   - **Ungated Actions & Raw Context Calls**:
+     - Line 258: `route('invoices.pdf', $inv->id)` in the desktop dropdown has no permission check.
+     - Line 346: `route('invoices.pdf', $inv->id)` in the mobile list has no permission check.
+     - Line 360: Detail link has no explicit permission check.
+     - Lines 30, 38, 263, 270: Uses `\App\Support\Context::hasPermission(...)` instead of idiomatic Laravel `@can` directives.
 
-#### A. Multiple Competing Primary Actions in Headers
-1. **`resources/views/app/ai/lobby.blade.php` (Lines 18–49)**:
-   In `<x-module-header>`, 4 competing solid brightly-colored primary-style buttons sit side-by-side in the action slot:
-   ```blade
-   <button type="button" @click="activeWorkflowTab = 'teamwork'..." class="bg-[#007AFF] hover:bg-[#0071E3] text-white...">Rapat Tim (/teamwork)</button>
-   <button type="button" @click="activeWorkflowTab = 'goal'..." class="bg-[#34C759] hover:bg-[#2DBE50] text-white...">Target Bisnis (/goal)</button>
-   <button type="button" @click="activeWorkflowTab = 'grill_me'..." class="bg-[#FF9500] hover:bg-[#E08500] text-white...">Diagnosa Usaha (/grill-me)</button>
-   <button type="button" @click="activeWorkflowTab = 'boost'..." class="bg-[#AF52DE] hover:bg-[#9B42C6] text-white...">Analisa Kritis (/boost)</button>
-   <button type="button" @click="activeWorkflowTab = 'schedule'..." class="bg-black/[0.06] text-black/80...">Rutinitas (/schedule)</button>
-   ```
-   Furthermore, lines 141–176 immediately repeat the exact same 5 workflows in an Alpine segmented tab control bar.
-2. **`resources/views/app/ai-studio/index.blade.php` (Lines 22–53)**:
-   `<x-module-header>` contains 4 elements:
-   - Saldo badge
-   - Top Up Kredit: `bg-[#FF9500] hover:bg-[#E08500] text-white` (Solid orange primary)
-   - Jelajahi Inspirasi: `bg-black/[0.05]`
-   - Buat Proyek Baru: `bg-[#007AFF] hover:bg-[#0071E3] text-white` (Solid blue primary)
-   On viewports 375px–430px, these 4 items wrap into multiple uneven rows, creating high visual friction.
-3. **`resources/views/app/ai-studio/show.blade.php` (Lines 68–85 & 160–190)**:
-   - Header has 6 controls (Platform pill, Status pill, Saldo pill, Top Up button, New Generation button, Back button) wrapping awkwardly on mobile.
-   - Canvas action bar has two competing solid primary buttons side-by-side: `Simpan ke Katalog` (`bg-[#34C759]`) and `Posting ke Media Sosial` (`bg-[#007AFF]`).
+---
 
-#### B. Floating Collisions & Fixed Overlay Clashes on Mobile
-1. **`resources/views/app/ai/providers.blade.php` (Lines 8–19)**:
-   Toast is positioned fixed:
-   ```blade
-   <div x-show="toast.show" class="fixed bottom-6 right-6 z-50 max-w-md w-full shadow-2xl rounded-2xl p-4 border backdrop-blur-xl">
-   ```
-   In `resources/views/layouts/app.blade.php`, the `Mobile Bottom App Bar (iOS 18 Frosted Tab Bar)` is fixed at the bottom with a height of ~64px-72px plus `safe-area-inset-bottom`.
-   Result: On mobile (375px–430px), `bottom-6` (24px) places the toast right behind the tab bar, rendering the text obscured and its close button unreachable without triggering tab bar navigation items.
-2. **`resources/views/app/ai/partials/virtual_office_canvas.blade.php`**:
-   - Line 306: Room Header HUD is positioned `absolute top-4 left-4 z-20 max-w-[calc(100%-140px)]`.
-   - Line 340: Floating POV Controller HUD is positioned `absolute top-4 left-1/2 -translate-x-1/2 z-30 max-w-[95%]`.
-   - Line 396: Camera HUD is positioned `absolute top-4 right-4 z-20`.
-   On mobile/small screens, when `isPOVMode` is true, the top-center HUD collides and overlaps directly with both the top-left room header and top-right buttons.
-   - Line 425: Floating Status Pill `absolute bottom-5 left-5 z-20 hidden md:flex`.
-   - Line 446: Floating POV Command Bar `absolute bottom-5 left-1/2 -translate-x-1/2 z-30 w-[94%] max-w-2xl`.
-   - Line 510: Floating Control Center Dock `absolute bottom-5 left-1/2 -translate-x-1/2 z-30`.
-   - Line 550: Camera preset menu `w-72 bottom-full mb-3 left-1/2 -translate-x-1/2`. On screens <= 360px, `w-72` (288px) centered overflows viewport edges.
-3. **`resources/views/app/ai/partials/agent_inspector_hud.blade.php` (Line 16)**:
-   ```blade
-   class="absolute bottom-20 right-4 sm:right-6 z-50 max-w-sm sm:max-w-md w-full p-5 rounded-3xl ... max-h-[calc(100vh-6.5rem)] overflow-y-auto"
-   ```
-   On a 375px mobile screen, `max-w-sm` (384px) with `right-4` (16px) is wider than the viewport, clipping the left boundary off-screen. Furthermore, on short mobile heights (e.g. 667px), `bottom-20` causes the top of the HUD to overflow out of the canvas viewport.
+#### B. `resources\views\app\invoices\create.blade.php`
+1. **Component Hierarchy**:
+   - Header Toolbar (lines 184–208): Breadcrumbs, title, Cancel button, and Save button.
+   - Client Info Panel (lines 213–314): Customer select, PO pull option, sender/recipient names, dates, terms, warehouse location, attachment info.
+   - Items Section (lines 319–419): Items table with live product selection, unit, quantity, selling price, COGS snapshot (`unit_hpp`), row subtotal, and add/remove item controls.
+   - Calculation & Margin (lines 422–479): Estimated gross profit card (`#34C759`), notes, warranty terms, and totals breakdown (subtotal, discount, tax, shipping, grand total).
+   - Bottom Actions (lines 482–495): Secondary Cancel link + Primary Save button.
+2. **Direct Observations of Defects & Anomalies**:
+   - **Duplicate & Competing Solid Primary Buttons**:
+     - Line 203: `<button type="submit" class="... text-white bg-[#007AFF] ...">{{ __('sales.invoices.btn_save_invoice') }}</button>` in the top header.
+     - Line 488: `<button type="submit" class="... text-white bg-[#007AFF] ...">{{ __('sales.invoices.btn_save_invoice') }}</button>` at the bottom of the form.
+     Both buttons are styled as primary solid blue buttons, violating `ui-simplify-layout` ("Satu primary per layar/kartu/modal. Dua tombol solid yang bersaing membuat pengguna ragu").
+   - **Authorization Bypass on Top Submit Button**:
+     - Line 203 (top Save button) has **zero** permission gating.
+     - Line 487 (bottom Save button) is wrapped with `@if(\App\Support\Context::hasPermission('invoices.create'))`.
+     A user lacking `invoices.create` sees the top button active and clickable, while the bottom button is hidden.
+   - **Sub-Standard Mobile Touch Targets**:
+     - Line 326: "Add Item" button is `h-8` (32px).
+     - Line 354: Mobile item remove button is `h-6 px-2` (24px height).
+     - Lines 378, 386, 391, 396: Grid of inputs uses `w-[48%]` with `ml-[4%]`, leading to cramped inputs on screens `< 380px`.
+   - **Semantic Icon Inconsistency**:
+     - Line 204: Uses `data-lucide="send"` for saving an invoice.
+     - Line 490: Uses paper plane SVG for saving an invoice.
+     `ui-simplify-layout` mandates `check` or `save` for saving actions, reserving `send` for actual email/message dispatch.
 
-#### C. z-Index Inconsistencies & Teleportation Failures
-According to `layouts.app` and `ui-simplify-layout`:
-`--z-modal: 200`, `--z-sidebar: 50`, `--z-sticky: 30` (or `z-[35]`).
-- **`resources/views/app/ai-studio/partials/topup-modal.blade.php` (Line 4)**:
-  Uses `z-50` instead of `z-[200]`. Collides with `--z-sidebar: 50` in `layouts.app`.
-- **`resources/views/app/ai-studio/inspiration/index.blade.php` (Line 326)**:
-  `collectionModalOpen` uses `z-50` and is NOT wrapped in `<template x-teleport="body">`.
-- **`resources/views/app/ai-studio/inspiration/collections.blade.php` (Line 153)**:
-  `createModalOpen` uses `z-50` and lacks `x-teleport="body"`.
-- **`resources/views/app/ai-studio/inspiration/my-library.blade.php` (Line 158)**:
-  `uploadModalOpen` uses `z-50` and lacks `x-teleport="body"`.
+---
 
-#### D. Touch Target & Accessibility Anomalies
-- **`resources/views/app/ai-studio/inspiration/index.blade.php` (Lines 239, 247)**:
-  Card floating Favorite and Bookmark buttons are sized `w-7 h-7` (28x28px). Fails minimum mobile touch target rule (`>= 44x44px`).
-- **`resources/views/app/ai/index.blade.php` (Lines 160, 267)**:
-  Export Forecasting CSV (`px-2.5 py-1 text-xs`) and View All Stock (`px-2.5 py-1 text-xs`) buttons are undersized (`< 36px` height) with no touch target compensation.
-- **`resources/views/app/ai/index.blade.php` (Lines 64–96)**:
-  7 quick prompt buttons in `flex flex-wrap gap-2` stack into 3-4 vertical lines on mobile, creating unnecessary scroll bloat.
+#### C. `resources\views\app\invoices\edit.blade.php`
+1. **Component Hierarchy**:
+   - Matches `create.blade.php` with populated values from `$invoice` model: Header toolbar, client info, items table, profit/totals calculation, and bottom actions.
+2. **Direct Observations of Defects & Anomalies**:
+   - **Identical Duplicate Primary Buttons & Top Authorization Bypass**:
+     - Line 169: Top submit button has NO permission check.
+     - Line 431: Bottom submit button has `@if(\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create'))`.
+     - Both top and bottom buttons are solid blue primary buttons.
+   - **Inconsistent Button Heights Between Create and Edit**:
+     - In `create.blade.php` (line 484), buttons use `min-h-[44px] h-11`.
+     - In `edit.blade.php` (lines 428 & 432), bottom buttons use `h-9` (36px), violating 44px touch target rules on touch devices.
+   - **Mobile Item Card Ergonomics**:
+     - Add item button `h-8` (32px), remove item button `h-6` (24px).
 
-#### E. Symbol `+` Text Duplication
-- **`resources/views/app/ai-studio/show.blade.php` (Line 78)**:
-  `<i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span>+ Render Variasi Baru</span>`.
-- **`resources/views/app/ai-studio/inspiration/collections.blade.php` (Line 97)**:
-  `<span>+ Buat Koleksi Pertama Anda</span>`.
+---
 
-#### F. Dark/Light Mode Inconsistency & Blade Syntax Bug in Consultation Modal
-- **`resources/views/app/ai/partials/consultation_modal.blade.php`**:
-  - Line 101 contains a malformed HTML comment closing tag:
-    `<!-- Alert jika {{ __('ai.belum_ada_provider_ai_aktif') }}>` (ends with `>` instead of `-->`).
-  - Modal container (Line 29) hardcodes dark colors (`bg-[#0B0F19]`, `bg-[#070B12]/80`, `border-white/10`) with no Light Mode counterparts, breaking UI coherence when the business owner operates in Light Mode.
-  - Line 122 & Line 140: Both AI and User message bubbles share identical `bg-emerald-600 text-white` styling, eliminating visual sender distinction.
+#### D. `resources\views\app\invoices\show.blade.php`
+1. **Component Hierarchy**:
+   - Header Toolbar (lines 89–231): `<x-module-header>` with status badge, Back button, "Rilis Draf" button, "Catat Pembayaran" button, WhatsApp link, "Cetak A4" button, and `⋯` Actions dropdown.
+   - Main Document Card (lines 238–503): Commercial invoice card with PO reference, dates, party information (seller & customer inset Bento cards), warehouse badge, items table, real gross profit analysis card, financial calculation breakdown, and payment receipts history table.
+   - Action Modals (lines 508–912):
+     1. Record Payment Modal (`showPaymentModal`, lines 508–612)
+     2. Release Confirmation Dialog (`confirmReleaseModalOpen`, lines 618–667)
+     3. Void Confirmation Dialog (`confirmVoidModalOpen`, lines 673–722)
+     4. Delete Draft Dialog (`confirmDeleteModalOpen`, lines 728–777)
+     5. Term Reminder Modal (`showReminderModal`, lines 782–912)
+2. **Direct Observations of Defects & Anomalies**:
+   - **Header Action Crowding on Mobile**:
+     Lines 107–146 define actions in `flex items-center gap-2 flex-wrap sm:flex-nowrap justify-start sm:justify-end`.
+     When multiple actions are eligible, on mobile they wrap into 2–3 rows of buttons, displacing title and badge and causing vertical clutter.
+   - **Ungated Print & Communication Actions**:
+     - Line 142: Quick "Cetak A4" button (`route('invoices.print', $invoice->id)`) has NO permission check.
+     - Line 191: "Cetak A4" link in the overflow dropdown has NO permission check.
+     - Line 134: "Buka WhatsApp" link has NO permission check.
+   - **Modal Sizing Anomaly**:
+     - Record Payment modal (line 529) uses `sm:max-w-[95vw] lg:max-w-3xl` instead of the 2-column Bento canvas prescribed by `ui-simplify-layout`.
+     - Reminder modal (line 802) uses `max-w-lg`.
+   - **Raw Context Calls**:
+     Lines 57–63 declare PHP variables checking `\App\Support\Context::hasPermission(...)` rather than using Blade directives `@can`.
+
+---
+
+#### E. `resources\views\app\invoices\print.blade.php`
+1. **Component Hierarchy**:
+   - Floating Action Toolbar (lines 111–154): Back button, System Print button, and Direct PDF Download button.
+   - Print Sheet (lines 157–407): A4 portrait paper container with company header, buyer details, itemized table, bank transfer payment box, financial totals, and dual signature blocks.
+   - Embedded Scripts (lines 409–488): `downloadPDF()` using `html2pdf.js` and URL search param auto-executors (`?print=1` or `?download=1`).
+2. **Direct Observations of Defects & Anomalies**:
+   - **CRITICAL JAVASCRIPT SYNTAX ERROR**:
+     Lines 472–477 contain an unclosed `else` block and an unclosed `function downloadPDF()`:
+     ```javascript
+                 } else {
+                     element.style.padding = prevPadding;
+             function downloadPDF() {
+                 window.location.href = "{{ route('invoices.pdf', $invoice->id) }}";
+             }
+
+             window.addEventListener('load', () => {
+                 const params = new URLSearchParams(window.location.search);
+     ```
+     Verification with `node -e` confirmed:
+     `JS ERROR: Unexpected token ')'`
+     Because of this syntax error:
+     1. The browser's JavaScript engine throws a syntax error on script load.
+     2. `downloadPDF()` fails to compile.
+     3. `window.addEventListener('load')` is never registered, breaking auto-print and auto-download query params (`?print=1`, `?download=1`).
+   - **External CDN Dependency in Production View**:
+     Line 15: `<script src="https://cdn.tailwindcss.com"></script>` is loaded over CDN. In offline or private networks, printable invoices lose styling completely.
+   - **Unprotected Print View**:
+     The view contains no authorization checks around actions.
+
+---
+
+#### F. `resources\views\app\labor-machines\index.blade.php`
+1. **Component Hierarchy**:
+   - Header (lines 112–152): Page header with title, subtitle, breadcrumb, and 2 creation buttons: "Tambah Tarif Upah" and "Tambah Mesin Baru".
+   - Sub-Navigation Tabs (lines 157–195): Segmented pill bar linking to Calculator, Labor-Machines, and Profitability.
+   - Flash Messages (lines 201–221): Success/error alerts.
+   - KPI Summary (lines 226–272): 4 cards in `grid grid-cols-2 lg:grid-cols-4`.
+   - Controls Toolbar (lines 277–315): Search input + Segmented filter controls ("Semua", "Tenaga Kerja", "Mesin").
+   - Direct Labor Section (lines 320–515):
+     - Header with "Tambah Posisi" button.
+     - Desktop dense table (lines 351–454).
+     - Mobile grouped inset list (lines 457–514).
+   - Machines Section (lines 520–726):
+     - Header with "Tambah Mesin" button.
+     - Desktop dense table (lines 551–664).
+     - Mobile grouped inset list (lines 667–725).
+   - Modals & Dialogs (lines 731–1265):
+     - Add Labor Rate modal (`showLaborModal`, lines 731–849)
+     - Edit Labor Rate modal (`showEditLaborModal`, lines 853–974)
+     - Add Machine modal (`showMachineModal`, lines 979–1093)
+     - Edit Machine modal (`showEditMachineModal`, lines 1098–1213)
+     - Delete Confirmation dialog (`deleteModalOpen`, lines 1218–1259)
+2. **Direct Observations of Defects & Anomalies**:
+   - **CRITICAL PERMISSION MISMATCH (Route RBAC vs View Authorization)**:
+     - In `routes/owner.php` (lines 373–383):
+       ```php
+       Route::middleware(['module:labor_machines', 'require.permission:labor_machines.view'])->group(function (): void {
+           Route::get('/labor-machines', [LaborMachineWebController::class, 'index'])->name('labor-machines.index');
+       });
+       Route::middleware(['module:labor_machines', 'require.permission:labor_machines.manage'])->group(function (): void {
+           Route::post('/labor-rates', [LaborMachineWebController::class, 'storeLabor'])->name('labor-rates.store');
+           Route::put('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'updateLabor'])->name('labor-rates.update');
+           Route::delete('/labor-rates/{laborRate}', [LaborMachineWebController::class, 'destroyLabor'])->name('labor-rates.destroy');
+           Route::post('/machines', [LaborMachineWebController::class, 'storeMachine'])->name('machines.store');
+           Route::put('/machines/{machine}', [LaborMachineWebController::class, 'updateMachine'])->name('machines.update');
+           Route::delete('/machines/{machine}', [LaborMachineWebController::class, 'destroyMachine'])->name('machines.destroy');
+       });
+       ```
+     - In `resources/views/app/labor-machines/index.blade.php`:
+       Lines 138, 337, 410, 483, 538, 619, 694 check:
+       `@if (\App\Support\Context::hasPermission('costing.manage'))`!
+     - **Severe Operational Impact**:
+       The view checks `costing.manage`, but the routes strictly require `labor_machines.manage`. A user assigned the seeded role permission `labor_machines.manage` will see all action buttons completely hidden in the UI. Conversely, a user with only `costing.manage` will see the action buttons, but submitting forms results in a 403 Forbidden error.
+   - **Absence of Controller-Level RBAC in `LaborMachineWebController`**:
+     Inspecting `app\Http\Controllers\Web\LaborMachineWebController.php` reveals that it does NOT implement `HasMiddleware` and defines zero controller-level permission declarations, violating R2.
+   - **Button Proliferation & Lack of Contextual Filtering**:
+     - Header has: "Tambah Tarif Upah" and "Tambah Mesin Baru" (lines 141–149).
+     - Section 1 has: "Tambah Posisi" (line 339).
+     - Section 2 has: "Tambah Mesin" (line 540).
+     Four separate "Add" buttons appear on one screen. When filtered to "Tenaga Kerja" via the segmented control, the header still displays "Tambah Mesin Baru"; when filtered to "Mesin", it still displays "Tambah Tarif Upah".
+   - **Sub-Standard Mobile Touch Targets & Dangerous Proximity**:
+     Lines 495, 500, 706, 712 in the mobile inset lists:
+     - Edit button: `h-8 px-2.5` (32px height).
+     - Delete button: `h-8 w-8` (32×32px).
+     - Gap between Edit and Delete: `gap-1.5` (6px).
+     Both buttons are far below the 44px minimum target and are placed 6px apart, causing frequent accidental taps of the destructive delete button on mobile devices.
+   - **Narrow Form Modals (`sm:max-w-md`)**:
+     All 4 modals (Add Labor, Edit Labor, Add Machine, Edit Machine) use `class="... sm:max-w-md ..."` (448px max width). Form parameters (Hari/Bulan, Jam/Hari, Utilisasi %, Daya kW, Listrik/kWh, Rawat/Jam) are compressed into 3-column micro-grids with tiny inputs.
+   - **Hardcoded URL String Action Routes**:
+     - Line 888: `:action="'/labor-rates/' + editLabor.id"`
+     - Line 1133: `:action="'/machines/' + editMachine.id"`
+     Uses string concatenation instead of named routes or parameterized JS templates.
+   - **Extensive Hardcoded Indonesian Text (i18n Non-Compliance)**:
+     Over 40 text nodes in `labor-machines/index.blade.php` are hardcoded Indonesian strings without `__()` helpers (e.g., titles, breadcrumbs, table headers, parameter headings, delete confirmation prompts).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Premise**: In Cooca SaaS ERP, Business Owners and operators use the system on both mobile devices (e.g., iPhone/Android phones 375px–430px) and wide desktop screens (>=1024px).
-2. **Evidence**: `layouts.app` establishes a fixed mobile bottom tab bar (`iOS 18 Frosted Tab Bar`) with safe area padding, an expandable sidebar drawer (`z-50`), and an overlay z-index scale where modals reside at `z-[200]`.
-3. **Inference 1 (Overlap Root Cause)**: Modals and toasts in `providers.blade.php`, `topup-modal.blade.php`, and `inspiration/*.blade.php` configured with `z-50` or `bottom-6` physically collide with the layout's sticky bottom tab bar and sidebar. They must be promoted to `z-[200]` and teleported to `<body>`.
-4. **Inference 2 (Header Visual Hierarchy Collapse)**: Placing 4–5 bright, solid-colored buttons in module headers (`lobby.blade.php`, `ai-studio/index.blade.php`) creates decision fatigue and destroys the "Single Primary Action" rule. Secondary actions belong in segmented tabs, neutral outline buttons, or overflow dropdown menus.
-5. **Inference 3 (Canvas Overlay Overcrowding)**: The 3D canvas viewport in `virtual_office_canvas.blade.php` has three competing elements pinned to `top-4` and three to `bottom-5`. Under mobile viewports, these collide. Stacking them into a single responsive top bar and responsive bottom control tray with safe-area spacing resolves the overlap entirely.
-6. **Inference 4 (Mobile Usability & Standards)**: Sub-44px touch targets (`w-7 h-7` on cards) and multiline button wrapping violate `/ui-simplify-layout` and `/responsive-ui-ux`. Converting horizontal button stacks into swipeable snap sliders and expanding icon button touch targets to `44x44px` ensures zero mis-taps.
+1. **Premise 1 (Script Compilation)**: Any syntax error in a `<script>` tag prevents the script block from compiling and halts all event listener executions within that block.
+   - *Observation*: `resources\views\app\invoices\print.blade.php` (lines 472–477) has mismatched braces and an unclosed function, throwing `Unexpected token ')'`.
+   - *Inference*: Client-side PDF generation and automated URL parameter handling (`?print=1`, `?download=1`) are non-functional.
+
+2. **Premise 2 (Authorization Synchronization)**: UI action affordances must match backend enforcement; otherwise, users face either hidden features (false negatives) or 403 Forbidden errors (false positives).
+   - *Observation*: `routes/owner.php` enforces `labor_machines.manage` on all state-mutating routes, but `labor-machines/index.blade.php` guards buttons with `costing.manage`.
+   - *Inference*: Role assignments based on `RbacSeeder` for `labor_machines.manage` break on this view. Synchronizing the view guards to `@can('labor_machines.manage')` is strictly required.
+
+3. **Premise 3 (Controller-Level RBAC Requirement R2)**: Security controls must reside at the controller level (`HasMiddleware`), ensuring that authorization cannot be bypassed if route groups change.
+   - *Observation*: `InvoiceWebController` implements `HasMiddleware`, but `LaborMachineWebController` does not implement `HasMiddleware` and has no controller guards.
+   - *Inference*: `LaborMachineWebController` must be refactored to implement `HasMiddleware` with explicit permissions (`labor_machines.view`, `labor_machines.manage`).
+
+4. **Premise 4 (Visual Clarity and Primary Action Hierarchy)**: Interfaces that present multiple identical primary solid buttons cause visual competition and decision friction.
+   - *Observation*: `invoices/create.blade.php` and `invoices/edit.blade.php` provide identical solid `#007AFF` Save buttons at both the top toolbar and bottom footer. Furthermore, the top button lacks authorization checks.
+   - *Inference*: The header should either host a single authoritative primary action or use a sticky bottom action bar, removing redundant solid buttons and ensuring all submission buttons are gated with `@can`.
+
+5. **Premise 5 (Mobile Touch Ergonomics & Touch Target Sizing)**: Touch targets below 44×44px or spaced less than 8px apart violate Apple HIG and `ui-simplify-layout` and lead to mis-clicks.
+   - *Observation*: `invoices/index.blade.php` places 4 buttons (`h-8`, 32px) side-by-side in each mobile card. `labor-machines/index.blade.php` places an Edit button (32px) 6px away from a Delete button (32×32px).
+   - *Inference*: On mobile cards, secondary actions must be consolidated into an overflow menu (`⋯`) or the whole card should tap through to detail, leaving only 1 primary action or well-spaced targets (`min-h-[44px]`).
+
+6. **Premise 6 (Modal Form Dimensioning)**: Data entry modals constrained to `max-w-md` force parameter grids into cramped columns that impair usability.
+   - *Observation*: All 4 labor/machine modals use `sm:max-w-md`.
+   - *Inference*: Modals should expand to standard full-size Bento canvas (`max-w-4xl` / `max-w-5xl` on desktop, adaptive bottom sheets with safe-area padding on mobile).
 
 ---
 
 ## 3. Caveats
 
-1. **Read-Only Scope**: In accordance with the Teamwork explorer protocol, no source code files in `resources/views/` were altered during this survey.
-2. **Dynamic 3D WebGL Rendering**: The 3D Three.js canvas in `virtual_office_canvas.blade.php` relies on client-side WebGL dimensions. While the CSS overlay classes were fully parsed and audited, live canvas resize behavior depends on browser window resize events handled in `office_script.blade.php`.
-3. **Multi-Industry Visibility**: Certain buttons and links (such as POS terminal, BOM, and Kitchen views) are conditionally hidden based on `$activeBiz->isModuleEnabled()` and `$activeBiz->hasDineInFeature()`.
+1. **Read-Only Scope**: In strict accordance with the explorer archetype, no source files were modified during this survey.
+2. **Headless Environment**: Visual inspection was conducted via code analysis and static parsers. Real browser rendering across various viewport widths (320px, 375px, 768px, 1280px) should be verified once implementers apply layout updates.
+3. **Database Seed State**: Permissions observed in `RbacSeeder.php` reflect the repository's current definition. If new granular permissions (e.g., `invoices.print`) are desired, they must be registered in the seeder.
 
 ---
 
-## 4. Conclusion & Actionable Recommendations
+## 4. Conclusion
 
-To achieve production readiness and zero-overlap compliance across the AI and AI Studio modules, the following remediation tasks must be executed:
+Both modules exhibit strong visual foundations aligned with Apple HIG aesthetic guidelines, but contain **critical syntax, authorization, and mobile layout defects** that prevent production readiness:
 
-### Recommendation R1: Module Header Cleanliness & Single Primary Action
-- **`app/ai/lobby.blade.php`**:
-  - Retain **only 1 Primary Action** in the module header: `Rapat Tim (/teamwork)` (`bg-[#007AFF]`).
-  - Move other workflow triggers (`/goal`, `/grill_me`, `/boost`, `/schedule`) exclusively to the Segmented Control Bar (Lines 141–176), styled with subtle HIG active pills.
-- **`app/ai-studio/index.blade.php`**:
-  - Keep `Buat Proyek Baru` (`bg-[#007AFF]`) as the single primary header action.
-  - Demote `Top Up Kredit` to a secondary pill (`bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20`).
-- **`app/ai-studio/show.blade.php`**:
-  - Consolidate canvas actions: designate `Simpan ke Katalog` as the solid primary (`bg-[#007AFF]`), turn `Posting ke Media Sosial` into secondary outline/tonal (`bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black dark:text-white`), and move `Hapus` to a separated quiet destructive button with >= 16px distance.
-  - Remove character `+` from `<span>+ Render Variasi Baru</span>`.
-
-### Recommendation R2: Mobile Fixed & Floating Overlap Remediation
-- **`app/ai/providers.blade.php`**:
-  - Update toast positioning to `bottom-[calc(76px+env(safe-area-inset-bottom))] sm:bottom-6 right-4 sm:right-6 z-[220]` or leverage the layout's global `#alpine-toast-container`.
-- **`app/ai/partials/virtual_office_canvas.blade.php`**:
-  - Consolidate Top HUD: wrap Room Header, POV Mode indicator, and Camera controls into an adaptive flex navbar: `flex items-center justify-between gap-2 px-3 py-2 w-full`.
-  - For POV Mode on mobile, use a dedicated collapsible drawer or docked sheet instead of three floating blocks.
-  - Ensure Camera Preset Popover has responsive bounds: `max-w-[calc(100vw-32px)] w-72`.
-- **`app/ai/partials/agent_inspector_hud.blade.php`**:
-  - Change positioning to `inset-x-3 bottom-[calc(72px+env(safe-area-inset-bottom))] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-md w-auto z-[60]` with `max-h-[70vh]`.
-
-### Recommendation R3: Modal Stacking, Teleportation & z-Index Standardization
-- Wrap every modal with `<template x-teleport="body">`.
-- Standardize all modal shells to `z-[200]` and backdrop to `z-[200]`:
-  - `ai-studio/partials/topup-modal.blade.php` (`z-50` $\rightarrow$ `z-[200]`)
-  - `ai-studio/inspiration/index.blade.php` (`collectionModalOpen`: add teleport, `z-50` $\rightarrow$ `z-[200]`)
-  - `ai-studio/inspiration/collections.blade.php` (`createModalOpen`: add teleport, `z-50` $\rightarrow$ `z-[200]`)
-  - `ai-studio/inspiration/my-library.blade.php` (`uploadModalOpen`: add teleport, `z-50` $\rightarrow$ `z-[200]`)
-
-### Recommendation R4: Consultation Modal Theme & Message Bubble Redesign
-- In `app/ai/partials/consultation_modal.blade.php`:
-  - Fix syntax error on line 101 (`-->`).
-  - Apply dual mode classes: `bg-white dark:bg-[#1C1C1E] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white`.
-  - Differentiate message bubbles: AI Message $\rightarrow$ `bg-black/5 dark:bg-white/10 text-black dark:text-white`; User Message $\rightarrow$ `bg-[#007AFF] text-white`.
-
-### Recommendation R5: Touch Targets & Horizontal Snap Slider
-- In `ai-studio/inspiration/index.blade.php`: expand card action buttons to minimum 40x40px (`min-w-[40px] min-h-[40px] flex items-center justify-center`).
-- In `ai/index.blade.php`: convert the 7 multiline quick prompt chips into a horizontal swipeable snap slider (`flex gap-2 overflow-x-auto snap-x no-scrollbar pb-1`).
+1. **Critical Defect**: `resources\views\app\invoices\print.blade.php` has a JavaScript syntax error breaking PDF and print triggers.
+2. **Authorization Mismatch**: `resources\views\app\labor-machines\index.blade.php` guards write actions with `costing.manage` instead of `labor_machines.manage`, leading to authorization failures.
+3. **Missing Controller RBAC**: `LaborMachineWebController` lacks `HasMiddleware` and controller-level guards.
+4. **Security Leak in Views**: Top submission buttons in `invoices/create` and `invoices/edit` lack permission checks, and print links in `invoices/index` and `invoices/show` are completely ungated.
+5. **UI Clutter & Ergonomic Violations**:
+   - Competing primary solid buttons in invoice creation and editing views.
+   - 4 competing "Add" buttons across header and section headers in labor-machines.
+   - Squeezed 32px touch targets and dangerous button proximity on mobile cards.
+   - Narrow form modals (`sm:max-w-md`) cramping multi-parameter forms.
+   - Extensive hardcoded Indonesian strings in `labor-machines`.
 
 ---
 
 ## 5. Verification Method
 
-To independently verify these observations and validate downstream implementations:
+### 1. Reproduce Syntax Error in `invoices/print.blade.php`
+Execute:
+```powershell
+node -e "const fs = require('fs'); const content = fs.readFileSync('resources/views/app/invoices/print.blade.php', 'utf8'); const scripts = [...content.matchAll(/<script>([\s\S]*?)<\/script>/g)]; try { new Function(scripts[1][1]); console.log('Parsed OK'); } catch(e) { console.error('JS ERROR:', e.message); }"
+```
+*Expected Result*: Throws `JS ERROR: Unexpected token ')'` due to unclosed braces at lines 472–477.
 
-1. **Syntax Check**:
-   Run PHP lint on all surveyed Blade templates:
-   ```powershell
-   Get-ChildItem -Recurse -Path "resources\views\app\ai", "resources\views\app\ai-studio" -Filter "*.blade.php" | ForEach-Object { php -l $_.FullName }
-   ```
-2. **Inspection Commands**:
-   - Check modal z-indexes across AI Studio:
-     ```powershell
-     Select-String -Path "resources\views\app\ai-studio\*.blade.php", "resources\views\app\ai-studio\**\*.blade.php" -Pattern 'z-50|z-\[200\]|x-teleport'
-     ```
-   - Check `+` text label occurrences:
-     ```powershell
-     Select-String -Path "resources\views\app\ai\*.blade.php", "resources\views\app\ai-studio\**\*.blade.php" -Pattern '\+ [A-Z]'
-     ```
-3. **Invalidation Conditions**:
-   - Any report claim is invalidated if a Blade view already enforces single primary action, uses `z-[200]` with `x-teleport="body"`, or guarantees `>= 44px` touch targets without layout collision on 375px viewports.
+### 2. Verify PHP Syntax of All 6 Views
+Execute:
+```powershell
+php -l resources\views\app\invoices\index.blade.php
+php -l resources\views\app\invoices\create.blade.php
+php -l resources\views\app\invoices\edit.blade.php
+php -l resources\views\app\invoices\show.blade.php
+php -l resources\views\app\invoices\print.blade.php
+php -l resources\views\app\labor-machines\index.blade.php
+```
+*Expected Result*: All 6 files pass `No syntax errors detected`.
+
+### 3. Verify Permission Mismatch in Labor-Machines
+Inspect lines 376–383 of `routes/owner.php` vs lines 138, 337, 410, 538, 619 of `resources/views/app/labor-machines/index.blade.php`:
+- Route expects: `require.permission:labor_machines.manage`
+- View checks: `\App\Support\Context::hasPermission('costing.manage')`
+- Invalidation condition: If view is updated to `@can('labor_machines.manage')`, both route and view will check the exact same ability.
+
+### 4. Verify Missing Controller-Level RBAC
+Inspect `app/Http/Controllers/Web/LaborMachineWebController.php`:
+- Verify presence of `implements HasMiddleware` and `public static function middleware(): array`.
+- Invalidation condition: Controller must register `require.permission:labor_machines.view` for `index`, and `require.permission:labor_machines.manage` for `storeLabor`, `updateLabor`, `storeMachine`, `updateMachine`, `destroyLabor`, `destroyMachine`.
+
+---
+
+## 6. Prioritized Remediation Roadmap (Aligned with `ui-simplify-layout`)
+
+### Priority 1: Fix Syntax & Security Vulnerabilities
+1. **Fix `invoices/print.blade.php` Script**:
+   Close the `else` block properly and isolate `downloadPDF()` so `window.addEventListener('load')` executes cleanly. Replace the CDN Tailwind script with local bundle assets or fallback.
+2. **Align Labor-Machines Permissions**:
+   Change all `Context::hasPermission('costing.manage')` in `labor-machines/index.blade.php` to `@can('labor_machines.manage')`.
+3. **Implement Controller-Level RBAC in `LaborMachineWebController`**:
+   Add `implements HasMiddleware` with middleware mapping for `labor_machines.view` and `labor_machines.manage`.
+4. **Gate All Action Buttons with `@can`**:
+   - Wrap top Save button in `invoices/create.blade.php` with `@can('invoices.create')`.
+   - Wrap top Save button in `invoices/edit.blade.php` with `@can('invoices.edit')`.
+   - Wrap PDF / Print links in `invoices/index.blade.php` and `invoices/show.blade.php` with `@can('invoices.export')` or `@can('invoices.view')`.
+
+### Priority 2: Simplify UI & Resolve Button Competing Hierarchies
+1. **Eliminate Duplicate Primary Buttons**:
+   In `create.blade.php` and `edit.blade.php`, retain a single primary solid action button (in the top header, or sticky bottom bar on mobile). Change duplicate buttons to secondary or remove them.
+2. **Consolidate Labor-Machines Creation Actions**:
+   In `labor-machines/index.blade.php`, remove redundant "Tambah Posisi" and "Tambah Mesin" from section headers. Use a single context-aware primary button in the main header that dynamically switches between "Tambah Tarif Upah" or "Tambah Mesin" based on `activeSection`.
+3. **Fix Mobile Inset List Touch Targets**:
+   - In `invoices/index.blade.php`, replace the 4-button cluster with a single "Detail" chevron link, moving PDF, Edit, and Delete into an overflow menu (`⋯`).
+   - In `labor-machines/index.blade.php`, increase Edit and Delete button touch targets to `min-h-[44px] min-w-[44px]` and enforce minimum 8px spacing.
+4. **Upgrade Modals to Full-Size Canvas**:
+   Expand labor and machine form modals from `sm:max-w-md` to comfortable 2-column Bento layouts (`max-w-4xl`), ensuring parameter inputs have proper breathing room.
+5. **Localize Hardcoded Strings**:
+   Wrap all hardcoded Indonesian text in `labor-machines/index.blade.php` with `__()` helpers in `resources/lang/id/labor_machines.php` and `resources/lang/en/labor_machines.php`.

@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            @if (\App\Support\Context::hasPermission('costing.manage'))
+            @can('labor_machines.manage')
                 <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                     <button type="button" @click="showLaborModal = true"
                         class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
@@ -148,7 +148,7 @@
                         <span>Tambah Mesin Baru</span>
                     </button>
                 </div>
-            @endif
+            @endcan
         </header>
 
         {{-- ===================================================== --}}
@@ -166,7 +166,7 @@
 
                 @if (
                     (\App\Support\Context::hasPermission('labor_machines.view') ||
-                        \App\Support\Context::hasPermission('costing.manage')) &&
+                        \App\Support\Context::hasPermission('labor_machines.manage')) &&
                         (request()->routeIs('labor-machines.*') ||
                             (\App\Support\Context::business()?->isModuleEnabled(
                                 \App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true)))
@@ -334,7 +334,7 @@
                     </div>
                 </div>
 
-                @if (\App\Support\Context::hasPermission('costing.manage'))
+                @can('labor_machines.manage')
                     <button type="button" @click="showLaborModal = true"
                         class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
@@ -343,7 +343,7 @@
                         </svg>
                         <span>Tambah Posisi</span>
                     </button>
-                @endif
+                @endcan
             </div>
 
             <!-- 4A. Desktop Dense Table -->
@@ -407,7 +407,7 @@
                                         {{ number_format((float) $hourly, 0, ',', '.') }}/jam
                                     </td>
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                        @if (\App\Support\Context::hasPermission('costing.manage'))
+                                        @can('labor_machines.manage')
                                             <div class="flex items-center justify-end gap-1">
                                                 <button type="button" title="{{ __('labor_machines.edit_tarif') }}" aria-label="{{ __('labor_machines.edit_tarif_2') }}"
                                                     @click="openEditLabor(@js([
@@ -431,7 +431,7 @@
                                             </div>
                                         @else
                                             <span class="text-black/30 dark:text-white/30 text-[12px]">-</span>
-                                        @endif
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty
@@ -480,7 +480,7 @@
                                 </span>
                             </p>
                         </div>
-                        @if (\App\Support\Context::hasPermission('costing.manage'))
+                        @can('labor_machines.manage')
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <button type="button" @click="openEditLabor(@js([
     'id' => $lr->id,
@@ -504,7 +504,7 @@
                                     </svg>
                                 </button>
                             </div>
-                        @endif
+                        @endcan
                     </div>
                 @empty
                     <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
@@ -535,7 +535,7 @@
                     </div>
                 </div>
 
-                @if (\App\Support\Context::hasPermission('costing.manage'))
+                @can('labor_machines.manage')
                     <button type="button" @click="showMachineModal = true"
                         class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
@@ -544,7 +544,7 @@
                         </svg>
                         <span>Tambah Mesin</span>
                     </button>
-                @endif
+                @endcan
             </div>
 
             <!-- 5A. Desktop Dense Table -->
@@ -616,7 +616,7 @@
                                         {{ number_format((float) $totalHourly, 0, ',', '.') }}/jam
                                     </td>
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                        @if (\App\Support\Context::hasPermission('costing.manage'))
+                                        @can('labor_machines.manage')
                                             <div class="flex items-center justify-end gap-1">
                                                 <button type="button" title="{{ __('labor_machines.edit_mesin') }}" aria-label="{{ __('labor_machines.edit_mesin_2') }}"
                                                     @click="openEditMachine(@js([
@@ -640,7 +640,7 @@
                                             </div>
                                         @else
                                             <span class="text-black/30 dark:text-white/30 text-[12px]">-</span>
-                                        @endif
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty
@@ -691,7 +691,7 @@
                                 </span>
                             </p>
                         </div>
-                        @if (\App\Support\Context::hasPermission('costing.manage'))
+                        @can('labor_machines.manage')
                             <div class="flex items-center gap-1.5 shrink-0">
                                 <button type="button" @click="openEditMachine(@js([
     'id' => $m->id,
@@ -715,7 +715,7 @@
                                     </svg>
                                 </button>
                             </div>
-                        @endif
+                        @endcan
                     </div>
                 @empty
                     <div class="p-8 text-center text-black/40 dark:text-white/40 text-[13px]">
