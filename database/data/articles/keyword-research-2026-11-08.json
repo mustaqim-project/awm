@@ -1,0 +1,73 @@
+{
+  "research_date": "2026-11-08",
+  "batch": 3,
+  "timezone": "Asia/Jakarta",
+  "platform": "Cooca (cooca.id)",
+  "target_audience": [
+    "Pelaku usaha mikro dan toko kelontong yang menerima pembayaran QRIS",
+    "Wajib pajak orang pribadi dan pemilik PT Perorangan UMKM yang bermigrasi ke Coretax DJP",
+    "Pengusaha toko ritel, minimarket, kafe, dan barbershop yang mempekerjakan staf toko",
+    "Produsen makanan olahan, katering, dan pedagang kuliner yang menghadapi pengawasan wajib halal BPJPH",
+    "Seller TikTok Shop dan Shopee yang bersiap menyambut festival belanja 11.11 dan 12.12",
+    "Pemilik toko dan restoran yang ingin menertibkan rekonsiliasi kas register harian",
+    "Pemasok, grosir, dan distributor B2B yang memiliki tagihan piutang tempo",
+    "Pengusaha kafe dan resto yang mengendalikan food cost dan resep bahan baku",
+    "Pedagang ritel yang mengelola banyak cabang toko dan gudang marketplace",
+    "Pebisnis ritel dan jasa yang ingin membangun basis pelanggan setia berbasis loyalitas WhatsApp"
+  ],
+  "topical_coverage_map": {
+    "core_pillar": "Business Operating System UMKM Indonesia",
+    "clusters": [
+      {
+        "cluster": "Pajak & Regulasi Transaksi",
+        "article": "Klarifikasi Aturan Pajak QRIS dan Insentif MDR 0 Persen Bank Indonesia",
+        "relation": "Edukasi bahwa QRIS bukan objek PPN baru dan pemanfaatan tarif MDR 0% usaha mikro transaksi kecil."
+      },
+      {
+        "cluster": "Kepatuhan Pajak Digital",
+        "article": "Panduan Aktivasi Akun Coretax DJP dan Validasi NPWP 16 Digit UMKM",
+        "relation": "Langkah teknis aktivasi akun pajak mandiri di portal baru DJP dan penerbitan kode tanda tangan digital."
+      },
+      {
+        "cluster": "Penggajian & Anggaran SDM",
+        "article": "Simulasi Kenaikan UMP dan UMK 2027 untuk Anggaran Gaji Karyawan Toko",
+        "relation": "Proyeksi beban gaji pasca penetapan UMP/UMK November 2026 dan pedoman rasio payroll sehat."
+      },
+      {
+        "cluster": "Sertifikasi & Legalitas Pangan",
+        "article": "Tahapan Sanksi Administratif Wajib Halal Menurut Peraturan BPJPH Nomor 2 Tahun 2026",
+        "relation": "Pencegahan sanksi penarikan produk olahan makanan minuman dengan jalur self-declare gratis."
+      },
+      {
+        "cluster": "Pemasaran & Live Commerce",
+        "article": "Trik Sukses Live Shopping Harbolnas 11.11 dan 12.12 bagi UMKM",
+        "relation": "Strategi interaksi host, flash sale berkala 30 menit, dan SOP packing kilat anti penalti keterlambatan."
+      },
+      {
+        "cluster": "Kasir & Pengendalian Kas",
+        "article": "SOP Rekonsiliasi Kas Harian Toko Kasir POS dan Blind Count",
+        "relation": "Prosedur tutup shift kasir, investigasi selisih kas fisik laci, dan berita acara serah terima register."
+      },
+      {
+        "cluster": "Piutang B2B & Faktur Penjualan",
+        "article": "Strategi Penagihan Piutang Dagang B2B UMKM agar Invoice Cepat Lunas",
+        "relation": "Penerapan diskon pelunasan cepat 2/10 Net 30 dan skrip pesan WhatsApp santun pencair modal kerja."
+      },
+      {
+        "cluster": "HPP & Manajemen Dapur",
+        "article": "Cara Menghitung Food Cost Ideal Kafe Resto agar Margin Bersih 30 Persen",
+        "relation": "Pengendalian waste dapur, kalkulasi yield susut bahan baku, dan resep standar menu kuliner."
+      },
+      {
+        "cluster": "Multi Gudang & Distribusi",
+        "article": "Manajemen Multi Gudang Toko Ritel dan Marketplace: Solusi Stok Anti-Overselling",
+        "relation": "Sinkronisasi persediaan toko fisik dan marketplace daring dengan alokasi safety stock per channel."
+      },
+      {
+        "cluster": "CRM & Retensi Pelanggan",
+        "article": "Cara Membuat Program Loyalitas Poin Belanja untuk Menaikkan Repeat Order",
+        "relation": "Sistem membership digital nomor WhatsApp dan kupon hadiah ulang tahun pencetak repeat order."
+      }
+    ]
+  }
+}

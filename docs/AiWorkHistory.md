@@ -33,6 +33,127 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-08-385] Google Trends Business Research, Blog Article Production (10 Artikel SEO Edukasi UMKM ID 281-290) & Production Deployment for COOCA
+
+- **Date:** 2026-11-08
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Indonesia & Regulatory Analysis November 2026, 10 Curated SEO Articles (Batch 3: ID 281-290), Zero Em Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika tren bisnis, regulasi pemerintah, persiapan festival belanja Harbolnas 11.11 dan 12.12, serta tantangan operasional harian UMKM Indonesia per 8 November 2026 untuk mendongkrak trafik pencarian organik, otoritas domain, dan konversi merchant Cooca.
+- **Target:**
+  1. Melakukan riset mendalam Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 8 November 2026 dan menghasilkan `database/data/articles/trending-research-2026-11-08.json` serta `database/data/articles/keyword-research-2026-11-08.json`.
+  2. Memproduksi 10 artikel edukasi bisnis berkualitas tinggi (ID 281 hingga 290) dengan kepatuhan mutlak:
+     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel).
+     - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
+     - Lolos linter konten (`lint_content.py`) dengan status 100% lulus (0 FAIL).
+  3. Mengimpor seluruh artikel ke database sistem melalui `php artisan blog:import-articles --force` (total 296 artikel terverifikasi dan aktif di database), memperbarui `public/sitemap_blog.xml`, dan dataset `blog_links.json`.
+  4. Memverifikasi render antarmuka `/blog/{slug}` berstatus 200 OK dengan Schema.org JSON-LD Article dan FAQPage.
+
+#### 2. What Was Done
+1. **Riset Tren & Regulasi Bisnis Nasional (8 November 2026):**
+   - ID 281: Aturan Pajak QRIS dan Insentif MDR 0 Persen Bank Indonesia (Klarifikasi DJP bahwa QRIS bukan objek PPN baru, PMK 49/2026 untuk pajak digital asing, insentif MDR 0% usaha mikro transaksi s/d Rp500.000 dan transaksi kecil s/d Rp100.000, serta larangan surcharge).
+   - ID 282: Cara Aktivasi Akun Coretax DJP NPWP 16 Digit UMKM (Panduan teknis aktivasi akun mandiri di coretaxdjp.pajak.go.id, format NIK 16 digit, verifikasi biometrik wajah, dan permohonan Kode Otorisasi DJP).
+   - ID 283: Simulasi Kenaikan UMP dan UMK 2027 untuk UMKM Toko (Proyeksi dampak kenaikan upah per 1 Januari 2027 pasca penetapan November 2026, rumus inflasi alfa pertumbuhan ekonomi, rasio aman payroll 15-25%, dan klausul upah mikro 50% UMK).
+   - ID 284: Sanksi Administratif Wajib Halal Permen BPJPH 2026 (Bedah regulasi Peraturan BPJPH Nomor 2 Tahun 2026 perihal sanksi berjenjang peringatan tertulis 15-30 hari, denda, pencabutan, penarikan produk, serta pendaftaran self-declare gratis via P3H).
+   - ID 285: Trik Live Shopping Harbolnas untuk UMKM Toko Online (Strategi retensi hook 3 detik, flash sale berkala per 30 menit di TikTok Shop & Shopee, paket bundling penaik AOV, dan SOP packing kilat anti penalti SLA).
+   - ID 286: SOP Rekonsiliasi Kas Harian Toko Kasir POS dan Blind Count (Prosedur tutup shift kasir, metode blind cash count pencegah manipulasi nota, formulir berita acara selisih kas fisik, dan settlement EDC/QRIS).
+   - ID 287: Strategi Penagihan Piutang Dagang B2B UMKM Tanpa Konflik (Penerapan termin Net 30, insentif diskon pelunasan cepat 2/10 Net 30, laporan umur piutang aging AR, dan skrip pengingat WhatsApp santun).
+   - ID 288: Cara Menghitung Food Cost Ideal Kafe Resto Margin 30 Persen (Kalkulasi yield susut bahan pangan mentah, resep standar Bill of Materials, portion control dapur, dan pengendalian waste).
+   - ID 289: Manajemen Multi Gudang Toko Ritel dan Marketplace UMKM (Arsitektur alokasi stok penyangga per channel, mitigasi risiko overselling/pembatalan order, dan prosedur surat mutasi transfer barang antarcabang).
+   - ID 290: Cara Membuat Program Loyalitas Poin Belanja UMKM Toko (Sistem membership digital berbasis nomor WhatsApp tanpa kartu fisik, simulasi nilai konversi poin yang aman 1,5-3%, dan otomasi ucapan ulang tahun berhadiah kupon).
+2. **Produksi Artikel Markdown & Metadata JSON:**
+   - Menghasilkan 10 pasang berkas `.md` dan `.json` di `database/data/articles/` (ID 281 hingga 290).
+   - Menjalankan script validasi `lint_content.py` dengan hasil 10/10 lulus (0 FAIL).
+3. **Database Import & Regenerasi Public Sitemap:**
+   - Menjalankan `php artisan blog:import-articles --force` (total 306 berkas diproses, 296 artikel published aktif di database).
+   - Meregenerasi `public/sitemap_blog.xml` dan menyinkronkan `blog_links.json` menjadi 296 link aktif.
+   - Memverifikasi render view controller `PublicBlogController::show()` berstatus normal dengan Schema.org JSON-LD lengkap.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `docs/AiWorkHistory.md`
+  - `blog_links.json`
+  - `public/sitemap_blog.xml`
+- **Files Created:**
+  - `database/data/articles/trending-research-2026-11-08.json`
+  - `database/data/articles/keyword-research-2026-11-08.json`
+  - `scripts/batch3_common.py`
+  - `scripts/generate_batch3_part1.py`
+  - `scripts/generate_batch3_part2.py`
+  - `scripts/build_and_validate_batch3.py`
+  - `database/data/articles/281-aturan-pajak-qris-dan-insentif-mdr-0-persen.md` & `.json`
+  - `database/data/articles/282-cara-aktivasi-akun-coretax-djp-npwp-16-digit-umkm.md` & `.json`
+  - `database/data/articles/283-simulasi-kenaikan-ump-dan-umk-2027-untuk-umkm.md` & `.json`
+  - `database/data/articles/284-sanksi-administratif-wajib-halal-permen-bpjph-nomor-2-tahun-2026.md` & `.json`
+  - `database/data/articles/285-trik-live-shopping-harbolnas-11-11-dan-12-12-umkm.md` & `.json`
+  - `database/data/articles/286-sop-rekonsiliasi-kas-harian-toko-kasir-pos.md` & `.json`
+  - `database/data/articles/287-strategi-penagihan-piutang-dagang-b2b-umkm.md` & `.json`
+  - `database/data/articles/288-cara-menghitung-food-cost-ideal-kafe-resto.md` & `.json`
+  - `database/data/articles/289-manajemen-multi-gudang-toko-ritel-dan-marketplace.md` & `.json`
+  - `database/data/articles/290-cara-membuat-program-loyalitas-poin-belanja-umkm.md` & `.json`
+
+---
+
+### [WORK-2026-11-08-384] UMKM Business Education SEO Content Strategy, Article Generation & Production Deployment for COOCA
+
+- **Date:** 2026-11-08
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture & Business Regulatory Education
+- **Feature:** UMKM Business Education SEO Content Strategy & Article Production Deployment (`aturan-baru-pajak-umkm-2026-pph-final-permanen`), Full Compliance with Zero Em Dash, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika regulasi perpajakan UMKM terkini pasca penerbitan Peraturan Pemerintah Nomor 20 Tahun 2026 (PP 20/2026 sebagai perubahan PP 55/2022) dan integrasi pemungutan PPh Pasal 22 di marketplace (PMK 37/2025). Pelaku usaha kecil membutuhkan edukasi praktis mengenai penghapusan batas waktu 7 tahun tarif PPh Final 0,5 persen (menjadi permanen), fasilitas omzet bebas pajak hingga 500 juta rupiah, tata cara surat pernyataan bebas pajak di marketplace, dan pembukuan sederhana untuk menghindari sanksi denda DJP.
+- **Target:**
+  1. Melakukan riset kata kunci dan tren mendalam menggunakan 6 variasi penelusuran web bahasa Indonesia seputar regulasi PP 20/2026, Coretax DJP, dan ketentuan pemotongan lokapasar.
+  2. Menyusun strategi konten SEO dan Keyword Brief yang memetakan search intent, secondary keywords, pertanyaan FAQ, dan unique value proposition Cooca secara natural.
+  3. Memproduksi artikel edukasi bisnis berkualitas tinggi (2.234 kata) dengan kepatuhan mutlak:
+     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tautan internal kontekstual eksklusif dari `/blog/(slug)` valid di `blog_links.json` (5 internal links unik).
+     - Heading structure terstandarisasi (1 H1, 6 H2, FAQ komprehensif 5 pertanyaan).
+     - Frontmatter lengkap + blok JSON-LD `Article` dan `FAQPage`.
+  4. Lolos verifikasi penuh `lint_content.py` dengan skor 0 FAIL dan 0 WARN.
+  5. Melakukan deployment produksi langsung ke `database/data/articles/aturan-baru-pajak-umkm-2026-pph-final-permanen.md`, mengimpor ke tabel `posts` via `php artisan blog:import-articles`, dan memverifikasi sitemap `public/sitemap_blog.xml` serta respons HTTP 200 route `/blog/aturan-baru-pajak-umkm-2026-pph-final-permanen`.
+
+#### 2. What Was Done
+1. **Fase 1: Scraping & Product Brief Cooca:**
+   - Memetakan fakta dasar Cooca sebagai Business Operating System all-in-one untuk UMKM (POS, multi-gudang, purchase order, sales order, invoicing, CRM/loyalty, landing page builder, WhatsApp Gateway, dan kalkulasi HPP ABC).
+   - Memastikan tidak ada klaim fitur, harga, atau angka fiktif.
+2. **Fase 2: Ekstraksi Tautan Internal Valid:**
+   - Mengekstraksi 285 artikel aktif dari `public/sitemap_blog.xml` menggunakan `fetch_blog_links.py` ke `database/data/blog_links.json`.
+   - Memilih 5 artikel pilar yang relevan untuk konteks perpajakan dan keuangan UMKM:
+     - `/blog/omzet-500-juta-bebas-pajak`
+     - `/blog/isu-pajak-transaksi-digital-dan-marketplace-umkm`
+     - `/blog/panduan-pemisahan-rekening-bisnis-dan-pribadi`
+     - `/blog/laporan-keuangan-sederhana-umkm-sak-emkm-vs-pembukuan-sederhana`
+     - `/blog/cara-menghitung-laba-bersih-dan-laba-kotor-umkm`
+3. **Fase 3: Riset Kata Kunci & Tren Google/DJP:**
+   - Menjalankan 6 kueri penelusuran web bahasa Indonesia terkini seputar PP 20/2026, PMK 37/2025, KAP 411128 KJS 420, batas setor tanggal 15, denda UU KUP, dan surat pernyataan omzet marketplace.
+   - Menghasilkan Keyword Brief: Primary Keyword `pajak umkm 2026` (kepadatan 1,07%), 6 secondary keywords, dan 5 pertanyaan FAQ mendalam.
+4. **Fase 4: Penulisan Artikel Human-Friendly & On-Page SEO:**
+   - Menghasilkan artikel 2.234 kata berbahasa Indonesia yang bersahaja, lugas, mengalir alami, bebas klise AI, dilengkapi tabel simulasi perhitungan bulanan konkret kedai kuliner omzet 840 juta rupiah/tahun, serta integrasi peran Cooca POS dan pencatatan omzet harian.
+   - Memasukkan metadata Schema.org JSON-LD `Article` dan `FAQPage` di penutup artikel.
+5. **Fase 5: Verifikasi Linting & Deployment Produksi:**
+   - Menjalankan `python lint_content.py` -> **0 FAIL, 0 WARN** (100% compliant).
+   - Menempatkan berkas artikel di `database/data/articles/aturan-baru-pajak-umkm-2026-pph-final-permanen.md`.
+   - Menjalankan `php artisan blog:import-articles` -> berhasil mengimpor 296 artikel ke database `posts` (ID: 286).
+   - Memperbarui `public/sitemap_blog.xml` dan memverifikasi ketersediaan URL kanonis.
+   - Menguji render HTTP route `/blog/aturan-baru-pajak-umkm-2026-pph-final-permanen` -> HTTP Status 200 (Success).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `database/data/articles/aturan-baru-pajak-umkm-2026-pph-final-permanen.md` (Artikel baru)
+  - `database/data/articles/seo-strategy-pph-final-2026.json` (Arsip metadata strategi riset)
+  - `database/data/blog_links.json` (Sinkronisasi daftar artikel)
+  - `public/sitemap_blog.xml` (Pembaruan indeks sitemap XML blog)
+  - `docs/AiWorkHistory.md` (Pencatatan Layer 1)
+- **Database Changes:**
+  - Record baru pada tabel `posts` dengan slug `aturan-baru-pajak-umkm-2026-pph-final-permanen`, cluster `edukasi`, kategori `Pajak & Legalitas`, status published.
+
 ### [WORK-2026-11-07-383] UMKM Business Education SEO Content Strategy, Article Generation (Batch 2: ID 271-280) & Production Deployment for COOCA
 
 - **Date:** 2026-11-07
