@@ -1,0 +1,108 @@
+﻿{
+    "id":  302,
+    "title":  "Perbedaan Izin Edar PIRT dan BPOM Olahan Pangan UMKM Kuliner",
+    "slug":  "perbedaan-izin-edar-pirt-dan-bpom-olahan-pangan-umkm",
+    "meta_title":  "Perbedaan Izin Edar PIRT dan BPOM Olahan Pangan UMKM",
+    "meta_description":  "Pahami perbedaan izin edar PIRT dan BPOM olahan pangan UMKM kuliner, syarat risiko pangan, batas masa simpan 7 hari, fasilitas dapur, dan alur izin OSS.",
+    "primary_keyword":  "perbedaan izin edar pirt dan bpom olahan pangan umkm",
+    "secondary_keywords":  "syarat izin edar bpom md frozen food, pendaftaran spp irt online oss dinkes, kategori risiko pangan rendah dan tinggi bpom, aturan masa simpan pangan lebih dari 7 hari, fasilitas produksi rumah vs pabrik terpisah",
+    "search_intent":  "informational",
+    "category":  "Pajak \u0026 Legalitas",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Apakah makanan beku (frozen food) rumahan boleh menggunakan izin PIRT?",
+                     "a":  "Tidak boleh. Berdasarkan regulasi Badan POM, semua produk makanan beku yang membutuhkan penyimpanan suhu dingin masuk ke dalam kategori pangan olahan risiko tinggi, sehingga wajib memiliki izin edar BPOM MD meskipun diproduksi dalam skala rumahan."
+                 },
+                 {
+                     "q":  "Berapa lama masa berlaku sertifikat izin edar PIRT dan BPOM MD?",
+                     "a":  "Sertifikat Produksi Pangan Industri Rumah Tangga (SPP-PIRT) berlaku selama lima tahun sejak diterbitkan dan dapat diperpanjang. Izin edar BPOM MD juga memiliki masa berlaku selama lima tahun dan dapat diperpanjang melalui portal e-Registration BPOM."
+                 },
+                 {
+                     "q":  "Apakah membuat izin PIRT di Dinas Kesehatan dipungut biaya?",
+                     "a":  "Penerbitan nomor SPP-PIRT melalui portal OSS pada dasarnya tidak dipungut biaya retribusi perizinan. Namun, beberapa daerah mungkin memberlakukan biaya retribusi daerah yang sangat terjangkau untuk pelaksanaan pelatihan Penyuluhan Keamanan Pangan (PKP)."
+                 },
+                 {
+                     "q":  "Mengapa tempat produksi BPOM MD tidak boleh menyatu dengan dapur rumah?",
+                     "a":  "Persyaratan ini ditetapkan untuk mencegah terjadinya kontaminasi silang dari debu, hewan peliharaan, aroma masakan dapur rumah tangga, serta aktivitas anggota keluarga yang dapat mencemari produk pangan olahan komersial berskala tinggi."
+                 },
+                 {
+                     "q":  "Bagaimana Cooca membantu produsen makanan mengelola masa kedaluwarsa bahan baku?",
+                     "a":  "Sistem Cooca mencatat tanggal masuk dan masa simpan setiap bahan baku secara otomatis di modul inventori, menerapkan prinsip rotasi FIFO, dan memberikan notifikasi peringatan jika ada stok bahan pangan yang mendekati batas kedaluwarsa."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "Perbedaan Izin Edar PIRT vs BPOM Olahan Pangan UMKM Kuliner",
+                                          "description":  "Pahami perbedaan izin edar PIRT dan BPOM olahan pangan UMKM kuliner, syarat risiko pangan, batas masa simpan 7 hari, fasilitas dapur, dan alur izin OSS.",
+                                          "image":  "https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/perbedaan-izin-edar-pirt-dan-bpom-olahan-pangan-umkm",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/perbedaan-izin-edar-pirt-dan-bpom-olahan-pangan-umkm",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah makanan beku (frozen food) rumahan boleh menggunakan izin PIRT?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Tidak boleh. Berdasarkan regulasi Badan POM, semua produk makanan beku yang membutuhkan penyimpanan suhu dingin masuk ke dalam kategori pangan olahan risiko tinggi, sehingga wajib memiliki izin edar BPOM MD meskipun diproduksi dalam skala rumahan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa lama masa berlaku sertifikat izin edar PIRT dan BPOM MD?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Sertifikat Produksi Pangan Industri Rumah Tangga (SPP-PIRT) berlaku selama lima tahun sejak diterbitkan dan dapat diperpanjang. Izin edar BPOM MD juga memiliki masa berlaku selama lima tahun dan dapat diperpanjang melalui portal e-Registration BPOM."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah membuat izin PIRT di Dinas Kesehatan dipungut biaya?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Penerbitan nomor SPP-PIRT melalui portal OSS pada dasarnya tidak dipungut biaya retribusi perizinan. Namun, beberapa daerah mungkin memberlakukan biaya retribusi daerah yang sangat terjangkau untuk pelaksanaan pelatihan Penyuluhan Keamanan Pangan (PKP)."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Mengapa tempat produksi BPOM MD tidak boleh menyatu dengan dapur rumah?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Persyaratan ini ditetapkan untuk mencegah terjadinya kontaminasi silang dari debu, hewan peliharaan, aroma masakan dapur rumah tangga, serta aktivitas anggota keluarga yang dapat mencemari produk pangan olahan komersial berskala tinggi."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana Cooca membantu produsen makanan mengelola masa kedaluwarsa bahan baku?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Sistem Cooca mencatat tanggal masuk dan masa simpan setiap bahan baku secara otomatis di modul inventori, menerapkan prinsip rotasi FIFO, dan memberikan notifikasi peringatan jika ada stok bahan pangan yang mendekati batas kedaluwarsa."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

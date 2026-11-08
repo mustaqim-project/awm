@@ -1,0 +1,108 @@
+﻿{
+    "id":  308,
+    "title":  "Cara Menyusun Struktur dan Skala Upah Karyawan Toko UMKM",
+    "slug":  "cara-menyusun-struktur-dan-skala-upah-karyawan-toko-umkm",
+    "meta_title":  "Cara Menyusun Struktur dan Skala Upah Karyawan Toko UMKM",
+    "meta_description":  "Panduan cara menyusun struktur dan skala upah karyawan toko UMKM, skema insentif target omzet, kepatuhan upah usaha mikro, dan rasio payroll kasir.",
+    "primary_keyword":  "cara menyusun struktur dan skala upah karyawan toko umkm",
+    "secondary_keywords":  "perhitungan gaji pokok dan tunjangan kehadiran, skema insentif komisi omzet staf kasir, batas rasio beban payroll omzet usaha, aturan upah usaha mikro pp 36 tahun 2021, jenjang karier staf toko ritel kafe",
+    "search_intent":  "informational",
+    "category":  "Strategi \u0026 Operasional",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1519389950473-47ba0277781c.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Apakah usaha mikro wajib membayar gaji karyawan sesuai angka UMP provinsi?",
+                     "a":  "Berdasarkan PP Nomor 36 Tahun 2021, usaha mikro dan kecil dikecualikan dari ketentuan upah minimum provinsi. Upah disepakati secara tertulis antara pengusaha dan pekerja dengan batas minimal mengacu pada data rata-rata konsumsi masyarakat BPS setempat."
+                 },
+                 {
+                     "q":  "Berapa batas maksimal biaya gaji karyawan dari total omzet toko yang sehat?",
+                     "a":  "Rasio total biaya gaji karyawan yang ideal pada bisnis ritel dan kuliner skala UMKM adalah berada pada kisaran 15 persen sampai maksimal 20 persen dari total omzet kotor bulanan toko."
+                 },
+                 {
+                     "q":  "Mengapa tunjangan kehadiran harian lebih efektif daripada menaikkan gaji pokok?",
+                     "a":  "Tunjangan kehadiran harian memberikan efek jera instan bagi staf yang sering terlambat atau membolos tanpa izin karena langsung terpotong saat mereka tidak hadir bekerja, sehingga kedisiplinan toko tetap terjaga."
+                 },
+                 {
+                     "q":  "Bagaimana cara menentukan kenaikan upah tahunan karyawan toko kecil?",
+                     "a":  "Kenaikan upah tahunan sebaiknya mempertimbangkan evaluasi kinerja individu, pencapaian target penjualan toko selama setahun, serta penyesuaian laju inflasi harga kebutuhan pokok lokal."
+                 },
+                 {
+                     "q":  "Apakah sistem kasir Cooca bisa melacak kinerja penjualan per masing-masing kasir?",
+                     "a":  "Sangat bisa. Setiap staf kasir memiliki akun login tersendiri di aplikasi POS Cooca, sehingga sistem dapat menyajikan laporan total omzet, jumlah struk yang dicetak, dan riwayat transaksi setiap kasir secara transparan untuk bahan evaluasi bonus."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "Cara Menyusun Struktur Skala Upah Karyawan Toko UMKM",
+                                          "description":  "Panduan cara menyusun struktur dan skala upah karyawan toko UMKM, skema insentif target omzet, kepatuhan upah usaha mikro, dan rasio payroll kasir.",
+                                          "image":  "https://cooca.id/images/blog/photo-1519389950473-47ba0277781c.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/cara-menyusun-struktur-dan-skala-upah-karyawan-toko-umkm",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/cara-menyusun-struktur-dan-skala-upah-karyawan-toko-umkm",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah usaha mikro wajib membayar gaji karyawan sesuai angka UMP provinsi?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Berdasarkan PP Nomor 36 Tahun 2021, usaha mikro dan kecil dikecualikan dari ketentuan upah minimum provinsi. Upah disepakati secara tertulis antara pengusaha dan pekerja dengan batas minimal mengacu pada data rata-rata konsumsi masyarakat BPS setempat."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa batas maksimal biaya gaji karyawan dari total omzet toko yang sehat?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Rasio total biaya gaji karyawan yang ideal pada bisnis ritel dan kuliner skala UMKM adalah berada pada kisaran 15 persen sampai maksimal 20 persen dari total omzet kotor bulanan toko."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Mengapa tunjangan kehadiran harian lebih efektif daripada menaikkan gaji pokok?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Tunjangan kehadiran harian memberikan efek jera instan bagi staf yang sering terlambat atau membolos tanpa izin karena langsung terpotong saat mereka tidak hadir bekerja, sehingga kedisiplinan toko tetap terjaga."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana cara menentukan kenaikan upah tahunan karyawan toko kecil?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Kenaikan upah tahunan sebaiknya mempertimbangkan evaluasi kinerja individu, pencapaian target penjualan toko selama setahun, serta penyesuaian laju inflasi harga kebutuhan pokok lokal."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah sistem kasir Cooca bisa melacak kinerja penjualan per masing-masing kasir?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Sangat bisa. Setiap staf kasir memiliki akun login tersendiri di aplikasi POS Cooca, sehingga sistem dapat menyajikan laporan total omzet, jumlah struk yang dicetak, dan riwayat transaksi setiap kasir secara transparan untuk bahan evaluasi bonus."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

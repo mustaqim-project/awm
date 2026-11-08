@@ -1,0 +1,108 @@
+﻿{
+    "id":  307,
+    "title":  "SOP Penerimaan Pembayaran QRIS Dinamis Kasir POS Toko Aman",
+    "slug":  "sop-penerimaan-pembayaran-qris-dinamis-kasir-pos",
+    "meta_title":  "SOP Penerimaan Pembayaran QRIS Dinamis Kasir POS",
+    "meta_description":  "Panduan SOP penerimaan pembayaran QRIS dinamis kasir POS, pencegahan struk palsu, integrasi layar kasir, bebas biaya MDR 0%, dan rekonsiliasi bank.",
+    "primary_keyword":  "sop penerimaan pembayaran qris dinamis kasir pos",
+    "secondary_keywords":  "perbedaan qris statis vs qris dinamis, pencegahan bukti transfer palsu kasir toko, integrasi qris di layar kasir pos, aturan mdr 0 persen transaksi mikro bi, rekonsiliasi mutasi qr code harian",
+    "search_intent":  "informational",
+    "category":  "Kasir \u0026 POS",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1556740738-b6a63e27c4df.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Mengapa kasir tidak boleh hanya percaya pada tampilan struk di layar HP pembeli?",
+                     "a":  "Karena saat ini marak beredar aplikasi generator bukti transfer palsu yang mampu membuat gambar tangkapan layar pembayaran fiktif dalam hitungan detik. Kasir wajib memastikan sistem mesin POS telah menerima konfirmasi resmi dari server bank."
+                 },
+                 {
+                     "q":  "Berapa lama masa aktif sebuah kode QRIS dinamis di layar kasir POS?",
+                     "a":  "Kode QRIS dinamis umumnya memiliki batas waktu toleransi pembayaran antara dua sampai tiga menit sejak diterbitkan di layar kasir. Jika melewati batas waktu tersebut, kode akan kedaluwarsa demi keamanan."
+                 },
+                 {
+                     "q":  "Apakah toko boleh menarik biaya tambahan kepada pembeli yang membayar pakai QRIS?",
+                     "a":  "Tidak boleh. Peraturan Bank Indonesia secara tegas melarang merchant mengenakan biaya tambahan kepada konsumen saat bertransaksi menggunakan QRIS."
+                 },
+                 {
+                     "q":  "Berapa tarif potongan MDR QRIS resmi untuk usaha mikro saat ini?",
+                     "a":  "Bank Indonesia memberlakukan kebijakan insentif tarif MDR sebesar 0 persen bagi merchant Usaha Mikro untuk nilai transaksi belanja hingga Rp500.000."
+                 },
+                 {
+                     "q":  "Bagaimana sistem Cooca memverifikasi pembayaran QRIS yang berhasil?",
+                     "a":  "Aplikasi kasir POS Cooca terhubung secara langsung dengan gateway pembayaran resmi, sehingga saat dana sukses didebit dari rekening pembeli, layar kasir Cooca otomatis berubah sukses dan mencetak struk secara instan."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "SOP Penerimaan Pembayaran QRIS Dinamis Kasir POS",
+                                          "description":  "Panduan SOP penerimaan pembayaran QRIS dinamis kasir POS, pencegahan struk palsu, integrasi layar kasir, bebas biaya MDR 0%, dan rekonsiliasi bank.",
+                                          "image":  "https://cooca.id/images/blog/photo-1556740738-b6a63e27c4df.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/sop-penerimaan-pembayaran-qris-dinamis-kasir-pos",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/sop-penerimaan-pembayaran-qris-dinamis-kasir-pos",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Mengapa kasir tidak boleh hanya percaya pada tampilan struk di layar HP pembeli?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Karena saat ini marak beredar aplikasi generator bukti transfer palsu yang mampu membuat gambar tangkapan layar pembayaran fiktif dalam hitungan detik. Kasir wajib memastikan sistem mesin POS telah menerima konfirmasi resmi dari server bank."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa lama masa aktif sebuah kode QRIS dinamis di layar kasir POS?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Kode QRIS dinamis umumnya memiliki batas waktu toleransi pembayaran antara dua sampai tiga menit sejak diterbitkan di layar kasir. Jika melewati batas waktu tersebut, kode akan kedaluwarsa demi keamanan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah toko boleh menarik biaya tambahan kepada pembeli yang membayar pakai QRIS?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Tidak boleh. Peraturan Bank Indonesia secara tegas melarang merchant mengenakan biaya tambahan kepada konsumen saat bertransaksi menggunakan QRIS."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa tarif potongan MDR QRIS resmi untuk usaha mikro saat ini?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Bank Indonesia memberlakukan kebijakan insentif tarif MDR sebesar 0 persen bagi merchant Usaha Mikro untuk nilai transaksi belanja hingga Rp500.000."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana sistem Cooca memverifikasi pembayaran QRIS yang berhasil?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Aplikasi kasir POS Cooca terhubung secara langsung dengan gateway pembayaran resmi, sehingga saat dana sukses didebit dari rekening pembeli, layar kasir Cooca otomatis berubah sukses dan mencetak struk secara instan."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

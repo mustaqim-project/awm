@@ -33,6 +33,66 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-09-386] Google Trends Business Research, Blog Article Production (20 Artikel SEO Edukasi UMKM ID 291-310) & Production Deployment for COOCA
+
+- **Date:** 2026-11-09
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Indonesia & Regulatory Analysis 9 November 2026, 20 Curated SEO Articles (Batch 4: ID 291-310), Zero Em Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika tren bisnis, regulasi pemerintah, persiapan festival belanja Harbolnas 11.11 dan 12.12, serta tantangan operasional harian UMKM Indonesia per 9 November 2026 untuk mendongkrak trafik pencarian organik, otoritas domain, dan konversi merchant Cooca.
+- **Target:**
+  1. Melakukan riset mendalam Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 9 November 2026 dan menghasilkan `database/data/articles/trending-research-2026-11-09.json` serta `database/data/articles/keyword-research-2026-11-09.json` yang memetakan 20 topik esensial operasional UMKM.
+  2. Memproduksi 20 artikel edukasi bisnis berkualitas tinggi (ID 291 hingga 310) dengan kepatuhan mutlak:
+     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel).
+     - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
+     - Lolos linter konten (`lint_content.py`) dengan status 100% lulus (0 FAIL).
+  3. Mengimpor seluruh artikel ke database sistem melalui `php artisan blog:import-articles --force` (total 315 artikel terverifikasi dan aktif di database), memperbarui `public/sitemap_blog.xml` (317 total URL aktif), dan dataset `blog_links.json` (316 tautan artikel unik).
+  4. Memverifikasi render antarmuka `/blog/{slug}` untuk seluruh artikel berstatus 200 OK dengan Schema.org JSON-LD Article dan FAQPage.
+
+#### 2. What Was Done
+1. **Riset Tren & Regulasi Bisnis Nasional (9 November 2026):**
+   - ID 291: Cara Hitung Diskon Flash Sale Harbolnas Agar Tidak Boncos (Bedah rumus floor price, potongan biaya admin marketplace 8-12%, gratis ongkir ekstra, dan strategi bundling pelindung net margin 15%).
+   - ID 292: Mencegah Overselling dan Pembatalan Order Harbolnas (Alokasi buffer stock terisolasi 5-10%, sinkronisasi stok toko fisik dan online, SOP stock opname kilat H-1, dan pencegahan penalti seller).
+   - ID 293: Mengelola Jeda Pencairan Saldo Marketplace untuk Menjaga Arus Kas Toko (Manajemen cash conversion cycle 12-14 hari menghadapi payout lag rekening penampung escrow, pemisahan pos kas darurat, dan negosiasi tempo supplier).
+   - ID 294: Relaksasi Bertahap Wajib Halal UMK Menurut PP 42 Tahun 2024 dan SE BPJPH (Ulasan yuridis masa penyesuaian UMK s/d 2028, pendaftaran program SEHATI gratis jalur self-declare bersama pendamping P3H).
+   - ID 295: SOP Pengemasan Kilat dan Mitigasi Selisih Ongkir Kurir Peak Season Harbolnas (Tata letak workstation packing 5 zona berkecepatan 90 paket/jam, rumus berat volumetrik kardus, dan berita acara serah terima resi kurir).
+   - ID 296: SOP Penanganan Retur Barang dan Cadangan Klaim Garansi Harbolnas (Alur verifikasi video unboxing, pembentukan akun cadangan retur 2-5% di laba rugi, dan alur reverse logistics sortir barang layak jual).
+   - ID 297: Strategi Invoice Financing dan PO Discounting untuk Modal Kerja Usaha B2B (Pencairan likuiditas berbasis Purchase Order resmi dan faktur komersial tanpa agunan tanah/bangunan, simulasi biaya diskonto 1,5%/bulan).
+   - ID 298: Cara Menghitung Rendemen dan Yield Bahan Baku Kuliner Saat Harga Melonjak (Perhitungan edible portion vs as-purchased daging dan sayur, portion control porsi dapur, dan resep Bill of Materials dinamis).
+   - ID 299: SOP Blind Cash Count dan Pencegahan Fraud Kasir Shift Malam Toko Ritel (Metode hitung kas buta tanpa akses laporan sistem, pembatasan otorisasi void via PIN Supervisor, dan kebijakan cash drop brankas).
+   - ID 300: Prosedur Rekonsiliasi Bank dan Tutup Buku UMKM Akhir Tahun 2026 (Rekonsiliasi mutasi bank koran vs buku kas, inventarisasi persediaan akhir FIFO, penyusutan aset garis lurus, dan pemutihan piutang macet).
+   - ID 301 - 310: Edukasi mendalam Food Waste dapur resto, perizinan PIRT vs BPOM MD, persiapan SPT Coretax DJP, stok opname akhir tahun, likuiditas liburan panjang, manajemen pesanan omnichannel, QRIS dinamis kasir, struktur skala upah toko, KUR Syariah BSI, serta pemulihan keranjang belanja terbengkalai via WhatsApp.
+2. **Produksi Artikel Markdown & Metadata JSON:**
+   - Menghasilkan berkas `.md` dan `.json` di `database/data/articles/` untuk seluruh batch artikel (ID 291 hingga 310).
+   - Menjalankan script validasi `lint_content.py` dengan hasil 100% lulus (0 FAIL).
+3. **Database Import & Regenerasi Public Sitemap:**
+   - Menjalankan `php artisan blog:import-articles --force` (total 326 berkas diproses, 315 artikel published aktif di database).
+   - Meregenerasi `public/sitemap_blog.xml` (317 URL) dan menyinkronkan `blog_links.json` menjadi 316 link aktif.
+   - Memverifikasi render view controller `PublicBlogController::show()` untuk seluruh slug berstatus HTTP 200 OK dengan Schema.org JSON-LD lengkap.
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `docs/AiWorkHistory.md`
+  - `blog_links.json`
+  - `database/data/blog_links.json`
+  - `public/sitemap_blog.xml`
+- **Files Created:**
+  - `database/data/articles/trending-research-2026-11-09.json`
+  - `database/data/articles/keyword-research-2026-11-09.json`
+  - `scripts/batch4_common.py`
+  - `scripts/generate_batch4_part1.py`
+  - `scripts/generate_batch4_part2.py`
+  - `scripts/build_and_validate_batch4.py`
+  - `scripts/generate_research_2026_11_09.py`
+  - `scripts/verify_posts_db.php`
+  - `database/data/articles/291-*.md` & `.json` s/d `database/data/articles/310-*.md` & `.json`
+
+---
+
 ### [WORK-2026-11-08-385] Google Trends Business Research, Blog Article Production (10 Artikel SEO Edukasi UMKM ID 281-290) & Production Deployment for COOCA
 
 - **Date:** 2026-11-08

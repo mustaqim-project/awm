@@ -1,0 +1,108 @@
+﻿{
+    "id":  301,
+    "title":  "Cara Mengendalikan Food Waste Dapur Kafe Restoran agar HPP Aman",
+    "slug":  "cara-mengendalikan-food-waste-dapur-kafe-restoran",
+    "meta_title":  "Cara Mengendalikan Food Waste Dapur Kafe Restoran",
+    "meta_description":  "Panduan lengkap cara mengendalikan food waste dapur kafe restoran, audit limbah harian, metode FIFO, yield management resep, dan penguncian HPP menu.",
+    "primary_keyword":  "cara mengendalikan food waste dapur kafe restoran",
+    "secondary_keywords":  "audit limbah makanan dapur restoran, metode fifo fefo bahan baku kuliner, standar resep dan yield management masakan, batch cooking jam sibuk resto, cara mengatasi pembengkakan food cost kafe",
+    "search_intent":  "informational",
+    "category":  "HPP \u0026 Harga Jual",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1501339847302-ac426a4a7cbb.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Mengapa food waste di dapur restoran langsung merusak angka HPP?",
+                     "a":  "Bahan makanan yang busuk atau terbuang sia-sia dibeli menggunakan uang modal tunai usaha Anda. Biaya pembelian bahan yang rusak tersebut tetap dihitung sebagai modal keluar, sehingga otomatis menaikkan beban rata-rata harga pokok penjualan pada porsi makanan yang berhasil terjual."
+                 },
+                 {
+                     "q":  "Berapa persentase food waste yang dianggap wajar dalam industri kuliner?",
+                     "a":  "Standar industri restoran dan kafe yang sehat menargetkan tingkat food waste dapur di bawah 3 persen sampai maksimal 5 persen dari total nilai belanja bahan baku bulanan. Angka di atas 7 persen menandakan adanya kebocoran serius pada manajemen penyimpanan atau resep masakan."
+                 },
+                 {
+                     "q":  "Apa perbedaan utama limbah pre-consumer dan post-consumer di restoran?",
+                     "a":  "Limbah pre-consumer adalah sampah makanan yang timbul di dalam area dapur sebelum hidangan disajikan ke meja (seperti potongan kulit sayur, bahan gosong, atau daging kedaluwarsa). Sedangkan limbah post-consumer adalah sisa makanan yang ditinggalkan pembeli di atas piring setelah selesai bersantap."
+                 },
+                 {
+                     "q":  "Bagaimana cara praktis melatih staf dapur agar tidak boros bahan baku?",
+                     "a":  "Lakukan audit limbah harian secara terbuka, tempelkan kartu standar resep bergambar di setiap pos masak, sediakan timbangan digital presisi di meja persiapan, dan berikan bonus insentif bulanan bagi tim dapur jika mereka berhasil menjaga food cost di bawah target batas yang ditetapkan."
+                 },
+                 {
+                     "q":  "Bisakah sistem kasir Cooca memotong stok bahan masakan secara otomatis?",
+                     "a":  "Sangat bisa. Modus kalkulasi HPP dan resep terintegrasi di Cooca secara otomatis mengonversi menu yang dipesan pelanggan di kasir menjadi pengurangan gramasi bahan baku mentah di gudang dapur secara tepat dan transparan."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "Cara Mengendalikan Food Waste Dapur Kafe Restoran agar HPP Aman",
+                                          "description":  "Panduan lengkap cara mengendalikan food waste dapur kafe restoran, audit limbah harian, metode FIFO, yield management resep, dan penguncian HPP menu.",
+                                          "image":  "https://cooca.id/images/blog/photo-1501339847302-ac426a4a7cbb.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/cara-mengendalikan-food-waste-dapur-kafe-restoran",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/cara-mengendalikan-food-waste-dapur-kafe-restoran",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Mengapa food waste di dapur restoran langsung merusak angka HPP?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Bahan makanan yang busuk atau terbuang sia-sia dibeli menggunakan uang modal tunai usaha Anda. Biaya pembelian bahan yang rusak tersebut tetap dihitung sebagai modal keluar, sehingga otomatis menaikkan beban rata-rata harga pokok penjualan pada porsi makanan yang berhasil terjual."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa persentase food waste yang dianggap wajar dalam industri kuliner?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Standar industri restoran dan kafe yang sehat menargetkan tingkat food waste dapur di bawah 3 persen sampai maksimal 5 persen dari total nilai belanja bahan baku bulanan. Angka di atas 7 persen menandakan adanya kebocoran serius pada manajemen penyimpanan atau resep masakan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apa perbedaan utama limbah pre-consumer dan post-consumer di restoran?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Limbah pre-consumer adalah sampah makanan yang timbul di dalam area dapur sebelum hidangan disajikan ke meja. Sedangkan limbah post-consumer adalah sisa makanan yang ditinggalkan pembeli di atas piring setelah selesai bersantap."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana cara praktis melatih staf dapur agar tidak boros bahan baku?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Lakukan audit limbah harian secara terbuka, tempelkan kartu standar resep bergambar di setiap pos masak, sediakan timbangan digital presisi di meja persiapan, dan berikan bonus insentif bulanan bagi tim dapur jika berhasil menjaga food cost di bawah target."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bisakah sistem kasir Cooca memotong stok bahan masakan secara otomatis?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Sangat bisa. Modus kalkulasi HPP dan resep terintegrasi di Cooca secara otomatis mengonversi menu yang dipesan pelanggan di kasir menjadi pengurangan gramasi bahan baku mentah di gudang dapur secara tepat dan transparan."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

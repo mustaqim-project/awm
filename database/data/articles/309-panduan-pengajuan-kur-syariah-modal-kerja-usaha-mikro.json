@@ -1,0 +1,108 @@
+﻿{
+    "id":  309,
+    "title":  "Panduan Pengajuan KUR Syariah Modal Kerja Usaha Mikro 2026",
+    "slug":  "panduan-pengajuan-kur-syariah-modal-kerja-usaha-mikro",
+    "meta_title":  "Panduan Pengajuan KUR Syariah Modal Kerja Usaha Mikro",
+    "meta_description":  "Panduan pengajuan KUR Syariah modal kerja usaha mikro, syarat NIB OSS, akad murabahah tanpa agunan hingga 100 juta, margin murah, dan tips lolos SLIK.",
+    "primary_keyword":  "panduan pengajuan kur syariah modal kerja usaha mikro",
+    "secondary_keywords":  "syarat kur syariah bsi pegadaian 2026, akad pembiayaan murabahah dan ijarah usaha, plafon kur super mikro tanpa jaminan tambahan, tips lolos verifikasi slik ojk bi checking, dokumen surat keterangan usaha nib oss",
+    "search_intent":  "informational",
+    "category":  "Modal",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1553729459-efe14ef6055d.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Apa perbedaan utama KUR Syariah dengan KUR konvensional?",
+                     "a":  "KUR Syariah menggunakan akad muamalah syariat Islam (seperti Murabahah jual beli atau Ijarah sewa jasa) dengan margin bagi hasil yang disepakati tetap, tanpa menerapkan sistem bunga pinjaman berbunga atau denda riba keterlambatan."
+                 },
+                 {
+                     "q":  "Apakah pengajuan KUR Syariah hingga Rp100 juta wajib menggunakan jaminan tanah?",
+                     "a":  "Berdasarkan ketentuan pemerintah, KUR Super Mikro (hingga Rp10 juta) dan KUR Mikro (hingga Rp100 juta) tidak mewajibkan agunan tambahan fisik berupa sertifikat tanah atau BPKB kendaraan, melainkan kelayakan usaha yang dinilai sebagai objek pembiayaan."
+                 },
+                 {
+                     "q":  "Berapa lama proses pencairan dana KUR Syariah dari pengajuan awal?",
+                     "a":  "Jika seluruh berkas administrasi NIB lengkap, catatan SLIK OJK bersih, dan survei lapangan telah selesai dilakukan, proses persetujuan hingga pencairan dana umumnya memakan waktu tiga sampai tujuh hari kerja."
+                 },
+                 {
+                     "q":  "Apakah seseorang yang memiliki cicilan motor di leasing boleh mengajukan KUR Syariah?",
+                     "a":  "Boleh, asalkan cicilan kendaraan bermotor tersebut berstatus lancar (tidak pernah menunggak) dan rasio cicilan bulanan masih berada dalam batas kemampuan bayar (Debt Service Ratio) dari keuntungan bersih usaha Anda."
+                 },
+                 {
+                     "q":  "Bagaimana Cooca membantu pemilik usaha mikro agar lolos survei bank?",
+                     "a":  "Cooca menyediakan laporan pembukuan laba rugi dan ringkasan arus kas digital otomatis dari mesin kasir POS, sehingga pemilik usaha dapat menunjukkan laporan perputaran omzet yang rapi, profesional, dan meyakinkan di mata surveyor bank."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "Panduan KUR Syariah Modal Kerja Usaha Mikro 2026",
+                                          "description":  "Panduan pengajuan KUR Syariah modal kerja usaha mikro, syarat NIB OSS, akad murabahah tanpa agunan hingga 100 juta, margin murah, dan tips lolos SLIK.",
+                                          "image":  "https://cooca.id/images/blog/photo-1553729459-efe14ef6055d.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/panduan-pengajuan-kur-syariah-modal-kerja-usaha-mikro",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/panduan-pengajuan-kur-syariah-modal-kerja-usaha-mikro",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apa perbedaan utama KUR Syariah dengan KUR konvensional?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "KUR Syariah menggunakan akad muamalah syariat Islam seperti Murabahah atau Ijarah dengan margin bagi hasil tetap yang disepakati bersama, tanpa menerapkan sistem bunga pinjaman berbunga atau denda riba keterlambatan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah pengajuan KUR Syariah hingga Rp100 juta wajib menggunakan jaminan tanah?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Berdasarkan ketentuan pemerintah, KUR Super Mikro (hingga Rp10 juta) dan KUR Mikro (hingga Rp100 juta) tidak mewajibkan agunan tambahan fisik berupa sertifikat tanah, melainkan kelayakan usaha yang dinilai sebagai objek penjaminan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa lama proses pencairan dana KUR Syariah dari pengajuan awal?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Jika seluruh berkas administrasi NIB lengkap, catatan SLIK OJK bersih, dan survei lapangan telah selesai dilakukan, proses persetujuan hingga pencairan dana umumnya memakan waktu tiga sampai tujuh hari kerja."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah seseorang yang memiliki cicilan motor di leasing boleh mengajukan KUR Syariah?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Boleh, asalkan cicilan kendaraan bermotor tersebut berstatus lancar dan rasio cicilan bulanan masih berada dalam batas kemampuan bayar dari keuntungan bersih usaha Anda."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana Cooca membantu pemilik usaha mikro agar lolos survei bank?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Cooca menyediakan laporan pembukuan laba rugi dan ringkasan arus kas digital otomatis dari mesin kasir POS, sehingga pemilik usaha dapat menunjukkan laporan perputaran omzet yang rapi dan meyakinkan di mata surveyor bank."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

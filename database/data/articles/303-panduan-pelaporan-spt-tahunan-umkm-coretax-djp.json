@@ -1,0 +1,108 @@
+﻿{
+    "id":  303,
+    "title":  "Panduan Pelaporan SPT Tahunan UMKM Coretax DJP Orang Pribadi",
+    "slug":  "panduan-pelaporan-spt-tahunan-umkm-coretax-djp",
+    "meta_title":  "Panduan Pelaporan SPT Tahunan UMKM Coretax DJP",
+    "meta_description":  "Panduan pelaporan SPT tahunan UMKM Coretax DJP, rekapitulasi omzet bruto, format NPWP 16 digit, batas bebas pajak 500 juta, dan kode billing pajak.",
+    "primary_keyword":  "panduan pelaporan spt tahunan umkm coretax djp",
+    "secondary_keywords":  "rekapitulasi omzet bruto bulanan pph final, pp 55 tahun 2022 batas omzet 500 juta, format npwp 16 digit nik wajib pajak, daftar harta dan utang spt tahunan op, kode billing bayar pajak di portal coretax",
+    "search_intent":  "informational",
+    "category":  "Pajak \u0026 Legalitas",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1589829545856-d10d557cf95f.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Kapan batas akhir pelaporan SPT Tahunan Wajib Pajak Orang Pribadi UMKM?",
+                     "a":  "Batas akhir pelaporan SPT Tahunan bagi Wajib Pajak Orang Pribadi adalah paling lambat tanggal 31 Maret untuk tahun pajak sebelumnya. Sangat disarankan untuk melapor lebih awal di bulan Januari atau Februari."
+                 },
+                 {
+                     "q":  "Jika omzet toko saya di bawah Rp500 juta setahun, apakah tetap wajib lapor SPT?",
+                     "a":  "Tetap wajib melapor. Meskipun omzet di bawah Rp500 juta mendapatkan fasilitas bebas PPh Final (pajak terutang nihil atau Rp0), Anda tetap diwajibkan oleh undang-undang untuk melaporkan rekapitulasi omzet bruto dan daftar harta akhir tahun di portal Coretax DJP."
+                 },
+                 {
+                     "q":  "Apa sanksi jika pemilik UMKM terlambat melaporkan SPT Tahunan?",
+                     "a":  "Keterlambatan pelaporan SPT Tahunan Wajib Pajak Orang Pribadi dikenakan sanksi denda administratif sebesar Rp100.000 berdasarkan Pasal 7 Undang-Undang Ketentuan Umum dan Tata Cara Perpajakan."
+                 },
+                 {
+                     "q":  "Apakah format NPWP 16 digit berlaku untuk seluruh pelaku UMKM?",
+                     "a":  "Ya, format NPWP 16 digit berlaku nasional. Untuk Wajib Pajak Orang Pribadi, format 16 digit menggunakan 16 digit Nomor Induk Kependudukan (NIK) e-KTP yang telah dipadankan di sistem administrasi perpajakan."
+                 },
+                 {
+                     "q":  "Bagaimana Cooca membantu pemilik usaha menyiapkan laporan pajak tahunan?",
+                     "a":  "Sistem Cooca mencatat seluruh transaksi kasir secara otomatis dan menyediakan menu laporan rekapitulasi omzet bulanan yang rapi, sehingga pemilik usaha bisa langsung menyalin total penjualan bruto ke formulir SPT di portal Coretax tanpa perlu menghitung nota fisik satu per satu."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "Panduan Pelaporan SPT Tahunan UMKM Coretax DJP",
+                                          "description":  "Panduan pelaporan SPT tahunan UMKM Coretax DJP, rekapitulasi omzet bruto, format NPWP 16 digit, batas bebas pajak 500 juta, dan kode billing pajak.",
+                                          "image":  "https://cooca.id/images/blog/photo-1589829545856-d10d557cf95f.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/panduan-pelaporan-spt-tahunan-umkm-coretax-djp",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/panduan-pelaporan-spt-tahunan-umkm-coretax-djp",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Kapan batas akhir pelaporan SPT Tahunan Wajib Pajak Orang Pribadi UMKM?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Batas akhir pelaporan SPT Tahunan bagi Wajib Pajak Orang Pribadi adalah paling lambat tanggal 31 Maret untuk tahun pajak sebelumnya. Sangat disarankan untuk melapor lebih awal di bulan Januari atau Februari."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Jika omzet toko saya di bawah Rp500 juta setahun, apakah tetap wajib lapor SPT?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Tetap wajib melapor. Meskipun omzet di bawah Rp500 juta mendapatkan fasilitas bebas PPh Final (pajak terutang nihil atau Rp0), Anda tetap diwajibkan oleh undang-undang untuk melaporkan rekapitulasi omzet bruto dan daftar harta akhir tahun di portal Coretax DJP."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apa sanksi jika pemilik UMKM terlambat melaporkan SPT Tahunan?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Keterlambatan pelaporan SPT Tahunan Wajib Pajak Orang Pribadi dikenakan sanksi denda administratif sebesar Rp100.000 berdasarkan Pasal 7 Undang-Undang Ketentuan Umum dan Tata Cara Perpajakan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah format NPWP 16 digit berlaku untuk seluruh pelaku UMKM?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Ya, format NPWP 16 digit berlaku nasional. Untuk Wajib Pajak Orang Pribadi, format 16 digit menggunakan 16 digit Nomor Induk Kependudukan (NIK) e-KTP yang telah dipadankan di sistem administrasi perpajakan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana Cooca membantu pemilik usaha menyiapkan laporan pajak tahunan?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Sistem Cooca mencatat seluruh transaksi kasir secara otomatis dan menyediakan menu laporan rekapitulasi omzet bulanan yang rapi, sehingga pemilik usaha bisa langsung menyalin total penjualan bruto ke formulir SPT di portal Coretax tanpa perlu menghitung nota fisik satu per satu."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}

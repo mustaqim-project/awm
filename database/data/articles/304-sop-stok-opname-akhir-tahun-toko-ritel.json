@@ -1,0 +1,108 @@
+﻿{
+    "id":  304,
+    "title":  "SOP Stok Opname Akhir Tahun Toko Ritel dan Rekonsiliasi Stok",
+    "slug":  "sop-stok-opname-akhir-tahun-toko-ritel",
+    "meta_title":  "SOP Stok Opname Akhir Tahun Toko Ritel",
+    "meta_description":  "Panduan SOP stok opname akhir tahun toko ritel, tata cara hitung fisik, cut-off kasir, investigasi selisih persediaan, dan rekonsiliasi nilai aset neraca.",
+    "primary_keyword":  "sop stok opname akhir tahun toko ritel",
+    "secondary_keywords":  "cara rekonsiliasi stok fisik dan sistem, jadwal cut off transaksi stok opname, analisis inventory shrinkage toko kelontong, penghapusan dead stock barang kedaluwarsa, jurnal penyesuaian saldo awal persediaan",
+    "search_intent":  "informational",
+    "category":  "Inventori \u0026 Stok",
+    "reading_time":  "9 menit",
+    "cover_image":  "https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg",
+    "published_at":  "2026-11-09T05:00:00+07:00",
+    "faqs":  [
+                 {
+                     "q":  "Mengapa toko ritel harus melakukan cut-off transaksi saat stok opname berlangsung?",
+                     "a":  "Cut-off transaksi mutlak dilakukan untuk membekukan arus keluar-masuk barang, sehingga tidak ada transaksi penjualan kasir atau penerimaan surat jalan supplier yang mengubah angka persediaan selama proses hitung fisik sedang berjalan."
+                 },
+                 {
+                     "q":  "Apa keuntungan menggunakan metode blind count dibandingkan menghitung biasa?",
+                     "a":  "Metode blind count menyembunyikan angka stok sistem dari petugas hitung, sehingga tim dipaksa menghitung barang fisik secara jujur dan teliti tanpa tergoda untuk menebak atau menyalin angka di komputer."
+                 },
+                 {
+                     "q":  "Berapa batas toleransi penyusutan stok (shrinkage) yang dianggap wajar pada toko ritel?",
+                     "a":  "Standar penyusutan fisik yang wajar di industri ritel umumnya berada pada rentang 0,5 persen sampai maksimal 1 persen dari total nilai penjualan tahunan toko. Angka di atas 1,5 persen menandakan adanya indikasi kecurangan serius."
+                 },
+                 {
+                     "q":  "Bagaimana jika hasil stok fisik lebih banyak daripada angka sistem kasir?",
+                     "a":  "Selisih lebih (surplus stok) biasanya dipicu oleh kelalaian input penerimaan barang dari supplier yang terlewat dicatat ke komputer, barang retur pelanggan yang langsung ditaruh kembali ke rak, atau kasir salah memindai barcode produk lain yang serupa."
+                 },
+                 {
+                     "q":  "Apakah sistem inventori Cooca mendukung stok opname per kategori rak secara berkala?",
+                     "a":  "Ya, Cooca mendukung stok opname menyeluruh maupun stok opname parsial per kategori rak (cycle count), sehingga pemilik toko dapat mengaudit barang yang bernilai tinggi tanpa harus menutup toko seharian."
+                 }
+             ],
+    "schema_org":  {
+                       "@context":  "https://schema.org",
+                       "@graph":  [
+                                      {
+                                          "@type":  "Article",
+                                          "headline":  "SOP Stok Opname Akhir Tahun Toko Ritel",
+                                          "description":  "Panduan SOP stok opname akhir tahun toko ritel, tata cara hitung fisik, cut-off kasir, investigasi selisih persediaan, dan rekonsiliasi nilai aset neraca.",
+                                          "image":  "https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg",
+                                          "datePublished":  "2026-11-09T05:00:00+07:00",
+                                          "dateModified":  "2026-11-09T05:00:00+07:00",
+                                          "url":  "https://cooca.id/blog/sop-stok-opname-akhir-tahun-toko-ritel",
+                                          "mainEntityOfPage":  "https://cooca.id/blog/sop-stok-opname-akhir-tahun-toko-ritel",
+                                          "author":  {
+                                                         "@type":  "Organization",
+                                                         "name":  "Tim Riset Finansial \u0026 Operasional Cooca"
+                                                     },
+                                          "publisher":  {
+                                                            "@type":  "Organization",
+                                                            "name":  "Cooca",
+                                                            "logo":  {
+                                                                         "@type":  "ImageObject",
+                                                                         "url":  "https://cooca.id/images/logo.png"
+                                                                     }
+                                                        }
+                                      },
+                                      {
+                                          "@type":  "FAQPage",
+                                          "mainEntity":  [
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Mengapa toko ritel harus melakukan cut-off transaksi saat stok opname berlangsung?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Cut-off transaksi mutlak dilakukan untuk membekukan arus keluar-masuk barang, sehingga tidak ada transaksi penjualan kasir atau penerimaan surat jalan supplier yang mengubah angka persediaan selama proses hitung fisik sedang berjalan."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apa keuntungan menggunakan metode blind count dibandingkan menghitung biasa?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Metode blind count menyembunyikan angka stok sistem dari petugas hitung, sehingga tim dipaksa menghitung barang fisik secara jujur dan teliti tanpa tergoda untuk menebak atau menyalin angka di komputer."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Berapa batas toleransi penyusutan stok (shrinkage) yang dianggap wajar pada toko ritel?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Standar penyusutan fisik yang wajar di industri ritel umumnya berada pada rentang 0,5 persen sampai maksimal 1 persen dari total nilai penjualan tahunan toko. Angka di atas 1,5 persen menandakan adanya indikasi kecurangan serius."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Bagaimana jika hasil stok fisik lebih banyak daripada angka sistem kasir?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Selisih lebih (surplus stok) biasanya dipicu oleh kelalaian input penerimaan barang dari supplier yang terlewat dicatat ke komputer, barang retur pelanggan yang langsung ditaruh kembali ke rak, atau kasir salah memindai barcode produk lain yang serupa."
+                                                                                    }
+                                                             },
+                                                             {
+                                                                 "@type":  "Question",
+                                                                 "name":  "Apakah sistem inventori Cooca mendukung stok opname per kategori rak secara berkala?",
+                                                                 "acceptedAnswer":  {
+                                                                                        "@type":  "Answer",
+                                                                                        "text":  "Ya, Cooca mendukung stok opname menyeluruh maupun stok opname parsial per kategori rak (cycle count), sehingga pemilik toko dapat mengaudit barang yang bernilai tinggi tanpa harus menutup toko seharian."
+                                                                                    }
+                                                             }
+                                                         ]
+                                      }
+                                  ]
+                   }
+}
