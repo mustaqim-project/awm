@@ -463,7 +463,7 @@
                         <span>{{ __('navigation.user_profile') }}</span>
                     </a>
 
-                    @if (\App\Support\Context::isOwner())
+                    @if (\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('feedback.view'))
                         <a href="{{ route('feedback.bugs.index') }}" @click="profileOpen = false"
                             class="w-full px-2.5 py-1.5 rounded-[7px] text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white flex items-center gap-2 transition active:scale-98">
                             <i data-lucide="life-buoy" class="w-3.5 h-3.5 text-[#007AFF] shrink-0"></i>

@@ -2126,7 +2126,7 @@
             </div>
 
             {{-- 9.9 Bantuan & Pelaporan Bug --}}
-            @if (\App\Support\Context::isOwner())
+            @if (\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('feedback.view'))
                 <div class="relative group"
                     @mouseenter="if(sidebarCollapsed) activeFlyout = 'support'"
                     @mouseleave="activeFlyout = null">

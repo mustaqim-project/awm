@@ -6,7 +6,7 @@
 @php
     $canSeeDashboard = \App\Support\Context::isOwner() || \App\Support\Context::hasPermission('dashboard.view');
     $homeRoute = $canSeeDashboard ? route('dashboard') : route('portal');
-    $homeLabel = $canSeeDashboard ? 'Dashboard' : 'Portal';
+    $homeLabel = $canSeeDashboard ? __('common.dashboard') : __('common.portal');
     $parentRoute = route($type === 'bugs' ? 'feedback.bugs.index' : 'feedback.features.index');
     $parentLabel = $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features');
     $currentLabel = $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature');
@@ -51,10 +51,7 @@
                 <i data-lucide="{{ $type === 'bugs' ? 'bug' : 'sparkles' }}" class="w-5 h-5"></i>
             </div>
             <div>
-                <h2 class="text-lg font-bold text-black dark:text-white">
-                    {{ $type === 'bugs' ? __('feedback.create_bug') : __('feedback.create_feature') }}
-                </h2>
-                <p class="text-[12px] text-black/50 dark:text-white/50">
+                <p class="text-[13px] font-medium text-black/60 dark:text-white/60">
                     {{ $type === 'bugs' ? __('feedback.subtitle_bugs_detail') : __('feedback.subtitle_features_detail') }}
                 </p>
             </div>
@@ -86,7 +83,7 @@
                         class="w-full h-12 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
                         @foreach($categories as $cat)
                             <option value="{{ $cat }}" {{ old('category') === $cat ? 'selected' : '' }}>
-                                {{ ucfirst(str_replace('_', ' ', $cat)) }}
+                                {{ __('feedback.cat_' . $cat) !== 'feedback.cat_' . $cat ? __('feedback.cat_' . $cat) : ucfirst(str_replace('_', ' ', $cat)) }}
                             </option>
                         @endforeach
                     </select>
@@ -100,7 +97,7 @@
                         class="w-full h-12 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
                         @foreach($type === 'bugs' ? ['low','normal','high','critical'] : ['low','normal','high'] as $level)
                             <option value="{{ $level }}" {{ old($type === 'bugs' ? 'severity' : 'priority') === $level ? 'selected' : '' }}>
-                                {{ ucfirst($level) }}
+                                {{ $type === 'bugs' ? __('feedback.severity_' . $level) : __('feedback.priority_' . $level) }}
                             </option>
                         @endforeach
                     </select>

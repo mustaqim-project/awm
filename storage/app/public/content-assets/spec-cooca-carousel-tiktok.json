@@ -5,17 +5,19 @@
   "dimensions": "1080x1080",
   "target_time": "19:45",
   "slot_label": "TikTok Prime Time Swipe Photo Carousel",
-  "topic_id": "swipe_secret_cashier_tricks",
+  "primary_feature": "pos",
+  "feature_name": "Kasir POS Pintar Kilat",
+  "feature_route": "/pos",
   "topic_name": "3 Fitur Rahasia Mesin Kasir yang Bikin Antrean Toko Bebas Macet",
-  "hook_title": "3 Trik Rahasia Kasir Toko Ramai yang Jarang Diketahui Karyawan! Geser Sampai Akhir",
-  "solution_summary": "Gunakan tombol shortcut barang favorit, integrasi QRIS dinamis 2 detik, dan cetak struk via WhatsApp tanpa kertas.",
-  "viral_score": 96.5,
+  "hook_title": "3 Trik Rahasia Mesin Kasir Toko Ramai yang Bikin Antrean Bebas Macet! Geser Foto",
+  "solution_summary": "Integrasi fitur Kasir POS Pintar Kilat (/pos) untuk optimalisasi operasional ritel.",
+  "viral_score": 97.95,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 97.0,
-  "problem_urgency": 95.0,
-  "platform_fit": 98.0,
+  "trend_velocity": 98.0,
+  "problem_urgency": 98.0,
+  "platform_fit": 99.0,
   "cta_clarity": 96.0,
-  "caption": "3 Trik Rahasia Kasir Toko Ramai yang Jarang Diketahui Karyawan! Geser Sampai Akhir\n\nAntrean kasir yang menumpuk bisa membuat pelanggan enggan berbelanja kembali. Ini 3 fitur rahasia mesin kasir modern yang mempermudah operasional kasir:\n1. Tombol Shortcut Produk: Transaksi produk terlaris cukup 1 kali sentuh layar.\n2. QRIS Dinamis 2 Detik: Total belanja langsung otomatis muncul di barcode pembeli.\n3. Struk Digital WhatsApp: Hemat biaya kertas dan nomor pelanggan tersimpan otomatis.\n\nPraktis, cepat, dan membuat pelayanan kasir jauh lebih responsif!\n\nCoba gratis sekarang di https://cooca.id (klik link di bio profil!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #operasionalritel #COOCA",
+  "caption": "3 Trik Rahasia Mesin Kasir Toko Ramai yang Bikin Antrean Bebas Macet! Geser Foto\n\nAntrean kasir yang menumpuk bisa membuat pelanggan enggan berbelanja kembali. Ini 3 fitur rahasia mesin kasir modern yang mempermudah operasional kasir:\n1. Tombol Shortcut Produk: Transaksi produk terlaris cukup 1 kali sentuh layar tanpa ketik nama barang.\n2. QRIS Dinamis 2 Detik: Total belanja langsung otomatis muncul di barcode pembeli tanpa input nominal manual.\n3. Struk Digital WhatsApp: Hemat biaya kertas thermal dan nomor pelanggan tersimpan otomatis untuk promosi.\n\nPraktis, cepat, dan membuat pelayanan kasir jauh lebih responsif!\n\nCoba gratis sekarang fitur Kasir POS Pintar Kilat di https://cooca.id/pos (klik link di bio profil!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #operasionalritel #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -24,13 +26,13 @@
     },
     {
       "slide": 2,
-      "title": "Trik 1: Shortcut Barang Favorit Tanpa Perlu Ketik Nama",
+      "title": "Trik 1: Tombol Shortcut Produk Terlaris Sekali Sentuh",
       "tag": "Kecepatan Kasir"
     },
     {
       "slide": 3,
       "title": "Trik 2: Scan QRIS Dinamis Langsung Sesuai Total Belanja",
-      "tag": "Pembayaran Cepat"
+      "tag": "Pembayaran Instan"
     },
     {
       "slide": 4,
@@ -39,9 +41,11 @@
     },
     {
       "slide": 5,
-      "title": "Kasir Toko Lebih Gesit Bareng COOCA, Cek Link di Bio",
-      "tag": "Teknologi Kasir"
+      "title": "Operasional Kasir Lebih Gesit Bareng COOCA (/pos)",
+      "tag": "Teknologi Ritel"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:35"
+  "evaluated_at": "2026-11-08 07:30:20",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

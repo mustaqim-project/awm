@@ -6,7 +6,7 @@
 @php
     $canSeeDashboard = \App\Support\Context::isOwner() || \App\Support\Context::hasPermission('dashboard.view');
     $homeRoute = $canSeeDashboard ? route('dashboard') : route('portal');
-    $homeLabel = $canSeeDashboard ? 'Dashboard' : 'Portal';
+    $homeLabel = $canSeeDashboard ? __('common.dashboard') : __('common.portal');
     $parentRoute = route($type === 'bugs' ? 'feedback.bugs.index' : 'feedback.features.index');
     $parentLabel = $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features');
     $currentLabel = '#' . $item->id . ' - ' . \Illuminate\Support\Str::limit($item->title, 25);
@@ -76,11 +76,8 @@
                         {{ $item->created_at->format('d M Y H:i') }}
                     </span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-bold text-black dark:text-white leading-snug">
-                    {{ $item->title }}
-                </h1>
                 <p class="text-[12px] text-black/50 dark:text-white/50">
-                    {{ __('feedback.category_label') }}: <strong class="text-black dark:text-white">{{ ucfirst(str_replace('_', ' ', $item->category)) }}</strong>
+                    {{ __('feedback.category_label') }}: <strong class="text-black dark:text-white">{{ __('feedback.cat_' . $item->category) !== 'feedback.cat_' . $item->category ? __('feedback.cat_' . $item->category) : ucfirst(str_replace('_', ' ', $item->category)) }}</strong>
                     @if ($item->reporter ?? $item->requester)
                         • {{ __('feedback.reporter_label') }}: <strong class="text-black dark:text-white">{{ ($item->reporter ?? $item->requester)->name }}</strong>
                     @endif
@@ -153,7 +150,7 @@
                         </div>
                     </div>
                     <a href="{{ route('feedback.bugs.attachment', $item) }}" target="_blank"
-                        class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer">
+                        class="min-h-[44px] px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                         <span>{{ __('feedback.view_attachment') }}</span>
                     </a>

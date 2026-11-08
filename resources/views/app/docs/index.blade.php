@@ -252,7 +252,10 @@
                             <span class="w-6 h-6 rounded-[7px] bg-[#34C759]/15 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158] flex items-center justify-center shrink-0">
                                 <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium text-[12px]">Kas, Bank &amp; Akuntansi</span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Kas, Bank &amp; Akuntansi</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">15 Hub</span>
+                            </div>
                         </a>
 
                         <!-- Otorisasi Dokumen MAR & Anti-Fraud -->
@@ -335,6 +338,18 @@
                             <div class="flex items-center justify-between flex-1 min-w-0">
                                 <span class="truncate tracking-tight text-[12px]">Langganan &amp; Billing</span>
                                 <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">TriPay QRIS</span>
+                            </div>
+                        </a>
+
+                        <!-- Pusat Feedback & Laporan Masalah -->
+                        <a href="#sec-feedback" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-rose-500/15 text-rose-600 dark:bg-rose-400/20 dark:text-rose-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Pusat Feedback &amp; Bug</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">Bugs &amp; Request</span>
                             </div>
                         </a>
 
@@ -679,46 +694,10 @@
             @include('app.docs.partials.sec_analytics')
 
             <!-- ===================================================== -->
-            <!-- SECTION 6: KEUANGAN, KAS & LAPORAN AKUNTANSI         -->
+            <!-- SECTION 6: PUSAT KEUANGAN, KAS & REKONSILIASI         -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & 15 HUB FINANSIAL)  -->
             <!-- ===================================================== -->
-            <section id="sec-finance" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'finance') && matchesSearch('keuangan kas bank akuntansi laporan laba rugi neraca arus kas p&l jurnal ekspor excel')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-500 flex items-center justify-center font-bold text-sm">
-                            6
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">{{ __('docs.keuangan_pembukuan_laporan_finansial') }}</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Otomasi jurnal akuntansi tanpa perlu menjadi akuntan bersertifikasi</p>
-                        </div>
-                    </div>
-                    @if(\App\Support\Context::hasPermission('reports.view'))
-                        <a href="{{ route('reports.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>{{ __('docs.buka_laporan_bisnis') }}</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </a>
-                    @endif
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-purple-600 dark:text-purple-400">Laba Rugi (P&amp;L Real-Time)</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Memantau omzet kotor, beban pokok penjualan (HPP), biaya sewa, listrik, dan laba bersih usaha Anda setiap detik.</p>
-                        </div>
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-purple-600 dark:text-purple-400">Neraca Saldo &amp; Valuasi Aset</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Ketahui posisi kas tunai di laci, saldo rekening bank, total nilai aset stok gudang, dan kewajiban hutang usaha.</p>
-                        </div>
-                        <div class="p-3.5 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-purple-600 dark:text-purple-400">Ekspor Excel &amp; PDF Siap Audit</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Seluruh laporan penjualan dan keuangan dapat diunduh ke format XLSX dengan rumus akuntansi rapi untuk keperluan pelaporan pajak.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_finance')
 
             <!-- ===================================================== -->
             <!-- SECTION 7: HRM, PRESENSI ONLINE & GAJI KARYAWAN       -->
@@ -801,6 +780,12 @@
             <!-- (PANDUAN LENGKAP 20 JENIS USAHA & LINK TUTORIAL)      -->
             <!-- ===================================================== -->
             @include('app.docs.partials.sec_ai_studio')
+
+            <!-- ===================================================== -->
+            <!-- SECTION 12C: PUSAT FEEDBACK & LAPORAN MASALAH (BUGS)  -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & JALUR ENGINEERING)  -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_feedback')
 
             <!-- ===================================================== -->
             <!-- SECTION 13: PINTASAN KEYBOARD (SHORTCUTS)            -->

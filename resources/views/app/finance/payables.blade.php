@@ -18,12 +18,14 @@
         </a>
         @endif
 
+        @can('finance.payables')
         <button type="button" @click="showImportModal = true"
            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
            title="{{ __('finance.tooltip_import_payables_opening') }}">
             <i data-lucide="upload" class="w-4 h-4 text-[#FF9500]"></i>
             <span>{{ __('finance.btn_import_opening_balance_short') }}</span>
         </button>
+        @endcan
 
         @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage'))
             <a href="{{ route('purchasing.bills.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E8880A] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(255,149,0,0.25)]">
@@ -219,7 +221,7 @@
                         <td class="px-4 py-3 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                             <div class="flex items-center justify-end gap-1">
                                 @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage') || \App\Support\Context::hasPermission('invoices.record_payment'))
-                                <a href="{{ route('purchasing.bills.index') }}" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[10px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_pay') }}" aria-label="{{ __('finance.btn_pay') }}">
+                                <a href="{{ route('purchasing.bills.index') }}" class="min-w-[44px] min-h-[44px] rounded-[10px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_pay') }}" aria-label="{{ __('finance.btn_pay') }}">
                                     <i data-lucide="credit-card" class="w-4 h-4"></i>
                                 </a>
                                 @endif
@@ -540,7 +542,7 @@
             <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
                 <div>
                     <button type="button" x-show="importPreview" @click="resetImport()"
-                        class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                        class="h-11 min-h-[44px] px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
                         :disabled="importExecuting">
                         <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                         <span>{{ __('finance.btn_change_file') }}</span>
@@ -549,13 +551,13 @@
 
                 <div class="flex items-center gap-2.5">
                     <button type="button" @click="if (!importExecuting) showImportModal = false"
-                        class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                        class="h-11 min-h-[44px] px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
                         :disabled="importExecuting">
                         {{ __('common.cancel') }}
                     </button>
 
                     <button type="button" x-show="importPreview" @click="executePayablesImport()"
-                        class="h-10 px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E8880A] text-white text-[13px] font-semibold shadow-sm shadow-[#FF9500]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="h-11 min-h-[44px] px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E8880A] text-white text-[13px] font-semibold shadow-sm shadow-[#FF9500]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         :disabled="importExecuting || !importPreview || (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) === 0">
                         <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importExecuting"></i>
                         <i data-lucide="check" class="w-4 h-4" x-show="!importExecuting"></i>

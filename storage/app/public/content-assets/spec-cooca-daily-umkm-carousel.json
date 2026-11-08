@@ -5,48 +5,52 @@
   "dimensions": "1080x1350",
   "target_time": "12:15",
   "slot_label": "Daily UMKM Portrait 1080x1350 High-End Carousel",
-  "topic_id": "grand_blueprint_digital_umkm",
-  "topic_name": "Roadmap Transformasi Toko Kelontong Jadi Ritel Modern Mandiri",
-  "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Menjadi Ritel Modern",
-  "solution_summary": "Panduan transformasi menyeluruh: Pengelompokan barang, barcodeisasi rak, kasir scanner cepat, dan pemisahan uang usaha.",
-  "viral_score": 96.9,
+  "primary_feature": "inventory",
+  "feature_name": "Manajemen Stok & Low-Stock Alert",
+  "feature_route": "/inventory/stocks",
+  "topic_name": "Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
+  "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
+  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert (/inventory/stocks) untuk optimalisasi operasional ritel.",
+  "viral_score": 96.5,
   "gate_status": "PASSED (>= 80.0)",
   "trend_velocity": 95.0,
   "problem_urgency": 97.0,
-  "platform_fit": 99.0,
-  "cta_clarity": 97.0,
-  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Menjadi Ritel Modern\n\nBanyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan operasional yang bisa dipantau tanpa harus menjaga toko seharian. Transformasi digital toko tidak harus rumit dan mahal.\n\nSimak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak toko.\n2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\nSiap bawa bisnis naik kelas hari ini? Coba demo gratisnya di https://cooca.id (klik link di bio profil!)\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA",
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern\n\nBanyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan bisa dipantau tanpa harus menjaga toko seharian. Transformasi digital toko tidak harus rumit dan mahal.\n\nSimak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak display toko.\n2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\nBawa bisnis ritel Anda naik kelas hari ini bersama platform COOCA di https://cooca.id/inventory/stocks\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA",
   "slides": [
     {
       "slide": 1,
-      "title": "Blueprint Toko Kelontong Menjadi Ritel Modern",
+      "title": "Roadmap Toko Kelontong Menjadi Ritel Modern",
       "tag": "Transformasi UMKM"
     },
     {
       "slide": 2,
       "title": "Fase 1: Standarisasi Kode Barcode Seluruh Produk",
-      "tag": "Identifikasi"
+      "tag": "Identifikasi Barang"
     },
     {
       "slide": 3,
-      "title": "Fase 2: Transaksi Kasir Cepat di Bawah 3 Detik",
-      "tag": "Kecepatan Layanan"
+      "title": "Fase 2: Transaksi Kasir Scanner Cepat Kurang dari 3 Detik",
+      "tag": "Layanan Kilat"
     },
     {
       "slide": 4,
-      "title": "Fase 3: Kartu Stok Digital & Notifikasi Minimum",
+      "title": "Fase 3: Kartu Stok Digital & Notifikasi Batas Minimum",
       "tag": "Pergudangan"
     },
     {
       "slide": 5,
-      "title": "Fase 4: Pisahkan Rekening Bisnis & Keperluan Dapur",
+      "title": "Fase 4: Pemisahan Rekening Kas Usaha dan Rekening Pribadi",
       "tag": "Disiplin Finansial"
     },
     {
       "slide": 6,
-      "title": "Kelola Operasional Toko Mandiri & Modern Bareng COOCA",
-      "tag": "Ekosistem Terpadu"
+      "title": "Tumbuh Mandiri & Modern Bersama Ekosistem COOCA (/inventory/stocks)",
+      "tag": "Solusi Terintegrasi"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:30"
+  "evaluated_at": "2026-11-08 07:30:12",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-08",
+  "topic": "Aturan Baru Pajak UMKM 2026: PPh Final 0,5 Persen Permanen dan Cara Hitungnya",
+  "slug": "aturan-baru-pajak-umkm-2026-pph-final-permanen",
+  "primary_keyword": "pajak umkm 2026",
+  "secondary_keywords": [
+    "pph final 0.5 persen",
+    "aturan baru pp 20 tahun 2026",
+    "batas omzet 500 juta bebas pajak",
+    "cara hitung pajak umkm bulanan",
+    "pajak seller marketplace",
+    "pembukuan sederhana umkm"
+  ],
+  "search_intent": "Informational, Commercial",
+  "category": "Pajak & Legalitas",
+  "cluster": "edukasi",
+  "author": "Tim Edukasi COOCA",
+  "published_at": "2026-11-08 07:00:00",
+  "reading_time": "8 menit",
+  "word_count": 2234,
+  "internal_links_used": [
+    {
+      "url": "https://cooca.id/blog/omzet-500-juta-bebas-pajak",
+      "anchor": "ketentuan omzet 500 juta bebas pajak"
+    },
+    {
+      "url": "https://cooca.id/blog/isu-pajak-transaksi-digital-dan-marketplace-umkm",
+      "anchor": "pemotongan pajak transaksi digital marketplace"
+    },
+    {
+      "url": "https://cooca.id/blog/panduan-pemisahan-rekening-bisnis-dan-pribadi",
+      "anchor": "pemisahan rekening bisnis dan pribadi"
+    },
+    {
+      "url": "https://cooca.id/blog/laporan-keuangan-sederhana-umkm-sak-emkm-vs-pembukuan-sederhana",
+      "anchor": "pembukuan sederhana untuk UMKM"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-laba-bersih-dan-laba-kotor-umkm",
+      "anchor": "cara menghitung laba bersih dan laba kotor UMKM"
+    }
+  ],
+  "verification_results": {
+    "lint_status": "PASSED (0 FAIL, 0 WARN)",
+    "em_dash_count": 0,
+    "en_dash_count": 0,
+    "external_links_count": 0,
+    "h1_count": 1,
+    "h2_count": 6,
+    "faq_count": 5,
+    "keyword_density": "1.07%",
+    "database_imported_id": 286,
+    "http_status_rendered": 200,
+    "sitemap_xml_verified": true
+  }
+}

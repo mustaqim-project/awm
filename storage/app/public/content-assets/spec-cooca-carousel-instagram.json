@@ -5,43 +5,47 @@
   "dimensions": "1080x1080",
   "target_time": "12:15",
   "slot_label": "Instagram Lunchtime 5-Slide HD Carousel",
-  "topic_id": "cashier_shift_reconciliation",
-  "topic_name": "Step-by-Step Rekap Kas Harian Tanpa Selisih Rp 1 Pun",
-  "hook_title": "5 Langkah Wajib Tutup Kasir Toko Biar Uang Fisik Selalu Cocok Sama Laporan Sistem",
-  "solution_summary": "SOP closing kasir 3 menit: Kunci saldo awal, catat petty cash, dan cetak ringkasan shift otomatis.",
-  "viral_score": 97.1,
+  "primary_feature": "finance",
+  "feature_name": "Laporan Laba Rugi Real-Time",
+  "feature_route": "/reports",
+  "topic_name": "SOP Tutup Kasir & Rekonsiliasi Kas Harian Anti-Selisih",
+  "hook_title": "5 Langkah Tutup Kasir Toko Tanpa Selisih Rp 1 Pun (SOP Closing 3 Menit)",
+  "solution_summary": "Integrasi fitur Laporan Laba Rugi Real-Time (/reports) untuk optimalisasi operasional ritel.",
+  "viral_score": 96.5,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 96.0,
-  "problem_urgency": 98.0,
+  "trend_velocity": 95.0,
+  "problem_urgency": 97.0,
   "platform_fit": 98.0,
   "cta_clarity": 96.0,
-  "caption": "5 Langkah Wajib Tutup Kasir Toko Biar Uang Fisik Selalu Cocok Sama Laporan Sistem\n\nPernahkah Anda merasa penjualan toko seharian ramai, namun saat penghitungan uang fisik di laci kasir saat tutup toko justru terjadi selisih?\n\nJangan biarkan hasil kerja keras hilang tanpa pencatatan yang jelas. Terapkan 5 langkah SOP tutup kasir berikut ini (geser slide):\n1. Input dan kunci saldo kas awal di sistem saat toko pertama kali buka.\n2. Catat seketika semua pengeluaran kas kecil (operasional harian, plastik, kebersihan).\n3. Pastikan tidak ada transaksi menggantung saat pergantian shift staf kasir.\n4. Hitung uang fisik dan bandingkan langsung dengan ringkasan sistem kasir.\n5. Cetak rekap shift otomatis untuk arsip verifikasi harian.\n\nKelola kasir toko lebih rapi, tenang, dan anti-selisih bersama COOCA di https://cooca.id\n\n#tipsbisnis #kasirtoko #selisihkas #sopkasir #manajemenkasir #COOCA",
+  "caption": "5 Langkah Tutup Kasir Toko Tanpa Selisih Rp 1 Pun (SOP Closing 3 Menit)\n\nPernahkah Anda mendapati penjualan toko seharian ramai, namun saat penghitungan uang fisik di laci kasir saat tutup toko justru ada selisih?\n\nJangan biarkan hasil kerja seharian menguap tanpa pencatatan yang pasti. Terapkan 5 langkah SOP tutup kasir berikut ini (geser slide):\n1. Input dan kunci saldo kas awal di sistem saat toko pertama kali buka.\n2. Catat seketika semua pengeluaran kas kecil (operasional harian, plastik, kebersihan) lewat pencatatan petty cash resmi.\n3. Pastikan tidak ada transaksi menggantung saat pergantian shift staf kasir.\n4. Hitung uang fisik dan bandingkan langsung dengan ringkasan sistem kasir.\n5. Cetak rekap shift otomatis untuk arsip verifikasi harian tanpa perlu hitung kalkulator manual.\n\nKelola kasir toko lebih rapi, tenang, dan anti-selisih bersama fitur Laporan Laba Rugi Real-Time COOCA di https://cooca.id/reports\n\n#tipsbisnis #kasirtoko #selisihkas #sopkasir #manajemenkasir #keuanganritel #COOCA",
   "slides": [
     {
       "slide": 1,
-      "title": "5 Langkah Tutup Kasir Tanpa Selisih Rp 1 Pun",
-      "tag": "Tips Finansial"
+      "title": "SOP Tutup Shift Kasir Cepat & Akurat",
+      "tag": "Keuangan Kasir"
     },
     {
       "slide": 2,
-      "title": "Langkah 1: Kunci Saldo Kas Awal Sebelum Buka Toko",
-      "tag": "SOP Awal"
+      "title": "Langkah 1: Kunci Saldo Awal Kasir di Awal Hari",
+      "tag": "Modal Kasir"
     },
     {
       "slide": 3,
-      "title": "Langkah 2: Rekam Pengeluaran Operasional Kecil Seketika",
-      "tag": "Petty Cash"
+      "title": "Langkah 2: Rekam Pengeluaran Operasional (Petty Cash)",
+      "tag": "Arus Kas Kecil"
     },
     {
       "slide": 4,
-      "title": "Langkah 3: Hindari Nota Bon Gantung Saat Pergantian Shift",
+      "title": "Langkah 3: Selesaikan Transaksi Tertunda Sebelum Shift Berakhir",
       "tag": "Disiplin Kasir"
     },
     {
       "slide": 5,
-      "title": "Langkah 4-5: Cetak Rekap Shift Otomatis di Sistem COOCA",
-      "tag": "Hasil Otomatis"
+      "title": "Langkah 4-5: Cetak Rekap Shift Otomatis di COOCA (/reports)",
+      "tag": "Verifikasi Sistem"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:26"
+  "evaluated_at": "2026-11-08 07:30:08",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

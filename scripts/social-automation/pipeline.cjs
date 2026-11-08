@@ -154,6 +154,14 @@ async function captureScreen(feature, outDir, slug) {
     throw new Error(`Screen capture aborted: page redirected to login (${page.url()}) and authentication could not be completed.`);
   }
 
+  // STRICT ANTI-CONNECTION-ERROR CHECK: Jangan pernah screenshot halaman error Chrome (ERR_CONNECTION_REFUSED)
+  const bodyText = await page.evaluate(() => document.body ? document.body.innerText : '').catch(() => '');
+  if (bodyText.includes('ERR_CONNECTION_REFUSED') || bodyText.includes("This site can't be reached")) {
+    console.error(`[Playwright] CRITICAL: Page failed to load (${targetUrl}). Detected connection error. Aborting screenshot!`);
+    await browser.close();
+    throw new Error(`Screen capture aborted: target URL '${targetUrl}' could not be reached (ERR_CONNECTION_REFUSED).`);
+  }
+
   const finalUrl = page.url();
   console.log(`[Playwright] Target verified: ${finalUrl} (Feature ID: ${feature.id}, Route: ${feature.route})`);
 

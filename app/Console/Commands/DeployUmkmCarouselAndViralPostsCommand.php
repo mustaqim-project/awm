@@ -119,13 +119,13 @@ Geser slide untuk melihat:
 3. Cara kunci menu kasir sensitif (anti-void tanpa PIN Supervisor).
 4. Solusi pembukuan laba rugi otomatis langsung dari HP Anda.
 
-Di Toko Kamu yang dikelola bersama Cooca Indonesia, seluruh transaksi kasir, mutasi stok barang, dan laporan keuangan terhubung otomatis secara real-time.
+Bersama Cooca Indonesia, seluruh transaksi kasir, mutasi stok barang, dan laporan keuangan terhubung otomatis secara real-time.
 
-Coba demo gratis sistem kasir Cooca sekarang:
+Mulai gunakan Paket Free sistem kasir Cooca sekarang:
 Kunjungi https://cooca.id (Tautan lengkap ada di bio)
-Gratis uji coba 14 hari tanpa perlu kartu kredit!
+Paket Free Rp 0 Gratis Selamanya untuk Solo Owner!
 
-#CoocaERP #AplikasiKasir #KasirPintar #UMKMIndonesia #BisnisRitel #KelolaToko #ManajemenKeuangan #TokoKamu
+#CoocaERP #AplikasiKasir #KasirPintar #UMKMIndonesia #BisnisRitel #KelolaToko #ManajemenKeuangan
 CAPTION;
 
         // Clean caption from forbidden characters

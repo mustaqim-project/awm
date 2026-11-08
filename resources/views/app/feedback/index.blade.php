@@ -6,7 +6,7 @@
 @php
     $canSeeDashboard = \App\Support\Context::isOwner() || \App\Support\Context::hasPermission('dashboard.view');
     $homeRoute = $canSeeDashboard ? route('dashboard') : route('portal');
-    $homeLabel = $canSeeDashboard ? 'Dashboard' : 'Portal';
+    $homeLabel = $canSeeDashboard ? __('common.dashboard') : __('common.portal');
     $currentLabel = $type === 'bugs' ? __('feedback.title_bugs') : __('feedback.title_features');
     $breadcrumbs = [
         ['label' => $homeLabel, 'url' => $homeRoute],

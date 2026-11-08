@@ -199,6 +199,10 @@ final class RbacSeeder extends Seeder
             // ─── Labor & Machine ──────────────────────────────────────
             'labor_machines.view'         => ['Lihat Upah Kerja & Mesin',               'labor',       'Melihat daftar tarif upah kerja dan biaya mesin.'],
             'labor_machines.manage'       => ['Kelola Upah Kerja & Mesin',              'labor',       'Menambah dan mengubah tarif upah kerja dan biaya mesin produksi.'],
+
+            // ─── Feedback & Dukungan Platform ─────────────────────────
+            'feedback.view'               => ['Lihat Tiket Masalah & Feedback',         'feedback',    'Melihat daftar tiket kendala sistem, bug, dan usulan fitur.', 'name' => 'feedback.view', 'label' => 'Lihat Tiket Masalah & Feedback', 'group' => 'Feedback', 'module' => 'feedback', 'action' => 'view'],
+            'feedback.create'             => ['Kirim Laporan Bug & Request Fitur',      'feedback',    'Mengirimkan laporan kendala sistem, bug, dan usulan fitur baru.', 'name' => 'feedback.create', 'label' => 'Kirim Laporan Bug & Request Fitur', 'group' => 'Feedback', 'module' => 'feedback', 'action' => 'create'],
         ];
     }
 
@@ -305,6 +309,8 @@ final class RbacSeeder extends Seeder
             'community.post',
             'community.events.register',
             'community.manage',
+            'feedback.view',
+            'feedback.create',
         ];
 
         return [
@@ -391,6 +397,8 @@ final class RbacSeeder extends Seeder
 
                     'finance.receivables',
                     'finance.payables',
+                    'feedback.view',
+                    'feedback.create',
                     'reports.view',
                     'reports.financial',
                     'reports.export',

@@ -7,11 +7,13 @@
     <x-module-header
         title="{{ __('finance.edc_terminals_page_title') }}"
         subtitle="{{ __('finance.edc_terminals_subtitle') }}">
+        @can('finance.cash_bank')
         <button type="button" @click="openAddModal()"
             class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm">
             <i data-lucide="plus-circle" class="w-4 h-4"></i>
             <span>{{ __('finance.btn_add_edc') }}</span>
         </button>
+        @endcan
         <a href="{{ route('finance.cash-bank.index') }}"
             class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
@@ -131,7 +133,7 @@
                     <form action="{{ route('finance.edc-terminals.toggle', $term->id) }}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="min-h-[36px] sm:min-h-[38px] px-3 rounded-[10px] text-[12px] font-medium {{ $term->is_active ? 'text-[#FF9500] hover:bg-[#FF9500]/10' : 'text-[#34C759] hover:bg-[#34C759]/10' }} transition cursor-pointer">
+                        <button type="submit" class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-medium {{ $term->is_active ? 'text-[#FF9500] hover:bg-[#FF9500]/10' : 'text-[#34C759] hover:bg-[#34C759]/10' }} transition cursor-pointer">
                             {{ $term->is_active ? __('finance.btn_deactivate') : __('finance.btn_activate_terminal') }}
                         </button>
                     </form>
@@ -140,7 +142,7 @@
                         onsubmit="return confirm('{{ __('finance.confirm_delete_edc') }}')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition cursor-pointer">
+                        <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition cursor-pointer">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </form>
@@ -157,7 +159,7 @@
                     {{ __('finance.empty_edc_desc') }}
                 </p>
                 <button type="button" @click="openAddModal()"
-                    class="h-10 px-5 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition inline-flex items-center gap-2 shadow-sm">
+                    class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition inline-flex items-center gap-2 shadow-sm">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     <span>{{ __('finance.btn_add_edc_now') }}</span>
                 </button>

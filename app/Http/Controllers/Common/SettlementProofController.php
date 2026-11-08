@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final class SettlementProofController extends Controller
 {
@@ -19,7 +19,7 @@ final class SettlementProofController extends Controller
      * Display or stream the protected payout transfer proof image.
      * Strictly authorized to Superadmin (guard: admin) OR the Merchant Owner/Staff (guard: web).
      */
-    public function show(Request $request, PaymentSettlement $settlement): BinaryFileResponse
+    public function show(Request $request, PaymentSettlement $settlement): Response
     {
         $isAdmin = Auth::guard('admin')->check();
         $isMerchant = false;
@@ -32,7 +32,7 @@ final class SettlementProofController extends Controller
             }
         }
 
-        abort_unless($isAdmin || $isMerchant, 403, 'Akses bukti transfer ditolak. Dokumen rahasia keuangan hanya dapat diakses oleh Admin atau Merchant bersangkutan.');
+        abort_unless($isAdmin || ($isMerchant && \App\Support\Context::hasPermission('finance.cash_bank')), 403, 'Akses bukti transfer ditolak. Dokumen rahasia keuangan hanya dapat diakses oleh Admin atau Merchant bersangkutan.');
 
         $path = $settlement->proof_image_path;
         abort_unless(! empty($path), 404, 'Bukti transfer belum diunggah.');

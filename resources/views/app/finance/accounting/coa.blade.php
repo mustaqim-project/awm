@@ -203,11 +203,11 @@
                                     </div>
                                 </td>
                                 <td class="px-4 sm:px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                    <div class="flex items-center justify-end gap-1">
+                                    <div class="flex items-center justify-end gap-1.5">
                                         <a href="{{ route('finance.general-ledger', ['account_id' => $acc->id]) }}"
                                             title="{{ __('finance.tooltip_general_ledger_account') }}"
                                             aria-label="{{ __('finance.tooltip_general_ledger_account') }}"
-                                            class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/12 hover:text-[#007AFF] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
+                                            class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#007AFF]/12 hover:text-[#007AFF] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                             <i data-lucide="book-open" class="w-4 h-4"></i>
                                         </a>
                                         @if(\App\Support\Context::hasPermission('accounting.manage'))
@@ -224,7 +224,7 @@
                                                 })"
                                                 title="{{ __('finance.tooltip_edit_account') }}"
                                                 aria-label="{{ __('finance.tooltip_edit_account') }}"
-                                                class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
+                                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black/60 dark:text-white/60 flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                                 <i data-lucide="pencil" class="w-4 h-4"></i>
                                             </button>
                                             @if($acc->canBeDeleted())
@@ -232,7 +232,7 @@
                                                     @click="confirmDelete({ id: '{{ $acc->id }}', code: '{{ $acc->code }}', name: '{{ addslashes($acc->name) }}' }, '{{ route('finance.coa.destroy', $acc) }}')"
                                                     title="{{ __('finance.tooltip_delete_sub_account') }}"
                                                     aria-label="{{ __('finance.tooltip_delete_sub_account') }}"
-                                                    class="w-8 h-8 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-[#FF3B30] flex items-center justify-center shrink-0 cursor-pointer transition-colors">
+                                                    class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-[#FF3B30]/15 hover:text-[#FF3B30] text-[#FF3B30] flex items-center justify-center shrink-0 cursor-pointer transition-colors">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             @endif

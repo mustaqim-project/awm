@@ -4,18 +4,20 @@
   "format": "feed",
   "dimensions": "1080x1080",
   "target_time": "19:45",
-  "slot_label": "TikTok Prime Time Single FYP Video/Image Feed",
-  "topic_id": "cashier_fraud_void_prevention",
+  "slot_label": "TikTok Prime Time Single Static Image Feed",
+  "primary_feature": "fraud_prevention",
+  "feature_name": "Hak Akses Kasir & Anti-Kecurangan",
+  "feature_route": "/roles",
   "topic_name": "POV Anti-Fraud: Cegah Transaksi Void Palsu di Meja Kasir",
   "hook_title": "POV Kasir: Mau Hapus Transaksi Belanja Tapi Layar Langsung Minta PIN Supervisor",
-  "solution_summary": "Kunci mutlak keamanan meja kasir: Tombol void dan diskon manual hanya bisa dibuka dengan persetujuan manajer toko.",
-  "viral_score": 98.25,
+  "solution_summary": "Integrasi fitur Hak Akses Kasir & Anti-Kecurangan (/roles) untuk optimalisasi operasional ritel.",
+  "viral_score": 97.95,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 98.0,
-  "problem_urgency": 99.0,
+  "problem_urgency": 98.0,
   "platform_fit": 99.0,
   "cta_clarity": 96.0,
-  "caption": "POV Kasir: Mau Hapus Transaksi Belanja Tapi Layar Langsung Minta PIN Supervisor\n\nJangan biarkan transaksi void atau selisih kembalian kasir membuat margin keuntungan toko berkurang tanpa disadari.\nStandar keamanan meja kasir modern:\n- Staf kasir tidak bisa membatalkan transaksi tanpa otorisasi PIN Supervisor.\n- Rekap kas otomatis per pergantian shift kasir selesai dalam 1 menit.\n- Struk belanja langsung terkirim secara instan via WhatsApp pelanggan.\n\nCoba gratis sekarang di https://cooca.id (klik link di bio!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #keamanantoko #COOCA",
+  "caption": "POV Kasir: Mau Hapus Transaksi Belanja Tapi Layar Langsung Minta PIN Supervisor\n\nJangan biarkan transaksi void fiktif atau selisih kembalian kasir membuat margin keuntungan toko berkurang tanpa disadari.\nStandar keamanan meja kasir modern:\n- Staf kasir tidak bisa membatalkan transaksi tanpa otorisasi PIN Supervisor.\n- Rekap kas otomatis per pergantian shift kasir selesai dalam 1 menit.\n- Struk belanja langsung terkirim secara instan via WhatsApp pelanggan.\n\nCoba sistem keamanan kasir pintar COOCA di https://cooca.id/roles (klik link di bio!)\n\n#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #keamanantoko #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -23,5 +25,7 @@
       "tag": "Keamanan Toko"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:36"
+  "evaluated_at": "2026-11-08 07:30:22",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

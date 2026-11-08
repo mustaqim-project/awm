@@ -1,0 +1,86 @@
+{
+  "research_date": "2026-11-08",
+  "market": "Indonesia (B2B Retail / Multi-Outlet / Enterprise & Growing UMKM)",
+  "language": "id-ID",
+  "platform_focus": "LinkedIn",
+  "categories_analyzed": [
+    {
+      "category": "Tata Kelola Multi-Cabang & Multi-Gudang",
+      "primary_keyword": "tata kelola retail multi cabang",
+      "secondary_keywords": [
+        "kontrol stok multi outlet",
+        "rekonsiliasi transfer stok antar cabang",
+        "laporan konsolidasi multi gudang",
+        "sop operasional toko cabang"
+      ],
+      "long_tail_keywords": [
+        "cara mengontrol stok barang beda cabang agar tidak bocor",
+        "sistem transfer stok antar gudang dengan konfirmasi dua arah",
+        "penyebab selisih stok saat ekspansi cabang toko ritel"
+      ],
+      "search_intent": "Commercial & Operational Playbook",
+      "core_problem": "Pemilik bisnis ritel mengalami disekonomi skala saat membuka cabang ke-3 atau ke-5, di mana omzet meningkat tetapi margin keuntungan bersih tergerus akibat selisih barang dalam perjalanan antar-cabang dan ketiadaan verifikasi serah-terima digital.",
+      "people_also_ask": [
+        "Mengapa buka banyak cabang justru bikin profit turun?",
+        "Bagaimana cara memantau stok di 5 cabang toko sekaligus?",
+        "Apa itu sistem transfer stok handshake dua arah?",
+        "Kapan waktu yang tepat bagi toko ritel membuka cabang baru?"
+      ],
+      "organic_potential": "Sangat Tinggi di LinkedIn (topik favorit Founders, Directors, Head of Operations, dan Franchise Owners)",
+      "cooca_feature_relevance": "Sangat Tinggi (Modul Multi-Gudang & Multi-Cabang /warehouse dengan alur Pengiriman -> Dalam Perjalanan -> Konfirmasi Diterima)",
+      "education_angle": "Bongkar fenomena The Multi-Branch Paradox dan cara mengunci kebocoran logistik antar-gudang dengan kontrol terpusat.",
+      "social_content_opportunity": "Eksplosif di LinkedIn (kontrarian, bernada eksekutif, memicu debat di kalangan pengusaha dan praktisi ritel)"
+    },
+    {
+      "category": "Otorisasi Kasir & Pencegahan Fraud Internal",
+      "primary_keyword": "hak akses kasir dan supervisor",
+      "secondary_keywords": [
+        "mencegah void liar kasir",
+        "role based access control kasir",
+        "blind cash count tutup shift",
+        "audit kecurangan kasir toko"
+      ],
+      "long_tail_keywords": [
+        "cara membatasi wewenang kasir agar tidak bisa batalkan struk sepihak",
+        "sop tutup kasir tanpa melihat saldo akhir di komputer kasir",
+        "matriks hak akses karyawan toko ritel modern"
+      ],
+      "search_intent": "Practical Problem-Solution & Governance Framework",
+      "core_problem": "Kasir toko memiliki wewenang setara supervisor karena ketiadaan sistem RBAC berjenjang, memungkinkan pembatalan item struk (void) setelah menerima uang tunai dari pembeli.",
+      "people_also_ask": [
+        "Apakah kasir boleh memiliki akses untuk void struk?",
+        "Bagaimana cara mencegah manipulasi diskon kasir?",
+        "Apa manfaat blind settlement saat pergantian shift kasir?"
+      ],
+      "organic_potential": "Tinggi (relevan langsung dengan resiko kehilangan uang tunai harian)",
+      "cooca_feature_relevance": "Sangat Tinggi (Modul Manajemen Peran & Hak Akses /roles serta POS Kasir /pos)",
+      "education_angle": "Panduan matriks pemisahan wewenang kasir, kepala toko, dan pemilik bisnis pusat.",
+      "social_content_opportunity": "Tinggi (menggunakan simulasi kerugian riil 1% kebocoran per shift)"
+    },
+    {
+      "category": "Laporan Keuangan & Audit Konsolidasi",
+      "primary_keyword": "laporan keuangan konsolidasi cabang",
+      "secondary_keywords": [
+        "analisis profitabilitas per gerai",
+        "valuasi stok real time multi cabang",
+        "rekonsiliasi omzet dan kas masuk harian"
+      ],
+      "long_tail_keywords": [
+        "cara melihat laporan laba rugi konsolidasian semua cabang toko",
+        "cara mengetahui cabang toko yang rugi dan boncos",
+        "dashboard kontrol pemilik bisnis ritel multi gerai"
+      ],
+      "search_intent": "Executive Decision Making",
+      "core_problem": "Pemilik bisnis harus menunggu staf akuntansi menggabungkan file spreadsheet terpisah dari masing-masing cabang tiap akhir bulan, sehingga keputusan pengadaan barang lambat dan tidak akurat.",
+      "people_also_ask": [
+        "Bagaimana cara menghitung laba rugi per cabang toko?",
+        "Mengapa pembukuan manual spreadsheet tidak aman untuk 3 cabang lebih?",
+        "Bagaimana memantau kas mengendap di kasir seluruh cabang?"
+      ],
+      "organic_potential": "Sangat Tinggi (C-level, CFO, dan Pemilik Usaha)",
+      "cooca_feature_relevance": "Sangat Tinggi (Modul Laporan Keuangan Konsolidasian /reports)",
+      "education_angle": "Transisi dari spreadsheet parsial ke dashboard konsolidasi terintegrasi real-time.",
+      "social_content_opportunity": "Sangat Tinggi (format bento dashboard yang memanjakan mata)"
+    }
+  ]
+}

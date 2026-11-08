@@ -72,4 +72,21 @@ return [
     'status_reviewed' => 'Ditinjau',
 
     'status_' => 'Status',
+    'dashboard' => 'Dashboard',
+    'portal' => 'Portal',
+
+    // Kategori Laporan & Permintaan Fitur
+    'cat_bug' => 'Kendala / Bug Teknis',
+    'cat_performance' => 'Kecepatan / Performa',
+    'cat_security' => 'Keamanan Sistem',
+    'cat_ui' => 'Tampilan / Antarmuka (UI/UX)',
+    'cat_data' => 'Akurasi Data',
+    'cat_reporting' => 'Laporan & Analitik',
+    'cat_inventory' => 'Stok & Gudang',
+    'cat_sales' => 'Penjualan & Kasir POS',
+    'cat_finance' => 'Keuangan & Akuntansi',
+    'cat_ai' => 'Kecerdasan Buatan (AI)',
+    'cat_integration' => 'Integrasi Sistem',
+    'cat_mobile' => 'Aplikasi Mobile / Tablet',
+    'cat_other' => 'Lainnya',
 ];

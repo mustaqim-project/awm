@@ -72,4 +72,21 @@ return [
     'status_reviewed' => 'Reviewed',
 
     'status_' => 'Status',
+    'dashboard' => 'Dashboard',
+    'portal' => 'Portal',
+
+    // Category Translations
+    'cat_bug' => 'Bug / Technical Issue',
+    'cat_performance' => 'Performance & Speed',
+    'cat_security' => 'System Security',
+    'cat_ui' => 'User Interface (UI/UX)',
+    'cat_data' => 'Data Accuracy',
+    'cat_reporting' => 'Reports & Analytics',
+    'cat_inventory' => 'Inventory & Warehouse',
+    'cat_sales' => 'Sales & POS Cashier',
+    'cat_finance' => 'Finance & Accounting',
+    'cat_ai' => 'Artificial Intelligence (AI)',
+    'cat_integration' => 'Integration & API',
+    'cat_mobile' => 'Mobile / Tablet App',
+    'cat_other' => 'Others',
 ];

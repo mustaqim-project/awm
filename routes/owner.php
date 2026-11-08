@@ -527,18 +527,16 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::delete('/schedules/{schedule}', [HrmWebController::class, 'destroySchedule'])->middleware('require.permission:users.manage')->name('schedules.destroy');
         });
 
-        // Owner Platform Feedback
-        Route::middleware('require.role:owner')->group(function (): void {
-            Route::get('/feedback/bugs', [FeedbackWebController::class, 'bugs'])->name('feedback.bugs.index');
-            Route::get('/feedback/bugs/create', [FeedbackWebController::class, 'createBug'])->name('feedback.bugs.create');
-            Route::post('/feedback/bugs', [FeedbackWebController::class, 'storeBug'])->name('feedback.bugs.store');
-            Route::get('/feedback/bugs/{bugReport}/attachment', [FeedbackWebController::class, 'streamBugAttachment'])->name('feedback.bugs.attachment');
-            Route::get('/feedback/bugs/{bugReport}', [FeedbackWebController::class, 'showBug'])->name('feedback.bugs.show');
-            Route::get('/feedback/features', [FeedbackWebController::class, 'features'])->name('feedback.features.index');
-            Route::get('/feedback/features/create', [FeedbackWebController::class, 'createFeature'])->name('feedback.features.create');
-            Route::post('/feedback/features', [FeedbackWebController::class, 'storeFeature'])->name('feedback.features.store');
-            Route::get('/feedback/features/{featureRequest}', [FeedbackWebController::class, 'showFeature'])->name('feedback.features.show');
-        });
+        // Platform Feedback & Bug Reports (Granular permissions enforced via FeedbackWebController::middleware())
+        Route::get('/feedback/bugs', [FeedbackWebController::class, 'bugs'])->name('feedback.bugs.index');
+        Route::get('/feedback/bugs/create', [FeedbackWebController::class, 'createBug'])->name('feedback.bugs.create');
+        Route::post('/feedback/bugs', [FeedbackWebController::class, 'storeBug'])->name('feedback.bugs.store');
+        Route::get('/feedback/bugs/{bugReport}/attachment', [FeedbackWebController::class, 'streamBugAttachment'])->name('feedback.bugs.attachment');
+        Route::get('/feedback/bugs/{bugReport}', [FeedbackWebController::class, 'showBug'])->name('feedback.bugs.show');
+        Route::get('/feedback/features', [FeedbackWebController::class, 'features'])->name('feedback.features.index');
+        Route::get('/feedback/features/create', [FeedbackWebController::class, 'createFeature'])->name('feedback.features.create');
+        Route::post('/feedback/features', [FeedbackWebController::class, 'storeFeature'])->name('feedback.features.store');
+        Route::get('/feedback/features/{featureRequest}', [FeedbackWebController::class, 'showFeature'])->name('feedback.features.show');
 
         // Dokumentasi & Panduan Penggunaan Sistem Cooca (Dapat diakses oleh seluruh pengguna)
         Route::get('/docs', [DocumentationWebController::class, 'index'])->name('docs.index');

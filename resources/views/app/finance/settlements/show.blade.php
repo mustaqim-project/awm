@@ -1,56 +1,44 @@
 @extends('layouts.app', ['title' => __('finance.settlement_detail_page_title', ['number' => $settlement->settlement_number])])
 
 @section('content')
-<div x-data="{ showProofModal: false }" class="max-w-[1000px] mx-auto space-y-6 pb-16">
+<div x-data="{ showProofModal: false }" class="max-w-[1000px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10">
 
     {{-- ========================================================== --}}
     {{-- TOOLBAR / PAGE HEADER                                      --}}
     {{-- ========================================================== --}}
-    <header class="rounded-[20px] backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 px-5 sm:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
-        <div>
-            <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1">
-                <a href="{{ route('finance.settlements.index') }}" class="hover:text-black dark:hover:text-white transition">{{ __('finance.breadcrumb_gateway_recon') }}</a>
-                <i data-lucide="chevron-right" class="w-3 h-3 opacity-40"></i>
-                <span class="text-black dark:text-white font-medium">{{ __('finance.breadcrumb_settlement_detail') }}</span>
-            </nav>
-            <h1 class="text-[20px] sm:text-[22px] font-bold text-black dark:text-white tracking-tight flex flex-wrap items-center gap-2.5">
-                <span>Settlement #{{ $settlement->settlement_number }}</span>
-                @if($settlement->isCompleted())
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1">
-                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('finance.status_transferred_completed') }}</span>
-                    </span>
-                @elseif($settlement->isPending())
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#F59E0B] inline-flex items-center gap-1">
-                        <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('finance.status_waiting_admin_transfer') }}</span>
-                    </span>
-                @elseif($settlement->isRejected())
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30] inline-flex items-center gap-1">
-                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('finance.status_rejected') }}</span>
-                    </span>
-                @else
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#007AFF]/15 text-[#007AFF]">
-                        {{ ucfirst($settlement->status) }}
-                    </span>
-                @endif
-            </h1>
-            <p class="text-[13px] text-black/50 dark:text-white/50 mt-0.5">
-                {{ __('finance.submitted_on', ['date' => \Carbon\Carbon::parse($settlement->settlement_date)->translatedFormat('d F Y')]) }}
-                @if($settlement->reconciledBy)
-                    {{ __('finance.by_user', ['name' => $settlement->reconciledBy->name]) }}
-                @endif
-            </p>
-        </div>
-        <div>
-            <a href="{{ route('finance.settlements.index') }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition flex items-center justify-center gap-1.5 active:scale-[0.98]">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>{{ __('common.back_to_list') }}</span>
-            </a>
-        </div>
-    </header>
+    @php
+        $canSeeDashboard = \App\Support\Context::isOwner() || \App\Support\Context::hasPermission('dashboard.view');
+        $homeRoute = $canSeeDashboard ? route('dashboard') : route('portal');
+        $homeLabel = $canSeeDashboard ? __('common.dashboard') : __('common.portal');
+        $breadcrumbs = [
+            ['label' => $homeLabel, 'url' => $homeRoute],
+            ['label' => __('finance.breadcrumb_gateway_recon'), 'url' => route('finance.settlements.index')],
+            ['label' => __('finance.breadcrumb_settlement_detail') . ' #' . $settlement->settlement_number, 'url' => null],
+        ];
+
+        $badgeHtml = match (true) {
+            $settlement->isCompleted() => '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] inline-flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i><span>' . e(__('finance.status_transferred_completed')) . '</span></span>',
+            $settlement->isPending() => '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#F59E0B] inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i><span>' . e(__('finance.status_waiting_admin_transfer')) . '</span></span>',
+            $settlement->isRejected() => '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FF3B30]/15 text-[#FF3B30] inline-flex items-center gap-1"><i data-lucide="x" class="w-3.5 h-3.5"></i><span>' . e(__('finance.status_rejected')) . '</span></span>',
+            default => '<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#007AFF]/15 text-[#007AFF]">' . e(ucfirst($settlement->status)) . '</span>',
+        };
+
+        $subtitle = __('finance.submitted_on', ['date' => \Carbon\Carbon::parse($settlement->settlement_date)->translatedFormat('d F Y')])
+            . ($settlement->reconciledBy ? ' ' . __('finance.by_user', ['name' => $settlement->reconciledBy->name]) : '');
+    @endphp
+
+    <x-module-header
+        module="finance"
+        :title="'Settlement #' . $settlement->settlement_number"
+        :subtitle="$subtitle"
+        :breadcrumbs="$breadcrumbs"
+        :badge="$badgeHtml">
+        <a href="{{ route('finance.settlements.index') }}"
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition flex items-center justify-center gap-1.5 active:scale-[0.98]">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>{{ __('common.back_to_list') }}</span>
+        </a>
+    </x-module-header>
 
     {{-- ========================================================== --}}
     {{-- STATUS SPECIFIC BENTO CARD (BUKTI BAYAR / PENDING / REJECT) --}}
@@ -71,12 +59,12 @@
 
                 <div class="flex items-center gap-2">
                     <button type="button" @click="showProofModal = true"
-                        class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98] shadow-xs">
+                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98] shadow-xs">
                         <i data-lucide="eye" class="w-4 h-4"></i>
                         <span>{{ __('finance.btn_view_photo_proof') }}</span>
                     </button>
                     <a href="{{ $settlement->proof_image_url }}" download="bukti-transfer-{{ $settlement->settlement_number }}.jpg" target="_blank"
-                        class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98]">
+                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98]">
                         <i data-lucide="download" class="w-4 h-4"></i>
                         <span>{{ __('finance.btn_download_receipt') }}</span>
                     </a>
@@ -216,7 +204,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/5 dark:divide-white/5 text-black/80 dark:text-white/80">
-                    @foreach($settlement->allocations as $allocation)
+                    @forelse($settlement->allocations as $allocation)
                         <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
                             <td class="py-3 px-5">
                                 <span class="px-2 py-0.5 rounded-md font-semibold text-[10px]"
@@ -231,7 +219,16 @@
                                 {{ $business->currency_symbol }} {{ number_format($allocation->amount, 0, ',', '.') }}
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="py-8 px-5 text-center text-black/40 dark:text-white/40">
+                                <div class="flex flex-col items-center justify-center gap-2">
+                                    <i data-lucide="inbox" class="w-6 h-6 opacity-40"></i>
+                                    <p class="text-[13px] font-medium">{{ __('finance.empty_allocations') }}</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

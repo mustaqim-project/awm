@@ -186,6 +186,7 @@
             </table>
         </div>
 
+        @can('finance.cash_bank')
         {{-- Payout Action Bar --}}
         <div x-show="unsettledItems.length > 0" class="p-5 sm:p-6 border-t border-black/5 dark:border-white/10 bg-black/[0.015] dark:bg-white/[0.02]">
             <form @submit.prevent="submitPayout()" class="space-y-4">
@@ -265,6 +266,7 @@
                 </div>
             </form>
         </div>
+        @endcan
     </div>
 
     {{-- ========================================================== --}}

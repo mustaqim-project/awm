@@ -20,12 +20,28 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 final class FeedbackWebController extends Controller implements HasMiddleware
 {
     /**
-     * Controller-level role enforcement: Owner platform feedback.
+     * Controller-level RBAC enforcement: Granular feedback permissions.
      */
     public static function middleware(): array
     {
         return [
-            new Middleware('require.role:owner'),
+            new Middleware(function ($request, $next) {
+                $routeAction = $request->route()?->getActionMethod();
+                $viewMethods = ['bugs', 'features', 'showBug', 'showFeature', 'streamBugAttachment'];
+                $createMethods = ['createBug', 'storeBug', 'createFeature', 'storeFeature'];
+
+                if (in_array($routeAction, $viewMethods, true) && ! Context::isAdminOrOwner() && ! Context::hasPermission('feedback.view')) {
+                    abort(403, 'Anda tidak memiliki hak akses untuk melihat tiket feedback.');
+                }
+
+                if (in_array($routeAction, $createMethods, true) && ! Context::isAdminOrOwner() && ! Context::hasPermission('feedback.create')) {
+                    abort(403, 'Anda tidak memiliki hak akses untuk membuat laporan feedback.');
+                }
+
+                return $next($request);
+            }),
+            new Middleware('require.permission:feedback.view', only: ['bugs', 'features', 'showBug', 'showFeature', 'streamBugAttachment']),
+            new Middleware('require.permission:feedback.create', only: ['createBug', 'storeBug', 'createFeature', 'storeFeature']),
         ];
     }
 

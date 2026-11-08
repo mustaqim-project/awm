@@ -38,7 +38,8 @@ _ide_helper_models.php
 .phpactor.json
 
 # --- Node & Frontend Dependencies ---
-/node_modules/
+node_modules/
+**/node_modules/
 /public/build
 /public/hot
 /public/storage

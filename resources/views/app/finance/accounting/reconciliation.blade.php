@@ -161,14 +161,14 @@
                                                     @if($line->status === 'reconciled')
                                                         <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
                                                             @csrf
-                                                            <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[8px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
+                                                            <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
                                                                 <i data-lucide="undo" class="w-4 h-4"></i>
                                                             </button>
                                                         </form>
                                                     @else
                                                         <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
                                                             @csrf
-                                                            <button type="submit" class="min-w-[36px] min-h-[36px] sm:min-w-[40px] sm:min-h-[40px] rounded-[8px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
+                                                            <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
                                                                 <i data-lucide="check" class="w-4 h-4"></i>
                                                             </button>
                                                         </form>

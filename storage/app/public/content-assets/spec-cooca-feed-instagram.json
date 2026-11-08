@@ -5,23 +5,27 @@
   "dimensions": "1080x1080",
   "target_time": "12:15",
   "slot_label": "Instagram Lunchtime Single Visual Feed",
-  "topic_id": "bite_sized_cashier_habits",
-  "topic_name": "3 Kebiasaan Sepele Kasir yang Bikin Toko Bocor Halus",
-  "hook_title": "Omzet Ramai Tapi Profit Tipis? Waspadai 3 Titik Kebocoran Kasir yang Sering Dianggap Remeh",
-  "solution_summary": "Hilangkan celah nota manual, pembulatan sepihak, dan void transaksi tanpa supervisi dengan kasir POS terintegrasi.",
-  "viral_score": 94.8,
+  "primary_feature": "fraud_prevention",
+  "feature_name": "Hak Akses Kasir & Anti-Kecurangan",
+  "feature_route": "/roles",
+  "topic_name": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
+  "hook_title": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
+  "solution_summary": "Integrasi fitur Hak Akses Kasir & Anti-Kecurangan (/roles) untuk optimalisasi operasional ritel.",
+  "viral_score": 96.5,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 93.0,
-  "problem_urgency": 96.0,
-  "platform_fit": 96.0,
-  "cta_clarity": 94.0,
-  "caption": "Omzet Ramai Tapi Profit Tipis? Waspadai 3 Titik Kebocoran Kasir yang Sering Dianggap Remeh\n\nSering merasa keuntungan penjualan menguap tanpa jejak? Waspadai 3 kebiasaan sepele di meja kasir ini:\n1. Transaksi manual tanpa struk saat toko sedang ramai pembeli.\n2. Pengambilan uang kasir untuk keperluan pribadi tanpa pencatatan petty cash resmi.\n3. Pembatalan (void) transaksi belanja tanpa otorisasi atau supervisi.\n\nPastikan setiap transaksi meja kasir dilindungi dengan sistem otorisasi kasir pintar yang transparan dan aman.\n\nCoba gratis sekarang di https://cooca.id (klik link di bio!)\n\n#kasirpintar #tipstoko #umkmmaju #keuangantoko #operasionaltoko #COOCA",
+  "trend_velocity": 95.0,
+  "problem_urgency": 97.0,
+  "platform_fit": 98.0,
+  "cta_clarity": 96.0,
+  "caption": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini\n\nSering merasa toko ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Waspadai 3 celah kebocoran di meja kasir:\n1. Transaksi manual tanpa struk saat toko sedang antre panjang.\n2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\nLindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\nPelajari fitur pengamanan kasir modern COOCA di https://cooca.id/roles\n\n#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA",
   "slides": [
     {
       "slide": 1,
-      "title": "3 Kebiasaan Sepele Kasir yang Bikin Toko Bocor Halus",
+      "title": "3 Kebiasaan Sepele Kasir yang Menyebabkan Bocor Halus",
       "tag": "Edukasi Kasir"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:28"
+  "evaluated_at": "2026-11-08 07:30:10",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

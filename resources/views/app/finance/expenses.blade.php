@@ -396,16 +396,16 @@
                                         :class="category === 'operational' ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="store" class="w-4 h-4 mb-1.5" :class="category === 'operational' ? 'text-white' : 'text-[#007AFF]'"></i>
-                                        <span class="text-[12px] font-bold">Operasional Toko</span>
-                                        <span class="text-[10px] opacity-70">ATK, pembersih, umum</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_operational') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_operational_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'utilities'"
                                         :class="category === 'utilities' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="zap" class="w-4 h-4 mb-1.5" :class="category === 'utilities' ? 'text-white' : 'text-[#FF9500]'"></i>
-                                        <span class="text-[12px] font-bold">Listrik, Air & Gas</span>
-                                        <span class="text-[10px] opacity-70">PLN, PAM, tabung LPG</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_utilities') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_utilities_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'internet_phone'"
@@ -420,8 +420,8 @@
                                         :class="category === 'supplies' ? 'bg-[#5856D6] text-white shadow-md shadow-[#5856D6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="package" class="w-4 h-4 mb-1.5" :class="category === 'supplies' ? 'text-white' : 'text-[#5856D6]'"></i>
-                                        <span class="text-[12px] font-bold">Kemasan & Plastik</span>
-                                        <span class="text-[10px] opacity-70">Plastik, dus, cup, lakban</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_supplies') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_supplies_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'salaries'"
@@ -444,32 +444,32 @@
                                         :class="category === 'logistics' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="truck" class="w-4 h-4 mb-1.5" :class="category === 'logistics' ? 'text-white' : 'text-[#FF9500]'"></i>
-                                        <span class="text-[12px] font-bold">Transport & Bensin</span>
-                                        <span class="text-[10px] opacity-70">BBM, kurir instan, tol</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_logistics') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_logistics_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'rent'"
                                         :class="category === 'rent' ? 'bg-[#5856D6] text-white shadow-md shadow-[#5856D6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="building-2" class="w-4 h-4 mb-1.5" :class="category === 'rent' ? 'text-white' : 'text-[#5856D6]'"></i>
-                                        <span class="text-[12px] font-bold">Sewa Tempat</span>
-                                        <span class="text-[10px] opacity-70">Sewa ruko, booth, IPL</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_rent') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_rent_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'maintenance'"
                                         :class="category === 'maintenance' ? 'bg-[#AF52DE] text-white shadow-md shadow-[#AF52DE]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="wrench" class="w-4 h-4 mb-1.5" :class="category === 'maintenance' ? 'text-white' : 'text-[#AF52DE]'"></i>
-                                        <span class="text-[12px] font-bold">Perawatan & Servis</span>
-                                        <span class="text-[10px] opacity-70">Servis alat, reparasi AC</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_maintenance') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_maintenance_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'marketing'"
                                         :class="category === 'marketing' ? 'bg-[#FF3B30] text-white shadow-md shadow-[#FF3B30]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="megaphone" class="w-4 h-4 mb-1.5" :class="category === 'marketing' ? 'text-white' : 'text-[#FF3B30]'"></i>
-                                        <span class="text-[12px] font-bold">Pemasaran & Iklan</span>
-                                        <span class="text-[10px] opacity-70">Meta ads, cetak spanduk</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_marketing') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_marketing_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'taxes_legal'"
@@ -484,8 +484,8 @@
                                         :class="category === 'bank_admin' ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
                                         <i data-lucide="credit-card" class="w-4 h-4 mb-1.5" :class="category === 'bank_admin' ? 'text-white' : 'text-[#007AFF]'"></i>
-                                        <span class="text-[12px] font-bold">Admin Bank & MDR</span>
-                                        <span class="text-[10px] opacity-70">Admin rekening, MDR EDC</span>
+                                        <span class="text-[12px] font-bold">{{ __('finance.cat_bank_admin') }}</span>
+                                        <span class="text-[10px] opacity-70">{{ __('finance.cat_bank_admin_desc') }}</span>
                                     </button>
 
                                     <button type="button" @click="category = 'cash_advance'"

@@ -5,43 +5,47 @@
   "dimensions": "1080x1080",
   "target_time": "08:00",
   "slot_label": "LinkedIn Morning Executive Carousel Deck",
-  "topic_id": "b2b_multi_outlet_governance",
-  "topic_name": "Arsitektur Kontrol Multi-Cabang & Tata Kelola Ritel B2B",
-  "hook_title": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet",
-  "solution_summary": "Terapkan pemisahan hak akses kasir vs supervisor dan pantau konsolidasi omzet seluruh cabang dari 1 dashboard cloud.",
-  "viral_score": 96.2,
+  "primary_feature": "multi_outlet",
+  "feature_name": "Multi-Cabang Dari 1 Layar HP",
+  "feature_route": "/warehouse",
+  "topic_name": "Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
+  "hook_title": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
+  "solution_summary": "Integrasi fitur Multi-Cabang Dari 1 Layar HP (/warehouse) untuk optimalisasi operasional ritel.",
+  "viral_score": 95.5,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 94.0,
-  "problem_urgency": 97.0,
-  "platform_fit": 98.0,
-  "cta_clarity": 96.0,
-  "caption": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau? Blueprint Tata Kelola Multi-Outlet\n\nMengembangkan jaringan ritel modern dari 1 menjadi beberapa cabang menghadirkan tantangan tata kelola yang fundamental. Banyak pebisnis ritel mengalami kendala asimetri informasi: omzet terlihat bertumbuh, namun kebocoran stok dan ketidakteraturan kasir justru meningkat.\n\nBerikut kerangka operasional pengendalian multi-cabang yang terbukti efektif untuk bisnis ritel modern:\n1. Pembatasan Otorisasi: Wewenang staf kasir dibatasi pada pemindaian transaksi, sedangkan pembatalan (void) memerlukan otorisasi PIN Supervisor.\n2. Sinkronisasi Inventori Real-Time: Mutasi stok antargudang dan antaroutlet tercatat otomatis melalui pembacaan barcode terpusat.\n3. Laporan Konsolidasi: Evaluasi profitabilitas per outlet disajikan secara real-time dari satu dashboard manajemen terpadu.\n\nSeluruh kendali tata kelola ritel multi-cabang kini dapat diakses secara terpusat melalui platform COOCA di https://cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SistemOperasional #EdukasiRitel #COOCA",
+  "problem_urgency": 96.0,
+  "platform_fit": 97.0,
+  "cta_clarity": 95.0,
+  "caption": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?\n\nDalam fase ekspansi ritel dari single store menuju jaringan multi-outlet, tantangan terbesar para founder bukanlah permodalan, melainkan asimetri pengawasan operasional harian. Ketika pemilik tidak berada di lokasi, rentang kendali melemah dan margin laba rentan bocor.\n\nTiga pilar tata kelola wajib untuk menjaga stabilitas ekspansi ritel:\n1. Pembatasan Otorisasi Kasir: Staf hanya memproses transaksi, sementara pembatalan nota (void) dan diskon manual wajib otorisasi PIN Supervisor.\n2. Integrasi Mutasi Stok Real-Time: Pengiriman barang antar cabang tercatat otomatis dengan pemindaian barcode terpusat.\n3. Laporan Konsolidasi 1 Layar: Pemilik dapat memantau perputaran omzet dan profitabilitas setiap gerai tanpa harus berkeliling lokasi.\n\nSeluruh arsitektur tata kelola ritel multi-cabang ini diintegrasikan melalui modul Multi-Cabang Dari 1 Layar HP di platform COOCA: https://cooca.id/warehouse\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SOPRitel #EfisiensiOperasional #COOCA",
   "slides": [
     {
       "slide": 1,
-      "title": "Buka 3 Cabang Baru Tapi Operasional Malah Kacau?",
-      "tag": "Tata Kelola B2B"
+      "title": "Audit Tata Kelola Ritel Multi-Cabang",
+      "tag": "Manajemen Ritel B2B"
     },
     {
       "slide": 2,
-      "title": "Tantangan Terbesar Multi-Cabang: Kebocoran Wewenang",
-      "tag": "Masalah Ritel"
+      "title": "Friction Point: Kebocoran Wewenang Antar Gerai",
+      "tag": "Identifikasi Masalah"
     },
     {
       "slide": 3,
-      "title": "Pemisahan Hak Akses: Kasir vs Kepala Toko",
-      "tag": "SOP Sistem"
+      "title": "Prinsip Otorisasi Bertingkat: Kasir vs Supervisor",
+      "tag": "Standar SOP"
     },
     {
       "slide": 4,
-      "title": "Konsolidasi Stok & Mutasi Antar Cabang Real-Time",
-      "tag": "Otomasi Cloud"
+      "title": "Konsolidasi Mutasi Stok Gudang & Penjualan Real-Time",
+      "tag": "Otomasi Sistem"
     },
     {
       "slide": 5,
-      "title": "Pantau Seluruh Cabang dari 1 Smartphone Bersama COOCA",
-      "tag": "Solusi Eksekutif"
+      "title": "Sentralisasi Kendali Multi-Outlet Bersama COOCA (/warehouse)",
+      "tag": "Solusi Strategis"
     }
   ],
-  "evaluated_at": "2026-11-07 22:23:22"
+  "evaluated_at": "2026-11-08 07:30:03",
+  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
 }

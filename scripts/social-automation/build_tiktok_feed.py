@@ -566,7 +566,7 @@ body {{
   <!-- Bottom Action / CTA Bar (y = 775 - 860px) -->
   <div class="action-bar">
     <div class="action-text">
-      Coba Gratis 14 Hari di cooca.id - Solusi Kasir &amp; Laporan Ritel
+      Mulai Gratis Selamanya di cooca.id - Solusi Kasir &amp; Laporan Ritel
     </div>
     <div class="action-button">
       KLIK LINK DI BIO

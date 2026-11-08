@@ -23,18 +23,18 @@
                     <span>{{ __('finance.btn_add_account') }}</span>
                 </button>
                 <button type="button" @click="showInflowModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2DBE50] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(52,199,89,0.25)] cursor-pointer">
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
                     <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
                     <span>{{ __('finance.btn_cash_inflow') }}</span>
                 </button>
                 <button type="button" @click="showOutflowModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(255,59,48,0.25)] cursor-pointer">
-                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#FF3B30]"></i>
                     <span>{{ __('finance.btn_cash_outflow') }}</span>
                 </button>
                 <button type="button" @click="showTransferModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4 text-black/70 dark:text-white/70"></i>
                     <span>{{ __('finance.btn_cash_transfer') }}</span>
                 </button>
             @endif
@@ -85,10 +85,6 @@
                     <i data-lucide="wallet-cards" class="w-4 h-4 text-[#007AFF]"></i>
                     <span>{{ __('finance.accounts_managed_title', ['count' => $accounts->count()]) }}</span>
                 </h2>
-                <button type="button" @click="showAccountModal = true"
-                    class="text-[12px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1 cursor-pointer">
-                    <i data-lucide="plus" class="w-3.5 h-3.5"></i> {{ __('finance.btn_add_account') }}
-                </button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
