@@ -10,22 +10,122 @@
   "feature_route": "/pos",
   "topic_name": "Analisis ROI & Metrik Efisiensi Sistem Kasir Modern",
   "hook_title": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026",
-  "solution_summary": "Integrasi fitur Kasir POS Pintar Kilat (/pos) untuk optimalisasi operasional ritel.",
+  "solution_summary": "Integrasi fitur Kasir POS Pintar Kilat di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 95.5,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 94.0,
   "problem_urgency": 96.0,
   "platform_fit": 97.0,
   "cta_clarity": 95.0,
-  "caption": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026\n\nBerdasarkan studi empiris operasional ritel, toko dengan transaksi manual kehilangan 1.8% hingga 3.2% potensi margin kotor akibat lamanya antrean, kesalahan pengembalian uang, dan proses rekonsiliasi tutup buku yang berlarut-larut.\n\nDampak kuantitatif implementasi sistem kasir pintar COOCA:\n- Kecepatan transaksi kasir terpangkas menjadi hanya 2.8 detik per transaksi.\n- Rekonsiliasi tutup shift kasir selesai dalam 3 menit dengan akurasi 100%.\n- Penghematan waktu staf operasional mencapai 14 jam kerja produktif per minggu.\n\nModernisasi sistem kasir bukan pos pengeluaran, melainkan investasi strategis perlindungan margin bisnis ritel.\nPelajari simulasi sistem selengkapnya di https://cooca.id/pos\n\n#AnalisisROI #EfisiensiBisnis #AplikasiKasirRitel #SOPRitel #ManajemenKasir #COOCA",
+  "caption": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026\n\nBerdasarkan studi empiris operasional bisnis UMKM, toko dengan transaksi manual kehilangan 1.8% hingga 3.2% potensi margin kotor akibat lamanya antrean, kesalahan pengembalian uang, dan proses rekonsiliasi tutup buku yang berlarut-larut.\n\nDampak kuantitatif implementasi sistem kasir pintar COOCA:\n- Kecepatan transaksi kasir terpangkas menjadi hanya 2.8 detik per transaksi.\n- Rekonsiliasi tutup shift kasir selesai dalam 3 menit dengan akurasi 100%.\n- Penghematan waktu staf operasional mencapai 14 jam kerja produktif per minggu.\n\nModernisasi sistem kasir bukan pos pengeluaran, melainkan investasi strategis perlindungan margin bisnis UMKM.\nPelajari simulasi sistem selengkapnya di cooca.id\n\n#AnalisisROI #EfisiensiBisnis #AplikasiKasirRitel #SOPRitel #ManajemenKasir #COOCA",
   "slides": [
     {
       "slide": 1,
-      "title": "Analisis Efisiensi & ROI Kasir Modern untuk Bisnis Ritel",
+      "title": "Analisis Efisiensi & ROI Kasir Modern untuk Bisnis UMKM",
       "tag": "Metrik Bisnis"
     }
   ],
-  "evaluated_at": "2026-11-09 14:27:19",
+  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (LINKEDIN)",
+  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "audience_research": {
+    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
+    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
+    "operational_stage": "Modernisasi operasional harian",
+    "persona": {
+      "role": "Pemilik Usaha",
+      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
+      "tech_savviness": "Menengah",
+      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
+    },
+    "pain_points": {
+      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
+      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
+      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
+      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
+      "knowledge_gap": "Penerapan sistem digital terpadu"
+    },
+    "behavior_and_preferences": {
+      "headline_triggers": "Solusi praktis dan tips operasional langsung",
+      "preferred_content_style": "Infografis edukatif dan terstruktur",
+      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
+    }
+  },
+  "content_strategy": {
+    "core_problem": "Kerugian tersembunyi akibat turnaround kasir manual yang lambat",
+    "educational_objective": "Memberikan wawasan aplikatif seputar Analisis ROI & Metrik Efisiensi Sistem Kasir Modern",
+    "content_angle": "Operational Awareness",
+    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Analisis ROI & Metrik Efisiensi Sistem Kasir Modern",
+    "practical_takeaways": [
+      "Gunakan pencatatan otomatis",
+      "Terapkan SOP harian",
+      "Evaluasi berkala"
+    ],
+    "cooca_organic_link": "Solusi Kasir POS Pintar Kilat di COOCA",
+    "audience_relevance_score": 95.0,
+    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens LINKEDIN dalam mengoptimalkan pengelolaan bisnis UMKM"
+  },
+  "caption_strategy": {
+    "opening_hook": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026",
+    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
+    "educational_value": "Edukasi praktis langkah demi langkah.",
+    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
+    "cooca_solution": "Informasi lebih lanjut di cooca.id",
+    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
+    "hashtags": [
+      "#TipsBisnis",
+      "#ManajemenToko",
+      "#UMKM",
+      "#COOCA"
+    ]
+  },
+  "quality_control": {
+    "research_validation": "PASSED",
+    "audience_validation": "PASSED",
+    "content_validation": "PASSED",
+    "caption_validation": "PASSED",
+    "product_relevance_validation": "PASSED",
+    "originality_validation": "PASSED",
+    "overall_status": "READY_FOR_DEPLOYMENT"
+  },
+  "evaluated_at": "2026-11-09 21:53:06",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
+  "brand_design_theme": {
+    "background": "dark_blue",
+    "background_hex": "#070B19",
+    "text_color": "white",
+    "text_color_hex": "#FFFFFF",
+    "accent_colors": [
+      "#38BDF8",
+      "#2563EB",
+      "#0284C7",
+      "#EF4444"
+    ],
+    "logo_required": true,
+    "logo_path": "public/assets/image/1785229034_logo_dark.png",
+    "renderer_engine": "mcp_canva",
+    "typography": {
+      "font_family": "Plus Jakarta Sans",
+      "headline": "Plus Jakarta Sans Bold / ExtraBold",
+      "subheadline": "Plus Jakarta Sans SemiBold",
+      "body": "Plus Jakarta Sans Regular / Medium",
+      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
+      "cta": "Plus Jakarta Sans Bold",
+      "advantages": [
+        "Modern dan profesional",
+        "Sangat nyaman dibaca dalam Bahasa Indonesia",
+        "Memiliki karakter teknologi tanpa terlihat kaku",
+        "Cocok untuk headline, isi carousel, hingga angka harga"
+      ]
+    },
+    "rules": [
+      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
+      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
+      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
+      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
+      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
+      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
+    ]
+  },
+  "canva_mcp_prompt_brief": "Square 1:1 feed (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Analisis ROI & Metrik Efisiensi Sistem Kasir Modern', bold headline 'Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
 }

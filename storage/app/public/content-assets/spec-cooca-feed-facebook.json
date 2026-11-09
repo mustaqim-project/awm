@@ -10,7 +10,7 @@
   "feature_route": "/whatsapp",
   "topic_name": "Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
   "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
-  "solution_summary": "Integrasi fitur Struk Digital & Broadcast WhatsApp di COOCA untuk optimalisasi operasional ritel.",
+  "solution_summary": "Integrasi fitur Struk Digital & Broadcast WhatsApp di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 94.95,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 93.0,
@@ -62,7 +62,7 @@
     ],
     "cooca_organic_link": "Solusi Struk Digital & Broadcast WhatsApp di COOCA",
     "audience_relevance_score": 95.0,
-    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens FACEBOOK dalam mengoptimalkan pengelolaan bisnis ritel"
+    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens FACEBOOK dalam mengoptimalkan pengelolaan bisnis UMKM"
   },
   "caption_strategy": {
     "opening_hook": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
@@ -87,7 +87,7 @@
     "originality_validation": "PASSED",
     "overall_status": "READY_FOR_DEPLOYMENT"
   },
-  "evaluated_at": "2026-11-09 21:39:25",
+  "evaluated_at": "2026-11-09 21:53:22",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
   "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
   "brand_design_theme": {

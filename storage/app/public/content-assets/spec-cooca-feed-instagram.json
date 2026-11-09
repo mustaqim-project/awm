@@ -87,7 +87,7 @@
     "originality_validation": "PASSED",
     "overall_status": "READY_FOR_DEPLOYMENT"
   },
-  "evaluated_at": "2026-11-09 21:16:42",
+  "evaluated_at": "2026-11-09 21:41:51",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
   "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
   "brand_design_theme": {
@@ -127,5 +127,5 @@
       "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
     ]
   },
-  "canva_mcp_prompt_brief": "Square 1:1 feed (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout. Subject: Photorealistic studio portrait of a confident Indonesian retail business owner or cashier holding an iPad tablet POS terminal, smiling warmly. Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi', bold headline 'Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini', floating glassmorphism bento metric cards, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, clean editorial layout, zero clutter, square 1080x1080."
+  "canva_mcp_prompt_brief": "Square 1:1 feed (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi', bold headline 'Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
 }

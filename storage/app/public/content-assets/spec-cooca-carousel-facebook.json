@@ -10,14 +10,14 @@
   "feature_route": "/inventory/stocks",
   "topic_name": "Studi Kasus: Selisih Stok Gudang vs Buku dan Solusi Audit Barcode",
   "hook_title": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?",
-  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert (/inventory/stocks) untuk optimalisasi operasional ritel.",
+  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 94.95,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 93.0,
   "problem_urgency": 96.0,
   "platform_fit": 96.0,
   "cta_clarity": 95.0,
-  "caption": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?\n\nBagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah kendala operasional yang sangat menyita waktu dan biaya. Berikut bedah studi kasus yang sering terjadi pada pengelolaan stok toko dan langkah solusinya (buka album foto):\n\n1. Mengapa Stok Kerap Selisih? Barang terjual belum terdata kasir, salah penempatan di rak, atau ketidakteraturan pencatatan saat barang masuk dari supplier.\n2. Dampak Finansial: Pembeli kecewa karena barang di sistem tercatat ada tapi di rak kosong, serta risiko kerugian modal barang.\n3. Solusi Otomasi: Terapkan pemindaian barcode saat barang masuk dan aktifkan notifikasi otomatis saat stok mencapai batas minimum.\n\nSistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time.\nBagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di https://cooca.id/inventory/stocks\n\n#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #ManajemenInventori #COOCA",
+  "caption": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?\n\nBagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah kendala operasional yang sangat menyita waktu dan biaya. Berikut bedah studi kasus yang sering terjadi pada pengelolaan stok toko dan langkah solusinya (buka album foto):\n\n1. Mengapa Stok Kerap Selisih? Barang terjual belum terdata kasir, salah penempatan di rak, atau ketidakteraturan pencatatan saat barang masuk dari supplier.\n2. Dampak Finansial: Pembeli kecewa karena barang di sistem tercatat ada tapi di rak kosong, serta risiko kerugian modal barang.\n3. Solusi Otomasi: Terapkan pemindaian barcode saat barang masuk dan aktifkan notifikasi otomatis saat stok mencapai batas minimum.\n\nSistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time.\nBagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di cooca.id\n\n#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #ManajemenInventori #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -41,7 +41,7 @@
     },
     {
       "slide": 5,
-      "title": "Otomatisasi Kartu Stok Real-Time COOCA (/inventory/stocks)",
+      "title": "Otomatisasi Kartu Stok Real-Time COOCA",
       "tag": "Solusi Akurat"
     }
   ],
@@ -74,13 +74,13 @@
     "core_problem": "Asimetri antara catatan stok buku/sistem dengan jumlah fisik nyata di rak display toko ritel",
     "educational_objective": "Mengedukasi pemilik toko tentang 3 titik kebocoran mutasi barang dan SOP pencegahan menggunakan barcode scanning",
     "content_angle": "Business Case Study & Operational Improvement",
-    "key_message": "Selisih stok bukan takdir bisnis ritel; dengan SOP pemindaian barcode masuk/keluar dan cycle count berkala, akurasi stok dapat dijaga hingga 99%",
+    "key_message": "Selisih stok bukan takdir bisnis UMKM; dengan SOP pemindaian barcode masuk/keluar dan cycle count berkala, akurasi stok dapat dijaga hingga 99%",
     "practical_takeaways": [
       "Wajibkan scan barcode setiap kali penerimaan barang supplier",
       "Lakukan cycle count mingguan untuk 10-20 SKU produk terlaris tanpa harus tutup toko",
       "Kunci otorisasi koreksi stok rusak/hilang hanya melalui persetujuan Supervisor"
     ],
-    "cooca_organic_link": "Modul Manajemen Stok & Low-Stock Alert (/inventory/stocks) COOCA menyediakan kartu stok digital real-time dan notifikasi dini batas minimum",
+    "cooca_organic_link": "Modul Manajemen Stok & Low-Stock Alert di COOCA menyediakan kartu stok digital real-time dan notifikasi dini batas minimum",
     "audience_relevance_score": 96.5,
     "content_audience_matching_justification": "Sangat relevan karena lebih dari 78% pedagang ritel dan grosir di komunitas Facebook menghadapi masalah selisih fisik saat audit stok bulanan"
   },
@@ -89,7 +89,7 @@
     "audience_connection": "Bagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah kendala operasional yang sangat menyita waktu dan biaya.",
     "educational_value": "Membedah 3 faktor utama penyebab selisih stok: mutasi tak terekam, human error kasir salah barcode, dan barang rusak tanpa pencatatan.",
     "practical_takeaway": "Terapkan pemindaian barcode saat barang masuk dan aktifkan peringatan otomatis saat stok menipis.",
-    "cooca_solution": "Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time di https://cooca.id/inventory/stocks",
+    "cooca_solution": "Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time di cooca.id",
     "engagement_cta": "Bagikan pengalaman rekan-rekan di kolom komentar: seberapa sering toko Anda mengalami selisih stok fisik?",
     "hashtags": [
       "#KomunitasRitel",
@@ -109,7 +109,7 @@
     "originality_validation": "PASSED (Original Case Study Framework, Anti-AI Slop)",
     "overall_status": "READY_FOR_DEPLOYMENT"
   },
-  "evaluated_at": "2026-11-09 16:27:09",
+  "evaluated_at": "2026-11-09 21:53:52",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
   "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
   "brand_design_theme": {
@@ -149,11 +149,11 @@
       "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
     ]
   },
-  "canva_mcp_prompt_brief": "Create modern carousel in Indonesian for COOCA. Theme: White & Blue identity (Pure White #FFFFFF & Cooca Blue #2563EB, #0A1128, strictly NO green) using Plus Jakarta Sans font hierarchy (Bold headline, SemiBold subheadline, Regular body text, Bold numbers & CTA) with electric cyan accents. Official COOCA Dark Logo (1785229034_logo_dark.png) included at top. Topic: Studi Kasus: Selisih Stok Gudang vs Buku dan Solusi Audit Barcode. Headline: Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?.",
+  "canva_mcp_prompt_brief": "Multi-slide square carousel (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic high-end photography of organized modern retail store inventory shelves, warehouse logistics, or a merchant conducting a barcode stock check matching the inventory topic). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Studi Kasus: Selisih Stok Gudang vs Buku dan Solusi Audit Barcode', bold headline 'Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter.",
   "canva_design": {
-    "design_id": "DAHaaVSX6zU",
-    "edit_url": "https://canva.link/ciecoprbrlt8yib",
-    "view_url": "https://canva.link/ciecoprbrlt8yib",
+    "design_id": "DAHaaagXDAU",
+    "edit_url": "https://canva.link/ervxe8r2v5opjk6",
+    "view_url": "https://www.canva.com/d/oIQOsRSPK3raKoc",
     "page_count": 5
   }
 }

@@ -10,14 +10,14 @@
   "feature_route": "/inventory/stocks",
   "topic_name": "Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
   "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
-  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert (/inventory/stocks) untuk optimalisasi operasional ritel.",
+  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 96.5,
   "gate_status": "PASSED (>= 80.0)",
   "trend_velocity": 95.0,
   "problem_urgency": 97.0,
   "platform_fit": 98.0,
   "cta_clarity": 96.0,
-  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern\n\nBanyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan bisa dipantau tanpa harus menjaga toko seharian. Transformasi digital toko tidak harus rumit dan mahal.\n\nSimak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak display toko.\n2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\nBawa bisnis ritel Anda naik kelas hari ini bersama platform COOCA di https://cooca.id/inventory/stocks\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA",
+  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern\n\nBanyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan bisa dipantau tanpa harus menjaga toko seharian. Transformasi digital toko tidak harus rumit dan mahal.\n\nSimak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak display toko.\n2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\nBawa bisnis UMKM Anda naik kelas hari ini bersama platform COOCA di cooca.id\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -46,11 +46,111 @@
     },
     {
       "slide": 6,
-      "title": "Tumbuh Mandiri & Modern Bersama Ekosistem COOCA (/inventory/stocks)",
+      "title": "Tumbuh Mandiri & Modern Bersama Ekosistem COOCA",
       "tag": "Solusi Terintegrasi"
     }
   ],
-  "evaluated_at": "2026-11-08 07:30:12",
+  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (INSTAGRAM)",
+  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "audience_research": {
+    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
+    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
+    "operational_stage": "Modernisasi operasional harian",
+    "persona": {
+      "role": "Pemilik Usaha",
+      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
+      "tech_savviness": "Menengah",
+      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
+    },
+    "pain_points": {
+      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
+      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
+      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
+      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
+      "knowledge_gap": "Penerapan sistem digital terpadu"
+    },
+    "behavior_and_preferences": {
+      "headline_triggers": "Solusi praktis dan tips operasional langsung",
+      "preferred_content_style": "Infografis edukatif dan terstruktur",
+      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
+    }
+  },
+  "content_strategy": {
+    "core_problem": "Toko kelontong tradisional kalah saing karena sistem pencatatan manual",
+    "educational_objective": "Memberikan wawasan aplikatif seputar Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
+    "content_angle": "Operational Awareness",
+    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
+    "practical_takeaways": [
+      "Gunakan pencatatan otomatis",
+      "Terapkan SOP harian",
+      "Evaluasi berkala"
+    ],
+    "cooca_organic_link": "Solusi Manajemen Stok & Low-Stock Alert di COOCA",
+    "audience_relevance_score": 95.0,
+    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens INSTAGRAM dalam mengoptimalkan pengelolaan bisnis UMKM"
+  },
+  "caption_strategy": {
+    "opening_hook": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
+    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
+    "educational_value": "Edukasi praktis langkah demi langkah.",
+    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
+    "cooca_solution": "Informasi lebih lanjut di cooca.id",
+    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
+    "hashtags": [
+      "#TipsBisnis",
+      "#ManajemenToko",
+      "#UMKM",
+      "#COOCA"
+    ]
+  },
+  "quality_control": {
+    "research_validation": "PASSED",
+    "audience_validation": "PASSED",
+    "content_validation": "PASSED",
+    "caption_validation": "PASSED",
+    "product_relevance_validation": "PASSED",
+    "originality_validation": "PASSED",
+    "overall_status": "READY_FOR_DEPLOYMENT"
+  },
+  "evaluated_at": "2026-11-09 21:53:33",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
+  "brand_design_theme": {
+    "background": "dark_blue",
+    "background_hex": "#070B19",
+    "text_color": "white",
+    "text_color_hex": "#FFFFFF",
+    "accent_colors": [
+      "#38BDF8",
+      "#2563EB",
+      "#0284C7",
+      "#EF4444"
+    ],
+    "logo_required": true,
+    "logo_path": "public/assets/image/1785229034_logo_dark.png",
+    "renderer_engine": "mcp_canva",
+    "typography": {
+      "font_family": "Plus Jakarta Sans",
+      "headline": "Plus Jakarta Sans Bold / ExtraBold",
+      "subheadline": "Plus Jakarta Sans SemiBold",
+      "body": "Plus Jakarta Sans Regular / Medium",
+      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
+      "cta": "Plus Jakarta Sans Bold",
+      "advantages": [
+        "Modern dan profesional",
+        "Sangat nyaman dibaca dalam Bahasa Indonesia",
+        "Memiliki karakter teknologi tanpa terlihat kaku",
+        "Cocok untuk headline, isi carousel, hingga angka harga"
+      ]
+    },
+    "rules": [
+      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
+      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
+      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
+      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
+      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
+      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
+    ]
+  },
+  "canva_mcp_prompt_brief": "Multi-page portrait carousel (1080x1350 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic high-end photography authentically visualizing the core theme and keyword: 'Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern'). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern', bold headline 'Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
 }
