@@ -471,6 +471,21 @@
                     <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A] tabular-nums">{{ $apAging['counts']['unpaid'] + $apAging['counts']['partial'] }}</span>
                 @endif
             </button>
+
+            {{-- Tab 10: Pajak & PPN Platform --}}
+            <button type="button" @click="activeTab = 'tax'; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
+                :class="activeTab === 'tax' ?
+                    'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' :
+                    'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
+                class="px-3.5 py-1.5 rounded-[10px] transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="receipt-percent" class="w-4 h-4 text-[#FF9500]"></i>
+                <span>Pajak Platform (PPN)</span>
+                @if($platformTaxSummary['tax_enabled'])
+                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] tabular-nums">{{ $platformTaxSummary['tax_rate'] }}%</span>
+                @else
+                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] font-bold bg-black/10 dark:bg-white/10 text-black/50 dark:text-white/50">Off</span>
+                @endif
+            </button>
         </div>
     </div>
 
@@ -484,6 +499,7 @@
     @include('admin.finance.tabs.tab-sync')
     @include('admin.finance.tabs.tab-ar')
     @include('admin.finance.tabs.tab-ap')
+    @include('admin.finance.tabs.tab-tax')
 
     {{-- MODALS --}}
     @include('admin.finance.modals.modal-create-transaction')

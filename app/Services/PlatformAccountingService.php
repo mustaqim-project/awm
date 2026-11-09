@@ -79,22 +79,58 @@ class PlatformAccountingService
             ]);
 
             if ($transaction->isInflow()) {
-                // Debit: Kas & Bank (Asset +), Credit: Pendapatan (Revenue +)
-                PlatformJournalEntryLine::create([
-                    'journal_entry_id' => $journal->id,
-                    'account_id' => $cashAccount->id,
-                    'type' => PlatformJournalEntryLine::TYPE_DEBIT,
-                    'amount' => $amount,
-                    'notes' => 'Penerimaan Kas/Bank dari transaksi ' . $transaction->transaction_number,
-                ]);
+                // Check if this transaction is linked to a SubscriptionPayment with PPN tax
+                $subPayment = $transaction->subscriptionPayment;
+                $taxAmount = (float) ($subPayment?->tax_amount ?? 0);
+                $taxAccount = $taxAmount > 0 ? PlatformChartOfAccount::where('code', '2140')->first() : null;
 
-                PlatformJournalEntryLine::create([
-                    'journal_entry_id' => $journal->id,
-                    'account_id' => $counterAccount->id,
-                    'type' => PlatformJournalEntryLine::TYPE_CREDIT,
-                    'amount' => $amount,
-                    'notes' => $counterAccount->name,
-                ]);
+                if ($taxAmount > 0 && $taxAccount !== null) {
+                    $dppAmount = max(0.0, round($amount - $taxAmount, 2));
+
+                    // Debit: Kas & Bank (Asset +)
+                    PlatformJournalEntryLine::create([
+                        'journal_entry_id' => $journal->id,
+                        'account_id' => $cashAccount->id,
+                        'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                        'amount' => $amount,
+                        'notes' => 'Penerimaan Kas/Bank dari transaksi ' . $transaction->transaction_number,
+                    ]);
+
+                    // Credit: Pendapatan SaaS (Revenue +) DPP Pokok
+                    PlatformJournalEntryLine::create([
+                        'journal_entry_id' => $journal->id,
+                        'account_id' => $counterAccount->id,
+                        'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                        'amount' => $dppAmount,
+                        'notes' => $counterAccount->name . ' (DPP Pokok)',
+                    ]);
+
+                    // Credit: Hutang PPN Keluaran Platform (Liability +)
+                    PlatformJournalEntryLine::create([
+                        'journal_entry_id' => $journal->id,
+                        'account_id' => $taxAccount->id,
+                        'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                        'amount' => $taxAmount,
+                        'notes' => 'Hutang PPN Keluaran Platform (' . ($subPayment->tax_rate ?? 11) . '%)',
+                    ]);
+                } else {
+                    // Normal single credit line
+                    PlatformJournalEntryLine::create([
+                        'journal_entry_id' => $journal->id,
+                        'account_id' => $cashAccount->id,
+                        'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                        'amount' => $amount,
+                        'notes' => 'Penerimaan Kas/Bank dari transaksi ' . $transaction->transaction_number,
+                    ]);
+
+                    PlatformJournalEntryLine::create([
+                        'journal_entry_id' => $journal->id,
+                        'account_id' => $counterAccount->id,
+                        'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                        'amount' => $amount,
+                        'notes' => $counterAccount->name,
+                    ]);
+                }
             } else {
                 // Outflow:
                 // If settling merchant payable: Debit: Hutang Titipan (Liability -), Credit: Kas/Bank (Asset -)
@@ -818,5 +854,202 @@ class PlatformAccountingService
             'buckets'      => $buckets,
             'counts'       => $counts,
         ];
+    }
+
+    /**
+     * Compute Platform Tax & VAT (PPN) Summary for Corporate Admin reporting.
+     *
+     * @return array<string, mixed>
+     */
+    public function getPlatformTaxSummary(?string $startDate = null, ?string $endDate = null): array
+    {
+        $startDate = $startDate ?? Carbon::now()->startOfMonth()->toDateString();
+        $endDate = $endDate ?? Carbon::now()->endOfMonth()->toDateString();
+
+        $taxEnabled = (bool) \App\Models\SystemSetting::get('platform_tax_enabled', '0');
+        $taxRate = max(0.0, (float) (\App\Models\SystemSetting::get('platform_tax_rate') ?: '11.0'));
+        $taxInclusive = (bool) \App\Models\SystemSetting::get('platform_tax_inclusive', '0');
+        $taxName = (string) (\App\Models\SystemSetting::get('platform_tax_name') ?: 'PPN');
+        $applySub = (bool) \App\Models\SystemSetting::get('platform_tax_apply_subscription', '1');
+        $applyTopup = (bool) \App\Models\SystemSetting::get('platform_tax_apply_topup', '1');
+        $companyNpwp = (string) (\App\Models\SystemSetting::get('platform_tax_company_npwp') ?: '01.234.567.8-012.000');
+        $companyName = (string) (\App\Models\SystemSetting::get('platform_tax_company_name') ?: 'PT Cooca Digital Solusindo');
+
+        // Query approved subscription payments in date range
+        $subQuery = \App\Models\SubscriptionPayment::with(['business', 'user'])
+            ->where('status', \App\Models\SubscriptionPayment::STATUS_APPROVED)
+            ->whereBetween('approved_at', [
+                Carbon::parse($startDate)->startOfDay(),
+                Carbon::parse($endDate)->endOfDay(),
+            ]);
+
+        $approvedPayments = $subQuery->orderBy('approved_at', 'desc')->get();
+
+        $totalGrossRevenue = 0.0;
+        $totalDpp = 0.0;
+        $totalTaxCollected = 0.0;
+        $taxablePayments = [];
+
+        foreach ($approvedPayments as $payment) {
+            $gross = (float) ($payment->total_payable ?? $payment->amount);
+            $tax = (float) ($payment->tax_amount ?? 0);
+            $dpp = $payment->subtotal ? (float) $payment->subtotal : max(0.0, $gross - $tax);
+
+            $totalGrossRevenue += $gross;
+            $totalDpp += $dpp;
+            $totalTaxCollected += $tax;
+
+            if ($tax > 0) {
+                $taxablePayments[] = [
+                    'id' => $payment->id,
+                    'order_number' => $payment->order_number,
+                    'approved_at' => $payment->approved_at ? Carbon::parse($payment->approved_at)->format('d M Y H:i') : '-',
+                    'business_name' => $payment->business?->name ?? 'Tenant',
+                    'plan_name' => $payment->package_name ?: ($payment->plan_code ?? 'Langganan SaaS'),
+                    'dpp' => $dpp,
+                    'tax_rate' => (float) ($payment->tax_rate ?? $taxRate),
+                    'tax_amount' => $tax,
+                    'total_payable' => $gross,
+                    'is_inclusive' => (bool) $payment->is_tax_inclusive,
+                ];
+            }
+        }
+
+        // Fetch current VAT Payable (Akun 2140) balance from COA
+        $vatAccount = PlatformChartOfAccount::where('code', '2140')->first();
+        $vatPayableBalance = 0.0;
+        if ($vatAccount) {
+            $ledger = $this->getGeneralLedger((string) $vatAccount->id);
+            $vatPayableBalance = $ledger['closingBalance'] ?? 0.0;
+        }
+
+        // Monthly SPT recap
+        $monthlyRecap = [];
+        foreach ($taxablePayments as $p) {
+            $monthKey = Carbon::parse($p['approved_at'])->format('Y-m');
+            if (! isset($monthlyRecap[$monthKey])) {
+                $monthlyRecap[$monthKey] = [
+                    'period' => Carbon::parse($p['approved_at'])->translatedFormat('F Y'),
+                    'count' => 0,
+                    'dpp' => 0.0,
+                    'tax' => 0.0,
+                    'gross' => 0.0,
+                ];
+            }
+            $monthlyRecap[$monthKey]['count']++;
+            $monthlyRecap[$monthKey]['dpp'] += $p['dpp'];
+            $monthlyRecap[$monthKey]['tax'] += $p['tax_amount'];
+            $monthlyRecap[$monthKey]['gross'] += $p['total_payable'];
+        }
+
+        return [
+            'tax_enabled' => $taxEnabled,
+            'tax_rate' => $taxRate,
+            'tax_inclusive' => $taxInclusive,
+            'tax_name' => $taxName,
+            'apply_subscription' => $applySub,
+            'apply_topup' => $applyTopup,
+            'company_npwp' => $companyNpwp,
+            'company_name' => $companyName,
+            'total_gross_revenue' => $totalGrossRevenue,
+            'total_dpp' => $totalDpp,
+            'total_tax_collected' => $totalTaxCollected,
+            'vat_payable_balance' => $vatPayableBalance,
+            'taxable_payments' => $taxablePayments,
+            'taxable_count' => count($taxablePayments),
+            'monthly_recap' => array_values($monthlyRecap),
+        ];
+    }
+
+    /**
+     * Record settlement / payment of VAT (PPN) to DJP/Kas Negara.
+     *
+     * @param array{
+     *     amount: float|int|string,
+     *     payment_date: string,
+     *     reference_number: string,
+     *     notes?: string|null,
+     *     attachment_path?: string|null
+     * } $data
+     */
+    public function recordTaxSettlement(array $data, ?string $adminId = null): PlatformTransaction
+    {
+        return DB::transaction(function () use ($data, $adminId): PlatformTransaction {
+            $amount = (float) $data['amount'];
+            if ($amount <= 0.0) {
+                throw new InvalidArgumentException('Nominal setoran pajak harus lebih besar dari 0.');
+            }
+
+            $cashAccount = PlatformChartOfAccount::where('code', '1120')->first()
+                ?? PlatformChartOfAccount::where('code', '1110')->firstOrFail();
+
+            $taxAccount = PlatformChartOfAccount::where('code', '2140')->first()
+                ?? PlatformChartOfAccount::firstOrCreate(
+                    ['code' => '2140'],
+                    [
+                        'name' => 'Hutang Pajak Penjualan Platform (PPN Keluaran SaaS & Top-Up)',
+                        'type' => PlatformChartOfAccount::TYPE_LIABILITY,
+                        'normal_balance' => PlatformChartOfAccount::BALANCE_CREDIT,
+                        'category_group' => 'hutang_lancar',
+                        'is_system' => true,
+                        'is_active' => true,
+                    ]
+                );
+
+            $datePrefix = Carbon::parse($data['payment_date'])->format('Ym');
+            $count = PlatformTransaction::where('transaction_number', 'like', "TRX-{$datePrefix}-%")->count() + 1;
+            $trxNumber = sprintf('TRX-%s-%04d', $datePrefix, $count);
+
+            $ntpn = $data['reference_number'] ?? 'NTPN';
+
+            $trx = PlatformTransaction::create([
+                'transaction_number' => $trxNumber,
+                'type' => PlatformTransaction::TYPE_OUT,
+                'category' => PlatformTransaction::CAT_OPERATIONAL,
+                'title' => "Setoran PPN Kas Negara (NTPN: {$ntpn})",
+                'amount' => $amount,
+                'transaction_date' => $data['payment_date'],
+                'payment_method' => 'e-Billing DJP',
+                'notes' => $data['notes'] ?? "Setor PPN Masa melalui e-Billing / NTPN #{$ntpn}",
+                'attachment_path' => $data['attachment_path'] ?? null,
+                'source_type' => 'manual',
+                'admin_id' => $adminId,
+            ]);
+
+            // Create balanced journal:
+            // Debit: Hutang PPN Keluaran 2140 (mengurangi hutang)
+            // Credit: Kas & Bank 1120 (mengurangi kas)
+            $journal = PlatformJournalEntry::create([
+                'entry_date' => $data['payment_date'],
+                'reference_type' => PlatformJournalEntry::REF_TRANSACTION,
+                'reference_id' => (string) $trx->id,
+                'description' => "Jurnal Setor Pajak PPN: NTPN {$ntpn} ({$trxNumber})",
+                'total_debit' => $amount,
+                'total_credit' => $amount,
+                'is_balanced' => true,
+                'admin_id' => $adminId,
+            ]);
+
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $taxAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_DEBIT,
+                'amount' => $amount,
+                'notes' => 'Pelunasan Hutang PPN ke Kas Negara (NTPN ' . $ntpn . ')',
+            ]);
+
+            PlatformJournalEntryLine::create([
+                'journal_entry_id' => $journal->id,
+                'account_id' => $cashAccount->id,
+                'type' => PlatformJournalEntryLine::TYPE_CREDIT,
+                'amount' => $amount,
+                'notes' => 'Pengeluaran Kas/Bank untuk Pembayaran Pajak',
+            ]);
+
+            $journal->verifyBalance();
+            $trx->updateQuietly(['journal_entry_id' => $journal->id]);
+
+            return $trx;
+        });
     }
 }

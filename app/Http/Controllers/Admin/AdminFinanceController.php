@@ -46,6 +46,7 @@ final class AdminFinanceController extends Controller implements HasMiddleware
             new Middleware('require.admin.permission:admin.finance.manage', only: [
                 'store', 'update', 'destroy', 'storeJournal', 'storeAccount', 'updateAccount', 'toggleAccount',
                 'storeReceivable', 'recordReceivablePayment', 'storePayable', 'recordPayablePayment',
+                'updateTaxSettings', 'settleTaxPayment',
             ]),
             new Middleware('require.admin.permission:admin.finance.sync', only: ['sync']),
             new Middleware('require.admin.permission:admin.finance.export', only: ['export']),
@@ -213,6 +214,9 @@ final class AdminFinanceController extends Controller implements HasMiddleware
         $platformAccounts = PaymentAccount::where('is_active', true)->get();
         $categoryLabels = PlatformTransaction::categoryLabels();
 
+        // Platform Tax & VAT Summary
+        $platformTaxSummary = $this->accountingService->getPlatformTaxSummary($startDate, $endDate);
+
         return view('admin.finance.index', compact(
             'activeTab',
             'startDate',
@@ -246,7 +250,8 @@ final class AdminFinanceController extends Controller implements HasMiddleware
             'apAging',
             'businesses',
             'cashBankAccounts',
-            'expenseAccounts'
+            'expenseAccounts',
+            'platformTaxSummary'
         ));
     }
 
@@ -841,5 +846,80 @@ final class AdminFinanceController extends Controller implements HasMiddleware
 
         return redirect()->route('admin.finance.index', ['tab' => 'ap'])
             ->with('status', "Pelunasan hutang vendor {$payment->payment_number} sebesar Rp " . number_format((float) $payment->amount, 0, ',', '.') . " berhasil dicatat dan dijurnal otomatis!");
+    }
+
+    /**
+     * Update Platform Tax (PPN) Configuration for SaaS Subscriptions & Top-Ups.
+     */
+    public function updateTaxSettings(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'platform_tax_enabled'            => ['nullable', 'in:0,1,on'],
+            'platform_tax_rate'               => ['required_with:platform_tax_enabled', 'numeric', 'min:0', 'max:100'],
+            'platform_tax_inclusive'          => ['nullable', 'in:0,1,on'],
+            'platform_tax_name'               => ['nullable', 'string', 'max:50'],
+            'platform_tax_apply_subscription' => ['nullable', 'in:0,1,on'],
+            'platform_tax_apply_topup'        => ['nullable', 'in:0,1,on'],
+            'platform_tax_company_npwp'       => ['nullable', 'string', 'max:50'],
+            'platform_tax_company_name'       => ['nullable', 'string', 'max:150'],
+        ]);
+
+        $enabled = ! empty($validated['platform_tax_enabled']) && in_array((string) $validated['platform_tax_enabled'], ['1', 'on'], true) ? '1' : '0';
+        $inclusive = ! empty($validated['platform_tax_inclusive']) && in_array((string) $validated['platform_tax_inclusive'], ['1', 'on'], true) ? '1' : '0';
+        $applySub = ! empty($validated['platform_tax_apply_subscription']) && in_array((string) $validated['platform_tax_apply_subscription'], ['1', 'on'], true) ? '1' : '0';
+        $applyTopup = ! empty($validated['platform_tax_apply_topup']) && in_array((string) $validated['platform_tax_apply_topup'], ['1', 'on'], true) ? '1' : '0';
+
+        \App\Models\SystemSetting::set('platform_tax_enabled', $enabled);
+        \App\Models\SystemSetting::set('platform_tax_rate', (string) ($validated['platform_tax_rate'] ?? '11.0'));
+        \App\Models\SystemSetting::set('platform_tax_inclusive', $inclusive);
+        \App\Models\SystemSetting::set('platform_tax_name', (string) ($validated['platform_tax_name'] ?? 'PPN'));
+        \App\Models\SystemSetting::set('platform_tax_apply_subscription', $applySub);
+        \App\Models\SystemSetting::set('platform_tax_apply_topup', $applyTopup);
+
+        if (isset($validated['platform_tax_company_npwp'])) {
+            \App\Models\SystemSetting::set('platform_tax_company_npwp', $validated['platform_tax_company_npwp']);
+        }
+        if (isset($validated['platform_tax_company_name'])) {
+            \App\Models\SystemSetting::set('platform_tax_company_name', $validated['platform_tax_company_name']);
+        }
+
+        $statusText = $enabled === '1' ? 'diaktifkan (Tarif ' . ($validated['platform_tax_rate'] ?? '11') . '%)' : 'dinonaktifkan';
+
+        return redirect()->route('admin.finance.index', ['tab' => 'tax'])
+            ->with('success', "Konfigurasi Pajak & PPN Platform berhasil {$statusText}. Semua pesanan subscription dan top up baru akan mengikuti ketentuan ini.");
+    }
+
+    /**
+     * Record payment / settlement of VAT (PPN) to DJP/Kas Negara.
+     */
+    public function settleTaxPayment(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'amount'           => ['required', 'numeric', 'min:1'],
+            'payment_date'     => ['required', 'date'],
+            'reference_number' => ['required', 'string', 'max:64'],
+            'notes'            => ['nullable', 'string', 'max:500'],
+            'attachment'       => ['nullable', 'file', 'image', 'max:5120'],
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $attachmentPath = $request->file('attachment')->store('tax_settlements', 'public');
+        }
+
+        try {
+            $trx = $this->accountingService->recordTaxSettlement([
+                'amount'           => $validated['amount'],
+                'payment_date'     => $validated['payment_date'],
+                'reference_number' => $validated['reference_number'],
+                'notes'            => $validated['notes'] ?? null,
+                'attachment_path'  => $attachmentPath,
+            ], Auth::guard('admin')->id());
+
+            return redirect()->route('admin.finance.index', ['tab' => 'tax'])
+                ->with('success', "Penyetoran PPN ke Kas Negara sebesar Rp " . number_format((float) $trx->amount, 0, ',', '.') . " (NTPN: {$validated['reference_number']}) berhasil dicatat & mengurangi saldo hutang pajak platform.");
+        } catch (\Throwable $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
     }
 }

@@ -1351,8 +1351,68 @@ final class EntitlementService
         return $this->createTopupOrder($business, $user, 'storage', 0, $this->getStorageTopupBytes(), $this->getStorageTopupPrice(), $paymentMethod);
     }
 
+    /**
+     * Calculate platform tax (PPN) for SaaS subscription or instant top-up.
+     *
+     * @return array{
+     *     tax_rate: float,
+     *     tax_amount: float,
+     *     subtotal: float,
+     *     total_payable: float,
+     *     is_inclusive: bool,
+     *     tax_name: string
+     * }
+     */
+    public function calculatePlatformTax(float $netBasePrice, string $type = 'subscription'): array
+    {
+        $enabled = (bool) SystemSetting::get('platform_tax_enabled', '0');
+        $applySub = (bool) SystemSetting::get('platform_tax_apply_subscription', '1');
+        $applyTopup = (bool) SystemSetting::get('platform_tax_apply_topup', '1');
+
+        $shouldApply = $enabled && match ($type) {
+            'topup', 'ai_token', 'storage' => $applyTopup,
+            default => $applySub,
+        };
+
+        $taxName = (string) (SystemSetting::get('platform_tax_name') ?: 'PPN');
+
+        if (! $shouldApply || $netBasePrice <= 0.0) {
+            return [
+                'tax_rate' => 0.0,
+                'tax_amount' => 0.0,
+                'subtotal' => $netBasePrice,
+                'total_payable' => $netBasePrice,
+                'is_inclusive' => false,
+                'tax_name' => $taxName,
+            ];
+        }
+
+        $taxRate = max(0.0, (float) (SystemSetting::get('platform_tax_rate') ?: '11.0'));
+        $isInclusive = (bool) SystemSetting::get('platform_tax_inclusive', '0');
+
+        if ($isInclusive) {
+            $subtotal = round($netBasePrice / (1 + ($taxRate / 100)), 2);
+            $taxAmount = round($netBasePrice - $subtotal, 2);
+            $totalPayable = $netBasePrice;
+        } else {
+            $subtotal = $netBasePrice;
+            $taxAmount = round($netBasePrice * ($taxRate / 100), 2);
+            $totalPayable = round($subtotal + $taxAmount, 2);
+        }
+
+        return [
+            'tax_rate' => $taxRate,
+            'tax_amount' => $taxAmount,
+            'subtotal' => $subtotal,
+            'total_payable' => $totalPayable,
+            'is_inclusive' => $isInclusive,
+            'tax_name' => $taxName,
+        ];
+    }
+
     private function createTopupOrder(Business $business, User $user, string $type, int $quantity, int $storageBytes, float $amount, string $paymentMethod): SubscriptionPayment
     {
+        $taxCalc = $this->calculatePlatformTax($amount, $type);
         $orderNumber = $this->nextOrderNumber('TOP-' . date('Ym') . '-');
         return SubscriptionPayment::create([
             'business_id' => $business->id,
@@ -1362,8 +1422,12 @@ final class EntitlementService
             'plan_code' => 'topup',
             'cycle' => 'one_time',
             'amount' => $amount,
+            'subtotal' => $taxCalc['subtotal'],
+            'tax_rate' => $taxCalc['tax_rate'],
+            'tax_amount' => $taxCalc['tax_amount'],
+            'is_tax_inclusive' => $taxCalc['is_inclusive'],
             'unique_code' => 0,
-            'total_payable' => $amount,
+            'total_payable' => $taxCalc['total_payable'],
             'topup_quantity' => $quantity ?: null,
             'topup_storage_bytes' => $storageBytes ?: null,
             'payment_method' => $paymentMethod,
@@ -1668,7 +1732,9 @@ final class EntitlementService
             }
         }
 
-        $totalPayable = max(0.0, round($baseAmount - $discountAmount, 2));
+        $baseAfterDiscount = max(0.0, round($baseAmount - $discountAmount, 2));
+        $taxCalc = $this->calculatePlatformTax($baseAfterDiscount, 'subscription');
+        $totalPayable = $taxCalc['total_payable'];
 
         // Generate unique order number SUB-YYYYMM-XXXX
         $orderNumber = $this->nextOrderNumber('SUB-' . date('Ym') . '-');
@@ -1687,6 +1753,10 @@ final class EntitlementService
             'package_name' => $packageName,
             'cycle' => $isAnnual ? 'annual' : 'monthly',
             'amount' => $baseAmount,
+            'subtotal' => $taxCalc['subtotal'],
+            'tax_rate' => $taxCalc['tax_rate'],
+            'tax_amount' => $taxCalc['tax_amount'],
+            'is_tax_inclusive' => $taxCalc['is_inclusive'],
             'promo_id' => $promoId,
             'promo_code' => $promoCode,
             'pricing_program_id' => $pricingProgramId,
@@ -1756,7 +1826,9 @@ final class EntitlementService
             }
         }
 
-        $totalPayable = max(0.0, round($baseAmount - $discountAmount, 2));
+        $baseAfterDiscount = max(0.0, round($baseAmount - $discountAmount, 2));
+        $taxCalc = $this->calculatePlatformTax($baseAfterDiscount, $paymentType === BillingPackage::TYPE_SUBSCRIPTION ? 'subscription' : 'topup');
+        $totalPayable = $taxCalc['total_payable'];
 
         $payment = SubscriptionPayment::create([
             'business_id' => $business->id,
@@ -1772,6 +1844,10 @@ final class EntitlementService
             'plan_code' => $isSubscription ? BusinessSubscription::PLAN_CORE_MONTHLY : 'topup',
             'cycle' => $isSubscription ? 'package' : 'one_time',
             'amount' => $baseAmount,
+            'subtotal' => $taxCalc['subtotal'],
+            'tax_rate' => $taxCalc['tax_rate'],
+            'tax_amount' => $taxCalc['tax_amount'],
+            'is_tax_inclusive' => $taxCalc['is_inclusive'],
             'unique_code' => 0,
             'total_payable' => $totalPayable,
             'topup_quantity' => $package->token_quantity,

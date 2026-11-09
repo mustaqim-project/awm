@@ -853,6 +853,14 @@
                                         </td>
                                     </tr>
                                 @endif
+                                @if ($payment->hasTax())
+                                    <tr>
+                                        <td style="color: #475569; padding: 3px 0;">PPN Platform ({{ $payment->tax_rate }}% {{ $payment->is_tax_inclusive ? 'Inklusif' : '' }})</td>
+                                        <td style="text-align: right; font-family: monospace; font-weight: 600; color: #0f172a; padding: 3px 0;">
+                                            +Rp {{ number_format((float) $payment->tax_amount, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 @if ($payment->unique_code > 0)
                                     <tr>
                                         <td style="color: #d97706; padding: 3px 0;">{{ __('billing.unique_code_verification') }}</td>

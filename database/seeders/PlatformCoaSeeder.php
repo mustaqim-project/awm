@@ -62,6 +62,15 @@ class PlatformCoaSeeder extends Seeder
                 'is_system' => true,
             ],
             [
+                'code' => '1140',
+                'name' => 'Uang Muka Pajak & PPN Masukan Platform',
+                'type' => PlatformChartOfAccount::TYPE_ASSET,
+                'normal_balance' => PlatformChartOfAccount::BALANCE_DEBIT,
+                'category_group' => 'kas_bank',
+                'description' => 'PPN Masukan dari biaya server/infrastruktur dan pembayaran pajak di muka',
+                'is_system' => true,
+            ],
+            [
                 'code' => '1210',
                 'name' => 'Aset Perangkat Keras & Infrastruktur IT',
                 'type' => PlatformChartOfAccount::TYPE_ASSET,
@@ -98,6 +107,24 @@ class PlatformCoaSeeder extends Seeder
                 'category_group' => 'hutang_lancar',
                 'description' => 'Tagihan API, server, atau vendor pihak ketiga yang belum jatuh tempo bayar',
                 'is_system' => false,
+            ],
+            [
+                'code' => '2140',
+                'name' => 'Hutang Pajak Penjualan Platform (PPN Keluaran SaaS & Top-Up)',
+                'type' => PlatformChartOfAccount::TYPE_LIABILITY,
+                'normal_balance' => PlatformChartOfAccount::BALANCE_CREDIT,
+                'category_group' => 'hutang_lancar',
+                'description' => 'Kewajiban PPN atas penjualan lisensi software SaaS dan kuota top-up AI/storage',
+                'is_system' => true,
+            ],
+            [
+                'code' => '2150',
+                'name' => 'Hutang Pajak Penghasilan (PPh Platform Cooca)',
+                'type' => PlatformChartOfAccount::TYPE_LIABILITY,
+                'normal_balance' => PlatformChartOfAccount::BALANCE_CREDIT,
+                'category_group' => 'hutang_lancar',
+                'description' => 'Kewajiban PPh Badan / PPh Pasal 21/23/25 platform Cooca yang belum disetor',
+                'is_system' => true,
             ],
 
             // 3. EKUITAS / MODAL (3-XXXX)

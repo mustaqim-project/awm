@@ -247,6 +247,49 @@
                             </div>
                         </div>
 
+                        <!-- Pajak Pertambahan Nilai (PPN) Platform -->
+                        @php
+                            $platformTaxEnabled = \App\Models\SystemSetting::get('platform_tax_enabled', '0') === '1';
+                            $platformTaxRate = \App\Models\SystemSetting::get('platform_tax_rate', '11.0');
+                            $platformTaxInclusive = \App\Models\SystemSetting::get('platform_tax_inclusive', '0') === '1';
+                        @endphp
+                        <input type="hidden" name="platform_tax_enabled_submitted" value="1">
+                        <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.05] border border-[#FF9500]/20 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-[8px] bg-[#FF9500]/15 text-[#B25E00] dark:text-[#FF9F0A] flex items-center justify-center">
+                                        <i data-lucide="receipt-percent" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-[12.5px] font-bold text-black dark:text-white">Pajak Pertambahan Nilai (PPN) Platform</span>
+                                        <span class="text-[11px] text-black/50 dark:text-white/50 block">Dikenakan pada checkout langganan dan top-up tenant</span>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                    <input type="checkbox" name="platform_tax_enabled" value="1" {{ $platformTaxEnabled ? 'checked' : '' }} class="sr-only peer">
+                                    <div class="w-9 h-5 bg-black/15 peer-focus:outline-none rounded-full peer dark:bg-white/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#34C759]"></div>
+                                    <span class="ml-2 text-[12px] font-bold text-black/70 dark:text-white/70">
+                                        {{ $platformTaxEnabled ? 'Aktif' : 'Nonaktif' }}
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-[#FF9500]/15">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Tarif PPN (%)</label>
+                                    <input type="number" name="platform_tax_rate" value="{{ $platformTaxRate }}" min="0" max="100" step="0.1"
+                                        class="w-full h-9 px-3 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[13px] tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]/40">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Skema Tarif</label>
+                                    <select name="platform_tax_inclusive" class="w-full h-9 px-3 bg-white dark:bg-black/20 border border-black/[0.08] dark:border-white/[0.1] rounded-[10px] text-[12.5px] font-medium text-black dark:text-white focus:outline-none">
+                                        <option value="0" {{ !$platformTaxInclusive ? 'selected' : '' }}>Eksklusif (Harga + PPN)</option>
+                                        <option value="1" {{ $platformTaxInclusive ? 'selected' : '' }}>Inklusif (Sudah Termasuk PPN)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                                                 <!-- Comprehensive Resource Quotas Matrix Across All 4 Tiers (Free, Standard, Premium, Prestige) -->
                         @php
                             $resourceCategories = [

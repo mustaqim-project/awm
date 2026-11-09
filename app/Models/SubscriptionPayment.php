@@ -204,6 +204,10 @@ class SubscriptionPayment extends Model
         'plan_code',
         'cycle',
         'amount',
+        'subtotal',
+        'tax_rate',
+        'tax_amount',
+        'is_tax_inclusive',
         'discount_amount',
         'unique_code',
         'total_payable',
@@ -238,6 +242,10 @@ class SubscriptionPayment extends Model
     {
         return [
             'amount' => 'float',
+            'subtotal' => 'float',
+            'tax_rate' => 'float',
+            'tax_amount' => 'float',
+            'is_tax_inclusive' => 'boolean',
             'discount_amount' => 'float',
             'unique_code' => 'integer',
             'total_payable' => 'float',
@@ -267,6 +275,11 @@ class SubscriptionPayment extends Model
     public function isPaid(): bool
     {
         return $this->status === self::STATUS_APPROVED;
+    }
+
+    public function hasTax(): bool
+    {
+        return (float) ($this->tax_amount ?? 0) > 0;
     }
 
     /**

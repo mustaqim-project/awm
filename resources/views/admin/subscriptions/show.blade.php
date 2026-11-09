@@ -95,9 +95,21 @@
                         </span>
                     </div>
                     <div class="flex justify-between py-1.5 border-b border-black/5 dark:border-white/10"><span
-                            class="text-black/50 dark:text-white/50">Nominal Pokok:</span><span
-                            class="tabular-nums text-black/80 dark:text-white/80">Rp
-                            {{ number_format($payment->amount, 0, ',', '.') }}</span></div>
+                            class="text-black/50 dark:text-white/50">Dasar Pengenaan Pajak (DPP):</span><span
+                            class="tabular-nums font-semibold text-black/80 dark:text-white/80">Rp
+                            {{ number_format($payment->subtotal ?: ($payment->amount - $payment->tax_amount), 0, ',', '.') }}</span></div>
+                    @if($payment->discount_amount > 0)
+                        <div class="flex justify-between py-1.5 border-b border-black/5 dark:border-white/10 text-[#34C759] dark:text-[#30D158]"><span
+                                class="font-medium">Potongan Diskon Promo:</span><span
+                                class="tabular-nums font-bold">-Rp
+                                {{ number_format($payment->discount_amount, 0, ',', '.') }}</span></div>
+                    @endif
+                    @if($payment->tax_amount > 0)
+                        <div class="flex justify-between py-1.5 border-b border-black/5 dark:border-white/10 text-[#FF9500] dark:text-[#FF9F0A]"><span
+                                class="font-medium">PPN Platform ({{ $payment->tax_rate }}% {{ $payment->is_tax_inclusive ? 'Inklusif' : 'Eksklusif' }}):</span><span
+                                class="tabular-nums font-bold">+Rp
+                                {{ number_format($payment->tax_amount, 0, ',', '.') }}</span></div>
+                    @endif
                     <div class="flex justify-between py-1.5 border-b border-black/5 dark:border-white/10"><span
                             class="text-black/50 dark:text-white/50">Kode Verifikasi Unik:</span><span
                             class="font-mono font-semibold text-[#FF9500] dark:text-[#FF9F0A] tabular-nums">{{ $payment->unique_code }}</span>

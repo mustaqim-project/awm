@@ -874,6 +874,11 @@ final class AdminSettingController extends Controller implements HasMiddleware
             'owner_storage_limit_gb' => ['nullable', 'integer', 'min:1'],
             'storage_topup_price' => ['nullable', 'numeric', 'min:0'],
             'storage_topup_gb' => ['nullable', 'integer', 'min:1'],
+            'platform_tax_enabled' => ['nullable', 'in:0,1,on'],
+            'platform_tax_rate' => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'platform_tax_inclusive' => ['nullable', 'in:0,1,on'],
+            'platform_tax_apply_subscription' => ['nullable', 'in:0,1,on'],
+            'platform_tax_apply_topup' => ['nullable', 'in:0,1,on'],
         ]);
 
         $settings = [
@@ -892,7 +897,15 @@ final class AdminSettingController extends Controller implements HasMiddleware
             'owner_storage_limit_gb',
             'storage_topup_price',
             'storage_topup_gb',
+            'platform_tax_rate',
         ];
+
+        if ($request->has('platform_tax_enabled_submitted')) {
+            SystemSetting::set('platform_tax_enabled', $request->boolean('platform_tax_enabled') ? '1' : '0', 'billing');
+            SystemSetting::set('platform_tax_inclusive', $request->boolean('platform_tax_inclusive') ? '1' : '0', 'billing');
+            SystemSetting::set('platform_tax_apply_subscription', $request->boolean('platform_tax_apply_subscription') ? '1' : '0', 'billing');
+            SystemSetting::set('platform_tax_apply_topup', $request->boolean('platform_tax_apply_topup') ? '1' : '0', 'billing');
+        }
 
         foreach ($settings as $setting) {
             if (isset($validated[$setting])) {

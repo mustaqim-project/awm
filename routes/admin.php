@@ -237,6 +237,10 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/receivables/{receivable}/payments', [AdminFinanceController::class, 'recordReceivablePayment'])->name('receivables.payments.store');
             Route::post('/payables', [AdminFinanceController::class, 'storePayable'])->name('payables.store');
             Route::post('/payables/{payable}/payments', [AdminFinanceController::class, 'recordPayablePayment'])->name('payables.payments.store');
+
+            // Platform Tax Settings & VAT Settlement
+            Route::post('/tax-settings', [AdminFinanceController::class, 'updateTaxSettings'])->name('tax-settings.update');
+            Route::post('/tax-settle', [AdminFinanceController::class, 'settleTaxPayment'])->name('tax-settle');
         });
 
         // Penjualan B2B & Faktur Platform (Quotations, Sales Orders, Invoices, Sales Returns & Official PDF)
