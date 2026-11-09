@@ -510,15 +510,30 @@ def main():
             "logo_required": True,
             "logo_path": "public/assets/image/1785229034_logo_light.png",
             "renderer_engine": "mcp_canva",
+            "typography": {
+                "font_family": "Plus Jakarta Sans",
+                "headline": "Plus Jakarta Sans Bold / ExtraBold",
+                "subheadline": "Plus Jakarta Sans SemiBold",
+                "body": "Plus Jakarta Sans Regular / Medium",
+                "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
+                "cta": "Plus Jakarta Sans Bold",
+                "advantages": [
+                    "Modern dan profesional",
+                    "Sangat nyaman dibaca dalam Bahasa Indonesia",
+                    "Memiliki karakter teknologi tanpa terlihat kaku",
+                    "Cocok untuk headline, isi carousel, hingga angka harga"
+                ]
+            },
             "rules": [
                 "Latar belakang wajib Dark Blue / Deep Navy (#070B19 atau #0A1128)",
                 "Tipografi dan teks utama wajib White (#FFFFFF) dengan kontras tajam",
+                "Font wajib Plus Jakarta Sans di seluruh elemen (Headline: Bold/ExtraBold, Subheadline: SemiBold, Body: Regular/Medium, Angka: Bold/ExtraBold, CTA: Bold)",
                 "Wajib menyertakan Logo Resmi COOCA di header/sudut atas desain",
                 "Aksen visual menggunakan Cyan Blue (#38BDF8) dan Emerald (#10B981)",
                 "Dilarang background putih polos atau warna-warni non-brand"
             ]
         },
-        "canva_mcp_prompt_brief": f"Create modern {content_format} in Indonesian for COOCA. Theme: Dark Blue background (#070B19) and crisp White typography (#FFFFFF) with electric cyan accents. Official COOCA Logo included at top. Topic: {synthesized['topic_name']}. Headline: {synthesized['hook_title']}.",
+        "canva_mcp_prompt_brief": f"Create modern {content_format} in Indonesian for COOCA. Theme: Dark Blue background (#070B19), crisp White typography (#FFFFFF) using Plus Jakarta Sans font hierarchy (Bold headline, SemiBold subheadline, Regular body text, Bold numbers & CTA) with electric cyan accents. Official COOCA Logo included at top. Topic: {synthesized['topic_name']}. Headline: {synthesized['hook_title']}.",
     }
 
     print("====================================================================")
