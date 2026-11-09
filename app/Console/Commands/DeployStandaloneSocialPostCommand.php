@@ -101,7 +101,7 @@ class DeployStandaloneSocialPostCommand extends Command
             })->delete();
 
         // Cari atau susun aset media sesuai channel & format
-        $mediaItems = $this->resolveMediaItems($channel, $format, $dimensions, $slides);
+        $mediaItems = $this->resolveMediaItems($channel, $format, $dimensions, $slides, $spec);
 
         // Buat Postingan Utama (tanpa nama usaha atau nama user)
         $post = SocialMediaPost::create([
@@ -185,7 +185,7 @@ class DeployStandaloneSocialPostCommand extends Command
     /**
      * Cari berkas media yang sesuai untuk postingan ini.
      */
-    protected function resolveMediaItems(string $channel, string $format, string $dimensions, array $slides): array
+    protected function resolveMediaItems(string $channel, string $format, string $dimensions, array $slides, array $spec = []): array
     {
         $items = [];
         $baseAssets = storage_path('app/public/admin/social-media-assets');
@@ -225,11 +225,23 @@ class DeployStandaloneSocialPostCommand extends Command
                 $items[] = $this->getFallbackItem($channel, $dimensions);
             }
         } else {
+            // Prioritaskan path media eksplisit dari spec jika valid
+            $explicitRelPath = $spec['media_path'] ?? $spec['local_media_path'] ?? ($spec['content']['media_path'] ?? null);
+            if ($explicitRelPath && File::exists(storage_path("app/public/{$explicitRelPath}"))) {
+                $fullPath = storage_path("app/public/{$explicitRelPath}");
+                return [[
+                    'media_url'  => asset('storage/' . str_replace('\\', '/', $explicitRelPath)),
+                    'local_path' => $explicitRelPath,
+                    'file_size'  => File::size($fullPath),
+                    'title'      => ucfirst($channel) . ' Feed Visual',
+                ]];
+            }
+
             $specificFeedMap = [
                 'facebook'  => 'content-assets/facebook-feed-piutang-bon-1080x1080.png',
                 'linkedin'  => 'content-assets/linkedin-feed-roi-cashier-1080x1080.png',
                 'instagram' => 'content-assets/instagram-feed-fraud-prevention-1080x1080.png',
-                'tiktok'    => 'platform/2026-11-09-toko-kamu-tiktok-fraud_prevention-1080x1350.png',
+                'tiktok'    => 'content-assets/tiktok-feed-reconciliation-shift-1080x1080.png',
             ];
 
             $relPath = $specificFeedMap[$channel] ?? 'platform/facebook-feed-inventory-1080x1080.png';
