@@ -1,78 +1,76 @@
-# BRIEFING — 2026-11-05T02:36:00Z
+# BRIEFING — 2026-11-09T00:55:30Z
 
 ## Mission
-Complete Milestone 2B (Refactor final 4 themes: retail_building, retail_electronics, retail_florist, retail_grocery; run Gate Batch 2) and advance through Milestones 2C, 2D, 3, 4, 5 per STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md.
+Perbaiki dan audit modul resources\views\app\invoices dan resources\views\app\labor-machines pada aplikasi COOCA untuk kesiapan produksi (production readiness), menerapkan panduan /ui-simplify-layout, /laravel-rbac, /business-owner-doc-generator, dan /laravel-module-audit.
 
 ## 🔒 My Identity
-- Archetype: orchestrator
+- Archetype: Project Orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\
-- Original parent: caller agent
-- Original parent conversation ID: 1af07087-84cd-48eb-8ae2-38199e6c7c7d
+- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2
+- Original parent: Sentinel
+- Original parent conversation ID: 9f817716-90ae-4b75-9181-4166d454c577
 
 ## 🔒 My Workflow
-- **Pattern**: Project Pattern
+- **Pattern**: Project
 - **Scope document**: c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\PROJECT.md
-1. **Decompose**: Survey & Architecture established in PROJECT.md (42 themes across 4 batches, M0 to M5).
-2. **Dispatch & Execute**: Direct iteration loop (Explorer → Worker → Reviewer → Challenger → Auditor → Gate) for milestones.
-3. **On failure**: Retry → Replace → Skip → Redistribute → Redesign → Escalate.
-4. **Succession**: At 16 spawns, write handoff.md, spawn successor.
+1. **Decompose**:
+   - M1: Controller-Level RBAC & Clean Routing [DONE]
+   - M2: UI Simplification, Layout Ergonomics, Syntax Fix & View Auth Gating [IN_PROGRESS - Gate 2 check]
+   - M3: Business Owner User Documentation per business-owner-doc-generator [PLANNED]
+   - M4: Module Production Readiness Audit & Verification per laravel-module-audit [PLANNED]
+2. **Dispatch & Execute**:
+   - Direct iteration loop: Explorer -> Worker -> Reviewers (2) -> Challengers (2) -> Auditor -> Gate check
+3. **On failure**: Retry -> Replace -> Skip -> Redistribute -> Redesign -> Escalate
+4. **Succession**: Threshold 16 spawns, soft handoff.md, spawn successor
 - **Work items**:
-  1. Milestone 0: Survey & Scope Mapping [done]
-  2. Milestone 1: Backend & Service Normalization [done]
-  3. Milestone 2A: Batch 1 Refactoring (10 themes) [done]
-  4. Milestone 2B: Batch 2 Refactoring (11 themes) [gating in-progress]
-  5. Milestone 2C: Batch 3 Refactoring (11 themes) [pending]
-  6. Milestone 2D: Batch 4 Refactoring (10 themes) [pending]
-  7. Milestone 3: Home & Layout Visibility Enforcement [pending]
-  8. Milestone 4: CMS Cockpit Enhancement [pending]
-  9. Milestone 5: QA & Full Test Verification [pending]
-- **Current phase**: 2B Gating (2 Reviewers, 2 Challengers, 1 Auditor running)
-- **Current focus**: Aggregate verdicts for Milestone 2B Gate.
+  1. Survey & Architecture Mapping [done]
+  2. M1: Controller-Level RBAC & Clean Routing [done]
+  3. M2: UI Simplification & View Auth Gating [in-progress: Gate 2 check]
+  4. M3: Business Owner Documentation [pending]
+  5. M4: Module Production Readiness Audit & Test Verification [pending]
+- **Current phase**: 2 (Gate 2 Verification & Finalization)
+- **Current focus**: Milestone 2 Gate verification via challenger_m2_1, challenger_m2_2, auditor_m2
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
 - NEVER run build/test commands yourself — require workers to do so.
 - NEVER investigate or explore the problem at the code level — dispatch Explorers for technical investigation.
-- Communicate with parent via send_message.
-- Hard audit veto: Forensic auditor INTEGRITY VIOLATION means automatic failure.
-- Never reuse a subagent after it has delivered its handoff.
+- File-editing tools ONLY for metadata/state files (.md) in .agents/teamwork/
+- Never reuse a subagent after it has delivered its handoff — always spawn fresh
+- MANDATORY: Include the path to ORIGINAL_REQUEST.md in every subagent dispatch.
+- FORENSIC AUDIT VETO: Non-negotiable binary veto.
 
 ## Current Parent
-- Conversation ID: 1af07087-84cd-48eb-8ae2-38199e6c7c7d
-- Updated: 2026-11-05T02:12:02Z
+- Conversation ID: 9f817716-90ae-4b75-9181-4166d454c577
+- Updated: 2026-11-09T00:52:00Z
 
 ## Key Decisions Made
-- Inherited state from orchestrator_1. Milestone 0, 1, 2A complete.
-- Themes 1-7 in Batch 2 already refactored by worker_m2b_1 before timeout.
-- Worker worker_m2b_2 (`165c16d4-4873-439c-8016-fc5eb6c4b20e`) completed refactoring of Themes 8-11 and full Batch 2 empirical test suite (5/5 passed, 1,584 assertions).
-- Dispatched 5 Gate agents for Milestone 2B: 2 Reviewers, 2 Challengers, 1 Auditor.
+- Orchestrator 1 completed Survey, Milestone 1 (Gate PASS), and Milestone 2 implementation + 2 Reviewer APPROVALS.
+- Orchestrator 2 dispatched challenger_m2_1, challenger_m2_2, and auditor_m2 to conclude Gate 2.
 
 ## Team Roster
 | Agent | Type | Work Item | Status | Conv ID |
 |-------|------|-----------|--------|---------|
-| worker_m2b_2 | teamwork_worker | Milestone 2B Refactoring (Themes 8-11 & Batch 2 tests) | completed | 165c16d4-4873-439c-8016-fc5eb6c4b20e |
-| reviewer_m2b_1 | teamwork_reviewer | Milestone 2B Reviewer 1 | in-progress | a8c40de3-cb7e-495a-b3ed-7e3b0334d8cd |
-| reviewer_m2b_2 | teamwork_reviewer | Milestone 2B Reviewer 2 | in-progress | 2835ea23-514a-4f63-8d34-8bb842653476 |
-| challenger_m2b_1 | teamwork_challenger | Milestone 2B Challenger 1 | in-progress | a1e30aed-450b-4abf-81d6-ceea2007e8fe |
-| challenger_m2b_2 | teamwork_challenger | Milestone 2B Challenger 2 | in-progress | 347c7707-a9f9-4356-b1e2-b9e6e48b99f7 |
-| auditor_m2b_1 | teamwork_auditor | Milestone 2B Forensic Auditor | in-progress | 2532f421-e041-4679-8c42-8af73e75f333 |
+| challenger_m2_1 | teamwork_challenger | M2 Empirical UI & JS Challenge | in-progress | c06013eb-27a9-4c6d-8cc1-2357aabb7f53 |
+| challenger_m2_2 | teamwork_challenger | M2 View Auth & Regression Challenge | in-progress | a2d462fb-3956-4f8e-a6a0-22f16f684a4f |
+| auditor_m2 | teamwork_auditor | M2 Forensic Integrity Audit | in-progress | 2585f4fc-48f4-4bd6-a8ab-5e444c53b50b |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 6 / 16
-- Pending subagents: a8c40de3, 2835ea23, a1e30aed, 347c7707, 2532f421
+- Spawn count: 3 / 16
+- Pending subagents: c06013eb-27a9-4c6d-8cc1-2357aabb7f53, a2d462fb-3956-4f8e-a6a0-22f16f684a4f, 2585f4fc-48f4-4bd6-a8ab-5e444c53b50b
 - Predecessor: orchestrator_1
 - Successor: not yet spawned
 
 ## Active Timers
-- Heartbeat cron: e91189e4-1570-496d-bd95-cdbf6361301a/task-51
+- Heartbeat cron: 85fc67ed-7573-4e2d-b865-057e29ad32c7/task-42
 - Safety timer: none
 
 ## Artifact Index
-- C:\Users\Ulfah Ramadhani\.gemini\antigravity\brain\5699ea93-e022-47d8-82fe-e47b3a657b52\STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md — Blueprint SSOT
 - c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Original User Request
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\PROJECT.md — Master Project Tracking & Contracts
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\progress.md — Overall Progress Checklist
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\GATE_STATUS.md — Milestone Gate Status
-- c:\laragon\www\cooca_core\.agents\teamwork\teamwork_worker_m2b_2\handoff.md — Batch 2 Worker Handoff
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\PROJECT.md — Global project plan & architecture
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\GATE_STATUS.md — Gate Verdicts
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\progress.md — Orchestrator Progress
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_m2\handoff.md — Worker M2 Report
+- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_1\handoff.md — Reviewer M2 1 Report
+- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_2\handoff.md — Reviewer M2 2 Report

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-09T06:37:00Z
+# BRIEFING — 2026-11-09T06:50:00Z
 
 ## Mission
 Empirically stress-test view compilation and costing/invoice engine integrity:
@@ -24,7 +24,7 @@ Empirically stress-test view compilation and costing/invoice engine integrity:
 
 ## Current Parent
 - Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-09T06:37:00Z
+- Updated: 2026-11-09T06:50:00Z
 
 ## Review Scope
 - **Files to review**:
@@ -33,21 +33,25 @@ Empirically stress-test view compilation and costing/invoice engine integrity:
   - `routes/owner.php`
   - `tests/Feature/LaborAndMachineEngineTest.php`
   - `tests/Feature/InvoiceModuleAuditTest.php`
+  - `tests/Feature/LaborMachineRbacAdversarialTest.php`
 - **Interface contracts**: PROJECT.md, ORIGINAL_REQUEST.md, worker_m1/handoff.md
 - **Review criteria**: Blade view compilation without error, route resolution after cache/clear, costing engine test pass, adversarial unauthorized and unauthenticated request interception.
 
 ## Attack Surface
 - **Hypotheses tested**:
-  1. Blade view `labor-machines/index.blade.php` might have unmatched `@can` / `@endcan` or `@else` syntax breaking view compilation under `php artisan view:cache`.
-  2. Route clearance or route caching might fail or fail to resolve `labor-rates.*`, `machines.*`, or `invoices.*` routes.
-  3. Costing engine tests (`LaborAndMachineEngineTest.php`) or invoice tests (`InvoiceModuleAuditTest.php`) might fail due to controller RBAC or view changes.
-  4. Users without `labor_machines.manage` might bypass RBAC and modify labor rates or machines.
-  5. Unauthenticated guest requests might bypass auth or cause 500 server crashes instead of 401/302 redirects.
-- **Vulnerabilities found**: [TBD]
-- **Untested angles**: [TBD]
+  1. Blade view `labor-machines/index.blade.php` might have unmatched `@can` / `@endcan` or `@else` syntax breaking view compilation under `php artisan view:cache`. -> DISPROVEN. `php -l` clean, `php artisan view:clear` and `php artisan view:cache` cached successfully.
+  2. Route clearance or route caching might fail or fail to resolve `labor-rates.*`, `machines.*`, or `invoices.*` routes. -> DISPROVEN. `php artisan route:clear` and `php artisan route:cache` completed with 0 errors. All 28 target routes resolved accurately.
+  3. Costing engine tests (`LaborAndMachineEngineTest.php`) or invoice tests (`InvoiceModuleAuditTest.php`) might fail due to controller RBAC or view changes. -> DISPROVEN. Both suites passed completely (4/4 tests, 15 assertions; 9/9 tests, 32 assertions).
+  4. Users without `labor_machines.manage` might bypass RBAC and modify labor rates or machines. -> DISPROVEN. All POST/PUT/DELETE attempts returned HTTP 403 Forbidden with zero database state mutations.
+  5. Unauthenticated guest requests might bypass auth or cause 500 server crashes instead of 401/302 redirects. -> DISPROVEN. 21 endpoints tested; 12 HTML requests redirected to login (302), 9 JSON requests returned 401 Unauthorized. Zero 500 errors.
+  6. Cross-tenant IDOR attack might allow modifying records of another tenant. -> DISPROVEN. Multi-layer defense (`BusinessScope` returning 404 + controller `abort_unless` returning 403) prevented cross-tenant operations.
+- **Vulnerabilities found**: None. Controller-Level RBAC and tenant security are verified robust and airtight.
+- **Untested angles**: None within M1 scope.
 
 ## Key Decisions Made
-- [TBD]
+- Authored and executed empirical adversarial test suite `tests/Feature/LaborMachineRbacAdversarialTest.php` (6 tests, 85 assertions).
+- Verified full view compilation, route serialization, and existing regression suites.
+- Verdict: APPROVE.
 
 ## Artifact Index
 - `DISPATCH.md` — Inbound instructions

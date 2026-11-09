@@ -1,146 +1,187 @@
-# Empirical Challenge Report: Milestone M1 — RBAC & Controller Security
+# Empirical Challenge & Verification Report: Milestone M1 (Controller-Level RBAC & Clean Routing)
 
-**Challenger**: Challenger M1 (Empirical Security Challenger)  
-**Parent**: `e2aae656-229b-42bb-a7be-8273bdd8a984`  
-**Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1`  
-**Target Worker**: Worker M1  
-**Verdict**: **APPROVE**  
-**Date**: 2026-11-07  
+- **Agent**: `challenger_m1_1` (Critic & Specialist)
+- **Target Work Product**: Milestone M1 changes by `worker_m1`
+- **Date**: 2026-11-09T06:48:00Z
+- **Verdict**: **APPROVE**
 
 ---
 
 ## 1. Observation
 
-### 1.1 Implementation Artifacts Audited
-The implementation provided by Worker M1 across 4 files was directly inspected:
-1. `database/seeders/RbacSeeder.php`:
-   - Lines 179-181: Granular permissions `ai.access`, `ai.approve`, and `ai.manage` declared in `permissionMatrix()`.
-   - Line 290: `'ai.approve'` assigned to `$managerSlugs`.
-   - Line 310: `'ai.manage'` assigned to `'admin'` role definition.
-   - Lines 330, 348: `'ai.access'` retained on `'cashier'` and `'warehouse'` roles without leaking `ai.approve` or `ai.manage`.
-   - Line 300: `$ownerSlugs = $allSlugs;` ensuring `owner` retains all permissions.
+### 1.1 Source Code and Controller Contracts
+1. **`app/Http/Controllers/Web/LaborMachineWebController.php`**:
+   - Implements `Illuminate\Routing\Controllers\HasMiddleware` (line 20).
+   - Method `public static function middleware(): array` (lines 25–38) declares:
+     ```php
+     return [
+         new Middleware('require.permission:labor_machines.view', only: ['index']),
+         new Middleware('require.permission:labor_machines.manage', only: [
+             'storeLabor',
+             'updateLabor',
+             'destroyLabor',
+             'storeMachine',
+             'updateMachine',
+             'destroyMachine',
+         ]),
+     ];
+     ```
+   - Listing method `index()` (lines 48–56) enforces active tenant query scoping:
+     ```php
+     $laborRates = LaborRate::where('business_id', $business->id)->latest()->get();
+     $machines = Machine::where('business_id', $business->id)->latest()->get();
+     ```
+   - IDOR guards are explicitly placed on all single-record mutation methods:
+     - `updateLabor` (lines 112–114):
+       ```php
+       $business = Context::business();
+       abort_unless($business !== null, 403);
+       abort_unless($laborRate->business_id === $business->id, 403);
+       ```
+     - `destroyLabor` (lines 286–288):
+       ```php
+       $business = Context::business();
+       abort_unless($business !== null, 403);
+       abort_unless($laborRate->business_id === $business->id, 403);
+       ```
+     - `updateMachine` (lines 224–226):
+       ```php
+       $business = Context::business();
+       abort_unless($business !== null, 403);
+       abort_unless($machine->business_id === $business->id, 403);
+       ```
+     - `destroyMachine` (lines 322–324):
+       ```php
+       $business = Context::business();
+       abort_unless($business !== null, 403);
+       abort_unless($machine->business_id === $business->id, 403);
+       ```
+   - `AuditLog` dispatches (lines 86–102, 146–163, 198–215, 259–276, 300–312, 335–347) capture action tags `labor_rates.created`, `labor_rates.updated`, `labor_rates.deleted`, `machines.created`, `machines.updated`, and `machines.deleted` with metadata and old/new values.
 
-2. `app/Http/Controllers/Web/Ai/AiCompanyWebController.php`:
-   - Lines 38-39 & 43: Implements `Illuminate\Routing\Controllers\HasMiddleware`.
-   - Lines 48-86: Granular `public static function middleware(): array`:
-     - `require.permission:ai.access` on 17 read/chat methods (`index`, `lobby`, `executiveOffice`, `operationsOffice`, `growthOffice`, `history`, `actions`, `liveMetrics`, `getAgentAvatars`, `getRules`, `ask`, `triggerDailyCheck`, `teamwork`, `goal`, `grillMe`, `boost`, `schedule`).
-     - `require.permission:ai.approve` on 3 proposal action methods (`approveAction`, `reviseAction`, `rejectAction`).
-     - `require.permission:ai.manage` on 8 provider and rule mutation methods (`providers`, `storeProvider`, `testProvider`, `detectModels`, `updateAgentAvatar`, `storeRule`, `toggleRule`, `deleteRule`).
+2. **`routes/owner.php`**:
+   - Invoices routes (lines 330–343) have eliminated redundant route-level middleware declarations (`require.permission:invoices.*`), relying completely on `InvoiceWebController::middleware()`.
+   - Labor-machines routes (lines 371–379) are cleanly grouped under `Route::middleware('module:labor_machines')->group(...)` with all 7 routes intact and mapped directly to `LaborMachineWebController`:
+     - `GET /labor-machines` -> `labor-machines.index`
+     - `POST /labor-rates` -> `labor-rates.store`
+     - `PUT /labor-rates/{laborRate}` -> `labor-rates.update`
+     - `DELETE /labor-rates/{laborRate}` -> `labor-rates.destroy`
+     - `POST /machines` -> `machines.store`
+     - `PUT /machines/{machine}` -> `machines.update`
+     - `DELETE /machines/{machine}` -> `machines.destroy`
 
-3. `app/Http/Controllers/Web/Ai/PosAiWebController.php`:
-   - Lines 12-13 & 17: Implements `HasMiddleware`.
-   - Lines 22-33: Granular `middleware()`:
-     - `require.permission:ai.access` on `index`, `ask`.
-     - `require.permission:ai.approve` on `executeAction`.
+3. **`resources/views/app/labor-machines/index.blade.php`**:
+   - Lines 138, 169, 337, 410, 483, 538, 619, and 694 all check `@can('labor_machines.manage')` or `Context::hasPermission('labor_machines.manage')`, eliminating former mismatch with `costing.manage`.
 
-4. `routes/owner.php`:
-   - Lines 632-635, 637, 673: Removed outer `require.permission:ai.access` group wrappers while strictly maintaining tenant entitlement `entitlement:ai`.
+### 1.2 Empirical Test Execution Results
+An empirical test harness was written and executed at `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php`:
+- **Execution Command**:
+  ```powershell
+  php artisan test tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
+  ```
+- **Result Output**:
+  ```json
+  {"tool":"phpunit","result":"passed","tests":9,"passed":9,"assertions":134,"duration_ms":30831}
+  ```
+  *Verdict: 9 passed, 0 failed, 134 assertions.*
 
-### 1.2 Empirical Stress-Test Execution
-To independently prove the authorization boundaries, an 18-scenario adversarial test suite was authored and executed in `tests/Feature/AiRbacEmpiricalStressTest.php`.
+Specific test scenarios proven:
+1. `test_labor_machine_web_controller_implements_has_middleware_and_declares_exact_contracts`: Controller implements `HasMiddleware`; reflection inspection verifies exact middleware names and action arrays matching interface contracts.
+2. `test_route_names_for_labor_machines_are_intact_and_resolve_correctly`: All 7 route names resolve to `LaborMachineWebController` and accept appropriate HTTP verbs (GET/POST/PUT/DELETE).
+3. `test_route_names_for_invoices_are_intact_and_resolve_correctly`: All 14 invoice route names resolve to `InvoiceWebController` and accept designated HTTP verbs.
+4. `test_unauthorized_user_lacking_labor_machines_view_cannot_access_index`: Users lacking `labor_machines.view` receive HTTP `403 Forbidden` (`FORBIDDEN_PERMISSION`) on JSON requests and are redirected to `route('portal')` on browser requests.
+5. `test_user_with_labor_machines_view_can_access_index_and_data_is_tenant_scoped`: Users with `labor_machines.view` receive `200 OK`; assertions prove records belonging to another tenant (`business_id`) are excluded from output.
+6. `test_user_lacking_labor_machines_manage_cannot_execute_mutations`: Users with read-only access attempting to call `storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, or `destroyMachine` receive HTTP `403 Forbidden` (`FORBIDDEN_PERMISSION`).
+7. `test_authorized_user_can_execute_all_labor_and_machine_mutations_and_dispatches_audit_logs`: Authorized users successfully perform all 6 CRUD operations, create records with correct active `business_id`, and generate verified `AuditLog` records with correct action slugs and payload diffs.
+8. `test_idor_cross_tenant_update_and_destroy_are_defensively_rejected`: Cross-tenant attack attempts by Business B against Business A records are blocked at multiple layers (layer 1: `BusinessScope` / route model binding, layer 2: explicit controller `abort_unless(..., 403)`). Direct controller invocations with mismatched models throw `HttpException(403)`. Target records in the database remain untouched and undeleted.
+9. `test_invoices_controller_level_rbac_enforcement`: Invoices module routes correctly enforce permission requirements via `InvoiceWebController::middleware()`, rejecting unauthorized requests with 403 while granting authorized access.
 
-#### Test Suite Command & Verbatim Output
-Command executed:
-```bash
-php artisan test tests/Feature/AiRbacEmpiricalStressTest.php
+### 1.3 Full Regression Test Suite Execution
+- `tests/Feature/InvoiceModuleAuditTest.php`: 9 tests passed, 32 assertions (57.3s)
+- `tests/Feature/InvoiceDraftEditAndPartiesTest.php`: 4 tests passed, 24 assertions (15.8s)
+- `tests/Feature/LaborAndMachineEngineTest.php`: 4 tests passed, 15 assertions (15.9s)
+- `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php`: 9 tests passed, 134 assertions (30.8s)
+- **Cumulative Regression Total**: 26 tests passed, 205 assertions, 0 failures.
+
+### 1.4 Syntax Linting (`php -l`)
+```powershell
+php -l app/Http/Controllers/Web/LaborMachineWebController.php
+php -l routes/owner.php
+php -l resources/views/app/labor-machines/index.blade.php
+php -l tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
 ```
-Result:
-```json
-{"tool":"phpunit","result":"passed","tests":18,"passed":18,"assertions":60,"duration_ms":39624}
-```
-
-Full AI Feature Suite Command & Verbatim Output:
-```bash
-php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php tests/Feature/AiRbacEmpiricalStressTest.php
-```
-Result:
-```json
-{"tool":"phpunit","result":"passed","tests":32,"passed":32,"assertions":130,"duration_ms":41865}
-```
-
-### 1.3 Verbatim Empirical Results per Challenge Dimension
-
-| # | Adversarial Test Scenario | Role Tested | Endpoint | Expected Result | Actual Observed Result | Status |
-|---|---------------------------|-------------|----------|-----------------|------------------------|--------|
-| 1 | Action Proposal Approval | Cashier (no `ai.approve`) | `POST /cooca-ai/actions/{proposal}/approve` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`, proposal remains PENDING) | PASS |
-| 2 | Action Proposal Approval | Warehouse (no `ai.approve`) | `POST /cooca-ai/actions/{proposal}/approve` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`, proposal remains PENDING) | PASS |
-| 3 | Action Proposal Revision & Rejection | Cashier (no `ai.approve`) | `POST /cooca-ai/actions/{proposal}/revise`, `reject` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`) | PASS |
-| 4 | POS AI Action Execution (with `pos.orders` & `invoices.create`) | Cashier (no `ai.approve`) | `POST /pos/ai/execute-action` | HTTP 403 Forbidden | `403 Forbidden` (Intercepted before FormRequest `authorize()`) | PASS |
-| 5 | POS AI Purchase Order Action Execution | Warehouse (no `ai.approve`) | `POST /pos/ai/execute-action` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`) | PASS |
-| 6 | AI Provider Storage / Modification | Manager (no `ai.manage`) | `POST /cooca-ai/providers` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`, `required_permissions: ['ai.manage']`) | PASS |
-| 7 | AI Guardrail Rule Creation, Toggle & Deletion | Manager (no `ai.manage`) | `POST /cooca-ai/rules`, `PATCH .../toggle`, `DELETE ...` | HTTP 403 Forbidden | `403 Forbidden` across all 3 rule management methods | PASS |
-| 8 | AI Provider Page Access | Manager (no `ai.manage`) | `GET /cooca-ai/providers` | HTTP 403 Forbidden | `403 Forbidden` (`FORBIDDEN_PERMISSION`) | PASS |
-| 9 | AI Provider & Rule Modification | Cashier (no `ai.manage`) | `POST /cooca-ai/providers`, `POST /cooca-ai/rules` | HTTP 403 Forbidden | `403 Forbidden` on both endpoints | PASS |
-| 10 | Authorized Action Proposal Revision & Rejection | Manager (has `ai.approve`) | `POST /cooca-ai/actions/{proposal}/revise`, `reject` | HTTP 200 OK | `200 OK` (Payload updated, proposal successfully rejected) | PASS |
-| 11 | Authorized AI Guardrail Rule Creation | Admin (has `ai.manage`) | `POST /cooca-ai/rules` | HTTP 201 Created | `201 Created` (`ai_guardrails` table updated in database) | PASS |
-| 12 | Full Owner Management Access | Owner (all permissions) | `GET /cooca-ai/providers`, `POST /cooca-ai/rules` | HTTP 200/201 OK | `200 OK` on providers, `201 Created` on rules | PASS |
-| 13 | Permitted Viewing & Chat Access | Cashier (has `ai.access`) | `GET /cooca-ai`, `GET /pos/ai` | HTTP 200 OK | `200 OK` on both lobby and POS Cockpit | PASS |
-| 14 | Base Access Gating | Viewer (no `ai.access`) | `GET /cooca-ai`, `GET /pos/ai` | HTTP 403 Forbidden | `403 Forbidden` (`required_permissions: ['ai.access']`) | PASS |
-| 15 | Unauthenticated Guest Protection | Guest (unauthenticated) | `POST /cooca-ai/actions/{proposal}/approve` | HTTP 401/302 Redirect | `401 Unauthorized` / `302 Redirect` to login | PASS |
-| 16 | Cross-Tenant Isolation | Owner of Tenant B | `POST /cooca-ai/actions/{proposal_A}/approve` | HTTP 404 / 403 | `404 Not Found` (Tenant barrier enforced) | PASS |
-| 17 | Legacy Route Controller Enforcement | Cashier / Manager | `POST /ai/actions/{proposal}/approve`, `POST /ai/providers` | HTTP 403 Forbidden | `403 Forbidden` (Controller middleware protects legacy fallbacks) | PASS |
-| 18 | Web Browser Form Redirection | Cashier (web request) | `GET /cooca-ai/providers` | HTTP 302 Redirect | `302 Redirect` to `route('portal')` with session error flash | PASS |
+All four files reported `No syntax errors detected`.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Premise 1 — Former Phantom Permission Gap**:
-   Prior to M1, `AiActionPolicy.php:68` checked `Context::hasPermission('ai.approve')`, but `ai.approve` did not exist in `RbacSeeder.php`. Furthermore, `ExecuteAiPosActionRequest.php:21` fell back to `pos.orders` or `invoices.create`, allowing regular cashiers to trigger automated AI actions draft execution.
+1. **Controller-Level RBAC Enforcement**:
+   - From Observation 1.1, `LaborMachineWebController` implements `HasMiddleware` and configures `require.permission:labor_machines.view` for `index` and `require.permission:labor_machines.manage` for all 6 mutation actions.
+   - Observation 1.2 (tests 1, 4, 6) confirms that requests lacking these permissions are halted with HTTP 403 Forbidden prior to method execution.
+   - Therefore, controller-level RBAC is correctly enforced independent of route-level definitions.
 
-2. **Premise 2 — Controller Middleware Precedence**:
-   In Laravel 11, `HasMiddleware` executes before FormRequest authorization. By applying `new Middleware('require.permission:ai.approve', only: ['executeAction'])` on `PosAiWebController`, any incoming request from a user without `ai.approve` is intercepted by `RequirePermission` and rejected with `403 Forbidden`. Test #4 empirically proved this: a Cashier equipped with `pos.orders` and `invoices.create` was strictly rejected with 403 Forbidden when calling `POST /pos/ai/execute-action`.
+2. **Clean Routing Integrity**:
+   - Observation 1.1 shows that duplicate `require.permission` declarations were removed from `routes/owner.php` for both invoices and labor-machines.
+   - Observation 1.2 (tests 2, 3, 9) proves that all 21 route names remain registered in Laravel's RouteCollection, resolve to the intended controller methods, and maintain full authorization enforcement via controller middleware.
+   - Therefore, route cleaning did not introduce regressions or route naming breakages.
 
-3. **Premise 3 — Provider & Guardrail Secret Protection**:
-   Configuring third-party AI keys (`OPENAI_API_KEY`, Gemini, Anthropic) and company guardrails represents critical operational security. By binding `require.permission:ai.manage` to all 8 provider and rule mutation methods in `AiCompanyWebController`, managers and cashiers are entirely locked out (Tests #6, #7, #8, #9). Only `admin` and `owner` can mutate AI providers and rules (Tests #11, #12).
+3. **Tenant Security & IDOR Elimination**:
+   - Observation 1.1 reveals explicit `abort_unless($record->business_id === $business->id, 403)` checks on `updateLabor`, `destroyLabor`, `updateMachine`, and `destroyMachine`.
+   - Observation 1.2 (test 8) executes simulated adversary attacks from Business B against Business A. Direct controller execution throws 403, and HTTP route binding rejects foreign IDs. Database assertions verify no record alteration occurred.
+   - Observation 1.2 (test 5) verifies listing queries are filtered by `where('business_id', $business->id)`, preventing cross-tenant data exposure.
+   - Therefore, tenant isolation and IDOR defenses are robustly implemented with defense-in-depth.
 
-4. **Premise 4 — Clean Architecture & Route Freedom**:
-   By stripping `require.permission:ai.access` from `routes/owner.php`, routes are decoupled from authorization concerns while maintaining `entitlement:ai`. The controller remains the single source of truth for its own method permissions, eliminating duplicate middleware checks.
-
-5. **Premise 5 — Zero Regressions**:
-   All 14 existing feature tests in `AiCompanyWorkflowTest.php` and `PosAiEngineTest.php` continue to pass without a single failure or regression. Combined with the 18 new adversarial tests, the AI suite totals 32 passing tests and 130 assertions.
+4. **UI Permission Synchronization**:
+   - Observation 1.1 confirms that `resources/views/app/labor-machines/index.blade.php` now gates all action buttons using `@can('labor_machines.manage')`.
+   - This matches the backend requirement of `LaborMachineWebController::middleware()`, eliminating previous authorization desynchronization where users with `labor_machines.manage` were incorrectly blocked by `costing.manage` checks.
 
 ---
 
 ## 3. Caveats
 
-- **View Directives Scope**:
-  This challenge verified backend controller-level RBAC enforcement. Hiding action buttons, forms, and tabs in Blade views (e.g. `@if(Context::hasPermission('ai.approve') || Context::isAdminOrOwner())`) is the explicit scope of Milestone M2. However, because backend controller middleware is active and verified, unauthorized UI tampering or direct POST requests will reliably receive `403 Forbidden`.
-- **In-Memory SQLite Testing**:
-  Automated tests run against SQLite `:memory:` with `RbacSeeder`. The seeder was also confirmed to execute cleanly on MySQL/MariaDB in Worker M1's report (`php artisan db:seed --class=RbacSeeder --force`).
+- **View Presentation & Layout**: View visual hierarchy and button spacing were checked for syntax and authorization directives, but full UI ergonomics, no-overlap redesign, and bento layout adjustments are reserved for Milestone M2 as planned in `PROJECT.md`.
+- No other caveats.
 
 ---
 
 ## 4. Conclusion
 
-**Verdict: APPROVE**
+The implementation delivered by `worker_m1` for Milestone M1 is empirically robust, secure, and compliant with all project requirements:
+- Controller-level RBAC adheres to Laravel 11 `HasMiddleware` standards.
+- Route names and resolution contracts are 100% intact.
+- Multi-tenant IDOR protection is established at both model-scope and controller levels.
+- Full audit trails are recorded on all state mutations.
+- 26 tests and 205 assertions pass cleanly across the regression boundary.
 
-Worker M1's implementation is verified as complete, robust, and empirically sound:
-1. `ai.approve` and `ai.manage` permissions are officially registered and seeded.
-2. `AiCompanyWebController` and `PosAiWebController` correctly enforce controller-level RBAC via `HasMiddleware`.
-3. Unauthorized roles (Cashier, Warehouse, Manager without `ai.manage`) are strictly blocked with `403 Forbidden` from proposal execution and provider configuration.
-4. Authorized roles (Owner, Admin, Manager with `ai.approve`) perform their permitted operations without error.
-5. All 18 adversarial tests and 14 regression tests pass with 100% success.
+**Final Verdict: APPROVE**
 
 ---
 
 ## 5. Verification Method
 
-Any team member or orchestrator can independently re-verify this assessment with the following commands:
+To independently reproduce and verify this assessment:
 
-```bash
-# 1. Run the comprehensive adversarial stress test suite:
-php artisan test tests/Feature/AiRbacEmpiricalStressTest.php
+1. **Run PHP Linting**:
+   ```powershell
+   php -l app/Http/Controllers/Web/LaborMachineWebController.php
+   php -l routes/owner.php
+   php -l resources/views/app/labor-machines/index.blade.php
+   php -l tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
+   ```
 
-# 2. Run the combined AI module feature test suite:
-php artisan test tests/Feature/AiCompanyWorkflowTest.php tests/Feature/PosAiEngineTest.php tests/Feature/AiRbacEmpiricalStressTest.php
+2. **Run Dedicated Empirical RBAC & Clean Routing Test Suite**:
+   ```powershell
+   php artisan test tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
+   ```
 
-# 3. Verify route middleware bindings directly:
-php artisan route:list --name=cooca-ai.actions.approve -v
-php artisan route:list --name=cooca-ai.providers.store -v
-php artisan route:list --name=pos.ai.execute-action -v
-```
+3. **Run Invoices & Calculation Regression Test Suites**:
+   ```powershell
+   php artisan test tests/Feature/InvoiceModuleAuditTest.php
+   php artisan test tests/Feature/InvoiceDraftEditAndPartiesTest.php
+   php artisan test tests/Feature/LaborAndMachineEngineTest.php
+   ```
 
-### Invalidation Conditions:
-- If `POST /pos/ai/execute-action` returns `200` for a Cashier lacking `ai.approve`, verify `PosAiWebController::middleware()`.
-- If `POST /cooca-ai/providers` returns anything other than `403` for a Manager lacking `ai.manage`, verify `AiCompanyWebController::middleware()`.
+4. **Invalidation Conditions**:
+   - Any failure in `LaborMachineRbacCleanRoutingEmpiricalTest.php` indicates RBAC bypass or broken route contracts.
+   - Unauthenticated/unauthorized users obtaining HTTP 200 on mutation endpoints invalidates controller middleware.
+   - Modifying a model from Business A while authenticated in Business B without a 403/404 exception invalidates IDOR defense.

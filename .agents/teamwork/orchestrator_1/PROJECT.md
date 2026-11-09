@@ -34,10 +34,16 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | M1: Controller-Level RBAC & Tenant Security | `LaborMachineWebController.php`, `routes/owner.php`, permission alignment in `labor-machines/index.blade.php` | none | IN_PROGRESS |
-| 2 | M2: UI Simplification, Layout Ergonomics & View Auth | Blade templates in `resources/views/app/invoices/` and `resources/views/app/labor-machines/` | M1 | PLANNED |
+| 1 | M1: Controller-Level RBAC & Tenant Security | `LaborMachineWebController.php`, `routes/owner.php`, permission alignment in `labor-machines/index.blade.php` | none | DONE |
+| 2 | M2: UI Simplification, Layout Ergonomics & View Auth | Blade templates in `resources/views/app/invoices/` and `resources/views/app/labor-machines/` | M1 | IN_PROGRESS |
 | 3 | M3: Business Owner User Documentation | `resources/views/app/docs/partials/sec_labor_machines.blade.php`, `sec_invoices.blade.php`, `resources/views/app/docs/index.blade.php` | none | PLANNED |
 | 4 | M4: Module Production Readiness Audit & Verification | `tests/Feature/LaborMachineWebControllerTest.php`, full test execution, PHP linting, final gate pass | M1, M2, M3 | PLANNED |
+
+## Milestone 1 Outputs
+- `LaborMachineWebController.php`: Implemented `HasMiddleware` mapping `labor_machines.view` to `index` and `labor_machines.manage` to all mutations. Implemented strict tenant scoping on `index()` and defensive IDOR protection (`abort_unless($record->business_id === $business->id, 403)`). Integrated `AuditLog` for create, update, and delete actions.
+- `routes/owner.php`: Clean routing achieved. Removed redundant route-level permissions on 14 invoice routes and 7 labor-machines routes while keeping group prefixes, names, and module gates intact.
+- `resources/views/app/labor-machines/index.blade.php`: Aligned 8 button authorization gates to `@can('labor_machines.manage')`.
+- Verification: 100% test pass (26 tests, 205 assertions across 4 test suites: `LaborMachineRbacCleanRoutingEmpiricalTest`, `LaborMachineRbacAdversarialTest`, `InvoiceModuleAuditTest`, `LaborAndMachineEngineTest`). Gate verdict: PASS.
 
 ## Interface Contracts
 ### LaborMachineWebController RBAC

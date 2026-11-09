@@ -27,21 +27,21 @@
         module="sales"
         :title="__('sales.invoices.module_title')"
         :subtitle="__('sales.invoices.module_subtitle')">
-        @if(\App\Support\Context::hasPermission('invoices.export'))
+        @can('invoices.export')
         <a href="{{ route('invoices.export-excel') }}"
-           class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2">
+           class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-2">
             <i data-lucide="file-spreadsheet" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
             <span>{{ __('sales.invoices.btn_export_csv') }}</span>
         </a>
-        @endif
+        @endcan
 
-        @if(\App\Support\Context::hasPermission('invoices.create'))
+        @can('invoices.create')
         <a href="{{ route('invoices.create') }}"
-           class="h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
+           class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-sm shadow-[#007AFF]/25">
             <i data-lucide="plus" class="w-4 h-4"></i>
             <span>{{ __('sales.invoices.btn_create_new') }}</span>
         </a>
-        @endif
+        @endcan
     </x-module-header>
 
     <x-module-tabs module="sales" />
@@ -159,7 +159,7 @@
     <!-- 4. DENSE DATA TABLE (DESKTOP & TABLET)                 -->
     <!-- ===================================================== -->
     <div x-data="coocaTableSort()" class="hidden sm:block rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto min-h-[220px]">
             <table class="w-full text-left text-[13px]">
                 <thead>
                     <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
@@ -237,45 +237,71 @@
                                     <span>{{ __('sales.invoices.btn_detail') }}</span>
                                 </a>
 
-                                <div x-data="{ open: false }" class="relative inline-block text-left">
+                                <div x-data="{ 
+                                    open: false,
+                                    coords: { top: 0, left: 0 },
+                                    toggle(e) {
+                                        if (!this.open) {
+                                            const rect = e.currentTarget.getBoundingClientRect();
+                                            const spaceBelow = window.innerHeight - rect.bottom;
+                                            this.coords = {
+                                                top: spaceBelow < 180 ? (rect.top + window.scrollY - 130) : (rect.bottom + window.scrollY + 6),
+                                                left: Math.max(10, rect.right + window.scrollX - 192)
+                                            };
+                                        }
+                                        this.open = !this.open;
+                                    }
+                                }" 
+                                @scroll.window="open = false"
+                                @resize.window="open = false"
+                                class="relative inline-block text-left">
                                     <button type="button" 
-                                            @click="open = !open" 
-                                            @click.outside="open = false"
+                                            @click="toggle($event)" 
                                             aria-label="{{ __('common.more_actions') }}"
                                             class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 w-9 h-9 rounded-[10px] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
                                         <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                     </button>
 
-                                    <div x-show="open"
-                                         x-cloak
-                                         x-transition:enter="transition ease-out duration-100"
-                                         x-transition:enter-start="transform opacity-0 scale-95"
-                                         x-transition:enter-end="transform opacity-100 scale-100"
-                                         x-transition:leave="transition ease-in duration-75"
-                                         x-transition:leave-start="transform opacity-100 scale-100"
-                                         x-transition:leave-end="transform opacity-0 scale-95"
-                                         class="absolute right-0 mt-1.5 w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-30 text-left">
-                                        <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
-                                           class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                            <i data-lucide="printer" class="w-4 h-4 text-gray-400"></i>
-                                            <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
-                                        </a>
-                                        @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
-                                        <a href="{{ route('invoices.edit', $inv->id) }}"
-                                           class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                                            <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
-                                            <span>{{ __('sales.invoices.btn_edit_invoice') }}</span>
-                                        </a>
-                                        @endif
-                                        @if($inv->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
-                                        <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
-                                        <button type="button" @click="open = false; openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')"
-                                            class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
-                                            <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
-                                            <span>{{ __('sales.invoices.btn_delete') }}</span>
-                                        </button>
-                                        @endif
-                                    </div>
+                                    <template x-teleport="body">
+                                        <div x-show="open"
+                                             x-cloak
+                                             @click.outside="open = false"
+                                             :style="'top: ' + coords.top + 'px; left: ' + coords.left + 'px;'"
+                                             x-transition:enter="transition ease-out duration-100"
+                                             x-transition:enter-start="transform opacity-0 scale-95"
+                                             x-transition:enter-end="transform opacity-100 scale-100"
+                                             x-transition:leave="transition ease-in duration-75"
+                                             x-transition:leave-start="transform opacity-100 scale-100"
+                                             x-transition:leave-end="transform opacity-0 scale-95"
+                                             class="absolute w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-[100] text-left">
+                                            @can('invoices.view')
+                                            <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
+                                               class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                                <i data-lucide="printer" class="w-4 h-4 text-gray-400"></i>
+                                                <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
+                                            </a>
+                                            @endcan
+                                            @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0)
+                                                @can('invoices.edit')
+                                                <a href="{{ route('invoices.edit', $inv->id) }}"
+                                                   class="flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                                    <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
+                                                    <span>{{ __('sales.invoices.btn_edit_invoice') }}</span>
+                                                </a>
+                                                @endcan
+                                            @endif
+                                            @if($inv->status === 'draft')
+                                                @can('invoices.delete')
+                                                <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+                                                <button type="button" @click="open = false; openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')"
+                                                    class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
+                                                    <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
+                                                    <span>{{ __('sales.invoices.btn_delete') }}</span>
+                                                </button>
+                                                @endcan
+                                            @endif
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
                         </td>
@@ -342,34 +368,59 @@
                         @endif
                     </p>
                 </a>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
-                       class="h-8 px-2 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] flex items-center gap-1"
-                       title="{{ __('sales.invoices.btn_download_pdf') }}">
-                        <i data-lucide="printer" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                        <span>PDF</span>
-                    </a>
-                    @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create')))
-                        <a href="{{ route('invoices.edit', $inv->id) }}"
-                           class="h-8 px-2 rounded-[8px] text-[12px] font-medium text-black/70 dark:text-white/70 bg-black/[0.04] dark:bg-white/[0.06] flex items-center gap-1"
-                           title="{{ __('sales.invoices.btn_edit_invoice') }}">
-                            <i data-lucide="edit-3" class="w-3.5 h-3.5 text-black/50 dark:text-white/50"></i>
-                            <span>{{ __('common.edit') }}</span>
-                        </a>
-                    @endif
-                    <a href="{{ route('invoices.show', $inv->id) }}"
-                       class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center gap-0.5"
-                       title="{{ __('sales.invoices.btn_detail') }}">
-                        <span>{{ __('sales.invoices.btn_detail') }}</span>
-                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                    </a>
-                    @if($inv->status === 'draft' && \App\Support\Context::hasPermission('invoices.delete'))
-                        <button type="button" @click="openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')"
-                                class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 flex items-center justify-center"
-                                title="{{ __('sales.invoices.btn_delete') }}">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <div class="flex items-center gap-1 shrink-0">
+                    <div x-data="{ open: false }" class="relative inline-block text-left">
+                        <button type="button" 
+                                @click.stop="open = !open" 
+                                @click.outside="open = false"
+                                aria-label="{{ __('common.more_actions') }}"
+                                class="min-h-[44px] min-w-[44px] rounded-[10px] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 active:scale-[0.97] transition-colors cursor-pointer">
+                            <i data-lucide="more-horizontal" class="w-5 h-5"></i>
                         </button>
-                    @endif
+
+                        <div x-show="open"
+                             x-cloak
+                             x-transition:enter="transition ease-out duration-100"
+                             x-transition:enter-start="transform opacity-0 scale-95"
+                             x-transition:enter-end="transform opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="transform opacity-100 scale-100"
+                             x-transition:leave-end="transform opacity-0 scale-95"
+                             class="absolute right-0 mt-1.5 w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-30 text-left">
+                            @can('invoices.view')
+                            <a href="{{ route('invoices.pdf', $inv->id) }}" target="_blank"
+                               class="min-h-[44px] flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                <i data-lucide="printer" class="w-4 h-4 text-gray-400"></i>
+                                <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
+                            </a>
+                            @endcan
+                            @if(!in_array($inv->status, ['paid', 'void'], true) && (float) $inv->paid_amount <= 0)
+                                @can('invoices.edit')
+                                <a href="{{ route('invoices.edit', $inv->id) }}"
+                                   class="min-h-[44px] flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                                    <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
+                                    <span>{{ __('sales.invoices.btn_edit_invoice') }}</span>
+                                </a>
+                                @endcan
+                            @endif
+                            @if($inv->status === 'draft')
+                                @can('invoices.delete')
+                                <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+                                <button type="button" @click="open = false; openDelete('{{ route('invoices.destroy', $inv->id) }}', '{{ addslashes($inv->invoice_number) }}')"
+                                        class="w-full min-h-[44px] flex items-center gap-2.5 px-3.5 py-2.5 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
+                                    <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
+                                    <span>{{ __('sales.invoices.btn_delete') }}</span>
+                                </button>
+                                @endcan
+                            @endif
+                        </div>
+                    </div>
+
+                    <a href="{{ route('invoices.show', $inv->id) }}"
+                       class="min-h-[44px] min-w-[44px] rounded-[10px] text-black/40 hover:text-[#007AFF] dark:text-white/40 dark:hover:text-[#007AFF] flex items-center justify-center transition-colors"
+                       aria-label="{{ __('sales.invoices.btn_detail') }}">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </a>
                 </div>
             </div>
         @empty

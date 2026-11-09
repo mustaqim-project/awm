@@ -6,7 +6,7 @@ Orchestrate repairs, RBAC enforcement, production readiness audit, and documenta
 ## 🔒 My Identity
 - Archetype: sentinel
 - Working directory: C:\laragon\www\cooca_core\.agents\teamwork\sentinel
-- Orchestrator: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Orchestrator: 85fc67ed-7573-4e2d-b865-057e29ad32c7
 - Victory Auditor: to be spawned on victory claim
 
 ## 🔒 Key Constraints

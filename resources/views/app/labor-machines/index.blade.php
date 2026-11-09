@@ -115,11 +115,11 @@
                 <!-- Breadcrumb minimal -->
                 <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mb-1"
                     aria-label="Breadcrumb">
-                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors">{{ __('sales.invoices.breadcrumb_dashboard') }}</a>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <span class="text-black/70 dark:text-white/70 font-medium">Biaya Produksi</span>
+                    <span class="text-black/70 dark:text-white/70 font-medium">{{ __('labor_machines.biaya_produksi') }}</span>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-40"></i>
-                    <span class="text-black dark:text-white font-medium">Tenaga Kerja &amp; Mesin</span>
+                    <span class="text-black dark:text-white font-medium">{{ __('labor_machines.module_title') }}</span>
                 </nav>
                 <div class="flex items-center gap-3">
                     <div
@@ -127,26 +127,45 @@
                         <i data-lucide="cog" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">Tenaga Kerja &amp;
-                            Mesin</h1>
-                        <p class="text-[13px] text-black/50 dark:text-white/50">Konversi tarif upah ke tarif per jam efektif
-                            dan kalkulasi biaya mesin per jam operasi</p>
+                        <h1 class="text-[20px] font-semibold text-black dark:text-white tracking-tight">{{ __('labor_machines.module_title') }}</h1>
+                        <p class="text-[13px] text-black/50 dark:text-white/50">{{ __('labor_machines.module_subtitle') }}</p>
                     </div>
                 </div>
             </div>
 
             @can('labor_machines.manage')
-                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
-                    <button type="button" @click="showLaborModal = true"
-                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                        <i data-lucide="user-plus" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                        <span>Tambah Tarif Upah</span>
-                    </button>
-                    <button type="button" @click="showMachineModal = true"
-                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Tambah Mesin Baru</span>
-                    </button>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <!-- Context-aware primary action adapting to active section -->
+                    <template x-if="activeSection === 'labor'">
+                        <button type="button" @click="showLaborModal = true"
+                            class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i>
+                            <span>{{ __('labor_machines.tambah_tarif_upah') }}</span>
+                        </button>
+                    </template>
+
+                    <template x-if="activeSection === 'machines'">
+                        <button type="button" @click="showMachineModal = true"
+                            class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>{{ __('labor_machines.tambah_mesin_baru') }}</span>
+                        </button>
+                    </template>
+
+                    <template x-if="activeSection === 'all'">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <button type="button" @click="showLaborModal = true"
+                                class="min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                                <i data-lucide="user-plus" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                                <span>{{ __('labor_machines.tambah_tarif_upah') }}</span>
+                            </button>
+                            <button type="button" @click="showMachineModal = true"
+                                class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>{{ __('labor_machines.tambah_mesin_baru') }}</span>
+                            </button>
+                        </div>
+                    </template>
                 </div>
             @endcan
         </header>
@@ -165,8 +184,8 @@
                 </a>
 
                 @if (
-                    (\App\Support\Context::hasPermission('labor_machines.view') ||
-                        \App\Support\Context::hasPermission('labor_machines.manage')) &&
+                    (\Illuminate\Support\Facades\Gate::allows('labor_machines.view') ||
+                        \Illuminate\Support\Facades\Gate::allows('labor_machines.manage')) &&
                         (request()->routeIs('labor-machines.*') ||
                             (\App\Support\Context::business()?->isModuleEnabled(
                                 \App\Domain\Template\ModuleRegistry::MODULE_LABOR_MACHINES) ?? true)))
@@ -174,21 +193,21 @@
                         class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('labor-machines.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
                         <i data-lucide="cog"
                             class="w-4 h-4 {{ request()->routeIs('labor-machines.*') ? 'text-[#FF9500]' : 'text-black/40 dark:text-white/40' }}"></i>
-                        <span>Upah Kerja &amp; Mesin</span>
+                        <span>{{ __('labor_machines.tab_labor_machines') }}</span>
                         <span
                             class="px-1.5 py-0.2 rounded-full text-[11px] tabular-nums font-semibold {{ request()->routeIs('labor-machines.*') ? 'bg-[#FF9500]/12 text-[#FF9500]' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">{{ $totalLaborCount + $totalMachineCount }}</span>
                     </a>
                 @endif
 
                 @if (
-                    \App\Support\Context::hasPermission('costing.view_margin') ||
-                        \App\Support\Context::hasPermission('reports.costing') ||
-                        \App\Support\Context::hasPermission('costing.manage'))
+                    \Illuminate\Support\Facades\Gate::allows('costing.view_margin') ||
+                        \Illuminate\Support\Facades\Gate::allows('reports.costing') ||
+                        \Illuminate\Support\Facades\Gate::allows('costing.manage'))
                     <a href="{{ route('profitability.index') }}"
                         class="px-3.5 py-1.5 rounded-[10px] {{ request()->routeIs('profitability.*') ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }} flex items-center gap-2 transition-all">
                         <i data-lucide="trending-up"
                             class="w-4 h-4 {{ request()->routeIs('profitability.*') ? 'text-[#34C759]' : 'text-black/40 dark:text-white/40' }}"></i>
-                        <span>Analisis BEP &amp; Margin</span>
+                        <span>{{ __('labor_machines.tab_profitability') }}</span>
                     </a>
                 @endif
             </div>
@@ -227,7 +246,7 @@
             <!-- Tile 1: Total Tenaga Kerja -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Tenaga Kerja Terdaftar</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('labor_machines.kpi_total_labor') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-black dark:text-white">{{ $totalLaborCount }}</span>
@@ -238,7 +257,7 @@
             <!-- Tile 2: Rata-rata Upah Efektif per Jam (System Green) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Rata-rata Upah / Jam</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('labor_machines.kpi_avg_labor_rate') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span class="text-[22px] sm:text-[24px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158]">
                         {{ $business->currency_symbol }} {{ number_format((float) $avgLaborHourly, 0, ',', '.') }}
@@ -250,7 +269,7 @@
             <!-- Tile 3: Total Mesin & Alat Produksi (System Blue) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Mesin &amp; Peralatan</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('labor_machines.kpi_total_machines') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span
                         class="text-[24px] font-bold tabular-nums text-[#007AFF] dark:text-[#0A84FF]">{{ $totalMachineCount }}</span>
@@ -261,7 +280,7 @@
             <!-- Tile 4: Rata-rata Biaya Mesin per Jam (System Orange) -->
             <div
                 class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between">
-                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">Rata-rata Biaya Mesin / Jam</span>
+                <span class="text-[12px] font-medium text-black/50 dark:text-white/50">{{ __('labor_machines.kpi_avg_machine_rate') }}</span>
                 <div class="mt-2 flex items-baseline justify-between">
                     <span class="text-[22px] sm:text-[24px] font-bold tabular-nums text-[#FF9500] dark:text-[#FF9F0A]">
                         {{ $business->currency_symbol }} {{ number_format((float) $avgMachineHourly, 0, ',', '.') }}
@@ -300,7 +319,7 @@
                         'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                         'text-black/55 dark:text-white/55'"
                     class="px-3.5 py-1 rounded-[7px] transition-all flex items-center gap-1.5">
-                    <span>Tenaga Kerja</span>
+                    <span>{{ __('labor_machines.segment_labor') }}</span>
                     <span class="text-[11px] font-semibold opacity-70 tabular-nums">({{ $totalLaborCount }})</span>
                 </button>
                 <button type="button" @click="activeSection = 'machines'"
@@ -308,7 +327,7 @@
                         'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)]' :
                         'text-black/55 dark:text-white/55'"
                     class="px-3.5 py-1 rounded-[7px] transition-all flex items-center gap-1.5">
-                    <span>Mesin</span>
+                    <span>{{ __('labor_machines.segment_machines') }}</span>
                     <span class="text-[11px] font-semibold opacity-70 tabular-nums">({{ $totalMachineCount }})</span>
                 </button>
             </div>
@@ -329,19 +348,15 @@
                     </div>
                     <div>
                         <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">{{ __('labor_machines.tarif_tenaga_kerja_langsung_direct_labor') }}</h2>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Dikonversi otomatis ke jam produktif
-                            (Productive Hours Utilization %)</p>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('labor_machines.desc_labor_productive_hours') }}</p>
                     </div>
                 </div>
 
                 @can('labor_machines.manage')
                     <button type="button" @click="showLaborModal = true"
-                        class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        <span>Tambah Posisi</span>
+                        class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('labor_machines.tambah_posisi') }}</span>
                     </button>
                 @endcan
             </div>
@@ -355,22 +370,22 @@
                             <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">
-                                    Nama Posisi / Peran</th>
+                                    {{ __('labor_machines.col_position_role') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">
-                                    Basis Tarif</th>
+                                    {{ __('labor_machines.col_wage_basis') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Nominal Dasar</th>
+                                    {{ __('labor_machines.col_base_rate') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center whitespace-nowrap">
-                                    Utilisasi Jam</th>
+                                    {{ __('labor_machines.col_effectiveness_hours') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Setara per Jam</th>
+                                    {{ __('labor_machines.col_effective_hourly_rate') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                    Aksi</th>
+                                    {{ __('common.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -408,7 +423,7 @@
                                     </td>
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @can('labor_machines.manage')
-                                            <div class="flex items-center justify-end gap-1">
+                                            <div class="flex items-center justify-end gap-2">
                                                 <button type="button" title="{{ __('labor_machines.edit_tarif') }}" aria-label="{{ __('labor_machines.edit_tarif_2') }}"
                                                     @click="openEditLabor(@js([
     'id' => $lr->id,
@@ -420,12 +435,12 @@
     'utilization_rate' => $lr->utilization_rate,
     'is_subcontractor' => $lr->is_subcontractor,
 ]))"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                    class="min-h-[44px] min-w-[44px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
                                                 <button type="button" title="{{ __('labor_machines.hapus_tarif') }}" aria-label="{{ __('labor_machines.hapus_tarif_2') }}"
                                                     @click="openDelete('{{ route('labor-rates.destroy', $lr->id) }}', '{{ addslashes($lr->name) }}')"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                    class="min-h-[44px] min-w-[44px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
@@ -481,7 +496,7 @@
                             </p>
                         </div>
                         @can('labor_machines.manage')
-                            <div class="flex items-center gap-1.5 shrink-0">
+                            <div class="flex items-center gap-3 shrink-0">
                                 <button type="button" @click="openEditLabor(@js([
     'id' => $lr->id,
     'name' => $lr->name,
@@ -492,16 +507,16 @@
     'utilization_rate' => $lr->utilization_rate,
     'is_subcontractor' => $lr->is_subcontractor,
 ]))"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                                    {{ __('common.edit') }}
+                                    class="min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer"
+                                    aria-label="{{ __('common.edit') }}">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                    <span>{{ __('common.edit') }}</span>
                                 </button>
                                 <button type="button"
                                     @click="openDelete('{{ route('labor-rates.destroy', $lr->id) }}', '{{ addslashes($lr->name) }}')"
-                                    class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 flex items-center justify-center">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    class="min-h-[44px] min-w-[44px] rounded-[10px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer"
+                                    aria-label="{{ __('common.delete') }}">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         @endcan
@@ -528,21 +543,16 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">Mesin &amp;
-                            Peralatan Produksi</h2>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Kalkulasi depresiasi garis lurus, konsumsi
-                            listrik kWh, dan biaya perawatan per jam</p>
+                        <h2 class="text-[16px] font-semibold text-black dark:text-white tracking-tight">{{ __('labor_machines.sec_machines_title') }}</h2>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('labor_machines.desc_machines_calc') }}</p>
                     </div>
                 </div>
 
                 @can('labor_machines.manage')
                     <button type="button" @click="showMachineModal = true"
-                        class="h-8 px-3 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        <span>Tambah Mesin</span>
+                        class="min-h-[44px] px-3.5 rounded-[10px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('labor_machines.tambah_mesin') }}</span>
                     </button>
                 @endcan
             </div>
@@ -556,25 +566,25 @@
                             <tr class="border-b border-black/5 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 whitespace-nowrap">
-                                    Nama Mesin / Peralatan</th>
+                                    {{ __('labor_machines.col_machine_name') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Harga Beli</th>
+                                    {{ __('labor_machines.label_purchase_price') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-center whitespace-nowrap">
-                                    Umur Manfaat</th>
+                                    {{ __('labor_machines.col_useful_life') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Depresiasi / Jam</th>
+                                    {{ __('labor_machines.col_purchase_salvage') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Listrik &amp; Rawat</th>
+                                    {{ __('labor_machines.col_power_maintenance') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap">
-                                    Total Biaya / Jam</th>
+                                    {{ __('labor_machines.col_total_hourly_cost') }}</th>
                                 <th
                                     class="py-2.5 px-4 text-[11px] font-semibold uppercase tracking-wide text-black/40 dark:text-white/40 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
-                                    Aksi</th>
+                                    {{ __('common.actions') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
@@ -617,7 +627,7 @@
                                     </td>
                                     <td class="py-3 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         @can('labor_machines.manage')
-                                            <div class="flex items-center justify-end gap-1">
+                                            <div class="flex items-center justify-end gap-2">
                                                 <button type="button" title="{{ __('labor_machines.edit_mesin') }}" aria-label="{{ __('labor_machines.edit_mesin_2') }}"
                                                     @click="openEditMachine(@js([
     'id' => $m->id,
@@ -629,12 +639,12 @@
     'electricity_cost_per_kwh' => 1500,
     'maintenance_cost_per_hour' => $m->maintenance_cost_per_hour,
 ]))"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
+                                                    class="min-h-[44px] min-w-[44px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#007AFF] hover:bg-[#007AFF]/10 dark:hover:bg-[#007AFF]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="pencil" class="w-4 h-4"></i>
                                                 </button>
                                                 <button type="button" title="{{ __('labor_machines.hapus_mesin') }}" aria-label="{{ __('labor_machines.hapus_mesin_2') }}"
                                                     @click="openDelete('{{ route('machines.destroy', $m->id) }}', '{{ addslashes($m->name) }}')"
-                                                    class="w-8 h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
+                                                    class="min-h-[44px] min-w-[44px] sm:w-8 sm:h-8 rounded-[8px] flex items-center justify-center text-[#FF3B30] hover:bg-[#FF3B30]/10 dark:hover:bg-[#FF3B30]/20 transition-all cursor-pointer shrink-0">
                                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
                                                 </button>
                                             </div>
@@ -692,7 +702,7 @@
                             </p>
                         </div>
                         @can('labor_machines.manage')
-                            <div class="flex items-center gap-1.5 shrink-0">
+                            <div class="flex items-center gap-3 shrink-0">
                                 <button type="button" @click="openEditMachine(@js([
     'id' => $m->id,
     'name' => $m->name,
@@ -703,16 +713,16 @@
     'electricity_cost_per_kwh' => 1500,
     'maintenance_cost_per_hour' => $m->maintenance_cost_per_hour,
 ]))"
-                                    class="h-8 px-2.5 rounded-[8px] text-[12px] font-medium text-[#007AFF] bg-[#007AFF]/10 flex items-center">
-                                    {{ __('common.edit') }}
+                                    class="min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer"
+                                    aria-label="{{ __('common.edit') }}">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                    <span>{{ __('common.edit') }}</span>
                                 </button>
                                 <button type="button"
                                     @click="openDelete('{{ route('machines.destroy', $m->id) }}', '{{ addslashes($m->name) }}')"
-                                    class="h-8 w-8 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 flex items-center justify-center">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                    class="min-h-[44px] min-w-[44px] rounded-[10px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] transition-all flex items-center justify-center cursor-pointer"
+                                    aria-label="{{ __('common.delete') }}">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         @endcan
@@ -749,98 +759,137 @@
                         x-transition:leave="ease-in duration-200"
                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
+                        class="relative w-full max-w-4xl rounded-t-[20px] sm:rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
                         <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                            <h3 id="modal-labor-title" class="text-[17px] font-semibold text-black dark:text-white">Tambah
-                                Tarif Tenaga Kerja</h3>
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                            <div>
+                                <h3 id="modal-labor-title" class="text-[18px] font-semibold text-black dark:text-white">
+                                    {{ __('labor_machines.modal_add_labor_title') }}
+                                </h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                    {{ __('labor_machines.desc_labor_productive_hours') }}
+                                </p>
+                            </div>
                             <button type="button" @click="showLaborModal = false" aria-label="{{ __('common.close') }}"
-                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer shrink-0">
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
 
-                        <form method="POST" action="{{ route('labor-rates.store') }}" class="space-y-3.5 text-[13px]">
+                        <form method="POST" action="{{ route('labor-rates.store') }}" class="space-y-5 text-[13px]">
                             @csrf
 
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi
-                                    <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="name" required
-                                    placeholder="Contoh: Koki Masak / Barista / Operator"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif
-                                        <span class="text-[#FF3B30]">*</span></label>
-                                    <select name="basis" required
-                                        class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                                        <option value="hourly">Per Jam (Hourly)</option>
-                                        <option value="daily">Per Hari (Daily)</option>
-                                        <option value="monthly">Bulanan (Monthly)</option>
-                                        <option value="per_unit">Per Unit (Potong)</option>
-                                        <option value="per_task">Per Tugas (Task)</option>
-                                        <option value="per_project">Per Proyek</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah
-                                        (Rp) <span class="text-[#FF3B30]">*</span></label>
-                                    <input type="number" name="rate_amount" required min="1" step="1000"
-                                        placeholder="3500000"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                            </div>
-
-                            <!-- Parameters Box -->
-                            <div
-                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                                <span
-                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
-                                    Efektivitas Kerja</span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                    <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
-                                        <input type="number" name="working_days_per_month" value="22"
-                                            min="1" max="31"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                            {{-- 2-Column Bento Layout --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {{-- Bento Column 1: Posisi & Upah Dasar --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4">
+                                    <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                        <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                            {{ __('labor_machines.col_position_role') }} &amp; {{ __('labor_machines.col_base_rate') }}
+                                        </h4>
                                     </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
-                                        <input type="number" name="working_hours_per_day" value="8" min="1"
-                                            max="24"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_position_name') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="text" name="name" required
+                                            placeholder="{{ __('labor_machines.placeholder_position_name') }}"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
-                                    <div>
-                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi
-                                            %</label>
-                                        <input type="number" name="utilization_percentage" value="80"
-                                            min="10" max="100"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_rate_basis') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <select name="basis" required
+                                                class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                                <option value="hourly">Per Jam (Hourly)</option>
+                                                <option value="daily">Per Hari (Daily)</option>
+                                                <option value="monthly">Bulanan (Monthly)</option>
+                                                <option value="per_unit">Per Unit (Potong)</option>
+                                                <option value="per_task">Per Tugas (Task)</option>
+                                                <option value="per_project">Per Proyek</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_rate_amount') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <input type="number" name="rate_amount" required min="1" step="1000"
+                                                placeholder="3500000"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                    </div>
+
+                                    <div class="min-h-[44px] flex items-center gap-2.5 pt-2">
+                                        <input type="checkbox" name="is_subcontractor" id="subcontractor-new" value="1"
+                                            class="w-4 h-4 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                        <label for="subcontractor-new"
+                                            class="text-[13px] text-black/70 dark:text-white/70 cursor-pointer">
+                                            {{ __('labor_machines.label_subcontractor') }}
+                                        </label>
                                     </div>
                                 </div>
+
+                                {{-- Bento Column 2: Parameter Efektivitas Kerja --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4 flex flex-col justify-between">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                            <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
+                                            <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                {{ __('labor_machines.label_work_effectiveness') }}
+                                            </h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_days_per_month') }}
+                                                </label>
+                                                <input type="number" name="working_days_per_month" value="22"
+                                                    min="1" max="31"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_hours_per_day') }}
+                                                </label>
+                                                <input type="number" name="working_hours_per_day" value="8" min="1"
+                                                    max="24"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_utilization_rate') }}
+                                                </label>
+                                                <input type="number" name="utilization_percentage" value="80"
+                                                    min="10" max="100"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
+                                        <p class="font-medium text-black/75 dark:text-white/75 mb-0.5">ℹ️ Konversi Jam Produktif</p>
+                                        Nominal upah dikonversi otomatis ke tarif per jam efektif berdasarkan jam kerja riil dikalikan faktor utilisasi produktif.
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="flex items-center gap-2 pt-1">
-                                <input type="checkbox" name="is_subcontractor" id="subcontractor-new" value="1"
-                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                                <label for="subcontractor-new"
-                                    class="text-[13px] text-black/70 dark:text-white/70">Pekerja
-                                    Subkontraktor / Jasa Luar</label>
-                            </div>
-
-                            <div
-                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                            <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showLaborModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
+                                    class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('labor_machines.simpan_tarif') }}</button>
+                                    class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_2px_8px_rgba(0,122,255,0.3)] cursor-pointer">
+                                    {{ __('labor_machines.simpan_tarif') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -872,100 +921,140 @@
                         x-transition:leave="ease-in duration-200"
                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
+                        class="relative w-full max-w-4xl rounded-t-[20px] sm:rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
                         <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                            <h3 id="modal-edit-labor-title" class="text-[17px] font-semibold text-black dark:text-white">{{ __('labor_machines.edit_tarif_tenaga_kerja') }}</h3>
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                            <div>
+                                <h3 id="modal-edit-labor-title" class="text-[18px] font-semibold text-black dark:text-white">
+                                    {{ __('labor_machines.modal_edit_labor_title') }}
+                                </h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                    {{ __('labor_machines.desc_labor_productive_hours') }}
+                                </p>
+                            </div>
                             <button type="button" @click="showEditLaborModal = false"
                                 aria-label="{{ __('common.close') }}"
-                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer shrink-0">
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
 
-                        <form :action="'/labor-rates/' + editLabor.id" method="POST" class="space-y-3.5 text-[13px]">
+                        <form :action="'/labor-rates/' + editLabor.id" method="POST" class="space-y-5 text-[13px]">
                             @csrf
                             @method('PUT')
 
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Peran / Posisi
-                                    <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="name" x-model="editLabor.name" required
-                                    placeholder="{{ __('labor_machines.nama_posisi') }}"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Basis Tarif
-                                        <span class="text-[#FF3B30]">*</span></label>
-                                    <select name="basis" x-model="editLabor.basis" required
-                                        class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                                        <option value="hourly">Per Jam (Hourly)</option>
-                                        <option value="daily">Per Hari (Daily)</option>
-                                        <option value="monthly">Bulanan (Monthly)</option>
-                                        <option value="per_unit">Per Unit (Potong)</option>
-                                        <option value="per_task">Per Tugas (Task)</option>
-                                        <option value="per_project">Per Proyek</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nominal Upah
-                                        (Rp) <span class="text-[#FF3B30]">*</span></label>
-                                    <input type="number" name="rate_amount" x-model="editLabor.rate_amount" required
-                                        min="1" step="1000"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                            </div>
-
-                            <!-- Parameters Box -->
-                            <div
-                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                                <span
-                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Parameter
-                                    Efektivitas Kerja</span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                    <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Hari/Bulan</label>
-                                        <input type="number" name="working_days_per_month"
-                                            x-model="editLabor.working_days_per_month" min="1" max="31"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                            {{-- 2-Column Bento Layout --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {{-- Bento Column 1: Posisi & Upah Dasar --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4">
+                                    <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                        <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                            {{ __('labor_machines.col_position_role') }} &amp; {{ __('labor_machines.col_base_rate') }}
+                                        </h4>
                                     </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Jam/Hari</label>
-                                        <input type="number" name="working_hours_per_day"
-                                            x-model="editLabor.working_hours_per_day" min="1" max="24"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_position_name') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="text" name="name" x-model="editLabor.name" required
+                                            placeholder="{{ __('labor_machines.placeholder_position_name') }}"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
-                                    <div>
-                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Utilisasi
-                                            %</label>
-                                        <input type="number" name="utilization_percentage"
-                                            x-model="editLabor.utilization_percentage" min="10" max="100"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_rate_basis') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <select name="basis" x-model="editLabor.basis" required
+                                                class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                                <option value="hourly">Per Jam (Hourly)</option>
+                                                <option value="daily">Per Hari (Daily)</option>
+                                                <option value="monthly">Bulanan (Monthly)</option>
+                                                <option value="per_unit">Per Unit (Potong)</option>
+                                                <option value="per_task">Per Tugas (Task)</option>
+                                                <option value="per_project">Per Proyek</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_rate_amount') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <input type="number" name="rate_amount" x-model="editLabor.rate_amount" required
+                                                min="1" step="1000"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                    </div>
+
+                                    <div class="min-h-[44px] flex items-center gap-2.5 pt-2">
+                                        <input type="checkbox" name="is_subcontractor" id="subcontractor-edit" value="1"
+                                            x-model="editLabor.is_subcontractor"
+                                            class="w-4 h-4 rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                        <label for="subcontractor-edit"
+                                            class="text-[13px] text-black/70 dark:text-white/70 cursor-pointer">
+                                            {{ __('labor_machines.label_subcontractor') }}
+                                        </label>
                                     </div>
                                 </div>
+
+                                {{-- Bento Column 2: Parameter Efektivitas Kerja --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4 flex flex-col justify-between">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                            <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
+                                            <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                {{ __('labor_machines.label_work_effectiveness') }}
+                                            </h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_days_per_month') }}
+                                                </label>
+                                                <input type="number" name="working_days_per_month"
+                                                    x-model="editLabor.working_days_per_month" min="1" max="31"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_hours_per_day') }}
+                                                </label>
+                                                <input type="number" name="working_hours_per_day"
+                                                    x-model="editLabor.working_hours_per_day" min="1" max="24"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_utilization_rate') }}
+                                                </label>
+                                                <input type="number" name="utilization_percentage"
+                                                    x-model="editLabor.utilization_percentage" min="10" max="100"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
+                                        <p class="font-medium text-black/75 dark:text-white/75 mb-0.5">ℹ️ Konversi Jam Produktif</p>
+                                        Nominal upah dikonversi otomatis ke tarif per jam efektif berdasarkan jam kerja riil dikalikan faktor utilisasi produktif.
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="flex items-center gap-2 pt-1">
-                                <input type="checkbox" name="is_subcontractor" id="subcontractor-edit" value="1"
-                                    x-model="editLabor.is_subcontractor"
-                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
-                                <label for="subcontractor-edit"
-                                    class="text-[13px] text-black/70 dark:text-white/70">Pekerja
-                                    Subkontraktor / Jasa Luar</label>
-                            </div>
-
-                            <div
-                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                            <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showEditLaborModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
+                                    class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('common.save_changes') }}</button>
+                                    class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_2px_8px_rgba(0,122,255,0.3)] cursor-pointer">
+                                    {{ __('common.save_changes') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -997,94 +1086,129 @@
                         x-transition:leave="ease-in duration-200"
                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
+                        class="relative w-full max-w-4xl rounded-t-[20px] sm:rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
                         <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                            <h3 id="modal-machine-title" class="text-[17px] font-semibold text-black dark:text-white">
-                                Tambah Mesin &amp; Peralatan</h3>
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                            <div>
+                                <h3 id="modal-machine-title" class="text-[18px] font-semibold text-black dark:text-white">
+                                    {{ __('labor_machines.modal_add_machine_title') }}
+                                </h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                    {{ __('labor_machines.desc_machines_calc') }}
+                                </p>
+                            </div>
                             <button type="button" @click="showMachineModal = false"
                                 aria-label="{{ __('common.close') }}"
-                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer shrink-0">
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
 
-                        <form method="POST" action="{{ route('machines.store') }}" class="space-y-3.5 text-[13px]">
+                        <form method="POST" action="{{ route('machines.store') }}" class="space-y-5 text-[13px]">
                             @csrf
 
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin /
-                                    Peralatan <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="name" required
-                                    placeholder="Contoh: Mesin Espresso 2 Group / Oven Deck"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp)
-                                        <span class="text-[#FF3B30]">*</span></label>
-                                    <input type="number" name="purchase_price" required min="1" step="10000"
-                                        placeholder="45000000"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
-                                        (Sisa)</label>
-                                    <input type="number" name="salvage_value" min="0" step="10000"
-                                        placeholder="0" value="0"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur
-                                    Manfaat (Jam)
-                                    <span class="text-[#FF3B30]">*</span></label>
-                                <input type="number" name="useful_life_hours" required min="100"
-                                    placeholder="10000" value="10000"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <!-- Electric & Maintenance Parameters -->
-                            <div
-                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                                <span
-                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
-                                    Daya &amp; Pemeliharaan</span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                    <div>
-                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
-                                            (kW)</label>
-                                        <input type="number" name="power_kw" value="1.5" step="0.1"
-                                            min="0"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                            {{-- 2-Column Bento Layout --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {{-- Bento Column 1: Aset & Depresiasi --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4">
+                                    <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                        <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                            {{ __('labor_machines.col_machine_name') }} &amp; {{ __('labor_machines.col_purchase_salvage') }}
+                                        </h4>
                                     </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
-                                        <input type="number" name="electricity_cost_per_kwh" value="1500"
-                                            min="0"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_machine_name') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="text" name="name" required
+                                            placeholder="{{ __('labor_machines.placeholder_machine_name') }}"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_purchase_price') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <input type="number" name="purchase_price" required min="1" step="10000"
+                                                placeholder="45000000"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_salvage_value') }}
+                                            </label>
+                                            <input type="number" name="salvage_value" min="0" step="10000"
+                                                placeholder="0" value="0"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                    </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
-                                        <input type="number" name="maintenance_cost_per_hour" value="0"
-                                            min="0" step="500"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_useful_life') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="number" name="useful_life_hours" required min="100"
+                                            placeholder="10000" value="10000"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
                                 </div>
+
+                                {{-- Bento Column 2: Konsumsi Daya & Biaya Operasional --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4 flex flex-col justify-between">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                            <span class="w-2 h-2 rounded-full bg-[#FF9500]"></span>
+                                            <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                {{ __('labor_machines.label_power_and_maintenance') }}
+                                            </h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_power_kw') }}
+                                                </label>
+                                                <input type="number" name="power_kw" value="1.5" step="0.1" min="0"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_electricity_cost') }}
+                                                </label>
+                                                <input type="number" name="electricity_cost_per_kwh" value="1500" min="0"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_maintenance_cost') }}
+                                                </label>
+                                                <input type="number" name="maintenance_cost_per_hour" value="0" min="0" step="500"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
+                                        <p class="font-medium text-black/75 dark:text-white/75 mb-0.5">ℹ️ Rumus Biaya Jam Operasi</p>
+                                        Total Biaya/Jam = ((Harga Beli - Nilai Residu) / Jam Manfaat) + (Daya kW × Tarif Listrik/kWh) + Biaya Perawatan/Jam.
+                                    </div>
+                                </div>
                             </div>
 
-                            <div
-                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                            <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showMachineModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
+                                    class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('labor_machines.simpan_mesin') }}</button>
+                                    class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_2px_8px_rgba(0,122,255,0.3)] cursor-pointer">
+                                    {{ __('labor_machines.simpan_mesin') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -1116,95 +1240,133 @@
                         x-transition:leave="ease-in duration-200"
                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        class="relative w-full sm:max-w-md rounded-t-[20px] sm:rounded-[16px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
+                        class="relative w-full max-w-4xl rounded-t-[20px] sm:rounded-[20px] bg-white/95 dark:bg-[#2C2C2E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 p-5 sm:p-7 space-y-5 shadow-[0_20px_50px_rgba(0,0,0,0.25)] max-h-[90vh] overflow-y-auto">
 
                         <div class="sm:hidden w-10 h-1 rounded-full bg-black/20 dark:bg-white/20 mx-auto mb-2"></div>
 
-                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
-                            <h3 id="modal-edit-machine-title"
-                                class="text-[17px] font-semibold text-black dark:text-white">{{ __('labor_machines.edit_mesin_peralatan') }}</h3>
+                        <div class="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4">
+                            <div>
+                                <h3 id="modal-edit-machine-title" class="text-[18px] font-semibold text-black dark:text-white">
+                                    {{ __('labor_machines.modal_edit_machine_title') }}
+                                </h3>
+                                <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                    {{ __('labor_machines.desc_machines_calc') }}
+                                </p>
+                            </div>
                             <button type="button" @click="showEditMachineModal = false"
                                 aria-label="{{ __('common.close') }}"
-                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer">
+                                class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer shrink-0">
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
 
-                        <form :action="'/machines/' + editMachine.id" method="POST" class="space-y-3.5 text-[13px]">
+                        <form :action="'/machines/' + editMachine.id" method="POST" class="space-y-5 text-[13px]">
                             @csrf
                             @method('PUT')
 
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nama Mesin /
-                                    Peralatan <span class="text-[#FF3B30]">*</span></label>
-                                <input type="text" name="name" x-model="editMachine.name" required
-                                    placeholder="{{ __('labor_machines.nama_mesin') }}"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Harga Beli (Rp)
-                                        <span class="text-[#FF3B30]">*</span></label>
-                                    <input type="number" name="purchase_price" x-model="editMachine.purchase_price"
-                                        required min="1" step="10000"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                                <div>
-                                    <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Nilai Residu
-                                        (Sisa)</label>
-                                    <input type="number" name="salvage_value" x-model="editMachine.salvage_value"
-                                        min="0" step="10000"
-                                        class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block font-medium text-black/70 dark:text-white/70 mb-1">Estimasi Umur
-                                    Manfaat (Jam)
-                                    <span class="text-[#FF3B30]">*</span></label>
-                                <input type="number" name="useful_life_hours" x-model="editMachine.useful_life_hours"
-                                    required min="100"
-                                    class="w-full h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
-                            </div>
-
-                            <!-- Electric & Maintenance Parameters -->
-                            <div
-                                class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 space-y-2">
-                                <span
-                                    class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wide">Konsumsi
-                                    Daya &amp; Pemeliharaan</span>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                    <div>
-                                        <label class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Daya
-                                            (kW)</label>
-                                        <input type="number" name="power_kw" x-model="editMachine.power_kw"
-                                            step="0.1" min="0"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                            {{-- 2-Column Bento Layout --}}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                {{-- Bento Column 1: Aset & Depresiasi --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4">
+                                    <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                        <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                                        <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                            {{ __('labor_machines.col_machine_name') }} &amp; {{ __('labor_machines.col_purchase_salvage') }}
+                                        </h4>
                                     </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Listrik/kWh</label>
-                                        <input type="number" name="electricity_cost_per_kwh"
-                                            x-model="editMachine.electricity_cost_per_kwh" min="0"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_machine_name') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="text" name="name" x-model="editMachine.name" required
+                                            placeholder="{{ __('labor_machines.placeholder_machine_name') }}"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_purchase_price') }} <span class="text-[#FF3B30]">*</span>
+                                            </label>
+                                            <input type="number" name="purchase_price" x-model="editMachine.purchase_price"
+                                                required min="1" step="10000"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                        <div>
+                                            <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                                {{ __('labor_machines.label_salvage_value') }}
+                                            </label>
+                                            <input type="number" name="salvage_value" x-model="editMachine.salvage_value"
+                                                min="0" step="10000"
+                                                class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
+                                        </div>
+                                    </div>
+
                                     <div>
-                                        <label
-                                            class="block text-[11px] text-black/60 dark:text-white/60 mb-1">Rawat/Jam</label>
-                                        <input type="number" name="maintenance_cost_per_hour"
-                                            x-model="editMachine.maintenance_cost_per_hour" min="0" step="500"
-                                            class="w-full h-9 px-2.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
+                                            {{ __('labor_machines.label_useful_life') }} <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="number" name="useful_life_hours" x-model="editMachine.useful_life_hours"
+                                            required min="100"
+                                            class="w-full min-h-[44px] h-11 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white tabular-nums focus:ring-2 focus:ring-[#007AFF]/50">
                                     </div>
                                 </div>
+
+                                {{-- Bento Column 2: Konsumsi Daya & Biaya Operasional --}}
+                                <div class="rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 p-4 sm:p-5 space-y-4 flex flex-col justify-between">
+                                    <div class="space-y-4">
+                                        <div class="flex items-center gap-2 border-b border-black/5 dark:border-white/5 pb-2.5">
+                                            <span class="w-2 h-2 rounded-full bg-[#FF9500]"></span>
+                                            <h4 class="text-[12px] font-semibold uppercase tracking-wider text-black/60 dark:text-white/60">
+                                                {{ __('labor_machines.label_power_and_maintenance') }}
+                                            </h4>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_power_kw') }}
+                                                </label>
+                                                <input type="number" name="power_kw" x-model="editMachine.power_kw"
+                                                    step="0.1" min="0"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_electricity_cost') }}
+                                                </label>
+                                                <input type="number" name="electricity_cost_per_kwh"
+                                                    x-model="editMachine.electricity_cost_per_kwh" min="0"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1.5">
+                                                    {{ __('labor_machines.label_maintenance_cost') }}
+                                                </label>
+                                                <input type="number" name="maintenance_cost_per_hour"
+                                                    x-model="editMachine.maintenance_cost_per_hour" min="0" step="500"
+                                                    class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[8px] text-black dark:text-white tabular-nums text-center focus:ring-2 focus:ring-[#007AFF]/50">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="rounded-[12px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-3 text-[12px] text-black/55 dark:text-white/55 leading-relaxed">
+                                        <p class="font-medium text-black/75 dark:text-white/75 mb-0.5">ℹ️ Rumus Biaya Jam Operasi</p>
+                                        Total Biaya/Jam = ((Harga Beli - Nilai Residu) / Jam Manfaat) + (Daya kW × Tarif Listrik/kWh) + Biaya Perawatan/Jam.
+                                    </div>
+                                </div>
                             </div>
 
-                            <div
-                                class="flex items-center justify-end gap-2 pt-3 border-t border-black/10 dark:border-white/10">
+                            <div class="flex items-center justify-end gap-3 pt-4 border-t border-black/10 dark:border-white/10">
                                 <button type="button" @click="showEditMachineModal = false"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] active:scale-[0.97] transition">{{ __('common.cancel') }}</button>
+                                    class="min-h-[44px] px-5 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
                                 <button type="submit"
-                                    class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition shadow-[0_1px_2px_rgba(0,122,255,0.25)]">{{ __('common.save_changes') }}</button>
+                                    class="min-h-[44px] px-6 rounded-[12px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition shadow-[0_2px_8px_rgba(0,122,255,0.3)] cursor-pointer">
+                                    {{ __('common.save_changes') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -1238,11 +1400,13 @@
 
                         <div class="px-5 pt-6 pb-5">
                             <p id="modal-delete-labor-machine-title"
-                                class="text-[17px] font-semibold text-black dark:text-white">Hapus Data?</p>
+                                class="text-[17px] font-semibold text-black dark:text-white">
+                                {{ __('labor_machines.modal_delete_title') }}
+                            </p>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1.5 leading-snug">
                                 <span x-text="deleteTarget.name" class="font-medium text-black dark:text-white"></span>
-                                akan
-                                dihapus dari sistem biaya. Tindakan ini tidak dapat dipulihkan.
+                                {{ __('labor_machines.modal_delete_desc') }}
+                                <span class="block text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('labor_machines.modal_delete_warning') }}</span>
                             </p>
                         </div>
 

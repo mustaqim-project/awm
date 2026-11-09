@@ -197,13 +197,15 @@
 
             <!-- Toolbar Actions -->
             <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <a href="{{ route('invoices.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
+                <a href="{{ route('invoices.index') }}" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
                     {{ __('sales.invoices.btn_cancel') }}
                 </a>
-                <button type="submit" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]">
-                    <i data-lucide="send" class="w-4 h-4"></i>
+                @can('invoices.create')
+                <button type="submit" class="min-h-[44px] px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
+                    <i data-lucide="check" class="w-4 h-4"></i>
                     <span>{{ __('sales.invoices.btn_save_invoice') }}</span>
                 </button>
+                @endcan
             </div>
         </header>
 
@@ -323,7 +325,7 @@
                     <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('sales.invoices.sec_items_desc') }}</p>
                 </div>
 
-                <button type="button" @click="addItem()" class="h-8 px-3 rounded-[8px] text-[12px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5">
+                <button type="button" @click="addItem()" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center gap-1.5 cursor-pointer">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -351,14 +353,14 @@
                                     <td class="block sm:table-cell py-0 sm:py-2.5 px-0 sm:px-3">
                                         <div class="flex sm:hidden items-center justify-between mb-2">
                                             <span class="text-[11px] font-bold uppercase tracking-wider text-black/50 dark:text-white/50" x-text="'Item #' + (index + 1)"></span>
-                                            <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="h-6 px-2 rounded-[5px] text-[#FF3B30] bg-[#FF3B30]/10 text-[11px] font-medium disabled:opacity-30 flex items-center gap-1">
-                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                                            <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="min-h-[44px] px-3 rounded-[8px] text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 text-[12px] font-medium disabled:opacity-30 flex items-center gap-1.5 cursor-pointer">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                                                 <span>{{ __('sales.invoices.btn_delete') }}</span>
                                             </button>
                                         </div>
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.select_product_label') }}</span>
                                         <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)" 
-                                                class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                             <option value="">{{ __('sales.invoices.product_select_placeholder') }}</option>
                                             <template x-for="prod in products" :key="prod.id">
                                                 <option :value="prod.id" x-text="(prod.type === 'service' ? '[Jasa] ' : '') + prod.name + (prod.selling_price > 0 ? ' (Rp ' + new Intl.NumberFormat('id-ID').format(prod.selling_price) + ')' : '')"></option>
@@ -372,12 +374,12 @@
                                             </template>
                                         </div>
                                         <input type="text" :name="'items[' + index + '][item_name]'" x-model="item.item_name" required placeholder="{{ __('sales.invoices.item_name_placeholder') }}"
-                                            class="w-full h-7 bg-transparent border-b border-black/10 dark:border-white/10 px-1 text-[12px] text-black dark:text-white mt-1.5 placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-[#007AFF] transition">
+                                            class="w-full min-h-[40px] sm:min-h-0 sm:h-7 bg-transparent border-b border-black/10 dark:border-white/10 px-1 text-[12px] text-black dark:text-white mt-1.5 placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:border-[#007AFF] transition">
                                         <input type="hidden" :name="'items[' + index + '][sku]'" x-model="item.sku">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-24 py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.col_unit') }}</span>
-                                        <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
                                             </template>
@@ -386,17 +388,17 @@
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-20 ml-[4%] sm:ml-0 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">{{ __('sales.invoices.col_qty') }}</span>
                                         <input type="number" step="any" min="0.0001" :name="'items[' + index + '][quantity]'" x-model="item.quantity" required
-                                            class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-32 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">{{ __('sales.invoices.col_selling_price') }}</span>
                                         <input type="number" step="any" min="0" :name="'items[' + index + '][unit_price]'" x-model="item.unit_price" required
-                                            class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-28 ml-[4%] sm:ml-0 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-[#FF9500] dark:text-[#FF9F0A] mb-1 text-left">{{ __('sales.invoices.col_hpp') }}</span>
                                         <input type="number" step="any" min="0" :name="'items[' + index + '][unit_hpp]'" x-model="item.unit_hpp" title="{{ __('sales.invoices.col_hpp') }}"
-                                            class="w-full h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-[#FF9500] dark:text-[#FF9F0A] focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 transition">
+                                            class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-left sm:text-right tabular-nums text-[#FF9500] dark:text-[#FF9F0A] focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 transition">
                                     </td>
                                     <td class="block sm:table-cell py-1.5 sm:py-2.5 px-0 sm:px-3 text-right tabular-nums font-semibold text-black dark:text-white text-[13px] border-t sm:border-0 border-black/[0.04] dark:border-white/[0.06]">
                                         <div class="flex sm:block items-center justify-between">
@@ -404,8 +406,8 @@
                                             <span class="text-[14px] sm:text-[13px] text-[#007AFF] sm:text-black dark:sm:text-white font-bold sm:font-semibold" x-text="formatCurrency(item.quantity * item.unit_price)"></span>
                                         </div>
                                     </td>
-                                    <td class="hidden sm:table-cell py-2.5 px-2 w-8 text-center">
-                                        <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="p-1 rounded-[6px] text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors">
+                                    <td class="hidden sm:table-cell py-2.5 px-2 w-10 text-center">
+                                        <button type="button" @click="removeItem(index)" :disabled="items.length <= 1" class="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-[8px] text-black/40 hover:text-[#FF3B30] dark:text-white/40 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer" aria-label="{{ __('sales.invoices.btn_delete') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
@@ -481,17 +483,15 @@
 
         <!-- Sticky/Bottom Form Actions -->
         <div class="flex items-center justify-end gap-2 pt-2">
-            <a href="{{ route('invoices.index') }}" class="min-h-[44px] h-11 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
+            <a href="{{ route('invoices.index') }}" class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 active:scale-[0.97] transition-all flex items-center justify-center">
                 {{ __('sales.invoices.btn_cancel') }}
             </a>
-            @if(\App\Support\Context::hasPermission('invoices.create'))
-            <button type="submit" class="min-h-[44px] h-11 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
+            @can('invoices.create')
+            <button type="submit" class="min-h-[44px] px-5 rounded-[10px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 border border-[#007AFF]/20 active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
+                <i data-lucide="check" class="w-4 h-4"></i>
                 <span>{{ __('sales.invoices.btn_save_invoice') }}</span>
             </button>
-            @endif
+            @endcan
         </div>
     </form>
 </div>

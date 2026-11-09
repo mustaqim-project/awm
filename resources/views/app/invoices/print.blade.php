@@ -117,11 +117,11 @@
             </div>
             <div class="flex items-center gap-2">
                 <button onclick="window.history.back()"
-                    class="h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all cursor-pointer">
+                    class="min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all cursor-pointer">
                     {{ __('sales.invoices.btn_back') }}
                 </button>
                 <button onclick="window.print()"
-                    class="h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] flex items-center gap-1.5 transition-all cursor-pointer">
+                    class="min-h-[44px] px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] flex items-center gap-1.5 transition-all cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-black/60 dark:text-white/60"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -132,7 +132,7 @@
                     <span>{{ __('sales.invoices.print_btn_printer') }}</span>
                 </button>
                 <a id="btnDownloadPdf" href="{{ route('invoices.pdf', $invoice->id) }}" target="_blank"
-                    class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer">
+                    class="min-h-[44px] px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-[0_1px_2px_rgba(0,122,255,0.25)] flex items-center gap-1.5 active:scale-[0.97] transition-all cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -471,8 +471,8 @@
                 });
             } else {
                 element.style.padding = prevPadding;
-        function downloadPDF() {
-            window.location.href = "{{ route('invoices.pdf', $invoice->id) }}";
+                window.location.href = "{{ route('invoices.pdf', $invoice->id) }}";
+            }
         }
 
         window.addEventListener('load', () => {

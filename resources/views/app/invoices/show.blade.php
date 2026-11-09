@@ -54,13 +54,13 @@
     }
     $statusStyle = $statusBadges[$currentStatus] ?? $statusBadges['draft'];
 
-    $canEdit = !in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\App\Support\Context::hasPermission('invoices.edit') || \App\Support\Context::hasPermission('invoices.create'));
-    $canRelease = $invoice->status === 'draft' && (\App\Support\Context::hasPermission('invoices.create') || \App\Support\Context::hasPermission('invoices.edit'));
-    $canRecordPayment = $invoice->balance_due > 0 && $invoice->status !== 'void' && $invoice->status !== 'draft' && \App\Support\Context::hasPermission('invoices.record_payment');
-    $canRemind = $invoice->balance_due > 0 && !in_array($invoice->status, ['void', 'draft']) && \App\Support\Context::hasPermission('invoices.view');
-    $canExport = \App\Support\Context::hasPermission('invoices.export') || \App\Support\Context::hasPermission('invoices.view');
-    $canVoid = !in_array($invoice->status, ['draft', 'void']) && $invoice->paid_amount == 0 && (\App\Support\Context::hasPermission('invoices.delete') || \App\Support\Context::hasPermission('invoices.edit'));
-    $canDeleteDraft = $invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \App\Support\Context::hasPermission('invoices.delete');
+    $canEdit = !in_array($invoice->status, ['paid', 'void'], true) && (float) $invoice->paid_amount <= 0 && (\Illuminate\Support\Facades\Gate::allows('invoices.edit') || \Illuminate\Support\Facades\Gate::allows('invoices.create'));
+    $canRelease = $invoice->status === 'draft' && (\Illuminate\Support\Facades\Gate::allows('invoices.create') || \Illuminate\Support\Facades\Gate::allows('invoices.edit'));
+    $canRecordPayment = $invoice->balance_due > 0 && $invoice->status !== 'void' && $invoice->status !== 'draft' && \Illuminate\Support\Facades\Gate::allows('invoices.record_payment');
+    $canRemind = $invoice->balance_due > 0 && !in_array($invoice->status, ['void', 'draft']) && \Illuminate\Support\Facades\Gate::allows('invoices.view');
+    $canExport = \Illuminate\Support\Facades\Gate::allows('invoices.export') || \Illuminate\Support\Facades\Gate::allows('invoices.view');
+    $canVoid = !in_array($invoice->status, ['draft', 'void']) && $invoice->paid_amount == 0 && (\Illuminate\Support\Facades\Gate::allows('invoices.delete') || \Illuminate\Support\Facades\Gate::allows('invoices.edit'));
+    $canDeleteDraft = $invoice->status === 'draft' && (float) $invoice->paid_amount <= 0 && \Illuminate\Support\Facades\Gate::allows('invoices.delete');
 @endphp
 
 @section('content')
@@ -132,17 +132,21 @@
 
             {{-- Secondary Action: WhatsApp Cepat (jika ada session wa_url) --}}
             @if(session('wa_url'))
+            @can('invoices.view')
             <a href="{{ session('wa_url') }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#25D366] bg-[#25D366]/10 hover:bg-[#25D366]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shrink-0">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                 <span>{{ __('sales.invoices.btn_open_wa') }}</span>
             </a>
+            @endcan
             @endif
 
-            {{-- Secondary Action: Cetak A4 / PDF Cepat --}}
-            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shrink-0">
+            {{-- Secondary Action: Cetak A4 / PDF Cepat (Desktop only to prevent mobile header crowding) --}}
+            @can('invoices.view')
+            <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="hidden sm:inline-flex min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.98] transition-all items-center justify-center gap-1.5 shrink-0">
                 <i data-lucide="printer" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
                 <span class="hidden md:inline">{{ __('sales.invoices.btn_print_a4') }}</span>
             </a>
+            @endcan
 
             {{-- Overflow Menu (Apple HIG "⋯" Actions) --}}
             <div class="relative" x-data="{ open: false }" @click.away="open = false" @keydown.escape.window="open = false">
@@ -180,18 +184,20 @@
                     @endif
 
                     {{-- Unduh PDF --}}
-                    @if($canExport)
+                    @can('invoices.view')
                     <a href="{{ route('invoices.pdf', $invoice->id) }}" target="_blank" class="flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition">
                         <i data-lucide="download" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
                         <span>{{ __('sales.invoices.btn_download_pdf') }}</span>
                     </a>
-                    @endif
+                    @endcan
 
                     {{-- Cetak A4 --}}
+                    @can('invoices.view')
                     <a href="{{ route('invoices.print', $invoice->id) }}" target="_blank" class="flex items-center gap-2.5 px-3.5 py-2 text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/10 transition">
                         <i data-lucide="printer" class="w-4 h-4 text-black/50 dark:text-white/50"></i>
                         <span>{{ __('sales.invoices.btn_print_a4') }}</span>
                     </a>
+                    @endcan
 
                     {{-- Destructive Options --}}
                     @if($canVoid || $canDeleteDraft)
@@ -505,7 +511,7 @@
     <!-- ===================================================== -->
     <!-- 3. APPLE SHEET: CATAT PEMBAYARAN MODAL                -->
     <!-- ===================================================== -->
-    @if(\App\Support\Context::hasPermission('invoices.record_payment'))
+    @can('invoices.record_payment')
     <template x-teleport="body">
         <div x-show="showPaymentModal"
             x-cloak
@@ -609,7 +615,7 @@
             </div>
         </div>
     </template>
-    @endif
+    @endcan
 
     <!-- ===================================================== -->
     <!-- 4. APPLE ALERT DIALOG: KONFIRMASI RILIS FAKTUR         -->

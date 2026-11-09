@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-09T06:39:00Z
+# BRIEFING — 2026-11-09T06:47:30Z
 
 ## Mission
 Empirically stress-test and challenge the Controller-Level RBAC and Clean Routing implementation for Invoices and Labor-Machines modules.
@@ -18,7 +18,7 @@ Empirically stress-test and challenge the Controller-Level RBAC and Clean Routin
 
 ## Current Parent
 - Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-09T06:39:00Z
+- Updated: 2026-11-09T06:47:30Z
 
 ## Review Scope
 - **Files to review**:
@@ -33,17 +33,19 @@ Empirically stress-test and challenge the Controller-Level RBAC and Clean Routin
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - `LaborMachineWebController::middleware()` contract conformance.
-  - Route resolution and naming integrity for all 7 labor-machines routes and 14 invoices routes.
-  - Unauthorized access: users lacking `labor_machines.view` or `labor_machines.manage` receive 403 Forbidden.
-  - IDOR & Tenant Isolation: mutations on records owned by Business A by an authenticated user of Business B fail with 403 Forbidden.
-  - AuditLog dispatching: all mutations generate auditable log entries.
-  - Invoice clean routing: controller middleware functions correctly without redundant route-level definitions.
-- **Vulnerabilities found**: TBD during test execution.
-- **Untested angles**: UI aesthetics & layout (scoped to M2).
+  1. `LaborMachineWebController::middleware()` conformance to `HasMiddleware` contract: Verified 100%. Returns `require.permission:labor_machines.view` for `index` and `require.permission:labor_machines.manage` for all 6 mutation actions.
+  2. Route resolution & naming integrity: 7 labor-machines routes and 14 invoices routes verified 100% intact and resolving to correct controller actions and HTTP methods.
+  3. RBAC Enforcement: Unauthorized users lacking `labor_machines.view` or `labor_machines.manage` receive 403 Forbidden on JSON/API requests and are safely redirected on web browser requests.
+  4. IDOR Defense (Cross-Tenant Isolation): Calling mutation methods across tenant boundaries triggers explicit 403 Forbidden at the controller layer and 404/403 at the HTTP model binding layer; database confirms zero unauthorized record modifications or deletions.
+  5. AuditLog Dispatching: Verified that `labor_rates.created`, `labor_rates.updated`, `labor_rates.deleted`, `machines.created`, `machines.updated`, `machines.deleted` are correctly logged with user and tenant attribution.
+  6. Invoices Clean Routing: Clean routing in `routes/owner.php` without redundant route-level middleware functions properly via `InvoiceWebController::middleware()`.
+- **Vulnerabilities found**: None. Multi-layered defense-in-depth is solid.
+- **Untested angles**: UI ergonomics and Blade presentation (scoped to Milestone M2).
 
 ## Key Decisions Made
-- Designing dedicated comprehensive test suite `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php`.
+- Authored and committed persistent, robust feature test suite: `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php` (9 test methods, 134 assertions).
+- Ran regression suite (`InvoiceModuleAuditTest`, `InvoiceDraftEditAndPartiesTest`, `LaborAndMachineEngineTest`), passing 100% (26 tests, 205 assertions across 4 test suites).
+- Verdict: **APPROVE**.
 
 ## Artifact Index
 - `progress.md` — Liveness and progress heartbeat

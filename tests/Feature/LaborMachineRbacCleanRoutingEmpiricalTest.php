@@ -13,16 +13,20 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\LaborRate;
 use App\Models\Machine;
+use App\Models\Permission;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\Unit;
 use App\Models\User;
 use App\Support\Context;
 use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tests\TestCase;
 
 final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
@@ -33,7 +37,7 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
     private Business $businessB;
     private User $ownerA;
     private User $managerA;
-    private User $viewerA;
+    private User $laborViewerA;
     private User $unauthorizedA;
     private User $ownerB;
 
@@ -81,16 +85,26 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
             'ends_at' => now()->addMonth(),
         ]);
 
-        // 4. Create Users for Business A
+        // 4. Create custom role for Business A that ONLY has labor_machines.view (read-only)
+        $laborViewerRole = Role::create([
+            'business_id' => $this->businessA->id,
+            'slug' => 'labor_viewer',
+            'name' => 'Labor Viewer',
+            'description' => 'Can only view labor and machines',
+        ]);
+        $viewPerm = Permission::where('slug', 'labor_machines.view')->firstOrFail();
+        $laborViewerRole->permissions()->attach($viewPerm->id, ['id' => (string) Str::uuid()]);
+
+        // 5. Create Users for Business A
         $this->ownerA = $this->createUserForBusiness($this->businessA, 'owner', 'ownerA@example.com');
         $this->managerA = $this->createUserForBusiness($this->businessA, 'manager', 'managerA@example.com');
-        $this->viewerA = $this->createUserForBusiness($this->businessA, 'viewer', 'viewerA@example.com');
+        $this->laborViewerA = $this->createUserForBusiness($this->businessA, 'labor_viewer', 'viewerA@example.com');
         $this->unauthorizedA = $this->createUserForBusiness($this->businessA, 'warehouse', 'warehouseA@example.com');
 
-        // 5. Create Owner for Business B
+        // 6. Create Owner for Business B
         $this->ownerB = $this->createUserForBusiness($this->businessB, 'owner', 'ownerB@example.com');
 
-        // 6. Create Seed Data for Business A
+        // 7. Create Seed Data for Business A
         $this->laborRateA = LaborRate::create([
             'business_id' => $this->businessA->id,
             'name' => 'Operator CNC Khusus A',
@@ -239,11 +253,18 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
 
     public function test_unauthorized_user_lacking_labor_machines_view_cannot_access_index(): void
     {
-        $response = $this->actingAs($this->unauthorizedA)
+        // JSON request returns 403 Forbidden
+        $resJson = $this->actingAs($this->unauthorizedA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->getJson(route('labor-machines.index'));
+        $resJson->assertStatus(403);
+        $resJson->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
+
+        // Web browser request redirects to portal
+        $resWeb = $this->actingAs($this->unauthorizedA)
             ->withSession(['active_business_id' => $this->businessA->id])
             ->get(route('labor-machines.index'));
-
-        $response->assertStatus(403);
+        $resWeb->assertRedirect(route('portal'));
     }
 
     public function test_user_with_labor_machines_view_can_access_index_and_data_is_tenant_scoped(): void
@@ -260,7 +281,7 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
             'is_subcontractor' => false,
         ]);
 
-        $response = $this->actingAs($this->viewerA)
+        $response = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
             ->get(route('labor-machines.index'));
 
@@ -272,56 +293,62 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
     public function test_user_lacking_labor_machines_manage_cannot_execute_mutations(): void
     {
         // 1. storeLabor
-        $resStoreLabor = $this->actingAs($this->viewerA)
+        $resStoreLabor = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->post(route('labor-rates.store'), [
+            ->postJson(route('labor-rates.store'), [
                 'name' => 'Tukang Las Listrik',
                 'basis' => 'daily',
                 'rate_amount' => 150000,
             ]);
         $resStoreLabor->assertStatus(403);
+        $resStoreLabor->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
 
         // 2. updateLabor
-        $resUpdateLabor = $this->actingAs($this->viewerA)
+        $resUpdateLabor = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->put(route('labor-rates.update', $this->laborRateA), [
+            ->putJson(route('labor-rates.update', $this->laborRateA), [
                 'name' => 'Operator CNC Diubah Tanpa Izin',
                 'basis' => 'hourly',
                 'rate_amount' => 50000,
             ]);
         $resUpdateLabor->assertStatus(403);
+        $resUpdateLabor->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
 
         // 3. destroyLabor
-        $resDestroyLabor = $this->actingAs($this->viewerA)
+        $resDestroyLabor = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->delete(route('labor-rates.destroy', $this->laborRateA));
+            ->deleteJson(route('labor-rates.destroy', $this->laborRateA));
         $resDestroyLabor->assertStatus(403);
+        $resDestroyLabor->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
 
         // 4. storeMachine
-        $resStoreMachine = $this->actingAs($this->viewerA)
+        $resStoreMachine = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->post(route('machines.store'), [
+            ->postJson(route('machines.store'), [
                 'name' => 'Mesin Press Otomatis',
                 'purchase_price' => 50000000,
                 'useful_life_hours' => 10000,
             ]);
         $resStoreMachine->assertStatus(403);
+        $resStoreMachine->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
 
         // 5. updateMachine
-        $resUpdateMachine = $this->actingAs($this->viewerA)
+        $resUpdateMachine = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->put(route('machines.update', $this->machineA), [
+            ->putJson(route('machines.update', $this->machineA), [
                 'name' => 'Mesin Bubut Diubah Tanpa Izin',
                 'purchase_price' => 130000000,
                 'useful_life_hours' => 20000,
             ]);
         $resUpdateMachine->assertStatus(403);
+        $resUpdateMachine->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
 
         // 6. destroyMachine
-        $resDestroyMachine = $this->actingAs($this->viewerA)
+        $resDestroyMachine = $this->actingAs($this->laborViewerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->delete(route('machines.destroy', $this->machineA));
+            ->deleteJson(route('machines.destroy', $this->machineA));
         $resDestroyMachine->assertStatus(403);
+        $resDestroyMachine->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
     }
 
     // =========================================================================
@@ -455,48 +482,84 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
 
     public function test_idor_cross_tenant_update_and_destroy_are_defensively_rejected(): void
     {
-        // Attacker is Owner of Business B, holding labor_machines.manage within Business B.
-        // Target records belong to Business A.
+        // Part A: Controller Direct Invocation Verification
+        // Even if route model binding or global scope was bypassed, controller abort_unless MUST throw 403.
+        Context::setBusiness($this->businessB);
+        $controller = app(LaborMachineWebController::class);
 
-        // 1. Attempt to update LaborRate of Business A from Business B session
-        $resUpdateLabor = $this->actingAs($this->ownerB)
-            ->withSession(['active_business_id' => $this->businessB->id])
-            ->put(route('labor-rates.update', $this->laborRateA), [
-                'name' => 'Hacked Labor Rate',
+        // 1. updateLabor direct call with mismatched business
+        try {
+            $req = Request::create('/labor-rates/' . $this->laborRateA->id, 'PUT', [
+                'name' => 'Direct Hacked Rate',
                 'basis' => 'hourly',
                 'rate_amount' => 1000,
-                'working_days_per_month' => 20,
-                'working_hours_per_day' => 8,
             ]);
-        $resUpdateLabor->assertStatus(403);
-        $this->laborRateA->refresh();
-        $this->assertEquals('Operator CNC Khusus A', $this->laborRateA->name, 'IDOR vulnerability: Business A labor rate was modified by Business B user!');
+            $controller->updateLabor($req, $this->laborRateA);
+            $this->fail('Expected 403 HttpException was not thrown on updateLabor');
+        } catch (HttpException $e) {
+            $this->assertEquals(403, $e->getStatusCode(), 'Controller did not abort with 403 on mismatched labor rate business_id.');
+        }
 
-        // 2. Attempt to destroy LaborRate of Business A from Business B session
-        $resDestroyLabor = $this->actingAs($this->ownerB)
-            ->withSession(['active_business_id' => $this->businessB->id])
-            ->delete(route('labor-rates.destroy', $this->laborRateA));
-        $resDestroyLabor->assertStatus(403);
-        $this->assertNotNull(LaborRate::find($this->laborRateA->id), 'IDOR vulnerability: Business A labor rate was deleted by Business B user!');
+        // 2. destroyLabor direct call with mismatched business
+        try {
+            $controller->destroyLabor($this->laborRateA);
+            $this->fail('Expected 403 HttpException was not thrown on destroyLabor');
+        } catch (HttpException $e) {
+            $this->assertEquals(403, $e->getStatusCode(), 'Controller did not abort with 403 on mismatched labor rate business_id.');
+        }
 
-        // 3. Attempt to update Machine of Business A from Business B session
-        $resUpdateMachine = $this->actingAs($this->ownerB)
-            ->withSession(['active_business_id' => $this->businessB->id])
-            ->put(route('machines.update', $this->machineA), [
-                'name' => 'Hacked Machine',
+        // 3. updateMachine direct call with mismatched business
+        try {
+            $req = Request::create('/machines/' . $this->machineA->id, 'PUT', [
+                'name' => 'Direct Hacked Machine',
                 'purchase_price' => 1000,
                 'useful_life_hours' => 100,
             ]);
-        $resUpdateMachine->assertStatus(403);
-        $this->machineA->refresh();
-        $this->assertEquals('Mesin Bubut CNC Model A', $this->machineA->name, 'IDOR vulnerability: Business A machine was modified by Business B user!');
+            $controller->updateMachine($req, $this->machineA);
+            $this->fail('Expected 403 HttpException was not thrown on updateMachine');
+        } catch (HttpException $e) {
+            $this->assertEquals(403, $e->getStatusCode(), 'Controller did not abort with 403 on mismatched machine business_id.');
+        }
 
-        // 4. Attempt to destroy Machine of Business A from Business B session
-        $resDestroyMachine = $this->actingAs($this->ownerB)
+        // 4. destroyMachine direct call with mismatched business
+        try {
+            $controller->destroyMachine($this->machineA);
+            $this->fail('Expected 403 HttpException was not thrown on destroyMachine');
+        } catch (HttpException $e) {
+            $this->assertEquals(403, $e->getStatusCode(), 'Controller did not abort with 403 on mismatched machine business_id.');
+        }
+
+        // Part B: HTTP Layer Verification (Multi-layered defense with BelongsToBusiness / Route Model Binding)
+        $resHttpUpdate = $this->actingAs($this->ownerB)
             ->withSession(['active_business_id' => $this->businessB->id])
-            ->delete(route('machines.destroy', $this->machineA));
-        $resDestroyMachine->assertStatus(403);
-        $this->assertNotNull(Machine::find($this->machineA->id), 'IDOR vulnerability: Business A machine was deleted by Business B user!');
+            ->put(route('labor-rates.update', $this->laborRateA->id), [
+                'name' => 'HTTP Hacked Rate',
+                'basis' => 'hourly',
+                'rate_amount' => 1000,
+            ]);
+        // Route model binding with BusinessScope returns 404 (or 403 if resolved)
+        $this->assertContains($resHttpUpdate->status(), [403, 404]);
+
+        $resHttpDestroy = $this->actingAs($this->ownerB)
+            ->withSession(['active_business_id' => $this->businessB->id])
+            ->delete(route('labor-rates.destroy', $this->laborRateA->id));
+        $this->assertContains($resHttpDestroy->status(), [403, 404]);
+
+        // Verify records in Business A remain completely pristine in the database
+        Context::setBusiness($this->businessA);
+        $this->assertDatabaseHas('labor_rates', [
+            'id' => $this->laborRateA->id,
+            'name' => 'Operator CNC Khusus A',
+            'business_id' => $this->businessA->id,
+            'deleted_at' => null,
+        ]);
+
+        $this->assertDatabaseHas('machines', [
+            'id' => $this->machineA->id,
+            'name' => 'Mesin Bubut CNC Model A',
+            'business_id' => $this->businessA->id,
+            'deleted_at' => null,
+        ]);
     }
 
     // =========================================================================
@@ -505,22 +568,29 @@ final class LaborMachineRbacCleanRoutingEmpiricalTest extends TestCase
 
     public function test_invoices_controller_level_rbac_enforcement(): void
     {
-        // 1. User lacking invoices.view (unauthorizedA / warehouse) cannot access invoices.index
-        $resIndex = $this->actingAs($this->unauthorizedA)
+        // 1. User lacking invoices.view accessing invoices.index
+        $resJsonIndex = $this->actingAs($this->unauthorizedA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->getJson(route('invoices.index'));
+        $resJsonIndex->assertStatus(403);
+        $resJsonIndex->assertJsonPath('error_code', 'FORBIDDEN_PERMISSION');
+
+        // Web browser request redirects to portal
+        $resWebIndex = $this->actingAs($this->unauthorizedA)
             ->withSession(['active_business_id' => $this->businessA->id])
             ->get(route('invoices.index'));
-        $resIndex->assertStatus(403);
+        $resWebIndex->assertRedirect(route('portal'));
 
         // 2. User lacking invoices.create cannot access invoices.create
         $resCreate = $this->actingAs($this->unauthorizedA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->get(route('invoices.create'));
+            ->getJson(route('invoices.create'));
         $resCreate->assertStatus(403);
 
         // 3. User lacking invoices.export cannot export excel
         $resExport = $this->actingAs($this->unauthorizedA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->get(route('invoices.export-excel'));
+            ->getJson(route('invoices.export-excel'));
         $resExport->assertStatus(403);
 
         // 4. Owner has full permissions and can access invoices.index

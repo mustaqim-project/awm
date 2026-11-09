@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T23:35:16Z
+# BRIEFING — 2026-11-09T06:45:00Z
 
 ## Mission
 Conduct objective and adversarial review of Milestone 1 changes (Labor & Machine RBAC, IDOR scoping, clean routing, view gates).
@@ -31,7 +31,11 @@ Conduct objective and adversarial review of Milestone 1 changes (Labor & Machine
 - **Review criteria**: Correctness, Logical Completeness, Quality, Security/IDOR, Stress-testing
 
 ## Key Decisions Made
-- [TBD]
+- Confirmed controller-level RBAC via `HasMiddleware` conforms to Laravel 11/12 and `laravel-permission/SKILL.md`
+- Verified IDOR checks provide defense-in-depth alongside `BusinessScope`
+- Verified zero syntax errors via `php -l`
+- Executed `LaborAndMachineEngineTest` (4 passed) and `InvoiceModuleAuditTest` (9 passed)
+- Determined verdict: APPROVE
 
 ## Artifact Index
 - DISPATCH.md — Parent dispatch instructions
@@ -39,11 +43,14 @@ Conduct objective and adversarial review of Milestone 1 changes (Labor & Machine
 - handoff.md — Final review and challenge report
 
 ## Review Checklist
-- **Items reviewed**: pending
-- **Verdict**: pending
-- **Unverified claims**: pending
+- **Items reviewed**: `LaborMachineWebController.php`, `routes/owner.php`, `resources/views/app/labor-machines/index.blade.php`, test suites
+- **Verdict**: APPROVE
+- **Unverified claims**: None
 
 ## Attack Surface
-- **Hypotheses tested**: pending
-- **Vulnerabilities found**: pending
-- **Untested angles**: pending
+- **Hypotheses tested**:
+  - Cross-tenant IDOR attack on `updateLabor`/`destroyLabor`/`updateMachine`/`destroyMachine` -> Mitigated by `BusinessScope` (404) and controller assertion (403).
+  - Unauthenticated/unauthorized access -> Blocked by `HasMiddleware` and `RequirePermission` (redirects to portal with 302).
+  - Audit logging data loss after model deletion -> Mitigated; variables and `old_values` captured prior to `$model->delete()`.
+- **Vulnerabilities found**: None in Milestone 1 implementation.
+- **Untested angles**: Full end-to-end browser E2E (covered in subsequent milestones).
