@@ -10,13 +10,13 @@
         title="{{ __('finance.payout_hub_page_title') }}"
         subtitle="{{ __('finance.payout_hub_subtitle') }}">
         <a href="{{ route('finance.cash-bank.ledger') }}"
-            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
-            <i data-lucide="book-open" class="w-4 h-4"></i>
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="book-open" class="w-4 h-4 shrink-0"></i>
             <span>{{ __('finance.cash_ledger') }}</span>
         </a>
         <a href="{{ route('finance.journals.index') }}"
-            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
-            <i data-lucide="split" class="w-4 h-4"></i>
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="split" class="w-4 h-4 shrink-0"></i>
             <span>{{ __('finance.auto_journals') }}</span>
         </a>
     </x-module-header>
@@ -121,7 +121,7 @@
             </div>
             <div class="flex items-center gap-2">
                 <button type="button" @click="toggleSelectAll()"
-                    class="h-8 px-3 rounded-[8px] text-xs font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition">
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-xs font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition whitespace-nowrap cursor-pointer">
                     <span x-text="selectedItems.length === unsettledItems.length && unsettledItems.length > 0 ? '{{ __('finance.btn_deselect_all') }}' : '{{ __('finance.btn_select_all') }}'"></span>
                 </button>
             </div>
@@ -259,8 +259,8 @@
 
                     <button type="submit"
                         :disabled="selectedItems.length === 0 || !payoutBankAccountId || isProcessing"
-                        class="min-h-[44px] h-11 sm:h-10 px-6 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm disabled:opacity-40 flex items-center justify-center gap-2 shrink-0">
-                        <i data-lucide="send" class="w-4 h-4"></i>
+                        class="min-h-[44px] h-11 sm:h-10 px-6 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-xs font-bold transition shadow-sm disabled:opacity-40 flex items-center justify-center gap-2 shrink-0 whitespace-nowrap cursor-pointer">
+                        <i data-lucide="send" class="w-4 h-4 shrink-0"></i>
                         <span x-text="isProcessing ? '{{ __('finance.submitting_request') }}' : (payoutMode === 'auto_h1' ? '{{ __('finance.schedule_auto_payout_h1') }}' : '{{ __('finance.submit_payout_to_cooca') }}')"></span>
                     </button>
                 </div>
@@ -348,11 +348,11 @@
                                             class="w-8 h-8 rounded-[8px] text-[#34C759] bg-[#34C759]/10 hover:bg-[#34C759]/20 transition flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
                                             title="{{ __('finance.btn_payment_proof') }}"
                                             aria-label="{{ __('finance.btn_payment_proof') }}">
-                                            <i data-lucide="image" class="w-4 h-4"></i>
+                                            <i data-lucide="image" class="w-4 h-4 shrink-0"></i>
                                         </button>
                                     @elseif($settlement->status === 'pending')
                                         <span class="inline-flex items-center justify-center w-8 h-8 rounded-[8px] text-[#FF9500] bg-[#FF9500]/10" title="{{ __('finance.status_waiting_proof') }}">
-                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                            <i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
                                         </span>
                                     @endif
 
@@ -360,7 +360,7 @@
                                         class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition flex items-center justify-center shrink-0 cursor-pointer"
                                         title="{{ __('common.detail') }}"
                                         aria-label="{{ __('common.detail') }}">
-                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                        <i data-lucide="eye" class="w-4 h-4 shrink-0"></i>
                                     </a>
                                 </div>
                             </td>
@@ -427,12 +427,13 @@
                             <a :href="proofImageUrl" target="_blank" download title="{{ __('finance.download_transfer_proof') }}"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 transition cursor-pointer"
                                 aria-label="{{ __('finance.download_transfer_proof') }}">
-                                <i data-lucide="download" class="w-4 h-4"></i>
+                                <i data-lucide="download" class="w-4 h-4 shrink-0"></i>
                             </a>
                             <button type="button" @click="showProofModal = false"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition cursor-pointer"
+                                title="{{ __('common.close_modal') }}"
                                 aria-label="{{ __('common.close_modal') }}">
-                                <i data-lucide="x" class="w-5 h-5"></i>
+                                <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
                             </button>
                         </div>
                     </div>

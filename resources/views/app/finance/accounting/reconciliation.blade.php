@@ -10,14 +10,14 @@
             title="{{ __('finance.bank_recon_page_title') }}"
             subtitle="{{ __('finance.bank_recon_subtitle') }}">
             <a href="{{ route('finance.cash-bank.index') }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
-                <i data-lucide="landmark" class="w-4 h-4 text-[#007AFF]"></i>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="landmark" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
                 <span>{{ __('finance.cash_bank_page_title') }}</span>
             </a>
             @if (\App\Support\Context::hasPermission('accounting.manage'))
                 <button type="button" @click="uploadModalOpen = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)]">
-                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] whitespace-nowrap cursor-pointer">
+                    <i data-lucide="upload" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_upload_statement') }}</span>
                 </button>
             @endif
@@ -162,14 +162,14 @@
                                                         <form method="POST" action="{{ route('finance.reconciliations.unmatch', $line) }}" class="inline">
                                                             @csrf
                                                             <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] text-black/60 dark:text-white/60 bg-black/[0.04] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_unmatch') }}" aria-label="{{ __('finance.btn_unmatch') }}">
-                                                                <i data-lucide="undo" class="w-4 h-4"></i>
+                                                                <i data-lucide="undo" class="w-4 h-4 shrink-0"></i>
                                                             </button>
                                                         </form>
                                                     @else
                                                         <form method="POST" action="{{ route('finance.reconciliations.match', $line) }}" class="inline">
                                                             @csrf
                                                             <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_match') }}" aria-label="{{ __('finance.btn_match') }}">
-                                                                <i data-lucide="check" class="w-4 h-4"></i>
+                                                                <i data-lucide="check" class="w-4 h-4 shrink-0"></i>
                                                             </button>
                                                         </form>
                                                     @endif
@@ -223,15 +223,18 @@
                     <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
                         <div class="flex items-center gap-3.5">
                             <div class="w-11 h-11 rounded-[14px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0 shadow-sm">
-                                <i data-lucide="file-up" class="w-5 h-5"></i>
+                                <i data-lucide="file-up" class="w-5 h-5 shrink-0"></i>
                             </div>
                             <div>
                                 <h2 class="text-[18px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_upload_statement_title') }}</h2>
                                 <p class="text-[12.5px] text-black/50 dark:text-white/50">{{ __('finance.modal_upload_statement_subtitle') }}</p>
                             </div>
                         </div>
-                        <button type="button" @click="uploadModalOpen = false" class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition">
-                            <i data-lucide="x" class="w-4 h-4"></i>
+                        <button type="button" @click="uploadModalOpen = false"
+                            class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition cursor-pointer"
+                            aria-label="{{ __('common.close_modal') }}"
+                            title="{{ __('common.close_modal') }}">
+                            <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                         </button>
                     </div>
 
@@ -277,8 +280,8 @@
                         </div>
 
                         <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-black/5 dark:border-white/10">
-                            <button type="button" @click="uploadModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition">{{ __('common.cancel') }}</button>
-                            <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-[0_4px_16px_rgba(0,122,255,0.3)] transition flex items-center justify-center gap-2">
+                            <button type="button" @click="uploadModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition whitespace-nowrap cursor-pointer">{{ __('common.cancel') }}</button>
+                            <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-[0_4px_16px_rgba(0,122,255,0.3)] transition flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
                                 <template x-if="isSubmitting">
                                     <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

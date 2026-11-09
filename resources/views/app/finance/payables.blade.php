@@ -11,31 +11,31 @@
         subtitle="{{ __('finance.payables_subtitle') }}">
         @if (\App\Support\Context::hasPermission('finance.payables'))
         <a href="{{ route('finance.payables.export') }}"
-           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
            title="{{ __('finance.tooltip_export_payables_excel') }}">
-            <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+            <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
             <span>{{ __('finance.btn_export_excel') }}</span>
         </a>
         @endif
 
         @can('finance.payables')
         <button type="button" @click="showImportModal = true"
-           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+           class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
            title="{{ __('finance.tooltip_import_payables_opening') }}">
-            <i data-lucide="upload" class="w-4 h-4 text-[#FF9500]"></i>
+            <i data-lucide="upload" class="w-4 h-4 text-[#FF9500] shrink-0"></i>
             <span>{{ __('finance.btn_import_opening_balance_short') }}</span>
         </button>
         @endcan
 
         @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage'))
-            <a href="{{ route('purchasing.bills.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E8880A] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(255,149,0,0.25)]">
-                <i data-lucide="receipt" class="w-4 h-4"></i>
+            <a href="{{ route('purchasing.bills.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E8880A] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 shadow-[0_1px_2px_rgba(255,149,0,0.25)] whitespace-nowrap">
+                <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                 <span>{{ __('finance.btn_supplier_bills') }}</span>
             </a>
         @endif
         @if(\App\Support\Context::hasPermission('master_data.suppliers.view') || \App\Support\Context::hasPermission('purchasing.view'))
-            <a href="{{ route('suppliers.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5">
-                <i data-lucide="truck" class="w-4 h-4 text-[#FF9500]"></i>
+            <a href="{{ route('suppliers.index') }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="truck" class="w-4 h-4 text-[#FF9500] shrink-0"></i>
                 <span>{{ __('finance.btn_suppliers_list') }}</span>
             </a>
         @endif
@@ -71,7 +71,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.kpi_total_supplier_debt') }}</p>
                 <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                    <i data-lucide="layers" class="w-4 h-4"></i>
+                    <i data-lucide="layers" class="w-4 h-4 shrink-0"></i>
                 </div>
             </div>
             <div class="mt-2.5">
@@ -85,7 +85,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.not_due_yet') }}</p>
                 <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0">
-                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i>
                 </div>
             </div>
             <div class="mt-2.5">
@@ -99,7 +99,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.overdue_1_30_days') }}</p>
                 <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] dark:text-[#FF9F0A] flex items-center justify-center shrink-0">
-                    <i data-lucide="clock" class="w-4 h-4"></i>
+                    <i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
                 </div>
             </div>
             <div class="mt-2.5">
@@ -113,7 +113,7 @@
             <div class="flex items-center justify-between">
                 <p class="text-[11px] font-semibold uppercase tracking-wider text-black/45 dark:text-white/45">{{ __('finance.overdue_30_plus_days') }}</p>
                 <div class="w-8 h-8 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A] flex items-center justify-center shrink-0">
-                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
                 </div>
             </div>
             <div class="mt-2.5">
@@ -153,7 +153,7 @@
                        class="w-full h-10 sm:h-8 pl-8 pr-3 text-[16px] sm:text-[12px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
             @if(request('search') || request('bucket') !== 'all')
-                <a href="{{ route('finance.payables') }}" class="min-h-[44px] sm:min-h-0 h-10 sm:h-8 px-3 rounded-[8px] text-[12px] text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition-colors">{{ __('common.reset') }}</a>
+                <a href="{{ route('finance.payables') }}" class="min-h-[44px] sm:min-h-0 h-10 sm:h-8 px-3 rounded-[8px] text-[12px] text-black/50 dark:text-white/50 hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition-colors whitespace-nowrap">{{ __('common.reset') }}</a>
             @endif
         </form>
     </div>
@@ -222,7 +222,7 @@
                             <div class="flex items-center justify-end gap-1">
                                 @if(\App\Support\Context::hasPermission('purchasing.bills') || \App\Support\Context::hasPermission('purchasing.manage') || \App\Support\Context::hasPermission('invoices.record_payment'))
                                 <a href="{{ route('purchasing.bills.index') }}" class="min-w-[44px] min-h-[44px] rounded-[10px] text-[#FF9500] bg-[#FF9500]/10 hover:bg-[#FF9500]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer" title="{{ __('finance.btn_pay') }}" aria-label="{{ __('finance.btn_pay') }}">
-                                    <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                    <i data-lucide="credit-card" class="w-4 h-4 shrink-0"></i>
                                 </a>
                                 @endif
                             </div>
@@ -313,15 +313,15 @@
             <span>{{ __('finance.total_bills_footer', ['count' => $invoices->total()]) }}</span>
             <div class="flex items-center gap-2">
                 @if($invoices->onFirstPage())
-                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</span>
+                    <span class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center whitespace-nowrap"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1 shrink-0"></i> {{ __('common.previous') }}</span>
                 @else
-                    <a href="{{ $invoices->previousPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</a>
+                    <a href="{{ $invoices->previousPageUrl() }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center whitespace-nowrap"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1 shrink-0"></i> {{ __('common.previous') }}</a>
                 @endif
-                <span class="h-8 px-2.5 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] text-black dark:text-white font-medium flex items-center tabular-nums">{{ $invoices->currentPage() }}</span>
+                <span class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-2.5 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] text-black dark:text-white font-medium flex items-center tabular-nums">{{ $invoices->currentPage() }}</span>
                 @if($invoices->hasMorePages())
-                    <a href="{{ $invoices->nextPageUrl() }}" class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
+                    <a href="{{ $invoices->nextPageUrl() }}" class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-[#007AFF] hover:bg-[#007AFF]/8 transition-colors flex items-center whitespace-nowrap">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1 shrink-0"></i></a>
                 @else
-                    <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
+                    <span class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center whitespace-nowrap">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1 shrink-0"></i></span>
                 @endif
             </div>
         </div>
@@ -373,9 +373,10 @@
                 </div>
 
                 <button type="button" @click="if (!importExecuting) showImportModal = false"
-                    class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition"
-                    aria-label="{{ __('common.close_modal') }}">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+                    class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                    aria-label="{{ __('common.close_modal') }}"
+                    title="{{ __('common.close_modal') }}">
+                    <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                 </button>
             </div>
 
@@ -388,14 +389,14 @@
                     <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="space-y-1">
                             <div class="flex items-center gap-2 text-[#B26A00] dark:text-[#FF9F0A] font-bold text-[13px]">
-                                <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold shrink-0">1</span>
                                 <span>{{ __('finance.step_1_download_payables_template_title') }}</span>
                             </div>
                             <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('finance.step_1_download_payables_template_desc') }}</p>
                         </div>
                         <a href="{{ route('finance.payables.template') }}"
-                           class="h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
-                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                           class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98] whitespace-nowrap">
+                            <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
                             <span>{{ __('finance.btn_download_template_xlsx') }}</span>
                         </a>
                     </div>
@@ -492,18 +493,18 @@
 
                     <!-- Table -->
                     <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
-                        <div class="max-h-[380px] overflow-y-auto">
-                            <table class="w-full text-left text-[12px] border-collapse">
+                        <div class="max-h-[380px] overflow-auto">
+                            <table class="w-full text-left text-[12px] border-collapse min-w-[640px]">
                                 <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
                                     <tr>
-                                        <th class="py-2.5 px-3 w-16 text-center">{{ __('common.status') }}</th>
-                                        <th class="py-2.5 px-3">{{ __('finance.col_bill_number') }}</th>
-                                        <th class="py-2.5 px-3">{{ __('finance.col_supplier') }}</th>
-                                        <th class="py-2.5 px-3">{{ __('finance.col_bill_date') }}</th>
-                                        <th class="py-2.5 px-3">{{ __('finance.col_due_date') }}</th>
-                                        <th class="py-2.5 px-3 text-right">{{ __('finance.col_total_value') }}</th>
-                                        <th class="py-2.5 px-3 text-right">{{ __('finance.col_remaining_debt') }}</th>
-                                        <th class="py-2.5 px-3">{{ __('finance.col_diagnostic_notes') }}</th>
+                                        <th class="py-2.5 px-3 w-16 text-center whitespace-nowrap">{{ __('common.status') }}</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_bill_number') }}</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_supplier') }}</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_bill_date') }}</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_due_date') }}</th>
+                                        <th class="py-2.5 px-3 text-right whitespace-nowrap">{{ __('finance.col_total_value') }}</th>
+                                        <th class="py-2.5 px-3 text-right whitespace-nowrap">{{ __('finance.col_remaining_debt') }}</th>
+                                        <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_diagnostic_notes') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
@@ -542,25 +543,25 @@
             <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
                 <div>
                     <button type="button" x-show="importPreview" @click="resetImport()"
-                        class="h-11 min-h-[44px] px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
                         :disabled="importExecuting">
-                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                        <i data-lucide="refresh-cw" class="w-4 h-4 shrink-0"></i>
                         <span>{{ __('finance.btn_change_file') }}</span>
                     </button>
                 </div>
 
                 <div class="flex items-center gap-2.5">
                     <button type="button" @click="if (!importExecuting) showImportModal = false"
-                        class="h-11 min-h-[44px] px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer whitespace-nowrap"
                         :disabled="importExecuting">
                         {{ __('common.cancel') }}
                     </button>
 
                     <button type="button" x-show="importPreview" @click="executePayablesImport()"
-                        class="h-11 min-h-[44px] px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E8880A] text-white text-[13px] font-semibold shadow-sm shadow-[#FF9500]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-6 rounded-[12px] bg-[#FF9500] hover:bg-[#E8880A] text-white text-[13px] font-semibold shadow-sm shadow-[#FF9500]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                         :disabled="importExecuting || !importPreview || (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) === 0">
-                        <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="importExecuting"></i>
-                        <i data-lucide="check" class="w-4 h-4" x-show="!importExecuting"></i>
+                        <i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0" x-show="importExecuting"></i>
+                        <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!importExecuting"></i>
                         <span x-text="importExecuting ? '{{ __('finance.btn_processing') }}' : ('{{ __('finance.btn_commit_import_bills', ['count' => '']) }}'.replace(':count', (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count))))"></span>
                     </button>
                 </div>

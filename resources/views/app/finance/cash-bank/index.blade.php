@@ -18,30 +18,30 @@
             :subtitle="__('finance.cash_bank_page_subtitle')">
             @if (\App\Support\Context::hasPermission('finance.cash_bank'))
                 <button type="button" @click="showAccountModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i data-lucide="plus-circle" class="w-4 h-4 text-[#007AFF]"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
                     <span>{{ __('finance.btn_add_account') }}</span>
                 </button>
                 <button type="button" @click="showInflowModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer">
-                    <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)] cursor-pointer whitespace-nowrap">
+                    <i data-lucide="arrow-down-left" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_cash_inflow') }}</span>
                 </button>
                 <button type="button" @click="showOutflowModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#FF3B30]"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                    <i data-lucide="arrow-up-right" class="w-4 h-4 text-[#FF3B30] shrink-0"></i>
                     <span>{{ __('finance.btn_cash_outflow') }}</span>
                 </button>
                 <button type="button" @click="showTransferModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i data-lucide="arrow-left-right" class="w-4 h-4 text-black/70 dark:text-white/70"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black dark:text-white bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 hover:bg-black/[0.08] dark:hover:bg-white/[0.1] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4 text-black/70 dark:text-white/70 shrink-0"></i>
                     <span>{{ __('finance.btn_cash_transfer') }}</span>
                 </button>
             @endif
             @if (\App\Support\Context::hasPermission('accounting.view') || \App\Support\Context::hasPermission('finance.cash_bank'))
                 <a href="{{ route('finance.cash-bank.ledger') }}"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i data-lucide="book-open" class="w-4 h-4 text-[#FF9500]"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                    <i data-lucide="book-open" class="w-4 h-4 text-[#FF9500] shrink-0"></i>
                     <span>{{ __('finance.btn_cash_ledger') }}</span>
                 </a>
             @endif
@@ -130,8 +130,9 @@
                                     <button type="button"
                                         @click="currentAccount = { id: '{{ $account->id }}', name: '{{ addslashes($account->name) }}', type: '{{ $account->type }}', is_active: {{ $account->is_active ? 'true' : 'false' }} }; editAccountModal = true"
                                         title="{{ __('finance.tooltip_edit_account') }}"
-                                        class="p-1.5 rounded-[8px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition-colors cursor-pointer">
-                                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                        aria-label="{{ __('finance.tooltip_edit_account') }}"
+                                        class="p-1.5 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-[8px] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/[0.05] dark:hover:bg-white/[0.08] transition-colors cursor-pointer">
+                                        <i data-lucide="pencil" class="w-3.5 h-3.5 shrink-0"></i>
                                     </button>
                                 </div>
                             </div>
@@ -152,8 +153,8 @@
                                 </p>
                             </div>
                             <a href="{{ route('finance.cash-bank.ledger', ['account_id' => $account->id]) }}"
-                                class="text-[13px] font-medium text-[#007AFF] hover:underline flex items-center gap-0.5">
-                                {{ __('finance.mutations_link') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                class="text-[13px] font-medium text-[#007AFF] hover:underline flex items-center gap-0.5 whitespace-nowrap">
+                                {{ __('finance.mutations_link') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0"></i>
                             </a>
                         </div>
                     </div>
@@ -212,17 +213,17 @@
                     </div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ __('finance.pos_channels_breakdown_subtitle') }}</p>
                 </div>
-                <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[10px]">
+                <div class="flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.06] p-1 rounded-[10px] overflow-x-auto">
                     <a href="{{ route('finance.cash-bank.index', ['period' => 'today']) }}"
-                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors {{ $curPeriod === 'today' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors whitespace-nowrap {{ $curPeriod === 'today' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.period_today') }}
                     </a>
                     <a href="{{ route('finance.cash-bank.index', ['period' => 'month']) }}"
-                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors {{ $curPeriod === 'month' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors whitespace-nowrap {{ $curPeriod === 'month' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.period_month') }}
                     </a>
                     <a href="{{ route('finance.cash-bank.index', ['period' => 'all']) }}"
-                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors {{ $curPeriod === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1 rounded-[7px] text-[12px] font-medium transition-colors whitespace-nowrap {{ $curPeriod === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.period_all_time') }}
                     </a>
                 </div>
@@ -235,8 +236,8 @@
                     <div>
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-bold text-[#248A3D] dark:text-[#30D158] uppercase tracking-wider">{{ __('finance.channel_cash') }}</span>
-                            <span class="w-6 h-6 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] flex items-center justify-center text-[10px] font-bold">
-                                <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+                            <span class="w-6 h-6 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                <i data-lucide="banknote" class="w-3.5 h-3.5 shrink-0"></i>
                             </span>
                         </div>
                         <div class="text-[17px] font-bold tabular-nums text-black dark:text-white mt-2">
@@ -245,8 +246,8 @@
                     </div>
                     <div class="mt-2.5 pt-2 border-t border-[#34C759]/15 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                         <span>{{ __('finance.channel_transactions_count', ['count' => $cashCount]) }}</span>
-                        <span class="text-[#248A3D] dark:text-[#30D158] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5">
-                            {{ __('finance.btn_cash_ledger') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="text-[#248A3D] dark:text-[#30D158] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5 whitespace-nowrap">
+                            {{ __('finance.btn_cash_ledger') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0"></i>
                         </span>
                     </div>
                 </a>
@@ -257,8 +258,8 @@
                     <div>
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-bold text-[#8944AB] dark:text-[#BF5AF2] uppercase tracking-wider">{{ __('finance.channel_qris') }}</span>
-                            <span class="w-6 h-6 rounded-full bg-[#BF5AF2]/20 text-[#8944AB] dark:text-[#BF5AF2] flex items-center justify-center text-[10px] font-bold">
-                                <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                            <span class="w-6 h-6 rounded-full bg-[#BF5AF2]/20 text-[#8944AB] dark:text-[#BF5AF2] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                <i data-lucide="qr-code" class="w-3.5 h-3.5 shrink-0"></i>
                             </span>
                         </div>
                         <div class="text-[17px] font-bold tabular-nums text-black dark:text-white mt-2">
@@ -267,8 +268,8 @@
                     </div>
                     <div class="mt-2.5 pt-2 border-t border-[#BF5AF2]/15 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                         <span>{{ __('finance.channel_transactions_count', ['count' => $qrisCount]) }}</span>
-                        <span class="text-[#8944AB] dark:text-[#BF5AF2] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5">
-                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="text-[#8944AB] dark:text-[#BF5AF2] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5 whitespace-nowrap">
+                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0"></i>
                         </span>
                     </div>
                 </a>
@@ -279,8 +280,8 @@
                     <div>
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-bold text-[#007AFF] dark:text-[#0A84FF] uppercase tracking-wider">{{ __('finance.channel_transfer') }}</span>
-                            <span class="w-6 h-6 rounded-full bg-[#007AFF]/20 text-[#007AFF] flex items-center justify-center text-[10px] font-bold">
-                                <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
+                            <span class="w-6 h-6 rounded-full bg-[#007AFF]/20 text-[#007AFF] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                <i data-lucide="landmark" class="w-3.5 h-3.5 shrink-0"></i>
                             </span>
                         </div>
                         <div class="text-[17px] font-bold tabular-nums text-black dark:text-white mt-2">
@@ -289,8 +290,8 @@
                     </div>
                     <div class="mt-2.5 pt-2 border-t border-[#007AFF]/15 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                         <span>{{ __('finance.channel_transactions_count', ['count' => $trfCount]) }}</span>
-                        <span class="text-[#007AFF] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5">
-                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="text-[#007AFF] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5 whitespace-nowrap">
+                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0"></i>
                         </span>
                     </div>
                 </a>
@@ -301,8 +302,8 @@
                     <div>
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-bold text-[#B25E00] dark:text-[#FF9F0A] uppercase tracking-wider">{{ __('finance.channel_edc') }}</span>
-                            <span class="w-6 h-6 rounded-full bg-[#FF9500]/20 text-[#B25E00] dark:text-[#FF9F0A] flex items-center justify-center text-[10px] font-bold">
-                                <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                            <span class="w-6 h-6 rounded-full bg-[#FF9500]/20 text-[#B25E00] dark:text-[#FF9F0A] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                <i data-lucide="credit-card" class="w-3.5 h-3.5 shrink-0"></i>
                             </span>
                         </div>
                         <div class="text-[17px] font-bold tabular-nums text-black dark:text-white mt-2">
@@ -311,8 +312,8 @@
                     </div>
                     <div class="mt-2.5 pt-2 border-t border-[#FF9500]/15 flex items-center justify-between text-[11px] text-black/50 dark:text-white/50">
                         <span>{{ __('finance.channel_transactions_count', ['count' => $edcCount]) }}</span>
-                        <span class="text-[#B25E00] dark:text-[#FF9F0A] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5">
-                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                        <span class="text-[#B25E00] dark:text-[#FF9F0A] group-hover:translate-x-0.5 transition-transform font-medium flex items-center gap-0.5 whitespace-nowrap">
+                            {{ __('finance.ledger_title') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 shrink-0"></i>
                         </span>
                     </div>
                 </a>
@@ -323,8 +324,8 @@
                     <div>
                         <div class="flex items-center justify-between">
                             <span class="text-[11px] font-bold text-[#C41E17] dark:text-[#FF453A] uppercase tracking-wider">{{ __('finance.channel_receivables') }}</span>
-                            <span class="w-6 h-6 rounded-full bg-[#FF3B30]/20 text-[#C41E17] dark:text-[#FF453A] flex items-center justify-center text-[10px] font-bold">
-                                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span class="w-6 h-6 rounded-full bg-[#FF3B30]/20 text-[#C41E17] dark:text-[#FF453A] flex items-center justify-center text-[10px] font-bold shrink-0">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5 shrink-0"></i>
                             </span>
                         </div>
                         <div class="text-[17px] font-bold tabular-nums text-black dark:text-white mt-2">
@@ -541,8 +542,10 @@
                                 </div>
                             </div>
                             <button type="button" @click="showAccountModal = false"
+                                title="{{ __('common.close_modal') }}"
+                                aria-label="{{ __('common.close_modal') }}"
                                 class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
                         <form method="POST" action="{{ route('finance.cash-bank.accounts.store') }}"
@@ -582,7 +585,7 @@
 
                                     <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1 text-[12px] text-black/65 dark:text-white/65">
                                         <div class="flex items-center gap-1.5 font-bold text-black dark:text-white">
-                                            <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759]"></i>
+                                            <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759] shrink-0"></i>
                                             <span>{{ __('finance.integrated_ledger_title') }}</span>
                                         </div>
                                         <p class="text-[11.5px] leading-relaxed">{{ __('finance.integrated_ledger_desc') }}</p>
@@ -592,16 +595,16 @@
 
                             <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10">
                                 <button type="button" @click="showAccountModal = false" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer whitespace-nowrap">{{ __('common.cancel') }}</button>
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer">
+                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                                     <template x-if="isSubmitting">
-                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                         </svg>
                                     </template>
-                                    <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                                     <span x-text="isSubmitting ? '{{ __('common.saving') }}' : '{{ __('finance.save_account') }}'">{{ __('finance.save_account') }}</span>
                                 </button>
                             </div>
@@ -651,8 +654,10 @@
                                 </div>
                             </div>
                             <button type="button" @click="editAccountModal = false"
+                                title="{{ __('common.close_modal') }}"
+                                aria-label="{{ __('common.close_modal') }}"
                                 class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
                         <form method="POST" :action="'{{ url('finance/cash-bank/accounts') }}/' + currentAccount.id"
@@ -679,16 +684,16 @@
 
                             <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10">
                                 <button type="button" @click="editAccountModal = false" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer whitespace-nowrap">{{ __('common.cancel') }}</button>
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer">
+                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                                     <template x-if="isSubmitting">
-                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                         </svg>
                                     </template>
-                                    <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                                     <span x-text="isSubmitting ? '{{ __('common.saving') }}' : '{{ __('finance.save_changes') }}'">{{ __('finance.save_changes') }}</span>
                                 </button>
                             </div>
@@ -738,8 +743,10 @@
                                 </div>
                             </div>
                             <button type="button" @click="showInflowModal = false"
+                                title="{{ __('common.close_modal') }}"
+                                aria-label="{{ __('common.close_modal') }}"
                                 class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
                         <form method="POST" action="{{ route('finance.cash-bank.inflow') }}"
@@ -779,7 +786,7 @@
                                     </div>
                                     <div x-show="category === 'other'" x-transition class="p-3.5 rounded-[14px] bg-[#FF9500]/10 border border-[#FF9500]/30 space-y-1.5">
                                         <label class="block text-[12.5px] font-bold text-[#FF9500] dark:text-[#FF9F0A] flex items-center gap-1.5">
-                                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
                                             <span>{{ __('finance.other_desc_label') }}</span>
                                         </label>
                                         <input name="other_description" x-model="otherDescription" :required="category === 'other'"
@@ -804,11 +811,11 @@
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#34C759] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
-                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
-                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
-                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 5.000.000</button>
+                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium whitespace-nowrap">{{ __('finance.quick_amount') }}</span>
+                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 100.000</button>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 1.000.000</button>
+                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 5.000.000</button>
                                         </div>
                                     </div>
                                 </div>
@@ -816,16 +823,16 @@
 
                             <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10">
                                 <button type="button" @click="showInflowModal = false" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer whitespace-nowrap">{{ __('common.cancel') }}</button>
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#34C759] hover:bg-[#2DBE50] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(52,199,89,0.3)] flex items-center justify-center gap-2 cursor-pointer">
+                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#34C759] hover:bg-[#2DBE50] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(52,199,89,0.3)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                                     <template x-if="isSubmitting">
-                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                         </svg>
                                     </template>
-                                    <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                                     <span x-text="isSubmitting ? '{{ __('common.saving') }}' : '{{ __('finance.save_inflow') }}'">{{ __('finance.save_inflow') }}</span>
                                 </button>
                             </div>
@@ -875,8 +882,10 @@
                                 </div>
                             </div>
                             <button type="button" @click="showOutflowModal = false"
+                                title="{{ __('common.close_modal') }}"
+                                aria-label="{{ __('common.close_modal') }}"
                                 class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
                         <form method="POST" action="{{ route('finance.cash-bank.outflow') }}"
@@ -919,7 +928,7 @@
                                     </div>
                                     <div x-show="category === 'other'" x-transition class="p-3.5 rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-1.5">
                                         <label class="block text-[12.5px] font-bold text-[#FF3B30] dark:text-[#FF453A] flex items-center gap-1.5">
-                                            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
                                             <span>{{ __('finance.other_desc_label') }}</span>
                                         </label>
                                         <input name="other_description" x-model="otherDescription" :required="category === 'other'"
@@ -944,12 +953,12 @@
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#FF3B30] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
-                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 50.000</button>
-                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
-                                            <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 250.000</button>
-                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
+                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium whitespace-nowrap">{{ __('finance.quick_amount') }}</span>
+                                            <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 50.000</button>
+                                            <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 100.000</button>
+                                            <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 250.000</button>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 1.000.000</button>
                                         </div>
                                     </div>
                                 </div>
@@ -957,16 +966,16 @@
 
                             <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10">
                                 <button type="button" @click="showOutflowModal = false" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer whitespace-nowrap">{{ __('common.cancel') }}</button>
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(255,59,48,0.3)] flex items-center justify-center gap-2 cursor-pointer">
+                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(255,59,48,0.3)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                                     <template x-if="isSubmitting">
-                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                         </svg>
                                     </template>
-                                    <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                                     <span x-text="isSubmitting ? '{{ __('common.saving') }}' : '{{ __('finance.save_outflow') }}'">{{ __('finance.save_outflow') }}</span>
                                 </button>
                             </div>
@@ -1016,8 +1025,10 @@
                                 </div>
                             </div>
                             <button type="button" @click="showTransferModal = false"
+                                title="{{ __('common.close_modal') }}"
+                                aria-label="{{ __('common.close_modal') }}"
                                 class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                                <i data-lucide="x" class="w-4 h-4"></i>
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
                         <form method="POST" action="{{ route('finance.cash-bank.transfer') }}"
@@ -1039,7 +1050,7 @@
                                         </div>
 
                                         <div class="flex items-center justify-center py-0.5 text-[#007AFF]">
-                                            <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                                            <i data-lucide="arrow-down" class="w-5 h-5 shrink-0"></i>
                                         </div>
 
                                         <div>
@@ -1070,11 +1081,11 @@
                                                 class="w-full h-14 pl-14 pr-4 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-2xl sm:text-3xl font-extrabold tabular-nums text-black dark:text-white placeholder:text-black/20 dark:placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all shadow-inner">
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pt-1">
-                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
-                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
-                                            <button type="button" @click="setQuickAmount(2500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 2.500.000</button>
-                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 5.000.000</button>
+                                            <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium whitespace-nowrap">{{ __('finance.quick_amount') }}</span>
+                                            <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 500.000</button>
+                                            <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 1.000.000</button>
+                                            <button type="button" @click="setQuickAmount(2500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 2.500.000</button>
+                                            <button type="button" @click="setQuickAmount(5000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 5.000.000</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1082,16 +1093,16 @@
 
                             <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10">
                                 <button type="button" @click="showTransferModal = false" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer">{{ __('common.cancel') }}</button>
+                                    class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition-all cursor-pointer whitespace-nowrap">{{ __('common.cancel') }}</button>
                                 <button type="submit" :disabled="isSubmitting"
-                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer">
+                                    class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(0,122,255,0.3)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                                     <template x-if="isSubmitting">
-                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                         </svg>
                                     </template>
-                                    <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                                     <span x-text="isSubmitting ? '{{ __('finance.transfer_executing') }}' : '{{ __('finance.btn_execute_transfer') }}'">{{ __('finance.btn_execute_transfer') }}</span>
                                 </button>
                             </div>

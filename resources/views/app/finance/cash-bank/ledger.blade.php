@@ -11,8 +11,8 @@
             subtitle="{{ __('finance.cash_ledger_subtitle') }}">
             @if (\App\Support\Context::hasPermission('finance.cash_bank'))
                 <a href="{{ route('finance.cash-bank.index') }}"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2">
-                    <i data-lucide="wallet-cards" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i data-lucide="wallet-cards" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
                     <span>{{ __('finance.btn_manage_accounts') }}</span>
                 </a>
             @endif
@@ -30,8 +30,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_active_account') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="landmark" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                        <i data-lucide="landmark" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -50,8 +50,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_current_balance') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] {{ $currentTotalBalance < 0 ? 'bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]' : 'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158]' }} flex items-center justify-center">
-                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] {{ $currentTotalBalance < 0 ? 'bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]' : 'bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158]' }} flex items-center justify-center shrink-0">
+                        <i data-lucide="wallet" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -70,8 +70,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_total_ledger_rows') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] flex items-center justify-center">
-                        <i data-lucide="receipt" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] flex items-center justify-center shrink-0">
+                        <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -85,13 +85,13 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_ledger_integrity') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                        <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                        <i data-lucide="check-circle" class="w-3.5 h-3.5 shrink-0"></i>
                         {{ __('finance.auto_synced') }}
                     </span>
                     <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('finance.realtime_running_balance') }}</p>
@@ -106,7 +106,7 @@
             <form method="GET" action="{{ route('finance.cash-bank.ledger') }}"
                 class="flex flex-wrap items-center gap-2.5">
                 <div class="flex items-center gap-2 text-black/70 dark:text-white/70">
-                    <i data-lucide="filter" class="w-4 h-4 text-black/40 dark:text-white/40"></i>
+                    <i data-lucide="filter" class="w-4 h-4 text-black/40 dark:text-white/40 shrink-0"></i>
                     <span class="text-[13px] font-semibold">{{ __('common.filter') }}:</span>
                 </div>
                 <select name="account_id"
@@ -141,13 +141,13 @@
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('finance.search_ledger_desc_placeholder') }}"
                     class="h-11 sm:h-9 px-3.5 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 <button type="submit"
-                    class="h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center gap-1.5 shadow-xs">
-                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center gap-1.5 shadow-xs whitespace-nowrap">
+                    <i data-lucide="search" class="w-3.5 h-3.5 shrink-0"></i>
                     <span>{{ __('common.apply') }}</span>
                 </button>
                 @if (request('account_id') || request('type') || request('method') || request('start_date') || request('end_date') || request('search'))
                     <a href="{{ route('finance.cash-bank.ledger') }}"
-                        class="h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center transition-colors">
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center transition-colors whitespace-nowrap">
                         {{ __('common.reset') }}
                     </a>
                 @endif

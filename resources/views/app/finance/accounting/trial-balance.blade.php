@@ -16,21 +16,21 @@
                 <input type="date" name="end_date" value="{{ $endDate->toDateString() }}"
                     class="h-11 sm:h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                 <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center">
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center whitespace-nowrap cursor-pointer">
                     {{ __('common.filter') }}
                 </button>
             </form>
             @can('accounting.view')
             <a id="btnTrialBalanceExportExcel" href="{{ route('finance.trial-balance.export-excel', ['start_date' => $startDate->toDateString(), 'end_date' => $endDate->toDateString()]) }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap"
                 title="{{ __('finance.export_trial_balance_tooltip') }}">
-                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759]"></i>
+                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759] shrink-0"></i>
                 <span>{{ __('common.export_excel') }}</span>
             </a>
             @endcan
             <button type="button" onclick="window.print()"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
-                <i data-lucide="printer" class="w-4 h-4"></i>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="printer" class="w-4 h-4 shrink-0"></i>
                 <span>{{ __('common.print') }}</span>
             </button>
         </x-module-header>
@@ -53,7 +53,7 @@
                     <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.all_debit_accounts') }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
-                    <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
+                    <i data-lucide="arrow-down-left" class="w-5 h-5 shrink-0"></i>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                     <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.all_credit_accounts') }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                    <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+                    <i data-lucide="arrow-up-right" class="w-5 h-5 shrink-0"></i>
                 </div>
             </div>
 
@@ -76,12 +76,12 @@
                     <div class="mt-1.5 flex items-center gap-1.5">
                         @if($trial['totals']['is_balanced'])
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0"></i>
                                 {{ __('finance.balanced_valid') }}
                             </span>
                         @else
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A]">
-                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
                                 {{ __('finance.difference') }} Rp {{ number_format(abs($trial['totals']['difference']), 0, ',', '.') }}
                             </span>
                         @endif
@@ -91,7 +91,7 @@
                     </p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] {{ $trial['totals']['is_balanced'] ? 'bg-[#34C759]/10 text-[#34C759]' : 'bg-[#FF3B30]/10 text-[#FF3B30]' }} flex items-center justify-center shrink-0">
-                    <i data-lucide="{{ $trial['totals']['is_balanced'] ? 'shield-check' : 'alert-triangle' }}" class="w-5 h-5"></i>
+                    <i data-lucide="{{ $trial['totals']['is_balanced'] ? 'shield-check' : 'alert-triangle' }}" class="w-5 h-5 shrink-0"></i>
                 </div>
             </div>
         </div>

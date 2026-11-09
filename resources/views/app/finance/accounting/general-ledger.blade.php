@@ -10,21 +10,21 @@
             title="{{ __('finance.general_ledger_page_title') }}"
             subtitle="{{ __('finance.general_ledger_subtitle') }}">
             <a href="{{ route('finance.coa.index') }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
-                <i data-lucide="list-tree" class="w-4 h-4"></i>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="list-tree" class="w-4 h-4 shrink-0"></i>
                 <span>{{ __('finance.btn_chart_of_accounts') }}</span>
             </a>
             @can('accounting.view')
             <a id="btnGeneralLedgerExportExcel" href="{{ route('finance.general-ledger.export-excel', array_filter(['account_id' => $accountId, 'start_date' => $startDate->toDateString(), 'end_date' => $endDate->toDateString()])) }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap"
                 title="{{ __('finance.export_general_ledger_tooltip') }}">
-                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759]"></i>
+                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759] shrink-0"></i>
                 <span>{{ __('common.export_excel') }}</span>
             </a>
             @endcan
             <button type="button" onclick="window.print()"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
-                <i data-lucide="printer" class="w-4 h-4"></i>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="printer" class="w-4 h-4 shrink-0"></i>
                 <span>{{ __('common.print') }}</span>
             </button>
         </x-module-header>
@@ -57,7 +57,7 @@
                     class="h-11 sm:h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                 
                 <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center">
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center whitespace-nowrap cursor-pointer">
                     {{ __('finance.btn_display') }}
                 </button>
             </form>

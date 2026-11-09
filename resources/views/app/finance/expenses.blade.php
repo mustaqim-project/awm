@@ -11,15 +11,15 @@
             :subtitle="__('finance.expenses_subtitle')">
             @if (\App\Support\Context::hasPermission('accounting.view') || \App\Support\Context::hasPermission('expenses.manage'))
                 <a href="{{ route('finance.journals.index') }}"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2">
-                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#5856D6]"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 whitespace-nowrap">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#5856D6] shrink-0"></i>
                     <span>{{ __('finance.btn_journal_book') }}</span>
                 </a>
             @endif
             @if (\App\Support\Context::hasPermission('expenses.manage'))
                 <button @click="showCreateModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 shadow-[0_2px_8px_rgba(255,59,48,0.3)]">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all flex items-center gap-2 shadow-[0_2px_8px_rgba(255,59,48,0.3)] whitespace-nowrap cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_record_new_expense') }}</span>
                 </button>
             @endif
@@ -59,8 +59,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_expenses_this_month') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center">
-                        <i data-lucide="trending-down" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center shrink-0">
+                        <i data-lucide="trending-down" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -74,8 +74,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_transaction_count') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center">
-                        <i data-lucide="receipt" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                        <i data-lucide="receipt" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -89,8 +89,8 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_average_expense') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
-                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center shrink-0">
+                        <i data-lucide="calculator" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
@@ -104,13 +104,13 @@
             <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 flex flex-col justify-between shadow-sm">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/45 dark:text-white/45">{{ __('finance.kpi_journaling') }}</span>
-                    <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <div class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
+                        <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
                     </div>
                 </div>
                 <div class="mt-2">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                        <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
                         Double-Entry
                     </span>
                     <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">{{ __('finance.kpi_journaling_desc') }}</p>
@@ -146,13 +146,13 @@
                 <input type="date" name="end_date" value="{{ request('end_date') }}"
                     class="h-11 sm:h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 <button type="submit"
-                    class="h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center gap-1.5 shadow-xs">
-                    <i data-lucide="filter" class="w-3.5 h-3.5"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition-colors flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap cursor-pointer">
+                    <i data-lucide="filter" class="w-3.5 h-3.5 shrink-0"></i>
                     <span>{{ __('common.filter') }}</span>
                 </button>
                 @if (request('search') || request('category') || request('start_date') || request('end_date'))
                     <a href="{{ route('finance.expenses.index') }}"
-                        class="h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center transition-colors">
+                        class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 text-[13px] font-medium flex items-center justify-center transition-colors whitespace-nowrap">
                         {{ __('common.reset') }}
                     </a>
                 @endif
@@ -196,7 +196,7 @@
                                         <div class="mt-1">
                                             <a href="{{ $ex->proof_url }}" target="_blank"
                                                 class="inline-flex items-center gap-1 text-[11px] text-[#007AFF] font-semibold hover:underline">
-                                                <i data-lucide="paperclip" class="w-3.5 h-3.5"></i>
+                                                <i data-lucide="paperclip" class="w-3.5 h-3.5 shrink-0"></i>
                                                 <span>{{ __('finance.receipt_preview') }}</span>
                                             </a>
                                         </div>
@@ -216,8 +216,8 @@
                             <tr>
                                 <td colspan="5" class="py-16 text-center">
                                     <div class="flex flex-col items-center gap-3">
-                                        <div class="w-12 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.04] text-black/30 dark:text-white/30 flex items-center justify-center">
-                                            <i data-lucide="receipt" class="w-6 h-6"></i>
+                                        <div class="w-12 h-12 rounded-[14px] bg-black/[0.04] dark:bg-white/[0.04] text-black/30 dark:text-white/30 flex items-center justify-center shrink-0">
+                                            <i data-lucide="receipt" class="w-6 h-6 shrink-0"></i>
                                         </div>
                                         <div>
                                             <p class="text-[15px] font-bold text-black/70 dark:text-white/70">{{ __('finance.empty_expenses_title') }}</p>
@@ -225,8 +225,8 @@
                                         </div>
                                         @if (\App\Support\Context::hasPermission('expenses.manage'))
                                             <button @click="showCreateModal = true"
-                                                class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-xs">
-                                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap cursor-pointer">
+                                                <i data-lucide="plus" class="w-4 h-4 shrink-0"></i>
                                                 <span>{{ __('finance.btn_record_new_expense') }}</span>
                                             </button>
                                         @endif
@@ -246,17 +246,17 @@
                     </div>
                     <div class="flex items-center gap-2">
                         @if ($expenses->onFirstPage())
-                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</span>
+                            <span class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center whitespace-nowrap"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1 shrink-0"></i> {{ __('common.previous') }}</span>
                         @else
                             <a href="{{ $expenses->previousPageUrl() }}"
-                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1"></i> {{ __('common.previous') }}</a>
+                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition whitespace-nowrap"><i data-lucide="chevron-left" class="w-3.5 h-3.5 mr-1 shrink-0"></i> {{ __('common.previous') }}</a>
                         @endif
 
                         @if ($expenses->hasMorePages())
                             <a href="{{ $expenses->nextPageUrl() }}"
-                                class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></a>
+                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 flex items-center transition whitespace-nowrap">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1 shrink-0"></i></a>
                         @else
-                            <span class="h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1"></i></span>
+                            <span class="min-h-[44px] sm:min-h-0 h-11 sm:h-8 px-3 rounded-[8px] text-[13px] font-medium text-black/30 dark:text-white/30 cursor-not-allowed flex items-center whitespace-nowrap">{{ __('common.next') }} <i data-lucide="chevron-right" class="w-3.5 h-3.5 ml-1 shrink-0"></i></span>
                         @endif
                     </div>
                 </div>
@@ -308,8 +308,8 @@
                     <p>{{ __('finance.empty_expenses_title') }}</p>
                     @if (\App\Support\Context::hasPermission('expenses.manage'))
                         <button type="button" @click="showCreateModal = true"
-                            class="mt-2 text-[#FF3B30] font-semibold text-[13px] hover:underline inline-flex items-center gap-1">
-                            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            class="mt-2 min-h-[44px] sm:min-h-0 text-[#FF3B30] font-semibold text-[13px] hover:underline inline-flex items-center gap-1 whitespace-nowrap cursor-pointer">
+                            <i data-lucide="plus" class="w-3.5 h-3.5 shrink-0"></i>
                             <span>{{ __('finance.btn_record_new_expense') }}</span>
                         </button>
                     @endif
@@ -360,7 +360,7 @@
                 <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
                     <div class="flex items-center gap-3.5">
                         <div class="w-11 h-11 rounded-[14px] bg-[#FF3B30]/12 text-[#FF3B30] flex items-center justify-center shrink-0 shadow-sm">
-                            <i data-lucide="receipt" class="w-5 h-5"></i>
+                            <i data-lucide="receipt" class="w-5 h-5 shrink-0"></i>
                         </div>
                         <div>
                             <h3 class="text-[18px] sm:text-[20px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_record_expense_title') }}</h3>
@@ -368,8 +368,10 @@
                         </div>
                     </div>
                     <button type="button" @click="showCreateModal = false"
-                        class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                        class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/15 flex items-center justify-center transition-all cursor-pointer"
+                        aria-label="{{ __('common.close_modal') }}"
+                        title="{{ __('common.close_modal') }}">
+                        <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                     </button>
                 </div>
 
@@ -395,7 +397,7 @@
                                     <button type="button" @click="category = 'operational'"
                                         :class="category === 'operational' ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="store" class="w-4 h-4 mb-1.5" :class="category === 'operational' ? 'text-white' : 'text-[#007AFF]'"></i>
+                                        <i data-lucide="store" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'operational' ? 'text-white' : 'text-[#007AFF]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_operational') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_operational_desc') }}</span>
                                     </button>
@@ -403,7 +405,7 @@
                                     <button type="button" @click="category = 'utilities'"
                                         :class="category === 'utilities' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="zap" class="w-4 h-4 mb-1.5" :class="category === 'utilities' ? 'text-white' : 'text-[#FF9500]'"></i>
+                                        <i data-lucide="zap" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'utilities' ? 'text-white' : 'text-[#FF9500]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_utilities') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_utilities_desc') }}</span>
                                     </button>
@@ -411,7 +413,7 @@
                                     <button type="button" @click="category = 'internet_phone'"
                                         :class="category === 'internet_phone' ? 'bg-[#32ADE6] text-white shadow-md shadow-[#32ADE6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="wifi" class="w-4 h-4 mb-1.5" :class="category === 'internet_phone' ? 'text-white' : 'text-[#32ADE6]'"></i>
+                                        <i data-lucide="wifi" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'internet_phone' ? 'text-white' : 'text-[#32ADE6]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_internet_phone') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_internet_phone_desc') }}</span>
                                     </button>
@@ -419,7 +421,7 @@
                                     <button type="button" @click="category = 'supplies'"
                                         :class="category === 'supplies' ? 'bg-[#5856D6] text-white shadow-md shadow-[#5856D6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="package" class="w-4 h-4 mb-1.5" :class="category === 'supplies' ? 'text-white' : 'text-[#5856D6]'"></i>
+                                        <i data-lucide="package" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'supplies' ? 'text-white' : 'text-[#5856D6]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_supplies') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_supplies_desc') }}</span>
                                     </button>
@@ -427,7 +429,7 @@
                                     <button type="button" @click="category = 'salaries'"
                                         :class="category === 'salaries' ? 'bg-[#34C759] text-white shadow-md shadow-[#34C759]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="users" class="w-4 h-4 mb-1.5" :class="category === 'salaries' ? 'text-white' : 'text-[#34C759]'"></i>
+                                        <i data-lucide="users" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'salaries' ? 'text-white' : 'text-[#34C759]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_salaries') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_salaries_desc') }}</span>
                                     </button>
@@ -435,7 +437,7 @@
                                     <button type="button" @click="category = 'consumption'"
                                         :class="category === 'consumption' ? 'bg-[#FF2D55] text-white shadow-md shadow-[#FF2D55]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="utensils" class="w-4 h-4 mb-1.5" :class="category === 'consumption' ? 'text-white' : 'text-[#FF2D55]'"></i>
+                                        <i data-lucide="utensils" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'consumption' ? 'text-white' : 'text-[#FF2D55]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_consumption') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_consumption_desc') }}</span>
                                     </button>
@@ -443,7 +445,7 @@
                                     <button type="button" @click="category = 'logistics'"
                                         :class="category === 'logistics' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="truck" class="w-4 h-4 mb-1.5" :class="category === 'logistics' ? 'text-white' : 'text-[#FF9500]'"></i>
+                                        <i data-lucide="truck" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'logistics' ? 'text-white' : 'text-[#FF9500]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_logistics') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_logistics_desc') }}</span>
                                     </button>
@@ -451,7 +453,7 @@
                                     <button type="button" @click="category = 'rent'"
                                         :class="category === 'rent' ? 'bg-[#5856D6] text-white shadow-md shadow-[#5856D6]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="building-2" class="w-4 h-4 mb-1.5" :class="category === 'rent' ? 'text-white' : 'text-[#5856D6]'"></i>
+                                        <i data-lucide="building-2" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'rent' ? 'text-white' : 'text-[#5856D6]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_rent') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_rent_desc') }}</span>
                                     </button>
@@ -459,7 +461,7 @@
                                     <button type="button" @click="category = 'maintenance'"
                                         :class="category === 'maintenance' ? 'bg-[#AF52DE] text-white shadow-md shadow-[#AF52DE]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="wrench" class="w-4 h-4 mb-1.5" :class="category === 'maintenance' ? 'text-white' : 'text-[#AF52DE]'"></i>
+                                        <i data-lucide="wrench" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'maintenance' ? 'text-white' : 'text-[#AF52DE]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_maintenance') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_maintenance_desc') }}</span>
                                     </button>
@@ -467,7 +469,7 @@
                                     <button type="button" @click="category = 'marketing'"
                                         :class="category === 'marketing' ? 'bg-[#FF3B30] text-white shadow-md shadow-[#FF3B30]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="megaphone" class="w-4 h-4 mb-1.5" :class="category === 'marketing' ? 'text-white' : 'text-[#FF3B30]'"></i>
+                                        <i data-lucide="megaphone" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'marketing' ? 'text-white' : 'text-[#FF3B30]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_marketing') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_marketing_desc') }}</span>
                                     </button>
@@ -475,7 +477,7 @@
                                     <button type="button" @click="category = 'taxes_legal'"
                                         :class="category === 'taxes_legal' ? 'bg-[#8E8E93] text-white shadow-md shadow-[#8E8E93]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="scale" class="w-4 h-4 mb-1.5" :class="category === 'taxes_legal' ? 'text-white' : 'text-[#8E8E93]'"></i>
+                                        <i data-lucide="scale" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'taxes_legal' ? 'text-white' : 'text-[#8E8E93]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_taxes_legal') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_taxes_legal_desc') }}</span>
                                     </button>
@@ -483,7 +485,7 @@
                                     <button type="button" @click="category = 'bank_admin'"
                                         :class="category === 'bank_admin' ? 'bg-[#007AFF] text-white shadow-md shadow-[#007AFF]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="credit-card" class="w-4 h-4 mb-1.5" :class="category === 'bank_admin' ? 'text-white' : 'text-[#007AFF]'"></i>
+                                        <i data-lucide="credit-card" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'bank_admin' ? 'text-white' : 'text-[#007AFF]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_bank_admin') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_bank_admin_desc') }}</span>
                                     </button>
@@ -491,7 +493,7 @@
                                     <button type="button" @click="category = 'cash_advance'"
                                         :class="category === 'cash_advance' ? 'bg-[#FF9500] text-white shadow-md shadow-[#FF9500]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="hand-coins" class="w-4 h-4 mb-1.5" :class="category === 'cash_advance' ? 'text-white' : 'text-[#FF9500]'"></i>
+                                        <i data-lucide="hand-coins" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'cash_advance' ? 'text-white' : 'text-[#FF9500]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_cash_advance') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_cash_advance_desc') }}</span>
                                     </button>
@@ -499,7 +501,7 @@
                                     <button type="button" @click="category = 'other'"
                                         :class="category === 'other' ? 'bg-[#8E8E93] text-white shadow-md shadow-[#8E8E93]/25 border-transparent' : 'bg-white dark:bg-[#2C2C2E] text-black/80 dark:text-white/80 border-black/5 dark:border-white/10 hover:border-black/15'"
                                         class="p-2.5 sm:p-3 rounded-[14px] border text-left flex flex-col justify-between transition-all cursor-pointer">
-                                        <i data-lucide="more-horizontal" class="w-4 h-4 mb-1.5" :class="category === 'other' ? 'text-white' : 'text-[#8E8E93]'"></i>
+                                        <i data-lucide="more-horizontal" class="w-4 h-4 mb-1.5 shrink-0" :class="category === 'other' ? 'text-white' : 'text-[#8E8E93]'"></i>
                                         <span class="text-[12px] font-bold">{{ __('finance.cat_other') }}</span>
                                         <span class="text-[10px] opacity-70">{{ __('finance.cat_other_desc') }}</span>
                                     </button>
@@ -520,11 +522,11 @@
                                 {{-- Quick Suggestion Pills --}}
                                 <div class="flex flex-wrap items-center gap-2 pt-1">
                                     <span class="text-[11.5px] text-black/45 dark:text-white/45 font-medium">{{ __('finance.quick_amount') }}</span>
-                                    <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 50.000</button>
-                                    <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 100.000</button>
-                                    <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 250.000</button>
-                                    <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 500.000</button>
-                                    <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer">+ 1.000.000</button>
+                                    <button type="button" @click="setQuickAmount(50000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 50.000</button>
+                                    <button type="button" @click="setQuickAmount(100000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 100.000</button>
+                                    <button type="button" @click="setQuickAmount(250000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 250.000</button>
+                                    <button type="button" @click="setQuickAmount(500000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 500.000</button>
+                                    <button type="button" @click="setQuickAmount(1000000)" class="min-h-[32px] px-2.5 py-1 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-[12px] font-semibold text-black/75 dark:text-white/75 transition cursor-pointer whitespace-nowrap">+ 1.000.000</button>
                                 </div>
                             </div>
 
@@ -680,19 +682,19 @@
                     <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-5 border-t border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E] sticky bottom-0 z-20">
                         <button type="button" @click="showCreateModal = false"
                             :disabled="isSubmitting"
-                            class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 active:opacity-70 transition-all cursor-pointer">
+                            class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 active:opacity-70 transition-all cursor-pointer whitespace-nowrap">
                             {{ __('common.cancel') }}
                         </button>
                         <button type="submit"
                             :disabled="isSubmitting"
-                            class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(255,59,48,0.35)] flex items-center justify-center gap-2 cursor-pointer">
+                            class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.98] transition-all shadow-[0_4px_16px_rgba(255,59,48,0.35)] flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap">
                             <template x-if="isSubmitting">
-                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                                 </svg>
                             </template>
-                            <i data-lucide="check" class="w-4 h-4" x-show="!isSubmitting"></i>
+                            <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!isSubmitting"></i>
                             <span x-text="isSubmitting ? '{{ __('finance.saving_expense') }}' : '{{ __('finance.save_expense') }}'">{{ __('finance.save_expense') }}</span>
                         </button>
                     </div>

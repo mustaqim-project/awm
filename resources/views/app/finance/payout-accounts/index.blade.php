@@ -9,14 +9,14 @@
         subtitle="{{ __('finance.payout_accounts_subtitle') }}">
         @can('finance.cash_bank')
         <button type="button" @click="openAddModal()"
-            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap cursor-pointer">
+            <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i>
             <span>{{ __('finance.add_bank_account') }}</span>
         </button>
         @endcan
         <a href="{{ route('finance.settlements.index') }}"
-            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <i data-lucide="arrow-left" class="w-4 h-4 shrink-0"></i>
             <span>{{ __('finance.back_to_payout_hub') }}</span>
         </a>
     </x-module-header>
@@ -98,8 +98,11 @@
                             onsubmit="return confirm('{{ __('finance.confirm_delete_payout_account') }}')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="min-w-[44px] min-h-[44px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition cursor-pointer">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            <button type="submit"
+                                title="{{ __('common.delete') }}"
+                                aria-label="{{ __('common.delete') }}"
+                                class="min-w-[44px] min-h-[44px] rounded-[10px] text-[#FF3B30] hover:bg-[#FF3B30]/10 flex items-center justify-center transition cursor-pointer">
+                                <i data-lucide="trash-2" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </form>
                     </div>
@@ -116,8 +119,8 @@
                     {{ __('finance.empty_payout_accounts_desc') }}
                 </p>
                 <button type="button" @click="openAddModal()"
-                    class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition inline-flex items-center gap-2 shadow-sm">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    class="min-h-[44px] h-11 px-5 rounded-[12px] text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition inline-flex items-center gap-2 shadow-sm whitespace-nowrap cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_add_account_now') }}</span>
                 </button>
             </div>
@@ -164,8 +167,9 @@
                         </div>
                         <button type="button" @click="showModal = false"
                             class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full hover:bg-black/5 dark:hover:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 transition cursor-pointer"
+                            title="{{ __('common.close_modal') }}"
                             aria-label="{{ __('common.close_modal') }}">
-                            <i data-lucide="x" class="w-5 h-5"></i>
+                            <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
                         </button>
                     </div>
 
@@ -229,12 +233,12 @@
 
                     <div class="flex items-center gap-2">
                         <button type="button" @click="showModal = false"
-                            class="h-10 px-4 rounded-[12px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition">
+                            class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-[12px] text-xs font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition whitespace-nowrap cursor-pointer">
                             {{ __('common.cancel') }}
                         </button>
                         <button type="submit"
-                            class="h-10 px-5 rounded-[12px] text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition shadow-sm flex items-center gap-1.5">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            class="min-h-[44px] sm:min-h-0 h-10 px-5 rounded-[12px] text-xs font-bold text-white bg-[#007AFF] hover:bg-[#0062CC] active:scale-[0.98] transition shadow-sm flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+                            <i data-lucide="check-circle" class="w-4 h-4 shrink-0"></i>
                             <span>{{ __('finance.btn_verify_and_save') }}</span>
                         </button>
                     </div>

@@ -34,8 +34,8 @@
         :breadcrumbs="$breadcrumbs"
         :badge="$badgeHtml">
         <a href="{{ route('finance.settlements.index') }}"
-            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition flex items-center justify-center gap-1.5 active:scale-[0.98]">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] text-[13px] font-semibold text-black/70 dark:text-white/70 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition flex items-center justify-center gap-1.5 active:scale-[0.98] whitespace-nowrap">
+            <i data-lucide="arrow-left" class="w-4 h-4 shrink-0"></i>
             <span>{{ __('common.back_to_list') }}</span>
         </a>
     </x-module-header>
@@ -59,13 +59,13 @@
 
                 <div class="flex items-center gap-2">
                     <button type="button" @click="showProofModal = true"
-                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98] shadow-xs">
-                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12.5px] font-semibold flex items-center justify-center gap-1.5 transition active:scale-[0.98] shadow-xs whitespace-nowrap cursor-pointer">
+                        <i data-lucide="eye" class="w-4 h-4 shrink-0"></i>
                         <span>{{ __('finance.btn_view_photo_proof') }}</span>
                     </button>
                     <a href="{{ $settlement->proof_image_url }}" download="bukti-transfer-{{ $settlement->settlement_number }}.jpg" target="_blank"
-                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-1.5 transition active:scale-[0.98]">
-                        <i data-lucide="download" class="w-4 h-4"></i>
+                        class="min-h-[44px] h-11 sm:h-10 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black dark:text-white text-[12.5px] font-semibold flex items-center justify-center gap-1.5 transition active:scale-[0.98] whitespace-nowrap cursor-pointer">
+                        <i data-lucide="download" class="w-4 h-4 shrink-0"></i>
                         <span>{{ __('finance.btn_download_receipt') }}</span>
                     </a>
                 </div>
@@ -284,22 +284,24 @@
                             </div>
                             <button @click="showProofModal = false"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/60 dark:text-white/60 hover:bg-black/10 transition cursor-pointer"
+                                title="{{ __('common.close_modal') }}"
                                 aria-label="{{ __('common.close_modal') }}">
-                                <i data-lucide="x" class="w-5 h-5"></i>
+                                <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
                             </button>
                         </div>
                         <div class="flex-1 overflow-auto flex items-center justify-center bg-black/[0.03] dark:bg-white/[0.03] rounded-[16px] p-2">
                             <img src="{{ $settlement->proof_image_url }}" alt="{{ __('admin.bukti_transfer') }}" class="max-h-[65vh] w-auto object-contain rounded-[12px] shadow-sm">
                         </div>
-                        <div class="flex items-center justify-between pt-2">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
                             <span class="text-xs text-black/50 dark:text-white/50">{{ __('finance.transferred_at_prefix') }}: {{ $settlement->transferred_at?->translatedFormat('d M Y, H:i') }} WIB</span>
-                            <div class="flex gap-2">
+                            <div class="flex items-center gap-2">
                                 <a href="{{ $settlement->proof_image_url }}" download="bukti-transfer-{{ $settlement->settlement_number }}.jpg" target="_blank"
-                                    class="h-9 px-4 rounded-[12px] bg-[#007AFF] text-white text-xs font-semibold flex items-center gap-1.5 hover:bg-[#0071E3] transition">
-                                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] bg-[#007AFF] text-white text-xs font-semibold flex items-center justify-center gap-1.5 hover:bg-[#0071E3] transition whitespace-nowrap cursor-pointer">
+                                    <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
                                     <span>{{ __('finance.btn_download_file') }}</span>
                                 </a>
-                                <button type="button" @click="showProofModal = false" class="h-9 px-4 rounded-[12px] bg-black/5 dark:bg-white/10 text-black dark:text-white text-xs font-semibold hover:bg-black/10 transition">
+                                <button type="button" @click="showProofModal = false"
+                                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[12px] bg-black/5 dark:bg-white/10 text-black dark:text-white text-xs font-semibold hover:bg-black/10 transition whitespace-nowrap cursor-pointer">
                                     {{ __('common.close') }}
                                 </button>
                             </div>

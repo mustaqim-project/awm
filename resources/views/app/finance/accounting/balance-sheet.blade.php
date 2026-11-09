@@ -19,23 +19,23 @@
             </form>
             @if (\App\Support\Context::hasPermission('accounting.manage'))
                 <button type="button" @click="showOpeningModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] cursor-pointer"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] cursor-pointer whitespace-nowrap"
                     title="{{ __('finance.import_opening_balance_tooltip') }}">
-                    <i data-lucide="upload" class="w-4 h-4"></i>
+                    <i data-lucide="upload" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_import_opening_balance') }}</span>
                 </button>
             @endif
             @can('accounting.view')
             <a id="btnBalanceSheetExportExcel" href="{{ route('finance.balance-sheet.export-excel', ['as_of_date' => $asOfDate->toDateString()]) }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-xs whitespace-nowrap"
                 title="{{ __('finance.export_balance_sheet_tooltip') }}">
-                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759]"></i>
+                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#34C759] shrink-0"></i>
                 <span>{{ __('common.export_excel') }}</span>
             </a>
             @endcan
             <button type="button" onclick="window.print()"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5">
-                <i data-lucide="printer" class="w-4 h-4"></i>
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <i data-lucide="printer" class="w-4 h-4 shrink-0"></i>
                 <span>{{ __('common.print') }}</span>
             </button>
         </x-module-header>
@@ -81,12 +81,12 @@
                     <div class="mt-1.5 flex items-center gap-1.5">
                         @if($sheet['summary']['is_balanced'])
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]">
-                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 shrink-0"></i>
                                 {{ __('finance.balanced_valid_100') }}
                             </span>
                         @else
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FF3B30]/12 text-[#C41E17] dark:text-[#FF453A]">
-                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
                                 {{ __('finance.difference_amount', ['amount' => 'Rp ' . number_format(abs($sheet['summary']['difference']), 0, ',', '.')]) }}
                             </span>
                         @endif
@@ -96,7 +96,7 @@
                     </p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] {{ $sheet['summary']['is_balanced'] ? 'bg-[#34C759]/10 text-[#34C759]' : 'bg-[#FF3B30]/10 text-[#FF3B30]' }} flex items-center justify-center shrink-0">
-                    <i data-lucide="{{ $sheet['summary']['is_balanced'] ? 'shield-check' : 'alert-circle' }}" class="w-5 h-5"></i>
+                    <i data-lucide="{{ $sheet['summary']['is_balanced'] ? 'shield-check' : 'alert-circle' }}" class="w-5 h-5 shrink-0"></i>
                 </div>
             </div>
         </div>
@@ -336,8 +336,9 @@
 
                             <button type="button" @click="if (!openingExecuting) showOpeningModal = false"
                                 class="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
-                                aria-label="{{ __('common.close_modal') }}">
-                                <i data-lucide="x" class="w-5 h-5"></i>
+                                aria-label="{{ __('common.close_modal') }}"
+                                title="{{ __('common.close_modal') }}">
+                                <i data-lucide="x" class="w-5 h-5 shrink-0"></i>
                             </button>
                         </div>
 
@@ -360,14 +361,14 @@
                         <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div class="space-y-1">
                                 <div class="flex items-center gap-2 text-[#B26A00] dark:text-[#FF9F0A] font-bold text-[13px]">
-                                    <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold">1</span>
+                                    <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold shrink-0">1</span>
                                     <span>{{ __('finance.step_1_download_template_title') }}</span>
                                 </div>
                                 <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('finance.step_1_download_template_desc') }}</p>
                             </div>
                             <a href="{{ route('finance.balance-sheet.opening-template') }}"
-                               class="h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98]">
-                                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                               class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98] whitespace-nowrap">
+                                <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
                                 <span>{{ __('finance.btn_download_template_xlsx') }}</span>
                             </a>
                         </div>
@@ -436,34 +437,34 @@
 
                         <!-- Table -->
                         <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
-                            <div class="max-h-[380px] overflow-y-auto">
-                                <table class="w-full text-left text-[12px] border-collapse">
+                            <div class="max-h-[380px] overflow-auto">
+                                <table class="w-full text-left text-[12px] border-collapse min-w-[640px]">
                                     <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
                                         <tr>
-                                            <th class="py-2.5 px-3 w-16 text-center">{{ __('common.status') }}</th>
-                                            <th class="py-2.5 px-3">{{ __('finance.col_account_code') }}</th>
-                                            <th class="py-2.5 px-3">{{ __('finance.col_account_name') }}</th>
-                                            <th class="py-2.5 px-3">{{ __('finance.col_classification') }}</th>
-                                            <th class="py-2.5 px-3 text-right">{{ __('finance.col_debit_rp') }}</th>
-                                            <th class="py-2.5 px-3 text-right">{{ __('finance.col_credit_rp') }}</th>
-                                            <th class="py-2.5 px-3">{{ __('finance.col_diagnostic_notes') }}</th>
+                                            <th class="py-2.5 px-3 w-16 text-center whitespace-nowrap">{{ __('common.status') }}</th>
+                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_code') }}</th>
+                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_name') }}</th>
+                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_classification') }}</th>
+                                            <th class="py-2.5 px-3 text-right whitespace-nowrap">{{ __('finance.col_debit_rp') }}</th>
+                                            <th class="py-2.5 px-3 text-right whitespace-nowrap">{{ __('finance.col_credit_rp') }}</th>
+                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_diagnostic_notes') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
                                         <template x-for="(row, idx) in (openingPreview ? openingPreview.rows : [])" :key="idx">
                                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
-                                                <td class="py-2.5 px-3 text-center">
+                                                <td class="py-2.5 px-3 text-center whitespace-nowrap">
                                                     <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">{{ __('finance.badge_ready') }}</span>
                                                     <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">{{ __('finance.badge_error') }}</span>
                                                 </td>
-                                                <td class="py-2.5 px-3 font-mono font-bold text-black dark:text-white" x-text="row.account_code || '-'"></td>
-                                                <td class="py-2.5 px-3 font-medium text-black dark:text-white" x-text="row.account_name || '-'"></td>
-                                                <td class="py-2.5 px-3 text-black/70 dark:text-white/70">
+                                                <td class="py-2.5 px-3 font-mono font-bold text-black dark:text-white whitespace-nowrap" x-text="row.account_code || '-'"></td>
+                                                <td class="py-2.5 px-3 font-medium text-black dark:text-white min-w-[140px]" x-text="row.account_name || '-'"></td>
+                                                <td class="py-2.5 px-3 text-black/70 dark:text-white/70 whitespace-nowrap">
                                                     <span class="inline-block uppercase text-[10px] px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/5 font-semibold" x-text="row.type || '-'"></span>
                                                 </td>
-                                                <td class="py-2.5 px-3 text-right font-mono font-bold text-black dark:text-white" x-text="row.debit > 0 ? formatCurrency(row.debit) : '-'"></td>
-                                                <td class="py-2.5 px-3 text-right font-mono font-bold text-black dark:text-white" x-text="row.credit > 0 ? formatCurrency(row.credit) : '-'"></td>
-                                                <td class="py-2.5 px-3">
+                                                <td class="py-2.5 px-3 text-right font-mono font-bold text-black dark:text-white whitespace-nowrap" x-text="row.debit > 0 ? formatCurrency(row.debit) : '-'"></td>
+                                                <td class="py-2.5 px-3 text-right font-mono font-bold text-black dark:text-white whitespace-nowrap" x-text="row.credit > 0 ? formatCurrency(row.credit) : '-'"></td>
+                                                <td class="py-2.5 px-3 min-w-[160px]">
                                                     <div class="space-y-0.5">
                                                         <template x-for="(msg, mi) in row.messages" :key="mi">
                                                             <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'" x-text="msg"></div>
@@ -482,28 +483,32 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528] gap-3">
                     <div>
                         <button type="button" x-show="openingPreview" @click="resetOpening()"
-                            class="h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5"
+                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
                             :disabled="openingExecuting">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            <i data-lucide="refresh-cw" class="w-4 h-4 shrink-0"></i>
                             <span>{{ __('finance.btn_change_file') }}</span>
                         </button>
                     </div>
 
                     <div class="flex items-center gap-2.5">
                         <button type="button" @click="if (!openingExecuting) showOpeningModal = false"
-                            class="h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer"
+                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer whitespace-nowrap"
                             :disabled="openingExecuting">
                             {{ __('common.cancel') }}
                         </button>
 
                         <button type="button" x-show="openingPreview" @click="executeOpeningImport()"
-                            class="h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                             :disabled="openingExecuting || !openingPreview || !openingPreview.is_balanced || openingPreview.valid_count === 0">
-                            <i data-lucide="loader" class="w-4 h-4 animate-spin" x-show="openingExecuting"></i>
-                            <i data-lucide="check" class="w-4 h-4" x-show="!openingExecuting"></i>
+                            <i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0" x-show="openingExecuting"></i>
+                            <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!openingExecuting"></i>
+                            <span x-text="openingExecuting ? '{{ __('finance.btn_committing') }}' : ('{{ __('finance.btn_commit_opening_journal', ['count' => '']) }}'.replace(':count', (openingPreview ? openingPreview.valid_count : 0)))"></span>
+                        </button>
+                    </div>
+                </div>
                             <span x-text="openingExecuting ? '{{ __('finance.btn_committing') }}' : ('{{ __('finance.btn_commit_opening_journal', ['count' => '']) }}'.replace(':count', (openingPreview ? openingPreview.valid_count : 0)))"></span>
                         </button>
                     </div>
