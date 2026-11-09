@@ -82,6 +82,14 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" ]; then
     touch "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" 2>/dev/null || true
 fi
 
+# Auto-deploy & publish LinkedIn Feed Infographic (Cooca LinkedIn Feed Publisher)
+if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_linkedin_feed_20261109.lock" ]; then
+    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
+    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-feed-linkedin --spec-json=storage/app/public/content-assets/spec-cooca-feed-linkedin.json >> "$SCRIPT_DIR/storage/logs/linkedin_feed_deploy.log" 2>&1 || true
+    "$PHP_BIN" artisan social-media:publish-scheduled >> "$SCRIPT_DIR/storage/logs/social-media.log" 2>&1 || true
+    touch "$SCRIPT_DIR/storage/framework/deploy_linkedin_feed_20261109.lock" 2>/dev/null || true
+fi
+
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
 
