@@ -501,6 +501,24 @@ def main():
         "evaluated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
         "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
+        "brand_design_theme": {
+            "background": "dark_blue",
+            "background_hex": "#070B19",
+            "text_color": "white",
+            "text_color_hex": "#FFFFFF",
+            "accent_colors": ["#38BDF8", "#2563EB", "#10B981", "#EF4444"],
+            "logo_required": True,
+            "logo_path": "public/assets/image/1785229034_logo_light.png",
+            "renderer_engine": "mcp_canva",
+            "rules": [
+                "Latar belakang wajib Dark Blue / Deep Navy (#070B19 atau #0A1128)",
+                "Tipografi dan teks utama wajib White (#FFFFFF) dengan kontras tajam",
+                "Wajib menyertakan Logo Resmi COOCA di header/sudut atas desain",
+                "Aksen visual menggunakan Cyan Blue (#38BDF8) dan Emerald (#10B981)",
+                "Dilarang background putih polos atau warna-warni non-brand"
+            ]
+        },
+        "canva_mcp_prompt_brief": f"Create modern {content_format} in Indonesian for COOCA. Theme: Dark Blue background (#070B19) and crisp White typography (#FFFFFF) with electric cyan accents. Official COOCA Logo included at top. Topic: {synthesized['topic_name']}. Headline: {synthesized['hook_title']}.",
     }
 
     print("====================================================================")
