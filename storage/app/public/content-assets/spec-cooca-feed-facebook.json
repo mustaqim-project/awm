@@ -25,7 +25,107 @@
       "tag": "Diskusi Komunitas"
     }
   ],
-  "evaluated_at": "2026-11-09 15:29:59",
+  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (FACEBOOK)",
+  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "audience_research": {
+    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
+    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
+    "operational_stage": "Modernisasi operasional harian",
+    "persona": {
+      "role": "Pemilik Usaha",
+      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
+      "tech_savviness": "Menengah",
+      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
+    },
+    "pain_points": {
+      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
+      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
+      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
+      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
+      "knowledge_gap": "Penerapan sistem digital terpadu"
+    },
+    "behavior_and_preferences": {
+      "headline_triggers": "Solusi praktis dan tips operasional langsung",
+      "preferred_content_style": "Infografis edukatif dan terstruktur",
+      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
+    }
+  },
+  "content_strategy": {
+    "core_problem": "Dilema kas bon hutang pelanggan yang menumpuk dan macet",
+    "educational_objective": "Memberikan wawasan aplikatif seputar Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
+    "content_angle": "Operational Awareness",
+    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
+    "practical_takeaways": [
+      "Gunakan pencatatan otomatis",
+      "Terapkan SOP harian",
+      "Evaluasi berkala"
+    ],
+    "cooca_organic_link": "Solusi Struk Digital & Broadcast WhatsApp (/whatsapp) COOCA",
+    "audience_relevance_score": 95.0,
+    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens FACEBOOK dalam mengoptimalkan pengelolaan bisnis ritel"
+  },
+  "caption_strategy": {
+    "opening_hook": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
+    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
+    "educational_value": "Edukasi praktis langkah demi langkah.",
+    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
+    "cooca_solution": "Informasi lebih lanjut di https://cooca.id/whatsapp",
+    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
+    "hashtags": [
+      "#TipsBisnis",
+      "#ManajemenToko",
+      "#UMKM",
+      "#COOCA"
+    ]
+  },
+  "quality_control": {
+    "research_validation": "PASSED",
+    "audience_validation": "PASSED",
+    "content_validation": "PASSED",
+    "caption_validation": "PASSED",
+    "product_relevance_validation": "PASSED",
+    "originality_validation": "PASSED",
+    "overall_status": "READY_FOR_DEPLOYMENT"
+  },
+  "evaluated_at": "2026-11-09 16:39:49",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
+  "brand_design_theme": {
+    "background": "dark_blue",
+    "background_hex": "#070B19",
+    "text_color": "white",
+    "text_color_hex": "#FFFFFF",
+    "accent_colors": [
+      "#38BDF8",
+      "#2563EB",
+      "#0284C7",
+      "#EF4444"
+    ],
+    "logo_required": true,
+    "logo_path": "public/assets/image/1785229034_logo_dark.png",
+    "renderer_engine": "mcp_canva",
+    "typography": {
+      "font_family": "Plus Jakarta Sans",
+      "headline": "Plus Jakarta Sans Bold / ExtraBold",
+      "subheadline": "Plus Jakarta Sans SemiBold",
+      "body": "Plus Jakarta Sans Regular / Medium",
+      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
+      "cta": "Plus Jakarta Sans Bold",
+      "advantages": [
+        "Modern dan profesional",
+        "Sangat nyaman dibaca dalam Bahasa Indonesia",
+        "Memiliki karakter teknologi tanpa terlihat kaku",
+        "Cocok untuk headline, isi carousel, hingga angka harga"
+      ]
+    },
+    "rules": [
+      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
+      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
+      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
+      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
+      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
+      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
+    ]
+  },
+  "canva_mcp_prompt_brief": "Create modern feed in Indonesian for COOCA. Theme: White & Blue identity (Pure White #FFFFFF & Cooca Blue #2563EB, #0A1128, strictly NO green) using Plus Jakarta Sans font hierarchy (Bold headline, SemiBold subheadline, Regular body text, Bold numbers & CTA) with electric cyan accents. Official COOCA Dark Logo (1785229034_logo_dark.png) included at top. Topic: Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang. Headline: Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut."
 }
