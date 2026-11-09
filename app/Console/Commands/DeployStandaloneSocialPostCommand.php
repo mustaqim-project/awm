@@ -22,7 +22,7 @@ class DeployStandaloneSocialPostCommand extends Command
     protected $signature = 'cooca:deploy-standalone-post
                             {--automation-id= : Unique Automation ID (e.g. cooca-carousel-linkedin)}
                             {--spec-json= : Path to evaluated spec JSON file}
-                            {--start-date=2026-11-09 : Target posting date (format YYYY-MM-DD)}
+                            {--start-date= : Target posting date (format YYYY-MM-DD, defaults to today)}
                             {--time= : Override posting time (format HH:mm)}
                             {--force : Force replace existing post for this specific automation}';
 

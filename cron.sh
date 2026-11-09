@@ -19,6 +19,7 @@
 # ==============================================================================
 
 set -e
+export TZ="Asia/Jakarta"
 
 # Resolve directory of this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
