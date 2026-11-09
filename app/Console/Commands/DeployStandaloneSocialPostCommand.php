@@ -77,9 +77,10 @@ class DeployStandaloneSocialPostCommand extends Command
         $this->info("  Aturan: Bebas nama usaha & bebas nama user (Universal Educational)");
         $this->info('====================================================================');
 
-        // ISOLASI TOTAL: Hanya hapus postingan yang secara spesifik berasal dari automation_id atau slot_label ini
+        // ISOLASI TOTAL: Hanya hapus postingan yang belum tayang (scheduled/draft) dari automation_id atau slot_label ini
         SocialPostMedia::whereHas('post', function ($q) use ($automationId, $slotLabel) {
             $q->where('is_platform', true)
+              ->whereIn('status', ['scheduled', 'draft'])
               ->where(function ($sub) use ($automationId, $slotLabel) {
                   $sub->whereJsonContains('metrics->automation_id', $automationId)
                       ->orWhereJsonContains('metrics->slot_label', $slotLabel);
@@ -88,6 +89,7 @@ class DeployStandaloneSocialPostCommand extends Command
 
         SocialPostTarget::whereHas('post', function ($q) use ($automationId, $slotLabel) {
             $q->where('is_platform', true)
+              ->whereIn('status', ['scheduled', 'draft'])
               ->where(function ($sub) use ($automationId, $slotLabel) {
                   $sub->whereJsonContains('metrics->automation_id', $automationId)
                       ->orWhereJsonContains('metrics->slot_label', $slotLabel);
@@ -95,6 +97,7 @@ class DeployStandaloneSocialPostCommand extends Command
         })->delete();
 
         SocialMediaPost::where('is_platform', true)
+            ->whereIn('status', ['scheduled', 'draft'])
             ->where(function ($sub) use ($automationId, $slotLabel) {
                 $sub->whereJsonContains('metrics->automation_id', $automationId)
                     ->orWhereJsonContains('metrics->slot_label', $slotLabel);

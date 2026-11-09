@@ -82,41 +82,31 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" ]; then
     touch "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" 2>/dev/null || true
 fi
 
-# Auto-deploy & publish LinkedIn Feed Infographic (Cooca LinkedIn Feed Publisher)
-if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_linkedin_feed_20261109.lock" ]; then
-    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
-    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-feed-linkedin --spec-json=storage/app/public/content-assets/spec-cooca-feed-linkedin.json >> "$SCRIPT_DIR/storage/logs/linkedin_feed_deploy.log" 2>&1 || true
-    "$PHP_BIN" artisan social-media:publish-scheduled >> "$SCRIPT_DIR/storage/logs/social-media.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/deploy_linkedin_feed_20261109.lock" 2>/dev/null || true
-fi
+# Auto-deploy all 9 daily social media automations on production (Cooca Multi-Platform Social Intelligence)
+TODAY="$(date '+%Y%m%d')"
 
-# Auto-deploy & publish Facebook Feed Infographic (Cooca Facebook Feed Publisher)
-if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_facebook_feed_20261109.lock" ]; then
-    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
-    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-feed-facebook --spec-json=storage/app/public/content-assets/spec-cooca-feed-facebook.json >> "$SCRIPT_DIR/storage/logs/facebook_feed_deploy.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/deploy_facebook_feed_20261109.lock" 2>/dev/null || true
-fi
+AUTOMATIONS=(
+    "cooca-daily-umkm-carousel"
+    "cooca-carousel-instagram"
+    "cooca-carousel-linkedin"
+    "cooca-carousel-facebook"
+    "cooca-carousel-tiktok"
+    "cooca-feed-instagram"
+    "cooca-feed-linkedin"
+    "cooca-feed-facebook"
+    "cooca-feed-tiktok"
+)
 
-# Auto-deploy & publish Instagram Feed Infographic (Cooca Instagram Feed Publisher)
-if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_instagram_feed_20261109.lock" ]; then
-    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
-    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-feed-instagram --spec-json=storage/app/public/content-assets/spec-cooca-feed-instagram.json >> "$SCRIPT_DIR/storage/logs/instagram_feed_deploy.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/deploy_instagram_feed_20261109.lock" 2>/dev/null || true
-fi
+"$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
 
-# Auto-deploy & publish Instagram Carousel (Cooca Instagram Carousel Publisher via Canva)
-if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_instagram_carousel_20261109.lock" ]; then
-    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
-    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-carousel-instagram --spec-json=storage/app/public/content-assets/spec-cooca-carousel-instagram.json >> "$SCRIPT_DIR/storage/logs/instagram_carousel_deploy.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/deploy_instagram_carousel_20261109.lock" 2>/dev/null || true
-fi
-
-# Auto-deploy & publish Facebook Carousel (Cooca Facebook Carousel Publisher via Canva)
-if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_facebook_carousel_20261109.lock" ]; then
-    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
-    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-carousel-facebook --spec-json=storage/app/public/content-assets/spec-cooca-carousel-facebook.json >> "$SCRIPT_DIR/storage/logs/facebook_carousel_deploy.log" 2>&1 || true
-    touch "$SCRIPT_DIR/storage/framework/deploy_facebook_carousel_20261109.lock" 2>/dev/null || true
-fi
+for AUTO_ID in "${AUTOMATIONS[@]}"; do
+    LOCK_FILE="$SCRIPT_DIR/storage/framework/deploy_${AUTO_ID}_${TODAY}.lock"
+    SPEC_FILE="$SCRIPT_DIR/storage/app/public/content-assets/spec-${AUTO_ID}.json"
+    if [ ! -f "$LOCK_FILE" ] && [ -f "$SPEC_FILE" ]; then
+        "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id="$AUTO_ID" --spec-json="storage/app/public/content-assets/spec-${AUTO_ID}.json" >> "$SCRIPT_DIR/storage/logs/${AUTO_ID}_deploy.log" 2>&1 || true
+        touch "$LOCK_FILE" 2>/dev/null || true
+    fi
+done
 
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
