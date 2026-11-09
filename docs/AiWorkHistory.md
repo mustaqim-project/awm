@@ -24329,3 +24329,35 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 
 
 
+
+
+### [WORK-2026-11-10-374] COOCA LinkedIn Carousel Publisher (cooca-carousel-linkedin)
+- **Timestamp:** 2026-11-10T06:35:00+07:00
+- **Audited Target:** `scripts/social-automation/instructions/cooca-carousel-linkedin.md`, `storage/app/public/content-assets/spec-cooca-carousel-linkedin.json`, Canva MCP `canva_canva`, `storage/app/public/admin/social-media-assets/carousel/linkedin/`, `DeployStandaloneSocialPostCommand.php`.
+- **Work Type:** Dynamic B2B Trend Research | Audience Intelligence | Canva MCP Integration & Lossless Export | Anti-Duplication Enforcement | Automated Social Media Deployment
+
+#### 1. Business Context & Objective
+- Mengeksekusi tugas otomasi konten LinkedIn Carousel COOCA (`cooca-carousel-linkedin`) untuk slot jam tayang viral B2B resmi (08:00 WIB, 10 November 2026).
+- Menerapkan arsitektur Audience-First, Content-Second, Data & Conversion-Driven untuk menghasilkan dokumen carousel multi-slide 1080x1080 px profesional berbobot B2B tinggi.
+- Mematuhi aturan Zero Reuse & Anti-Duplikasi: mengecek riwayat konten sebelumnya (`storage/app/public/content-assets/content_history.json`), memilih topik baru yang 100% segar seputar **Dead Stock & Erosi Modal Kerja (Working Capital Management & Cash Conversion Cycle)**, bebas nama usaha/user fiktif ("Toko Kamu"), dan zero em dash/en dash.
+- Mengintegrasikan Canva MCP (`canva_canva`) untuk kloning template carousel 5 slide (`DAHadzz3LHU`), menyunting seluruh teks, melakukan commit transaksi permanen (`7550806455061936139`), serta mengekspor format PDF dokumen dan PNG lossless resolusi tinggi ke direktori aset sistem.
+
+#### 2. Execution & Key Results
+1. **Dynamic Trend & Audience Intelligence:**
+   - *Topik:* Dead Stock & Erosi Modal Kerja: Mengapa 30% Modal Bisnis Ritel Terkunci di Rak Gudang?
+   - *Hook:* Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering?
+   - *Primary Audience:* Operations Director, Finance Manager, Business Owner, Chief Operating Officer (COO).
+   - *Virality Score:* **96.2 / 100** (Passed gate >= 85.0).
+   - *Feature Mapping:* Manajemen Stok & Valuasi HPP COOCA (`/inventory/stocks`).
+2. **Canva MCP Production & Lossless Export:**
+   - *Design ID:* `DAHadzz3LHU` (view: `https://www.canva.com/d/iBIDLi5y892i_XF`, edit: `https://www.canva.com/d/aDrq8Y3arlEyI-o`).
+   - *Penyuntingan Konten:* Memperbarui teks 5 slide secara komprehensif mencakup hook Paper Profit Illusion, 3 titik kritis pengadaan, framework Analisis ABC & DIO, otomasi pemotongan stok kasir POS 0 detik, serta roadmap aksi.
+   - *Ekspor Aset:* Berhasil mengunduh `carousel-linkedin.pdf` (5.95 MB) dan 5 slide PNG lossless (`slide-01.png` s/d `slide-05.png`, ~1 MB per slide) ke `storage/app/public/admin/social-media-assets/carousel/linkedin/` dan `public/admin/social-media-assets/carousel/linkedin/`.
+3. **Database Deployment:**
+   - Berhasil mendistribusikan ke database via `php artisan cooca:deploy-standalone-post --automation-id cooca-carousel-linkedin --spec-json storage/app/public/content-assets/spec-cooca-carousel-linkedin.json`.
+   - Post ID: `83f1ced7-ea59-4a62-a5b9-6afe77342959` | Status: `scheduled` | Jadwal: 10 Nov 2026 08:00 WIB | Media count: 5 slide terdaftar di `SocialPostMedia` & target `linkedin` terdaftar di `SocialPostTarget`.
+
+#### 3. Automated Verification & Testing
+- **Automated Feature Tests:**
+  `php artisan test tests/Feature/SocialMedia/LinkedInOAuthAndPublishingTest.php tests/Feature/Admin/AdminSocialMediaPlatformContentTest.php` -> **14 passed, 75 assertions (100% Success)**.
+- **Production Gate:** **PASSED (Production Hardened, Zero Slop, Verified Media & Schedule)**.

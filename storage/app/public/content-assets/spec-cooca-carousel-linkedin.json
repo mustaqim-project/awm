@@ -4,148 +4,141 @@
   "format": "carousel",
   "dimensions": "1080x1080",
   "target_time": "08:00",
-  "slot_label": "LinkedIn Morning Executive Carousel Deck",
-  "primary_feature": "multi_outlet",
-  "feature_name": "Multi-Cabang Dari 1 Layar HP",
-  "feature_route": "/warehouse",
-  "topic_name": "Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
-  "hook_title": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
-  "solution_summary": "Integrasi fitur Multi-Cabang Dari 1 Layar HP di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 95.5,
+  "slot_label": "LinkedIn Morning Executive Carousel Deck (K1 B2B)",
+  "primary_feature": "inventory",
+  "feature_name": "Manajemen Stok & Low-Stock Alert",
+  "feature_route": "/inventory/stocks",
+  "topic_name": "Dead Stock & Erosi Modal Kerja: Mengapa 30% Modal Bisnis Ritel Terkunci di Rak Gudang?",
+  "hook_title": "Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering?",
+  "solution_summary": "Penerapan analisis portofolio SKU ABC, Days Inventory Outstanding (DIO), dan sinkronisasi real-time kasir POS dengan kartu stok gudang di platform COOCA untuk menghentikan pembekuan modal kerja.",
+  "viral_score": 96.2,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 94.0,
-  "problem_urgency": 96.0,
+  "problem_urgency": 98.0,
   "platform_fit": 97.0,
   "cta_clarity": 95.0,
-  "caption": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?\n\nDalam fase ekspansi ritel dari single store menuju jaringan multi-outlet, tantangan terbesar para founder bukanlah permodalan, melainkan asimetri pengawasan operasional harian. Ketika pemilik tidak berada di lokasi, rentang kendali melemah dan margin laba rentan bocor.\n\nTiga pilar tata kelola wajib untuk menjaga stabilitas ekspansi ritel:\n1. Pembatasan Otorisasi Kasir: Staf hanya memproses transaksi, sementara pembatalan nota (void) dan diskon manual wajib otorisasi PIN Supervisor.\n2. Integrasi Mutasi Stok Real-Time: Pengiriman barang antar cabang tercatat otomatis dengan pemindaian barcode terpusat.\n3. Laporan Konsolidasi 1 Layar: Pemilik dapat memantau perputaran omzet dan profitabilitas setiap gerai tanpa harus berkeliling lokasi.\n\nSeluruh arsitektur tata kelola ritel multi-cabang ini diintegrasikan melalui modul Multi-Cabang Dari 1 Layar HP di platform COOCA: cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SOPRitel #EfisiensiOperasional #COOCA",
+  "canva_metadata": {
+    "design_id": "DAHadzz3LHU",
+    "edit_url": "https://www.canva.com/d/aDrq8Y3arlEyI-o",
+    "view_url": "https://www.canva.com/d/iBIDLi5y892i_XF",
+    "status": "committed",
+    "format": "Instagram Post (1080x1080 px)",
+    "export_format": "PNG Lossless & PDF Multi-Slide Document",
+    "pdf_document": "admin/social-media-assets/carousel/linkedin/carousel-linkedin.pdf"
+  },
+  "caption": "Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering? Anatomi Dead Stock pada Bisnis Ritel\n\nBagi para founder, direktur operasional, dan manajer keuangan di sektor ritel maupun distribusi, salah satu paradoks paling membingungkan adalah melihat laporan laba rugi bulanan yang hijau dan membanggakan, namun rekening operasional perusahaan justru terus mengalami krisis likuiditas saat harus membayar tagihan supplier atau gaji karyawan.\n\nFenomena ini dikenal sebagai Paper Profit Illusion, di mana keuntungan yang tercatat di atas kertas ternyata tidak berbentuk uang tunai cair, melainkan terkunci rapat dalam bentuk tumpukan kardus inventori di gudang atau rak pajang.\n\nBerdasarkan analisis operasional ritel modern, rata-rata 25% hingga 35% modal kerja bisnis terperangkap dalam kategori slow-moving atau dead stock akibat tiga kebiasaan lama:\n\n1. Jebakan Diskon Kuantitas Supplier\nMembeli pasokan barang dalam jumlah besar hanya demi mendapatkan potongan harga beberapa persen, tanpa memperhitungkan holding cost dan risiko perputaran barang yang melambat.\n\n2. Ketiadaan Visibilitas Penuaan Stok (Days Inventory Outstanding)\nBanyak bisnis tidak memiliki data akurat mengenai usia barang di rak. Barang yang sudah mengendap lebih dari 60 hari tanpa pergerakan otomatis menyerap biaya sewa gudang dan berisiko mengalami penyusutan nilai.\n\n3. Keterlambatan Rekonsiliasi Kasir dan Gudang\nTransaksi penjualan di meja kasir tidak langsung memotong kartu stok secara real-time, sehingga keputusan pengadaan barang baru kerap didasarkan pada perkiraan manual yang tidak akurat.\n\nBagaimana cara mengatasinya?\n\nKuncinya adalah menerapkan Prinsip Manajemen ABC dan Days Inventory Outstanding (DIO):\n- Klasifikasikan SKU ke dalam tiga kelompok: Produk A (80% kontribusi omzet), Produk B (15%), dan Produk C (5%).\n- Fokuskan modal kerja pada kelompok A dengan sistem pengadaan berkala yang ramping (lean reorder).\n- Hentikan pemesanan ulang untuk kelompok C yang perputarannya lambat dan segera lakukan strategi bundling atau flash sale untuk mencairkan kembali modal kerja.\n\nDi Cooca, seluruh pergerakan inventori dari meja kasir POS hingga gudang transit terhubung secara otomatis dan real-time. Anda dapat memantau valuasi stok, tingkat penuaan barang, dan notifikasi minimum stok langsung dari satu dashboard terpusat tanpa rekonsiliasi manual.\n\nBebaskan modal kerja bisnis Anda dari tumpukan barang mati. Pelajari manajemen inventori dan kasir modern di cooca.id.\n\nBagaimana strategi tim operasional Anda dalam mengidentifikasi dan mencairkan dead stock di gudang? Mari berdiskusi di kolom komentar.\n\n#ManajemenRitel #TataKelolaBisnis #ManajemenKeuangan #EfisiensiOperasional #ArusKas #InventoriGudang #CoocaERP",
   "slides": [
     {
       "slide": 1,
-      "title": "Audit Tata Kelola Ritel Multi-Cabang",
-      "tag": "Manajemen Ritel B2B"
+      "title": "Slide 1: Executive Financial & Inventory Audit - The Hook",
+      "tag": "Audit Finansial B2B",
+      "headline": "Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering?",
+      "subtitle": "Anatomi 30% modal kerja ritel yang membeku di tumpukan kardus rak gudang.",
+      "narrative": "Paper Profit Illusion: Laba tercatat di pembukuan, namun uang fisik tidak ada di rekening kas.",
+      "visual_direction": "Deep Midnight Navy (#070B19 ke #162B68), Logo resmi COOCA di header, kartu perbandingan laba kotor vs kas fisik riil."
     },
     {
       "slide": 2,
-      "title": "Friction Point: Kebocoran Wewenang Antar Gerai",
-      "tag": "Identifikasi Masalah"
+      "title": "Slide 2: Friction Points - 3 Kesalahan Fatal Pengadaan Barang",
+      "tag": "Diagnosa Titik Bocor",
+      "headline": "3 Titik Kritis Pengadaan Barang yang Membekukan Modal",
+      "subtitle": "Ketika pengadaan barang dilakukan atas dasar tebakan, bukan kecepatan perputaran kasir.",
+      "narrative": "Diskon kuantitas semu, ketiadaan klasifikasi fast-moving vs dead weight, dan stock opname yang terlambat.",
+      "visual_direction": "Bento stage dengan 3 kartu alert beraksen Crimson Alert (#EF4444) dan nomor urut 01, 02, 03."
     },
     {
       "slide": 3,
-      "title": "Prinsip Otorisasi Bertingkat: Kasir vs Supervisor",
-      "tag": "Standar SOP"
+      "title": "Slide 3: Framework - Audit Portofolio SKU dengan Prinsip ABC & DIO",
+      "tag": "Kerangka Kerja Manajemen",
+      "headline": "Audit Portofolio SKU dengan Prinsip Analisis ABC",
+      "subtitle": "Petakan seluruh portofolio SKU untuk mempercepat Days Inventory Outstanding (DIO).",
+      "narrative": "Kategori A (80% omzet toko) diprioritaskan, Kategori C (5% omzet) dihentikan PO-nya jika usia > 60 hari.",
+      "visual_direction": "Matriks tabel ABC terstruktur, aksen Cyan Glow (#38BDF8) dan Sapphire Blue (#2563EB)."
     },
     {
       "slide": 4,
-      "title": "Konsolidasi Mutasi Stok Gudang & Penjualan Real-Time",
-      "tag": "Otomasi Sistem"
+      "title": "Slide 4: System Solution - Kunci Mutasi Stok Otomatis dari Kasir",
+      "tag": "Otomasi Sistem Cloud",
+      "headline": "Kunci Mutasi Stok Otomatis dari Transaksi Kasir",
+      "subtitle": "Hubungkan kasir POS ke kartu stok gudang tanpa rekonsiliasi manual.",
+      "narrative": "Potong stok 0 detik saat scan kasir, notifikasi stok menipis, reduksi dead stock hingga 40%.",
+      "visual_direction": "Metrik KPI 0 Detik & 40% Reduksi Dead Stock dengan visual antarmuka sistem COOCA /inventory/stocks."
     },
     {
       "slide": 5,
-      "title": "Sentralisasi Kendali Multi-Outlet Bersama COOCA",
-      "tag": "Solusi Strategis"
+      "title": "Slide 5: Actionable Roadmap - 3 Langkah Bebaskan Modal Kerja",
+      "tag": "Langkah Implementasi",
+      "headline": "Mulai Audit Stok dan Bebaskan Modal Kerja Bisnis Anda",
+      "subtitle": "Kendalikan arus kas dan valuasi stok dengan sistem Cooca modern.",
+      "narrative": "Jalankan audit penuaan stok, kunci reorder point otomatis, dan mulai gratis di cooca.id Paket Solo Owner Rp 0.",
+      "visual_direction": "Kartu aksi 3 langkah terstruktur, badge Cooca Solo Owner Rp 0 Gratis Selamanya, CTA cooca.id."
     }
   ],
-  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (LINKEDIN)",
-  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "target_audience": "Founder, C-Level, Operations Director & Finance Manager (LINKEDIN)",
+  "target_audience_secondary": "Store Manager, Head of Warehouse & Inventory Controller",
   "audience_research": {
-    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
-    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
-    "operational_stage": "Modernisasi operasional harian",
+    "business_type": "Toko Retail Modern, F&B Multi-Outlet, Grosir/Distribusi, FMCG",
+    "business_scale": "Berkembang dari 2 hingga 10 gerai atau cabang gudang transit",
+    "operational_stage": "Fase ekspansi yang menghadapi tekanan modal kerja dan keterbatasan likuiditas kas",
     "persona": {
-      "role": "Pemilik Usaha",
-      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
-      "tech_savviness": "Menengah",
-      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
+      "role": "Operations Director / Finance Manager / Business Owner",
+      "daily_responsibilities": "Pengendalian arus kas, evaluasi purchase order supplier, dan mitigasi selisih inventori",
+      "tech_savviness": "Menengah ke Tinggi",
+      "decision_making_factors": "Efisiensi modal, perputaran uang tunai (Cash Conversion Cycle), dan keandalan data real-time"
     },
     "pain_points": {
-      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
-      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
-      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
-      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
-      "knowledge_gap": "Penerapan sistem digital terpadu"
+      "functional_pain": "Purchase order dilakukan secara manual tanpa data kecepatan penjualan riil per SKU",
+      "financial_pain": "Dana kas operasional tersedot membeli barang lambat laku sehingga tagihan supplier tersendat",
+      "emotional_pain": "Frustrasi melihat toko ramai pembeli namun saldo bank bisnis selalu pas-pasan",
+      "aspirational_needs": "Arus kas lancar, perputaran stok di bawah 30 hari, dan sistem audit otomatis",
+      "knowledge_gap": "Metodologi klasifikasi SKU Pareto ABC dan penghitungan Days Inventory Outstanding (DIO)"
     },
     "behavior_and_preferences": {
-      "headline_triggers": "Solusi praktis dan tips operasional langsung",
-      "preferred_content_style": "Infografis edukatif dan terstruktur",
-      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
+      "headline_triggers": "Wawasan finansial tajam, bedah masalah arus kas, dan framework eksekutif",
+      "preferred_content_style": "Document carousel B2B terstruktur, ringkas, data-backed, dan siap diteruskan ke tim manajemen",
+      "engagement_hooks": "Pertanyaan strategis seputar kebijakan stok dan pengalaman nyata mengelola likuiditas"
     }
   },
   "content_strategy": {
-    "core_problem": "Asimetri kontrol operasional saat ekspansi gerai ritel",
-    "educational_objective": "Memberikan wawasan aplikatif seputar Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
-    "content_angle": "Operational Awareness",
-    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
+    "core_problem": "Paper Profit Illusion dan pembekuan modal kerja akibat dead stock di rak toko dan gudang",
+    "educational_objective": "Memberikan kerangka kerja audit SKU ABC dan DIO untuk membebaskan modal kas yang mengendap",
+    "content_angle": "Executive Financial & Inventory Governance",
+    "key_message": "Keuntungan bisnis ritel baru terwujud saat barang terjual dan uang tunai masuk ke rekening kas, bukan saat barang menumpuk di gudang.",
     "practical_takeaways": [
-      "Gunakan pencatatan otomatis",
-      "Terapkan SOP harian",
-      "Evaluasi berkala"
+      "Petakan produk dengan Prinsip ABC (80% omzet didorong 20% SKU unggulan)",
+      "Pantau usia barang di rak: jika > 60 hari tanpa pergerakan, stop reorder dan lakukan bundling",
+      "Otomatisasi pemotongan stok langsung dari transaksi kasir POS secara real-time"
     ],
-    "cooca_organic_link": "Solusi Multi-Cabang Dari 1 Layar HP di COOCA",
-    "audience_relevance_score": 95.0,
-    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens LINKEDIN dalam mengoptimalkan pengelolaan bisnis UMKM"
+    "cooca_organic_link": "Modul Manajemen Stok & Valuasi HPP COOCA (/inventory/stocks)",
+    "audience_relevance_score": 97.0,
+    "content_audience_matching_justification": "Konten menjawab kegelisahan terbesar eksekutif ritel LinkedIn Indonesia yang membutuhkan kepastian likuiditas arus kas operasional."
   },
   "caption_strategy": {
-    "opening_hook": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
-    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
-    "educational_value": "Edukasi praktis langkah demi langkah.",
-    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
-    "cooca_solution": "Informasi lebih lanjut di cooca.id",
-    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
+    "opening_hook": "Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering? Anatomi Dead Stock pada Bisnis Ritel",
+    "audience_connection": "Bagi para founder, direktur operasional, dan manajer keuangan di sektor ritel maupun distribusi, krisis likuiditas sering kali bersumber dari pembekuan stok.",
+    "educational_value": "Edukasi mendalam tentang fenomena Paper Profit Illusion, 3 titik kritis pengadaan, dan metodologi Analisis ABC serta Days Inventory Outstanding.",
+    "practical_takeaway": "Terapkan reorder ramping untuk produk A, evaluasi produk B, dan hentikan PO produk C yang usianya melebihi 60 hari.",
+    "cooca_solution": "Seluruh mutasi terhubung otomatis dari kasir ke gudang transit di cooca.id.",
+    "engagement_cta": "Bagaimana strategi tim operasional Anda dalam mengidentifikasi dan mencairkan dead stock di gudang? Mari berdiskusi di kolom komentar.",
     "hashtags": [
-      "#TipsBisnis",
-      "#ManajemenToko",
-      "#UMKM",
-      "#COOCA"
+      "#ManajemenRitel",
+      "#TataKelolaBisnis",
+      "#ManajemenKeuangan",
+      "#EfisiensiOperasional",
+      "#ArusKas",
+      "#InventoriGudang",
+      "#CoocaERP"
     ]
   },
-  "quality_control": {
-    "research_validation": "PASSED",
-    "audience_validation": "PASSED",
-    "content_validation": "PASSED",
-    "caption_validation": "PASSED",
-    "product_relevance_validation": "PASSED",
-    "originality_validation": "PASSED",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-10 05:43:03",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Multi-slide square carousel (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic corporate retail management photography, modern store supervision, or multi-outlet operations analytics vividly representing business expansion). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B', bold headline 'Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
+  "publication_metadata": {
+    "content_title": "Dead Stock & Erosi Modal Kerja: Mengapa 30% Modal Bisnis Ritel Terkunci di Rak Gudang?",
+    "target_channel": "linkedin",
+    "format": "carousel",
+    "scheduled_at": "2026-11-10 08:00:00",
+    "slides_count": 5,
+    "identity_policy": "strictly_neutral_no_business_or_user_name",
+    "anti_slop_compliance": "PASS (0 em dash, 0 en dash, 0 fake claims, 0 video motion)",
+    "canva_integration_status": "COMMITTED & LOSSLESS_EXPORTED",
+    "deployed_by": "cooca-carousel-linkedin"
+  }
 }
