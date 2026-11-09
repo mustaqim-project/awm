@@ -66,7 +66,7 @@ class DeployStandaloneSocialPostCommand extends Command
         $viralScore = (float) ($spec['viral_score'] ?? 95.0);
         $slides = $spec['slides'] ?? [];
 
-        $startDateStr = (string) ($this->option('start-date') ?: '2026-11-09');
+        $startDateStr = (string) ($this->option('start-date') ?: now()->format('Y-m-d'));
         $timeStr = (string) ($this->option('time') ?: ($spec['target_time'] ?? '12:15'));
         $scheduledAtCarbon = Carbon::parse("{$startDateStr} {$timeStr}:00");
 
