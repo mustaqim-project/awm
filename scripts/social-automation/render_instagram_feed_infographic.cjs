@@ -27,7 +27,7 @@ const htmlContent = `<!DOCTYPE html>
 <meta charset="utf-8">
 <title>Cooca Instagram Feed Infographic</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 * {
   box-sizing: border-box;
@@ -148,7 +148,7 @@ body {
 }
 
 .main-title {
-  font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 34px;
   font-weight: 800;
   line-height: 1.22;
@@ -315,7 +315,7 @@ body {
 
 /* Solution Banner */
 .solution-banner {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(6, 78, 59, 0.28) 100%);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(14, 165, 233, 0.16) 100%);
   border: 1px solid rgba(37, 99, 235, 0.35);
   border-radius: 18px;
   padding: 16px 24px;
@@ -350,21 +350,21 @@ body {
 .sol-title {
   font-size: 16px;
   font-weight: 800;
-  color: #6EE7B7;
+  color: #38BDF8;
   letter-spacing: 0.3px;
   margin-bottom: 3px;
 }
 
 .sol-desc {
   font-size: 13px;
-  color: #D1FAE5;
+  color: #BAE6FD;
   font-weight: 500;
   line-height: 1.35;
 }
 
 .sol-badge {
   background: #2563EB;
-  color: #064E3B;
+  color: #FFFFFF;
   font-weight: 800;
   font-size: 12px;
   padding: 8px 16px;
@@ -516,7 +516,11 @@ body {
   <!-- Solution Banner -->
   <div class="solution-banner">
     <div class="sol-left">
-      <div class="sol-icon-box">🛡️</div>
+      <div class="sol-icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
       <div>
         <div class="sol-title">Solusi Sistematis: Otorisasi Bertingkat & Blind Balancing</div>
         <div class="sol-desc">Kunci akses kasir dengan PIN Supervisor, log pembatalan real-time, dan hitung kas tutup shift tanpa bocor saldo sistem.</div>
@@ -564,6 +568,16 @@ async function main() {
   const outputPath = path.join(outputDir, 'instagram-feed-fraud-prevention-1080x1080.png');
   console.log(`[Instagram Infographic] Rendering screenshot to: ${outputPath}`);
   await page.screenshot({ path: outputPath, type: 'png' });
+
+  const publicOutputDir = path.join(ROOT_DIR, 'public/storage/content-assets');
+  if (!fs.existsSync(publicOutputDir)) fs.mkdirSync(publicOutputDir, { recursive: true });
+  fs.copyFileSync(outputPath, path.join(publicOutputDir, 'instagram-feed-fraud-prevention-1080x1080.png'));
+
+  const artifactDir = 'C:/Users/Ulfah Ramadhani/.gemini/antigravity/brain/129c79f1-b78e-4b6b-a604-690a7bf322a9';
+  if (fs.existsSync(artifactDir)) {
+    fs.copyFileSync(outputPath, path.join(artifactDir, 'instagram-feed-fraud-prevention-1080x1080.png'));
+    console.log(`[Success] Copied to artifact directory: ${artifactDir}`);
+  }
 
   await browser.close();
   console.log('[Instagram Infographic] Render completed successfully! 1080x1080 px generated.');
