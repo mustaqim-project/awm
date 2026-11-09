@@ -30,6 +30,43 @@ from datetime import datetime
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 FEATURES_CATALOG_PATH = os.path.join(BASE_DIR, "scripts/social-automation/features-catalog.json")
 
+CONTENT_HISTORY_PATH = os.path.join(BASE_DIR, "storage/app/public/content-assets/content_history.json")
+
+def load_content_history() -> dict:
+    if os.path.exists(CONTENT_HISTORY_PATH):
+        try:
+            with open(CONTENT_HISTORY_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def record_content_history(automation_id: str, topic_name: str, hook_title: str, visual_style: str):
+    history = load_content_history()
+    if automation_id not in history:
+        history[automation_id] = []
+    history[automation_id].append({
+        "timestamp": datetime.now().isoformat(),
+        "topic_name": topic_name,
+        "hook_title": hook_title,
+        "visual_style": visual_style
+    })
+    # Keep last 50 entries per automation
+    history[automation_id] = history[automation_id][-50:]
+    os.makedirs(os.path.dirname(CONTENT_HISTORY_PATH), exist_ok=True)
+    with open(CONTENT_HISTORY_PATH, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+
+def is_content_already_used(automation_id: str, hook_title: str, topic_name: str) -> bool:
+    history = load_content_history()
+    entries = history.get(automation_id, [])
+    for e in entries:
+        if e.get("hook_title", "").strip().lower() == hook_title.strip().lower():
+            return True
+        if e.get("topic_name", "").strip().lower() == topic_name.strip().lower():
+            return True
+    return False
+
 # Mapping of Automations to their Primary COOCA Feature Domain & Channel Archetype
 AUTOMATION_PROFILES = {
     "cooca-carousel-linkedin": {
@@ -1542,6 +1579,7 @@ def main():
         with open(args.output_json, "w", encoding="utf-8") as f:
             json.dump(result_payload, f, indent=2, ensure_ascii=False)
         print(f"[JSON] Berhasil menulis spesifikasi viral dinamis ke: {args.output_json}")
+        record_content_history(args.automation_id, synthesized.get("topic_name", ""), synthesized.get("hook_title", ""), adaptive_visual)
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,43 @@
+{
+  "_info": "Master Content History to enforce 100% unique & non-repetitive content and designs across all automations",
+  "cooca-carousel-facebook": [
+    {
+      "timestamp": "2026-11-09T09:30:00+07:00",
+      "topic_name": "Piutang & Bon Pelanggan",
+      "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
+      "visual_style": "Community Advice Bento Grid"
+    }
+  ],
+  "cooca-carousel-instagram": [
+    {
+      "timestamp": "2026-11-09T15:57:00+07:00",
+      "topic_name": "SOP Tutup Shift Kasir",
+      "hook_title": "5 Langkah Tutup Kasir Toko Tanpa Selisih Rp 1 Pun (SOP Closing 3 Menit)",
+      "visual_style": "Step-by-Step Educational Swipe"
+    }
+  ],
+  "cooca-feed-instagram": [
+    {
+      "timestamp": "2026-11-09T15:41:00+07:00",
+      "topic_name": "Titik Kebocoran Kasir",
+      "hook_title": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
+      "visual_style": "High-Contrast Infographic"
+    }
+  ],
+  "cooca-feed-linkedin": [
+    {
+      "timestamp": "2026-11-09T14:56:00+07:00",
+      "topic_name": "Analisis ROI Kasir Manual",
+      "hook_title": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026",
+      "visual_style": "Corporate Executive ROI Infographic"
+    }
+  ],
+  "cooca-carousel-linkedin": [
+    {
+      "timestamp": "2026-11-09T12:00:00+07:00",
+      "topic_name": "Ekspansi Gerai Multi-Cabang",
+      "hook_title": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
+      "visual_style": "B2B Strategic Deck"
+    }
+  ]
+}

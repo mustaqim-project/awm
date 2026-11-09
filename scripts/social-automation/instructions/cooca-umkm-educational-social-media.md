@@ -56,6 +56,16 @@ Setiap siklus eksekusi automasi edukasi finansial UMKM ini terikat secara ketat 
 - **Bahasa:** Indonesia yang sederhana, komunikatif, dan edukatif.
 - **Target Audiens:** Pemilik UMKM, pebisnis ritel, pemilik toko, pelaku F&B, dan pengusaha pemula.
 
+
+## ATURAN KETAT ANTI-DUPLIKASI & WAJIB TEMPLATE CANVA BARU (THE ZERO REUSE RULE)
+1. **DILARANG MENGGUNAKAN MATERI KONTEN YANG SAMA (100% UNIQUE & FRESH CONTENT):**
+   - Dilarang keras menggunakan materi konten, topik edukasi, hook title, sudut pandang masalah, maupun keyword yang sama dengan materi konten yang sudah ada / sudah pernah dipublikasikan sebelumnya di sistem atau media sosial Cooca.
+   - Wajib memeriksa riwayat konten terdahulu (`storage/app/public/content-assets/content_history.json` dan database post) sebelum mengeksekusi riset tren untuk memastikan materi konten yang dihasilkan setiap harinya 100% unik, segar, dan mengangkat pilar solusi yang berbeda lintas 20 sektor industri UMKM.
+2. **DILARANG MENGGUNAKAN DESAIN YANG SAMA (WAJIB GENERATE TEMPLATE CANVA BARU SETIAP KONTEN):**
+   - Dilarang keras mendaur ulang (reuse) template visual, tata letak, atau desain yang sudah ada sebelumnya.
+   - Wajib selalu men-generate template desain Canva baru melalui Canva MCP (`create-design`) untuk SETIAP materi konten baru, disesuaikan secara dinamis dengan materi konten, hook, dan keyword hasil analisa tren terbaru.
+   - Setiap template Canva baru wajib mematuhi panduan visual Cooca: Deep Midnight Navy (#070B19 ke #162B68), Sapphire Blue (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, strictly ZERO GREEN, subjek fotografi realistis adaptif, dan URL bersih tunggal `cooca.id`.
+
 ## 2. RISET KEBUTUHAN DAN KESALAHAN FINANSIAL UMKM
 
 Lakukan riset mandiri terhadap kesalahan yang sering terjadi ketika pemilik usaha menghitung keuntungan.
