@@ -27,7 +27,7 @@ const htmlContent = `<!DOCTYPE html>
 <meta charset="utf-8">
 <title>Cooca LinkedIn Feed Infographic</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 * {
   box-sizing: border-box;
@@ -38,7 +38,7 @@ const htmlContent = `<!DOCTYPE html>
 body {
   width: 1080px;
   height: 1080px;
-  background-color: #070A14;
+  background-color: #070B19;
   background-image: 
     radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.22) 0%, transparent 45%),
     radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.18) 0%, transparent 45%),
@@ -139,7 +139,7 @@ body {
 }
 
 .headline {
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 37px;
   font-weight: 800;
   line-height: 1.18;
@@ -240,7 +240,7 @@ body {
 .metric-val {
   font-size: 24px;
   font-weight: 800;
-  font-family: 'Bricolage Grotesque', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: -0.01em;
 }
 
@@ -456,6 +456,16 @@ async function run() {
   const outputPath = path.join(outputDir, 'linkedin-feed-roi-cashier-1080x1080.png');
   await page.screenshot({ path: outputPath, type: 'png' });
   console.log(`[Success] Infographic rendered to: ${outputPath}`);
+
+  const publicOutputDir = path.join(ROOT_DIR, 'public/storage/content-assets');
+  if (!fs.existsSync(publicOutputDir)) fs.mkdirSync(publicOutputDir, { recursive: true });
+  fs.copyFileSync(outputPath, path.join(publicOutputDir, 'linkedin-feed-roi-cashier-1080x1080.png'));
+
+  const artifactDir = 'C:/Users/Ulfah Ramadhani/.gemini/antigravity/brain/157547ee-aa68-4a61-9fc0-dc7cf3752b41';
+  if (fs.existsSync(artifactDir)) {
+    fs.copyFileSync(outputPath, path.join(artifactDir, 'linkedin-feed-roi-cashier-1080x1080.png'));
+    console.log(`[Success] Copied to artifact directory: ${artifactDir}`);
+  }
   
   await browser.close();
 }
