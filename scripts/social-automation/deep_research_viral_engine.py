@@ -224,17 +224,17 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
     elif framework == "b2b_roi_infographic":
         hook_title = f"Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026"
         slides = [
-            {"slide": 1, "title": "Analisis Efisiensi & ROI Kasir Modern untuk Bisnis Ritel", "tag": "Metrik Bisnis"}
+            {"slide": 1, "title": "Analisis Efisiensi & ROI Kasir Modern untuk Bisnis UMKM", "tag": "Metrik Bisnis"}
         ]
         caption = (
             f"{hook_title}\n\n"
-            f"Berdasarkan studi empiris operasional ritel, toko dengan transaksi manual kehilangan 1.8% hingga 3.2% potensi margin kotor "
+            f"Berdasarkan studi empiris operasional bisnis UMKM, toko dengan transaksi manual kehilangan 1.8% hingga 3.2% potensi margin kotor "
             f"akibat lamanya antrean, kesalahan pengembalian uang, dan proses rekonsiliasi tutup buku yang berlarut-larut.\n\n"
             f"Dampak kuantitatif implementasi sistem kasir pintar COOCA:\n"
             f"- Kecepatan transaksi kasir terpangkas menjadi hanya 2.8 detik per transaksi.\n"
             f"- Rekonsiliasi tutup shift kasir selesai dalam 3 menit dengan akurasi 100%.\n"
             f"- Penghematan waktu staf operasional mencapai 14 jam kerja produktif per minggu.\n\n"
-            f"Modernisasi sistem kasir bukan pos pengeluaran, melainkan investasi strategis perlindungan margin bisnis ritel.\n"
+            f"Modernisasi sistem kasir bukan pos pengeluaran, melainkan investasi strategis perlindungan margin bisnis UMKM.\n"
             f"Pelajari simulasi sistem selengkapnya di cooca.id\n\n"
             f"#AnalisisROI #EfisiensiBisnis #AplikasiKasirRitel #SOPRitel #ManajemenKasir #COOCA"
         )
@@ -298,7 +298,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n"
             f"5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n"
             f"6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\n"
-            f"Bawa bisnis ritel Anda naik kelas hari ini bersama platform COOCA di cooca.id\n\n"
+            f"Bawa bisnis UMKM Anda naik kelas hari ini bersama platform COOCA di cooca.id\n\n"
             f"#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA"
         )
 
@@ -395,9 +395,9 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #keuanganritel #COOCA"
         )
     else:
-        hook_title = f"Edukasi Operasional Bisnis Ritel Modern ({pillar})"
+        hook_title = f"Edukasi Operasional Bisnis UMKM Modern ({pillar})"
         slides = [{"slide": 1, "title": pillar, "tag": "Ritel Modern"}]
-        caption = f"{hook_title}\n\nTingkatkan efisiensi bisnis ritel bersama platform COOCA di cooca.id"
+        caption = f"{hook_title}\n\nTingkatkan efisiensi bisnis UMKM bersama platform COOCA di cooca.id"
 
     clean_caption = clean_dashes(caption)
     clean_hook = clean_dashes(hook_title)
@@ -407,7 +407,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
         "caption": clean_caption,
         "slides": slides,
         "topic_name": pillar,
-        "solution_summary": f"Integrasi fitur {feat_name} di COOCA untuk optimalisasi operasional ritel.",
+        "solution_summary": f"Integrasi fitur {feat_name} di COOCA untuk optimalisasi operasional bisnis UMKM.",
         "dimensions": dimensions,
     }
 
@@ -446,7 +446,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
                 "core_problem": "Asimetri antara catatan stok buku/sistem dengan jumlah fisik nyata di rak display toko ritel",
                 "educational_objective": "Mengedukasi pemilik toko tentang 3 titik kebocoran mutasi barang dan SOP pencegahan menggunakan barcode scanning",
                 "content_angle": "Business Case Study & Operational Improvement",
-                "key_message": "Selisih stok bukan takdir bisnis ritel; dengan SOP pemindaian barcode masuk/keluar dan cycle count berkala, akurasi stok dapat dijaga hingga 99%",
+                "key_message": "Selisih stok bukan takdir bisnis UMKM; dengan SOP pemindaian barcode masuk/keluar dan cycle count berkala, akurasi stok dapat dijaga hingga 99%",
                 "practical_takeaways": [
                     "Wajibkan scan barcode setiap kali penerimaan barang supplier",
                     "Lakukan cycle count mingguan untuk 10-20 SKU produk terlaris tanpa harus tutup toko",
@@ -509,7 +509,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
             "practical_takeaways": ["Gunakan pencatatan otomatis", "Terapkan SOP harian", "Evaluasi berkala"],
             "cooca_organic_link": f"Solusi {feat_name} di COOCA",
             "audience_relevance_score": 95.0,
-            "content_audience_matching_justification": f"Konten selaras dengan kebutuhan audiens {channel.upper()} dalam mengoptimalkan pengelolaan bisnis ritel"
+            "content_audience_matching_justification": f"Konten selaras dengan kebutuhan audiens {channel.upper()} dalam mengoptimalkan pengelolaan bisnis UMKM"
         },
         "caption_strategy": {
             "opening_hook": synthesized["hook_title"],
