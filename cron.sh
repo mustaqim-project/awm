@@ -97,6 +97,13 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_facebook_feed_20261109.lock" ]; 
     touch "$SCRIPT_DIR/storage/framework/deploy_facebook_feed_20261109.lock" 2>/dev/null || true
 fi
 
+# Auto-deploy & publish Instagram Feed Infographic (Cooca Instagram Feed Publisher)
+if [ ! -f "$SCRIPT_DIR/storage/framework/deploy_instagram_feed_20261109.lock" ]; then
+    "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
+    "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id=cooca-feed-instagram --spec-json=storage/app/public/content-assets/spec-cooca-feed-instagram.json >> "$SCRIPT_DIR/storage/logs/instagram_feed_deploy.log" 2>&1 || true
+    touch "$SCRIPT_DIR/storage/framework/deploy_instagram_feed_20261109.lock" 2>/dev/null || true
+fi
+
 # Execute Laravel Schedule Run
 "$PHP_BIN" artisan schedule:run >> "$SCRIPT_DIR/storage/logs/scheduler.log" 2>&1
 
